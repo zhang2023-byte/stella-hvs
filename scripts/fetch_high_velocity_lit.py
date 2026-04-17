@@ -121,7 +121,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--query-file", type=Path, default=None, help="One query per line. Replaces defaults.")
     parser.add_argument("--extra-query", action="append", default=[], help="Add an extra query. Can be repeated.")
     parser.add_argument("--no-brief", action="store_true", help="Skip DeepXiv brief calls and use search metadata only.")
-    parser.add_argument("--token", default=None, help="Optional DeepXiv token. Defaults to DEEPXIV_TOKEN / ~/.env.")
+    parser.add_argument("--token", default=None, help="Optional DeepXiv token. Defaults to DEEPXIV_TOKEN from loaded .env files.")
     parser.add_argument("--notes-dir", type=Path, default=WORKSPACE / "notes")
     parser.add_argument("--logs-dir", type=Path, default=WORKSPACE / "logs")
     return parser

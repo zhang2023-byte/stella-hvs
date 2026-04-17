@@ -7,9 +7,9 @@ This workspace collects monthly arXiv/DeepXiv literature notes for high-velocity
 ```text
 stella-workspace/
   README.md
-  .env                         # Local LLM config, not required if using ~/.env
+  .env                         # Local DeepXiv token and LLM config, not committed
   scripts/
-    env.example                # Example LLM env vars
+    env.example                # Example DeepXiv and LLM env vars
     fetch_high_velocity_lit.py # Main CLI entrypoint
     run_2025_2026.sh           # Convenience wrapper for 2025 and 2026-to-date
   src/high_velocity_lit/
@@ -37,9 +37,10 @@ Run commands in the project conda environment:
 conda activate stella-env
 ```
 
-DeepXiv uses `DEEPXIV_TOKEN`, which can live in `~/.env`, the shell environment, or conda env vars. The LLM title classifier uses OpenAI-compatible environment variables:
+Use the project-local `.env` file for the DeepXiv token and LLM title-classifier settings. The file is ignored by Git, so local secrets stay out of commits.
 
 ```env
+DEEPXIV_TOKEN=
 LLM_API_KEY=
 LLM_BASE_URL=https://api.openai.com/v1
 LLM_MODEL=gpt-4o-mini
@@ -60,7 +61,7 @@ stella-workspace/.env
 current-working-directory/.env
 ```
 
-Command-line flags such as `--llm-api-key`, `--llm-base-url`, and `--llm-model` override environment values.
+For this project, keep `DEEPXIV_TOKEN` in `stella-workspace/.env` so runs launched from the workspace use the same project-local token. Command-line flags such as `--token`, `--llm-api-key`, `--llm-base-url`, and `--llm-model` override environment values.
 
 ## Default Search Scope
 
@@ -221,4 +222,3 @@ Brief calls are much lower because they are only made after title classification
 ## Notes On Accuracy
 
 The current classifier is title-only by design. This saves DeepXiv brief quota, but it can miss papers whose titles are vague and only reveal relevance in the abstract. To increase recall, raise `--max-results`, add more query phrases, or change the classifier prompt in `title_classifier.py` to be more inclusive. To reduce false positives, lower `--max-results`, add a score floor with `--min-score`, or make the classifier prompt stricter.
-
