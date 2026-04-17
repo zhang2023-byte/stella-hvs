@@ -5,6 +5,8 @@ from __future__ import annotations
 import json
 import os
 import re
+import socket
+import time
 import urllib.error
 import urllib.request
 from dataclasses import dataclass
@@ -62,12 +64,14 @@ class LLMTitleClassifier:
         model: str,
         temperature: float = 0.0,
         timeout: int = 60,
+        max_retries: int = 3,
     ) -> None:
         self.api_key = api_key
         self.base_url = base_url.rstrip("/")
         self.model = model
         self.temperature = temperature
         self.timeout = timeout
+        self.max_retries = max_retries
 
     def classify_batch(self, papers: list[dict[str, Any]]) -> dict[str, TitleDecision]:
         items = [
@@ -107,12 +111,18 @@ class LLMTitleClassifier:
             },
             method="POST",
         )
-        try:
-            with urllib.request.urlopen(request, timeout=self.timeout) as response:
-                raw = response.read().decode("utf-8")
-        except urllib.error.HTTPError as exc:
-            body = exc.read().decode("utf-8", errors="replace")
-            raise RuntimeError(f"LLM classifier HTTP {exc.code}: {body}") from exc
+        for attempt in range(1, self.max_retries + 1):
+            try:
+                with urllib.request.urlopen(request, timeout=self.timeout) as response:
+                    raw = response.read().decode("utf-8")
+                break
+            except urllib.error.HTTPError as exc:
+                body = exc.read().decode("utf-8", errors="replace")
+                raise RuntimeError(f"LLM classifier HTTP {exc.code}: {body}") from exc
+            except (TimeoutError, socket.timeout, urllib.error.URLError) as exc:
+                if attempt >= self.max_retries:
+                    raise RuntimeError(f"LLM classifier request failed after {self.max_retries} attempts: {exc}") from exc
+                time.sleep(2 ** (attempt - 1))
 
         result = json.loads(raw)
         content = result["choices"][0]["message"]["content"]

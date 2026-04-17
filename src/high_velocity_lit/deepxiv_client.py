@@ -38,7 +38,7 @@ def load_deepxiv_token(explicit_token: Optional[str] = None) -> Optional[str]:
 class DeepXivClient:
     def __init__(self, token: Optional[str] = None) -> None:
         self.token = load_deepxiv_token(token)
-        self.reader = Reader(token=self.token)
+        self.reader = Reader(token=self.token, timeout=30, max_retries=2)
 
     def search(
         self,
