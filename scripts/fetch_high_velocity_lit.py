@@ -4,8 +4,10 @@
 from __future__ import annotations
 
 import argparse
+import calendar
 import json
 import os
+import re
 import sys
 from datetime import date
 from pathlib import Path
@@ -41,10 +43,54 @@ from high_velocity_lit.models import SearchConfig  # noqa: E402
 from high_velocity_lit.pipeline import run_pipeline  # noqa: E402
 
 
-def parse_date(value: str | None) -> date | None:
-    if not value:
-        return None
-    return date.fromisoformat(value)
+DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+MONTH_RE = re.compile(r"^\d{4}-\d{2}$")
+YEAR_RE = re.compile(r"^\d{4}$")
+
+
+def parse_bool(value: str) -> bool:
+    normalized = value.strip().lower()
+    if normalized in {"true", "t", "1", "yes", "y"}:
+        return True
+    if normalized in {"false", "f", "0", "no", "n"}:
+        return False
+    raise argparse.ArgumentTypeError("expected True or False")
+
+
+def parse_period(value: str | None, *, kind: str, today: date | None = None) -> date:
+    today = today or date.today()
+    if value is None:
+        if kind == "to":
+            return today
+        raise ValueError("--from is required")
+
+    text = value.strip()
+    if kind == "to" and text.lower() in {"none", "today"}:
+        return today
+
+    try:
+        if DATE_RE.fullmatch(text):
+            parsed = date.fromisoformat(text)
+        elif MONTH_RE.fullmatch(text):
+            year, month = (int(part) for part in text.split("-"))
+            if kind == "from":
+                parsed = date(year, month, 1)
+            else:
+                parsed = date(year, month, calendar.monthrange(year, month)[1])
+        elif YEAR_RE.fullmatch(text):
+            year = int(text)
+            parsed = date(year, 1, 1) if kind == "from" else date(year, 12, 31)
+        else:
+            raise ValueError
+    except ValueError as exc:
+        expected = "YYYY-MM-DD, YYYY-MM, or YYYY"
+        if kind == "to":
+            expected += ", or none"
+        raise ValueError(f"--{kind} must be {expected}; got {value!r}") from exc
+
+    if parsed > today:
+        return today
+    return parsed
 
 
 def load_queries(query_file: Path | None, extra_queries: list[str]) -> list[str]:
@@ -77,11 +123,20 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Collect monthly DeepXiv/arXiv notes for high-velocity star literature."
     )
-    parser.add_argument("--start-year", type=int, default=2025)
-    parser.add_argument("--start-month", type=int, default=1)
-    parser.add_argument("--end-year", type=int, default=2026)
-    parser.add_argument("--end-month", type=int, default=4)
-    parser.add_argument("--end-date", default=None, help="Optional cap for the final month, YYYY-MM-DD.")
+    parser.add_argument(
+        "--from",
+        dest="from_value",
+        required=True,
+        metavar="DATE",
+        help="Start date as YYYY-MM-DD, YYYY-MM, or YYYY.",
+    )
+    parser.add_argument(
+        "--to",
+        dest="to_value",
+        default=None,
+        metavar="DATE",
+        help="End date as YYYY-MM-DD, YYYY-MM, YYYY, or none. Default: today.",
+    )
     parser.add_argument("--source", default=DEFAULT_SOURCE, choices=["deepxiv", "arxiv"], help="Candidate search backend.")
     parser.add_argument("--max-results", type=int, default=DEFAULT_MAX_RESULTS)
     parser.add_argument("--search-mode", default=DEFAULT_SEARCH_MODE, choices=["bm25", "vector", "hybrid"])
@@ -99,7 +154,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--classifier",
         default=DEFAULT_CLASSIFIER,
-        choices=["llm", "rules", "none"],
+        choices=["llm", "rules"],
         help="How to confirm candidate relevance before brief. Default: rules.",
     )
     parser.add_argument("--llm-api-key", default=os.environ.get("LLM_API_KEY") or os.environ.get("OPENAI_API_KEY") or os.environ.get("DEEPXIV_AGENT_API_KEY"))
@@ -107,9 +162,11 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--llm-model", default=os.environ.get("LLM_MODEL") or os.environ.get("OPENAI_MODEL") or os.environ.get("DEEPXIV_AGENT_MODEL") or DEFAULT_LLM_MODEL)
     parser.add_argument("--llm-batch-size", type=int, default=DEFAULT_LLM_BATCH_SIZE)
     parser.add_argument(
-        "--llm-review-weak",
-        action="store_true",
-        help="With --classifier rules, send weak rule matches to the LLM for confirmation.",
+        "--llm-review",
+        type=parse_bool,
+        default=False,
+        metavar="True|False",
+        help="With --classifier rules, send weak rule matches to the LLM. Default: False.",
     )
     parser.add_argument(
         "--sleep",
@@ -125,7 +182,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--query-file", type=Path, default=None, help="One query per line. Replaces defaults.")
     parser.add_argument("--extra-query", action="append", default=[], help="Add an extra query. Can be repeated.")
-    parser.add_argument("--no-brief", action="store_true", help="Skip DeepXiv brief calls and use search metadata only.")
+    parser.add_argument("--brief", type=parse_bool, default=True, metavar="True|False", help="Fetch DeepXiv brief. Default: True.")
     parser.add_argument("--token", default=None, help="Optional DeepXiv token. Defaults to DEEPXIV_TOKEN from loaded .env files.")
     parser.add_argument("--notes-dir", type=Path, default=WORKSPACE / "notes")
     parser.add_argument("--logs-dir", type=Path, default=WORKSPACE / "logs")
@@ -133,17 +190,28 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main() -> int:
-    args = build_parser().parse_args()
+    parser = build_parser()
+    args = parser.parse_args()
+    try:
+        start_date = parse_period(args.from_value, kind="from")
+        end_date = parse_period(args.to_value, kind="to")
+    except ValueError as exc:
+        parser.error(str(exc))
+    if start_date > end_date:
+        parser.error(f"--from date {start_date.isoformat()} is after --to date {end_date.isoformat()}")
+    if args.max_results < 1:
+        parser.error("--max-results must be at least 1")
+    if args.classifier in {"llm", "rules"} and (args.classifier == "llm" or args.llm_review):
+        if not args.llm_api_key:
+            parser.error("--classifier llm or --llm-review True requires LLM_API_KEY or --llm-api-key")
+
     queries = load_queries(args.query_file, args.extra_query)
     config = SearchConfig(
         workspace=WORKSPACE,
         notes_dir=args.notes_dir,
         logs_dir=args.logs_dir,
-        start_year=args.start_year,
-        start_month=args.start_month,
-        end_year=args.end_year,
-        end_month=args.end_month,
-        end_date=parse_date(args.end_date),
+        start_date=start_date,
+        end_date=end_date,
         source=args.source,
         queries=queries,
         categories=split_csv(args.categories),
@@ -155,10 +223,10 @@ def main() -> int:
         llm_base_url=args.llm_base_url,
         llm_model=args.llm_model,
         llm_batch_size=args.llm_batch_size,
-        llm_review_weak=args.llm_review_weak,
+        llm_review=args.llm_review if args.classifier == "rules" else False,
         search_sleep_seconds=args.sleep,
         brief_sleep_seconds=args.brief_sleep,
-        use_brief=not args.no_brief,
+        use_brief=args.brief,
         token=args.token,
     )
     summary = run_pipeline(config)

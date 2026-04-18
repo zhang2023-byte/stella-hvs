@@ -69,8 +69,10 @@ To ask the LLM to review weak matches before keeping them:
 
 ```bash
 conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
+  --from 2026-03 \
+  --to 2026-03 \
   --classifier rules \
-  --llm-review-weak
+  --llm-review True
 ```
 
 In this mode:
@@ -84,5 +86,7 @@ To use full LLM title classification instead:
 
 ```bash
 conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
+  --from 2026-03 \
+  --to 2026-03 \
   --classifier llm
 ```

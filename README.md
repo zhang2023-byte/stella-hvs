@@ -33,10 +33,8 @@ One month:
 
 ```bash
 conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
-  --start-year 2026 \
-  --start-month 3 \
-  --end-year 2026 \
-  --end-month 3 \
+  --from 2026-03 \
+  --to 2026-03 \
   --max-results 20
 ```
 

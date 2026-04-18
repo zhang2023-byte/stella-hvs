@@ -61,7 +61,7 @@ def render_month_note(
         lines.append(f"- DeepXiv score 下限：`{config.min_score}`")
     if config.classifier == "llm":
         lines.append(f"- 标题复核：LLM `{config.llm_model}`，base URL `{config.llm_base_url}`")
-    elif config.classifier == "rules" and config.llm_review_weak:
+    elif config.classifier == "rules" and config.llm_review:
         lines.append(f"- 标题复核：直接相关规则自动收录；弱相关规则交给 LLM `{config.llm_model}` 复核")
     else:
         lines.append(f"- 标题复核：`{config.classifier}`")
@@ -77,7 +77,7 @@ def render_month_note(
             f"- 规则分层：直接相关 {stats.get('direct_rule_included', 0)} 篇；"
             f"弱相关 {stats.get('weak_rule_candidates', 0)} 篇"
         )
-        if config.llm_review_weak:
+        if config.llm_review:
             rule_summary += (
                 f"；弱相关 LLM 复核 {stats.get('weak_llm_reviewed', 0)} 篇；"
                 f"复核后保留 {stats.get('weak_llm_included', 0)} 篇"

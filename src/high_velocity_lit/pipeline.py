@@ -18,14 +18,14 @@ from .title_classifier import LLMTitleClassifier, TitleDecision, heuristic_title
 
 
 def iter_months(config: SearchConfig) -> Iterable[MonthWindow]:
-    year = config.start_year
-    month = config.start_month
-    while (year, month) <= (config.end_year, config.end_month):
-        start = date(year, month, 1)
+    year = config.start_date.year
+    month = config.start_date.month
+    while (year, month) <= (config.end_date.year, config.end_date.month):
+        month_start = date(year, month, 1)
         last_day = calendar.monthrange(year, month)[1]
-        end = date(year, month, last_day)
-        if config.end_date and end > config.end_date:
-            end = config.end_date
+        month_end = date(year, month, last_day)
+        start = max(month_start, config.start_date)
+        end = min(month_end, config.end_date)
         if end >= start:
             yield MonthWindow(year=year, month=month, start=start, end=end)
 
@@ -90,16 +90,6 @@ def classify_candidates(
     month: MonthWindow,
     run_log: Path,
 ) -> tuple[list[dict[str, Any]], dict[str, int]]:
-    if config.classifier == "none":
-        for paper in papers:
-            paper["_classifier"] = {
-                "include": True,
-                "confidence": 1.0,
-                "reason": "Classifier disabled.",
-                "label": "none",
-            }
-        return papers, {"classifier_included": len(papers), "classifier_filtered": 0, "classifier_errors": 0}
-
     included: list[dict[str, Any]] = []
     filtered = 0
     errors = 0
@@ -109,7 +99,7 @@ def classify_candidates(
     weak_llm_included = 0
 
     llm: LLMTitleClassifier | None = None
-    use_llm = config.classifier == "llm" or (config.classifier == "rules" and config.llm_review_weak)
+    use_llm = config.classifier == "llm" or (config.classifier == "rules" and config.llm_review)
     if use_llm:
         api_key = load_llm_api_key(config.llm_api_key)
         if not api_key:
@@ -137,7 +127,7 @@ def classify_candidates(
                     paper_id(paper): heuristic_title_decision(str(paper.get("title") or ""))
                     for paper in batch
                 }
-                if config.llm_review_weak:
+                if config.llm_review:
                     weak_batch = [
                         paper
                         for paper in batch
@@ -186,7 +176,7 @@ def classify_candidates(
                     "run_id": run_id,
                     "month": month.slug,
                     "classifier": config.classifier,
-                    "llm_review_weak": config.llm_review_weak,
+                    "llm_review": config.llm_review,
                     "model": config.llm_model if use_llm else None,
                     "batch_size": len(batch),
                     "weak_llm_reviewed": batch_weak_llm_reviewed,
@@ -409,11 +399,8 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
             "event": "start",
             "run_id": run_id,
             "started_at": started_at.isoformat(timespec="seconds"),
-            "start_year": config.start_year,
-            "start_month": config.start_month,
-            "end_year": config.end_year,
-            "end_month": config.end_month,
-            "end_date": config.end_date.isoformat() if config.end_date else None,
+            "from_date": config.start_date.isoformat(),
+            "to_date": config.end_date.isoformat(),
             "query_count": len(config.queries),
             "max_results": config.max_results,
             "candidate_source": config.source,
@@ -422,10 +409,10 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
             "search_mode": config.search_mode,
             "min_score": config.min_score,
             "classifier": config.classifier,
-            "llm_review_weak": config.llm_review_weak,
-            "llm_base_url": config.llm_base_url if config.classifier == "llm" or config.llm_review_weak else None,
-            "llm_model": config.llm_model if config.classifier == "llm" or config.llm_review_weak else None,
-            "llm_batch_size": config.llm_batch_size if config.classifier == "llm" or config.llm_review_weak else None,
+            "llm_review": config.llm_review,
+            "llm_base_url": config.llm_base_url if config.classifier == "llm" or config.llm_review else None,
+            "llm_model": config.llm_model if config.classifier == "llm" or config.llm_review else None,
+            "llm_batch_size": config.llm_batch_size if config.classifier == "llm" or config.llm_review else None,
             "use_brief": config.use_brief,
         },
     )

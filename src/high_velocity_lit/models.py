@@ -33,11 +33,8 @@ class SearchConfig:
     workspace: Path
     notes_dir: Path
     logs_dir: Path
-    start_year: int
-    start_month: int
-    end_year: int
-    end_month: int
-    end_date: Optional[date]
+    start_date: date
+    end_date: date
     source: str
     queries: list[str]
     categories: list[str]
@@ -49,7 +46,7 @@ class SearchConfig:
     llm_base_url: str
     llm_model: str
     llm_batch_size: int
-    llm_review_weak: bool
+    llm_review: bool
     search_sleep_seconds: float
     brief_sleep_seconds: float
     use_brief: bool
