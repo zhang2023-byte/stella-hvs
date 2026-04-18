@@ -40,7 +40,7 @@ from high_velocity_lit.config import (  # noqa: E402
     DEFAULT_SEARCH_SLEEP_SECONDS,
 )
 from high_velocity_lit.models import SearchConfig  # noqa: E402
-from high_velocity_lit.pipeline import run_pipeline  # noqa: E402
+from high_velocity_lit.pipeline import PartialRunError, run_pipeline  # noqa: E402
 
 
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -117,6 +117,23 @@ def split_csv(value: str | None) -> list[str]:
     if not value:
         return []
     return [item.strip() for item in value.split(",") if item.strip()]
+
+
+def print_partial_notice(summary: dict[str, object]) -> None:
+    completed = summary.get("completed_months") or []
+    if isinstance(completed, list) and completed:
+        completed_text = f"{completed[0]} to {completed[-1]}" if len(completed) > 1 else str(completed[0])
+    else:
+        completed_text = "none"
+
+    sys.stderr.write("\nDeepXiv daily limit reached. Partial results were saved.\n")
+    sys.stderr.write(f"Completed months: {completed_text}\n")
+    sys.stderr.write(f"Partial summary: {summary.get('partial_summary_path')}\n")
+    sys.stderr.write(f"Run log: {summary.get('run_log')}\n")
+    sys.stderr.write(f"Resume from: {summary.get('resume_from')}\n")
+    sys.stderr.write("Resume command:\n")
+    sys.stderr.write(str(summary.get("resume_command")) + "\n")
+    sys.stderr.flush()
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -231,7 +248,12 @@ def main() -> int:
         progress=args.progress,
         token=args.token,
     )
-    summary = run_pipeline(config)
+    try:
+        summary = run_pipeline(config)
+    except PartialRunError as exc:
+        print_partial_notice(exc.summary)
+        print(json.dumps(exc.summary, ensure_ascii=False, indent=2))
+        return 2
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0
 

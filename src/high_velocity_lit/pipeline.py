@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import calendar
 import json
+import shlex
 import sys
 import time
 from datetime import date, datetime
@@ -16,6 +17,15 @@ from .filters import category_matches, score_matches
 from .markdown import render_index, render_month_note
 from .models import MonthWindow, SearchConfig
 from .title_classifier import LLMTitleClassifier, TitleDecision, heuristic_title_decision, load_llm_api_key
+
+
+class PartialRunError(RuntimeError):
+    """Raised when a recoverable API limit stops a run after partial output."""
+
+    def __init__(self, summary: dict[str, Any], cause: Exception) -> None:
+        super().__init__(str(cause))
+        self.summary = summary
+        self.__cause__ = cause
 
 
 class ProgressReporter:
@@ -173,6 +183,10 @@ def configured_text(value: str | None) -> str:
     return "configured" if value else "not configured"
 
 
+def is_rate_limit_error(exc: Exception) -> bool:
+    return type(exc).__name__ == "RateLimitError" or "Daily limit reached" in str(exc)
+
+
 def run_parameter_lines(config: SearchConfig, deepxiv_token: str | None) -> list[str]:
     return [
         f"--from: {config.start_date.isoformat()}",
@@ -197,6 +211,105 @@ def run_parameter_lines(config: SearchConfig, deepxiv_token: str | None) -> list
         f"--logs-dir: {config.logs_dir}",
         f"queries: {list_text(config.queries, empty='none')}",
     ]
+
+
+def resume_command(config: SearchConfig, failed_month: MonthWindow) -> str:
+    command_parts = [
+        "conda",
+        "run",
+        "-n",
+        "stella-env",
+        "python",
+        "scripts/fetch_high_velocity_lit.py",
+        "--from",
+        failed_month.slug,
+        "--to",
+        config.end_date.isoformat(),
+        "--max-results",
+        str(config.max_results),
+        "--brief",
+        bool_text(config.use_brief),
+        "--source",
+        config.source,
+        "--classifier",
+        config.classifier,
+        "--llm-review",
+        bool_text(config.llm_review),
+    ]
+    if config.categories:
+        command_parts.extend(["--categories", ",".join(config.categories)])
+    else:
+        command_parts.extend(["--categories", ""])
+    if config.min_score is not None:
+        command_parts.extend(["--min-score", str(config.min_score)])
+    if config.search_mode:
+        command_parts.extend(["--search-mode", config.search_mode])
+    return " ".join(shlex.quote(part) for part in command_parts)
+
+
+def build_run_summary(
+    *,
+    status: str,
+    run_id: str,
+    started_at: datetime,
+    finished_at: datetime,
+    config: SearchConfig,
+    month_summaries: list[dict[str, Any]],
+    run_log: Path,
+    requested_months: list[MonthWindow],
+) -> dict[str, Any]:
+    return {
+        "status": status,
+        "run_id": run_id,
+        "started_at": started_at.isoformat(timespec="seconds"),
+        "finished_at": finished_at.isoformat(timespec="seconds"),
+        "duration_seconds": round((finished_at - started_at).total_seconds(), 3),
+        "notes_dir": str(config.notes_dir),
+        "logs_dir": str(config.logs_dir),
+        "run_log": str(run_log),
+        "months": month_summaries,
+        "completed_months": [item["month"] for item in month_summaries],
+        "requested_months": [month.slug for month in requested_months],
+        "total_relevant": sum(item["relevant_count"] for item in month_summaries),
+    }
+
+
+def write_partial_summary(
+    *,
+    config: SearchConfig,
+    run_id: str,
+    started_at: datetime,
+    month_summaries: list[dict[str, Any]],
+    requested_months: list[MonthWindow],
+    failed_month: MonthWindow,
+    error: Exception,
+    run_log: Path,
+) -> dict[str, Any]:
+    finished_at = datetime.now()
+    partial_path = config.logs_dir / f"partial_{run_id}.json"
+    summary = build_run_summary(
+        status="partial",
+        run_id=run_id,
+        started_at=started_at,
+        finished_at=finished_at,
+        config=config,
+        month_summaries=month_summaries,
+        run_log=run_log,
+        requested_months=requested_months,
+    )
+    summary.update(
+        {
+            "error": f"{type(error).__name__}: {error}",
+            "failed_month": failed_month.slug,
+            "resume_from": failed_month.slug,
+            "resume_command": resume_command(config, failed_month),
+            "partial_summary_path": str(partial_path),
+        }
+    )
+    partial_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    append_jsonl(run_log, {"event": "partial_finish", **summary})
+    append_jsonl(config.logs_dir / "runs.jsonl", summary)
+    return summary
 
 
 def classify_candidates(
@@ -568,16 +681,31 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
         )
         for month_index, month in enumerate(months, start=1):
             progress.message(f"Month {month_index}/{len(months)} {month.slug}: {month.date_from} to {month.date_to}")
-            papers, stats = search_month(
-                arxiv_client,
-                deepxiv_client,
-                month,
-                config,
-                run_id=run_id,
-                run_log=run_log,
-                progress=progress,
-                search_state=search_state,
-            )
+            try:
+                papers, stats = search_month(
+                    arxiv_client,
+                    deepxiv_client,
+                    month,
+                    config,
+                    run_id=run_id,
+                    run_log=run_log,
+                    progress=progress,
+                    search_state=search_state,
+                )
+            except Exception as exc:
+                if not is_rate_limit_error(exc):
+                    raise
+                summary = write_partial_summary(
+                    config=config,
+                    run_id=run_id,
+                    started_at=started_at,
+                    month_summaries=month_summaries,
+                    requested_months=months,
+                    failed_month=month,
+                    error=exc,
+                    run_log=run_log,
+                )
+                raise PartialRunError(summary, exc) from exc
             note = render_month_note(month, papers, stats, config, run_id=run_id, started_at=started_at)
             (config.notes_dir / f"{month.slug}.md").write_text(note, encoding="utf-8")
             month_summaries.append(
@@ -595,16 +723,16 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
         (config.notes_dir / "index.md").write_text(index, encoding="utf-8")
 
         finished_at = datetime.now()
-        summary = {
-            "run_id": run_id,
-            "started_at": started_at.isoformat(timespec="seconds"),
-            "finished_at": finished_at.isoformat(timespec="seconds"),
-            "duration_seconds": round((finished_at - started_at).total_seconds(), 3),
-            "notes_dir": str(config.notes_dir),
-            "logs_dir": str(config.logs_dir),
-            "months": month_summaries,
-            "total_relevant": sum(item["relevant_count"] for item in month_summaries),
-        }
+        summary = build_run_summary(
+            status="complete",
+            run_id=run_id,
+            started_at=started_at,
+            finished_at=finished_at,
+            config=config,
+            month_summaries=month_summaries,
+            run_log=run_log,
+            requested_months=months,
+        )
         append_jsonl(run_log, {"event": "finish", **summary})
         append_jsonl(config.logs_dir / "runs.jsonl", summary)
         progress.message(f"Done: {len(month_summaries)} months, {summary['total_relevant']} relevant papers")

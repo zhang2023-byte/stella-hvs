@@ -79,6 +79,12 @@ keys are shown only as `configured` or `not configured`.
 an effect with `--classifier rules`; it sends weak rule matches to the LLM and
 requires a configured LLM API key.
 
+If DeepXiv returns a daily limit error, completed months are kept. The script
+writes a partial summary to `logs/partial_<run_id>.json`, appends it to
+`logs/runs.jsonl` with `status: partial`, prints the resume command, and exits
+without a Python traceback. Resume from the reported failed month after quota
+recovers.
+
 Date parsing:
 
 ```text
