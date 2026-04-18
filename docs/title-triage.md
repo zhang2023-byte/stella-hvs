@@ -11,11 +11,16 @@ Typical title terms:
 ```text
 hypervelocity star
 high-velocity star
+high-velocity RR Lyrae stars
+extreme-velocity stars
+fastest stars in the Galaxy
 runaway star
+hyper-runaway star
 unbound star
 escaping/ejected star
 stellar escaper
 walkaway star
+hypervelocity/high-velocity star surveys, searches, candidates, catalogues
 ```
 
 ## Weak Matches
@@ -30,10 +35,32 @@ ejection velocities
 dynamically-ejected stars
 binary supernova scenario
 potential or cluster escapers
+globular cluster escaped stars
+stellar escape from globular clusters
 bow shocks
 Galactic-center ejection language
+Sgr A* ejection language
+Hills mechanism
+tidal separation or disruption of binary stars by massive black holes
+restricted three-body encounters
+intermediate-mass black holes in star clusters
+massive black-hole binaries interacting with clusters or binaries
+Andromeda/M31 to Milky Way stellar migration
+Large Magellanic Cloud, Galactic bar, or Sagittarius Dwarf perturbations with high-velocity-star context
 stellar collisions or disruptions
 unusual stellar kinematics
+```
+
+The rules intentionally reject generic astronomy/tool titles unless the title also has a high-velocity-star signal. Examples that should stay out:
+
+```text
+galpy: A Python Library for Galactic Dynamics
+emcee: The MCMC Hammer
+Galaxy formation and evolution
+Gaia Early Data Release 3 summary papers
+generic parallax/proper-motion method papers
+generic intermediate-mass black hole papers without a star-cluster/ejection context
+generic LMC/Galactic-bar trajectory papers without a high-velocity-star context
 ```
 
 ## Hybrid Mode

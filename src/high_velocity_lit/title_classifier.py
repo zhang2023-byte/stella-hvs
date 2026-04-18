@@ -17,39 +17,83 @@ from .filters import clean_text
 
 DIRECT_TITLE_RULES: list[tuple[str, re.Pattern[str]]] = [
     ("hypervelocity stars", re.compile(r"\bhyper[-\s]?velocity\s+stars?\b|\bHVSs?\b", re.I)),
-    ("high-velocity stars", re.compile(r"\bhigh[-\s]?velocity\s+stars?\b", re.I)),
-    ("runaway stars", re.compile(r"\b(?:OB\s+)?runaway\s+stars?\b", re.I)),
-    ("unbound or escaping stars", re.compile(r"\b(?:unbound|escaping|ejected)\s+stars?\b", re.I)),
+    (
+        "high-velocity or extreme-velocity stars",
+        re.compile(
+            r"\b(?:high|extreme)[-\s]?velocity\s+(?:[A-Za-z0-9+/-]+\s+){0,4}stars?\b|"
+            r"\b(?:fastest|fast)\s+stars?\s+in\s+the\s+galax(?:y|ies)\b",
+            re.I,
+        ),
+    ),
+    ("runaway stars", re.compile(r"\b(?:hyper[-\s]?runaway|(?:OB|B[-\s]?type|O[-\s]?type)?\s*runaway)\s+stars?\b", re.I)),
+    (
+        "unbound, escaping, or ejected stars",
+        re.compile(
+            r"\b(?:unbound|escaping|ejected)\s+(?:[A-Za-z0-9+/-]+\s+){0,4}stars?\b|"
+            r"\bstars?\s+ejected\s+(?:from|by)\b|"
+            r"\bgalactic\s+cent(?:er|re)[-\s]?ejected\s+stars?\b|"
+            r"\bSgr\s*A\*?.{0,80}\bstars?\s+ejected\b",
+            re.I | re.S,
+        ),
+    ),
     ("stellar escapers", re.compile(r"\bstellar\s+escapers?\b|\bwalkaway\s+stars?\b", re.I)),
+    (
+        "high-velocity star surveys or candidates",
+        re.compile(
+            r"\b(?:candidate|candidates|survey|surveys|search|searching|census|catalog(?:ue)?)\b"
+            r".{0,80}\b(?:hyper[-\s]?velocity|high[-\s]?velocity|extreme[-\s]?velocity|unbound)\s+"
+            r"(?:[A-Za-z0-9+/-]+\s+){0,4}stars?\b",
+            re.I | re.S,
+        ),
+    ),
 ]
 
 WEAK_TITLE_RULES: list[tuple[str, re.Pattern[str]]] = [
     (
         "stellar ejection mechanisms",
         re.compile(
-            r"\bstellar\s+ejection\b|\bejection\s+velocities\b|\bejected\s+from\b|"
-            r"\bdynamically[-\s]?ejected\b|\bbinary\s+supernova\s+scenario\b",
+            r"\bstellar\s+ejection\b|\bejection\s+velocities\b|\bstars?\s+ejected\s+from\b|"
+            r"\bdynamically[-\s]?ejected\b|\bbinary\s+supernova\s+scenario\b|"
+            r"\bcompact\s+object\s+binaries\b.{0,80}\b(?:ejection|detectability)\b|"
+            r"\bejection\s+and\s+capture\s+dynamics\b",
             re.I,
         ),
     ),
     (
         "stellar escaper candidates",
-        re.compile(r"\bpotential\s+escapers?\b|\bcluster\s+escapers?\b|\bstellar\s+escapers?\b", re.I),
+        re.compile(
+            r"\bpotential\s+escapers?\b|\bcluster\s+escapers?\b|\bstellar\s+escapers?\b|"
+            r"\bglobular\s+cluster\s+(?:escapees?|escaped\s+stars?)\b|"
+            r"\bstellar\s+escape\s+from\s+globular\s+clusters?\b|"
+            r"\bescaped\s+stars?\b",
+            re.I,
+        ),
     ),
     (
         "runaway-related mechanisms",
-        re.compile(r"\brunaway\b|\bwalkaway\b|\bbow[-\s]?shocks?\b|\bbowshock(?:s| nebulae)?\b", re.I),
+        re.compile(
+            r"\brunaway\b|\bwalkaway\b|\bbow[-\s]?shocks?\b|\bbowshock(?:s| nebulae)?\b|"
+            r"\bsub[-\s]?cluster\s+mergers\b|\bfossils?\s+of\s+sub[-\s]?cluster\s+mergers\b",
+            re.I,
+        ),
     ),
     (
         "galactic-center dynamical origins",
-        re.compile(r"\bS-star\s+cluster\b|\bgalactic\s+cent(?:er|re)\b.{0,80}\beject", re.I | re.S),
+        re.compile(
+            r"\bS-star\s+cluster\b|"
+            r"\b(?:galactic\s+cent(?:er|re)|Sgr\s*A\*?)\b.{0,120}\b(?:eject|origin|track\s*back|constraint|environment)\b|"
+            r"\b(?:eject|origin|track\s*back|constraint|environment)\b.{0,120}\b(?:galactic\s+cent(?:er|re)|Sgr\s*A\*?)\b",
+            re.I | re.S,
+        ),
     ),
     (
         "stellar interactions in dense systems",
         re.compile(
             r"\bstellar\s+(?:collisions?|disruptions?)\b|"
             r"\bdisruptions?\s+of\s+stars\b|"
-            r"\b(?:star|stellar)\s+clusters?\b.{0,80}\bejections?\b",
+            r"\b(?:star|stellar|globular)\s+clusters?\b.{0,100}\b(?:ejections?|compact\s+object\s+encounters?|"
+            r"intermediate[-\s]?mass\s+black\s+holes?|massive\s+black\s+hole\s+binary|sub[-\s]?cluster\s+mergers)\b|"
+            r"\bintermediate[-\s]?mass\s+black\s+holes?\b.{0,80}\b(?:star|stellar|globular)\s+clusters?\b",
             re.I | re.S,
         ),
     ),
@@ -57,10 +101,46 @@ WEAK_TITLE_RULES: list[tuple[str, re.Pattern[str]]] = [
         "high proper-motion or unusual kinematics",
         re.compile(
             r"\bhigh\s+proper[-\s]?motion\s+stars?\b|"
+            r"\bproper\s+motions?\s+and\s+parallax(?:es)?\b.{0,80}\b(?:hyper[-\s]?velocity|high[-\s]?velocity)\b|"
             r"\bunusual\s+kinematics\b|"
             r"\bretrograde\s+stars?\b|"
-            r"\bkinematically\s+(?:hot|outlying|perturbed)\b",
+            r"\bkinematically\s+(?:hot|outlying|perturbed)\b|"
+            r"\bgalactic\s+space\s+velocities\b.{0,100}\b(?:high[-\s]?velocity|hyper[-\s]?velocity|runaway)\b",
+            re.I | re.S,
+        ),
+    ),
+    (
+        "Hills mechanism and tidal binary disruption",
+        re.compile(
+            r"\bHills\s+mechanism\b|"
+            r"\btidal\s+(?:separation|disruption)\s+of\s+binary\s+stars?\b|"
+            r"\bbinary\s+disruption\s+by\s+massive\s+black\s+holes?\b|"
+            r"\bbinaries\s+disrupted\s+by\s+a\s+massive\s+galactic\s+black\s+hole\b|"
+            r"\bmassive\s+black\s+holes?\s+and\s+binaries\b|"
+            r"\brestricted\s+(?:parabolic\s+)?(?:3|three)[-\s]?body\s+problem\b|"
+            r"\brestricted\s+(?:3|three)[-\s]?body\s+encounters\b",
             re.I,
+        ),
+    ),
+    (
+        "external-galaxy or perturber origin clues",
+        re.compile(
+            r"\bstellar\s+migration\s+from\s+Andromeda\s+to\s+the\s+Milky\s+Way\b|"
+            r"\b(?:Andromeda|M31|Sagittarius\s+Dwarf)\b"
+            r".{0,120}\b(?:origin|eject|candidate|high[-\s]?velocity|hyper[-\s]?velocity)\b|"
+            r"\b(?:Large\s+Magellanic\s+Cloud|LMC|galactic\s+bar)\b"
+            r".{0,120}\b(?:hyper[-\s]?velocity|high[-\s]?velocity|runaway|unbound|ejected|fastest?)\b|"
+            r"\b(?:trajectory|trajectories|origin|deflection|impact|eject|candidate)\b"
+            r".{0,120}\b(?:Andromeda|M31|Sagittarius\s+Dwarf)\b",
+            re.I | re.S,
+        ),
+    ),
+    (
+        "using high-velocity stars as probes",
+        re.compile(
+            r"\b(?:dark\s+matter\s+halo|galactic\s+halo|velocity\s+distribution)\b"
+            r".{0,120}\b(?:hyper[-\s]?velocity|high[-\s]?velocity|extreme[-\s]?velocity)\s+stars?\b",
+            re.I | re.S,
         ),
     ),
 ]
