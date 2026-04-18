@@ -29,16 +29,14 @@ Default batch:
 bash scripts/run_2025_2026.sh
 ```
 
-One month:
+Minimal run:
 
 ```bash
 conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
-  --from 2026-03 \
-  --to 2026-03 \
-  --max-results 20
+  --from 2026-03
 ```
 
-More commands and options: [docs/usage.md](docs/usage.md)
+More commands, defaults, and date rules: [docs/usage.md](docs/usage.md)
 
 ## Key Docs
 

@@ -50,4 +50,5 @@ class SearchConfig:
     search_sleep_seconds: float
     brief_sleep_seconds: float
     use_brief: bool
+    progress: bool
     token: Optional[str] = None

@@ -6,13 +6,22 @@ Run the default 2025 to 2026-to-date job:
 bash scripts/run_2025_2026.sh
 ```
 
-Run one month:
+Minimal run:
+
+```bash
+conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
+  --from 2026-03
+```
+
+Only `--from` is required. With the command above, the script starts on
+2026-03-01 and runs through today, because `--to` defaults to today.
+
+Run exactly one month:
 
 ```bash
 conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
   --from 2026-03 \
-  --to 2026-03 \
-  --max-results 20
+  --to 2026-03
 ```
 
 Run without fetching DeepXiv brief:
@@ -34,11 +43,41 @@ Useful options:
 --to DATE                    End: YYYY-MM-DD, YYYY-MM, YYYY, or none. Default: today.
 --brief True|False           Fetch DeepXiv brief. Default: True.
 --llm-review True|False      With rules, send weak matches to the LLM. Default: False.
---max-results N              Results per query/category.
+--max-results N              Results per query/category. Default: 50.
 --categories A,B,C           arXiv categories. Default: astro-ph.GA,astro-ph.SR,astro-ph.IM.
---min-score X                Optional DeepXiv score floor.
+--min-score X                Optional DeepXiv score floor. Default: disabled.
+--progress True|False        Show terminal progress bars. Default: True.
 --token TOKEN                Override DEEPXIV_TOKEN.
 ```
+
+Defaults:
+
+```text
+--to                today; future dates are also clamped to today
+--source            deepxiv
+--classifier        rules
+--llm-review        False
+--brief             True
+--max-results       50 per query/category
+--categories        astro-ph.GA,astro-ph.SR,astro-ph.IM
+--min-score         disabled
+--search-mode       hybrid
+--progress          True; shown when a terminal is available, including under conda run
+--sleep             0.2 seconds between search calls
+--brief-sleep       0.2 seconds between brief calls
+--llm-base-url      LLM_BASE_URL/OPENAI_BASE_URL/DEEPXIV_AGENT_BASE_URL, else https://api.openai.com/v1
+--llm-model         LLM_MODEL/OPENAI_MODEL/DEEPXIV_AGENT_MODEL, else gpt-4o-mini
+--llm-batch-size    25
+```
+
+At the start of a terminal run, the script prints the resolved parameter set,
+including defaults. It writes to the terminal when available so `conda run`
+still shows the status output. Secret values are never printed; tokens and API
+keys are shown only as `configured` or `not configured`.
+
+`--classifier llm` uses pure LLM classification. `--llm-review True` only has
+an effect with `--classifier rules`; it sends weak rule matches to the LLM and
+requires a configured LLM API key.
 
 Date parsing:
 

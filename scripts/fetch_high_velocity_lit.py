@@ -183,6 +183,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--query-file", type=Path, default=None, help="One query per line. Replaces defaults.")
     parser.add_argument("--extra-query", action="append", default=[], help="Add an extra query. Can be repeated.")
     parser.add_argument("--brief", type=parse_bool, default=True, metavar="True|False", help="Fetch DeepXiv brief. Default: True.")
+    parser.add_argument("--progress", type=parse_bool, default=True, metavar="True|False", help="Show terminal progress bars. Default: True.")
     parser.add_argument("--token", default=None, help="Optional DeepXiv token. Defaults to DEEPXIV_TOKEN from loaded .env files.")
     parser.add_argument("--notes-dir", type=Path, default=WORKSPACE / "notes")
     parser.add_argument("--logs-dir", type=Path, default=WORKSPACE / "logs")
@@ -227,6 +228,7 @@ def main() -> int:
         search_sleep_seconds=args.sleep,
         brief_sleep_seconds=args.brief_sleep,
         use_brief=args.brief,
+        progress=args.progress,
         token=args.token,
     )
     summary = run_pipeline(config)
