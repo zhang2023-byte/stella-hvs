@@ -49,6 +49,7 @@ class SearchConfig:
     llm_base_url: str
     llm_model: str
     llm_batch_size: int
+    llm_review_weak: bool
     search_sleep_seconds: float
     brief_sleep_seconds: float
     use_brief: bool

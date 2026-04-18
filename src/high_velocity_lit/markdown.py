@@ -61,6 +61,8 @@ def render_month_note(
         lines.append(f"- DeepXiv score 下限：`{config.min_score}`")
     if config.classifier == "llm":
         lines.append(f"- 标题复核：LLM `{config.llm_model}`，base URL `{config.llm_base_url}`")
+    elif config.classifier == "rules" and config.llm_review_weak:
+        lines.append(f"- 标题复核：直接相关规则自动收录；弱相关规则交给 LLM `{config.llm_model}` 复核")
     else:
         lines.append(f"- 标题复核：`{config.classifier}`")
     lines.append(f"- 简介生成：DeepXiv `brief` {'启用' if config.use_brief else '未启用'}")
@@ -70,6 +72,17 @@ def render_month_note(
         f"score 过滤 {stats.get('score_filtered', 0)} 篇；"
         f"标题复核过滤 {stats.get('classifier_filtered', 0)} 篇"
     )
+    if config.classifier == "rules":
+        rule_summary = (
+            f"- 规则分层：直接相关 {stats.get('direct_rule_included', 0)} 篇；"
+            f"弱相关 {stats.get('weak_rule_candidates', 0)} 篇"
+        )
+        if config.llm_review_weak:
+            rule_summary += (
+                f"；弱相关 LLM 复核 {stats.get('weak_llm_reviewed', 0)} 篇；"
+                f"复核后保留 {stats.get('weak_llm_included', 0)} 篇"
+            )
+        lines.append(rule_summary)
     lines.append("")
     lines.append("## 检索关键词")
     lines.append("")
@@ -80,7 +93,7 @@ def render_month_note(
     lines.append("")
 
     if not papers:
-        lines.append("本月没有被本地高速星规则筛中的 DeepXiv/arXiv 结果。")
+        lines.append("本月没有通过标题复核的 DeepXiv/arXiv 结果。")
         lines.append("")
     else:
         for idx, paper in enumerate(papers, 1):

@@ -15,12 +15,54 @@ from typing import Any
 from .filters import clean_text
 
 
-TITLE_RULES: list[tuple[str, re.Pattern[str]]] = [
+DIRECT_TITLE_RULES: list[tuple[str, re.Pattern[str]]] = [
     ("hypervelocity stars", re.compile(r"\bhyper[-\s]?velocity\s+stars?\b|\bHVSs?\b", re.I)),
     ("high-velocity stars", re.compile(r"\bhigh[-\s]?velocity\s+stars?\b", re.I)),
     ("runaway stars", re.compile(r"\b(?:OB\s+)?runaway\s+stars?\b", re.I)),
     ("unbound or escaping stars", re.compile(r"\b(?:unbound|escaping|ejected)\s+stars?\b", re.I)),
     ("stellar escapers", re.compile(r"\bstellar\s+escapers?\b|\bwalkaway\s+stars?\b", re.I)),
+]
+
+WEAK_TITLE_RULES: list[tuple[str, re.Pattern[str]]] = [
+    (
+        "stellar ejection mechanisms",
+        re.compile(
+            r"\bstellar\s+ejection\b|\bejection\s+velocities\b|\bejected\s+from\b|"
+            r"\bdynamically[-\s]?ejected\b|\bbinary\s+supernova\s+scenario\b",
+            re.I,
+        ),
+    ),
+    (
+        "stellar escaper candidates",
+        re.compile(r"\bpotential\s+escapers?\b|\bcluster\s+escapers?\b|\bstellar\s+escapers?\b", re.I),
+    ),
+    (
+        "runaway-related mechanisms",
+        re.compile(r"\brunaway\b|\bwalkaway\b|\bbow[-\s]?shocks?\b|\bbowshock(?:s| nebulae)?\b", re.I),
+    ),
+    (
+        "galactic-center dynamical origins",
+        re.compile(r"\bS-star\s+cluster\b|\bgalactic\s+cent(?:er|re)\b.{0,80}\beject", re.I | re.S),
+    ),
+    (
+        "stellar interactions in dense systems",
+        re.compile(
+            r"\bstellar\s+(?:collisions?|disruptions?)\b|"
+            r"\bdisruptions?\s+of\s+stars\b|"
+            r"\b(?:star|stellar)\s+clusters?\b.{0,80}\bejections?\b",
+            re.I | re.S,
+        ),
+    ),
+    (
+        "high proper-motion or unusual kinematics",
+        re.compile(
+            r"\bhigh\s+proper[-\s]?motion\s+stars?\b|"
+            r"\bunusual\s+kinematics\b|"
+            r"\bretrograde\s+stars?\b|"
+            r"\bkinematically\s+(?:hot|outlying|perturbed)\b",
+            re.I,
+        ),
+    ),
 ]
 
 
@@ -34,9 +76,12 @@ class TitleDecision:
 
 def heuristic_title_decision(title: str) -> TitleDecision:
     text = clean_text(title)
-    matches = [label for label, pattern in TITLE_RULES if pattern.search(text)]
-    if matches:
-        return TitleDecision(True, 0.75, "Title matched: " + ", ".join(matches), "heuristic")
+    direct_matches = [label for label, pattern in DIRECT_TITLE_RULES if pattern.search(text)]
+    if direct_matches:
+        return TitleDecision(True, 0.95, "Direct title match: " + ", ".join(direct_matches), "rule-direct")
+    weak_matches = [label for label, pattern in WEAK_TITLE_RULES if pattern.search(text)]
+    if weak_matches:
+        return TitleDecision(True, 0.65, "Weak title match: " + ", ".join(weak_matches), "rule-weak")
     return TitleDecision(False, 0.55, "Title does not explicitly indicate high-velocity/runaway stars.", "heuristic")
 
 

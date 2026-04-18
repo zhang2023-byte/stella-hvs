@@ -103,9 +103,14 @@ def classify_candidates(
     included: list[dict[str, Any]] = []
     filtered = 0
     errors = 0
+    direct_rule_included = 0
+    weak_rule_candidates = 0
+    weak_llm_reviewed = 0
+    weak_llm_included = 0
 
     llm: LLMTitleClassifier | None = None
-    if config.classifier == "llm":
+    use_llm = config.classifier == "llm" or (config.classifier == "rules" and config.llm_review_weak)
+    if use_llm:
         api_key = load_llm_api_key(config.llm_api_key)
         if not api_key:
             raise RuntimeError(
@@ -122,6 +127,7 @@ def classify_candidates(
         started = datetime.now()
         decisions: dict[str, TitleDecision] = {}
         error: str | None = None
+        batch_weak_llm_reviewed = 0
         try:
             if config.classifier == "llm":
                 assert llm is not None
@@ -131,6 +137,43 @@ def classify_candidates(
                     paper_id(paper): heuristic_title_decision(str(paper.get("title") or ""))
                     for paper in batch
                 }
+                if config.llm_review_weak:
+                    weak_batch = [
+                        paper
+                        for paper in batch
+                        if decisions.get(paper_id(paper), TitleDecision(False, 0, "", "")).label == "rule-weak"
+                    ]
+                    if weak_batch:
+                        assert llm is not None
+                        batch_weak_llm_reviewed = len(weak_batch)
+                        weak_llm_reviewed += len(weak_batch)
+                        llm_decisions = llm.classify_batch(weak_batch)
+                        for paper in weak_batch:
+                            arxiv_id = paper_id(paper)
+                            rule_decision = decisions[arxiv_id]
+                            llm_decision = llm_decisions.get(arxiv_id)
+                            if llm_decision is None:
+                                decisions[arxiv_id] = TitleDecision(
+                                    False,
+                                    0.0,
+                                    rule_decision.reason + " LLM did not return a decision for this weak match.",
+                                    "rule-weak-llm-missing",
+                                )
+                            elif llm_decision.include:
+                                weak_llm_included += 1
+                                decisions[arxiv_id] = TitleDecision(
+                                    True,
+                                    llm_decision.confidence,
+                                    rule_decision.reason + " LLM confirmed: " + llm_decision.reason,
+                                    "rule-weak-llm-confirmed",
+                                )
+                            else:
+                                decisions[arxiv_id] = TitleDecision(
+                                    False,
+                                    llm_decision.confidence,
+                                    rule_decision.reason + " LLM rejected: " + llm_decision.reason,
+                                    "rule-weak-llm-rejected",
+                                )
         except Exception as exc:
             errors += len(batch)
             error = f"{type(exc).__name__}: {exc}"
@@ -143,8 +186,10 @@ def classify_candidates(
                     "run_id": run_id,
                     "month": month.slug,
                     "classifier": config.classifier,
-                    "model": config.llm_model if config.classifier == "llm" else None,
+                    "llm_review_weak": config.llm_review_weak,
+                    "model": config.llm_model if use_llm else None,
                     "batch_size": len(batch),
+                    "weak_llm_reviewed": batch_weak_llm_reviewed,
                     "error": error,
                     "duration_seconds": round((datetime.now() - started).total_seconds(), 3),
                 },
@@ -162,14 +207,24 @@ def classify_candidates(
                 "label": decision.label,
             }
             if decision.include:
+                if decision.label == "rule-direct":
+                    direct_rule_included += 1
+                elif decision.label.startswith("rule-weak"):
+                    weak_rule_candidates += 1
                 included.append(paper)
             else:
+                if decision.label.startswith("rule-weak"):
+                    weak_rule_candidates += 1
                 filtered += 1
 
     return included, {
         "classifier_included": len(included),
         "classifier_filtered": filtered,
         "classifier_errors": errors,
+        "direct_rule_included": direct_rule_included,
+        "weak_rule_candidates": weak_rule_candidates,
+        "weak_llm_reviewed": weak_llm_reviewed,
+        "weak_llm_included": weak_llm_included,
     }
 
 
@@ -367,9 +422,10 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
             "search_mode": config.search_mode,
             "min_score": config.min_score,
             "classifier": config.classifier,
-            "llm_base_url": config.llm_base_url if config.classifier == "llm" else None,
-            "llm_model": config.llm_model if config.classifier == "llm" else None,
-            "llm_batch_size": config.llm_batch_size if config.classifier == "llm" else None,
+            "llm_review_weak": config.llm_review_weak,
+            "llm_base_url": config.llm_base_url if config.classifier == "llm" or config.llm_review_weak else None,
+            "llm_model": config.llm_model if config.classifier == "llm" or config.llm_review_weak else None,
+            "llm_batch_size": config.llm_batch_size if config.classifier == "llm" or config.llm_review_weak else None,
             "use_brief": config.use_brief,
         },
     )

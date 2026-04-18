@@ -100,12 +100,17 @@ def build_parser() -> argparse.ArgumentParser:
         "--classifier",
         default=DEFAULT_CLASSIFIER,
         choices=["llm", "rules", "none"],
-        help="How to confirm candidate relevance before brief. Default: llm.",
+        help="How to confirm candidate relevance before brief. Default: rules.",
     )
     parser.add_argument("--llm-api-key", default=os.environ.get("LLM_API_KEY") or os.environ.get("OPENAI_API_KEY") or os.environ.get("DEEPXIV_AGENT_API_KEY"))
     parser.add_argument("--llm-base-url", default=os.environ.get("LLM_BASE_URL") or os.environ.get("OPENAI_BASE_URL") or os.environ.get("DEEPXIV_AGENT_BASE_URL") or DEFAULT_LLM_BASE_URL)
     parser.add_argument("--llm-model", default=os.environ.get("LLM_MODEL") or os.environ.get("OPENAI_MODEL") or os.environ.get("DEEPXIV_AGENT_MODEL") or DEFAULT_LLM_MODEL)
     parser.add_argument("--llm-batch-size", type=int, default=DEFAULT_LLM_BATCH_SIZE)
+    parser.add_argument(
+        "--llm-review-weak",
+        action="store_true",
+        help="With --classifier rules, send weak rule matches to the LLM for confirmation.",
+    )
     parser.add_argument(
         "--sleep",
         type=float,
@@ -150,6 +155,7 @@ def main() -> int:
         llm_base_url=args.llm_base_url,
         llm_model=args.llm_model,
         llm_batch_size=args.llm_batch_size,
+        llm_review_weak=args.llm_review_weak,
         search_sleep_seconds=args.sleep,
         brief_sleep_seconds=args.brief_sleep,
         use_brief=not args.no_brief,

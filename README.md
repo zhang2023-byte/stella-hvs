@@ -1,6 +1,6 @@
 # High-Velocity Star Literature Workflow
 
-This workspace collects monthly arXiv/DeepXiv literature notes for high-velocity star related research. The current default workflow is DeepXiv-first: use DeepXiv search for broad recall, split searches by arXiv category, deduplicate locally, use an LLM to judge title relevance, and fetch DeepXiv brief only for papers that pass the title check.
+This workspace collects monthly arXiv/DeepXiv literature notes for high-velocity star related research. The current default workflow is DeepXiv-first: use DeepXiv search for broad recall, split searches by arXiv category, deduplicate locally, use fast title rules to classify direct and weak relevance, and fetch DeepXiv brief only for papers that pass title triage. Weak rule matches can optionally be reviewed by an LLM.
 
 ## Directory Layout
 
@@ -17,7 +17,7 @@ stella-workspace/
     models.py                  # Shared dataclasses
     deepxiv_client.py          # DeepXiv SDK wrapper and token loading
     arxiv_client.py            # Optional arXiv API fallback client
-    title_classifier.py        # LLM title classifier and rule-based test classifier
+    title_classifier.py        # Direct/weak title rules plus optional LLM review
     pipeline.py                # Search, dedupe, classify, brief, render orchestration
     markdown.py                # Monthly note and index rendering
     filters.py                 # Category/score helpers and legacy rule helpers
@@ -37,7 +37,7 @@ Run commands in the project conda environment:
 conda activate stella-env
 ```
 
-Use the project-local `.env` file for the DeepXiv token and LLM title-classifier settings. The file is ignored by Git, so local secrets stay out of commits.
+Use the project-local `.env` file for the DeepXiv token and optional LLM title-review settings. The file is ignored by Git, so local secrets stay out of commits.
 
 ```env
 DEEPXIV_TOKEN=
@@ -98,17 +98,25 @@ flowchart TD
     D --> E["Merge results"]
     E --> F["Deduplicate by arXiv ID"]
     F --> G["Optional score filter"]
-    G --> H["Batch titles into LLM classifier"]
-    H --> I{"LLM says relevant?"}
-    I -- "No" --> J["Discard from monthly note"]
+    G --> H["Apply direct/weak title rules"]
+    H --> I{"Direct match?"}
     I -- "Yes" --> K["Fetch DeepXiv brief"]
+    I -- "No" --> J{"Weak match?"}
+    J -- "No" --> X["Discard from monthly note"]
+    J -- "Yes, default" --> K
+    J -- "Yes, with --llm-review-weak" --> R["Ask LLM to review weak match"]
+    R --> S{"LLM confirms?"}
+    S -- "Yes" --> K
+    S -- "No" --> X
     K --> L["Render monthly Markdown"]
     L --> M["Append JSONL run logs"]
 ```
 
-The LLM classifier only sees title and category. It is asked to include papers likely about hypervelocity stars, high-velocity stars, runaway stars, OB runaways, unbound/ejected/escaping stars, stellar escapers, walkaway stars, or mechanisms/observations/kinematics of those populations. Papers about compact stars, neutron stars, impacts, cratering, generic binary stars, AGN simulations, or ordinary stellar populations should be excluded unless the title clearly suggests the target topic.
+Default title triage is rule-based and does not call an LLM. Direct rules include titles that explicitly mention hypervelocity/high-velocity stars, runaway stars, unbound/escaping/ejected stars, stellar escapers, or walkaway stars. Weak rules catch likely mechanism or proxy topics such as stellar ejection mechanisms, potential/cluster escapers, bow shocks, Galactic-center ejection language, stellar interactions in dense systems, and unusual stellar kinematics.
 
-DeepXiv brief is fetched only after the LLM returns `include=true`. This keeps DeepXiv brief usage focused on likely relevant papers.
+With `--llm-review-weak`, direct rule matches are still accepted immediately, but weak rule matches are batched into the LLM for confirmation. This keeps the default run fast while allowing a higher-precision hybrid mode when needed.
+
+DeepXiv brief is fetched only after title triage returns `include=true`. This keeps DeepXiv brief usage focused on likely relevant papers.
 
 ## Usage
 
@@ -123,7 +131,7 @@ Run a single month:
 ```bash
 conda run -n stella-env python /Users/willzhang/Documents/MyProject/Stella_Project/stella-workspace/scripts/fetch_high_velocity_lit.py \
   --source deepxiv \
-  --classifier llm \
+  --classifier rules \
   --start-year 2026 \
   --start-month 3 \
   --end-year 2026 \
@@ -131,21 +139,7 @@ conda run -n stella-env python /Users/willzhang/Documents/MyProject/Stella_Proje
   --max-results 20
 ```
 
-Run without fetching DeepXiv brief, useful for testing search and LLM classification:
-
-```bash
-conda run -n stella-env python /Users/willzhang/Documents/MyProject/Stella_Project/stella-workspace/scripts/fetch_high_velocity_lit.py \
-  --source deepxiv \
-  --classifier llm \
-  --start-year 2026 \
-  --start-month 3 \
-  --end-year 2026 \
-  --end-month 3 \
-  --max-results 20 \
-  --no-brief
-```
-
-Use the rule-based classifier only for offline sanity checks:
+Run rules-only without fetching DeepXiv brief, useful for testing search and title triage:
 
 ```bash
 conda run -n stella-env python /Users/willzhang/Documents/MyProject/Stella_Project/stella-workspace/scripts/fetch_high_velocity_lit.py \
@@ -155,15 +149,30 @@ conda run -n stella-env python /Users/willzhang/Documents/MyProject/Stella_Proje
   --start-month 3 \
   --end-year 2026 \
   --end-month 3 \
-  --max-results 5 \
+  --max-results 20 \
   --no-brief
+```
+
+Use the hybrid mode to send only weak rule matches to the LLM:
+
+```bash
+conda run -n stella-env python /Users/willzhang/Documents/MyProject/Stella_Project/stella-workspace/scripts/fetch_high_velocity_lit.py \
+  --source deepxiv \
+  --classifier rules \
+  --llm-review-weak \
+  --start-year 2026 \
+  --start-month 3 \
+  --end-year 2026 \
+  --end-month 3 \
+  --max-results 20
 ```
 
 ## Important Options
 
 ```text
 --source deepxiv|arxiv       Candidate search backend. Default: deepxiv.
---classifier llm|rules|none  Title relevance check. Default: llm.
+--classifier llm|rules|none  Title relevance check. Default: rules.
+--llm-review-weak            With rules, send weak rule matches to the LLM.
 --categories A,B,C           Category fan-out for DeepXiv search.
 --max-results N              Top N results per query/category.
 --min-score X                Optional DeepXiv score floor. Default: disabled.
@@ -181,10 +190,11 @@ Each monthly Markdown note includes:
 ```text
 - date range
 - run id and time
-- search source, categories, LLM model
+- search source, categories, title classifier mode
 - raw unique candidates and title-classifier pass count
 - confirmed papers with arXiv link, PDF link, score, matched queries/categories
-- LLM decision label, confidence, and reason
+- classifier decision label, confidence, and reason
+- direct-rule, weak-rule, and weak-LLM review counts
 - DeepXiv brief and arXiv abstract
 - per-query/category search summary
 ```
@@ -207,8 +217,8 @@ With default DeepXiv-first settings:
 ```text
 Search calls per month = number_of_queries * number_of_categories
 Default = 8 * 3 = 24 DeepXiv search calls/month
-Brief calls per month = number of papers accepted by the LLM
-LLM calls per month = ceil(unique_candidates / llm_batch_size)
+Brief calls per month = number of papers accepted by title triage
+LLM calls per month = 0 by default, or ceil(weak_rule_candidates / llm_batch_size) with --llm-review-weak
 ```
 
 For the 2025 plus 2026-to-date job, the DeepXiv search call count is approximately:
@@ -217,8 +227,8 @@ For the 2025 plus 2026-to-date job, the DeepXiv search call count is approximate
 16 months * 8 queries * 3 categories = 384 search calls
 ```
 
-Brief calls are much lower because they are only made after title classification.
+Brief calls are much lower because they are only made after title triage.
 
 ## Notes On Accuracy
 
-The current classifier is title-only by design. This saves DeepXiv brief quota, but it can miss papers whose titles are vague and only reveal relevance in the abstract. To increase recall, raise `--max-results`, add more query phrases, or change the classifier prompt in `title_classifier.py` to be more inclusive. To reduce false positives, lower `--max-results`, add a score floor with `--min-score`, or make the classifier prompt stricter.
+The current classifier is title-only by design. Default rules are much faster than full LLM review, but they can miss papers whose titles are vague and only reveal relevance in the abstract. Direct rules prioritize high precision. Weak rules increase recall for mechanism/proxy topics, and `--llm-review-weak` can filter those weak matches when precision matters. To increase recall, raise `--max-results`, add more query phrases, or expand weak rules in `title_classifier.py`. To reduce false positives, tighten weak rules, enable `--llm-review-weak`, lower `--max-results`, or add a score floor with `--min-score`.
