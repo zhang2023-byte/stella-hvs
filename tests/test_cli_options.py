@@ -57,6 +57,11 @@ class CliOptionParsingTest(unittest.TestCase):
         with self.assertRaises(Exception):
             cli.parse_bool("maybe")
 
+    def test_default_max_results_is_quota_conservative(self) -> None:
+        parser = cli.build_parser()
+        args = parser.parse_args(["--from", "2026-03"])
+        self.assertEqual(args.max_results, 20)
+
 
 if __name__ == "__main__":
     unittest.main()

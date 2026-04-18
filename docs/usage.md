@@ -43,7 +43,7 @@ Useful options:
 --to DATE                    End: YYYY-MM-DD, YYYY-MM, YYYY, or none. Default: today.
 --brief True|False           Fetch DeepXiv brief. Default: True.
 --llm-review True|False      With rules, send weak matches to the LLM. Default: False.
---max-results N              Results per query/category. Default: 50.
+--max-results N              Results per query/category. Default: 20.
 --categories A,B,C           arXiv categories. Default: astro-ph.GA,astro-ph.SR,astro-ph.IM.
 --min-score X                Optional DeepXiv score floor. Default: disabled.
 --progress True|False        Show terminal progress bars. Default: True.
@@ -58,7 +58,7 @@ Defaults:
 --classifier        rules
 --llm-review        False
 --brief             True
---max-results       50 per query/category
+--max-results       20 per query/category
 --categories        astro-ph.GA,astro-ph.SR,astro-ph.IM
 --min-score         disabled
 --search-mode       hybrid
@@ -74,6 +74,10 @@ At the start of a terminal run, the script prints the resolved parameter set,
 including defaults. It writes to the terminal when available so `conda run`
 still shows the status output. Secret values are never printed; tokens and API
 keys are shown only as `configured` or `not configured`.
+
+The default `--max-results 20` is intentionally modest because high-velocity
+star papers are a relatively small field and DeepXiv quota appears to scale
+with returned records. Increase it only when doing a broader recall pass.
 
 `--classifier llm` uses pure LLM classification. `--llm-review True` only has
 an effect with `--classifier rules`; it sends weak rule matches to the LLM and
