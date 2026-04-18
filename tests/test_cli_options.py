@@ -62,6 +62,23 @@ class CliOptionParsingTest(unittest.TestCase):
         args = parser.parse_args(["--from", "2026-03"])
         self.assertEqual(args.max_results, 20)
 
+    def test_default_categories_focus_on_galactic_astrophysics(self) -> None:
+        parser = cli.build_parser()
+        args = parser.parse_args(["--from", "2026-03"])
+        self.assertEqual(args.categories, "astro-ph.GA")
+
+    def test_default_queries_avoid_singular_plural_duplicates(self) -> None:
+        self.assertEqual(
+            cli.load_queries(None, []),
+            [
+                "hypervelocity stars",
+                "high-velocity stars",
+                "runaway stars",
+                "unbound stars",
+                "escaping stars",
+            ],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

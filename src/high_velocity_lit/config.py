@@ -2,19 +2,14 @@
 
 DEFAULT_QUERIES = [
     "hypervelocity stars",
-    "hypervelocity star",
-    "high velocity stars",
     "high-velocity stars",
     "runaway stars",
-    "OB runaway stars",
     "unbound stars",
     "escaping stars",
 ]
 
 DEFAULT_CATEGORIES = [
     "astro-ph.GA",
-    "astro-ph.SR",
-    "astro-ph.IM",
 ]
 
 DEFAULT_SEARCH_MODE = "hybrid"
