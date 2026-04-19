@@ -135,7 +135,7 @@ LLM API environment variables as weak-match LLM review.
 Assess one monthly note:
 
 ```bash
-conda run -n stella-env python scripts/annotate_catalog_data.py --from 2026-03
+conda run -n stella-env python scripts/annotate_catalog_data.py --on 2026-03
 ```
 
 Assess a range:
@@ -146,17 +146,26 @@ conda run -n stella-env python scripts/annotate_catalog_data.py \
   --to 2025-06
 ```
 
-You can also pass explicit JSON paths:
+When `--to` is omitted, `--from` runs from that date/month/year through today.
+For example, `--from 2025-01` selects all note months from January 2025 through
+the current month.
+
+Assess several non-contiguous months:
 
 ```bash
 conda run -n stella-env python scripts/annotate_catalog_data.py \
-  notes/2026-03/2026-03.json
+  --on 2025-01 \
+  --on 2025-03
 ```
 
-For this annotation script, omitted `--to` selects the same period as `--from`:
-`--from 2026-03` selects March 2026, while `--from 2025` selects all 2025 note
-months. Existing `catalog_assessment` fields are skipped unless `--force True`
-is set.
+`--on` also accepts a quoted list:
+
+```bash
+conda run -n stella-env python scripts/annotate_catalog_data.py \
+  --on 'list:[2025-01, 2025-03, 2026-02]'
+```
+
+Existing `catalog_assessment` fields are skipped unless `--force True` is set.
 
 If DeepXiv returns a daily limit error, completed months are kept. The script
 writes a partial summary to `logs/partial_<run_id>.json`, appends it to

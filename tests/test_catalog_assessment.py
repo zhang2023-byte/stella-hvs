@@ -115,14 +115,20 @@ class CatalogAssessmentTest(unittest.TestCase):
             ],
         )
 
-    def test_omitted_to_selects_same_period_as_from(self) -> None:
+    def test_omitted_to_defaults_to_today(self) -> None:
+        self.assertEqual(annotate_cli.infer_period_end("2025-03", today=date(2026, 4, 19)), date(2026, 4, 19))
+
+    def test_on_selection_supports_lists_and_repeated_values(self) -> None:
         self.assertEqual(
-            annotate_cli.infer_period_end("2025-03", today=date(2026, 4, 19)),
-            date(2025, 3, 31),
+            annotate_cli.parse_on_values(["2025-01", "list:[2025-03, 2025-06]", "2026-01,2026-04"]),
+            ["2025-01", "2025-03", "2025-06", "2026-01", "2026-04"],
         )
         self.assertEqual(
-            annotate_cli.infer_period_end("2025", today=date(2026, 4, 19)),
-            date(2025, 12, 31),
+            annotate_cli.json_paths_from_months(Path("/tmp/notes"), ["2025-01", "2025-03"]),
+            [
+                Path("/tmp/notes") / "2025-01" / "2025-01.json",
+                Path("/tmp/notes") / "2025-03" / "2025-03.json",
+            ],
         )
 
     def test_annotate_record_adds_catalog_assessment_and_markdown(self) -> None:
