@@ -1,0 +1,314 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2024-11",
+  "date_from": "2024-11-01",
+  "date_to": "2024-11-30",
+  "run": {
+    "run_id": "20260419T213844",
+    "started_at": "2026-04-19T21:38:44"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2024-11",
+    "date_from": "2024-11-01",
+    "date_to": "2024-11-30",
+    "raw_unique": 34,
+    "relevant_count": 2,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 34,
+    "classifier_included": 2,
+    "classifier_filtered": 32,
+    "classifier_errors": 0,
+    "direct_rule_included": 2,
+    "weak_rule_candidates": 1,
+    "weak_llm_reviewed": 1,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 2,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 165,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 444,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 166,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 165,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 166,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2411.16202",
+      "title": "Material mixing in pulsar wind nebulae of massive runaway stars",
+      "authors": [
+        "D. M.-A. Meyer",
+        "D. F. Torres",
+        "D. F. Torres"
+      ],
+      "author_names": "D. M.-A. Meyer D. F. Torres D. F. Torres",
+      "categories": [
+        "astro-ph.SR",
+        "astro-ph.GA",
+        "astro-ph.HE"
+      ],
+      "published_at": "2024-11-25 00:00:00",
+      "updated_at": "2024-11-25 09:00:02",
+      "links": {
+        "abs": "https://arxiv.org/abs/2411.16202",
+        "pdf": "https://arxiv.org/pdf/2411.16202"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "In this study we quantitatively examine the manner pulsar wind, supernova ejecta and defunct stellar wind materials distribute and melt together into plerions. We performed 2.5D MHD simulations of the entire evolution of their stellar surroundings and different scenarios are explored, whether the star dies as a red supergiant and Wolf Rayet supernova progenitors, and whether it moved with velocity 20 km/s or 40 km/s through the ISM. Within the post explosion, early 10 kyr, the H burning products rich red supergiant wind only mixes by <= 20 per cent, due to its dense circumstellar medium filling the progenitor bow shock trail, still unaffected by the supernova blastwave. Wolf Rayet materials, enhanced in C, N, O elements, distribute circularly for the 35 Mo star moving at 20 km/s and oblongly at higher velocities, mixing efficiently up to 80 per cent. Supernova ejecta, filled with Mg, Si, Ca, Ti and Fe, remain spherical for longer times at 20 km/s but form complex patterns at higher progenitor speeds due to earlier interaction with the bow shock, in which they mix more efficiently. The pulsar wind mixing is more efficient for Wolf Rayet (25 per cent) than red supergiant progenitors (20 per cent). This work reveals that the past evolution of massive stars and their circumstellar environments critically shapes the internal distribution of chemical elements on plerionic supernova remnants, and, therefore, governs the origin of the various emission mechanisms at work therein. This is essential for interpreting multi-frequency observations of atomic and molecular spectral lines, such as in optical, infrared, and soft X rays."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 24.296377
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: runaway stars"
+      },
+      "deepxiv": {
+        "score": 9.704442,
+        "best_score": 24.296377,
+        "search_keywords": null,
+        "citations": "0"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] 2.5D MHD simulations reveal that chemical mixing in pulsar wind nebulae is highly dependent on progenitor evolution and velocity: red supergiant winds mix ≤20% due to dense circumstellar medium, while Wolf-Rayet winds mix up to 80% due to efficient interaction with bow shocks; supernova ejecta remain spherical at low velocities but form complex, mixed patterns at high velocities due to early bow shock interaction; pulsar wind mixing is more efficient in Wolf-Rayet progenitors (25%) than red supergiants (20%), demonstrating that pre-explosion stellar history and motion critically determine elemental distribution in plerions, with direct implications for interpreting multi-wavelength spectral emissions.",
+        "keywords": [
+          "aggregated circumstellar mixing",
+          "bow shock interaction",
+          "chemical composition evolution",
+          "supernova ejecta dynamics",
+          "progenitor phase dependence"
+        ],
+        "citations": "0",
+        "published_at": "2024-11-25T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2411.16202",
+          "src_url": "https://arxiv.org/pdf/2411.16202",
+          "title": "Material mixing in pulsar wind nebulae of massive runaway stars"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T213844"
+      },
+      "source_fields": {
+        "pg_id": 1041028,
+        "venue": "Monthly notices of the Royal Astronomical Society",
+        "journal_name": "Monthly Notices of the Royal Astronomical Society",
+        "status": "extracted",
+        "token_count": 23444,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 04:24:19",
+        "sections_text": "Method: The paper proposes a three-step simulation method that first models the progenitor's stellar wind interaction, then evolves a 1D supernova blastwave to capture swept-up material, and finally maps this solution into a 2.5D circumstellar medium where a pulsar wind is injected and evolved, using passive scalar tracers to track the distribution of stellar winds and ejecta. Results: The simulations show that in a runaway 20M⊙ star with 20 km s⁻¹ velocity, the supernova remnant develops a Napoleon's hat shape with a ring of ejecta and a pulsar wind nebula exhibiting oblong morphology and strong Rayleigh-Taylor instabilities, while at 40 km s⁻¹ it forms a drop-like structure resembling Cygnus Loop, and for a 35M⊙ Wolf-Rayet progenitor, the pulsar wind nebula adopts a diamond shape with enhanced mixing during reverberation, with key performance metrics including instability development at 5.0 kyr and significant deviation from Komissarov & Lyubarsky (2004) predictions. Conclusion: This study demonstrates that the prior stellar and circumstellar evolution of massive runaway stars profoundly influences the spatial distribution, mixing efficiency, and chemical composition of materials in pulsar wind nebulae within supernova remnants. Discussion: The 2.5-dimensional model produces artificial jet-like features due to axisymmetry and employs a non-relativistic, low-magnetisation pulsar wind, leading to reduced shock compression and altered dynamics compared to full 3D simulations with realistic relativistic and magnetic conditions. Introduction: This paper introduces a novel numerical framework that incorporates the detailed chemical composition of stellar winds and supernova ejecta from different evolutionary phases of massive stars, addressing the lack of chemical mixing modeling in existing pulsar wind nebula simulations to more accurately reproduce the physical and chemical evolution of these environments.",
+        "highlight": {
+          "abstract": [
+            "This work reveals that the past evolution of massive <em>stars</em> and their circumstellar environments critically shapes the internal distribution of chemical elements on plerionic supernova remnants, and, therefore"
+          ],
+          "title": [
+            "Material mixing in pulsar wind nebulae of massive runaway <em>stars</em>"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.95,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Paper presents 2.5D MHD simulations of pulsar wind nebulae around runaway stars. No observational data, source IDs, or candidate lists mentioned. Focus is on theoretical modeling of mixing processes.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:41:57"
+      }
+    },
+    {
+      "arxiv_id": "2411.09278",
+      "title": "A Recent Supermassive Black Hole Binary in the Galactic Center Unveiled by the Hypervelocity Stars",
+      "authors": [
+        "Chunyang Cao (PKU)",
+        "Fukun Liu (PKU",
+        "KIAA)",
+        "Shuo Li (NAOC)",
+        "Xian Chen (PKU",
+        "KIAA)",
+        "Ke Wang (KIAA)"
+      ],
+      "author_names": "Chunyang Cao (PKU) Fukun Liu (PKU KIAA) Shuo Li (NAOC) Xian Chen (PKU KIAA) Ke Wang (KIAA)",
+      "categories": [
+        "astro-ph.HE",
+        "astro-ph.GA"
+      ],
+      "published_at": "2024-11-14 00:00:00",
+      "updated_at": "2025-03-26 02:16:15",
+      "links": {
+        "abs": "https://arxiv.org/abs/2411.09278",
+        "pdf": "https://arxiv.org/pdf/2411.09278"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "When a binary of early-type stars from the young stellar populations in the Galactic center (GC) region is scattered to the vicinity of the supermassive black hole (SMBH) Sgr~$\\\\\\\\rm{A}^{*}$, one of the components would be tidally ejected as an early-type hypervelocity star (HVS) and the counterpart would be captured on a tight orbit around Sgr~$\\\\\\\\rm{A}^{*}$. Dozens of B-type HVSs moving faster than the Galactic escape speed have been discovered in the Galactic halo and are produced most likely by the SMBH Sgr~$\\\\\\\\rm{A}^{*}$. However, the velocity distribution and in particular the deficit of the HVSs above $700\\\\\\\\, \\\\\\\\rm{km\\\\\\\\, s^{-1}}$ is seriously inconsistent with the expectations of the present models. Here we show that the high-velocity deficit is due to the deficiency in close interactions of stars with the SMBH Sgr~$\\\\\\\\rm{A}^{*}$, because an orbiting intermediate-mass black hole (IMBH) of about 15,000 Solar mass kicked away slowly approaching stars 50--250 million years ago. The SMBH-IMBH binary formed probably after the merger of the Milky Way with the Gaia-Sausage-Enceladus dwarf galaxy, and coalesced about 10 million years ago, leading to a gravitational recoil of Sgr~$\\\\\\\\rm{A}^{*}$ at a velocity of 0.3--0.5$\\\\\\\\, \\\\\\\\rm{km\\\\\\\\, s^{-1}}$ and to a change of the HVS ejection scenarios. The SMBH-IMBH binary scenario predicts the formation of the S-star cluster at the GC with the distribution of the orbital size and stellar ages that are well consistent with the observations."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 26.622957
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars"
+      },
+      "deepxiv": {
+        "score": 26.622957,
+        "best_score": 26.622957,
+        "search_keywords": null,
+        "citations": "1"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] A dynamical model proposes that a past intermediate-mass black hole (IMBH) binary with a 100-au semimajor axis, formed during the Milky Way's merger with the Gaia-Sausage-Enceladus dwarf galaxy, blocked close stellar encounters with Sgr A*. This blocking effect suppresses tidal separations of compact binaries at large orbital distances, explaining the observed deficit of hypervelocity stars (HVSs) above 700 km/s—specifically, the absence of HVSs with velocities >700 km/s despite theoretical predictions of 40–60% such stars. The model reproduces the observed age distribution of young stars in the Galactic center and predicts the formation of the S-star cluster with orbital and age distributions consistent with observations.",
+        "keywords": [
+          "black hole binary dynamics",
+          "hypervelocity star deficit",
+          "intermediate-mass black hole",
+          "gravitational slingshot blocking",
+          "stellar encounter suppression"
+        ],
+        "citations": "1",
+        "published_at": "2024-11-14T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2411.09278",
+          "src_url": "https://arxiv.org/pdf/2411.09278",
+          "title": "A Recent Supermassive Black Hole Binary in the Galactic Center Unveiled by the Hypervelocity Stars"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T213844"
+      },
+      "source_fields": {
+        "pg_id": 1050028,
+        "venue": "Astrophysical Journal Letters",
+        "journal_name": "The Astrophysical Journal Letters",
+        "status": "extracted",
+        "token_count": 25751,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-23 13:54:04",
+        "sections_text": "Model: The paper proposes a model in which a hard supermassive black hole binary (SMBHB) in the Galactic Center continuously ejects hypervelocity stars (HVSs) through tidal disruption of stellar binaries and slingshot interactions with distant stars, driven by energy and angular momentum loss via gravitational wave radiation and dynamical friction, to explain the observed long-term, continuous ejection of HVSs over 200 million years. Methods: The paper proposes a Monte Carlo-based method to simulate the formation and evolution of hypervelocity stars (HVSs) and captured stars by modeling the gravitational interactions between stellar binaries and a supermassive black hole (SMBH) in the Milky Way, tracking their orbital dynamics, ejection, or capture, and propagating HVSs through the galaxy's gravitational potential to assess their survival and detectability. Results: Our SMBHB model in the empty-loss-cone regime successfully reproduces the observed velocity and Galactocentric distance distributions of halo hypervelocity stars, with only 2.5% of stars exceeding 700 km s⁻¹—consistent with observations and significantly lower than predictions from alternative models—best fitting to an SMBHB with a mass ratio of 2.9×10⁻³ and eccentricity of 0.4 at 500 Myr ago. Discussion: The model shows that late B-type halo HVSs originate from tidal separations of binaries in the Galactic Center's CWD, with a unique velocity upper truncation at ~700 km/s indicating a past SMBHB of mass ratio ~3×10⁻³ that coalesced ~10 Myr ago, and the detection of S5-HVS1 at 1755 km/s and 8.5 kpc strongly supports a CWD origin despite age uncertainties. Experiments: Extensive scattering simulations show that SMBHB-stellar binary encounters produce a high probability of binary disruption or significant energy gain via slingshot effects, with post-interaction binary semimajor axis ratios $\\\\zeta \\\\equiv a_{*}'/a_{*}$ distributed according to tidal heating, and model fits to HVS and S-star observations constrain the SMBHB population to favor low-mass ratios and large pericenter distances. Introduction: This paper proposes a novel model in which an evolving supermassive black hole binary (SMBHB) at the Galactic Center interacts with young stellar populations in the nuclear star cluster, producing late B-type hypervelocity stars via both tidal separations and slingshot ejections, thereby explaining the observed deficit of HVSs above 700 km s⁻¹ by accounting for the blocking effect of the dense stellar environment. A Recent Supermassive Black Hole Binary in the Galactic Center Unveiled by the Hypervelocity Stars: This section presents a discovery of a supermassive black hole binary in the Galactic Center, inferred from the dynamics of hypervelocity stars.",
+        "highlight": {
+          "abstract": [
+            "When a binary of early-type <em>stars</em> from the young stellar populations in the Galactic center (GC) region is scattered to the vicinity of the supermassive black hole (SMBH) Sgr~$\\\\\\\\rm{A}^{*}$, one of the",
+            "components would be tidally ejected as an early-type <em>hypervelocity</em> star (HVS) and the counterpart would be captured on a tight orbit around Sgr~$\\\\\\\\rm{A}^{*}$.",
+            "Here we show that the high-velocity deficit is due to the deficiency in close interactions of <em>stars</em> with the SMBH Sgr~$\\\\\\\\rm{A}^{*}$, because an orbiting intermediate-mass black hole (IMBH) of about 15,000",
+            "Solar mass kicked away slowly approaching <em>stars</em> 50--250 million years ago."
+          ],
+          "title": [
+            "A Recent Supermassive Black Hole Binary in the Galactic Center Unveiled by the <em>Hypervelocity</em> <em>Stars</em>"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.9,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Paper presents a theoretical dynamical model to explain the observed deficit of hypervelocity stars above 700 km/s. References existing discoveries of HVSs but does not present new observational data, candidate lists, or analysis of object-level measurements.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:41:57"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 2,
+    "catalog_count": 0,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:41:57"
+  }
+}

@@ -1,0 +1,305 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2020-07",
+  "date_from": "2020-07-01",
+  "date_to": "2020-07-31",
+  "run": {
+    "run_id": "20260419T215133",
+    "started_at": "2026-04-19T21:51:33"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2020-07",
+    "date_from": "2020-07-01",
+    "date_to": "2020-07-31",
+    "raw_unique": 38,
+    "relevant_count": 2,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 38,
+    "classifier_included": 2,
+    "classifier_filtered": 36,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 2,
+    "weak_llm_reviewed": 2,
+    "weak_llm_included": 1,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 1
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 188,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 440,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 190,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 189,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 189,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2007.03350",
+      "title": "A proto-helium white dwarf stripped by a substellar companion via common-envelope ejection -- Uncovering the true nature of a candidate hypervelocity B-type star",
+      "authors": [
+        "Andreas Irrgang",
+        "Stephan Geier",
+        "Ulrich Heber",
+        "Thomas Kupfer",
+        "Kareem El-Badry",
+        "Steven Bloemen"
+      ],
+      "author_names": "Andreas Irrgang Stephan Geier Ulrich Heber Thomas Kupfer Kareem El-Badry Steven Bloemen",
+      "categories": [
+        "astro-ph.SR",
+        "astro-ph.GA",
+        "astro-ph.HE"
+      ],
+      "published_at": "2020-07-07 00:00:00",
+      "updated_at": "2021-06-19 14:57:28",
+      "links": {
+        "abs": "https://arxiv.org/abs/2007.03350",
+        "pdf": "https://arxiv.org/pdf/2007.03350"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "In the past, SDSS J160429.12+100002.2 was spectroscopically classified as a blue horizontal branch (BHB) star. Assuming a luminosity that is characteristic of BHB stars, the object's radial velocity and proper motions from Gaia Early Data Release 3 would imply that its Galactic rest-frame velocity exceeds its local escape velocity. Consequently, the object would be considered a hypervelocity star, which would prove particularly interesting because its Galactic trajectory points in our direction. However, based on the spectroscopic analysis of follow-up observations, we show that the object is actually a short-period ($P \\\\\\\\approx 3.4$ h) single-lined spectroscopic binary system with a visible B-type star (effective temperature $T_{\\\\\\\\mathrm{eff}} = 15\\\\\\\\,840\\\\\\\\pm160$ K and surface gravity $\\\\\\\\log(g) = 4.86\\\\\\\\pm0.04$) that is less luminous than typical BHB stars. Accordingly, the distance of the system is lower than originally thought, which renders its Galactic orbit bound to the Galaxy. Nevertheless, it is still an extreme halo object on a highly retrograde orbit. The abundances of He, C, N, O, Ne, Mg, Al, Si, S, and Ca are subsolar by factors from 3 to more than 100, while Fe is enriched by a factor of about 6. This peculiar chemical composition pattern is most likely caused by atomic diffusion processes. Combining constraints from astrometry, orbital motion, photometry, and spectroscopy, we conclude that the visible component is an unevolved proto-helium white dwarf with a thin hydrogen envelope that was stripped by a substellar companion through common-envelope ejection. Its unique configuration renders the binary system an interesting test bed for stellar binary evolution in general and common-envelope evolution in particular."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 16.523163
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: high-velocity star surveys or candidates"
+      },
+      "deepxiv": {
+        "score": 16.523163,
+        "best_score": 16.523163,
+        "search_keywords": null,
+        "citations": "9"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] The object SDSS J160429.12+100002.2 was initially misclassified as a hypervelocity blue horizontal branch star due to its high radial velocity and unusual spectroscopic signature, but follow-up high-resolution spectroscopy reveals it as a short-period single-lined spectroscopic binary with a visible B-type star (T_eff = 15,840 K) exhibiting sub-solar helium and heavy-element abundances. The system hosts an unevolved proto-helium white dwarf with a thin hydrogen envelope, stripped by a substellar companion via common-envelope ejection, resulting in a retrograde orbit and extreme chemical peculiarities attributed to atomic diffusion. This configuration provides a rare observational test case for common-envelope binary evolution and the formation of helium white dwarfs in close binaries.",
+        "keywords": [
+          "common-envelope ejection",
+          "proto-helium white dwarf",
+          "substellar companion",
+          "chemical peculiarities",
+          "retrograde orbit"
+        ],
+        "citations": "9",
+        "published_at": "2020-07-07T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2007.03350",
+          "src_url": "https://arxiv.org/pdf/2007.03350",
+          "title": "A proto-helium white dwarf stripped by a substellar companion via common-envelope ejection -- Uncovering the true nature of a candidate hypervelocity B-type star"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T215133"
+      },
+      "source_fields": {
+        "pg_id": 2850559,
+        "venue": "Astronomy & Astrophysics",
+        "journal_name": "Astronomy & Astrophysics",
+        "status": "extracted",
+        "token_count": 25835,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 19:16:07",
+        "sections_text": "Analysis: This section details the comprehensive spectroscopic, photometric, and kinematic analysis of the target object using multi-instrument observations and advanced modeling techniques to derive stellar parameters and physical properties. Discussion: The unseen companion is likely a brown dwarf with a mass below 0.094 M⊙, as inferred from the low mass function and inclination constraints, while the visible component is identified as a proto-He white dwarf of 0.21 ± 0.01 M⊙, ruling out a BHB classification and explaining the observed infrared excess as a relic of past mass transfer. Introduction: This paper makes the novel contribution of identifying SDSS J1604+1000 as a short-period single-lined spectroscopic binary with a retrograde Galactic orbit, resolving the paradox of its high radial velocity by showing it is not a hypervelocity star but a binary system hosting the progenitor of a low-mass helium white dwarf. Summary and outlook: J1604+1000 is a short-period post-common-envelope binary containing a proto-He white dwarf with anomalous chemical abundances and a compact low-mass companion, offering a unique test of stellar evolution models and insights into atomic diffusion processes. A proto-helium white dwarf stripped by a substellar companion via common-envelope ejection: This section presents a study identifying a candidate hypervelocity B-type star whose true nature may be explained by a proto-helium white dwarf being stripped by a substellar companion through common-envelope ejection.",
+        "highlight": {
+          "abstract": [
+            "Assuming a luminosity that is characteristic of BHB <em>stars</em>, the object's radial velocity and proper motions from Gaia Early Data Release 3 would imply that its Galactic rest-frame velocity exceeds its local",
+            "Consequently, the object would be considered a <em>hypervelocity</em> star, which would prove particularly interesting because its Galactic trajectory points in our direction.",
+            "binary system with a visible B-type star (effective temperature $T_{\\\\\\\\mathrm{eff}} = 15\\\\\\\\,840\\\\\\\\pm160$ K and surface gravity $\\\\\\\\log(g) = 4.86\\\\\\\\pm0.04$) that is less luminous than typical BHB <em>stars</em>"
+          ],
+          "title": [
+            "substellar companion via common-envelope ejection -- Uncovering the true nature of a candidate <em>hypervelocity</em>"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "followup_observations",
+        "object_scope": "single_object",
+        "evidence": "Paper presents detailed follow-up observations (spectroscopy, astrometry) of a specific star (SDSS J160429.12+100002.2) initially considered a hypervelocity candidate. Contains actual observational data: coordinates, proper motions, radial velocities, spectra, abundances.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "spectra",
+          "abundances"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:54:36"
+      }
+    },
+    {
+      "arxiv_id": "2007.11999",
+      "title": "Planetary Systems in a Star Cluster II: intermediate-mass black holes and planetary systems",
+      "authors": [
+        "Francesco Flammini Dotti",
+        "M.B.N. Kouwenhoven",
+        "Qi Shu",
+        "Wei Hao",
+        "Rainer Spurzem"
+      ],
+      "author_names": "Francesco Flammini Dotti M.B.N. Kouwenhoven Qi Shu Wei Hao Rainer Spurzem",
+      "categories": [
+        "astro-ph.EP",
+        "astro-ph.GA",
+        "astro-ph.SR"
+      ],
+      "published_at": "2020-07-23 00:00:00",
+      "updated_at": "2020-07-23 13:13:24",
+      "links": {
+        "abs": "https://arxiv.org/abs/2007.11999",
+        "pdf": "https://arxiv.org/pdf/2007.11999"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Most stars form in dense stellar environments. It is speculated that some dense star clusters may host intermediate-mass black holes (IMBHs), which may have formed from runaway collisions between high-mass stars, or from the mergers of less massive black holes. Here, we numerically explore the evolution of populations of planets in star clusters with an IMBH. We study the dynamical evolution of single-planet systems and free-floating planets, over a period of 100~Myr, in star clusters without an IMBH, and in clusters with a central IMBH of mass $100~M_\\\\\\\\odot$ or $200~M_\\\\\\\\odot$. In the central region ($r\\\\\\\\lesssim 0.2$~pc), the IMBH's tidal influence on planetary systems is typically 10~times stronger than the average neighbour star. For a star cluster with a $200M_\\\\\\\\odot$ IMBH, the region in which the IMBH's influence is stronger within the virial radius ($\\\\\\\\sim 1$~pc). The IMBH quenches mass segregation, and the stars in the core tend to move towards intermediate regions. The ejection rate of both stars and planets is higher when an IMBH is present. The rate at which planets are expelled from their host star rate is higher for clusters with higher IMBH masses, for $t<0.5 t_{rh}$, while remains mostly constant while the star cluster fills its Roche lobe, similar to a star cluster without an IMBH. The disruption rate of planetary systems is higher in initially denser clusters, and for wider planetary orbits, but this rate is substantially enhanced by the presence of a central IMBH."
+      },
+      "match": {
+        "queries": [
+          "runaway stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 12.489349
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.85,
+        "reason": "Weak title match: stellar interactions in dense systems LLM confirmed: Paper studies planetary system evolution in star clusters with IMBHs, including planet ejection rates and disruption of planetary systems. While not exclusively about high-velocity stars, it directly addresses ejection mechanisms relevant to runaway/walkaway stars and stellar escapers."
+      },
+      "deepxiv": {
+        "score": 12.489349,
+        "best_score": 12.489349,
+        "search_keywords": null,
+        "citations": "1"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T215133"
+      },
+      "source_fields": {
+        "pg_id": 2849610,
+        "venue": null,
+        "journal_name": "Monthly Notices of the Royal Astronomical Society",
+        "status": "extracted",
+        "token_count": 31879,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-23 06:26:41",
+        "sections_text": "Results: The theoretical analysis shows that in a star cluster with an intermediate-mass black hole (IMBH), the IMBH's tidal force on planetary systems equals that of the nearest star when the distance from the cluster center is $ d = R_n \\\\left( \\\\frac{2M_B}{M_n} \\\\right)^{1/3} $, with performance metrics indicating that for typical cluster parameters, the IMBH dominates tidal forces beyond this distance, especially when the black hole mass exceeds that of the nearest stars by a factor of ~2–3. Introduction: This paper introduces a novel analysis of how a central intermediate-mass black hole (IMBH) influences the dynamical evolution of planetary systems and free-floating planet populations in star clusters, addressing the previously unexplored problem of IMBH-driven perturbations beyond binary star interactions. Discussion and conclusions: A central intermediate-mass black hole significantly enhances planetary system disruptions and free-floating planet production by dominating tidal forces, increasing stellar and planetary escape rates, and amplifying close encounters—particularly in the early, compact phases of star cluster evolution—leading to higher ejection rates and a greater fraction of free-floating planets compared to clusters without an IMBH. Methodology and initial conditions: The paper proposes an N-body simulation methodology to study the effects of intermediate-mass black holes (IMBHs) on star clusters by evolving 10,000-star open clusters over 100 Myr with realistic initial conditions, including a 30-Myr-old stellar population and varying IMBH masses, to examine their impact on stellar dynamics and planetary systems.",
+        "highlight": {
+          "abstract": [
+            "Most <em>stars</em> form in dense stellar environments.",
+            "It is speculated that some dense star clusters may host intermediate-mass black holes (IMBHs), which may have formed from <em>runaway</em> collisions between high-mass <em>stars</em>, or from the mergers of less massive",
+            "The IMBH quenches mass segregation, and the <em>stars</em> in the core tend to move towards intermediate regions. The ejection rate of both <em>stars</em> and planets is higher when an IMBH is present."
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.9,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Purely theoretical/numerical simulation paper studying planetary system evolution in star clusters with IMBHs. No observational data or object-level stellar catalog presented; focuses on ejection rates and disruption mechanisms via simulations.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:54:36"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 2,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:54:36"
+  }
+}

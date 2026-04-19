@@ -1,0 +1,328 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2023-11",
+  "date_from": "2023-11-01",
+  "date_to": "2023-11-30",
+  "run": {
+    "run_id": "20260419T214239",
+    "started_at": "2026-04-19T21:42:39"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2023-11",
+    "date_from": "2023-11-01",
+    "date_to": "2023-11-30",
+    "raw_unique": 33,
+    "relevant_count": 2,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 33,
+    "classifier_included": 2,
+    "classifier_filtered": 31,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 3,
+    "weak_llm_reviewed": 3,
+    "weak_llm_included": 1,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 1
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 162,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 450,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 163,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 163,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 162,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2311.11940",
+      "title": "Characterisation of high velocity stars in the S-PLUS internal fourth data release",
+      "authors": [
+        "F. Quispe-Huaynasi",
+        "F. Roig",
+        "V. M. Placco",
+        "L. Beraldo e Silva",
+        "S. Daflon",
+        "C. B. Pereira",
+        "A. Kanaan",
+        "C. Mendes de Oliveira",
+        "T. Ribeiro",
+        "W. Schoenell"
+      ],
+      "author_names": "F. Quispe-Huaynasi F. Roig V. M. Placco L. Beraldo e Silva S. Daflon C. B. Pereira A. Kanaan C. Mendes de Oliveira T. Ribeiro W. Schoenell",
+      "categories": [
+        "astro-ph.GA",
+        "astro-ph.SR"
+      ],
+      "published_at": "2023-11-20 00:00:00",
+      "updated_at": "2023-11-20 17:22:35",
+      "links": {
+        "abs": "https://arxiv.org/abs/2311.11940",
+        "pdf": "https://arxiv.org/pdf/2311.11940"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "In general, the atypical high velocity of some stars in the Galaxy can only be explained by invoking acceleration mechanisms related to extreme astrophysical events in the Milky Way. Using astrometric data from Gaia and the photometric information in 12 filters of the S-PLUS, we performed a kinematic, dynamical, and chemical analysis of 64 stars with galactocentric velocities higher than 400 $\\\\\\\\mathrm{km\\\\\\\\,s}^{-1}$. All the stars are gravitationally bound to the Galaxy and exhibit halo kinematics. Some of the stars could be remnants of structures such as the Sequoia and the Gaia-Sausage/Enceladus. Supported by orbital and chemical analysis, we identified Gaia DR3 5401875170994688896 as a star likely to be originated at the centre of the Galaxy. Application of a machine learning technique to the S-PLUS photometric data allows us to obtain very good estimates of magnesium abundances for this sample of high velocity stars."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 27.337217
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: high-velocity or extreme-velocity stars"
+      },
+      "deepxiv": {
+        "score": 10.405766,
+        "best_score": 27.337217,
+        "search_keywords": null,
+        "citations": "1"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] A kinematic and chemical analysis of 64 high-velocity stars (galactocentric velocities >400 km/s) from Gaia and S-PLUS data reveals halo kinematics and potential origins in Galactic structures like the Sequoia and Gaia-Sausage/Enceladus; one star (Gaia DR3 5401875170994688896) is identified as likely originating from the Galactic center via orbital and chemical tagging; machine learning applied to S-PLUS photometry enables accurate magnesium abundance estimation, supporting chemical classification of these high-velocity halo stars.",
+        "keywords": [
+          "high-velocity stars",
+          "galactic halo kinematics",
+          "chemical tagging",
+          "machine learning in photometry",
+          "Galactic center origin"
+        ],
+        "citations": "1",
+        "published_at": "2023-11-20T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2311.11940",
+          "src_url": "https://arxiv.org/pdf/2311.11940",
+          "title": "Characterisation of high velocity stars in the S-PLUS internal fourth data release"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T214239"
+      },
+      "source_fields": {
+        "pg_id": 2137383,
+        "venue": "Monthly notices of the Royal Astronomical Society",
+        "journal_name": "Monthly Notices of the Royal Astronomical Society",
+        "status": "extracted",
+        "token_count": 38995,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 04:19:28",
+        "sections_text": "Conclusions: This study identifies most HiVel stars as bound halo stars, with one potential Galactic Center origin, and highlights the effectiveness of machine learning in predicting stellar metallicities from low-resolution data. Data sources: The sample of high-velocity stars is characterized using Gaia DR3 astrometric data, with effective temperature, surface gravity, and metallicity derived from deep learning models trained on common sources between S-PLUS and LAMOST or APOGEE. Introduction: This paper introduces a novel, comprehensive analysis of high-velocity stars using Gaia DR2 data, combining astrometric and spectroscopic information to identify and validate unbound stars with improved statistical rigor and chemical tagging, addressing the problem of distinguishing genuine galactic escapees from false positives in previous studies. Stellar parameters: A Convolutional Neural Network is trained on photometric and spectroscopic data to determine stellar parameters (T_eff, [Fe/H], log g) with high accuracy, achieving good agreement between predicted and observed values in the test sample. Appendix A Distances: The Galactocentric velocities of high-velocity stars show good agreement between photo-geometric and photo-astrometric distances within ∼7 kpc, with discrepancies beyond this distance and a notable unbound candidate identified when using the StarHorse distance. Kinematics and dynamics: This section details the orbital integration of high-velocity stars using a galactic gravitational potential to determine their kinematic and dynamical properties, with particular focus on assessing their possible origin in the Galactic center or the Large Magellanic Cloud. High Velocity Stars Selection: This section describes the selection and characterization of high-velocity stars using Gaia data, employing photo-geometric distances and strict astrometric quality criteria to identify 64 stars with galactocentric velocities exceeding 400 km/s.",
+        "highlight": {
+          "abstract": [
+            "In general, the atypical high velocity of some <em>stars</em> in the Galaxy can only be explained by invoking acceleration mechanisms related to extreme astrophysical events in the Milky Way.",
+            "Using astrometric data from Gaia and the photometric information in 12 filters of the S-PLUS, we performed a kinematic, dynamical, and chemical analysis of 64 <em>stars</em> with galactocentric velocities higher",
+            "All the <em>stars</em> are gravitationally bound to the Galaxy and exhibit halo kinematics. Some of the <em>stars</em> could be remnants of structures such as the Sequoia and the Gaia-Sausage/Enceladus.",
+            "Application of a machine learning technique to the S-PLUS photometric data allows us to obtain very good estimates of magnesium abundances for this sample of high velocity <em>stars</em>."
+          ],
+          "title": [
+            "Characterisation of high velocity <em>stars</em> in the S-PLUS internal fourth data release"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "uses_existing_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper analyzes 64 specific high-velocity stars with galactocentric velocities >400 km/s using Gaia and S-PLUS data, provides kinematic/dynamical/chemical analysis, and identifies individual stars like Gaia DR3 5401875170994688896.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "abundances",
+          "orbit_integrations"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:45:10"
+      }
+    },
+    {
+      "arxiv_id": "2311.01827",
+      "title": "Galactic runaway O and Be stars found using Gaia DR3",
+      "authors": [
+        "M. Carretero-Castrillo",
+        "M. Ribó",
+        "J. M. Paredes",
+        "ICCUB",
+        "IEEC-UB"
+      ],
+      "author_names": "M. Carretero-Castrillo M. Ribó J. M. Paredes ICCUB IEEC-UB",
+      "categories": [
+        "astro-ph.SR",
+        "astro-ph.GA",
+        "astro-ph.HE"
+      ],
+      "published_at": "2023-11-03 00:00:00",
+      "updated_at": "2023-11-03 10:30:11",
+      "links": {
+        "abs": "https://arxiv.org/abs/2311.01827",
+        "pdf": "https://arxiv.org/pdf/2311.01827"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "A relevant fraction of massive stars are runaway stars. These stars move with a significant peculiar velocity with respect to their environment. We aim to discover and characterize the population of massive and early-type runaway stars in the GOSC and BeSS catalogs using Gaia DR3 astrometric data. We present a 2-dimensional method in the velocity space to discover runaway stars as those that deviate significantly from the velocity distribution of field stars, which are considered to follow the Galactic rotation curve. We found 106 O runaway stars, 42 of which were not previously identified as runaways. We found 69 Be runaway stars, 47 of which were not previously identified as runaways. The dispersion of runaway stars is a few times higher in Z and b than that of field stars. This is explained by the ejections they underwent when they became runaways. The percentage of runaways is 25.4% for O-type stars, and it is 5.2% for Be-type stars. In addition, we conducted simulations in 3 dimensions for our catalogs. They revealed that these percentages could increase to ~30% and ~6.7%, respectively. Our runaway stars include seven X-ray binaries and one gamma-ray binary. Moreover, we obtain velocity dispersions of ~5 km/s perpendicular to the Galactic plane for O- and Be-type field stars. These values increase in the Galactic plane to ~7 km/s for O-type stars due to uncertainties and to ~9 km/s for Be-type stars due to Galactic velocity diffusion. The excellent Gaia DR3 astrometric data have allowed us to identify a significant number of O-type and Be-type runaways in the GOSC and BeSS catalogs. The higher percentages and higher velocities found for O-type compared to Be-type runaways underline that the dynamical ejection scenario is more likely than the binary supernova scenario. Our results open the door to identifying new high-energy systems among our runaways by conducting detailed studies."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 29.975386
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 1.0,
+        "reason": "Weak title match: runaway-related mechanisms LLM confirmed: Explicitly studies runaway O and Be stars using Gaia DR3, identifies new runaway candidates, discusses ejection scenarios (dynamical vs. binary supernova), and analyzes kinematics and velocities—directly matching all inclusion criteria."
+      },
+      "deepxiv": {
+        "score": 11.255005,
+        "best_score": 29.975386,
+        "search_keywords": null,
+        "citations": "8"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T214239"
+      },
+      "source_fields": {
+        "pg_id": 2135746,
+        "venue": "Astronomy &amp; Astrophysics",
+        "journal_name": "Astronomy &amp; Astrophysics",
+        "status": "extracted",
+        "token_count": 33588,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 04:23:23",
+        "sections_text": "Method: The method computes Galactic velocities of stars relative to the regional standard of rest by using Gaia data and theoretical radial velocities derived from a linearized Galactic rotation curve, enabling the identification of runaway stars through their significant peculiar velocities beyond the local standard of rest. Results: The experiment identifies 106 runaway stars in the GOSC-Gaia DR3 catalog (25.4% of the sample) and 69 in the BeSS-Gaia DR3 catalog (5.2%), with runaway stars exhibiting significantly higher velocity dispersions of 20–40 km s⁻¹ and larger spatial dispersions in Z and b compared to field stars, consistent with known runaway star kinematics. Catalogs: This section describes the Gaia and Galactic O-Star Catalog (GOSC) as key astronomical data sources, with Gaia providing high-precision astrometric and photometric data for stars across the Milky Way, and GOSC offering detailed spectroscopic and positional information for Galactic O-type stars, both of which are essential for studying stellar populations and galactic structure. Method#2: The paper proposes a 3D velocity simulation method that models runaway stars using exponentially distributed peculiar velocities with spherical symmetry, projects them onto 2D velocity components, and compares the resulting 2D and 3D runaway star populations to assess the impact of the third velocity component on detection. Footnotes: The section provides access information for data tables and notes on the handling of correlated astrometric parameters from Gaia, emphasizing that their correlation does not significantly affect uncertainty computations when using the corrected parallax parameter $\\\\varpi_{\\\\mathrm{c}}$. Appendix#2: The RSR velocity distributions of GOSC- and BeSS-Gaia DR3 stars are clustered around zero with small dispersions (≈5 km s⁻¹), significantly reduced by the use of theoretical radial velocities compared to observational studies, and show only minor deviations from Gaussian shapes. Appendix#3: Both the GOSC-Gaia DR3 and BeSS-Gaia DR3 star catalogs show galactocentric distributions clustered near the Galactic plane, with the BeSS-Gaia DR3 catalog exhibiting a notable overdensity above the plane at (X,Y) = (13,5). Discussion: The velocity dispersion of young OB field stars is approximately 5–9 km/s, with tangential dispersion increasing due to distance-related uncertainties and Galactic velocity diffusion, indicating a birth dispersion of ~5 km/s that grows with stellar age, consistent with disk kinematics and previous studies. Conclusions: Using Gaia DR3 data and a 2D velocity classification method, we identify 106 O-type and 69 Be-type runaway stars, finding a significantly higher runaway fraction for O-type stars—supporting the dynamical ejection scenario over the binary stellar system scenario—and highlighting the potential for discovering new high-energy binaries among these runaways. Introduction: This paper introduces a novel, three-dimensional runaway detection method that combines precise proper motions from Gaia data with radial velocity constraints and spatial distance criteria, significantly improving the identification of massive runaway OB stars and addressing the limitations of previous two-dimensional or threshold-based approaches. Cross match of the catalogs: This section describes the cross-matching of the GOSC and BeSS catalogs with Gaia DR3, applying strict astrometric quality cuts to produce high-quality stellar samples with improved accuracy and reliability.",
+        "highlight": {
+          "abstract": [
+            "A relevant fraction of massive <em>stars</em> are runaway <em>stars</em>. These <em>stars</em> move with a significant peculiar velocity with respect to their environment.",
+            "We found 106 O runaway <em>stars</em>, 42 of which were not previously identified as runaways. We found 69 Be runaway <em>stars</em>, 47 of which were not previously identified as runaways.",
+            "The dispersion of runaway <em>stars</em> is a few times higher in Z and b than that of field <em>stars</em>. This is explained by the ejections they underwent when they became runaways.",
+            "The percentage of runaways is 25.4% for O-type <em>stars</em>, and it is 5.2% for Be-type <em>stars</em>. In addition, we conducted simulations in 3 dimensions for our catalogs.",
+            "These values increase in the Galactic plane to ~7 km/s for O-type <em>stars</em> due to uncertainties and to ~9 km/s for Be-type <em>stars</em> due to Galactic velocity diffusion."
+          ],
+          "title": [
+            "Galactic runaway O and Be <em>stars</em> found using Gaia DR3"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.98,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Identifies new runaway candidates from GOSC and BeSS catalogs using Gaia DR3: 106 O runaway stars (42 new) and 69 Be runaway stars (47 new). Presents specific object-level analysis with velocity measurements and binary identifications.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:45:10"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 2,
+    "catalog_count": 2,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:45:10"
+  }
+}

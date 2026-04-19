@@ -1,0 +1,326 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2022-04",
+  "date_from": "2022-04-01",
+  "date_to": "2022-04-30",
+  "run": {
+    "run_id": "20260419T214540",
+    "started_at": "2026-04-19T21:45:40"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2022-04",
+    "date_from": "2022-04-01",
+    "date_to": "2022-04-30",
+    "raw_unique": 36,
+    "relevant_count": 2,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 36,
+    "classifier_included": 2,
+    "classifier_filtered": 34,
+    "classifier_errors": 0,
+    "direct_rule_included": 2,
+    "weak_rule_candidates": 0,
+    "weak_llm_reviewed": 0,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 2,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 157,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 360,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 158,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 159,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 160,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2204.11913",
+      "title": "And then they were two: detection of non-thermal radio emission from the bow shocks of two runaway stars",
+      "authors": [
+        "M. Moutzouri",
+        "J. Mackey",
+        "C. Carrasco-González",
+        "Y. Gong",
+        "R. Brose",
+        "D. Zargaryan",
+        "J. A. Toalá",
+        "K. M. Menten",
+        "V. V. Gvaramadze",
+        "M. R. Rugel"
+      ],
+      "author_names": "M. Moutzouri J. Mackey C. Carrasco-González Y. Gong R. Brose D. Zargaryan J. A. Toalá K. M. Menten V. V. Gvaramadze M. R. Rugel",
+      "categories": [
+        "astro-ph.HE",
+        "astro-ph.GA"
+      ],
+      "published_at": "2022-04-25 00:00:00",
+      "updated_at": "2022-04-25 18:37:04",
+      "links": {
+        "abs": "https://arxiv.org/abs/2204.11913",
+        "pdf": "https://arxiv.org/pdf/2204.11913"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Winds from massive stars have recently been deemed promising sites for investigating relativistic particle acceleration. Particularly, the resulting bow shock from the interaction of the winds of runaway stars with interstellar matter has been observed at multiple wavelengths. Here we investigate the O4If star, BD+433654, the bow shock of which is, so far, the only one proven to radiate both thermally and non-thermally at radio frequencies. We also consider NGC7635 as a bow shock candidate and examine its apex for indications of thermal and non-thermal radio emission. We observed both sources with the VLA at 4-8 GHz and 8-12 GHz, and with the Effelsberg telescope at 4-8 GHz. We analysed data from both telescopes individually and combined, obtained their spectral index maps and calculated their Spectral Energy Distributions. We present the first high-resolution maps of radio emission from NGC7635. We find that both emit non-thermal emission in the radio regime, with the clearest evidence for NGC7635. Our results are less conclusive for BD+433654, as the emission from its bow shock becomes weaker and fainter at higher radio frequencies. Our results extend the previous radio results for the BD+433654 bow shock to higher frequencies. Modelling of our data for both sources shows that accelerated electrons at the wind termination shock are a plausible source for the non-thermal radio emission, but energetics arguments suggest that any non-thermal X-ray and $\\\\\\\\gamma$-ray emission could be significantly below existing upper limits. Enhanced synchrotron emission from compressed Galactic cosmic rays in the radiative bow shock could also explain the radio emission from the BD+433654 bow shock but not NGC7635. Non-detection of point-like radio emission from BD+433654 puts an upper limit on the mass-loss rate of the star that is lower than values quoted in the literature. [abridged]"
+      },
+      "match": {
+        "queries": [
+          "runaway stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 20.94058
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: runaway stars"
+      },
+      "deepxiv": {
+        "score": 20.94058,
+        "best_score": 20.94058,
+        "search_keywords": null,
+        "citations": "2"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] This study presents the first detection of non-thermal radio emission from the bow shock of NGC 7635 (the Bubble Nebula), confirming a strongly negative spectral index along its northern rim and providing high-resolution radio maps that align with optical nebular morphology. The bow shock of BD +43°3654 is also found to emit non-thermal radio radiation, though with weaker high-frequency emission, and Effelsberg data reveals a larger thermal emitting region than VLA observations. Multi-wavelength modeling supports relativistic electron acceleration at the wind termination shock as the origin of non-thermal emission, while energetics suggest that any associated X-ray or γ-ray emission is below current upper limits; non-detection of point-like emission from BD +43°3654 constrains the star’s mass-loss rate to values lower than previously reported.",
+        "keywords": [
+          "shock wave dynamics",
+          "non-thermal radio emission",
+          "diffusive shock acceleration",
+          "stellar wind interaction",
+          "synchrotron radiation"
+        ],
+        "citations": "2",
+        "published_at": "2022-04-25T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2204.11913",
+          "src_url": "https://arxiv.org/pdf/2204.11913",
+          "title": "And then they were two: detection of non-thermal radio emission from the bow shocks of two runaway stars"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T214540"
+      },
+      "source_fields": {
+        "pg_id": 978874,
+        "venue": "Astronomy &amp; Astrophysics",
+        "journal_name": "Astronomy &amp; Astrophysics",
+        "status": "extracted",
+        "token_count": 23435,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-23 05:31:19",
+        "sections_text": "Results: The bow shocks of BSBD43 and BSBD60 exhibit a mixture of thermal and non-thermal emission, with BSBD43 showing a spectral index of ∼−1.5 across most of the shock and BSBD60 fluctuating around −1, both with low spectral index errors in their main emission regions, indicating consistent non-thermal dominance. Targets: This section highlights the properties of the massive runaway stars BD + 43°3654 and BD + 60°2522, emphasizing their wind-blown bow shocks and the importance of their stellar characteristics in understanding the observational features, including non-thermal emission, of their associated nebulae. Footnotes: The section lists footnotes containing author contact information, definitions of radio emission types, institutional affiliations, URLs for technical documentation, and references to observational resources. Appendix#2: The UV-range coverage across each 1 GHz bandwidth in BSBD43 (Fig. B.2) demonstrates significant flux information throughout the bandwidth, justifying full-bandwidth flux analysis. Discussion: The experiment finds that BSBD60 exhibits clear self-consistent detection of both thermal and non-thermal emission with high signal-to-noise, while BSBD43 shows ambiguous spectral indices likely due to VLA sensitivity limitations and contamination from extended thermal emission, suggesting that small-scale non-thermal features in bow shocks are difficult to detect without high-resolution observations. Conclusions: This study presents high-resolution radio observations of two runaway star bow shocks, detecting non-thermal emission in BSBD60 for the first time and finding ambiguous evidence for non-thermal emission in BSBD43, with both sources modeled to understand the origin of the emission through shock acceleration and cosmic ray compression mechanisms. Introduction: This paper introduces a novel approach to disentangling thermal bremsstrahlung from non-thermal synchrotron emission in OB-runaway star bow shocks using radio observations, addressing the lack of reliable gas-density tracers and the absence of detected non-thermal emission from such systems. Radio Observations: Radio observations of BSBD43 and BSBD60 were conducted using the VLA and Effelsberg telescopes to obtain high-sensitivity continuum maps, with interferometric data providing angular resolution and single-dish observations addressing coverage gaps caused by the primary beam and short-spacing problems.",
+        "highlight": {
+          "abstract": [
+            "Winds from massive <em>stars</em> have recently been deemed promising sites for investigating relativistic particle acceleration.",
+            "Particularly, the resulting bow shock from the interaction of the winds of <em>runaway</em> <em>stars</em> with interstellar matter has been observed at multiple wavelengths."
+          ],
+          "title": [
+            "And then they were two: detection of non-thermal radio emission from the bow shocks of two <em>runaway</em> <em>stars</em>"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.9,
+        "catalog_role": "followup_observations",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper presents new VLA and Effelsberg radio observations of two specific runaway stars (BD+433654 and NGC7635) with detailed analysis of their bow shocks, including spectral index maps and SEDs.",
+        "data_products": [
+          "coordinates",
+          "spectra",
+          "source_ids"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:47:13"
+      }
+    },
+    {
+      "arxiv_id": "2204.01594",
+      "title": "The origin of early-type runaway stars from open clusters",
+      "authors": [
+        "Aakash Bhat",
+        "Andreas Irrgang",
+        "Ulrich Heber"
+      ],
+      "author_names": "Aakash Bhat Andreas Irrgang Ulrich Heber",
+      "categories": [
+        "astro-ph.SR",
+        "astro-ph.GA"
+      ],
+      "published_at": "2022-04-04 00:00:00",
+      "updated_at": "2022-04-04 15:44:20",
+      "links": {
+        "abs": "https://arxiv.org/abs/2204.01594",
+        "pdf": "https://arxiv.org/pdf/2204.01594"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Runaway stars are ejected from their place of birth in the Galactic disk, with some young B-type runaways found several tens of kiloparsecs from the plane traveling at speeds beyond the escape velocity. Young open clusters are a likely place of origin, and ejection may be either through N-body interactions or in binary supernova explosions. The excellent quality of Gaia astrometry opens up the path to study the kinematics of young runaway stars to such a high precision that the place of origin in open stellar clusters can be identified uniquely. We developed an efficient minimization method to calculate whether two or more objects may come from the same place, which we tested against samples of Orion runaways. Our fitting procedure was then used to calculate trajectories for known runaway stars where we used Gaia data and updated radial velocities. We found that only half of the sample could be classified as runaways while the others were walkaway stars. Most of the latter stars turned out to be binaries. We identified parent clusters for runaways based on their trajectories and then used cluster age and flight time of the stars to investigate whether the ejection was likely due to a binary supernova or due to a dynamical ejection. In particular, we show that the classical runaways AE Aurigae and $\\\\\\\\mu$ Columbae might not have originated together, with $\\\\\\\\mu$ Columbae having an earlier ejection from Collinder 69, a cluster near the ONC. The second sample investigated comprises a set of distant runaway B stars in the halo which have been studied carefully by quantitative spectral analyses. We are able to identify candidate parent clusters for at least four stars including the hyper-runaway candidate HIP 60350. The ejection events had to be very violent, ejecting stars at velocities as large as 150 to 400 km/s."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 29.831514
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: runaway stars"
+      },
+      "deepxiv": {
+        "score": 12.18893,
+        "best_score": 29.831514,
+        "search_keywords": null,
+        "citations": "9"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] The paper develops a high-precision trajectory fitting method using Gaia astrometry to determine the parent open clusters of early-type runaway B stars. By analyzing six-dimensional phase space kinematics, it distinguishes true runaways (velocities >30 km/s) from walkaway stars (slower, often binaries), and finds that only half of the sample are classical runaways. It identifies parent clusters for several stars—including HIP 60350—showing that ejection events required extreme velocities (150–400 km/s), favoring violent binary supernova or dynamical ejection scenarios over gentle cluster relaxation. The results challenge the shared origin of AE Aurigae and μ Columbae, suggesting separate ejections from Collinder 69 and other clusters.",
+        "keywords": [
+          "kinematic trajectory fitting",
+          "binary supernova ejection",
+          "dynamical ejection scenario",
+          "open cluster origin",
+          "runaway star classification"
+        ],
+        "citations": "9",
+        "published_at": "2022-04-04T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2204.01594",
+          "src_url": "https://arxiv.org/pdf/2204.01594",
+          "title": "The origin of early-type runaway stars from open clusters"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T214540"
+      },
+      "source_fields": {
+        "pg_id": 976176,
+        "venue": "Astronomy &amp; Astrophysics",
+        "journal_name": "Astronomy &amp; Astrophysics",
+        "status": "extracted",
+        "token_count": 51687,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 08:22:34",
+        "sections_text": "Method: The paper proposes a Monte Carlo simulation-based orbit reconstruction method that traces back runaway stars and clusters using astrometric data with added observational errors and correlations, demonstrating that high-precision measurements like those from Gaia significantly improve trajectory inference and consistency with expected origins. Footnotes: The footnotes provide methodological justifications, data sources, and caveats regarding distance estimates, radial velocities, and stellar encounter probabilities across various clusters, emphasizing uncertainties and the influence of observational data quality. Conclusion: The high precision of Gaia astrometry enables the unique identification of runaway stars' origins in distant open clusters, with new clusters being discovered and a minimization method developed to efficiently determine spatial coincidences among stellar trajectories. Introduction: This paper introduces a novel classification and kinematic analysis of runaway stars using Gaia data, resolving the origin ambiguity of high-velocity stars by demonstrating that many hypervelocity stars do not originate from the Galactic center, thereby advancing the understanding of stellar ejection mechanisms beyond the binary supernova and dynamical ejection scenarios. Trajectories: This section outlines the use of a Milky Way gravitational potential model and a novel minimization-based method to determine the origin of stars and clusters by analyzing their trajectories and kinematic parameters, replacing traditional Monte Carlo simulations. Fitting procedure: A computationally efficient fitting procedure using χ² minimization of kinematic parameters allows for the estimation of the minimum possible distance between stellar trajectories, overcoming the limitations of time-consuming Monte Carlo simulations while accounting for parameter uncertainties and trajectory significance. Runaway B stars in the Galactic halo: This section identifies and analyzes runaway B-type main sequence stars in the Galactic halo, using kinematic and spectroscopic data to investigate their likely origins through dynamical interactions with nearby clusters, with particular attention to the roles of binary star systems and cluster age uncertainties. The Orion nuclear cluster - a testbed: The analysis of runaway candidates in the Orion Nebula Cluster using Gaia astrometry and radial velocities reveals high p-values and minimized distances consistent with prior studies, though several stars exhibit close approaches beyond the cluster's radius, suggesting they may not originate from the ONC. The Hoogerwerf et al. sample revisited: This section revisits Hoogerwerf et al.'s (2001) list of runaway stars using improved astrometric data from Hipparcos and Gaia, refining origin assignments and incorporating new data while applying strict quality criteria to ensure reliability. The hyper-runaway candidate HIP 60350 and Cl Pismis 20: HIP 60350 is likely a hyper-runaway star ejected from the Galactic disk, with a plausible origin in the younger cluster Cl Pismis 20 rather than older or disfavored clusters, possibly due to a supernova explosion of a massive Wolf-Rayet star. The Hoogerwerf et al. sample revisited: Individual objects: This section revisits individual walkaway stars, evaluating their parent clusters and dynamical ejection scenarios, with findings indicating that while some stars likely originated from specific young clusters via binary star scattering (BSS), others require alternative mechanisms like supernova-driven ejection due to age and velocity mismatches.",
+        "highlight": {
+          "abstract": [
+            "Our fitting procedure was then used to calculate trajectories for known runaway <em>stars</em> where we used Gaia data and updated radial velocities.",
+            "We found that only half of the sample could be classified as runaways while the others were walkaway <em>stars</em>. Most of the latter <em>stars</em> turned out to be binaries.",
+            "The second sample investigated comprises a set of distant runaway B <em>stars</em> in the halo which have been studied carefully by quantitative spectral analyses.",
+            "We are able to identify candidate parent clusters for at least four <em>stars</em> including the hyper-runaway candidate HIP 60350.",
+            "The ejection events had to be very violent, ejecting <em>stars</em> at velocities as large as 150 to 400 km/s."
+          ],
+          "title": [
+            "The origin of early-type runaway <em>stars</em> from open clusters"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.85,
+        "catalog_role": "uses_existing_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper analyzes known runaway stars using Gaia astrometry and updated radial velocities, identifying parent clusters and classifying stars as runaways vs. walkaways. Includes specific objects like AE Aurigae, μ Columbae, and HIP 60350.",
+        "data_products": [
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "orbit_integrations",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:47:13"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 2,
+    "catalog_count": 2,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:47:13"
+  }
+}

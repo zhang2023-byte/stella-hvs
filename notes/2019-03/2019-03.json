@@ -1,0 +1,294 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2019-03",
+  "date_from": "2019-03-01",
+  "date_to": "2019-03-31",
+  "run": {
+    "run_id": "20260419T215548",
+    "started_at": "2026-04-19T21:55:48"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2019-03",
+    "date_from": "2019-03-01",
+    "date_to": "2019-03-31",
+    "raw_unique": 32,
+    "relevant_count": 2,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 32,
+    "classifier_included": 2,
+    "classifier_filtered": 30,
+    "classifier_errors": 0,
+    "direct_rule_included": 0,
+    "weak_rule_candidates": 2,
+    "weak_llm_reviewed": 2,
+    "weak_llm_included": 2,
+    "brief_eligible_count": 0,
+    "brief_skipped_weak_count": 2
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 189,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 467,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 190,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 189,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 189,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1903.09456",
+      "title": "Origin of the excess of high-energy retrograde stars in the Galactic halo",
+      "authors": [
+        "Tadafumi Matsuno",
+        "Wako Aoki",
+        "Takuma Suda"
+      ],
+      "author_names": "Tadafumi Matsuno Wako Aoki Takuma Suda",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2019-03-22 00:00:00",
+      "updated_at": "2019-03-22 11:35:44",
+      "links": {
+        "abs": "https://arxiv.org/abs/1903.09456",
+        "pdf": "https://arxiv.org/pdf/1903.09456"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We report on the very low $\\\\\\\\alpha$-element abundances of a group of metal-poor stars with high orbital energy and with large retrograde motion in the Milky Way halo, whose excess has been reported recently from metallicity and kinematics. We constructed a sample of halo stars with measured abundances and precise kinematics, including $\\\\\\\\sim 880$ stars with [{{Fe}/{H}}]$<-0.7$, by crossmatching the Stellar Abundances for Galactic Archaeology database to the second data release of Gaia. Three regions in the energy-angular momentum space have been selected: innermost halo, Gaia Enceladus/Sausage, and high-energy retrograde halo. While the innermost halo and Gaia Enceladus regions have chemical abundances consistent with high- and low-$\\\\\\\\alpha$ populations in the halo, respectively, chemical abundances of stars in the high-energy retrograde halo are different from the two populations; their [{X}/{Fe}], where X represents Na, Mg, and Ca, are even lower than those in Gaia Enceladus. These abundances, as well as their low mean metallicity, provide a new support for the idea that the retrograde component is dominated by an accreted dwarf galaxy which has a longer star formation timescale and is less massive than Gaia Enceladus/Sausage."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 16.564869
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.85,
+        "reason": "Weak title match: high proper-motion or unusual kinematics LLM confirmed: Focuses on high-energy retrograde halo stars with unusual kinematics and origins, directly relevant to high-velocity stellar populations and their accretion/ejection mechanisms."
+      },
+      "deepxiv": {
+        "score": 10.067191,
+        "best_score": 16.564869,
+        "search_keywords": null,
+        "citations": "63"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T215548"
+      },
+      "source_fields": {
+        "pg_id": 245809,
+        "venue": "Astrophysical Journal",
+        "journal_name": "The Astrophysical Journal Letters",
+        "status": "extracted",
+        "token_count": 12162,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 04:13:32",
+        "sections_text": "Sample: This section describes the use of the SAGA database to obtain chemical abundances and astrometric data for metal-poor stars, with detailed uncertainty assessments showing that measurement and non-LTE effects dominate abundance uncertainties, particularly for [Na/Fe] and [Mg/Fe], and that the estimated errors are small and do not significantly impact the conclusions. Results: The retrograde substructure (C) exhibits lower [X/Fe] abundances than both the innermost halo (A) and Gaia Enceladus (B), indicating it originated from a chemically distinct and independent progenitor, unlike the other halo populations. Summary: This study provides new evidence, using Gaia kinematics and $\\\\alpha$-element abundances, that the high-energy retrograde halo star excess stems from the accretion of a dwarf galaxy distinct from Gaia Enceladus/Sausage, with lower $\\\\alpha$-element abundances suggesting a less massive progenitor. Discussion: The analysis reveals that Gaia Enceladus and high-energy retrograde halo stars exhibit distinct Mg and Ca abundance trends, with Gaia Enceladus stars fitting the low-α population and retrograde stars fitting the high-α population, as evidenced by posterior distributions showing different turnover points ($x_t$) and slopes ($a$), with $x_t \\\\approx -2.5$ and $a \\\\approx -0.15$ for Mg and Ca, indicating earlier, more intense star formation in the high-α population. Introduction: This paper presents a novel chemo-kinematic signature of a distinct accretion event in the Milky Way halo, distinct from Gaia Sausage/Enceladus, by combining SAGA chemical abundance data with Gaia DR2 kinematics, providing strong evidence for an extragalactic origin at low metallicity.",
+        "highlight": {
+          "abstract": [
+            "We report on the very low $\\\\\\\\alpha$-element abundances of a group of metal-poor <em>stars</em> with high orbital energy and with large retrograde motion in the Milky Way halo, whose excess has been reported recently",
+            "We constructed a sample of halo <em>stars</em> with measured abundances and precise kinematics, including $\\\\\\\\sim 880$ <em>stars</em> with [{{Fe}/{H}}]$<-0.7$, by crossmatching the Stellar Abundances for Galactic Archaeology",
+            "While the innermost halo and Gaia Enceladus regions have chemical abundances consistent with high- and low-$\\\\\\\\alpha$ populations in the halo, respectively, chemical abundances of <em>stars</em> in the high-energy"
+          ],
+          "title": [
+            "Origin of the excess of high-energy retrograde <em>stars</em> in the Galactic halo"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.9,
+        "catalog_role": "uses_existing_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Cross-matched SAGA database with Gaia DR2 to construct sample of ~880 metal-poor halo stars with measured abundances and precise kinematics; analyzes specific high-energy retrograde halo population",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "abundances",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:57:23"
+      }
+    },
+    {
+      "arxiv_id": "1903.05954",
+      "title": "Spherical models of star clusters with potential escapers",
+      "authors": [
+        "Ian Claydon",
+        "Mark Gieles",
+        "Anna Lisa Varri",
+        "Douglas C. Heggie",
+        "Alice Zocchi"
+      ],
+      "author_names": "Ian Claydon Mark Gieles Anna Lisa Varri Douglas C. Heggie Alice Zocchi",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2019-03-14 00:00:00",
+      "updated_at": "2019-03-15 13:51:21",
+      "links": {
+        "abs": "https://arxiv.org/abs/1903.05954",
+        "pdf": "https://arxiv.org/pdf/1903.05954"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "An increasing number of observations of the outer regions of globular clusters (GCs) have shown a flattening of the velocity dispersion profile and an extended surface density profile. Formation scenarios of GCs can lead to different explanations of these peculiarities, therefore the dynamics of stars in the outskirts of GCs are an important tool in tracing back the evolutionary history and formation of star clusters. One possible explanation for these features is that GCs are embedded in dark matter halos. Alternatively, these features are the result of a population of energetically unbound stars that can be spatially trapped within the cluster, known as potential escapers (PEs). We present a prescription for the contribution of these energetically unbound members to a family of self-consistent, distribution function-based models, which, for brevity, we call the Spherical Potential Escapers Stitched (SPES) models. We show that, when fitting to mock data of bound and unbound stars from an N-body model of a tidally-limited star cluster, the SPES models correctly reproduce the density and velocity dispersion profiles up to the Jacobi radius, and they are able to recover the value of the Jacobi radius itself to within 20%. We also provide a comparison to the number density and velocity dispersion profiles of the Galactic cluster 47 Tucanae. Such a case offers a proof of concept that an appropriate modelling of PEs is essential to accurately interpret Gaia data in the outskirts of GCs, and, in turn, to formulate meaningful present-day constraints for GC formation scenarios in the early universe."
+      },
+      "match": {
+        "queries": [
+          "high-velocity stars",
+          "unbound stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 18.097425
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.9,
+        "reason": "Weak title match: stellar escaper candidates LLM confirmed: Explicitly models potential escapers (energetically unbound stars) in globular clusters, directly addressing stellar escapers and unbound populations."
+      },
+      "deepxiv": {
+        "score": 12.088642,
+        "best_score": 18.097425,
+        "search_keywords": null,
+        "citations": "16"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T215548"
+      },
+      "source_fields": {
+        "pg_id": 238073,
+        "venue": "Monthly notices of the Royal Astronomical Society",
+        "journal_name": "Monthly Notices of the Royal Astronomical Society",
+        "status": "extracted",
+        "token_count": 24459,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 14:10:19",
+        "sections_text": "Introduction: This paper introduces a novel anisotropic, lowered isothermal distribution function model that efficiently captures the complex dynamical evolution of globular clusters by accurately incorporating velocity anisotropy and mass segregation—key physical effects missing in traditional equilibrium models—thereby solving the problem of insufficiently realistic descriptions of observed cluster structural and kinematic properties. Observational data: The best-fit spes model reproduces the velocity dispersion profile of 47 Tuc well but underestimates the outer density and kinematic data, leading to an inaccurate estimate of the Jacobi radius and mass, and an underestimated fraction of potential escapers. Discussion \\\\& summary: The spes model, a physically motivated distribution function-based approach incorporating energetically unbound stars, accurately reproduces key observational features such as flattened velocity dispersion and surface density profiles up to $2r_{\\\\rm J}$ and matches mass, half-mass radius, and $r_{\\\\rm J}$ of $N$-body simulations, though it underpredicts the fraction of mass in PEs due to assumptions of sphericity and absence of tidal effects. The spes family of models: The paper proposes a family of distribution function models, termed limepy, that generalizes lowered isothermal models by incorporating radial orbit anisotropy, multiple mass components, and a truncated exponential form with a parameter $g$ to smoothly describe the phase space distribution of bound stars while allowing for a physical representation of unbound particles through a continuous, equilibrium-based approach. Fitting to $N$-body simulations: This section describes the fitting of spes and limepy models to density and velocity dispersion profiles from $N$-body simulations of globular clusters in Hénon units, using Markov Chain Monte Carlo methods to derive best-fit parameters and their uncertainties.",
+        "highlight": {
+          "abstract": [
+            "An increasing number of observations of the outer regions of globular clusters (GCs) have shown a flattening of the <em>velocity</em> dispersion profile and an extended surface density profile.",
+            "Formation scenarios of GCs can lead to different explanations of these peculiarities, therefore the dynamics of <em>stars</em> in the outskirts of GCs are an important tool in tracing back the evolutionary history",
+            "Alternatively, these features are the result of a population of energetically unbound <em>stars</em> that can be spatially trapped within the cluster, known as potential escapers (PEs).",
+            "We show that, when fitting to mock data of bound and unbound <em>stars</em> from an N-body model of a tidally-limited star cluster, the SPES models correctly reproduce the density and <em>velocity</em> dispersion profiles",
+            "We also provide a comparison to the number density and <em>velocity</em> dispersion profiles of the Galactic cluster 47 Tucanae."
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.8,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Presents theoretical models (SPES models) for potential escapers in globular clusters; mentions comparison to 47 Tucanae but paper focuses on modeling methodology rather than presenting new observational catalog",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:57:23"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 2,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:57:23"
+  }
+}

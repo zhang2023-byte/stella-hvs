@@ -1,0 +1,204 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2024-10",
+  "date_from": "2024-10-01",
+  "date_to": "2024-10-31",
+  "run": {
+    "run_id": "20260419T213844",
+    "started_at": "2026-04-19T21:38:44"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2024-10",
+    "date_from": "2024-10-01",
+    "date_to": "2024-10-31",
+    "raw_unique": 33,
+    "relevant_count": 1,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 33,
+    "classifier_included": 1,
+    "classifier_filtered": 32,
+    "classifier_errors": 0,
+    "direct_rule_included": 0,
+    "weak_rule_candidates": 1,
+    "weak_llm_reviewed": 1,
+    "weak_llm_included": 1,
+    "brief_eligible_count": 0,
+    "brief_skipped_weak_count": 1
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 228,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 562,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 228,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 230,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 230,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2410.02146",
+      "title": "Formation of Stripped Stars From Stellar Collisions in Galactic Nuclei",
+      "authors": [
+        "C. Gibson",
+        "F. Kiroglu",
+        "J. C. Lombardi Jr.",
+        "S. C. Rose",
+        "H. D. Vanderzyden",
+        "B. Mockler",
+        "M. Gallegos-Garcia",
+        "K. Kremer",
+        "E. Ramirez-Ruiz",
+        "F. A. Rasio"
+      ],
+      "author_names": "C. Gibson F. Kiroglu J. C. Lombardi Jr. S. C. Rose H. D. Vanderzyden B. Mockler M. Gallegos-Garcia K. Kremer E. Ramirez-Ruiz F. A. Rasio",
+      "categories": [
+        "astro-ph.SR",
+        "astro-ph.GA",
+        "astro-ph.HE"
+      ],
+      "published_at": "2024-10-03 00:00:00",
+      "updated_at": "2024-10-03 02:11:39",
+      "links": {
+        "abs": "https://arxiv.org/abs/2410.02146",
+        "pdf": "https://arxiv.org/pdf/2410.02146"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Tidal disruption events (TDEs) are an important way to probe the properties of stellar populations surrounding supermassive black holes. Observed spectra of several TDEs, such as ASASSN-14li, show high nitrogen to carbon abundance ratios, leading to questions about their progenitors. Disrupting an intermediate- or high-mass star that has undergone CNO processing, increasing the nitrogen in its core, could lead to an enhanced nitrogen TDE. Galactic nuclei present a conducive environment for high-velocity stellar collisions that can lead to high mass loss, stripping the carbon- and hydrogen-rich envelopes of the stars and leaving behind the enhanced nitrogen cores. TDEs of these stripped stars may therefore exhibit even more extreme nitrogen enhancement. Using the smoothed particle hydrodynamics code StarSmasher, we provide a parameter space study of high-velocity stellar collisions involving intermediate-mass stars, analyzing the composition of the collision products. We conclude that high-velocity stellar collisions can form products that have abundance ratios similar to those observed in the motivating TDEs. Furthermore, we show that stars that have not experienced high CNO processing can yield low-mass collision products that retain even higher nitrogen to carbon abundance ratios. We analytically estimate the mass fallback for a typical TDE of several collision products to demonstrate consistency between our models and TDE observations. Lastly, we discuss how the extended collision products, with high central to average density ratios, can be related to repeated partial TDEs like ASASSN-14ko and G objects in the Galactic Center."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 18.869677
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.85,
+        "reason": "Weak title match: stellar interactions in dense systems LLM confirmed: Paper focuses on high-velocity stellar collisions in galactic nuclei as formation mechanism for stripped stars, directly relevant to high-velocity/runaway star origins"
+      },
+      "deepxiv": {
+        "score": 10.893218,
+        "best_score": 18.869677,
+        "search_keywords": null,
+        "citations": "3"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T213844"
+      },
+      "source_fields": {
+        "pg_id": 1113657,
+        "venue": "Astrophysical Journal",
+        "journal_name": "The Astrophysical Journal",
+        "status": "extracted",
+        "token_count": 47242,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-23 12:40:17",
+        "sections_text": "Methods: The paper proposes a method that uses realistic stellar models from MESA and simulates stellar collisions via the Lagrangian SPH code StarSmasher to study elemental abundances and mass transfer in binary star systems. Results: Collision simulations show that 21.36 < 10^[N/C] < 560 (with one outlier at 1118) in stripped stars, with outcomes categorized into four scenarios—two stripped stars (2SS), one stripped star (1SS), no stripped stars (0SS), and complete disruption (CD)—where 1SS and 2SS cases exhibit elevated N/C ratios due to mass transfer or survival of high-N/C material, while 0SS and CD cases show minimal or no N/C enrichment, respectively. Footnotes: The section provides key details on central escape speeds of stars, confirms the consistency of MESA models with a specific version, and lists the public availability of the StarSmasher code. Discussion: High-velocity stellar collisions (v∞ > 2000 km s⁻¹) in the Galactic Center can produce stripped stars with elevated N/C abundance ratios, consistent with observations, particularly from intermediate-mass stars, and such events may explain certain TDEs and Galactic Center G objects, with fallback debris maintaining high N/C ratios even in stars that do not globally elevate their abundance. Introduction: This paper proposes that high-velocity stellar collisions in dense galactic nuclei are a key formation channel for stripped stars with elevated nitrogen abundances, offering a novel explanation for TDEs with extreme [N/C] ratios that complements and distinguishes from binary evolution or ram pressure stripping scenarios. Rates Of Collisions In Galactic Nuclei: Stellar collisions in the Galactic Center are both energetically sufficient and statistically likely to strip mass from main-sequence stars, particularly those with masses below ~3 M⊙, due to high relative velocities and short collision timescales. Implications Of Collisionally Formed Stripped Stars: Collisionally formed stripped stars exhibit helium- and nitrogen-rich compositions, making them ideal progenitors of tidal disruption events with anomalous chemical abundances, as evidenced by their fallback debris profiles exceeding observed N/C ratios in events like ASASSN-14li.",
+        "highlight": {
+          "abstract": [
+            "Galactic nuclei present a conducive environment for high-velocity stellar collisions that can lead to high mass loss, stripping the carbon- and hydrogen-rich envelopes of the <em>stars</em> and leaving behind the",
+            "TDEs of these stripped <em>stars</em> may therefore exhibit even more extreme nitrogen enhancement.",
+            "Using the smoothed particle hydrodynamics code StarSmasher, we provide a parameter space study of high-velocity stellar collisions involving intermediate-mass <em>stars</em>, analyzing the composition of the collision",
+            "Furthermore, we show that <em>stars</em> that have not experienced high CNO processing can yield low-mass collision products that retain even higher nitrogen to carbon abundance ratios."
+          ],
+          "title": [
+            "Formation of Stripped <em>Stars</em> From Stellar Collisions in Galactic Nuclei"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.95,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Paper is theoretical simulation study of stellar collisions using smoothed particle hydrodynamics (StarSmasher) to model formation mechanisms for stripped stars that could produce TDEs with nitrogen enhancement. No observational stellar data or catalog presented.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:41:51"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 0,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:41:51"
+  }
+}

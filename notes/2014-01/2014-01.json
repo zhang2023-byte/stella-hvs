@@ -1,0 +1,527 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2014-01",
+  "date_from": "2014-01-01",
+  "date_to": "2014-01-31",
+  "run": {
+    "run_id": "20260419T221210",
+    "started_at": "2026-04-19T22:12:10"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2014-01",
+    "date_from": "2014-01-01",
+    "date_to": "2014-01-31",
+    "raw_unique": 35,
+    "relevant_count": 4,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 35,
+    "classifier_included": 4,
+    "classifier_filtered": 31,
+    "classifier_errors": 0,
+    "direct_rule_included": 3,
+    "weak_rule_candidates": 1,
+    "weak_llm_reviewed": 1,
+    "weak_llm_included": 1,
+    "brief_eligible_count": 3,
+    "brief_skipped_weak_count": 1
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 125,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 288,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 126,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 128,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 127,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1401.7342",
+      "title": "MMT Hypervelocity Star Survey III: A Complete Survey of Faint B-type Stars in the Northern Milky Way Halo",
+      "authors": [
+        "Warren R. Brown",
+        "Margaret J. Geller",
+        "Scott J. Kenyon"
+      ],
+      "author_names": "Warren R. Brown Margaret J. Geller Scott J. Kenyon",
+      "categories": [
+        "astro-ph.SR",
+        "astro-ph.GA"
+      ],
+      "published_at": "2014-01-28 00:00:00",
+      "updated_at": "2014-01-28 21:12:02",
+      "links": {
+        "abs": "https://arxiv.org/abs/1401.7342",
+        "pdf": "https://arxiv.org/pdf/1401.7342"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We describe our completed spectroscopic survey for unbound hypervelocity stars (HVSs) ejected from the Milky Way. Three new discoveries bring the total number of unbound HVSs to 21. We place new constraints on the nature of HVSs and on their distances using moderate resolution MMT spectroscopy. Half of the HVSs are fast rotators; they are certain 2.5-4 Msun main sequence stars at 50 - 120 kpc distances. Correcting for stellar lifetime, our survey implies that unbound 2.5-4 Msun stars are ejected from the Milky Way at a rate of 1.5e-6 /yr. The observed HVSs are likely ejected continuously over the past 200 Myr and do not share a common flight time. The anisotropic spatial distribution of HVSs on the sky remains puzzling. Southern hemisphere surveys like SkyMapper will soon allow us to map the all-sky distribution of HVSs. Future proper motion measurements with Hubble Space Telescope and Gaia will provide strong constraints on origin. All existing observations are consistent with HVS ejections from encounters with the massive black hole in the Galactic center."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "runaway stars",
+          "unbound stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 25.007864
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars"
+      },
+      "deepxiv": {
+        "score": 25.007864,
+        "best_score": 25.007864,
+        "search_keywords": null,
+        "citations": "90"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] A completed spectroscopic survey of faint B-type stars in the Milky Way halo identifies 3 new hypervelocity stars (HVSs), bringing the total to 21. Spectroscopic analysis confirms half of the HVSs as rapidly rotating main-sequence B stars at 50–120 kpc, with stellar ages exceeding their flight times by ~100 Myr—ruling out disk runaway origins. The ejection rate of unbound 2.5–4 M⊙ stars is estimated at 1.5×10⁻⁶ yr⁻¹, consistent with continuous ejection over the past 200 Myr from the Galactic center via three-body interactions with the supermassive black hole, with no common flight time or spatial clustering.",
+        "keywords": [
+          "hypervelocity star ejection",
+          "stellar kinematics",
+          "main sequence star lifetime",
+          "Galactic center black hole interactions",
+          "anisotropic spatial distribution"
+        ],
+        "citations": "90",
+        "published_at": "2014-01-28T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1401.7342",
+          "src_url": "https://arxiv.org/pdf/1401.7342",
+          "title": "MMT Hypervelocity Star Survey III: A Complete Survey of Faint B-type Stars in the Northern Milky Way Halo"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T221210"
+      },
+      "source_fields": {
+        "pg_id": 2539826,
+        "venue": null,
+        "journal_name": "The Astrophysical Journal",
+        "status": "extracted",
+        "token_count": 24563,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-23 12:33:23",
+        "sections_text": "2. DATA: This section describes the selection, spectroscopic observations, and radial velocity distribution of late B-type stars in the HVS Survey, highlighting a complete sample of 1126 stars with a significant lack of high-velocity outliers indicating most fast-moving stars are unbound or have short lifetimes. 1. INTRODUCTION: This paper presents a targeted, spectroscopically validated survey of unbound stars (HVSs) with the properties of young, massive B-type stars, resolving the confusion in HVS identifications by demonstrating that these stars must originate from the Galactic disk or center and are not disk runaways, thereby confirming the central black hole as the dominant ejection mechanism. 3. HVS STELLAR NATURE: Stellar atmosphere fits to the full sample of hypervelocity stars reveal that six are fast rotators consistent with main sequence stars, enabling mass and luminosity estimates through comparison with main sequence tracks. 6. DISCUSSION AND CONCLUSIONS: The HVS survey identifies 21 unbound late B-type stars and suggests a total of approximately 300 unbound 2.5–4 $M_{\\\\odot}$ HVSs within $R < 100$ kpc, with an ejection rate of $1.5 \\\\times 10^{-6}$ yr$^{-1}$ for this mass range and $2.5 \\\\times 10^{-4}$ yr$^{-1}$ for all stellar masses under a Salpeter IMF, consistent with theoretical predictions and supporting a continuous ejection scenario rather than a single burst, though the anisotropic spatial clustering around Leo remains unexplained. 5. HVS PROPER MOTION PREDICTIONS: This section outlines how future Gaia-measured proper motions of hypervelocity stars (HVSs) can distinguish between Galactic center and disk origins, with trajectory calculations showing that most HVSs—especially HVS1—can only arise from the Galactic center, while disk ejections are severely limited by physical constraints on ejection velocities. 4. HVS SPATIAL AND FLIGHT TIME DISTRIBUTIONS: The spatial distribution of unbound hypervelocity stars shows a striking concentration around Leo, which could result from a common ejection event or continuous ejections over time, while their flight times and lifetimes must be accounted for in interpreting their origin and distribution.",
+        "highlight": {
+          "abstract": [
+            "We describe our completed spectroscopic survey for unbound <em>hypervelocity</em> <em>stars</em> (HVSs) ejected from the Milky Way. Three new discoveries bring the total number of unbound HVSs to 21.",
+            "Half of the HVSs are fast rotators; they are certain 2.5-4 Msun main sequence <em>stars</em> at 50 - 120 kpc distances.",
+            "Correcting for stellar lifetime, our survey implies that unbound 2.5-4 Msun <em>stars</em> are ejected from the Milky Way at a rate of 1.5e-6 /yr."
+          ],
+          "title": [
+            "MMT <em>Hypervelocity</em> Star Survey III: A Complete Survey of Faint B-type <em>Stars</em> in the Northern Milky Way"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Title and abstract describe a completed spectroscopic survey identifying 3 new hypervelocity stars, bringing total to 21. Mentions moderate resolution MMT spectroscopy, distances, and analysis of a specific sample.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "spectra",
+          "radial_velocities",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:13:00"
+      }
+    },
+    {
+      "arxiv_id": "1401.5063",
+      "title": "The First Hypervelocity Star from the LAMOST Survey",
+      "authors": [
+        "Zheng Zheng",
+        "Jeffrey L. Carlin",
+        "Timothy C. Beers",
+        "Licai Deng",
+        "Carl J. Grillmair",
+        "Puragra Guhathakurta",
+        "Sébastien Lépine",
+        "Heidi Jo Newberg",
+        "Brian Yanny",
+        "Haotong Zhang",
+        "Chao Liu",
+        "Ge Jin",
+        "Yong Zhang"
+      ],
+      "author_names": "Zheng Zheng Jeffrey L. Carlin Timothy C. Beers Licai Deng Carl J. Grillmair Puragra Guhathakurta Sébastien Lépine Heidi Jo Newberg Brian Yanny Haotong Zhang Chao Liu Ge Jin Yong Zhang",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2014-01-20 00:00:00",
+      "updated_at": "2014-02-22 22:08:08",
+      "links": {
+        "abs": "https://arxiv.org/abs/1401.5063",
+        "pdf": "https://arxiv.org/pdf/1401.5063"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We report the first hypervelocity star (HVS) discovered from the LAMOST spectroscopic survey. It is a B-type star with a heliocentric radial velocity about 620 km/s, which projects to a Galactocentric radial velocity component of ~477 km/s. With a heliocentric distance of ~13 kpc and an apparent magnitude of ~13 mag, it is the nearest bright HVS currently known. With a mass of ~9Msun, it is one of the three most massive HVSs discovered so far. The star is clustered on the sky with many other known HVSs, with the position suggesting a possible connection to Galactic center structures. With the current poorly-determined proper motion, a Galactic center origin of this HVS remains consistent with the data at the 1sigma level, while a disk run-away origin cannot be excluded. We discuss the potential of the LAMOST survey to discover a large statistical sample of HVSs of different types."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 23.049007
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars"
+      },
+      "deepxiv": {
+        "score": 23.049007,
+        "best_score": 23.049007,
+        "search_keywords": null,
+        "citations": "48"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] The LAMOST survey discovers the first hypervelocity star (HVS) with a heliocentric radial velocity of ~620 km/s and a mass of ~9 M☉, making it one of the most massive HVSs known and the nearest bright HVS at ~13 kpc. Its sky position clusters with other known HVSs near the Galactic center, suggesting a possible origin from the central black hole, though a disk-runaway origin cannot be ruled out. This discovery highlights LAMOST’s potential to yield a statistically significant sample of HVSs for probing Galactic dynamics, dark matter halo shape, and central black hole environments.",
+        "keywords": [
+          "hypervelocity star",
+          "Galactic center kinematics",
+          "stellar ejection mechanisms",
+          "Galactic halo dynamics",
+          "LAMOST spectroscopic survey"
+        ],
+        "citations": "48",
+        "published_at": "2014-01-20T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1401.5063",
+          "src_url": "https://arxiv.org/pdf/1401.5063",
+          "title": "The First Hypervelocity Star from the LAMOST Survey"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T221210"
+      },
+      "source_fields": {
+        "pg_id": 2541805,
+        "venue": null,
+        "journal_name": "The Astrophysical Journal Letters",
+        "status": "extracted",
+        "token_count": 9851,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 09:10:22",
+        "sections_text": "1. Introduction: This paper presents the first hypervelocity star discovered in the LAMOST survey, significantly expanding the statistical sample of such stars and enabling new studies of Galactic center dynamics and dark matter halo structure. 3. Summary and Discussion: The LAMOST survey discovered the first hypervelocity star (LAMOST-HVS1), a B-type star with ~9 M☉ and a radial velocity of ~477 km/s at ~19 kpc, suggesting a galactic center origin, and is projected to discover 56–85 HVSs down to 1 M☉ based on a 16,000 square degree survey with r = 17.5, depending on the stellar mass function. 2. The LAMOST Survey and Its First HVS: This section describes the discovery and properties of LAMOST-HVS1, a high-velocity star with an extreme radial velocity and anomalous proper motion, identified in the LAMOST survey's first data release.",
+        "highlight": {
+          "abstract": [
+            "We report the first <em>hypervelocity</em> star (HVS) discovered from the LAMOST spectroscopic survey."
+          ],
+          "title": [
+            "The First <em>Hypervelocity</em> Star from the LAMOST Survey"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.9,
+        "catalog_role": "new_catalog",
+        "object_scope": "single_object",
+        "evidence": "Reports discovery of first hypervelocity star from LAMOST survey with specific observational data: radial velocity (~620 km/s), distance (~13 kpc), mass (~9Msun), magnitude.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "spectra",
+          "radial_velocities"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:13:00"
+      }
+    },
+    {
+      "arxiv_id": "1401.1464",
+      "title": "Unbound Star-forming Molecular Clouds",
+      "authors": [
+        "Rachel L. Ward",
+        "James Wadsley",
+        "Alison Sills"
+      ],
+      "author_names": "Rachel L. Ward James Wadsley Alison Sills",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2014-01-07 00:00:00",
+      "updated_at": "2014-01-07 18:24:03",
+      "links": {
+        "abs": "https://arxiv.org/abs/1401.1464",
+        "pdf": "https://arxiv.org/pdf/1401.1464"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We explore whether observed molecular clouds could include a substantial population of unbound clouds. Using simulations which include only turbulence and gravity, we are able to match observed relations and naturally reproduce the observed scatter in the cloud size-linewidth coefficient, at fixed surface density. We identify the source of this scatter as a spread in the intrinsic virial parameter. Thus these observational trends do not require that clouds exist in a state of dynamical equilibrium. We demonstrate that cloud virial parameters can be accurately determined observationally with an appropriate size estimator. All our simulated clouds eventually form collapsing cores, regardless of whether the cloud is bound overall. This supports the idea that molecular clouds do not have to be bound to form stars or to have observed properties like those of nearby low-mass clouds."
+      },
+      "match": {
+        "queries": [
+          "unbound stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 24.616577
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: unbound, escaping, or ejected stars"
+      },
+      "deepxiv": {
+        "score": 24.616577,
+        "best_score": 24.616577,
+        "search_keywords": null,
+        "citations": "9"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] Simulations of molecular clouds using only turbulence and gravity reproduce observed size-linewidth relations and reveal intrinsic scatter in the virial parameter, indicating that a substantial population of molecular clouds can be unbound (α > 2) while still forming gravitationally bound collapsing cores. The scatter in the size-linewidth coefficient is attributed to a spread in intrinsic virial parameters, not observational noise or external pressure/magnetic support, and observational determination of virial parameters is shown to be feasible with accurate size estimators. This challenges the long-standing assumption that molecular clouds must be in virial equilibrium to form stars.",
+        "keywords": [
+          "virial parameter",
+          "unbound molecular clouds",
+          "turbulent collapse",
+          "size-linewidth relation",
+          "cloud dynamics"
+        ],
+        "citations": "9",
+        "published_at": "2014-01-07T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1401.1464",
+          "src_url": "https://arxiv.org/pdf/1401.1464",
+          "title": "Unbound Star-forming Molecular Clouds"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T221210"
+      },
+      "source_fields": {
+        "pg_id": 2537354,
+        "venue": null,
+        "journal_name": "Monthly Notices of the Royal Astronomical Society",
+        "status": "extracted",
+        "token_count": 13350,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-23 04:43:54",
+        "sections_text": "Results: The simulated molecular clouds exhibit mass, linewidth, and size distributions consistent with observations—specifically, median masses of ~5000 M⊙, velocity dispersions derived from mass-weighted gas motions, and area estimates scaled from intensity-weighted size dispersions—when using extinction-based column density thresholds and excluding sink particles to avoid observational biases. Introduction: This paper makes the novel contribution of re-examining the scatter in Larson’s Laws and demonstrating that the observed variability in molecular cloud properties—particularly in column density and velocity dispersion—reflects real physical inhomogeneities rather than observational noise, thereby challenging the assumption of universal, scale-invariant structure and providing new insights into the non-equilibrium dynamics of molecular clouds. The Simulations: These high-resolution smoothed particle hydrodynamics simulations of isolated molecular clouds with decaying turbulence and gravity reproduce observed filamentary structures and star formation dynamics, showing that anisotropic \"ribbon\" collapse is the most likely natural scenario for cloud evolution. Conclusions \\\\& Discussion: Molecular clouds, even when unbound, exhibit observed size-linewidth relationships and form stars through localized turbulence-driven compression, leading to low star formation rates consistent with observations and challenging the assumption of virial equilibrium. The Cloud Selection Process: A synthetic column density map is created from simulations using SPH interpolation and spatial smoothing, with clouds selected based on detection thresholds and size criteria to match observed molecular cloud properties and evolutionary stages.",
+        "highlight": {
+          "abstract": [
+            "We explore whether observed molecular clouds could include a substantial population of <em>unbound</em> clouds.",
+            "This supports the idea that molecular clouds do not have to be bound to form <em>stars</em> or to have observed properties like those of nearby low-mass clouds."
+          ],
+          "title": [
+            "<em>Unbound</em> Star-forming Molecular Clouds"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.85,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Paper focuses on simulations of molecular clouds (not stars) to explore whether observed clouds could be unbound. Uses simulations with turbulence and gravity, not observational stellar data.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:13:00"
+      }
+    },
+    {
+      "arxiv_id": "1401.7932",
+      "title": "On the Origin of Young Stars at the Galactic Center",
+      "authors": [
+        "Ann-Marie Madigan",
+        "Oliver Pfuhl",
+        "Yuri Levin",
+        "Stefan Gillessen",
+        "Reinhard Genzel",
+        "Hagai B. Perets"
+      ],
+      "author_names": "Ann-Marie Madigan Oliver Pfuhl Yuri Levin Stefan Gillessen Reinhard Genzel Hagai B. Perets",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2014-01-30 00:00:00",
+      "updated_at": "2014-01-30 17:42:48",
+      "links": {
+        "abs": "https://arxiv.org/abs/1401.7932",
+        "pdf": "https://arxiv.org/pdf/1401.7932"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "The center of our galaxy is home to a massive black hole, SgrA*, and a nuclear star cluster containing stellar populations of various ages. While the late type stars may be too old to have retained memory of their initial orbital configuration, and hence formation mechanism, the kinematics of the early type stars should reflect their original distribution. In this contribution we present a new statistic which uses directly-observable kinematical stellar data to infer orbital parameters for stellar populations, and is capable of distinguishing between different origin scenarios. We use it on a population of B-stars in the Galactic center that extends out to large radii (0.5 pc) from the massive black hole. We find that the high K-magnitude population form an eccentric distribution, suggestive of a Hills binary-disruption origin."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 12.11459
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.85,
+        "reason": "Weak title match: galactic-center dynamical origins LLM confirmed: Focuses on B-stars with eccentric kinematics, explicitly mentions Hills binary-disruption origin mechanism for high-velocity stellar populations."
+      },
+      "deepxiv": {
+        "score": 10.89502,
+        "best_score": 12.11459,
+        "search_keywords": null,
+        "citations": "1"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T221210"
+      },
+      "source_fields": {
+        "pg_id": 2537522,
+        "venue": "Proceedings of the International Astronomical Union",
+        "journal_name": "Proceedings of the International Astronomical Union",
+        "status": "extracted",
+        "token_count": 3031,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-23 21:10:36",
+        "sections_text": "Implications: The tidal disruption of binaries in the young clockwise disk leads to a more top-heavy initial mass function and provides constraints on the stellar mass distribution, suggesting a cusp rather than a core at the Galactic center. Where do the young stars come from?: The origin of the young B-stars in the Galactic center—whether from a tidally disrupted binary population with high orbital eccentricities or from a disk formation event with low eccentricities—is determined by measuring the population-level orbital eccentricity using a statistical $h$-statistic derived from astrometric data. Comparison between simulations and data: Simulations show that high-mass B-stars with $m_{K}\\\\geq 15$ on high-eccentricity orbits likely originate from tidally disrupted binaries outside the Galactic center, while lower-magnitude B-stars align better with a disk formation origin.",
+        "highlight": {
+          "abstract": [
+            "While the late type <em>stars</em> may be too old to have retained memory of their initial orbital configuration, and hence formation mechanism, the kinematics of the early type <em>stars</em> should reflect their original",
+            "We use it on a population of B-<em>stars</em> in the Galactic center that extends out to large radii (0.5 pc) from the massive black hole."
+          ],
+          "title": [
+            "On the Origin of Young <em>Stars</em> at the Galactic Center"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.8,
+        "catalog_role": "uses_existing_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Analyzes kinematics of B-stars in Galactic center using 'directly-observable kinematical stellar data' to infer orbital parameters. Focuses on existing population of stars with eccentric kinematics.",
+        "data_products": [
+          "coordinates",
+          "astrometry",
+          "orbit_integrations"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:13:00"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 4,
+    "catalog_count": 3,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T22:13:00"
+  }
+}

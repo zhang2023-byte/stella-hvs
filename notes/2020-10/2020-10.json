@@ -1,0 +1,205 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2020-10",
+  "date_from": "2020-10-01",
+  "date_to": "2020-10-31",
+  "run": {
+    "run_id": "20260419T215133",
+    "started_at": "2026-04-19T21:51:33"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2020-10",
+    "date_from": "2020-10-01",
+    "date_to": "2020-10-31",
+    "raw_unique": 36,
+    "relevant_count": 1,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 36,
+    "classifier_included": 1,
+    "classifier_filtered": 35,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 0,
+    "weak_llm_reviewed": 0,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 155,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 428,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 156,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 161,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 159,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2010.11965",
+      "title": "Runaway stars masquerading as star formation in galactic outskirts",
+      "authors": [
+        "Eric P. Andersson",
+        "Florent Renaud",
+        "Oscar Agertz"
+      ],
+      "author_names": "Eric P. Andersson Florent Renaud Oscar Agertz",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2020-10-22 00:00:00",
+      "updated_at": "2021-09-08 06:55:54",
+      "links": {
+        "abs": "https://arxiv.org/abs/2010.11965",
+        "pdf": "https://arxiv.org/pdf/2010.11965"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "In the outskirts of nearby spiral galaxies, star formation is observed in extremely low gas surface densities. Star formation in these regions, where the interstellar medium is dominated by diffuse atomic hydrogen, is difficult to explain with classic star formation theories. In this letter, we introduce runaway stars as an explanation for this observation. Runaway stars, produced by collisional dynamics in young stellar clusters, can travel kiloparsecs during their main-sequence lifetime. Using galactic-scale hydrodynamic simulations including a treatment of individual stars, we demonstrate that this mechanism enables the ejection of young massive stars into environments where the gas is not dense enough to trigger star formation. This results in the appearance of star formation in regions where it ought to be impossible. We conclude that runaway stars are a contributing, if not dominant, factor to the observations of star formation in the outskirts of spiral galaxies."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 30.263945
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: runaway stars"
+      },
+      "deepxiv": {
+        "score": 11.442558,
+        "best_score": 30.263945,
+        "search_keywords": null,
+        "citations": "6"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] Galactic-scale hydrodynamic simulations demonstrate that runaway stars—massive stars ejected from young clusters via collisional dynamics—can travel kilo-parsecs and trigger star formation in diffuse atomic hydrogen regions where traditional theories predict no star formation. The mechanism explains observed star formation in galactic outskirts with extremely low gas surface densities by decoupling star formation from local gas conditions, as these runaway stars contribute to emission without requiring dense molecular gas.",
+        "keywords": [
+          "runaway star dynamics",
+          "galactic outskirts star formation",
+          "hydrodynamic ejection mechanisms",
+          "diffuse atomic hydrogen environments",
+          "stellar kinematics in disc galaxies"
+        ],
+        "citations": "6",
+        "published_at": "2020-10-22T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2010.11965",
+          "src_url": "https://arxiv.org/pdf/2010.11965",
+          "title": "Runaway stars masquerading as star formation in galactic outskirts"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T215133"
+      },
+      "source_fields": {
+        "pg_id": 2798371,
+        "venue": null,
+        "journal_name": "arXiv: Astrophysics of Galaxies",
+        "status": "extracted",
+        "token_count": 13867,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-23 08:44:47",
+        "sections_text": "Results: Increasing spatial and temporal resolution reduces scatter in the star-formation relation, revealing a tighter coupling between stars and gas that follows the canonical $\\\\Sigma_{\\\\rm SFR} \\\\propto \\\\Sigma_{\\\\rm g}^{1.4}$ relation at high gas densities, with slightly faster star formation at very high surface densities and deviations on large scales due to decoupling mechanisms. Discussion: This study finds that runaway stars with masses between 5–7 M⊙—not massive O stars—dominate the FUV flux in galactic outskirts, explaining the observed star formation signal at low gas surface densities without requiring in-situ star formation or a universal IMF, and highlights the need for full N-body models to fully capture their role. Introduction: This paper introduces a novel explanation for the observed third regime of star formation in galactic outskirts—where star formation proceeds slowly in extremely diffuse gas—by showing that runaway stars ejected from dense regions naturally contribute to SF tracers without direct physical connection to their formation sites, resolving the long-standing question of the origin of the low-SFR, high-depletion-time regime. Numerical setup: This section describes a numerical simulation of Milky Way-like galaxies using RAMSES, comparing a model with and without runaway stars, where runaway stars are introduced via natal velocity kicks based on a power-law distribution, while low-mass stars are treated with detailed feedback physics and stellar evolution. Summary \\\\& Conclusions: Runaway stars transport massive, FUV-emitting stars from dense star-forming regions into low-density gas, creating a distinct feature in the star formation relation in outer spiral galaxies that matches observations and highlights their key role in shaping the SF relation. Appendix A Generating synthetic spectra for stellar populations: This section describes the method for generating synthetic GALEX-FUV spectra of stellar populations by combining stellar population synthesis with wave propagation through gas, applying extinction, angular resolution filtering, and flux boosting to match simulated star formation rates.",
+        "highlight": {
+          "abstract": [
+            "In this letter, we introduce runaway <em>stars</em> as an explanation for this observation.",
+            "Runaway <em>stars</em>, produced by collisional dynamics in young stellar clusters, can travel kiloparsecs during their main-sequence lifetime.",
+            "Using galactic-scale hydrodynamic simulations including a treatment of individual <em>stars</em>, we demonstrate that this mechanism enables the ejection of young massive <em>stars</em> into environments where the gas is",
+            "We conclude that runaway <em>stars</em> are a contributing, if not dominant, factor to the observations of star formation in the outskirts of spiral galaxies."
+          ],
+          "title": [
+            "Runaway <em>stars</em> masquerading as star formation in galactic outskirts"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.95,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Paper presents galactic-scale hydrodynamic simulations of runaway star dynamics, not observational data or catalogs of actual stars",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:54:57"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 0,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:54:57"
+  }
+}

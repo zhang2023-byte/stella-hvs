@@ -1,0 +1,204 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2015-09",
+  "date_from": "2015-09-01",
+  "date_to": "2015-09-30",
+  "run": {
+    "run_id": "20260419T220916",
+    "started_at": "2026-04-19T22:09:16"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2015-09",
+    "date_from": "2015-09-01",
+    "date_to": "2015-09-30",
+    "raw_unique": 34,
+    "relevant_count": 1,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 34,
+    "classifier_included": 1,
+    "classifier_filtered": 33,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 1,
+    "weak_llm_reviewed": 1,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 131,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 339,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 131,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 131,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 132,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1509.03170",
+      "title": "High velocity stars from close interaction of a globular cluster and a super massive black hole",
+      "authors": [
+        "R. Capuzzo-Dolcetta",
+        "G. Fragione"
+      ],
+      "author_names": "R. Capuzzo-Dolcetta G. Fragione",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2015-09-10 00:00:00",
+      "updated_at": "2015-09-10 14:22:21",
+      "links": {
+        "abs": "https://arxiv.org/abs/1509.03170",
+        "pdf": "https://arxiv.org/pdf/1509.03170"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Observations show the presence, in the halo of our Galaxy, of stars moving at velocities so high to require an acceleration mechanism involving the presence of a massive central black hole. Thus, in the frame of a galaxy hosting a supermassive black hole ($10^8$ $M_{\\\\\\\\odot}$) we investigated a mechanism for the production of high velocity stars, which was suggested by the results of N-body simulations of the close interaction between a massive, orbitally decayed, globular cluster and the super massive black hole. The high velocity acquired by some stars of the cluster comes from the transfer of gravitational binding energy into kinetic energy of the escaping star originally orbiting around the cluster. After the close interaction with the massive black hole, stars could reach a velocity sufficient to travel in the halo and even overcome the galactic gravitational well, while some of them are just stripped from the globular cluster and start orbiting on precessing loops around the galactic centre."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 25.42141
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: high-velocity or extreme-velocity stars"
+      },
+      "deepxiv": {
+        "score": 12.312358,
+        "best_score": 25.42141,
+        "search_keywords": null,
+        "citations": "43"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] The paper investigates a novel mechanism for producing high-velocity stars via gravitational energy transfer during a close interaction between a massive, orbitally decayed globular cluster and a supermassive black hole (SMBH) in the galactic center. Stars within the cluster gain kinetic energy through tidal disruption and gravitational slingshot effects, enabling some to escape the galactic potential or enter precessing orbits around the SMBH. This mechanism extends beyond the classical Hills mechanism by involving cluster-scale dynamics and provides a viable pathway for generating both runaway and hypervelocity stars, particularly in the context of observed stellar kinematics in the galactic halo.",
+        "keywords": [
+          "gravitational binding energy transfer",
+          "globular cluster disruption",
+          "supermassive black hole interactions",
+          "hypervelocity star formation",
+          "stellar kinematics in galactic halos"
+        ],
+        "citations": "43",
+        "published_at": "2015-09-10T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1509.03170",
+          "src_url": "https://arxiv.org/pdf/1509.03170",
+          "title": "High velocity stars from close interaction of a globular cluster and a super massive black hole"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T220916"
+      },
+      "source_fields": {
+        "pg_id": 1999232,
+        "venue": null,
+        "journal_name": "Monthly Notices of the Royal Astronomical Society",
+        "status": "extracted",
+        "token_count": 20396,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": null,
+        "sections_text": "Method: The paper proposes a 3-body scattering model in which stars interact with a globular cluster orbiting a supermassive black hole, using orbital energy and angular momentum to sample eccentricity variations and neglecting the external stellar background potential within the Hill sphere and influence radius to study high-velocity star production. Results: Scattering experiments show that for less eccentric GC orbits (higher α), the fraction of stars captured by the BH decreases, the fraction remaining bound to the GC increases (reaching ~80% at e∼0.7 for M_GC=10⁴ M⊙), and the fraction ejected as high-velocity stars decreases with increasing α but increases with GC mass. Conclusions: This study demonstrates that close encounters between a massive globular cluster and a supermassive black hole can efficiently eject stars at high velocities, with up to 50% of stars escaping the cluster and about 18% reaching galactic escape velocity, primarily through 3-body interactions, and shows that the outcome depends on cluster mass, encounter geometry, and the cluster's internal structure. Introduction: This paper introduces a novel method to reconstruct the full three-dimensional velocity vectors of hypervelocity stars by combining MMT spectroscopic data with precise proper motion measurements, thereby solving the critical problem of incomplete velocity information that limits the ability to confirm their origin from Galactic center interactions. Appendix A Fraction of particles in nearly circular orbits: This section derives the ergodic distribution functions for spherical stellar systems in steady potentials, showing how the distribution function depends on the relative energy and the potential's form, with isotropic models given explicitly for the Hernquist and Plummer potentials and anisotropic models introduced via a power-law dependence on angular momentum.",
+        "highlight": {
+          "abstract": [
+            "Observations show the presence, in the halo of our Galaxy, of <em>stars</em> moving at velocities so high to require an acceleration mechanism involving the presence of a massive central black hole.",
+            "Thus, in the frame of a galaxy hosting a supermassive black hole ($10^8$ $M_{\\\\\\\\odot}$) we investigated a mechanism for the production of high velocity <em>stars</em>, which was suggested by the results of N-body",
+            "The high velocity acquired by some <em>stars</em> of the cluster comes from the transfer of gravitational binding energy into kinetic energy of the escaping star originally orbiting around the cluster.",
+            "After the close interaction with the massive black hole, <em>stars</em> could reach a velocity sufficient to travel in the halo and even overcome the galactic gravitational well, while some of them are just stripped"
+          ],
+          "title": [
+            "High velocity <em>stars</em> from close interaction of a globular cluster and a super massive black hole"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.9,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Purely theoretical mechanism study investigating gravitational energy transfer from globular cluster-SMBH interactions to produce high-velocity stars. No observational data, candidate lists, or catalog analysis mentioned.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:11:13"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 0,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T22:11:13"
+  }
+}

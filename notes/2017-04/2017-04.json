@@ -1,0 +1,326 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2017-04",
+  "date_from": "2017-04-01",
+  "date_to": "2017-04-30",
+  "run": {
+    "run_id": "20260419T220335",
+    "started_at": "2026-04-19T22:03:35"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2017-04",
+    "date_from": "2017-04-01",
+    "date_to": "2017-04-30",
+    "raw_unique": 32,
+    "relevant_count": 2,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 32,
+    "classifier_included": 2,
+    "classifier_filtered": 30,
+    "classifier_errors": 0,
+    "direct_rule_included": 2,
+    "weak_rule_candidates": 1,
+    "weak_llm_reviewed": 1,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 2,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 126,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 291,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 126,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 128,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 127,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1704.07990",
+      "title": "An artificial neural network to discover Hypervelocity stars: Candidates in Gaia DR1/TGAS",
+      "authors": [
+        "T. Marchetti",
+        "E. M. Rossi",
+        "G. Kordopatis",
+        "A. G. A. Brown",
+        "A. Rimoldi",
+        "E. Starkenburg",
+        "K. Youakim",
+        "R. Ashley"
+      ],
+      "author_names": "T. Marchetti E. M. Rossi G. Kordopatis A. G. A. Brown A. Rimoldi E. Starkenburg K. Youakim R. Ashley",
+      "categories": [
+        "astro-ph.GA",
+        "astro-ph.SR"
+      ],
+      "published_at": "2017-04-26 00:00:00",
+      "updated_at": "2017-05-29 09:02:23",
+      "links": {
+        "abs": "https://arxiv.org/abs/1704.07990",
+        "pdf": "https://arxiv.org/pdf/1704.07990"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "The paucity of hypervelocity stars (HVSs) known to date has severely hampered their potential to investigate the stellar population of the Galactic Centre and the Galactic Potential. The first Gaia data release gives an opportunity to increase the current sample. The challenge is the disparity between the expected number of hypervelocity stars and that of bound background stars. We have applied a novel data mining algorithm based on machine learning techniques, an artificial neural network, to the Tycho-Gaia astrometric solution (TGAS) catalogue. With no pre-selection of data, we could exclude immediately $\\\\\\\\sim 99 \\\\\\\\%$ of the stars in the catalogue and find 80 candidates with more than $90\\\\\\\\%$ predicted probability to be HVSs, based only on their position, proper motions, and parallax. We have cross-checked our findings with other spectroscopic surveys, determining radial velocities for 30 and spectroscopic distances for 5 candidates. In addition, follow-up observations have been carried out at the Isaac Newton Telescope for 22 stars, for which we obtained radial velocities and distance estimates. We discover 14 stars with a total velocity in the Galactic rest frame > 400 km/s, and 5 of these have a probability $>50\\\\\\\\%$ of being unbound from the Milky Way. Tracing back their orbits in different Galactic potential models we find one possible unbound HVS with velocity $\\\\\\\\sim$ 520 km/s, 5 bound HVSs, and, notably, 5 runaway stars with median velocity between 400 and 780 km/s. At the moment, uncertainties in the distance estimates and ages are too large to confirm the nature of our candidates by narrowing down their ejection location, and we wait for future Gaia releases to validate the quality of our sample. This test successfully demonstrates the feasibility of our new data mining routine."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 29.505323
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars"
+      },
+      "deepxiv": {
+        "score": 29.505323,
+        "best_score": 29.505323,
+        "search_keywords": null,
+        "citations": "24"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] A machine learning-based artificial neural network is applied to the Tycho-Gaia astrometric solution (TGAS) to identify hypervelocity stars (HVSs) without pre-selection, achieving a 99% rejection rate of background stars and identifying 80 candidates with >90% predicted probability of being HVSs based solely on position, proper motion, and parallax. Among these, 14 stars exceed 400 km s⁻¹ in Galactic rest frame velocity, with 5 having >50% probability of being unbound; orbital tracing reveals one possible unbound HVS (~520 km s⁻¹), five bound HVSs, and five runaway stars (400–780 km s⁻¹), demonstrating the feasibility of large-scale HVS discovery using astrometric data alone.",
+        "keywords": [
+          "astrometric data mining",
+          "hypervelocity star detection",
+          "neural network classification",
+          "Galactic kinematics",
+          "proper motion analysis"
+        ],
+        "citations": "24",
+        "published_at": "2017-04-26T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1704.07990",
+          "src_url": "https://arxiv.org/pdf/1704.07990",
+          "title": "An artificial neural network to discover Hypervelocity stars: Candidates in Gaia DR1/TGAS"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T220335"
+      },
+      "source_fields": {
+        "pg_id": 2679179,
+        "venue": null,
+        "journal_name": "Monthly Notices of the Royal Astronomical Society",
+        "status": "extracted",
+        "token_count": 40641,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": null,
+        "sections_text": "Results: The experiment identified 45 out of 47 candidate hypervelocity stars (HVSs) with median Galactic rest-frame velocities exceeding 150 km s⁻¹, and 11 of them are consistent with being unbound from the Milky Way, demonstrating a high success rate in detecting high-velocity stars with velocities above the local escape speed. Introduction: This paper introduces a novel framework that leverages Gaia's high-precision proper motion and radial velocity data to accurately identify and constrain the Galactic Centre origins of low-mass hypervelocity stars, solving the long-standing problem of large distance and motion uncertainties that have hindered precise origin determination and environmental inference for these rare stars. Distance estimation: The section argues that direct inversion of parallaxes for distance estimation is biased and unreliable due to parallax errors and parameter correlations, and thus proposes a Bayesian method that accounts for astrometric covariances to more accurately estimate stellar distances from Gaia data. Data Mining algorithm: The paper proposes a supervised machine learning approach using an artificial neural network to classify stars in the Gaia TGAS catalogue based on their astrometric properties—position, parallax, and proper motions—into either normal background stars or hypervelocity stars by learning from a training set of known examples. Application to Gaia DR1: A neural network applied to Gaia DR1 data identifies 80 high-probability hypervelocity star candidates through astrometric analysis alone, using probabilistic filtering and uncertainty propagation without relying on spectral, photometric, or radial velocity information. Discussion and Conclusions: The study identified 80 high-velocity star candidates from Gaia data, with 45 exhibiting median rest-frame velocities >150 km s⁻¹ and 5 having >50% probability of being unbound from the Milky Way, including 6 Galactic Center-origin stars and 5 hyper-runaway stars, demonstrating the algorithm's effectiveness in detecting rare, high-velocity objects without spectral bias. Appendix A Gaia Identifiers: This appendix provides Tycho 2, Hipparcos, and Gaia identifiers for hypervelocity star candidates identified in the study, linking observational data from the INT telescope to the Gaia DR1/TGAS catalog. Acquiring spectral information: To assess and confirm high-velocity stars (HVSs), reliable heliocentric radial velocities were obtained through follow-up spectroscopic observations using the INT telescope, with velocities determined via cross-correlation and validated against standard stars. Discussion of Individual Candidates: The experiment identifies six hypervelocity and bound hypervelocity star candidates, including TYC 8422-875-1, with parallax-inferred distances favored over distance modulus estimates, and all exhibit highly radial orbits with median eccentricities >0.9, consistent with ejection from the Galactic center. Appendix B Assuming Different Priors on Distance: This paper addresses the critical issue of distance priors in hypervelocity star (HVS) detection by challenging the use of standard Milky Way density models and introducing a physically motivated HVS-specific prior, positioning itself at the intersection of astrophysical modeling and machine learning-based kinematic analysis.",
+        "highlight": {
+          "abstract": [
+            "The paucity of <em>hypervelocity</em> <em>stars</em> (HVSs) known to date has severely hampered their potential to investigate the stellar population of the Galactic Centre and the Galactic Potential.",
+            "The challenge is the disparity between the expected number of <em>hypervelocity</em> <em>stars</em> and that of bound background <em>stars</em>.",
+            "With no pre-selection of data, we could exclude immediately $\\\\\\\\sim 99 \\\\\\\\%$ of the <em>stars</em> in the catalogue and find 80 candidates with more than $90\\\\\\\\%$ predicted probability to be HVSs, based only",
+            "In addition, follow-up observations have been carried out at the Isaac Newton Telescope for 22 <em>stars</em>, for which we obtained radial velocities and distance estimates.",
+            "We discover 14 <em>stars</em> with a total velocity in the Galactic rest frame > 400 km/s, and 5 of these have a probability $>50\\\\\\\\%$ of being unbound from the Milky Way."
+          ],
+          "title": [
+            "An artificial neural network to discover <em>Hypervelocity</em> <em>stars</em>: Candidates in Gaia DR1/TGAS"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper applies neural network to TGAS data to identify 80 HVS candidates, provides follow-up radial velocities for 30 stars, and presents 14 high-velocity stars with measured velocities >400 km/s. Explicitly mentions candidate lists, cross-matching with surveys, and follow-up observations.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:05:04"
+      }
+    },
+    {
+      "arxiv_id": "1704.06257",
+      "title": "Relaxation near supermassive black holes driven by nuclear spiral arms: anisotropic hypervelocity stars, S-stars and tidal disruption events",
+      "authors": [
+        "Adrian S. Hamers",
+        "Hagai B. Perets"
+      ],
+      "author_names": "Adrian S. Hamers Hagai B. Perets",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2017-04-20 00:00:00",
+      "updated_at": "2017-07-10 17:22:43",
+      "links": {
+        "abs": "https://arxiv.org/abs/1704.06257",
+        "pdf": "https://arxiv.org/pdf/1704.06257"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Nuclear spiral arms are small-scale transient spiral structures found in the centers of galaxies. Similarly to their galactic-scale counterparts, nuclear spiral arms can perturb the orbits of stars. In the case of the Galactic Center (GC), these perturbations can affect the orbits of stars and binaries in a region extending to several hundred parsecs around the supermassive black hole (MBH), causing diffusion in orbital energy and angular momentum. This diffusion process can drive stars and binaries to close approaches with the MBH, disrupting single stars in tidal disruption events (TDEs), or disrupting binaries, leaving a star tightly bound to the MBH, and an unbound star escaping the galaxy, i.e., a hypervelocity star (HVS). Here, we consider diffusion by nuclear spiral arms in galactic nuclei, specifying to the Milky Way GC. We determine nuclear spiral arm-driven diffusion rates using test-particle integrations, and compute disruption rates. Our TDE rates are up to 20% higher compared to relaxation by single stars. For binaries, the enhancement is up to a factor of ~100, and our rates are comparable to the observed numbers of HVSs and S-stars. Our scenario is complementary to relaxation driven by massive perturbers. In addition, our rates depend on the inclination of the binary with respect to the Galactic plane. Therefore, our scenario provides a novel potential source for the observed anisotropic distribution of HVSs. Nuclear spiral arms may also be important for accelerating the coalescence of binary MBHs, and for supplying nuclear star clusters with stars and gas."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 26.566648
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars"
+      },
+      "deepxiv": {
+        "score": 26.566648,
+        "best_score": 26.566648,
+        "search_keywords": null,
+        "citations": "14"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] The paper models orbital diffusion in the Galactic Center caused by transient nuclear spiral arms—small-scale gas-driven spiral structures—showing that these structures enhance tidal disruption event (TDE) rates by up to 20% and binary disruption rates by up to a factor of 100 compared to standard stellar relaxation. The resulting hypervelocity stars (HVSs) and bound S-stars exhibit anisotropic distributions depending on binary inclination, offering a novel explanation for observed HVS anisotropy and potentially accelerating binary supermassive black hole coalescence or fueling nuclear star clusters.",
+        "keywords": [
+          "nuclear spiral arm dynamics",
+          "tidal disruption event (TDE) rate enhancement",
+          "anisotropic hypervelocity star distribution",
+          "binary disruption in galactic centers",
+          "orbital diffusion in dense stellar environments"
+        ],
+        "citations": "14",
+        "published_at": "2017-04-20T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1704.06257",
+          "src_url": "https://arxiv.org/pdf/1704.06257",
+          "title": "Relaxation near supermassive black holes driven by nuclear spiral arms: anisotropic hypervelocity stars, S-stars and tidal disruption events"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T220335"
+      },
+      "source_fields": {
+        "pg_id": 2685955,
+        "venue": null,
+        "journal_name": "The Astrophysical Journal",
+        "status": "extracted",
+        "token_count": 54071,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": null,
+        "sections_text": "5. Discussion: The experiment finds that nuclear spiral arms enhance single and binary star disruption rates by up to $3.0 \\\\times 10^{-5}\\\\,\\\\mathrm{yr^{-1}}$ and $10^{-6}\\\\,\\\\mathrm{yr^{-1}}$ respectively, with rates for HVSs and S-stars matching observations when including spiral arm-driven relaxation, while showing only a modest inclination dependence and a distinct anisotropic distribution relative to the Galactic plane. 6. Conclusions: Nuclear spiral arms in the galactic center can efficiently drive angular-momentum diffusion and disrupt binary stars, enhancing the formation rates of S-stars and hypervelocity stars by orders of magnitude compared to stellar relaxation alone, with disruption rates consistent with observations under plausible physical conditions. 1. Introduction: This paper introduces a novel connection between transient nuclear spiral arms in the Galactic Center and the heating of young stellar populations through spiral-induced velocity perturbations, solving the problem of explaining how recent star formation in dense environments is driven by gas dynamics and tidal forces from nuclear spiral structures. 4. Disruption rates: This section shows that disruption rates of stars and binaries by a supermassive black hole are highest near the transition between empty and full loss cones, where relaxation by nuclear spiral arms efficiently refills the loss cone, leading to peak disruption rates in the galactic center. 3. Diffusion by nuclear spiral arms: This section uses large-scale orbital integrations to model stellar diffusion in the galactic center due to nuclear spiral arms, determining diffusion coefficients from orbital angular momentum and energy to assess relaxation effects on stars and binaries. 2. Orbits around the GC in the presence of nuclear spiral arms: This section describes the modeling of the gravitational potential in the Galactic Center, including the supermassive black hole, bulge, and nuclear spiral arms, and outlines the integration of stellar orbits to compute relaxation timescales, diffusion coefficients, and disruption rates by the black hole. Appendix B Disruption rates and expected number of HVSs and S-stars: This section presents disruption rates and expected numbers of hypervelocity stars (HVSs) and S-stars under various inclinations and stellar density conditions in galactic nuclei, showing how orbital dynamics and environmental factors influence their production and loss. Appendix A Loss-cone diffusion coefficients for relaxation driven by stars: This section derives the orbit-averaged angular-momentum diffusion coefficient due to stellar interactions, expressed in terms of the distribution function and potential, through integrals involving the Coulomb logarithm and energy-dependent integrals over stellar orbits.",
+        "highlight": {
+          "abstract": [
+            "Similarly to their galactic-scale counterparts, nuclear spiral arms can perturb the orbits of <em>stars</em>.",
+            "This diffusion process can drive <em>stars</em> and binaries to close approaches with the MBH, disrupting single <em>stars</em> in tidal disruption events (TDEs), or disrupting binaries, leaving a star tightly bound to",
+            "the MBH, and an unbound star escaping the galaxy, i.e., a <em>hypervelocity</em> star (HVS).",
+            "Our TDE rates are up to 20% higher compared to relaxation by single <em>stars</em>.",
+            "For binaries, the enhancement is up to a factor of ~100, and our rates are comparable to the observed numbers of HVSs and S-<em>stars</em>."
+          ],
+          "title": [
+            "Relaxation near supermassive black holes driven by nuclear spiral arms: anisotropic <em>hypervelocity</em> <em>stars</em>",
+            ", S-<em>stars</em> and tidal disruption events"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.9,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Purely theoretical/dynamical study of nuclear spiral arm effects on stellar orbits in Galactic Center. Computes diffusion rates and disruption rates via test-particle integrations, but presents no observational data, candidate lists, or analysis of actual stellar objects.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:05:04"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 2,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T22:05:04"
+  }
+}

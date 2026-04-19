@@ -1,0 +1,205 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2024-09",
+  "date_from": "2024-09-01",
+  "date_to": "2024-09-30",
+  "run": {
+    "run_id": "20260419T213844",
+    "started_at": "2026-04-19T21:38:44"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2024-09",
+    "date_from": "2024-09-01",
+    "date_to": "2024-09-30",
+    "raw_unique": 39,
+    "relevant_count": 1,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 39,
+    "classifier_included": 1,
+    "classifier_filtered": 38,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 1,
+    "weak_llm_reviewed": 1,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 183,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 475,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 183,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 185,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 185,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2409.13564",
+      "title": "Binary Disruption and Ejected Stars from Hierarchical Star Cluster Assembly",
+      "authors": [
+        "Claude Cournoyer-Cloutier",
+        "Jeremy Karam",
+        "Alison Sills",
+        "Simon Portegies Zwart",
+        "Maite J. C. Wilhelm"
+      ],
+      "author_names": "Claude Cournoyer-Cloutier Jeremy Karam Alison Sills Simon Portegies Zwart Maite J. C. Wilhelm",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2024-09-20 00:00:00",
+      "updated_at": "2024-09-20 15:04:17",
+      "links": {
+        "abs": "https://arxiv.org/abs/2409.13564",
+        "pdf": "https://arxiv.org/pdf/2409.13564"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We simulate mergers between star clusters embedded within their natal giant molecular cloud. We extract initial conditions from cloud-scale simulations of cluster formation and introduce different prescriptions for primordial binaries. We find that simulations that do not include primordial binaries result in a larger fraction of unbound stars than simulations which include a prescription for binaries based on observations. We also find a preferred direction of motion for stars that become unbound during the merger. Sub-cluster mergers within realistic gas environments promote binary disruption while mergers between idealized, gas-rich spherical clusters do not produce the same disruption. Binary systems with smaller semi-major axes are disrupted in simulations of sub-cluster mergers within their natal environment compared to simulations that do not include the realistic gas environment. We conclude that binary disruption and the production of an anisotropic distribution of unbound stars are the natural consequences of sub-cluster mergers during star cluster assembly."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 21.756145
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: unbound, escaping, or ejected stars"
+      },
+      "deepxiv": {
+        "score": 10.380014,
+        "best_score": 21.756145,
+        "search_keywords": null,
+        "citations": "7"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] Sub-cluster mergers in realistic gas-rich environments disrupt binaries more effectively than idealized, gas-free mergers, leading to a higher fraction of unbound stars and an anisotropic ejection direction. Simulations show that binaries with smaller semi-major axes are preferentially disrupted in gas-rich settings, and the resulting unbound stars exhibit a preferred direction of motion, indicating that binary disruption and anisotropic ejection are natural dynamical outcomes of hierarchical cluster assembly in natal molecular clouds.",
+        "keywords": [
+          "binary disruption",
+          "sub-cluster mergers",
+          "anisotropic ejection",
+          "gas-rich environments",
+          "stellar dynamics in cluster formation"
+        ],
+        "citations": "7",
+        "published_at": "2024-09-20T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2409.13564",
+          "src_url": "https://arxiv.org/pdf/2409.13564",
+          "title": "Binary Disruption and Ejected Stars from Hierarchical Star Cluster Assembly"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T213844"
+      },
+      "source_fields": {
+        "pg_id": 1225955,
+        "venue": "Astrophysical Journal",
+        "journal_name": "The Astrophysical Journal",
+        "status": "extracted",
+        "token_count": 15472,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 23:47:32",
+        "sections_text": "Methods: The paper proposes a method that uses realistic initial conditions from a magneto-hydrodynamic simulation of star formation in a collapsing cloud, where a merger between two sub-clusters forms at a specific time, and models the subsequent stellar dynamics using an N-body code with advanced treatments for binaries and close encounters to capture the physical evolution of the system. Results: In merger simulations, the binary fraction decreases from an initial ~27% to a final ~19–21%, with about half of the decline occurring during the first 0.4 Myr of the merger, and most disruptions happening within the first 0.1 Myr, while the Plummer sphere merger shows a steeper early decline and a higher final binary fraction compared to the TORCH-inherited simulations. Summary: Sub-cluster mergers within giant molecular clouds efficiently disrupt binaries, reduce the binary fraction, and produce unbound stars with directional motion, providing a natural explanation for observed binary properties in dense star-forming environments and globular clusters. Discussion: The excess binary disruption in TORCH simulations arises from a more extended, background-rich gas distribution that accelerates sub-cluster mergers and creates a shallower gravitational potential, leading to higher disruption rates—especially in the first 0.2 Myr—and explains the lower wide binary fraction in regions like the ONC, where gas-rich mergers are inferred. Introduction: This paper introduces a novel framework that links stellar binary populations and massive star ejection during hierarchical cluster mergers, solving the problem of understanding how cluster assembly processes—such as subcluster mergers and dynamical interactions—shape stellar multiplicity and drive massive star escape, thereby explaining observed abundance variations and feedback effects in young massive clusters.",
+        "highlight": {
+          "abstract": [
+            "We find that simulations that do not include primordial binaries result in a larger fraction of unbound <em>stars</em> than simulations which include a prescription for binaries based on observations.",
+            "We also find a preferred direction of motion for <em>stars</em> that become unbound during the merger.",
+            "We conclude that binary disruption and the production of an anisotropic distribution of unbound <em>stars</em> are the natural consequences of sub-cluster mergers during star cluster assembly."
+          ],
+          "title": [
+            "Binary Disruption and Ejected <em>Stars</em> from Hierarchical Star Cluster Assembly"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.95,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Purely simulation paper about binary disruption and unbound star production in cluster mergers, no observational data presented",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:41:47"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 0,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:41:47"
+  }
+}

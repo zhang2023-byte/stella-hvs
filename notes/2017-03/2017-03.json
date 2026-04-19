@@ -1,0 +1,505 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2017-03",
+  "date_from": "2017-03-01",
+  "date_to": "2017-03-31",
+  "run": {
+    "run_id": "20260419T220335",
+    "started_at": "2026-04-19T22:03:35"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2017-03",
+    "date_from": "2017-03-01",
+    "date_to": "2017-03-31",
+    "raw_unique": 34,
+    "relevant_count": 4,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 34,
+    "classifier_included": 4,
+    "classifier_filtered": 30,
+    "classifier_errors": 0,
+    "direct_rule_included": 2,
+    "weak_rule_candidates": 2,
+    "weak_llm_reviewed": 2,
+    "weak_llm_included": 2,
+    "brief_eligible_count": 2,
+    "brief_skipped_weak_count": 2
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 113,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 340,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 113,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 116,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 114,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1703.08551",
+      "title": "Formation of runaway stars in a star-cluster potential",
+      "authors": [
+        "Taeho Ryu",
+        "Nathan W. C. Leigh",
+        "Rosalba Perna"
+      ],
+      "author_names": "Taeho Ryu Nathan W. C. Leigh Rosalba Perna",
+      "categories": [
+        "astro-ph.GA",
+        "astro-ph.SR"
+      ],
+      "published_at": "2017-03-24 00:00:00",
+      "updated_at": "2017-06-05 16:03:26",
+      "links": {
+        "abs": "https://arxiv.org/abs/1703.08551",
+        "pdf": "https://arxiv.org/pdf/1703.08551"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We study the formation of runaway stars due to binary-binary (2+2) interactions in young star-forming clusters and/or associations. This is done using a combination of analytic methods and numerical simulations of 2+2 scattering interactions, both in isolation and in a homogeneous background potential. We focus on interactions that produce two single stars and a binary, and study the outcomes as a function of the depth of the background potential, within a range typical of cluster cores. As reference parameters for the observational properties, we use those observed for the system of runaway stars AE Aur and $\\\\\\\\mu$ Col and binary $\\\\\\\\iota$ Ori. We find that the outcome fractions have no appreciable dependence on the depth of the potential, and neither do the velocities of the ejected single stars. However, as the potential gets deeper and a larger fraction of binaries remain trapped, two binary populations emerge, with the escaped component having higher speeds and shorter semi-major axes than the trapped one. Additionally, we find that the relative angles between the ejected products are generally large. In particular, the angle between the ejected fastest star and the escaped binary is typically $\\\\\\\\gtrsim 120-135^{\\\\\\\\circ}$, with a peak at around $160^{\\\\\\\\circ}$. However, as the potential gets deeper, the angle distribution becomes broader. Finally, we discuss the implications of our results for the interpretation of the properties of the runaway stars AE Aur and $\\\\\\\\mu$ Col."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 29.77929
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: runaway stars"
+      },
+      "deepxiv": {
+        "score": 11.090357,
+        "best_score": 29.77929,
+        "search_keywords": null,
+        "citations": "8"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] The study quantifies how a background gravitational potential affects the outcomes of binary-binary (2+2) scattering events in young star clusters, focusing on the 2+1+1 outcome that produces runaway stars. It finds that while ejection velocities and outcome fractions are independent of potential depth, deeper potentials lead to two distinct binary populations: one escaped with higher speeds and shorter orbital periods, and one trapped. The angle between the fastest ejected star and the escaped binary is typically ≥120°–135°, peaking at ~160°, and broadens with increasing potential depth. These results refine the dynamical interpretation of observed runaway stars like AE Aur and μ Col in the Trapezium cluster, showing that cluster potential significantly shapes the kinematic and angular structure of ejection products without altering core velocity distributions.",
+        "keywords": [
+          "binary-binary scattering",
+          "runaway star formation",
+          "gravitational background potential",
+          "dynamical ejection angles",
+          "star cluster kinematics"
+        ],
+        "citations": "8",
+        "published_at": "2017-03-24T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1703.08551",
+          "src_url": "https://arxiv.org/pdf/1703.08551",
+          "title": "Formation of runaway stars in a star-cluster potential"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T220335"
+      },
+      "source_fields": {
+        "pg_id": 2597753,
+        "venue": null,
+        "journal_name": "Monthly Notices of the Royal Astronomical Society",
+        "status": "extracted",
+        "token_count": 24291,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": null,
+        "sections_text": "Method: The paper proposes a numerical method that uses two different N-body codes—RTP for simulations with a background potential and FEWBODY for isolated cases—to study how background potentials affect the runaway formation of O/B-type stars in binary-binary encounters, by systematically varying the background potential depth while keeping initial binary parameters fixed and comparing outcomes with and without the potential. Results: The scattering experiments show that the $2 + 1 + 1$ outcome is most common ($\\\\sim 77\\\\%$), with the formation of the most massive $[S_{11} + S_{21}]$ binary accounting for $\\\\sim 38\\\\%$ of these cases, highlighting a strong preference for massive binary formation in binary encounters. Footnotes: The section provides technical details and footnotes explaining error control in numerical methods, comparisons of impact parameters, limitations in simulating flyby outcomes due to cross-section assumptions, and definitions of physical quantities used in the simulations. Discussion: The background potential has a negligible effect on the formation probabilities of runaway stars in tight binary-binary encounters, but deepens the potential by increasing the escape velocity leads to two distinct binary populations—escaped (E-binaries) with shorter semimajor axes and higher velocities, and non-escaped (NE-binaries) with velocity constraints by the escape velocity, with ~40% of binaries failing to escape when $\\\\nu_{\\\\mathrm{esc}} \\\\simeq 20\\\\,\\\\mathrm{km\\\\,s^{-1}}$. Introduction: This paper makes the novel contribution of quantifying how a star cluster's background gravitational potential affects the velocity and angular properties of runaway stars produced in $2+2$ scattering events that yield a $2+1+1$ outcome, addressing a critical gap in existing dynamical models.",
+        "highlight": {
+          "abstract": [
+            "We study the formation of runaway <em>stars</em> due to binary-binary (2+2) interactions in young star-forming clusters and/or associations.",
+            "We focus on interactions that produce two single <em>stars</em> and a binary, and study the outcomes as a function of the depth of the background potential, within a range typical of cluster cores.",
+            "As reference parameters for the observational properties, we use those observed for the system of runaway <em>stars</em> AE Aur and $\\\\\\\\mu$ Col and binary $\\\\\\\\iota$ Ori.",
+            "We find that the outcome fractions have no appreciable dependence on the depth of the potential, and neither do the velocities of the ejected single <em>stars</em>.",
+            "Finally, we discuss the implications of our results for the interpretation of the properties of the runaway <em>stars</em> AE Aur and $\\\\\\\\mu$ Col."
+          ],
+          "title": [
+            "Formation of runaway <em>stars</em> in a star-cluster potential"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.95,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Purely theoretical/simulation study of runaway star formation via binary-binary scattering. Uses observed stars (AE Aur, μ Col, ι Ori) only as reference/motivation, not presenting new observational data.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:04:45"
+      }
+    },
+    {
+      "arxiv_id": "1703.08538",
+      "title": "An analytic method for identifying dynamically-formed runaway stars",
+      "authors": [
+        "Taeho Ryu",
+        "Nathan W. C. Leigh",
+        "Rosalba Perna"
+      ],
+      "author_names": "Taeho Ryu Nathan W. C. Leigh Rosalba Perna",
+      "categories": [
+        "astro-ph.GA",
+        "astro-ph.SR"
+      ],
+      "published_at": "2017-03-24 00:00:00",
+      "updated_at": "2017-05-09 15:14:02",
+      "links": {
+        "abs": "https://arxiv.org/abs/1703.08538",
+        "pdf": "https://arxiv.org/pdf/1703.08538"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "In this paper, we study the 3-body products (two single stars and a binary) of binary-binary (2+2) scattering interactions. This is done using a combination of analytic methods and numerical simulations of 2+2 scattering interactions, both in isolation and in a homogeneous background potential. We derive analytically a simple formula relating the angle between the velocity vectors of the two ejected single stars and the orbital separation of the remaining binary. We compare our analytic formulation to numerical scattering simulations, and illustrate that the agreement is excellent, both in isolation and in a homogeneous background potential. Our results are ideally suited for application to the GAIA database, which is expected to identify many hundred runaway stars. The analytic relation presented here has the potential to identify runaway stars formed dynamically with high confidence. Finally, by applying our method to the runaways AE Aur and $\\\\\\\\mu$ Col, we illustrate that it can be used to constrain the history of the background potential, which was denser than the presently observed density in the case of the Trapezium cluster."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 29.320349
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: runaway stars"
+      },
+      "deepxiv": {
+        "score": 11.199062,
+        "best_score": 29.320349,
+        "search_keywords": null,
+        "citations": "9"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] The paper derives an analytic formula linking the relative velocity angle between two ejected single stars in binary-binary scattering events to the orbital separation of the resulting binary, using conservation of momentum in the center-of-mass frame. This relation holds both in isolation and under a homogeneous background potential, and is validated against numerical simulations. The method enables high-confidence identification of dynamically-formed runaway stars in Gaia data and can constrain the background density of stellar clusters by comparing predicted binary properties to observations, as demonstrated for AE Aur and μ Col.",
+        "keywords": [
+          "binary-binary scattering",
+          "runaway star formation",
+          "gravitational chaos",
+          "momentum conservation",
+          "analytic dynamics"
+        ],
+        "citations": "9",
+        "published_at": "2017-03-24T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1703.08538",
+          "src_url": "https://arxiv.org/pdf/1703.08538",
+          "title": "An analytic method for identifying dynamically-formed runaway stars"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T220335"
+      },
+      "source_fields": {
+        "pg_id": 2603122,
+        "venue": null,
+        "journal_name": "Monthly Notices of the Royal Astronomical Society",
+        "status": "extracted",
+        "token_count": 33160,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 06:22:22",
+        "sections_text": "Results: The analytic formulae accurately predict the final binary speeds, semimajor axes, and relative angles in binary-binary scatterings, with results matching numerical simulations within 5% and showing that background potentials significantly influence runaway star formation by altering ejection dynamics and final binary properties, as confirmed in both extreme limits and full simulations. Summary: This paper derives analytic formulas for the final binary's velocity and orientation in binary-binary interactions, showing strong agreement with simulations and demonstrating symmetry in ejection order that simplifies observational comparisons, even in the presence of a background potential. Appendix#2: This section presents simulation results showing that the radial distances of ejected stars at 4 Myr closely match analytic predictions, with final speeds within 7% of the theoretical values, regardless of whether the background potential is included or the escape velocity parameter ν is equal or unequal. Discussion: The method identifies that the Trapezium cluster was denser and more massive 2.4 Myr ago—consistent with a predicted escape velocity of >15.5 km/s—based on the observed runaway stars AE Aur and μ Col, with a current escape velocity of ~9(M_bg/10⁴ M☉)¹/³(ρ/2500 M☉/pc³)¹/⁶, suggesting a past higher mass density and enabling constraints on the lifetime of massive stars. Introduction: This paper makes the novel contribution of deriving an analytic framework for binary-binary scattering in the four-body problem that predicts the final binary's properties from initial energy and momentum, enabling unambiguous identification of dynamically ejected runaway stars and distinguishing them from those formed in other processes. Analytic Formulation Of $2 + 1 + 1$ Case: This section derives analytic expressions for the binary's momentum, velocity, and the relative angles between the ejected stars and the binary using only conservation of momentum, independent of the initial encounter details.",
+        "highlight": {
+          "abstract": [
+            "In this paper, we study the 3-body products (two single <em>stars</em> and a binary) of binary-binary (2+2) scattering interactions.",
+            "We derive analytically a simple formula relating the angle between the velocity vectors of the two ejected single <em>stars</em> and the orbital separation of the remaining binary.",
+            "Our results are ideally suited for application to the GAIA database, which is expected to identify many hundred runaway <em>stars</em>.",
+            "The analytic relation presented here has the potential to identify runaway <em>stars</em> formed dynamically with high confidence."
+          ],
+          "title": [
+            "An analytic method for identifying dynamically-formed runaway <em>stars</em>"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.9,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Analytical method paper for identifying dynamically-formed runaway stars. Mentions application to Gaia data and uses AE Aur/μ Col as examples, but presents no new observational catalog or object-level data.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:04:45"
+      }
+    },
+    {
+      "arxiv_id": "1703.04548",
+      "title": "An Approximate Analytic Model of a Star Cluster with Potential Escapers",
+      "authors": [
+        "Kathryne J. Daniel",
+        "Douglas C. Heggie",
+        "Anna Lisa Varri"
+      ],
+      "author_names": "Kathryne J. Daniel Douglas C. Heggie Anna Lisa Varri",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2017-03-13 00:00:00",
+      "updated_at": "2017-03-13 19:59:39",
+      "links": {
+        "abs": "https://arxiv.org/abs/1703.04548",
+        "pdf": "https://arxiv.org/pdf/1703.04548"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "In the context of a star cluster moving on a circular galactic orbit, a \"potential escaper\" is a cluster star that has orbital energy greater than the escape energy, and yet is confined within the Jacobi radius of the stellar system. On the other hand analytic models of stellar clusters typically have a truncation energy equal to the cluster escape energy, and therefore explicitly exclude these energetically unbound stars. Starting from the landmark analysis performed by Henon of periodic orbits of the circular Hill equations, we present a numerical exploration of the population of \"non-escapers\", defined here as those stars which remain within two Jacobi radii for several galactic periods, with energy above the escape energy. We show that they can be characterised by the Jacobi integral and two further approximate integrals, which are based on perturbation theory and ideas drawn from Lidov-Kozai theory. Finally we use these results to construct an approximate analytic model that includes a phase space description of a population resembling that of potential escapers, in addition to the usual bound population."
+      },
+      "match": {
+        "queries": [
+          "unbound stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 12.581977
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.85,
+        "reason": "Weak title match: stellar escaper candidates LLM confirmed: Title and abstract explicitly discuss 'potential escapers' and 'energetically unbound stars' in star clusters, directly relevant to stellar escapers and escaping/ejected stars."
+      },
+      "deepxiv": {
+        "score": 12.581977,
+        "best_score": 12.581977,
+        "search_keywords": null,
+        "citations": "19"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T220335"
+      },
+      "source_fields": {
+        "pg_id": 2602896,
+        "venue": null,
+        "journal_name": "Monthly Notices of the Royal Astronomical Society",
+        "status": "extracted",
+        "token_count": 43685,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 06:19:34",
+        "sections_text": "Introduction: This paper introduces a novel, self-consistent framework for modeling tidal effects in star clusters by extending beyond simple energy-truncation prescriptions to better capture the structural and kinematic complexities—such as extended halos and flattened velocity dispersions—observed in clusters with significant extra-tidal features, thereby addressing the limitations of classical King-model-based approaches. Discussion and Conclusions: The study finds that defining non-escapers by $ r_{\\\\text{max}} < 2r_J $ is conservative and robust, with no observed escapes beyond $ 16\\\\pi $ (≈1.8 Gyr), and confirms that the integration time is sufficient for reliable classification of non-escapers in the model. A model with predicted non-escapers: The paper proposes an approximate analytic model of a star cluster by first deriving an empirical phase-space criterion to identify non-escapers based on their surface density and kinematics, then constructing a synthetic model by combining these predicted non-escapers with an underlying bound population. The Location of Non-Escapers in Phase Space: This section develops and validates approximate integrals of motion to identify and characterize non-escaping orbits in phase space, using a combination of analytic arguments and numerical evidence to construct a practical criterion for distinguishing non-escapers from escapers. Appendix A Perturbation theory of $f$-orbits: This section derives the first-order perturbation solution for $f$-orbits using tidal perturbations of a retrograde Keplerian orbit, showing how the orbital motion deviates from pure Keplerian behavior due to the tidal force. Appendix E Sampling the canonical distribution: This section describes a procedure for sampling the canonical phase-space distribution by first deriving the marginal distribution in position space using an integral transform, then applying an acceptance-rejection method with a carefully bounded upper limit, and finally sampling velocity magnitude and direction accordingly. Appendix D Sampling of the $\\\\Gamma$-hypersurface: This section derives a normalized equilibrium distribution on the $\\\\Gamma$-hypersurface by restricting the phase space to bounded radii and using a rejection method to sample positions and velocities consistent with Jeans' theorem and non-escaping orbits. Numerical studies of non-escaping orbits in Hill’s problem: This section derives the equations of motion for a star in a rotating frame and a non-rotating frame within Hill’s problem, introducing the Jacobi integral and relating the energy and angular momentum in both frames to describe non-escaping orbits in a star cluster. Appendix B Approximate first-order perturbation theory of the Kepler energy: This appendix derives the time-averaged tidal potential perturbation on a Keplerian orbit, showing how the average energy depends on orbital inclination, argument of pericentre, and orbital parameters, under the assumption of a static tidal field valid over short timescales. Appendix C Approximate first-order perturbation theory of the ${z}$-component of angular momentum: This section derives the time evolution of the $z$-component of angular momentum in a rotating frame using first-order perturbation theory, showing that it evolves as a combination of sinusoidal terms due to orbital motion and frame rotation, with averaged contributions depending on orbital elements and shape of the orbit.",
+        "highlight": {
+          "abstract": [
+            "On the other hand analytic models of stellar clusters typically have a truncation energy equal to the cluster escape energy, and therefore explicitly exclude these energetically <em>unbound</em> <em>stars</em>.",
+            "Starting from the landmark analysis performed by Henon of periodic orbits of the circular Hill equations, we present a numerical exploration of the population of \"non-escapers\", defined here as those <em>stars</em>"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.95,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Theoretical analytic model of star clusters with potential escapers. No observational data or object-level catalog presented; purely dynamical modeling.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:04:45"
+      }
+    },
+    {
+      "arxiv_id": "1703.03358",
+      "title": "Proper motions of five OB stars with candidate dusty bow shocks in the Carina Nebula",
+      "authors": [
+        "Megan M. Kiminki",
+        "Nathan Smith",
+        "Megan Reiter",
+        "John Bally"
+      ],
+      "author_names": "Megan M. Kiminki Nathan Smith Megan Reiter John Bally",
+      "categories": [
+        "astro-ph.SR",
+        "astro-ph.GA"
+      ],
+      "published_at": "2017-03-09 00:00:00",
+      "updated_at": "2017-03-09 17:25:44",
+      "links": {
+        "abs": "https://arxiv.org/abs/1703.03358",
+        "pdf": "https://arxiv.org/pdf/1703.03358"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We constrain the proper motions of five OB stars associated with candidate stellar wind bow shocks in the Carina Nebula using HST ACS imaging over 9--10 year baselines. These proper motions allow us to directly compare each star's motion to the orientation of its candidate bow shock. Although these stars are saturated in our imaging, we assess their motion by the shifts required to minimize residuals in their Airy rings. The results limit the direction of each star's motion to sectors less than 90 degrees wide. None of the five stars are moving away from the Carina Nebula's central clusters as runaway stars would be, confirming that a candidate bow shock is not necessarily indicative of a runaway star. Two of the five stars are moving tangentially relative to the orientation of their candidate bow shocks, both of which point at the OB cluster Trumpler 14. In these cases, the large-scale flow of the interstellar medium, powered by feedback from the cluster, appears to dominate over the motion of the star in producing the observed candidate bow shock. The remaining three stars all have some component of motion toward the central clusters, meaning that we cannot distinguish whether their candidate bow shocks are indicators of stellar motion, of the flow of ambient gas, or of density gradients in their surroundings. In addition, these stars' lack of outward motion hints that the distributed massive-star population in Carina's South Pillars region formed in place, rather than migrating out from the association's central clusters."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 20.121815
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.85,
+        "reason": "Weak title match: runaway-related mechanisms LLM confirmed: Paper directly studies OB stars to test if they are runaway stars using proper motions and bow shock orientations. Explicitly discusses runaway stars and their expected kinematics."
+      },
+      "deepxiv": {
+        "score": 9.967749,
+        "best_score": 20.121815,
+        "search_keywords": null,
+        "citations": "4"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T220335"
+      },
+      "source_fields": {
+        "pg_id": 2597762,
+        "venue": null,
+        "journal_name": "Monthly Notices of the Royal Astronomical Society",
+        "status": "extracted",
+        "token_count": 26438,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-23 13:39:37",
+        "sections_text": "Results: The five OB stars with candidate dusty bow shocks in the Carina Nebula show negligible proper motions (best-fit local transverse velocities of 16–35 km s⁻¹), with only HD 93576 exhibiting significant motion at 3σ, and their motion directions are constrained to less than 90° wide sectors, with most motions consistent with zero within 1–2σ. Discussion: The measured proper motions of $\\\\sim$30 km s$^{-1}$ for four of five candidate bow shock stars are inconsistent with their association with the Carina Nebula's known star–ISM velocities (average $\\\\sim$17 km s$^{-1}$), suggesting these stars are likely not runaway or origin-cluster members, and their motions are best interpreted as upper limits with true velocities significantly lower. Conclusions: The observed proper motions of OB stars in the Carina Nebula suggest that bow shocks are often driven by ISM flows rather than runaway stars, and indicate that the massive-star population formed as part of a distributed, non-clustered system rather than as remnants of ejected clusters. Introduction: This paper introduces a novel method to distinguish between runaway and non-runaway massive stars by analyzing the orientation and standoff distance of bow shock arcs, thereby solving the problem of accurately identifying stellar velocities and origins in field O-type stars without relying on assumptions about their motion. Observations and Analysis: This section describes the HST ACS imaging survey of the Carina Nebula, including observation design, epoch differences, and the identification of five OB stars with candidate dusty bow shocks for proper motion analysis.",
+        "highlight": {
+          "abstract": [
+            "We constrain the proper motions of five OB <em>stars</em> associated with candidate stellar wind bow shocks in the Carina Nebula using HST ACS imaging over 9--10 year baselines.",
+            "Although these <em>stars</em> are saturated in our imaging, we assess their motion by the shifts required to minimize residuals in their Airy rings.",
+            "None of the five <em>stars</em> are moving away from the Carina Nebula's central clusters as runaway <em>stars</em> would be, confirming that a candidate bow shock is not necessarily indicative of a runaway star.",
+            "Two of the five <em>stars</em> are moving tangentially relative to the orientation of their candidate bow shocks, both of which point at the OB cluster Trumpler 14.",
+            "The remaining three <em>stars</em> all have some component of motion toward the central clusters, meaning that we cannot distinguish whether their candidate bow shocks are indicators of stellar motion, of the flow"
+          ],
+          "title": [
+            "Proper motions of five OB <em>stars</em> with candidate dusty bow shocks in the Carina Nebula"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.85,
+        "catalog_role": "followup_observations",
+        "object_scope": "multiple_objects",
+        "evidence": "Presents proper motion measurements for five specific OB stars with candidate bow shocks using HST imaging. Contains object-level astrometric data to test runaway star hypothesis.",
+        "data_products": [
+          "coordinates",
+          "astrometry"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:04:45"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 4,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T22:04:45"
+  }
+}

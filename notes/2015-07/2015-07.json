@@ -1,0 +1,202 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2015-07",
+  "date_from": "2015-07-01",
+  "date_to": "2015-07-31",
+  "run": {
+    "run_id": "20260419T220916",
+    "started_at": "2026-04-19T22:09:16"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2015-07",
+    "date_from": "2015-07-01",
+    "date_to": "2015-07-31",
+    "raw_unique": 28,
+    "relevant_count": 1,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 28,
+    "classifier_included": 1,
+    "classifier_filtered": 27,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 0,
+    "weak_llm_reviewed": 0,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 134,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 319,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 134,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 136,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 135,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1507.00520",
+      "title": "Super Massive Black Holes and the Origin of High-Velocity Stars",
+      "authors": [
+        "Roberto Capuzzo-Dolcetta",
+        "Giacomo Fragione"
+      ],
+      "author_names": "Roberto Capuzzo-Dolcetta Giacomo Fragione",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2015-07-02 00:00:00",
+      "updated_at": "2015-07-02 11:05:02",
+      "links": {
+        "abs": "https://arxiv.org/abs/1507.00520",
+        "pdf": "https://arxiv.org/pdf/1507.00520"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "The origin of high velocity stars observed in the halo of our Galaxy is still unclear. In this work we test the hypothesis, raised by results of recent high precision $N$-body simulations, of strong acceleration of stars belonging to a massive globular cluster orbitally decayed in the central region of the host galaxy where it suffers of a close interaction with a super massive black hole, which, for these test cases, we assumed $10^8$ M$_\\\\\\\\odot$ in mass."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 27.384293
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: high-velocity or extreme-velocity stars"
+      },
+      "deepxiv": {
+        "score": 13.817392,
+        "best_score": 27.384293,
+        "search_keywords": null,
+        "citations": "0"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] The paper presents a 3-body dynamical simulation framework to investigate the ejection of stars from globular clusters (GCs) during close encounters with supermassive black holes (SMBHs), showing that GCs with high mass and eccentric orbits can produce high-velocity stars (HVS) via gravitational scattering. The branching ratios of ejected stars, S-stars (BH-bound), and retained stars depend on GC mass, orbital eccentricity, and galactic potential structure, with higher GC masses increasing the fraction of unbound HVS in spiral galaxies due to stronger escape velocities. Results demonstrate that SMBH-GC interactions can be a significant source of HVS, particularly in galaxies with extended dark matter halos.",
+        "keywords": [
+          "globular cluster dynamics",
+          "supermassive black hole interactions",
+          "gravitational scattering",
+          "high-velocity star production",
+          "orbital eccentricity effects"
+        ],
+        "citations": "0",
+        "published_at": "2015-07-02T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1507.00520",
+          "src_url": "https://arxiv.org/pdf/1507.00520",
+          "title": "Super Massive Black Holes and the Origin of High-Velocity Stars"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T220916"
+      },
+      "source_fields": {
+        "pg_id": 1995214,
+        "venue": null,
+        "journal_name": "arXiv: Astrophysics of Galaxies",
+        "status": "extracted",
+        "token_count": 2781,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 17:50:32",
+        "sections_text": "Conclusions: A close passage of a massive globular cluster near a supermassive black hole efficiently ejects stars via 3-body interactions, with up to 50% of cluster stars escaping and 18% escaping the galaxy, depending on galaxy type. Introduction: This paper introduces a novel mechanism in which hypervelocity stars are produced via close encounters between a globular cluster and a supermassive black hole, offering a new pathway to explain HVS formation and addressing the problem of identifying astrophysical origins of these stars beyond binary tidal disruption. Close Globular Cluster-Super Massive Black Hole Interactions: This study uses 3-body simulations to investigate how stars in a globular cluster are ejected when passing near a supermassive black hole, finding that ejection rates and velocities depend on the cluster's mass, orbital eccentricity, and the host galaxy's structure.",
+        "highlight": {
+          "abstract": [
+            "The origin of high velocity <em>stars</em> observed in the halo of our Galaxy is still unclear.",
+            "In this work we test the hypothesis, raised by results of recent high precision $N$-body simulations, of strong acceleration of <em>stars</em> belonging to a massive globular cluster orbitally decayed in the central"
+          ],
+          "title": [
+            "Super Massive Black Holes and the Origin of High-Velocity <em>Stars</em>"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.95,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Title and abstract describe theoretical simulation framework testing ejection mechanisms via SMBH-GC interactions; no mention of observational data, candidate lists, or real stellar objects.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:11:07"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 0,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T22:11:07"
+  }
+}

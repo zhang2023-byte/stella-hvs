@@ -1,0 +1,410 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2022-03",
+  "date_from": "2022-03-01",
+  "date_to": "2022-03-31",
+  "run": {
+    "run_id": "20260419T214540",
+    "started_at": "2026-04-19T21:45:40"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2022-03",
+    "date_from": "2022-03-01",
+    "date_to": "2022-03-31",
+    "raw_unique": 39,
+    "relevant_count": 3,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 39,
+    "classifier_included": 3,
+    "classifier_filtered": 36,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 2,
+    "weak_llm_reviewed": 2,
+    "weak_llm_included": 2,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 2
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 171,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 448,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 173,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 171,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 173,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2203.16364",
+      "title": "The Chemical Composition of Extreme-Velocity Stars",
+      "authors": [
+        "Henrique Reggiani",
+        "Alexander P. Ji",
+        "Kevin C. Schlaufman",
+        "Anna Frebel",
+        "Lina Necib",
+        "Tyler Nelson",
+        "Keith Hawkins",
+        "Jhon Yana Galarza"
+      ],
+      "author_names": "Henrique Reggiani Alexander P. Ji Kevin C. Schlaufman Anna Frebel Lina Necib Tyler Nelson Keith Hawkins Jhon Yana Galarza",
+      "categories": [
+        "astro-ph.SR",
+        "astro-ph.GA"
+      ],
+      "published_at": "2022-03-30 00:00:00",
+      "updated_at": "2022-03-30 14:43:58",
+      "links": {
+        "abs": "https://arxiv.org/abs/2203.16364",
+        "pdf": "https://arxiv.org/pdf/2203.16364"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Little is known about the origin of the fastest stars in the Galaxy. Our understanding of the Milky Way and surrounding dwarf galaxies chemical evolution history allows us to use the chemical composition of a star to investigate its origin, and say whether a star was formed in-situ or was accreted. However, the fastest stars, the hypervelocity stars, are young and massive and their chemical composition has not yet been analyzed. Though it is difficult to analyze the chemical composition of a massive young star, we are well versed in the analysis of late-type stars. We have used high-resolution ARCES/3.5m Apache Point Observatory, MIKE/Magellan spectra to study the chemical details of 15 late-type hypervelocity stars candidates. With Gaia EDR3 astrometry and spectroscopically determined radial velocities we found total velocities with a range of $274$ - $520$ km s$^{-1}$ and mean value of $381$ km s$^{-1}$. Therefore, our sample stars are not fast enough to be classified as Hypervelocity stars, and are what is known as extreme-velocity stars. Our sample has a wide iron abundance range of $-2.5 \\\\\\\\le \\\\\\\\mathrm{[Fe/H]} \\\\\\\\le -0.9$. Their chemistry indicate that at least 50\\\\\\\\% of them are accreted extragalactic stars, with iron-peak elements consistent with prior sub-Chandrasekhar mass type Ia supernova enrichment. Without indication of binary companions, their chemical abundances and orbital parameters are indicative that they are the accelerated tidal debris of disrupted dwarf galaxies."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 25.600325
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: high-velocity or extreme-velocity stars"
+      },
+      "deepxiv": {
+        "score": 25.600325,
+        "best_score": 25.600325,
+        "search_keywords": null,
+        "citations": "5"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[observational astrophysics research paper] A spectroscopic study of 15 late-type extreme-velocity stars (with total velocities 274–520 km/s) reveals iron abundances spanning [Fe/H] = −2.5 to −0.9, indicating that at least 50% are accreted extragalactic stars enriched by sub-Chandrasekhar mass Type Ia supernovae. Chemical signatures and orbital parameters suggest these stars are tidal debris from disrupted dwarf galaxies, not products of the Hills mechanism or binary ejection, providing observational evidence for galactic accretion events.",
+        "keywords": [
+          "extreme-velocity stars",
+          "stellar abundances",
+          "tidal debris",
+          "dwarf galaxy disruption",
+          "chemical enrichment"
+        ],
+        "citations": "5",
+        "published_at": "2022-03-30T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2203.16364",
+          "src_url": "https://arxiv.org/pdf/2203.16364",
+          "title": "The Chemical Composition of Extreme-Velocity Stars"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T214540"
+      },
+      "source_fields": {
+        "pg_id": 862737,
+        "venue": "Astronomical Journal",
+        "journal_name": "The Astronomical Journal",
+        "status": "extracted",
+        "token_count": 45475,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 04:22:01",
+        "sections_text": "Conclusion: This study confirms that the high-velocity low-mass stars are likely tidal debris from disrupted dwarf galaxies, accelerated by the Milky Way's gravitational potential, and calls for further chemical and orbital analyses to determine their origins and acceleration mechanisms. Discussion: At least 50% of the extreme-velocity stars in the sample have extragalactic origins, as evidenced by their low [α/Fe] ratios below [Fe/H] = –1.0 and distinct iron-peak element abundances (e.g., [Mn/Fe], [Ni/Fe], [Zn/Fe]) inconsistent with Milky Way stellar populations, with high-metallicity stars showing signatures of sub-Chandrasekhar Type Ia supernova enrichment typical of dwarf galaxies. Introduction: This paper advances the identification and characterization of hypervelocity stars by leveraging Gaia data to discover and analyze a new sample of extreme-velocity stars, including both unbound and bound stars, thereby broadening the understanding of stellar ejection mechanisms beyond the classical Hills mechanism. Chemical Abundances: This section details the measurement and analysis of chemical abundances for various elements in the star HE 1523-0901 using equivalent width measurements and model atmospheres, with a focus on α-elements and neutron-capture elements, and finds that discrepancies with previous studies are within uncertainties and likely due to differences in adopted metallicities. Atmospheric Parameters: Stellar parameters are derived using a hybrid isochrone/spectroscopy method with Gaia distances and multiwavelength photometry, combined with atomic line analyses and radiative transfer modeling to determine effective temperature, surface gravity, and metallicity. Sample Selection And Observations: This study analyzed 15 extreme-velocity stars selected from Gaia DR1 data based on high velocities, lack of prior spectroscopy, brightness, and observability, using MIKE and ARCES spectrographs to obtain high-resolution spectra and confirm radial velocities consistent with Gaia DR2, including the r-process-enhanced star HE 1523-0901 to investigate potential widespread r-process enrichment among such stars.",
+        "highlight": {
+          "abstract": [
+            "Little is known about the origin of the fastest <em>stars</em> in the Galaxy.",
+            "However, the fastest <em>stars</em>, the <em>hypervelocity</em> <em>stars</em>, are young and massive and their chemical composition has not yet been analyzed.",
+            "Though it is difficult to analyze the chemical composition of a massive young star, we are well versed in the analysis of late-type <em>stars</em>.",
+            "We have used high-resolution ARCES/3.5m Apache Point Observatory, MIKE/Magellan spectra to study the chemical details of 15 late-type <em>hypervelocity</em> <em>stars</em> candidates.",
+            "Therefore, our sample <em>stars</em> are not fast enough to be classified as <em>Hypervelocity</em> <em>stars</em>, and are what is known as extreme-velocity <em>stars</em>."
+          ],
+          "title": [
+            "The Chemical Composition of Extreme-Velocity <em>Stars</em>"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper presents spectroscopic analysis of 15 late-type extreme-velocity stars using high-resolution spectra, Gaia EDR3 astrometry, and radial velocities. Provides specific velocity measurements, iron abundances, and orbital parameters.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "spectra",
+          "abundances",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:46:59"
+      }
+    },
+    {
+      "arxiv_id": "2203.10842",
+      "title": "Radio detections of IR-selected runaway stellar bow shocks",
+      "authors": [
+        "J. Van den Eijnden",
+        "P. Saikia",
+        "S. Mohamed"
+      ],
+      "author_names": "J. Van den Eijnden P. Saikia S. Mohamed",
+      "categories": [
+        "astro-ph.HE",
+        "astro-ph.GA",
+        "astro-ph.SR"
+      ],
+      "published_at": "2022-03-21 00:00:00",
+      "updated_at": "2022-03-21 10:03:33",
+      "links": {
+        "abs": "https://arxiv.org/abs/2203.10842",
+        "pdf": "https://arxiv.org/pdf/2203.10842"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Massive stars moving at supersonic peculiar velocities through the interstellar medium (ISM) can create bow shocks, arc-like structures at the interface between the stellar wind and the ISM. Many such bow shocks have been detected and catalogued at IR wavelengths, but detections in other wavebands remain rare. Strikingly, while electrons are expected to be accelerated in the bow shock and their non-thermal emission may include synchrotron emission at low frequencies, only two massive runaway stellar bow shocks have to date been detected in the radio band. Here, we examine a sample of fifty IR-detected bow shocks from the E-BOSS catalogues in recently released radio images from the Rapid ASKAP Continuum Survey (RACS). We identify three confident and three likely counterparts, as well as three inconclusive candidates requiring confirmation via follow-up observations. These detections significantly increase the number of known radio massive stellar bow shocks and highlight the advantage of dedicated searches with current and next-generation radio telescopes. We investigate the underlying radio emission mechanism for these radio sources, finding a mix of free-free-dominated and synchrotron-dominated systems. We also discuss the non-detected targets by putting constraints on their emission properties and investigating their detectability with future observations. Finally, we propose several future avenues of research to advance the study and understanding of bow shocks at radio frequencies."
+      },
+      "match": {
+        "queries": [
+          "runaway stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 19.143938
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Weak title match: runaway-related mechanisms LLM confirmed: Explicitly studies runaway stellar bow shocks from massive runaway stars, directly relevant to high-velocity stellar populations"
+      },
+      "deepxiv": {
+        "score": 19.143938,
+        "best_score": 19.143938,
+        "search_keywords": null,
+        "citations": "4"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T214540"
+      },
+      "source_fields": {
+        "pg_id": 867398,
+        "venue": null,
+        "journal_name": null,
+        "status": "extracted",
+        "token_count": 26894,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": null,
+        "sections_text": "Discussion: The experiment finds three confident radio detections of runaway stellar bow shocks, all consistent with thermal free-free emission in complex ISM environments, while non-thermal synchrotron emission is ruled out due to unfeasibly high efficiency requirements, and diffuse ISM structures complicate or prevent detection, highlighting the critical role of local ISM conditions in enabling observable radio emission. Conclusions: This study identifies and characterizes radio counterparts to massive runaway stellar bow shocks, finding evidence for both free-free and synchrotron-dominated emission and highlighting the need for detailed follow-up observations to understand their role as particle accelerators. Introduction: This paper presents the first systematic search for synchrotron radio emission from runaway massive star bow shocks, addressing the critical gap in understanding the efficiency and conditions under which non-thermal electron acceleration occurs in these environments. RACS bow shock search: This section identifies ten potential radio counterparts of IR-selected runaway stellar bow shocks in E-BOSS fields covered by RACS, with most showing morphological and positional matches, though several face complications from diffuse emission or large-scale structures, and two (K5 and HIP 38430) are flagged as likely counterparts with unresolved physical model uncertainties. Data Availability Statement: Data and code used in the study are publicly available through specified online repositories and websites. Measurements and calculations: This section presents radio measurements and physical properties of 40 E-BOSS bow shocks, excluding non-detected or unresolved targets due to lack of distance or geometrical constraints, to enable reliable calculations of their observable and physical characteristics. Observations and target selection: This section describes the selection of 50 IR bow shock candidates from the E-BOSS catalogues, matched to RACS radio data for deeper investigation, leveraging their known geometrical and interstellar medium properties to enable radio emission analysis.",
+        "highlight": {
+          "abstract": [
+            "Massive <em>stars</em> moving at supersonic peculiar velocities through the interstellar medium (ISM) can create bow shocks, arc-like structures at the interface between the stellar wind and the ISM.",
+            "Strikingly, while electrons are expected to be accelerated in the bow shock and their non-thermal emission may include synchrotron emission at low frequencies, only two massive <em>runaway</em> stellar bow shocks"
+          ],
+          "title": [
+            "Radio detections of IR-selected <em>runaway</em> stellar bow shocks"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.9,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Examines sample of fifty IR-detected bow shocks from E-BOSS catalog, identifies radio counterparts in RACS survey data. Presents confident and likely detections with specific observational constraints.",
+        "data_products": [
+          "coordinates",
+          "candidate_table",
+          "multi-wavelength_data"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:46:59"
+      }
+    },
+    {
+      "arxiv_id": "2203.06331",
+      "title": "Thermal emission from bow shocks II: 3D magnetohydrodynamic models of Zeta Ophiuchi",
+      "authors": [
+        "S. Green",
+        "J. Mackey",
+        "P. Kavanagh",
+        "T. J. Haworth",
+        "M. Moutzouri",
+        "V. V. Gvaramdaze"
+      ],
+      "author_names": "S. Green J. Mackey P. Kavanagh T. J. Haworth M. Moutzouri V. V. Gvaramdaze",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2022-03-12 00:00:00",
+      "updated_at": "2022-05-31 01:55:34",
+      "links": {
+        "abs": "https://arxiv.org/abs/2203.06331",
+        "pdf": "https://arxiv.org/pdf/2203.06331"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "The nearby, massive, runaway star Zeta Ophiuchi has a large bow shock detected in optical and infrared, and, uniquely among runaway O stars, diffuse X-ray emission is detected from the shocked stellar wind. Here we make the first detailed computational investigation of the bow shock of Zeta Ophiuchi, to test whether a simple model of the bow shock can explain the observed nebula, and to compare the detected X-ray emission with simulated emission maps. We re-analysed archival {\\\\\\\\it Chandra} observations of the thermal diffuse X-ray emission from the shocked wind region of the bow shock, finding total unabsorbed X-ray flux (0.3-2 keV band) corresponding to a diffuse luminosity of $L_\\\\\\\\mathrm{X}=2.33~(0.79-3.45)\\\\\\\\times10^{29}$ergs$^{-1}$. 3D MHD simulations were used to model the interaction of the star's wind with a uniform ISM using a range of stellar and ISM parameters motivated by observational constraints. Synthetic infrared, Ha, soft X-ray, emission measure, and radio 6\\\\\\\\,GHz emission maps were generated from three simulations, for comparison with relevant observations. Simulations where the space velocity of Zeta Ophiuchi has a significant radial velocity produce infrared emission maps with opening angle of the bow shock in better agreement with observations than for the case where motion is fully in the plane of the sky. The simulation with the highest pressure has the closest match, with flux level within a factor of 2 of the observational lower limit, and emission weighted temperature of $\\\\\\\\log_{10}(T_\\\\\\\\mathrm{A}/\\\\\\\\mathrm{K})=6.4$, although the morphology of the diffuse emission appears somewhat different. Observed X-ray emission is a filled bubble brightest near the star whereas simulations predict brightening towards the contact discontinuity as density increases."
+      },
+      "match": {
+        "queries": [
+          "runaway stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 13.149252
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.9,
+        "reason": "Weak title match: runaway-related mechanisms LLM confirmed: Focuses on Zeta Ophiuchi, a well-known massive runaway star, modeling its bow shock and kinematics"
+      },
+      "deepxiv": {
+        "score": 13.149252,
+        "best_score": 13.149252,
+        "search_keywords": null,
+        "citations": "4"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T214540"
+      },
+      "source_fields": {
+        "pg_id": 875440,
+        "venue": "Astronomy &amp; Astrophysics",
+        "journal_name": "Astronomy &amp; Astrophysics",
+        "status": "extracted",
+        "token_count": 30319,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 20:33:10",
+        "sections_text": "Discussion: The Z03 simulation, with twice the mass-loss rate and ISM number density, achieved a bow shock geometry consistent with observations and produced X-ray luminosity approximately 4 times higher than Z02, bringing synthetic X-ray emission closer to the observed value of $2.33^{+1.12}_{-1.54}\\\\times 10^{29}$ erg s⁻¹. Conclusions: This study presents the first 3D investigation of diffuse thermal X-ray emission from a runaway O star's wind bubble, finding that while simulations reproduce key observational features, only those with higher mass-loss rates and ISM densities achieve X-ray luminosities close to observations, despite discrepancies in mid-IR emission. Introduction: This paper presents the first detailed 2D and 3D simulations of the wind bubble and bow shock of $\\\\zeta$ Ophiuchi, addressing the lack of theoretical modeling for this well-studied runaway massive star and providing a robust framework to constrain stellar mass-loss rates and wind dynamics in moving massive stars. Observational data: This section presents observational data on ζ Ophiuchi, including uncertain stellar velocities and mass loss rates, and highlights discrepancies in key parameters that limit accurate modeling of its bow shock. Synthetic Emission: Synthetic infrared emission maps from Z01, Z02, and Z03 simulations reproduce the general position and width of the bow shock seen in observations, with consistent opening angles and emission regions at 24 μm, though the synthetic shocks lack the observed density structure due to the use of a uniform interstellar medium. Appendix A Projected emission at all angles: This section presents synthetic emission maps from the Z01 simulation at various viewing angles, showing how thermal dust emission, Hα, emission measure, radio, and X-ray emissions evolve with projection angle relative to the stellar velocity vector. Computational methods and simulation properties: The paper proposes a 3D MHD simulation approach using the pion code to model the interaction of an O star with the interstellar medium, incorporating a split-monopole magnetic field and static mesh refinement to resolve the bow shock and wake, followed by synthetic infrared emission mapping via TORUS and ray-tracing to compare with observations.",
+        "highlight": {
+          "abstract": [
+            "The nearby, massive, <em>runaway</em> star Zeta Ophiuchi has a large bow shock detected in optical and infrared, and, uniquely among <em>runaway</em> O <em>stars</em>, diffuse X-ray emission is detected from the shocked stellar"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.85,
+        "catalog_role": "not_catalog",
+        "object_scope": "single_object",
+        "evidence": "Focuses on computational modeling of Zeta Ophiuchi's bow shock using 3D MHD simulations. While it re-analyses archival Chandra observations, the paper is primarily theoretical/simulation-based rather than presenting new observational catalog of multiple objects.",
+        "data_products": [
+          "simulation_data",
+          "model_emission_maps"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:46:59"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 3,
+    "catalog_count": 2,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:46:59"
+  }
+}

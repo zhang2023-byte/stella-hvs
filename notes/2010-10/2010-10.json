@@ -1,0 +1,211 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2010-10",
+  "date_from": "2010-10-01",
+  "date_to": "2010-10-31",
+  "run": {
+    "run_id": "20260419T221845",
+    "started_at": "2026-04-19T22:18:45"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2010-10",
+    "date_from": "2010-10-01",
+    "date_to": "2010-10-31",
+    "raw_unique": 34,
+    "relevant_count": 1,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 34,
+    "classifier_included": 1,
+    "classifier_filtered": 33,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 0,
+    "weak_llm_reviewed": 0,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 73,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 153,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 74,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 75,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 73,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1010.2490",
+      "title": "Massive runaway stars in the Small Magellanic Cloud",
+      "authors": [
+        "V.V. Gvaramadze",
+        "J. Pflamm-Altenburg",
+        "P. Kroupa"
+      ],
+      "author_names": "V.V. Gvaramadze J. Pflamm-Altenburg P. Kroupa",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2010-10-12 00:00:00",
+      "updated_at": "2010-10-17 09:26:13",
+      "links": {
+        "abs": "https://arxiv.org/abs/1010.2490",
+        "pdf": "https://arxiv.org/pdf/1010.2490"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Using archival Spitzer Space Telescope data, we identified for the first time a dozen runaway OB stars in the Small Magellanic Cloud (SMC) through the detection of their bow shocks. The geometry of detected bow shocks allows us to infer the direction of motion of the associated stars and to determine their possible parent clusters and associations. One of the identified runaway stars, AzV 471, was already known as a high-velocity star on the basis of its high peculiar radial velocity, which is offset by ~40 km/s from the local systemic velocity. We discuss implications of our findings for the problem of the origin of field OB stars. Several of the bow shock-producing stars are found in the confines of associations, suggesting that these may be \"alien\" stars contributing to the age spread observed for some young stellar systems. We also report the discovery of a kidney-shaped nebula attached to the early WN-type star SMC-WR3 (AzV 60a). We interpreted this nebula as an interstellar structure created owing to the interaction between the stellar wind and the ambient interstellar medium."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 30.867813
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: runaway stars"
+      },
+      "deepxiv": {
+        "score": 11.765747,
+        "best_score": 30.867813,
+        "search_keywords": null,
+        "citations": "25"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[astronomical research paper] A systematic search of Spitzer archival data reveals a dozen runaway OB stars in the Small Magellanic Cloud (SMC) via detectable bow shocks, enabling inference of their motion directions and parent associations. The identified stars, including AzV 471 (already known as a high-velocity star), show supersonic velocities and are found within or near young stellar associations, suggesting that these 'alien' stars contribute to age dispersion in young clusters. One star, SMC-WR3 (AzV 60a), is associated with a kidney-shaped nebula formed by stellar wind–interstellar medium interaction, providing evidence of dynamic stellar-environment coupling.",
+        "keywords": [
+          "bow shock detection",
+          "runaway OB stars",
+          "stellar kinematics",
+          "interstellar medium interaction",
+          "young stellar associations"
+        ],
+        "citations": "25",
+        "published_at": "2010-10-12T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1010.2490",
+          "src_url": "https://arxiv.org/pdf/1010.2490",
+          "title": "Massive runaway stars in the Small Magellanic Cloud"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T221845"
+      },
+      "source_fields": {
+        "pg_id": 1350034,
+        "venue": null,
+        "journal_name": "Astronomy and Astrophysics",
+        "status": "extracted",
+        "token_count": 9498,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 04:26:09",
+        "sections_text": "Footnotes: The footnotes list relevant websites and citations for astronomical data and images, including references to specific stellar systems and their compositions. Discussion: The detection of bow shocks in a dozen field OB stars in the SMC confirms their runaway nature, with high velocity dispersions and radial velocity offsets supporting the conclusion that most massive field stars are runaways, likely originating from nearby associations and suggesting that massive stars can form in situ or be injected into clusters rather than forming solely in clustered environments. Introduction: This paper presents the first systematic search for bow shock-producing runaway stars in the Small Magellanic Cloud using Spitzer data, identifying several new candidates and extending the methodology for detecting and tracing runaway OB stars beyond the Milky Way and into nearby dwarf galaxies. Search for bow shocks in the SMC: A search of Spitzer MIPS 24μm images of the SMC revealed numerous arc-like structures associated with known OB stars, suggesting the presence of bow shocks, primarily located in the main body and wing of the SMC, with follow-up spectroscopy needed to confirm their spectral types and ages.",
+        "highlight": {
+          "abstract": [
+            "Using archival Spitzer Space Telescope data, we identified for the first time a dozen runaway OB <em>stars</em> in the Small Magellanic Cloud (SMC) through the detection of their bow shocks.",
+            "The geometry of detected bow shocks allows us to infer the direction of motion of the associated <em>stars</em> and to determine their possible parent clusters and associations.",
+            "One of the identified runaway <em>stars</em>, AzV 471, was already known as a high-velocity star on the basis of its high peculiar radial velocity, which is offset by ~40 km/s from the local systemic velocity.",
+            "We discuss implications of our findings for the problem of the origin of field OB <em>stars</em>.",
+            "Several of the bow shock-producing <em>stars</em> are found in the confines of associations, suggesting that these may be \"alien\" <em>stars</em> contributing to the age spread observed for some young stellar systems."
+          ],
+          "title": [
+            "Massive runaway <em>stars</em> in the Small Magellanic Cloud"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Identifies a dozen runaway OB stars via bow shock detection in Spitzer archival data, provides specific object IDs (AzV 471, SMC-WR3/AzV 60a), infers kinematics and parent associations",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "bow_shock_detections",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:20:01"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T22:20:01"
+  }
+}

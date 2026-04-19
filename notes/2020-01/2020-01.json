@@ -1,0 +1,208 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2020-01",
+  "date_from": "2020-01-01",
+  "date_to": "2020-01-31",
+  "run": {
+    "run_id": "20260419T215133",
+    "started_at": "2026-04-19T21:51:33"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2020-01",
+    "date_from": "2020-01-01",
+    "date_to": "2020-01-31",
+    "raw_unique": 35,
+    "relevant_count": 1,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 35,
+    "classifier_included": 1,
+    "classifier_filtered": 34,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 0,
+    "weak_llm_reviewed": 0,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 183,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 398,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 185,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 183,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 185,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2001.00899",
+      "title": "The Orion Protostellar Explosion and Runaway Stars Revisited: Stellar Masses, Disk Retention, and an Outflow from BN",
+      "authors": [
+        "John Bally",
+        "Adam Ginsburg",
+        "Jan Forbrich",
+        "Jaime Vargas-González"
+      ],
+      "author_names": "John Bally Adam Ginsburg Jan Forbrich Jaime Vargas-González",
+      "categories": [
+        "astro-ph.SR",
+        "astro-ph.GA"
+      ],
+      "published_at": "2020-01-03 00:00:00",
+      "updated_at": "2020-01-03 17:28:56",
+      "links": {
+        "abs": "https://arxiv.org/abs/2001.00899",
+        "pdf": "https://arxiv.org/pdf/2001.00899"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "The proper motions of the three stars ejected from Orion's OMC1 cloud core are combined with the requirement that their center of mass is gravitationally bound to OMC1 to show that radio source I (Src I) is likely to have a mass around 15 Solar masses consistent with recent measurements. Src I, the star with the smallest proper motion, is suspected to be either an AU-scale binary or a protostellar merger remnant produced by a dynamic interaction ~550 years ago. Near-infrared 2.2 um images spanning ~21 years confirm the ~55 km/s motion of `source x' (Src x) away from the site of stellar ejection and point of origin of the explosive OMC1 protostellar outflow. The radial velocities and masses of the Becklin-Neugebauer (BN) object and Src I constrain the radial velocity of Src x to be V_{LSR} = -28 +/-10 km/s . Several high proper-motion radio sources near BN, including Zapata 11 ([ZRK2004] 11) and a diffuse source near IRc 23, may trace a slow bipolar outflow from BN. The massive disk around Src I is likely the surviving portion of a disk that existed prior to the stellar ejection. Though highly perturbed, shocked, and re-oriented by the N-body interaction, enough time has elapsed to allow the disk to relax with its spin axis roughly orthogonal to the proper motion."
+      },
+      "match": {
+        "queries": [
+          "high-velocity stars",
+          "runaway stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 20.374046
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: runaway stars"
+      },
+      "deepxiv": {
+        "score": 11.863562,
+        "best_score": 20.374046,
+        "search_keywords": null,
+        "citations": "26"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] Combines proper motions and radial velocity measurements of three runaway stars ejected from Orion’s OMC1 cloud core with dynamical constraints from the circumstellar disk of Src I to infer its mass (~15 M⊙), confirm a ~550-year-old N-body interaction that triggered both stellar ejection and a massive outflow, and demonstrate that the disk around Src I—despite being shocked and reoriented—retains sufficient angular momentum to relax with spin orthogonal to the ejection direction, supporting a protostellar merger or AU-scale binary origin.",
+        "keywords": [
+          "stellar ejection",
+          "runaway stars",
+          "circumstellar disk dynamics",
+          "N-body interaction",
+          "outflow morphology"
+        ],
+        "citations": "26",
+        "published_at": "2020-01-03T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2001.00899",
+          "src_url": "https://arxiv.org/pdf/2001.00899",
+          "title": "The Orion Protostellar Explosion and Runaway Stars Revisited: Stellar Masses, Disk Retention, and an Outflow from BN"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T215133"
+      },
+      "source_fields": {
+        "pg_id": 2874427,
+        "venue": "Astrophysical Journal",
+        "journal_name": "The Astrophysical Journal",
+        "status": "extracted",
+        "token_count": 23424,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 18:18:29",
+        "sections_text": "Results: The center-of-mass motion of the three runaway stars from OMC1 is constrained to be less than 1.9 km s⁻¹, consistent with their pre-ejection velocities being below the local circular orbit speed, and the best-fit stellar masses (Mₐₙ ≈ 10–18 M⊙, Mᵢ ≈ 5–25 M⊙, Mₓ ≈ 1–4 M⊙) are derived from proper motion measurements and dynamical equilibrium with the OMC1 cluster. Discussion: The motion of the center of mass of ejected stars remains consistent with the velocity dispersion of OMC1, as the 5 GHz knots lack significant mass and the asymmetric outflow from BN has a minor impact, while ALMA observations constrain the BN disk to have a radius of ≤18 AU and a significant tilt relative to the line of sight, implying a non-edge-on orientation. Introduction: This paper novelly resolves the nature of the runaway star candidate Src I in the Orion OMC1 cloud by combining high-resolution radial velocity and proper motion data to demonstrate that it is not a runaway star but a disk-bearing object with a mass of 5–8 M⊙, thereby solving the long-standing ambiguity about the origin and dynamics of the outflow and stellar ejections in this massive star formation site. Summary and Conclusions: This study confirms a dynamical ejection scenario for young stars BN, Src I, and Src x from OMC1, with proper motion and mass constraints supporting Src I's mass of ~15 M⊙, Src x's radial velocity of ≈−23 km s⁻¹, and the survival of their disks as inner remnants of pre-existing systems, while radio knots like IRc23 and Zapata 11 contribute negligibly to the center-of-mass motion. Observations and Analysis: This section confirms the ~55 km s⁻¹ proper motion of Src x using multi-epoch infrared and radio observations, while ruling out fast-moving radio features like Zapata 11 and IRc23 as stellar sources, indicating they are likely ejecta from BN rather than runaway stars.",
+        "highlight": {
+          "abstract": [
+            "The proper motions of the three <em>stars</em> ejected from Orion's OMC1 cloud core are combined with the requirement that their center of mass is gravitationally bound to OMC1 to show that radio source I (Src",
+            "The radial velocities and masses of the Becklin-Neugebauer (BN) object and Src I constrain the radial <em>velocity</em> of Src x to be V_{LSR} = -28 +/-10 km/s .",
+            "Several <em>high</em> proper-motion radio sources near BN, including Zapata 11 ([ZRK2004] 11) and a diffuse source near IRc 23, may trace a slow bipolar outflow from BN."
+          ],
+          "title": [
+            "The Orion Protostellar Explosion and Runaway <em>Stars</em> Revisited: Stellar Masses, Disk Retention, and an"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.9,
+        "catalog_role": "uses_existing_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper analyzes proper motions, radial velocities, and masses of three specific runaway stars (BN object, Src I, Src x) ejected from OMC1, using observational data to constrain dynamical history.",
+        "data_products": [
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "masses"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:53:33"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:53:33"
+  }
+}

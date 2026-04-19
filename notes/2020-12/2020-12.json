@@ -1,0 +1,325 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2020-12",
+  "date_from": "2020-12-01",
+  "date_to": "2020-12-31",
+  "run": {
+    "run_id": "20260419T215133",
+    "started_at": "2026-04-19T21:51:33"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2020-12",
+    "date_from": "2020-12-01",
+    "date_to": "2020-12-31",
+    "raw_unique": 35,
+    "relevant_count": 2,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 35,
+    "classifier_included": 2,
+    "classifier_filtered": 33,
+    "classifier_errors": 0,
+    "direct_rule_included": 2,
+    "weak_rule_candidates": 2,
+    "weak_llm_reviewed": 2,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 2,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 163,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 355,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 165,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 164,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 166,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2012.09338",
+      "title": "Discovery of A candidate Hypervelocity star originated from the Sagittarius Dwarf Spheroidal galaxy",
+      "authors": [
+        "Yang Huang",
+        "Qingzheng Li",
+        "Huawei Zhang",
+        "Xinyi Li",
+        "Weixiang Sun",
+        "Jiang Chang",
+        "Xiaobo Dong",
+        "Xiaowei Liu"
+      ],
+      "author_names": "Yang Huang Qingzheng Li Huawei Zhang Xinyi Li Weixiang Sun Jiang Chang Xiaobo Dong Xiaowei Liu",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2020-12-17 00:00:00",
+      "updated_at": "2020-12-17 00:37:03",
+      "links": {
+        "abs": "https://arxiv.org/abs/2012.09338",
+        "pdf": "https://arxiv.org/pdf/2012.09338"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "In this letter, we report the discovery of an intriguing HVS (J1443+1453) candidate that is probably from the Sagittarius Dwarf Spheroidal galaxy (Sgr dSph). The star is an old and very metal-poor low-mass main-sequence turn-off star (age $\\\\\\\\sim14.0$ Gyr and [Fe/H] $= -2.23$ dex) and has a total velocity of $559.01^{+135.07}_{-87.40}$ km s$^{-1}$ in the Galactic rest-frame and a heliocentric distance of $2.90^{+0.72}_{-0.48}$ kpc. The velocity of J1443+1453 is larger than the escape speed at its position, suggesting it a promising HVS candidate. By reconstructing its trajectory in the Galactic potential, we find that the orbit of J1443+1453 intersects closely with that of the Sgr dSph $37.8^{+4.6}_{-6.0}$ Myr ago, when the latter has its latest pericentric passage through the Milky Way. The encounter occurs at a distance $2.42^{+1.80}_{-0.77}$ kpc from the centre of Sgr dSph, smaller than the size of the Sgr dSph. Chemical properties of this star are also consistent with those of one Sgr dSph associated globular cluster or of the Sgr stream member stars. Our finding suggests that J1443+1453 is an HVS either tidally stripped from the Sgr dSph or ejected from the Sgr dSph by the gravitational slingshot effect, requiring a (central) massive/intermediate-mass black hole or a (central) massive primordial black hole in the Sgr dSph."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 16.895973
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars, high-velocity star surveys or candidates"
+      },
+      "deepxiv": {
+        "score": 16.895973,
+        "best_score": 16.895973,
+        "search_keywords": null,
+        "citations": "10"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] A hypervelocity star candidate (J1443+1453) with a total velocity of 559 km s⁻¹ is identified as likely originating from the Sagittarius Dwarf Spheroidal galaxy (Sgr dSph), based on its low metallicity ([Fe/H] = −2.23), old age (∼14 Gyr), and orbital trajectory intersecting the Sgr dSph’s pericenter 37.8 Myr ago. Dynamical modeling shows its orbit crosses within 2.4 kpc of the Sgr dSph’s center, consistent with tidal stripping or gravitational ejection via a massive black hole (SMBH or primordial BH) in the dwarf galaxy, providing new evidence for dynamical ejection mechanisms in galactic halos.",
+        "keywords": [
+          "hypervelocity star",
+          "gravitational slingshot",
+          "dwarf galaxy dynamics",
+          "tidal stripping",
+          "galactic potential modeling"
+        ],
+        "citations": "10",
+        "published_at": "2020-12-17T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2012.09338",
+          "src_url": "https://arxiv.org/pdf/2012.09338",
+          "title": "Discovery of A candidate Hypervelocity star originated from the Sagittarius Dwarf Spheroidal galaxy"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T215133"
+      },
+      "source_fields": {
+        "pg_id": 2810014,
+        "venue": "Astrophysical Journal",
+        "journal_name": "The Astrophysical Journal Letters",
+        "status": "extracted",
+        "token_count": 10289,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-23 21:07:33",
+        "sections_text": "4. Summary: This study identifies J1443+1453 as a halo HVS likely stripped from the Sagittarius dSph during its latest pericentric passage, supporting theoretical models of tidal disruption and offering insights into HVS formation and galaxy evolution. 1. Introduction: This paper presents the discovery and detailed characterization of a new hypervelocity star, J1443+1453, providing robust evidence for the Hills mechanism by demonstrating its backward orbit points directly to the Galactic Center and confirming its origin through kinematic and stellar population analysis. 2. J1443+1453 properties: J1443+1453 is a F-type star with very low metallicity, located at a distance of 2.90 kpc, and its 3D position and velocity are derived from spectroscopic and astrometric data with precise error estimates. 3. The possible origins of J1443+1453: The backward orbital analysis suggests that J1443+1453 likely originated from a close encounter with the Sagittarius dwarf spheroidal galaxy approximately 38 Myr ago, at a distance of about 2.4 kpc from its core, with results robust across different Galactic models and assumptions.",
+        "highlight": {
+          "abstract": [
+            "Chemical properties of this star are also consistent with those of one Sgr dSph associated globular cluster or of the Sgr stream member <em>stars</em>."
+          ],
+          "title": [
+            "Discovery of A candidate <em>Hypervelocity</em> star originated from the Sagittarius Dwarf Spheroidal galaxy"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "new_catalog",
+        "object_scope": "single_object",
+        "evidence": "Paper reports discovery of specific hypervelocity star candidate J1443+1453 with detailed observational measurements including coordinates, velocity, metallicity, age, and distance.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "spectra",
+          "abundances",
+          "orbit_integrations"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:55:15"
+      }
+    },
+    {
+      "arxiv_id": "2012.02123",
+      "title": "Gaia EDR3 in 6D: Searching for unbound stars in the Galaxy",
+      "authors": [
+        "Tommaso Marchetti"
+      ],
+      "author_names": "Tommaso Marchetti",
+      "categories": [
+        "astro-ph.GA",
+        "astro-ph.SR"
+      ],
+      "published_at": "2020-12-03 00:00:00",
+      "updated_at": "2021-02-25 17:06:36",
+      "links": {
+        "abs": "https://arxiv.org/abs/2012.02123",
+        "pdf": "https://arxiv.org/pdf/2012.02123"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "The early third data release (EDR3) of the European Space Agency satellite Gaia provides coordinates, parallaxes, and proper motions for ~1.47 billion sources in our Milky Way, based on 34 months of observations. The combination of Gaia DR2 radial velocities with the more precise and accurate astrometry provided by Gaia EDR3 makes the best dataset available to search for the fastest nearby stars in our Galaxy. We compute the velocity distribution of ~7 million stars with precise parallaxes, to investigate the high-velocity tail of the velocity distribution of stars in the Milky Way. We release a catalogue with distances, total velocities, and corresponding uncertainties for all the stars considered in our analysis, available at https://sites.google.com/view/tmarchetti/research . By applying quality cuts on the Gaia astrometry and radial velocities, we identify a clean subset of 94 stars with a probability Pub > 50% to be unbound from our Galaxy. 17 of these have Pub > 80% and are our best candidates. We propagate these stars in the Galactic potential to characterize their orbits. We find that 11 stars are consistent with being ejected from the Galactic disk, and are possible hyper-runaway star candidates. The other 6 stars are not consistent with coming from a known star-forming region. We investigate the effect of adopting a parallax zero point correction, which strongly impacts our results: when applying this correction, we identify only 12 stars with Pub > 50%, 3 of these having Pub > 80%. Spectroscopic follow-ups with ground-based telescopes are needed to confirm the candidates identified in this work."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 28.847675
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: unbound, escaping, or ejected stars, high-velocity star surveys or candidates"
+      },
+      "deepxiv": {
+        "score": 11.964404,
+        "best_score": 28.847675,
+        "search_keywords": null,
+        "citations": "21"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] Leveraging Gaia EDR3's high-precision 6D (position, parallax, proper motion, radial velocity) data, the study analyzes the velocity distribution of ~7 million stars to identify candidates with unbound orbits. A subset of 94 stars (17 with >80% probability of being unbound) is identified, 11 of which are consistent with ejection from the Galactic disk and are potential hyper-runaway star candidates; the remaining 6 originate from regions not known for star formation. Results are highly sensitive to parallax zero-point corrections, which reduce the candidate pool from 94 to 12 stars when applied, highlighting the critical role of astrometric calibration in kinematic analyses.",
+        "keywords": [
+          "galactic kinematics",
+          "unbound stellar orbits",
+          "hyper-runaway stars",
+          "astrometric calibration",
+          "Galactic potential modeling"
+        ],
+        "citations": "21",
+        "published_at": "2020-12-03T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2012.02123",
+          "src_url": "https://arxiv.org/pdf/2012.02123",
+          "title": "Gaia EDR3 in 6D: Searching for unbound stars in the Galaxy"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T215133"
+      },
+      "source_fields": {
+        "pg_id": 2810851,
+        "venue": null,
+        "journal_name": "arXiv: Astrophysics of Galaxies",
+        "status": "extracted",
+        "token_count": 39185,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 04:20:37",
+        "sections_text": "Introduction: This paper introduces a novel framework that extends existing ejection mechanisms by modeling the dynamical formation of ultra-high velocity stars through combined binary interactions and galactic environment effects, addressing the gap in explaining the observed population of stars with velocities exceeding escape speed beyond traditional runaway and hypervelocity star scenarios. Orbit integration: This section describes the orbital integration of 94 high-velocity unbound stars using a Milky Way mass model to determine their orbital properties, eccentricities, and potential ejection locations from the galactic disk. Parallax zero point: This section demonstrates that correcting Gaia EDR3 parallaxes for the parallax zero point—which varies systematically with stellar properties—improves distance and velocity estimates, leading to the identification of 12 high-velocity unbound stars with reliable measurements. Discussion and conclusions: The analysis of 94 high-velocity giant stars with reliable astrometry and radial velocities identifies 17 candidates with >80% probability of being unbound from the Milky Way, including 11 hyper-runaway stars likely ejected from the Galactic disk and 6 with extragalactic origins, while no unbound stars are consistent with a Galactic Centre origin—results that are reduced by the parallax zero point correction. Appendix B Catalogue content: This appendix details the structure and content of a catalogue that includes both direct Gaia EDR3 data and newly derived distance and velocity estimates, with uncertainties computed from percentile distributions for derived quantities. High velocity star candidates: This section presents 17 high-velocity star candidates with a high probability ($P_{\\\\mathrm{ub}} > 0.8$) of being unbound from the Milky Way, exhibiting median total velocities between 600 and over 800 km s⁻¹, including 12 stars with $P_{\\\\mathrm{ub}} \\\\geq 0.9$. Spatial and velocity distributions: This section presents the spatial and velocity distributions of stars from Gaia EDR3, highlighting the identification of high-velocity unbound stars and their distribution in the Galactic frame, with key results visualized through histograms and diagrams. Deriving distances and total velocities: This section derives distances and Galactocentric velocities for a sample of bright stars with precise parallaxes from Gaia EDR3, focusing on sources with reliable astrometry to identify high-velocity stars in the Milky Way. Appendix A Comparison with other distance estimates: This appendix shows that the authors' distance estimates, including the parallax zero point, are generally consistent with those from Bailer-Jones et al. (2020), with a median distance bias likely due to lower prior distances in the Bayesian method. Appendix C Revisiting the fastest stars in Gaia DR2: The reanalysis of the 20 fastest star candidates from Gaia DR2 using more precise Gaia EDR3 astrometry shows that most no longer meet the criteria for high-velocity unbound stars due to improved radial velocity measurements, distance uncertainties, or increased proper motion uncertainties, with only one previously strong candidate having its velocity significantly revised due to spectroscopic contamination. Appendix D Estimating the fraction of statistical outliers: This appendix estimates that up to 40% of the fastest stars in the sample may be statistical outliers, based on Monte Carlo simulations of astrometric uncertainties.",
+        "highlight": {
+          "abstract": [
+            "The combination of Gaia DR2 radial velocities with the more precise and accurate astrometry provided by Gaia EDR3 makes the best dataset available to search for the fastest nearby <em>stars</em> in our Galaxy.",
+            "We compute the velocity distribution of ~7 million <em>stars</em> with precise parallaxes, to investigate the high-velocity tail of the velocity distribution of <em>stars</em> in the Milky Way.",
+            "We propagate these <em>stars</em> in the Galactic potential to characterize their orbits.",
+            "We find that 11 <em>stars</em> are consistent with being ejected from the Galactic disk, and are possible hyper-runaway star candidates.",
+            "The other 6 <em>stars</em> are not consistent with coming from a known star-forming region."
+          ],
+          "title": [
+            "Gaia EDR3 in 6D: Searching for unbound <em>stars</em> in the Galaxy"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.98,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper releases a catalog of 94 unbound star candidates (17 with high probability) with distances, total velocities, and uncertainties based on Gaia EDR3 data, including specific source selection and quality cuts.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "candidate_table",
+          "orbit_integrations"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:55:15"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 2,
+    "catalog_count": 2,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:55:15"
+  }
+}

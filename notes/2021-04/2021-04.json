@@ -1,0 +1,523 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2021-04",
+  "date_from": "2021-04-01",
+  "date_to": "2021-04-30",
+  "run": {
+    "run_id": "20260419T214845",
+    "started_at": "2026-04-19T21:48:45"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2021-04",
+    "date_from": "2021-04-01",
+    "date_to": "2021-04-30",
+    "raw_unique": 31,
+    "relevant_count": 4,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 31,
+    "classifier_included": 4,
+    "classifier_filtered": 27,
+    "classifier_errors": 0,
+    "direct_rule_included": 2,
+    "weak_rule_candidates": 2,
+    "weak_llm_reviewed": 2,
+    "weak_llm_included": 2,
+    "brief_eligible_count": 2,
+    "brief_skipped_weak_count": 2
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 132,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 324,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 133,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 133,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 133,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2104.10174",
+      "title": "Probing modified Newtonian dynamics with hypervelocity stars",
+      "authors": [
+        "Sankha Subhra Chakrabarty",
+        "Luisa Ostorero",
+        "Arianna Gallo",
+        "Stefano Ebagezio",
+        "Antonaldo Diaferio"
+      ],
+      "author_names": "Sankha Subhra Chakrabarty Luisa Ostorero Arianna Gallo Stefano Ebagezio Antonaldo Diaferio",
+      "categories": [
+        "astro-ph.GA",
+        "astro-ph.CO",
+        "astro-ph.SR"
+      ],
+      "published_at": "2021-04-20 00:00:00",
+      "updated_at": "2022-03-09 15:19:14",
+      "links": {
+        "abs": "https://arxiv.org/abs/2104.10174",
+        "pdf": "https://arxiv.org/pdf/2104.10174"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We show that measuring the velocity components of hypervelocity stars (HVSs) can discriminate between modified Newtonian dynamics (MOND) and Newtonian gravity. HVSs are ejected from the Galactic center on radial trajectories with a null tangential velocity component in the reference frame of the Galaxy. They acquire tangential components due to the nonspherical components of the Galactic gravitational potential. Axisymmetric potentials only affect the latitudinal components, $v_\\\\\\\\theta$, and non-null azimuthal components, $v_\\\\\\\\phi$, originate from non-axisymmetric matter distributions. For HVSs with sufficiently high ejection speed, $v_\\\\\\\\phi$ is proportionate to the deviation of the gravitational potential from axial symmetry. The ejection velocity threshold is $\\\\\\\\sim$ 750 km/s for 4 $M_{\\\\\\\\odot}$ stars and increases with decreasing HVS mass. We determine the upper limit of $v_\\\\\\\\phi$ as a function of the galactocentric distance for these high-speed HVSs if QUMOND, the quasi-linear formulation of MOND, is the correct theory of gravity and either the triaxial Galactic bulge or a nonspherical hot gaseous halo is the primary source of $v_\\\\\\\\phi$. In Newtonian gravity, the HVSs within 60 kpc of the Galactic center may easily have $v_\\\\\\\\phi$ values higher than the QUMOND upper limit if the dark matter (DM) halo is triaxial or if the DM halo and the baryonic components are axisymmetric but their two axes of symmetry are misaligned. Therefore, even a limited sample of high-speed HVSs could distinguish between QUMOND and the DM model. This test is currently limited by (i) the lack of a proper procedure to assess the HVS nature of a star in the model to be constrained; and (ii) the present uncertainties on $v_\\\\\\\\phi$, which are a factor of $\\\\\\\\sim 10$ too large. A proper procedure to assess the HVS nature of the stars and astrometric measurements with microarcsecond precision would make this test feasible."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 32.52824
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars"
+      },
+      "deepxiv": {
+        "score": 32.52824,
+        "best_score": 32.52824,
+        "search_keywords": null,
+        "citations": "2"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] The paper proposes a novel gravitational test using hypervelocity stars (HVSs) to distinguish between modified Newtonian dynamics (QUMOND) and Newtonian gravity with dark matter. It shows that HVSs ejected from the Galactic center acquire azimuthal velocity components $v_{\\phi}$ due to non-axisymmetric gravitational potentials; in QUMOND, these are bounded by the theory's predictions, while in Newtonian gravity, triaxial halos or misaligned symmetry axes can produce $v_{\\phi}$ values exceeding QUMOND limits. The test hinges on precise astrometric measurements of $v_{\\phi}$ and a reliable identification of HVS origins, with current limitations stemming from observational uncertainties and lack of robust HVS selection criteria.",
+        "keywords": [
+          "hypervelocity stars",
+          "non-axisymmetric gravitational potential",
+          "azimuthal velocity component",
+          "QUMOND",
+          "Galactic center ejection"
+        ],
+        "citations": "2",
+        "published_at": "2021-04-20T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2104.10174",
+          "src_url": "https://arxiv.org/pdf/2104.10174",
+          "title": "Probing modified Newtonian dynamics with hypervelocity stars"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T214845"
+      },
+      "source_fields": {
+        "pg_id": 1718358,
+        "venue": "Astronomy & Astrophysics",
+        "journal_name": "Astronomy & Astrophysics",
+        "status": "extracted",
+        "token_count": 38889,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 04:16:40",
+        "sections_text": "Introduction: This paper proposes a novel solution to the mass discrepancy problem by challenging the standard cold dark matter paradigm and offering an alternative gravitational framework that explains galactic and cosmological observations without invoking undetected non-baryonic particles. Discussion and conclusions: Hypervelocity stars with ejection velocities above ~710 km s⁻¹ in QUMOND (γ=2) or ~750 km s⁻¹ in other QUMOND/Newtonian models exhibit a galactocentric tangential velocity $|v_\\\\phi|$ that exceeds a theoretical threshold in QUMOND but remains unbounded in Newtonian gravity, enabling a discriminative observational test where $|v_\\\\phi|$ at distances beyond ~15 kpc (or up to ~50 kpc for lower-mass stars) reveals deviations from axial symmetry and thus distinguishes between MOND and Newtonian gravity. Newtonian gravitational potentials: This section compares an axisymmetric and a non-axisymmetric model of the Milky Way's gravitational potential, focusing on the impact of a triaxial bulge on the galaxy's dynamics, with the axisymmetric model relying on standard potentials for the disk, bulge, and central black hole, while the non-axisymmetric model introduces azimuthal variations due to the triaxial bulge. Quasi-linear modified Newtonian dynamics: This section presents the quasi-linear modified Newtonian dynamics (QUMOND) framework, using an interpolating function $\\\\nu(x)$ to describe gravity's deviation from Newtonian predictions at low accelerations, with the acceleration scale $a_0 = 3600$ km² s⁻² kpc⁻¹ determined from observational data and applied to a galaxy model comprising a supermassive black hole, stellar bulge, and disk. Simulations of the kinematics of the HVSs: This section presents simulations of hypervelocity star ejection via the Hills mechanism, showing that only stars with ejection velocities above ~710–750 km s⁻¹ (and galactocentric distances beyond ~15 kpc) are relevant for distinguishing between Newtonian gravity and QUMOND. The dark matter halo in Newtonian gravity: This section describes a Newtonian model of the Milky Way with a spheroidal dark matter halo, incorporating a triaxial generalization of the NFW potential to study its impact on hypervelocity star dynamics, while noting that the halo's shape is only weakly constrained and primarily explored for its axial symmetry. Tangential velocity in QUMOND and Newtonian gravity: QUMOND predicts significantly lower upper limits for the azimuthal tangential velocity $|v_{\\\\phi}|$ compared to Newtonian gravity, especially for hypervelocity stars within 60 kpc, due to the baryonic symmetry of the Galactic potential, challenging the theory if higher $|v_{\\\\phi}|$ values are observed.",
+        "highlight": {
+          "abstract": [
+            "We show that measuring the velocity components of <em>hypervelocity</em> <em>stars</em> (HVSs) can discriminate between modified Newtonian dynamics (MOND) and Newtonian gravity.",
+            "The ejection velocity threshold is $\\\\\\\\sim$ 750 km/s for 4 $M_{\\\\\\\\odot}$ <em>stars</em> and increases with decreasing HVS mass.",
+            "A proper procedure to assess the HVS nature of the <em>stars</em> and astrometric measurements with microarcsecond precision would make this test feasible."
+          ],
+          "title": [
+            "Probing modified Newtonian dynamics with <em>hypervelocity</em> <em>stars</em>"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.9,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Purely theoretical paper proposing a gravitational test using HVSs. No observational data presented; discusses current limitations of measurements.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:50:20"
+      }
+    },
+    {
+      "arxiv_id": "2104.02989",
+      "title": "The influence of the secular perturbation of an intermediate-mass companion: II. Ejection of hypervelocity stars from the Galactic Center",
+      "authors": [
+        "Xiaochen Zheng",
+        "Douglas N. C. Lin",
+        "Shude Mao"
+      ],
+      "author_names": "Xiaochen Zheng Douglas N. C. Lin Shude Mao",
+      "categories": [
+        "astro-ph.GA",
+        "astro-ph.SR"
+      ],
+      "published_at": "2021-04-07 00:00:00",
+      "updated_at": "2021-04-07 08:37:18",
+      "links": {
+        "abs": "https://arxiv.org/abs/2104.02989",
+        "pdf": "https://arxiv.org/pdf/2104.02989"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "There is a population of stars with velocities in excess of 500 km s$^{-1}$ relative to the Galactic center. Many, perhaps most, of these hyper-velocity stars (HVSs) are B stars, similar to the disk and S stars in a nuclear cluster around a super-massive black hole (SMBH) near $\\\\\\\\rm Sgr~A^{\\\\\\\\star}$. In the paper I of this series, we showed that the eccentricity of the stars emerged from a hypothetical disk around the SMBH can be rapidly excited by the secular perturbation of its intermediate-mass companion (IMC), and we suggested IRS 13E as a potential candidate for the IMC. Here, we show that this process leads to an influx of stars on parabolic orbits to the proximity of $\\\\\\\\rm Sgr~A^{\\\\\\\\star}$ on a secular timescale of a few Myr. This timescale is much shorter than the diffusion timescale into the lost cone through either the classical or the resonant relaxation. Precession of the highly-eccentric stars' longitude of periastron, relative to that of the IMC, brings them to its proximity within a few Myr. The IMC's gravitational perturbation scatters a fraction of the stars from nearly parabolic to hyperbolic orbits, with respect to the SMBH. Their follow-up close encounters with the SMBH induce them to escape with hyper-velocity. This scenario is a variant of the hypothesis proposed by Hills based on the anticipated breakup of some progenitor binary stars in the proximity of the SMBH, and its main objective is to account for the limited lifespan of the known HVSs. We generalize our previous numerical simulations of this process with a much wider range of orbital configurations. We demonstrate the robustness and evaluate the efficiency of this channel of HVS formation. From these numerical simulations, we infer observable kinematic properties for the HVSs."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 18.952791
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars"
+      },
+      "deepxiv": {
+        "score": 18.952791,
+        "best_score": 18.952791,
+        "search_keywords": null,
+        "citations": "4"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[Research Note (RNAAS)] RNAAS provides a non-peer-reviewed, rapid-dissemination platform for brief astronomical communications (≤1,000 words, one figure/table) that bridge gaps in traditional publishing for null results, observational alerts, or preliminary findings. Submissions undergo editorial screening for appropriateness and format, with publication in under 72 hours and permanent archiving via ADS with DOI, enabling citable, long-term access to timely, non-traditional research outputs.",
+        "keywords": [
+          "rapid dissemination",
+          "non-peer-reviewed publication",
+          "observational alerts",
+          "long-term archiving",
+          "astronomical data sharing"
+        ],
+        "citations": "4",
+        "published_at": "2021-04-07T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2104.02989",
+          "src_url": "https://arxiv.org/pdf/2104.02989",
+          "title": "The influence of the secular perturbation of an intermediate-mass companion: II. Ejection of hypervelocity stars from the Galactic Center"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T214845"
+      },
+      "source_fields": {
+        "pg_id": 1722891,
+        "venue": null,
+        "journal_name": null,
+        "status": "extracted",
+        "token_count": 1058,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 16:50:41",
+        "sections_text": "1: RNAAS is a fast-track, peer-review-exempt publication by the AAS that enables the timely and permanently archivable dissemination of brief, non-traditional astronomical results to the professional community.",
+        "highlight": {
+          "abstract": [
+            "There is a population of <em>stars</em> with velocities in excess of 500 km s$^{-1}$ relative to the Galactic center.",
+            "Many, perhaps most, of these hyper-velocity <em>stars</em> (HVSs) are B <em>stars</em>, similar to the disk and S <em>stars</em> in a nuclear cluster around a super-massive black hole (SMBH) near $\\\\\\\\rm Sgr~A^{\\\\\\\\star}$.",
+            "Here, we show that this process leads to an influx of <em>stars</em> on parabolic orbits to the proximity of $\\\\\\\\rm Sgr~A^{\\\\\\\\star}$ on a secular timescale of a few Myr.",
+            "Precession of the highly-eccentric <em>stars</em>' longitude of periastron, relative to that of the IMC, brings them to its proximity within a few Myr.",
+            "The IMC's gravitational perturbation scatters a fraction of the <em>stars</em> from nearly parabolic to hyperbolic orbits, with respect to the SMBH."
+          ],
+          "title": [
+            "Ejection of <em>hypervelocity</em> <em>stars</em> from the Galactic Center"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.85,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Theoretical/numerical study of HVS ejection mechanism from Galactic Center via secular perturbations. No observational stellar data presented.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:50:20"
+      }
+    },
+    {
+      "arxiv_id": "2104.12819",
+      "title": "Extreme adaptive optics astrometry of R136. Searching for high proper motion stars",
+      "authors": [
+        "Zeinab Khorrami",
+        "M. Langlois",
+        "F. Vakili",
+        "P. C. Clark",
+        "A. S. M. Buckner",
+        "M. Gonzalez",
+        "P. Crowther",
+        "R. Wunsch",
+        "J. Palous",
+        "A. Boccaletti",
+        "S. Lumsden",
+        "E. Moraux"
+      ],
+      "author_names": "Zeinab Khorrami M. Langlois F. Vakili P. C. Clark A. S. M. Buckner M. Gonzalez P. Crowther R. Wunsch J. Palous A. Boccaletti S. Lumsden E. Moraux",
+      "categories": [
+        "astro-ph.SR",
+        "astro-ph.GA",
+        "astro-ph.IM"
+      ],
+      "published_at": "2021-04-26 00:00:00",
+      "updated_at": "2021-04-26 18:53:44",
+      "links": {
+        "abs": "https://arxiv.org/abs/2104.12819",
+        "pdf": "https://arxiv.org/pdf/2104.12819"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We compared high-contrast near-infrared images of the core of R136 taken by VLT/SPHERE, in two epochs separated by 3.06 years. For the first time we monitored the dynamics of the detected sources in the core of R136 from a ground-based telescope with adaptive optics. The aim of these observations was to search for High prOper Motion cAndidates (HOMAs) in the central region of R136 (r<6\") where it has been challenging for other instruments. Two bright sources (K<15mag and V<16mag) are located near R136a1 and R136c (massive WR stars) and have been identified as potential HOMAs. These sources have significantly shifted in the images with respect to the mean shift of all reliable detected sources and their neighbours, and six times their own astrometric errors. We calculate their proper motions to be 1.36\\\\\\\\pm0.22 mas/yr (321\\\\\\\\pm52 km/s) and 1.15\\\\\\\\pm0.11 mas/yr (273\\\\\\\\pm26 km/s). We discuss different possible scenarios to explain the magnitude of such extreme proper motions, and argue for the necessity to conduct future observations to conclude on the nature of HOMAs in the core of R136."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 16.485735
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.85,
+        "reason": "Weak title match: high proper-motion or unusual kinematics LLM confirmed: Paper searches for high proper motion stars (HOMAs) in R136 with measured velocities ~300 km/s, directly studying high-velocity stellar candidates in a massive cluster context."
+      },
+      "deepxiv": {
+        "score": 9.515118,
+        "best_score": 16.485735,
+        "search_keywords": null,
+        "citations": "0"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T214845"
+      },
+      "source_fields": {
+        "pg_id": 1720236,
+        "venue": "Astronomy & Astrophysics",
+        "journal_name": "Astronomy & Astrophysics",
+        "status": "extracted",
+        "token_count": 9562,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 16:57:39",
+        "sections_text": "Data: This section describes the high-angular-resolution K-band imaging data of R136's core obtained over three years using IRDIS with consistent instrumental settings, corrected for instrumental and atmospheric effects to enable precise dynamical studies. Astrometry: This section describes a three-step astrometric method—using local correction and global rotation—to precisely measure proper motions of stars in K-band data by accounting for local shifts and global rotations between observation epochs. Conclusion: This study identifies two highly moving astrometric sources (HOMAs) in the R136 cluster with exceptional proper motions and kinematics, suggesting possible extreme dynamical origins or foreground contamination, and highlights their potential as targets for future spectroscopic and high-resolution observations. Photometry: Photometry was performed independently on left and right images for each epoch using consistent PSF criteria to ensure robustness, with common sources identified by positional proximity, magnitude similarity, and PSF correlation, and instrumental shifts greater than half a pixel rejected to yield a final set of 494 common sources. Introduction: This paper presents the first high-precision proper motion measurements of stars in the core of the R136 cluster using SPHERE/IRDIS near-infrared observations, overcoming limitations of HST and Gaia data by providing higher angular resolution, better pixel sampling, and reduced contamination from bright sources, thereby enabling the detection of high-velocity stars that could revise models of massive star formation and cluster dynamics. Selected sources: This section identifies 141 reliable-consistent (RC) sources in the R136 region with consistent astrometric measurements between left and right observations, demonstrating high positional accuracy and stability for bright stars, while astrometric errors increase with decreasing signal-to-noise for fainter sources. Appendix A Extra figures: Appendix A presents additional figures illustrating colour–magnitude diagrams and zoomed views of reliable stellar sources in the R136 region, highlighting photometric and astrometric data with precise positional measurements and source identification.",
+        "highlight": {
+          "abstract": [
+            "Two bright sources (K<15mag and V<16mag) are located near R136a1 and R136c (massive WR <em>stars</em>) and have been identified as potential HOMAs."
+          ],
+          "title": [
+            "Searching for high proper motion <em>stars</em>"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Presents proper motion measurements for two high proper motion candidates in R136 cluster from multi-epoch adaptive optics observations.",
+        "data_products": [
+          "coordinates",
+          "astrometry",
+          "proper_motions",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:50:20"
+      }
+    },
+    {
+      "arxiv_id": "2104.01451",
+      "title": "Stellar collisions in flattened and rotating Pop. III star clusters",
+      "authors": [
+        "M.Z.C. Vergara",
+        "D.R.G. Schleicher",
+        "T.C.N. Boekholt",
+        "B. Reinoso",
+        "M. Fellhauer",
+        "R.S. Klessen",
+        "N. W. C. Leigh"
+      ],
+      "author_names": "M.Z.C. Vergara D.R.G. Schleicher T.C.N. Boekholt B. Reinoso M. Fellhauer R.S. Klessen N. W. C. Leigh",
+      "categories": [
+        "astro-ph.GA",
+        "astro-ph.CO"
+      ],
+      "published_at": "2021-04-03 00:00:00",
+      "updated_at": "2021-04-03 17:15:14",
+      "links": {
+        "abs": "https://arxiv.org/abs/2104.01451",
+        "pdf": "https://arxiv.org/pdf/2104.01451"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Fragmentation often occurs in disk-like structures, both in the early Universe and in the context of present-day star formation. Supermassive black holes (SMBHs) are astrophysical objects whose origin is not well understood; they weigh millions of solar masses and reside in the centers of galaxies. An important formation scenario for SMBHs is based on collisions and mergers of stars in a massive cluster, in which the most massive star moves to the center of the cluster due to dynamical friction. This increases the rate of collisions and mergers since massive stars have larger collisional cross sections. This can lead to runaway growth of a very massive star which may collapse to become an intermediate-mass black hole. Here we investigate the dynamical evolution of Miyamoto-Nagai models that allow us to describe dense stellar clusters, including flattening and different degrees of rotation. We find that the collisions in these clusters depend mostly on the number of stars and the initial stellar radii for a given radial size of the cluster. By comparison, rotation seems to affect the collision rate by at most $20\\\\\\\\%$. For flatness, we compared spherical models with systems that have a scale height of about $10\\\\\\\\%$ of their radial extent, in this case finding a change in the collision rate of less than $25\\\\\\\\%$. Overall, we conclude that the parameters only have a minor effect on the number of collisions. Our results also suggest that rotation helps to retain more stars in the system, reducing the number of escapers by a factor of $2-3$ depending on the model and the specific realization. After two million years, a typical lifetime of a very massive star, we find that about $630$ collisions occur in typical models with $N=10^4$, $R=100$ $\\\\\\\\rm~R_\\\\\\\\odot$ and a half-mass radius of $0.1$ $\\\\\\\\rm~pc$, leading to a mass of about $6.3\\\\\\\\times10^3$ $\\\\\\\\rm~M_\\\\\\\\odot$ for the most massive object."
+      },
+      "match": {
+        "queries": [
+          "runaway stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 11.645991
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.7,
+        "reason": "Weak title match: stellar interactions in dense systems LLM confirmed: Abstract mentions 'reducing the number of escapers' and discusses stellar dynamics in clusters that can produce escapers/ejected stars"
+      },
+      "deepxiv": {
+        "score": 11.645991,
+        "best_score": 11.645991,
+        "search_keywords": null,
+        "citations": "4"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T214845"
+      },
+      "source_fields": {
+        "pg_id": 1723364,
+        "venue": null,
+        "journal_name": "Astronomy and Astrophysics",
+        "status": "extracted",
+        "token_count": 17407,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-23 02:39:20",
+        "sections_text": "Results: In rotating and flattened Pop. III star clusters, the Lagrangian radii evolve over time with the inner regions showing oscillatory behavior and non-uniform expansion, particularly at 10% mass fraction, while energy conservation is disrupted by mergers that drive growth of the most massive object, with the vertical expansion reaching a factor of 5 over 2 Myr and radial expansion slowing after 1.2 Myr. Simulations: This section describes the simulation setup using Nbody6 to model stellar dynamics in a rotating, disk-like population III cluster, including initial conditions, particle generation, collision rules, and parameter variations to study stellar interactions and evolution. Introduction: This paper presents a novel formation mechanism for supermassive black holes via stellar collisions in primordial protostellar clusters, addressing the challenge of forming massive seeds without relying on metal-free gas collapse, which is difficult to achieve in nature. Analytical model: The paper proposes a method based on the Miyamoto–Nagai potential and density profiles to compute the initial equilibrium state of axisymmetric stellar systems, assuming a velocity dispersion tensor aligned with the coordinate system and using a k-decomposition to model azimuthal velocity components with realistic rotation. Discussion and conclusions: Rotating and flattened star clusters exhibit similar total collision rates and mass growth of the most massive object (up to ~40,000 M⊙ with ~4000 collisions for 10⁴ stars and 1000 R⊙), with rotation reducing escapers and collisions with the central object by up to 20% and geometry affecting rates by at most 25%, while collision frequency increases with stellar radius and number of stars.",
+        "highlight": {
+          "abstract": [
+            "An important formation scenario for SMBHs is based on collisions and mergers of <em>stars</em> in a massive cluster, in which the most massive star moves to the center of the cluster due to dynamical friction.",
+            "This increases the rate of collisions and mergers since massive <em>stars</em> have larger collisional cross sections.",
+            "This can lead to <em>runaway</em> growth of a very massive star which may collapse to become an intermediate-mass black hole.",
+            "We find that the collisions in these clusters depend mostly on the number of <em>stars</em> and the initial stellar radii for a given radial size of the cluster.",
+            "Our results also suggest that rotation helps to retain more <em>stars</em> in the system, reducing the number of escapers by a factor of $2-3$ depending on the model and the specific realization."
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.9,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Theoretical simulation study of Pop. III star cluster dynamics and collisions. Mentions 'escapers' but no observational data.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:50:20"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 4,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:50:20"
+  }
+}

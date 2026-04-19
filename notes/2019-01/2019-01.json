@@ -1,0 +1,190 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2019-01",
+  "date_from": "2019-01-01",
+  "date_to": "2019-01-31",
+  "run": {
+    "run_id": "20260419T215548",
+    "started_at": "2026-04-19T21:55:48"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2019-01",
+    "date_from": "2019-01-01",
+    "date_to": "2019-01-31",
+    "raw_unique": 37,
+    "relevant_count": 1,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 37,
+    "classifier_included": 1,
+    "classifier_filtered": 36,
+    "classifier_errors": 0,
+    "direct_rule_included": 0,
+    "weak_rule_candidates": 1,
+    "weak_llm_reviewed": 1,
+    "weak_llm_included": 1,
+    "brief_eligible_count": 0,
+    "brief_skipped_weak_count": 1
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 137,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 354,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 137,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 139,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 137,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1901.05063",
+      "title": "Intermediate-Mass Black Holes in binary-rich star clusters",
+      "authors": [
+        "L. Subr",
+        "G. Fragione",
+        "J. Dabringhausen"
+      ],
+      "author_names": "L. Subr G. Fragione J. Dabringhausen",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2019-01-15 00:00:00",
+      "updated_at": "2019-01-17 09:03:17",
+      "links": {
+        "abs": "https://arxiv.org/abs/1901.05063",
+        "pdf": "https://arxiv.org/pdf/1901.05063"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "There is both theoretical expectation and some observational clues that intermediate mass black holes reside in nuclei of globular clusters. In order to find an independent indicator for their existence, we investigate in this paper how an IMBH manifests itself through its dynamical interaction with a binary rich globular cluster of moderate extension and mass. By means of direct $N$-body integration we follow the dynamical evolution of models of such a system over a time span of $\\\\\\\\approx$ 0.8 Gyr and compare the cases with and without the primordial binaries as well as with and without the IMBH. In accord with previous results, we show that when present the IMBH develops a power-law density cusp of stars around it, regardless of the binary population in the cluster. If, however, binaries are present, their interaction with the IMBH leads to the production of high velocity escapers at a rate of the order of 0.1 Myr$^{-1}$. These stars may contribute to the population of high-velocity stars observed in the Galaxy. Clusters hosting the IMBH together with high number of binaries also form a denser halo of marginally unbound stars than clusters that lack either the IMBH or the rich binary population. Finally, we show that the binary population leads to an increased rate of direct interactions of stars with the IMBH, potentially observable as tidal disruption events."
+      },
+      "match": {
+        "queries": [
+          "high-velocity stars",
+          "unbound stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 15.645233
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.85,
+        "reason": "Weak title match: stellar interactions in dense systems LLM confirmed: Abstract explicitly discusses production of high-velocity escapers from IMBH-binary interactions that may contribute to observed high-velocity stars in the Galaxy"
+      },
+      "deepxiv": {
+        "score": 15.645233,
+        "best_score": 15.645233,
+        "search_keywords": null,
+        "citations": "6"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T215548"
+      },
+      "source_fields": {
+        "pg_id": 381460,
+        "venue": "Monthly notices of the Royal Astronomical Society",
+        "journal_name": "Monthly Notices of the Royal Astronomical Society",
+        "status": "extracted",
+        "token_count": 23456,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 04:21:33",
+        "sections_text": "Method: The paper proposes a numerical $N$-body simulation approach using the NBODY6 code to study the long-term evolutionary impact of an intermediate-mass black hole (IMBH) on a binary-rich, aged stellar cluster by simultaneously modeling a large population of binaries and an IMBH, with the core idea being to isolate and quantify the IMBH's influence on cluster dynamics and stability through comparative simulations. Results: The presence of an IMBH leads to the formation of a stable central cusp with a $r^{-7/4}$ density profile within $\\\\sim 200$ Myr, where tightly bound, high-eccentricity stellar orbits (with peak velocities comparable to S-stars) and rapid relaxation cause most stars to be scattered out of the inner region within $\\\\sim 16$ Myr, with model BH-BIN and BH showing similar cusp evolution after $T \\\\gtrsim 200$ Myr. Introduction: This paper introduces a novel framework for detecting intermediate-mass black holes (IMBHs) through gravitational wave observations of IMBH–stellar-mass black hole binaries in globular clusters, addressing the long-standing lack of definitive evidence for IMBHs by leveraging the unique merger rates and observable signatures of intermediate-mass ratio inspirals. Discussions and Conclusions: Our simulations show that while IMBHs in binary-rich globular clusters lead to a power-law density profile with slope ≈ −7/4 and produce high-velocity stars via the Hills mechanism—ejecting stars with velocities up to ~300 km/s and a velocity distribution following a power-law with slope ≈ −3, at a rate of ~1 star per 10 Myr—these interactions only modestly increase the IMBH mass (from 1000 to ~1050 M⊙ over 0.8 Gyr), indicating that stellar collisions are insufficient to significantly grow the IMBH on cosmological timescales, and such ejections may contribute to the galactic high-velocity star population but cannot explain the full observed extreme velocities.",
+        "highlight": {
+          "abstract": [
+            "In accord with previous results, we show that when present the IMBH develops a power-law density cusp of <em>stars</em> around it, regardless of the binary population in the cluster.",
+            "If, however, binaries are present, their interaction with the IMBH leads to the production of <em>high</em> <em>velocity</em> escapers at a rate of the order of 0.1 Myr$^{-1}$.",
+            "These <em>stars</em> may contribute to the population of <em>high</em>-<em>velocity</em> <em>stars</em> observed in the Galaxy.",
+            "Clusters hosting the IMBH together with <em>high</em> number of binaries also form a denser halo of marginally unbound <em>stars</em> than clusters that lack either the IMBH or the rich binary population.",
+            "Finally, we show that the binary population leads to an increased rate of direct interactions of <em>stars</em> with the IMBH, potentially observable as tidal disruption events."
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.95,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Purely theoretical N-body simulation paper studying IMBH-binary interactions producing high-velocity escapers. No observational data or catalog presented.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:57:18"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 0,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:57:18"
+  }
+}

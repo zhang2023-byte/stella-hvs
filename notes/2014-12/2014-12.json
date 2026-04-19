@@ -1,0 +1,341 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2014-12",
+  "date_from": "2014-12-01",
+  "date_to": "2014-12-31",
+  "run": {
+    "run_id": "20260419T221210",
+    "started_at": "2026-04-19T22:12:10"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2014-12",
+    "date_from": "2014-12-01",
+    "date_to": "2014-12-31",
+    "raw_unique": 33,
+    "relevant_count": 2,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 33,
+    "classifier_included": 2,
+    "classifier_filtered": 31,
+    "classifier_errors": 0,
+    "direct_rule_included": 2,
+    "weak_rule_candidates": 0,
+    "weak_llm_reviewed": 0,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 2,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 69,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 246,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 71,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 69,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 70,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1412.1484",
+      "title": "Characterizing the High-Velocity Stars of RAVE: The Discovery of a Metal-Rich Halo Star Born in the Galactic Disk",
+      "authors": [
+        "K. Hawkins",
+        "G. Kordopatis",
+        "G. Gilmore",
+        "T. Masseron",
+        "R. F. G. Wyse",
+        "G. Ruchti",
+        "O. Bienaymé",
+        "J. Bland-Hawthorn",
+        "C. Boeche",
+        "K. Freeman",
+        "B. K. Gibson",
+        "E. K. Grebel",
+        "A. Helmi",
+        "A. Kunder",
+        "U. Munari",
+        "J. F. Navarro",
+        "Q. A. Parker",
+        "W. A. Reid",
+        "R. D. Scholz",
+        "G. Seabroke",
+        "A. Siebert",
+        "M. Steinmetz",
+        "F. Watson",
+        "T. Zwitter"
+      ],
+      "author_names": "K. Hawkins G. Kordopatis G. Gilmore T. Masseron R. F. G. Wyse G. Ruchti O. Bienaymé J. Bland-Hawthorn C. Boeche K. Freeman B. K. Gibson E. K. Grebel A. Helmi A. Kunder U. Munari J. F. Navarro Q. A. Parker W. A. Reid R. D. Scholz G. Seabroke A. Siebert M. Steinmetz F. Watson T. Zwitter",
+      "categories": [
+        "astro-ph.GA",
+        "astro-ph.SR"
+      ],
+      "published_at": "2014-12-03 00:00:00",
+      "updated_at": "2014-12-03 21:01:18",
+      "links": {
+        "abs": "https://arxiv.org/abs/1412.1484",
+        "pdf": "https://arxiv.org/pdf/1412.1484"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We aim to characterize high-velocity (HiVel) stars in the solar vicinity both chemically and kinematically using the fourth data release of the RAdial Velocity Experiment (RAVE). We used a sample of 57 HiVel stars with Galactic rest-frame velocities larger than 275 km s$^{-1}$. With 6D position and velocity information, we integrated the orbits of the HiVel stars and found that, on average, they reach out to 13 kpc from the Galactic plane and have relatively eccentric orbits consistent with the Galactic halo. Using the stellar parameters and [$\\\\\\\\alpha$/Fe] estimates from RAVE, we found the metallicity distribution of the HiVel stars peak at [M/H] = -1.2 dex and is chemically consistent with the inner halo. There are a few notable exceptions that include a hypervelocity star (HVS) candidate, an extremely high-velocity bound halo star, and one star that is kinematically consistent with the halo but chemically consistent with the disk. High-resolution spectra were obtained for the metal-rich HiVel star candidate and the second highest velocity star in the sample. Using these high-resolution data, we report the discovery of a metal-rich halo star that has likely been dynamically ejected into the halo from the Galactic thick disk. This discovery could aid in explaining the assembly of the most metal-rich component of the Galactic halo."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 23.539179
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: high-velocity or extreme-velocity stars"
+      },
+      "deepxiv": {
+        "score": 18.807861,
+        "best_score": 23.539179,
+        "search_keywords": null,
+        "citations": "45"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[astronomical research paper] The study analyzes 57 high-velocity stars from the RAVE survey, combining kinematic and chemical data to reveal that most are chemically consistent with the inner Galactic halo, despite their high velocities. A key discovery is a metal-rich halo star with disk-like chemistry, likely ejected from the thick disk via dynamical ejection—offering evidence for the origin of metal-rich halo components through runaway disk stars. This supports models where kinematically heated disk stars are dynamically ejected into the halo, contributing to the metal-rich tail of the Galactic halo.",
+        "keywords": [
+          "dynamical ejection",
+          "runaway disk stars",
+          "metal-rich halo",
+          "thick disk ejection",
+          "high-velocity star kinematics"
+        ],
+        "citations": "45",
+        "published_at": "2014-12-03T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1412.1484",
+          "src_url": "https://arxiv.org/pdf/1412.1484",
+          "title": "Characterizing the High-Velocity Stars of RAVE: The Discovery of a Metal-Rich Halo Star Born in the Galactic Disk"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T221210"
+      },
+      "source_fields": {
+        "pg_id": 2514177,
+        "venue": null,
+        "journal_name": "Monthly Notices of the Royal Astronomical Society",
+        "status": "extracted",
+        "token_count": 27768,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 04:24:08",
+        "sections_text": "Introduction: This paper makes a novel contribution by combining kinematic and chemical abundances (Fe/H and α/Fe) of high-velocity stars from the RAVE survey to determine their origin within the Milky Way, addressing the problem of whether these stars originate in the disk, halo, or through dynamical ejection mechanisms like runaway stars or binary supernovae. Discussion and Conclusion: HiVel stars in RAVE are kinematically consistent with the Galactic halo, exhibiting eccentric orbits extending up to 14 kpc above the Galactic plane, metal-poor ([M/H] ≈ –1.2 dex) and α-enhanced ([α/Fe] ≈ +0.4), supporting their origin in the inner halo rather than the thick disk or disk. A Sample of High-Velocity Stars: This section describes the use of RAVE DR4 data to identify high-velocity stars, supplemented by high-resolution follow-up observations to refine stellar parameters and chemical abundances, with attention to metallicity and velocity trends in the Milky Way. Results: Metal-Poor High-Velocity Stars, Ejected Disk Stars and Hypervelocity Stars: The experiment identifies a metal-rich halo star with a Galactic rest frame velocity exceeding 800 km s⁻¹—more than 1σ above the escape speed—suggesting it originated in the Galactic disk and is a likely hypervelocity star candidate.",
+        "highlight": {
+          "abstract": [
+            "We aim to characterize high-velocity (HiVel) <em>stars</em> in the solar vicinity both chemically and kinematically using the fourth data release of the RAdial Velocity Experiment (RAVE).",
+            "We used a sample of 57 HiVel <em>stars</em> with Galactic rest-frame velocities larger than 275 km s$^{-1}$.",
+            "With 6D position and velocity information, we integrated the orbits of the HiVel <em>stars</em> and found that, on average, they reach out to 13 kpc from the Galactic plane and have relatively eccentric orbits",
+            "Using the stellar parameters and [$\\\\\\\\alpha$/Fe] estimates from RAVE, we found the metallicity distribution of the HiVel <em>stars</em> peak at [M/H] = -1.2 dex and is chemically consistent with the inner halo",
+            "There are a few notable exceptions that include a <em>hypervelocity</em> star (HVS) candidate, an extremely high-velocity bound halo star, and one star that is kinematically consistent with the halo but chemically"
+          ],
+          "title": [
+            "Characterizing the High-Velocity <em>Stars</em> of RAVE: The Discovery of a Metal-Rich Halo Star Born in the Galactic"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "uses_existing_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Analyzes 57 high-velocity stars from RAVE DR4 with 6D kinematics, stellar parameters, and chemical abundances. Includes high-resolution follow-up of specific candidates.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "spectra",
+          "abundances",
+          "orbit_integrations",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:13:41"
+      }
+    },
+    {
+      "arxiv_id": "1412.0657",
+      "title": "Maximum speed of hypervelocity stars ejected from binaries",
+      "authors": [
+        "Thomas M. Tauris"
+      ],
+      "author_names": "Thomas M. Tauris",
+      "categories": [
+        "astro-ph.SR",
+        "astro-ph.GA",
+        "astro-ph.HE"
+      ],
+      "published_at": "2014-12-01 00:00:00",
+      "updated_at": "2015-01-05 22:55:34",
+      "links": {
+        "abs": "https://arxiv.org/abs/1412.0657",
+        "pdf": "https://arxiv.org/pdf/1412.0657"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "The recent detection of hypervelocity stars (HVSs) as late-type B-stars and HVS candidate G/K-dwarfs raises the important question of their origin. In this Letter, we investigate the maximum possible velocities of such HVSs if they are produced from binaries which are disrupted via an asymmetric supernova explosion. We find that HVSs up to ~770 and ~1280 km/s are possible in the Galactic rest frame from this scenario for these two subclasses of HVSs, respectively. We conclude that whereas a binary origin cannot easily explain all of the observed velocities of B-type HVSs (in agreement with their proposed central massive black hole origin) it can indeed account for the far majority (if not all) of the recently detected G/K-dwarf HVS candidates."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 33.096725
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars, unbound, escaping, or ejected stars"
+      },
+      "deepxiv": {
+        "score": 33.096725,
+        "best_score": 33.096725,
+        "search_keywords": null,
+        "citations": "65"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research letter] The paper uses Monte Carlo simulations to model the maximum ejection velocities of hypervelocity stars (HVSs) from binaries disrupted by asymmetric core-collapse supernovae, incorporating SN shell impacts and post-explosion dynamics. It finds that asymmetric supernovae can produce HVSs up to ∼770 km/s (for B-type) and ∼1280 km/s (for G/K-dwarf) in the Galactic rest frame, showing that binary disruption via asymmetric supernovae can explain most observed G/K-dwarf HVS candidates, though not all B-type ones—consistent with their alternative origin from supermassive black hole interactions.",
+        "keywords": [
+          "asymmetric supernova",
+          "binary disruption",
+          "hypervelocity star kinematics",
+          "Roche lobe overflow",
+          "neutron star kick"
+        ],
+        "citations": "65",
+        "published_at": "2014-12-01T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1412.0657",
+          "src_url": "https://arxiv.org/pdf/1412.0657",
+          "title": "Maximum speed of hypervelocity stars ejected from binaries"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T221210"
+      },
+      "source_fields": {
+        "pg_id": 2515008,
+        "venue": null,
+        "journal_name": "Monthly Notices of the Royal Astronomical Society",
+        "status": "extracted",
+        "token_count": 10438,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 04:21:19",
+        "sections_text": "Results: Ejection velocities of hypervelocity star companions peak at kick velocities of 1000–1200 km/s, with G/K-dwarf companions achieving up to twice the velocities of B-star companions due to smaller masses and closer orbital separations, resulting in average ejection speeds of 375 km/s and a velocity range of 87–839 km/s under a 1000 km/s kick. Summary: Systematic Monte Carlo simulations show that binary disruption via asymmetric supernovae can produce high-velocity stars with maximum runaway velocities depending on companion mass, supporting a binary origin for many G/K-dwarf HVS candidates, though definitive identification remains lacking. Discussions: Simulations show that disrupted binary systems can produce HVSs with maximum runaway velocities of up to ~1280 km/s in the Galactic rest frame, with B-type stars reaching ~770–550 km/s and G/K-dwarfs up to ~1050 km/s, supporting a binary disruption origin for observed HVSs, especially given the plausibility of large neutron star kicks (>1000 km/s) observed in pulsars. Introduction: This paper presents a systematic Monte Carlo investigation of the maximum ejection velocities of hypervelocity stars from disrupted binaries via asymmetric supernovae, with a focus on late-type B and G/K-dwarf stars, providing a detailed model that includes SN shell impact and advancing the understanding of the kinematic origins of disc-originating HVSs. Appendix A The supernova shell impact: This section presents a calibrated analytical model for the impact of supernova ejecta on a companion star in binary systems, accounting for mass loss and momentum transfer, based on hydrodynamical simulations of Type Ia supernovae and adapted for use in studying hypervelocity star ejection velocities. Modelling the dynamical effects of SNe: The paper proposes a Monte Carlo-based method using analytical formulae from Tauris & Takens (1998) to systematically calculate the maximum ejection velocities of companion stars in close binary systems undergoing asymmetric supernovae, with the core idea that very small pre-SN orbital separations—limited by the Roche lobe—are required to produce hypervelocity stars, while avoiding common envelope evolution and post-SN mergers. Appendix B A sanity check on the equations: This section validates the applied equations by examining limiting cases—such as zero remnant mass or infinite kick velocity—and shows that the ejection velocity of the companion star approaches the orbital velocity in tight binaries, while symmetric supernovae with no impulse yield a reduced ejection velocity proportional to the orbital speed.",
+        "highlight": {
+          "abstract": [
+            "The recent detection of <em>hypervelocity</em> <em>stars</em> (HVSs) as late-type B-<em>stars</em> and HVS candidate G/K-dwarfs raises the important question of their origin."
+          ],
+          "title": [
+            "Maximum speed of <em>hypervelocity</em> <em>stars</em> ejected from binaries"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.9,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Purely theoretical study using Monte Carlo simulations to model maximum ejection velocities from binary disruption by asymmetric supernovae. No observational stellar data presented.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:13:41"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 2,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T22:13:41"
+  }
+}

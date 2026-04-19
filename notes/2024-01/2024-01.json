@@ -1,0 +1,440 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2024-01",
+  "date_from": "2024-01-01",
+  "date_to": "2024-01-31",
+  "run": {
+    "run_id": "20260419T213844",
+    "started_at": "2026-04-19T21:38:44"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2024-01",
+    "date_from": "2024-01-01",
+    "date_to": "2024-01-31",
+    "raw_unique": 31,
+    "relevant_count": 3,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 31,
+    "classifier_included": 3,
+    "classifier_filtered": 28,
+    "classifier_errors": 0,
+    "direct_rule_included": 3,
+    "weak_rule_candidates": 1,
+    "weak_llm_reviewed": 1,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 3,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 181,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 454,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 185,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 184,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 183,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2401.10635",
+      "title": "Seventeen 2 Micron All Sky Survey (2MASS) hypervelocity stars (HVS) from Gaia DR3",
+      "authors": [
+        "Parthasarathy Mudumba"
+      ],
+      "author_names": "Parthasarathy Mudumba",
+      "categories": [
+        "astro-ph.SR",
+        "astro-ph.GA"
+      ],
+      "published_at": "2024-01-19 00:00:00",
+      "updated_at": "2024-01-19 11:24:31",
+      "links": {
+        "abs": "https://arxiv.org/abs/2401.10635",
+        "pdf": "https://arxiv.org/pdf/2401.10635"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "As part of an ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources with Gaia G magnitudes less than 16.0 and radial velocities less than -600 km/sec. All these stars are brighter in the K band when compared with their V and G magnitudes. Ten of these (including three carbon stars) are long period variable stars (LPV) of Mira type. One is a relatively nearby high proper motion star and one is a very high galactic latitude chemically peculiar metal-poor star. It may be a galactic halo star. One star is a Kepler red giant, two stars may be cluster members and two are in the star forming region (probably YSOs). It is not clear how these stars acquired such high radial velocities. Further study of these seventeen stars is needed."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 26.887516
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars, high-velocity star surveys or candidates"
+      },
+      "deepxiv": {
+        "score": 26.887516,
+        "best_score": 26.887516,
+        "search_keywords": null,
+        "citations": "2"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research note] A catalog of 17 two-micron all-sky survey (2MASS) sources with Gaia DR3 G magnitudes <16.0 and radial velocities <−600 km/s is presented, identifying candidates for hypervelocity stars (HVS). Ten are Mira-type long period variables (LPVs), one is a high-proper-motion nearby star, one is a metal-poor chemically peculiar star possibly in the galactic halo, and others include a Kepler red giant, cluster members, and likely young stellar objects (YSOs). The origin of their extreme radial velocities remains unexplained and requires further spectroscopic and dynamical analysis.",
+        "keywords": [
+          "long period variables",
+          "hypervelocity stars",
+          "radial velocity",
+          "stellar kinematics",
+          "galactic halo"
+        ],
+        "citations": "2",
+        "published_at": "2024-01-19T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2401.10635",
+          "src_url": "https://arxiv.org/pdf/2401.10635",
+          "title": "Seventeen 2 Micron All Sky Survey (2MASS) hypervelocity stars (HVS) from Gaia DR3"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T213844"
+      },
+      "source_fields": {
+        "pg_id": 1264488,
+        "venue": "Research Notes of the AAS",
+        "journal_name": "Research Notes of the AAS",
+        "status": "extracted",
+        "token_count": 4754,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-23 14:21:18",
+        "sections_text": "Discussion: The seventeen 2MASS stars are identified as high-velocity stars (HVS) with radial velocities from Gaia DR3 (error ~10 km/s) or Jonsson et al. (error ~1.0 km/s), distances from Bailer-Jones et al. (2021), and light curve periods ranging from 142 to 255 days, including Mira variables and carbon stars, with Teff values between 3265–5306 K and [Fe/H] values from −1.1 to +0.35. Introduction: This paper presents a novel identification of seventeen 2MASS sources with extreme radial velocities and Gaia DR3 magnitudes, offering a new sample of high-velocity stars for further study of stellar dynamics and galactic structure.",
+        "highlight": {
+          "abstract": [
+            "As part of an ongoing search for <em>hypervelocity</em> <em>stars</em> (HVS) I found seventeen two micron all sky survey (2MASS) sources with Gaia G magnitudes less than 16.0 and radial velocities less than -600 km/sec.",
+            "All these <em>stars</em> are brighter in the K band when compared with their V and G magnitudes. Ten of these (including three carbon <em>stars</em>) are long period variable <em>stars</em> (LPV) of Mira type.",
+            "One star is a Kepler red giant, two <em>stars</em> may be cluster members and two are in the star forming region (probably YSOs). It is not clear how these <em>stars</em> acquired such high radial velocities.",
+            "Further study of these seventeen <em>stars</em> is needed."
+          ],
+          "title": [
+            "Seventeen 2 Micron All Sky Survey (2MASS) <em>hypervelocity</em> <em>stars</em> (HVS) from Gaia DR3"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Title and abstract explicitly present a catalog of 17 2MASS sources with Gaia DR3 data, radial velocities < -600 km/s, and detailed object classifications.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "radial_velocities",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:40:16"
+      }
+    },
+    {
+      "arxiv_id": "2401.05630",
+      "title": "New candidate hypervelocity red clump stars in the inner Galactic bulge",
+      "authors": [
+        "A. Luna",
+        "T. Marchetti",
+        "M. Rejkuba",
+        "N. W. C. Leigh",
+        "J. Alonso-García",
+        "A. Valenzuela Navarro",
+        "D. Minniti",
+        "L. C. Smith"
+      ],
+      "author_names": "A. Luna T. Marchetti M. Rejkuba N. W. C. Leigh J. Alonso-García A. Valenzuela Navarro D. Minniti L. C. Smith",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2024-01-11 00:00:00",
+      "updated_at": "2024-01-11 02:56:56",
+      "links": {
+        "abs": "https://arxiv.org/abs/2401.05630",
+        "pdf": "https://arxiv.org/pdf/2401.05630"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We search for high-velocity stars in the inner region of the Galactic bulge using a selected sample of red clump stars. Some of those stars might be considered hypervelocity stars (HVSs). Even though the HVSs ejection relies on an interaction with the supermassive black hole (SMBH) at the centre of the Galaxy, there are no confirmed detections of HVSs in the inner region of our Galaxy. With the detection of HVSs, ejection mechanism models can be constrained by exploring the stellar dynamics in the Galactic centre through a recent stellar interaction with the SMBH. Based on a previously developed methodology by our group, we searched with a sample of preliminary data from version 2 of the Vista Variables in the Via Lactea (VVV) Infrared Astrometric Catalogue (VIRAC2) and Gaia DR3 data, including accurate optical and NIR proper motions. This search resulted in a sample of 46 stars with transverse velocities larger than the local escape velocity within the Galactic bulge, of which 4 are prime candidate HVSs with high-proper motions consistent with being ejections from the Galactic centre. Adding to that, we studied a sample of reddened stars without a Gaia DR3 counterpart and found 481 stars with transverse velocities larger than the local escape velocity, from which 65 stars have proper motions pointing out of the Galactic centre and are candidate HVSs. In total, we found 69 candidate HVSs pointing away from the Galactic centre with transverse velocities larger than the local escape velocity."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 29.57152
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: high-velocity star surveys or candidates"
+      },
+      "deepxiv": {
+        "score": 29.57152,
+        "best_score": 29.57152,
+        "search_keywords": null,
+        "citations": "0"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] A systematic search of red clump stars in the inner Galactic bulge using VIRAC2 and Gaia DR3 data identifies 69 candidate hypervelocity stars (HVSs) with transverse velocities exceeding the local escape velocity, including 4 prime candidates with high proper motions pointing away from the Galactic center. The study leverages stellar kinematics and proper motion analysis to probe the Hills mechanism and alternative ejection scenarios involving supermassive black hole interactions, offering new constraints on stellar dynamics near Sgr A*.",
+        "keywords": [
+          "hypervelocity stars",
+          "stellar kinematics",
+          "proper motions",
+          "Galactic bulge dynamics",
+          "supermassive black hole interactions"
+        ],
+        "citations": "0",
+        "published_at": "2024-01-11T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2401.05630",
+          "src_url": "https://arxiv.org/pdf/2401.05630",
+          "title": "New candidate hypervelocity red clump stars in the inner Galactic bulge"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T213844"
+      },
+      "source_fields": {
+        "pg_id": 1271307,
+        "venue": "Monthly notices of the Royal Astronomical Society",
+        "journal_name": "Monthly Notices of the Royal Astronomical Society",
+        "status": "extracted",
+        "token_count": 36693,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": null,
+        "sections_text": "Conclusions: This section concludes that while 69 high-velocity star (HVS) candidates in the Galactic bulge are identified as potential ejections from the Galactic Center, their confirmation and orbital reconstruction require spectroscopic follow-up to determine their nature, origin, and ejection mechanisms, with future Gaia and GaiaNIR missions playing a crucial role in advancing these studies. Introduction: This paper introduces a novel dynamical framework that refines the Hills mechanism by incorporating realistic stellar interactions in the Galactic bulge, solving the long-standing problem of accurately identifying and explaining the origin of hypervelocity stars through binary disruptions with Sgr A* while reconciling their extreme velocities with the local environment and the presence of young S-stars. The red sample: This section identifies 472 candidate hypervelocity red clump stars from VIRAC2 that are not in Gaia DR3, after rigorous selection for distance, velocity, and contamination removal, and shows their kinematic and positional properties. Data Availability: The data used in this study come from the VISTA surveys, Gaia mission, and are made available through the ESO Science Archive and CDS. Results and discussion: After decontaminating the RC candidate sample and applying velocity and color criteria, 46 hypervelocity red clump stars were identified with tangential velocities between 731 and 1938 km/s, located between 0.3 and 3.5 kpc from the Galactic Center, and a lower velocity limit above the local escape velocity (600–800 km/s) under a low-mass Galactic potential model, while three possible M-dwarf contaminants were excluded. Selection of Red Clump Sources: Red clump stars are identified in the inner Galactic bulge by selecting a well-defined overdensity in the $J-K_s$ vs. $K_s$ colour-magnitude diagram, corrected for reddening and centered on their intrinsic colour, using a Gaussian-plus-polynomial luminosity function fit to determine their brightness and selection criteria. The Gaia DR3 and VIRAC2 catalogues: The Gaia DR3 and VIRAC2 catalogues provide high-precision astrometric and photometric data for over 1.5 billion stars and the Galactic bulge, respectively, with Gaia DR3 offering improved astrometric accuracy and VIRAC2 delivering reliable proper motions anchored to Gaia's reference frame, both used in this study after applying strict quality selection criteria. Appendix B Stars in VIRAC2 pointing away from the GC: This section presents the photometric properties and positions of 65 stars with VIRAC2 proper motions pointing away from 0.5° from the Galactic Center, which lack Gaia DR3 counterparts, providing a sample of stars in the outer regions of the Milky Way. Appendix A Possible M-dwarfs in the Gaia DR3 – VIRAC2 crossmatch: This section presents a list of candidate M-dwarfs identified in the Gaia DR3–VIRAC2 crossmatch and VIRAC2-only sample, selected based on colour criteria to distinguish potential M-dwarf candidates.",
+        "highlight": {
+          "abstract": [
+            "We search for high-velocity <em>stars</em> in the inner region of the Galactic bulge using a selected sample of red clump <em>stars</em>. Some of those <em>stars</em> might be considered <em>hypervelocity</em> <em>stars</em> (HVSs).",
+            "This search resulted in a sample of 46 <em>stars</em> with transverse velocities larger than the local escape velocity within the Galactic bulge, of which 4 are prime candidate HVSs with high-proper motions consistent",
+            "Adding to that, we studied a sample of reddened <em>stars</em> without a Gaia DR3 counterpart and found 481 <em>stars</em> with transverse velocities larger than the local escape velocity, from which 65 <em>stars</em> have proper"
+          ],
+          "title": [
+            "New candidate <em>hypervelocity</em> red clump <em>stars</em> in the inner Galactic bulge"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.98,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper presents a search resulting in 69 candidate HVSs with transverse velocities > escape velocity, using VIRAC2 and Gaia DR3 data including proper motions.",
+        "data_products": [
+          "coordinates",
+          "astrometry",
+          "proper_motions",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:40:16"
+      }
+    },
+    {
+      "arxiv_id": "2401.02017",
+      "title": "The origin of High-velocity stars considering the impact of the Large Magellanic Cloud",
+      "authors": [
+        "Jiwei Liao",
+        "Cuihua Du",
+        "Mingji Deng",
+        "Dashuang Ye",
+        "Hefan Li",
+        "Yang Huang",
+        "Jianrong Shi",
+        "Jun Ma"
+      ],
+      "author_names": "Jiwei Liao Cuihua Du Mingji Deng Dashuang Ye Hefan Li Yang Huang Jianrong Shi Jun Ma",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2024-01-04 00:00:00",
+      "updated_at": "2024-01-04 01:24:19",
+      "links": {
+        "abs": "https://arxiv.org/abs/2401.02017",
+        "pdf": "https://arxiv.org/pdf/2401.02017"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Utilizing astrometric parameters sourced from \\\\\\\\textit{Gaia} Data Release 3 and radial velocities obtained from various spectroscopic surveys, we identify 519 high-velocity stars (HiVels) with a total velocity in the Galactocentric restframe greater than 70\\\\\\\\% of their local escape velocity under the {\\\\\\\\tt\\\\\\\\string Gala} {\\\\\\\\tt\\\\\\\\string MilkyWayPotential}. Our analysis reveals that the majority of these HiVels are metal-poor late-type giants, and we show 9 HiVels that are unbound candidates to the Galaxy with escape probabilities of 50\\\\\\\\%. To investigate the origins of these HiVels, we classify them into four categories and consider the impact of the Large Magellanic Cloud (LMC) potential on their backward-integration trajectories. Specifically, we find that one of the HiVels can track back to the Galactic Center, and three HiVels may originate from the Sagittarius dwarf spheroidal galaxy (Sgr dSph). Furthermore, some HiVels appear to be ejected from the Galactic disk, while others formed within the Milky Way or have an extragalactic origin. Given that the LMC has a significant impact on the orbits of Sgr dSph, we examine the reported HiVels that originate from the Sgr dSph, with a few of them passing within the half-light radius of the Sgr dSph."
+      },
+      "match": {
+        "queries": [
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 25.418716
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: high-velocity or extreme-velocity stars"
+      },
+      "deepxiv": {
+        "score": 25.418716,
+        "best_score": 25.418716,
+        "search_keywords": null,
+        "citations": "3"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[astronomical research paper] The study identifies 519 high-velocity stars (HiVels) with velocities exceeding 70% of their local galactic escape velocity using Gaia DR3 astrometry and multi-survey radial velocities. It classifies these stars into four categories—unbound HVSs/HRSs, runaway stars, high-velocity halo stars, and Sgr dSph-origin candidates—and performs backward integration of their orbits, revealing one star tracing back to the Galactic Center and three potentially originating from the Sagittarius dwarf spheroidal galaxy. A key novel contribution is the inclusion of the Large Magellanic Cloud's gravitational potential in dynamical modeling, showing that several Sgr dSph-origin HiVels pass within the half-light radius of the Sgr dSph, and that the LMC significantly influences the orbital evolution of these stars, particularly in the context of dynamical friction and close encounters.",
+        "keywords": [
+          "stellar kinematics",
+          "stellar dynamics",
+          "Sagittarius dwarf spheroidal galaxy",
+          "Large Magellanic Cloud",
+          "backward integration trajectories"
+        ],
+        "citations": "3",
+        "published_at": "2024-01-04T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2401.02017",
+          "src_url": "https://arxiv.org/pdf/2401.02017",
+          "title": "The origin of High-velocity stars considering the impact of the Large Magellanic Cloud"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T213844"
+      },
+      "source_fields": {
+        "pg_id": 1270713,
+        "venue": "Astronomical Journal",
+        "journal_name": "The Astronomical Journal",
+        "status": "extracted",
+        "token_count": 15501,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 00:50:05",
+        "sections_text": "Discussion: This study identifies 519 high-velocity stars, including 9 unbound, 57 non-typical runaway stars, and 453 halo stars, with 440 newly discovered, revealing that only a few HiVels originate from the Sgr dSph—especially when considering LMC gravitational effects—and highlights the need for future radial velocity data to confirm origins, particularly for VVV CL002. Introduction: This paper makes the novel contribution of systematically identifying and tracing the origins of high-velocity stars—including those from the Sagittarius dwarf spheroidal galaxy—by incorporating the gravitational influence of the Large Magellanic Cloud and the Milky Way's dynamical friction, thereby solving the problem of incomplete or inaccurate origin assignments in previous studies. Hivels Sample: This section describes the backward-orbit integration of 519 high-velocity stars (HiVels) in the Milky Way and Large Magellanic Cloud gravitational fields to determine their origins, using dynamical models and velocity criteria to identify potential ejecta from the Sgr dSph or globular clusters. Observation Sample: The observation sample is selected from Gaia DR3 using stringent astrometric and spectroscopic criteria to ensure accurate parallaxes, radial velocities, and stellar classifications, followed by Bayesian inference to derive precise 3D positions and velocities in the Galactic coordinate system. The Origin Of Hivels: This section classifies HiVels based on their dynamical properties, revealing that some unbound stars exhibit retrograde motion and extragalactic origins, while most high-velocity halo stars are either disk-origin runaway stars ejected into the halo or have uncertain origins, with a clear distinction between disk and halo populations using empirical velocity criteria.",
+        "highlight": {
+          "abstract": [
+            "Utilizing astrometric parameters sourced from \\\\\\\\textit{Gaia} Data Release 3 and radial velocities obtained from various spectroscopic surveys, we identify 519 <em>high</em>-<em>velocity</em> <em>stars</em> (HiVels) with a total",
+            "<em>velocity</em> in the Galactocentric restframe greater than 70\\\\\\\\% of their local escape <em>velocity</em> under the {\\\\\\\\tt\\\\\\\\string Gala} {\\\\\\\\tt\\\\\\\\string MilkyWayPotential}."
+          ],
+          "title": [
+            "The origin of <em>High</em>-<em>velocity</em> <em>stars</em> considering the impact of the Large Magellanic Cloud"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.99,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Identifies 519 high-velocity stars using Gaia DR3 astrometry and spectroscopic radial velocities, with detailed classification and orbital analysis.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "orbit_integrations",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:40:16"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 3,
+    "catalog_count": 3,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:40:16"
+  }
+}

@@ -1,0 +1,312 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2022-05",
+  "date_from": "2022-05-01",
+  "date_to": "2022-05-31",
+  "run": {
+    "run_id": "20260419T214540",
+    "started_at": "2026-04-19T21:45:40"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2022-05",
+    "date_from": "2022-05-01",
+    "date_to": "2022-05-31",
+    "raw_unique": 36,
+    "relevant_count": 2,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 36,
+    "classifier_included": 2,
+    "classifier_filtered": 34,
+    "classifier_errors": 0,
+    "direct_rule_included": 2,
+    "weak_rule_candidates": 0,
+    "weak_llm_reviewed": 0,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 2,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 151,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 359,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 152,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 151,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 152,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2205.14777",
+      "title": "Constraints on the Galactic Centre environment from Gaia hypervelocity stars II: The evolved population",
+      "authors": [
+        "Fraser A. Evans",
+        "Tommaso Marchetti",
+        "Elena Maria Rossi"
+      ],
+      "author_names": "Fraser A. Evans Tommaso Marchetti Elena Maria Rossi",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2022-05-29 00:00:00",
+      "updated_at": "2022-10-14 20:14:18",
+      "links": {
+        "abs": "https://arxiv.org/abs/2205.14777",
+        "pdf": "https://arxiv.org/pdf/2205.14777"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "A dynamical encounter between a stellar binary and Sgr A* in the Galactic Centre (GC) can tidally separate the binary and eject one member with a velocity beyond the escape speed of the Milky Way. These hypervelocity stars (HVSs) can offer insight into the stellar populations in the GC environment. In a previous work, our simulations showed that the lack of main sequence HVS candidates with precise astrometric uncertainties and radial velocities in current data releases from the \\\\\\\\textit{Gaia} space mission places a robust upper limit on the ejection rate of HVSs from the GC of $3\\\\\\\\times10^{-2} \\\\\\\\, \\\\\\\\mathrm{yr^{-1}}$. We improve this constraint in this work by additionally considering the absence of post main sequence HVSs in \\\\\\\\textit{Gaia} Early Data Release 3 as well the existence of the HVS candidate S5-HVS1. This evidence offers degenerate joint constraints on the HVS ejection rate and the stellar initial mass function (IMF) in the GC. For a top-heavy GC IMF as suggested by recent works, our modelling motivates an HVS ejection rate of $\\\\\\\\eta=0.7_{-0.5}^{+1.5} \\\\\\\\times10^{-4} \\\\\\\\, \\\\\\\\mathrm{yr^{-1}}$. This preferred ejection rate can be as large as $10^{-2} \\\\\\\\, \\\\\\\\mathrm{yr^{-1}}$ for a very top-light IMF and as low as 10$^{-4.5} \\\\\\\\, \\\\\\\\mathrm{yr^{-1}}$ if the IMF is extremely top-heavy. Constraints will improve further with future \\\\\\\\textit{Gaia} data releases, regardless of how many HVS candidates are found therewithin."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 26.81141
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars"
+      },
+      "deepxiv": {
+        "score": 26.81141,
+        "best_score": 26.81141,
+        "search_keywords": null,
+        "citations": "5"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] The paper refines constraints on hypervelocity star (HVS) ejection rates from the Galactic Centre by combining the absence of post-main-sequence HVSs in Gaia EDR3 with the presence of the GC-originating HVS candidate S5-HVS1. Using dynamical models, it derives a degenerate joint constraint between the HVS ejection rate (η = 0.7⁻⁰.⁵⁺¹.⁵ × 10⁻⁴ yr⁻¹) and the stellar initial mass function (IMF) in the GC, showing that a top-heavy IMF allows for higher ejection rates, while extremely top-heavy IMFs suppress them. The analysis highlights that future Gaia data will further tighten these constraints regardless of new HVS discoveries.",
+        "keywords": [
+          "hypervelocity stars",
+          "stellar initial mass function",
+          "dynamical encounters",
+          "Galactic Centre environment",
+          "stellar kinematics"
+        ],
+        "citations": "5",
+        "published_at": "2022-05-29T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2205.14777",
+          "src_url": "https://arxiv.org/pdf/2205.14777",
+          "title": "Constraints on the Galactic Centre environment from Gaia hypervelocity stars II: The evolved population"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T214540"
+      },
+      "source_fields": {
+        "pg_id": 923659,
+        "venue": "Monthly notices of the Royal Astronomical Society",
+        "journal_name": "Monthly Notices of the Royal Astronomical Society",
+        "status": "extracted",
+        "token_count": 26414,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 19:46:17",
+        "sections_text": "Results: Under a fiducial IMF slope and ejection rate of $10^{-4}\\\\,\\\\text{yr}^{-1}$, fewer than one evolved HVS is expected in Gaia DR2, with core helium-burning stars being the most likely phase, and no detected HVSs in EDR3 constrain the Galactic center environment, while future data releases (DR3/DR4) will improve detection capabilities for evolved HVSs. Discussion: The analysis finds that, despite uncertainties and alternative ejection mechanisms, Gaia DR3 and DR4 data constrain the Galactic Center stellar environment and HVS ejection rate with a fiducial $\\\\eta = 10^{-4} \\\\mathrm{yr}^{-1}$ and $\\\\kappa = -1.7$, yielding 18.5 $\\\\pm$ 4.6 total HVSs in DR4, with minimal impact from binary mass ratio assumptions or IMF variations on key constraints. Conclusions: This study uses the non-detection of hypervelocity stars in Gaia data and the existence of S5-HVS1 to constrain the stellar initial mass function and ejection rate of hypervelocity stars from the Galactic Centre, demonstrating that evolved HVSs are a powerful tool for probing the central black hole environment. Introduction: This paper presents a novel identification and kinematic analysis of S5-HVS1, a hypervelocity star with unambiguous trajectory evidence supporting its origin via the Hills mechanism from a dynamical encounter with Sgr A*, thereby solving the long-standing challenge of confirming and characterizing such stars as reliable tracers of Galactic dynamics and central black hole interactions. Ejection Model: The paper proposes a Monte Carlo method to generate and simulate the ejection, propagation, and observation of hypervelocity stars (HVSs) in the Galactic Center by sampling binary initial conditions with a top-heavy initial mass function and randomly assigning ejection based on tidal separation dynamics.",
+        "highlight": {
+          "abstract": [
+            "These <em>hypervelocity</em> <em>stars</em> (HVSs) can offer insight into the stellar populations in the GC environment."
+          ],
+          "title": [
+            "Constraints on the Galactic Centre environment from Gaia <em>hypervelocity</em> <em>stars</em> II: The evolved population"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.8,
+        "catalog_role": "uses_existing_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper analyzes absence of post-main-sequence HVS candidates in Gaia EDR3 and uses known HVS candidate S5-HVS1 to constrain ejection rates. Uses observational data from Gaia catalog.",
+        "data_products": [
+          "astrometry",
+          "radial_velocities",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:47:22"
+      }
+    },
+    {
+      "arxiv_id": "2205.09774",
+      "title": "On the impact of runaway stars on dwarf galaxies with resolved interstellar medium",
+      "authors": [
+        "Ulrich P. Steinwandel",
+        "Greg L. Bryan",
+        "Rachel S. Somerville",
+        "Christopher C. Hayward",
+        "Blakesley Burkhart"
+      ],
+      "author_names": "Ulrich P. Steinwandel Greg L. Bryan Rachel S. Somerville Christopher C. Hayward Blakesley Burkhart",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2022-05-19 00:00:00",
+      "updated_at": "2022-05-19 18:00:04",
+      "links": {
+        "abs": "https://arxiv.org/abs/2205.09774",
+        "pdf": "https://arxiv.org/pdf/2205.09774"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "About ten to 20 percent of massive stars may be kicked out of their natal clusters before exploding as supernovae. These \"runaway stars\" might play a crucial role in driving galactic outflows and enriching the circumgalactic medium with metals. To study this effect, we carry out high resolution dwarf galaxy simulations that include velocity kicks to massive O/B stars above 8 M$_{\\\\\\\\odot}$. We consider two scenarios, one that adopts a power law velocity distribution for kick velocities, resulting in more stars with high velocity kicks, and a more moderate scenario with a Maxwellian velocity distribution. We explicitly resolve the multi-phase interstellar medium (ISM), and include non-equilibrium cooling and chemistry channels. We adopt a resolved feedback scheme (\\\\\\\\textsc{Griffin}) where we sample individual massive stars from an IMF. We follow the lifetime of these stars and add their photoionising radiation, their UV radiation field, and their photoelectric heating rate to the surrounding gas. At the end of their lifetime we explode the massive population as core collapse supernovae (CCSN). In the simulations with runaway massive stars, we add additional (natal) velocity kicks that mimic two and three body interactions that cannot be fully resolved in our simulations. We find that the inclusion of runaway or walkaway star scenarios has an impact on mass, metal, momentum and energy outflows as well as the respective loading factors. We find an increase in mass, metal and momentum loading by a factor of 2-3, whereas we find an increase in the mean energy loading by a factor of 5 in the runaway case and a factor of 3 in the walkaway case. However, we find that the peak values are increased by a factor of up to 10, independent of the adopted velocity kick model. We conclude that the inclusion of runaway stars could have a significant impact on the global outflow properties of dwarf galaxies."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 27.09564
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: runaway stars"
+      },
+      "deepxiv": {
+        "score": 9.9996,
+        "best_score": 27.09564,
+        "search_keywords": null,
+        "citations": "19"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] High-resolution simulations of dwarf galaxies incorporate velocity kicks to massive stars (>8 M⊙) to model runaway and walkaway stars, using power-law and Maxwellian kick distributions. By explicitly resolving the multi-phase interstellar medium and non-equilibrium cooling, the study finds that runaway stars increase mass, metal, and momentum outflows by factors of 2–3 and energy loading by factors of 3–5, demonstrating a significant impact on global outflow properties through enhanced jet-like feedback from unbound stars.",
+        "keywords": [
+          "runaway stars",
+          "multi-phase ISM",
+          "stellar feedback",
+          "velocity kicks",
+          "outflow loading"
+        ],
+        "citations": "19",
+        "published_at": "2022-05-19T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2205.09774",
+          "src_url": "https://arxiv.org/pdf/2205.09774",
+          "title": "On the impact of runaway stars on dwarf galaxies with resolved interstellar medium"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T214540"
+      },
+      "source_fields": {
+        "pg_id": 923522,
+        "venue": null,
+        "journal_name": null,
+        "status": "extracted",
+        "token_count": 32024,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 04:27:39",
+        "sections_text": "Results: The simulations show only minor differences in morphology and ISM structure across different models, with a slight increase in star formation rate in runaway star models due to reduced feedback, but no significant changes in outflow rates or wind loading factors, indicating that global outflow properties are robust and primarily governed by the vertical distribution of supernova explosions rather than stellar dynamics. Discussion: The inclusion of runaway star modeling in galaxy simulations increases the energy loading factor by up to an order of magnitude—reaching up to ∼0.1 and averaging a factor of 5 (WLM-runP) or 3 (WLM-runM)—and significantly boosts the hot phase volume and mass flux, despite minimal effects on density-temperature phase space, compared to previous work that found similar energy loading in Milky Way-like systems. Introduction: This work presents a novel approach by explicitly resolving runaway stars in entire dwarf galaxies using high-resolution simulations, addressing the critical gap in galaxy formation models where small-scale stellar feedback processes—such as runaway star kicks—remain unresolved and their impact on global galaxy properties is unexplored. Numerical Methods: The paper proposes an advanced Tree-SPH simulation method enhanced with the meshless finite mass (MFM) solver to accurately model fluid dynamics and self-consistently track cooling, star formation, and stellar feedback—including resolved supernova-driven winds—within a multiphase interstellar medium, enabling a physically grounded study of galactic outflows without ad-hoc tuning. Conclusions and Outlook: Runaway stars significantly enhance momentum and energy outflows—particularly in the diffuse, low-density hot phase of the ISM—by driving high-specific-energy winds, with the strongest effects observed when natal kicks occur above the galactic midplane.",
+        "highlight": {
+          "abstract": [
+            "About ten to 20 percent of massive <em>stars</em> may be kicked out of their natal clusters before exploding as supernovae.",
+            "These \"runaway <em>stars</em>\" might play a crucial role in driving galactic outflows and enriching the circumgalactic medium with metals.",
+            "To study this effect, we carry out high resolution dwarf galaxy simulations that include velocity kicks to massive O/B <em>stars</em> above 8 M$_{\\\\\\\\odot}$.",
+            "We adopt a resolved feedback scheme (\\\\\\\\textsc{Griffin}) where we sample individual massive <em>stars</em> from an IMF.",
+            "We conclude that the inclusion of runaway <em>stars</em> could have a significant impact on the global outflow properties of dwarf galaxies."
+          ],
+          "title": [
+            "On the impact of runaway <em>stars</em> on dwarf galaxies with resolved interstellar medium"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.9,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Purely theoretical simulation paper studying impact of runaway stars on dwarf galaxies. No observational stellar data presented - uses simulated velocity kicks and feedback models.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:47:22"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 2,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:47:22"
+  }
+}

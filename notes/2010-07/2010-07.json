@@ -1,0 +1,314 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2010-07",
+  "date_from": "2010-07-01",
+  "date_to": "2010-07-31",
+  "run": {
+    "run_id": "20260419T221845",
+    "started_at": "2026-04-19T22:18:45"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2010-07",
+    "date_from": "2010-07-01",
+    "date_to": "2010-07-31",
+    "raw_unique": 28,
+    "relevant_count": 2,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 28,
+    "classifier_included": 2,
+    "classifier_filtered": 26,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 1,
+    "weak_llm_reviewed": 1,
+    "weak_llm_included": 1,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 1
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 68,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 156,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 68,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 68,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 68,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1007.3493",
+      "title": "A Galactic Center Origin for HE 0437-5439, the Hypervelocity Star near the Large Magellanic Cloud",
+      "authors": [
+        "Warren R. Brown (1)",
+        "Jay Anderson (2)",
+        "Oleg Y. Gnedin (3)",
+        "Howard E. Bond (2)",
+        "Margaret J. Geller (1)",
+        "Scott J. Kenyon (1)",
+        "Mario Livio (2) ((1) Smithsonian Astrophysical Observatory",
+        "(2) Space Telescope Science Institute",
+        "(3) University of Michigan)"
+      ],
+      "author_names": "Warren R. Brown (1) Jay Anderson (2) Oleg Y. Gnedin (3) Howard E. Bond (2) Margaret J. Geller (1) Scott J. Kenyon (1) Mario Livio (2) ((1) Smithsonian Astrophysical Observatory (2) Space Telescope Science Institute (3) University of Michigan)",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2010-07-20 00:00:00",
+      "updated_at": "2010-07-20 20:00:01",
+      "links": {
+        "abs": "https://arxiv.org/abs/1007.3493",
+        "pdf": "https://arxiv.org/pdf/1007.3493"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We use Hubble Space Telescope imaging to measure the absolute proper motion of the hypervelocity star (HVS) HE 0437-5439, a short-lived B star located in the direction of the Large Magellanic Cloud (LMC). We observe (\\\\\\\\mu_\\\\\\\\alpha, \\\\\\\\mu_\\\\\\\\delta)=(+0.53+-0.25(stat)+-0.33(sys), +0.09+-0.21(stat)+-0.48(sys)) mas/yr. The velocity vector points directly away from the center of the Milky Way; an origin from the center of the LMC is ruled out at the 3-sigma level. The flight time of the HVS from the Milky Way exceeds its main-sequence lifetime, thus its stellar nature requires it to be a blue straggler. The large space velocity rules out a Galactic-disk ejection. Combining the HVS's observed trajectory, stellar nature, and required initial velocity, we conclude that HE 0437-5439 was most likely a compact binary ejected by the Milky Way's central black hole."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 18.293224
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars"
+      },
+      "deepxiv": {
+        "score": 18.293224,
+        "best_score": 18.293224,
+        "search_keywords": null,
+        "citations": "32"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] The paper measures the absolute proper motion of the hypervelocity star HE 0437-5439 (HVS3) using Hubble Space Telescope imaging, finding a velocity vector pointing directly away from the Milky Way's center. This rules out an origin in the Large Magellanic Cloud at the 3σ level and contradicts a Galactic-disk ejection; instead, the star's trajectory, stellar nature (blue straggler), and required initial velocity support a scenario where it was ejected as a compact binary from the Milky Way's central supermassive black hole via a three-body interaction mechanism.",
+        "keywords": [
+          "proper motion measurement",
+          "charge-transfer inefficiency correction",
+          "hypervelocity star origin",
+          "supermassive black hole ejection",
+          "blue straggler evolution"
+        ],
+        "citations": "32",
+        "published_at": "2010-07-20T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1007.3493",
+          "src_url": "https://arxiv.org/pdf/1007.3493",
+          "title": "A Galactic Center Origin for HE 0437-5439, the Hypervelocity Star near the Large Magellanic Cloud"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T221845"
+      },
+      "source_fields": {
+        "pg_id": 1361571,
+        "venue": null,
+        "journal_name": "The Astrophysical Journal Letters",
+        "status": "extracted",
+        "token_count": 8353,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 13:08:43",
+        "sections_text": "Origin: The origin of HVS3 as a blue straggler likely stems from a binary system ejected from the Galactic center, with its properties consistent with ejection mechanisms involving binary or triple interactions with a supermassive black hole. Conclusion: HVS3 is a blue straggler star likely ejected from the Galactic center as part of a binary system, with its kinematics and travel time ruling out origins in the Milky Way disk or the LMC. Trajectory: The trajectory of HVS3 points directly from the Milky Way center, ruling out an origin in the LMC at the 3σ systematic level, and is consistent with its high heliocentric velocity and proper motion. Introduction: This paper makes the novel contribution of using Hubble Space Telescope astrometry to measure the absolute proper motion of HVS3, ruling out an LMC origin and providing strong evidence that it was ejected from the Milky Way's galactic center as a binary by the central supermassive black hole. Proper Motion: The proper motion of HVS3 is measured using HST ACS imaging with careful correction for charge-transfer inefficiency effects to ensure accurate astrometry despite image orientation differences and detector artifacts. Stellar Nature: HVS3 is best explained as a blue straggler formed by the merger of two 4.5 M☉ stars, consistent with its main-sequence properties, kinematics, and lifetime constraints. A GALACTIC CENTER ORIGIN FOR HE 0437-5439, THE HYPERVELOCITY STAR NEAR THE LARGE MAGELLANIC CLOUD<sup>1</sup>: This paper proposes that the hypervelocity star HE 0437-5439 was ejected from the galactic center of the Milky Way and subsequently captured by the gravitational influence of the Large Magellanic Cloud.",
+        "highlight": {
+          "abstract": [
+            "We use Hubble Space Telescope imaging to measure the absolute proper motion of the <em>hypervelocity</em> star (HVS) HE 0437-5439, a short-lived B star located in the direction of the Large Magellanic Cloud (LMC"
+          ],
+          "title": [
+            "A Galactic Center Origin for HE 0437-5439, the <em>Hypervelocity</em> Star near the Large Magellanic Cloud"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.9,
+        "catalog_role": "followup_observations",
+        "object_scope": "single_object",
+        "evidence": "Paper presents new Hubble Space Telescope proper motion measurements for the specific hypervelocity star HE 0437-5439, with detailed astrometric data and analysis of its trajectory.",
+        "data_products": [
+          "coordinates",
+          "astrometry",
+          "proper_motions",
+          "orbit_integrations"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:19:42"
+      }
+    },
+    {
+      "arxiv_id": "1007.4883",
+      "title": "A catalogue of young runaway Hipparcos stars within 3kpc from the Sun",
+      "authors": [
+        "N. Tetzlaff",
+        "R. Neuhäuser",
+        "M. M. Hohle"
+      ],
+      "author_names": "N. Tetzlaff R. Neuhäuser M. M. Hohle",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2010-07-28 00:00:00",
+      "updated_at": "2010-10-05 14:02:16",
+      "links": {
+        "abs": "https://arxiv.org/abs/1007.4883",
+        "pdf": "https://arxiv.org/pdf/1007.4883"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Traditionally runaway stars are O and B type stars with large peculiar velocities.We want to extend this definition to young stars (up to ~50 Myr) of any spectral type and identify those present in the Hipparcos catalogue applying different selection criteria such as peculiar space velocities or peculiar one-dimensional velocities. Runaway stars are important to study the evolution of multiple star systems or star clusters as well as to identify origins of neutron stars. We compile distances, proper motions, spectral types, luminosity classes, V magnitudes and B-V colours and utilise evolutionary models from different authors to obtain star ages and study a sample of 7663 young Hipparcos stars within 3 kpc from the Sun. Radial velocities are obtained from the literature. We investigate the distributions of the peculiar spatial velocity, the peculiar radial velocity as well as the peculiar tangential velocity and its one-dimensional components and obtain runaway star probabilities for each star in the sample. In addition, we look for stars that are situated outside any OB association or OB cluster and the Galactic plane as well as stars of which the velocity vector points away from the median velocity vector of neighbouring stars or the surrounding local OB association/ cluster although the absolute velocity might be small. We find a total of 2547 runaway star candidates (with a contamination of normal Population I stars of 20 per cent at most). Thus, after subtraction of those 20 per cent, the runaway frequency among young stars is about 27 per cent. We compile a catalogue of runaway stars which will be available via VizieR."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 28.51194
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.99,
+        "reason": "Weak title match: runaway-related mechanisms LLM confirmed: Title explicitly mentions 'runaway stars' and abstract focuses on identifying and cataloguing young runaway stars using Hipparcos data, discussing selection criteria, velocities, and frequencies."
+      },
+      "deepxiv": {
+        "score": 10.732357,
+        "best_score": 28.51194,
+        "search_keywords": null,
+        "citations": "197"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T221845"
+      },
+      "source_fields": {
+        "pg_id": 1362505,
+        "venue": null,
+        "journal_name": "Monthly Notices of the Royal Astronomical Society",
+        "status": "extracted",
+        "token_count": 26904,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 04:41:28",
+        "sections_text": "Introduction: This paper introduces a unified identification method for runaway stars—combining spatial, tangential, and radial velocity criteria to detect both high- and low-velocity runaways across all young stellar types, thereby addressing the limitations of previous studies that missed slow or partially observed runaways and broadening the definition to include low-mass stars in young clusters. Young runaway stars: This section establishes that young runaway stars are identified through a two-Maxwellian velocity distribution model, with a derived high-velocity group comprising 27.7% of stars and velocity dispersions of 9.2 km/s (low) and 24.4 km/s (high), confirming consistent kinematic properties across stellar masses. Summary and conclusions: The study identifies 2547 runaway star candidates among young Hipparcos stars, with a runaway frequency of approximately 27%, in agreement with theoretical expectations, using multi-dimensional velocity analyses and neighborhood velocity comparisons. The sample of young stars: This section describes the selection, correction, and characterization of a sample of young stars from the Hipparcos catalogue, including spectral types, photometry, parallaxes, kinematics, and age/mass estimates based on pre-main sequence identification and stellar parameters. Appendix A The velocity dispersion of the high velocity group of stars: The velocity dispersion in the $z$ direction is reduced in the high velocity group of stars due to the Galactic potential, and the observed $\\\\sigma_{W,H} \\\\approx 17\\\\,\\\\mathrm{km/s}$ is consistent with theoretical predictions based on isotropic runaway velocity additions. Appendix B An individual discussion on runaway stars found in the literature: Using parallactic distances and updated kinematic data, we re-evaluate runaway stars and find that only a subset of previously identified candidates meet the criteria, with HIP 102195 showing a plausible origin in Cygnus OB7 ~11 Myr ago, while others fail due to systematic errors in photometric distances or outdated velocity data, resulting in a revised sample with improved accuracy and reliability.",
+        "highlight": {
+          "abstract": [
+            "Traditionally runaway <em>stars</em> are O and B type <em>stars</em> with large peculiar velocities.We want to extend this definition to young <em>stars</em> (up to ~50 Myr) of any spectral type and identify those present in the",
+            "Runaway <em>stars</em> are important to study the evolution of multiple star systems or star clusters as well as to identify origins of neutron <em>stars</em>.",
+            "In addition, we look for <em>stars</em> that are situated outside any OB association or OB cluster and the Galactic plane as well as <em>stars</em> of which the velocity vector points away from the median velocity vector",
+            "of neighbouring <em>stars</em> or the surrounding local OB association/ cluster although the absolute velocity might be small.",
+            "Thus, after subtraction of those 20 per cent, the runaway frequency among young <em>stars</em> is about 27 per cent. We compile a catalogue of runaway <em>stars</em> which will be available via VizieR."
+          ],
+          "title": [
+            "A catalogue of young runaway Hipparcos <em>stars</em> within 3kpc from the Sun"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Explicitly states compilation of a catalogue of 2547 runaway star candidates using Hipparcos data with distances, proper motions, spectral types, radial velocities, and other observational parameters. Mentions catalogue will be available via VizieR.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "spectra",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:19:42"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 2,
+    "catalog_count": 2,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T22:19:42"
+  }
+}

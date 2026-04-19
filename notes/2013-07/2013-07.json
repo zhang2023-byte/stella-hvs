@@ -1,0 +1,309 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2013-07",
+  "date_from": "2013-07-01",
+  "date_to": "2013-07-31",
+  "run": {
+    "run_id": "20260419T221353",
+    "started_at": "2026-04-19T22:13:53"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2013-07",
+    "date_from": "2013-07-01",
+    "date_to": "2013-07-31",
+    "raw_unique": 30,
+    "relevant_count": 2,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 30,
+    "classifier_included": 2,
+    "classifier_filtered": 28,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 1,
+    "weak_llm_reviewed": 1,
+    "weak_llm_included": 1,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 1
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 91,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 160,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 91,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 91,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 91,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1307.1134",
+      "title": "The Velocity Distribution of Hypervelocity Stars",
+      "authors": [
+        "Elena M. Rossi",
+        "Shiho Kobayashi",
+        "Re’em Sari"
+      ],
+      "author_names": "Elena M. Rossi Shiho Kobayashi Re’em Sari",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2013-07-03 00:00:00",
+      "updated_at": "2014-10-24 07:44:07",
+      "links": {
+        "abs": "https://arxiv.org/abs/1307.1134",
+        "pdf": "https://arxiv.org/pdf/1307.1134"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We consider the process of stellar binaries tidally disrupted by a supermassive black hole. For highly eccentric orbits, as one star is ejected from the three-body system, the companion remains bound to the black hole. Hypervelocity stars (HVSs) observed in the Galactic halo and S-stars observed orbiting the central black hole may originate from such mechanism. In this paper, we predict the velocity distribution of the ejected stars of a given mass, after they have travelled out of the Galactic potential. We use both analytical methods and Monte Carlo simulations. We find that each part of the velocity distribution encodes different information. At low velocities < 800 km/s, the Galactic Potential shapes universally the observed distribution, which rises towards a peak, related to the Galactic escape velocity. Beyond the peak, the velocity distribution depends on binary mass and separation distributions. Finally, the finite star life introduces a break related to their mass. A qualitative comparison of our models with current observations shows the great potential of HVSs to constrain bulge and Galactic properties. Standard choices for parameter distributions predict velocities below and above ~800 km/s with equal probability, while none are observed beyond ~700 km/s and the current detections are more clustered at low velocities 300-400 km/s. These features may indicate that the separation distribution of binaries that reach the tidal sphere is not flat in logarithmic space, as observed in more local massive binaries, but has more power towards larger separations, enhancing smaller velocities. In addition, the binary formation/evolution process or the injection mechanism might also induce a cut-off at ~ 10 solar radii in the separation distribution."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 34.237316
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars"
+      },
+      "deepxiv": {
+        "score": 34.237316,
+        "best_score": 34.237316,
+        "search_keywords": null,
+        "citations": "30"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[theoretical astrophysics research paper] The paper derives the velocity distribution of hypervelocity stars (HVSs) ejected from supermassive black hole (SMBH)-tidally disrupted binaries using a semi-analytic, mass-asymmetry-based three-body model. It reveals that the velocity distribution has distinct regimes: a universal low-velocity peak shaped by Galactic escape dynamics (<800 km s⁻¹), a high-velocity tail dependent on binary mass and separation, and a mass-dependent break due to finite stellar lifetimes. Observational data show a deficit of stars above ~700 km s⁻¹ and clustering at low velocities (300–400 km s⁻¹), suggesting a non-flat logarithmic separation distribution favoring larger separations—enhancing low velocities—and possibly a minimum separation cutoff (~10 R⊙) from binary formation or injection mechanisms.",
+        "keywords": [
+          "binary tidal disruption",
+          "hypervelocity star kinematics",
+          "supermassive black hole dynamics",
+          "separation distribution",
+          "stellar ejection velocity"
+        ],
+        "citations": "30",
+        "published_at": "2013-07-03T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1307.1134",
+          "src_url": "https://arxiv.org/pdf/1307.1134",
+          "title": "The Velocity Distribution of Hypervelocity Stars"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T221353"
+      },
+      "source_fields": {
+        "pg_id": 1454708,
+        "venue": null,
+        "journal_name": "The Astrophysical Journal",
+        "status": "extracted",
+        "token_count": 26150,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 04:19:35",
+        "sections_text": "Introduction: This paper introduces a novel semi-analytic framework for modeling binary-black hole encounters that bypasses dependence on binary physical properties, enabling efficient calculation of disruption probabilities and ejection velocities—thereby solving the problem of accurately predicting the origin and kinematics of hyper-velocity stars and S-stars from Galactic center tidal interactions. Monte Carlo calculations: Monte Carlo simulations are used to numerically evaluate binary disruption and ejection velocities in supermassive black hole encounters, accounting for realistic orbital geometries, finite stellar sizes, and tidal effects, thereby testing and refining the analytical model's predictions. Discussion and Conclusions: The experiment finds that hypervelocity star velocity distributions in the Galactic halo exhibit a steep rise to a peak tied to galactic escape velocity, with a decreasing tail influenced by binary separation and mass distributions, and shows a significant discrepancy between theoretical predictions and observed data, which lacks stars beyond 720 km s⁻¹. Binary statistical description: The post-disruption ejection velocities of stars from binaries depend on whether the binary system enters the loss cone via a slow or rapid angular momentum diffusion, leading to either an \"empty loss-cone\" or \"full loss-cone\" regime, with the latter producing more high-velocity stars from wider binaries, and the resulting velocity distribution being influenced by binary mass and orbital properties. Binaries dissolved by black-hole tides: Binaries approaching a black hole are tidally disrupted with a disruption probability depending on their penetration factor and orbital parameters, leading to the ejection of stars with hypervelocity velocities primarily determined by the binary's semi-major axis and black hole mass, though survival and exact ejection energies vary with orbital inclination and phase. Velocity distribution: analytical method: The paper proposes an analytical method to derive the velocity distribution of hypervelocity stars ejected from a black hole by analyzing the ejection velocity as a function of binary semi-major axis and companion mass, focusing on the most energetic binaries to infer the functional shape of the velocity distribution. Velocity distribution in the Galactic halo: The velocity distribution of hypervelocity stars in the Galactic halo exhibits a robust low-velocity cutoff proportional to $v_{\\\\infty}^2$ due to Galactic deceleration, modified by stellar lifetime effects, leading to a velocity-dependent number distribution with a break at $v_{\\\\text{age}} \\\\sim r / t_*$.",
+        "highlight": {
+          "abstract": [
+            "<em>Hypervelocity</em> <em>stars</em> (HVSs) observed in the Galactic halo and S-<em>stars</em> observed orbiting the central black hole may originate from such mechanism.",
+            "In this paper, we predict the velocity distribution of the ejected <em>stars</em> of a given mass, after they have travelled out of the Galactic potential."
+          ],
+          "title": [
+            "The Velocity Distribution of <em>Hypervelocity</em> <em>Stars</em>"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.95,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Purely theoretical paper predicting velocity distributions from tidal disruption mechanisms, with only qualitative comparison to existing observations.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:15:03"
+      }
+    },
+    {
+      "arxiv_id": "1307.3258",
+      "title": "The Runaway Binary LP 400-22 is Leaving the Galaxy",
+      "authors": [
+        "Mukremin Kilic",
+        "A. Gianninas",
+        "Warren R. Brown",
+        "Hugh C. Harris",
+        "Conard C. Dahn",
+        "M. A. Agüeros",
+        "Craig O. Heinke",
+        "S. J. Kenyon",
+        "J. A. Panei",
+        "Fernando Camilo"
+      ],
+      "author_names": "Mukremin Kilic A. Gianninas Warren R. Brown Hugh C. Harris Conard C. Dahn M. A. Agüeros Craig O. Heinke S. J. Kenyon J. A. Panei Fernando Camilo",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2013-07-11 00:00:00",
+      "updated_at": "2013-07-11 20:02:05",
+      "links": {
+        "abs": "https://arxiv.org/abs/1307.3258",
+        "pdf": "https://arxiv.org/pdf/1307.3258"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We present optical spectroscopy, astrometry, radio, and X-ray observations of the runaway binary LP 400-22. We refine the orbital parameters of the system based on our new radial velocity observations. Our parallax data indicate that LP 400-22 is significantly more distant (3 sigma lower limit of 840 pc) than initially predicted. LP 400-22 has a tangential velocity in excess of 830 km/s; it is unbound to the Galaxy. Our radio and X-ray observations fail to detect a recycled millisecond pulsar companion, indicating that LP 400-22 is a double white dwarf system. This essentially rules out a supernova runaway ejection mechanism. Based on its orbit, a Galactic center origin is also unlikely. However, its orbit intersects the locations of several globular clusters; dynamical interactions between LP 400-22 and other binary stars or a central black hole in a dense cluster could explain the origin of this unusual binary."
+      },
+      "match": {
+        "queries": [
+          "runaway stars",
+          "unbound stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 19.73203
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Weak title match: runaway-related mechanisms LLM confirmed: Title explicitly mentions 'runaway binary' and 'leaving the Galaxy'; abstract discusses unbound system with tangential velocity >830 km/s, ejection mechanisms, and kinematics."
+      },
+      "deepxiv": {
+        "score": 19.73203,
+        "best_score": 19.73203,
+        "search_keywords": null,
+        "citations": "10"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T221353"
+      },
+      "source_fields": {
+        "pg_id": 1450086,
+        "venue": null,
+        "journal_name": "Monthly Notices of the Royal Astronomical Society",
+        "status": "extracted",
+        "token_count": 11846,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-23 12:19:36",
+        "sections_text": "RESULTS: The revised orbital parameters of LP 400-22 are $P = 1.01014(5)$ d, $K = 119.3(8)$ km s⁻¹, and a mass function $f = 0.1778(36)$, consistent with prior studies, while the primary star's physical properties—particularly its low surface gravity and temperature—disagree with standard WD models, suggesting possible spectroscopically invisible helium in a 0.19 M☉ WD. DISCUSSION: The LP 400-22 binary system, with a space velocity exceeding 200 km s⁻¹ and no detected neutron star companion, cannot be explained by supernova ejection or Galactic center interactions, suggesting a possible origin in a globular cluster via dynamical interactions. CONCLUSIONS: The runaway white dwarf binary LP 400-22 likely originated from multi-body interactions in a dense cluster, possibly involving an intermediate-mass black hole, with its Galactic origin and cluster association remaining uncertain due to distance and observational limitations. INTRODUCTION: This paper presents a revised analysis of the runaway binary LP 400-22, using multi-wavelength observations to assess its Galactic center origin and challenge the conclusion that it is a typical halo star, offering new constraints on the ejection mechanisms of low-mass binary systems in dense stellar environments. OBSERVATIONS: This section presents updated optical spectroscopy and astrometry of LP 400-22, revealing a higher surface gravity due to improved stellar models and establishing a 3σ lower limit on distance of 840 pc, implying a tangential velocity exceeding the Galactic escape velocity and suggesting the system is a runaway binary.",
+        "highlight": {
+          "abstract": [
+            "We present optical spectroscopy, astrometry, radio, and X-ray observations of the <em>runaway</em> binary LP 400-22.",
+            "This essentially rules out a supernova <em>runaway</em> ejection mechanism. Based on its orbit, a Galactic center origin is also unlikely.",
+            "However, its orbit intersects the locations of several globular clusters; dynamical interactions between LP 400-22 and other binary <em>stars</em> or a central black hole in a dense cluster could explain the origin"
+          ],
+          "title": [
+            "The <em>Runaway</em> Binary LP 400-22 is Leaving the Galaxy"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.9,
+        "catalog_role": "followup_observations",
+        "object_scope": "single_object",
+        "evidence": "Presents new observational data (optical spectroscopy, astrometry, parallax, radial velocities) for specific runaway binary LP 400-22, with refined orbital parameters and velocity measurements.",
+        "data_products": [
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "spectra",
+          "orbit_integrations"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:15:03"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 2,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T22:15:03"
+  }
+}

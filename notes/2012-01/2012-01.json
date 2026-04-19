@@ -1,0 +1,293 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2012-01",
+  "date_from": "2012-01-01",
+  "date_to": "2012-01-31",
+  "run": {
+    "run_id": "20260419T221534",
+    "started_at": "2026-04-19T22:15:34"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2012-01",
+    "date_from": "2012-01-01",
+    "date_to": "2012-01-31",
+    "raw_unique": 31,
+    "relevant_count": 2,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 31,
+    "classifier_included": 2,
+    "classifier_filtered": 29,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 1,
+    "weak_llm_reviewed": 1,
+    "weak_llm_included": 1,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 1
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 65,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 162,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 65,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 66,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 65,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1201.1446",
+      "title": "Hypervelocity Planets and Transits Around Hypervelocity Stars",
+      "authors": [
+        "Idan Ginsburg",
+        "Abraham Loeb",
+        "Gary A. Wegner"
+      ],
+      "author_names": "Idan Ginsburg Abraham Loeb Gary A. Wegner",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2012-01-06 00:00:00",
+      "updated_at": "2012-03-14 18:46:23",
+      "links": {
+        "abs": "https://arxiv.org/abs/1201.1446",
+        "pdf": "https://arxiv.org/pdf/1201.1446"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "The disruption of a binary star system by the massive black hole at the Galactic Centre, SgrA*, can lead to the capture of one star around SgrA* and the ejection of its companion as a hypervelocity star (HVS). We consider the possibility that these stars may have planets and study the dynamics of these planets. Using a direct $N$-body integration code, we simulated a large number of different binary orbits around SgrA*. For some orbital parameters, a planet is ejected at a high speed. In other instances, a HVS is ejected with one or more planets orbiting around it. In these cases, it may be possible to observe the planet as it transits the face of the star. A planet may also collide with its host star. In such cases the atmosphere of the star will be enriched with metals. In other cases, a planet is tidally disrupted by SgrA*, leading to a bright flare."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 39.416573
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars"
+      },
+      "deepxiv": {
+        "score": 39.416573,
+        "best_score": 39.416573,
+        "search_keywords": null,
+        "citations": "22"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] N-body simulations of binary star systems disrupted by SgrA* reveal that a fraction of such systems eject a hypervelocity star (HVS) with one or more bound planets, enabling planetary transits or stellar atmospheric metal enrichment via planet-star collisions. Tidal disruption of planets by SgrA* can also produce bright flares, with orbital dynamics depending on binary eccentricity and initial separation, suggesting observable signatures for future high-velocity star surveys.",
+        "keywords": [
+          "hypervelocity star dynamics",
+          "planetary ejection in binary disruption",
+          "stellar tidal disruption",
+          "transit detection in HVS systems",
+          "binary-star-black hole interactions"
+        ],
+        "citations": "22",
+        "published_at": "2012-01-06T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1201.1446",
+          "src_url": "https://arxiv.org/pdf/1201.1446",
+          "title": "Hypervelocity Planets and Transits Around Hypervelocity Stars"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T221534"
+      },
+      "source_fields": {
+        "pg_id": 2104164,
+        "venue": null,
+        "journal_name": "Monthly Notices of the Royal Astronomical Society",
+        "status": "extracted",
+        "token_count": 14402,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 07:11:37",
+        "sections_text": "Conclusions: Simulations show that HVSs with hot Jupiters can form with a 10% probability under specific binary parameters, enabling detectable transits and offering insights into planetary formation near SgrA*, while also revealing potential metal enrichment or tidal disruption signatures from planetary interactions. Introduction: This paper makes the novel contribution of investigating whether tightly bound binary systems containing planets, when disrupted by the supermassive black hole at the galactic center, can produce hypervelocity planets (HVPs) capable of transiting around hypervelocity stars—offering a new pathway for detecting planetary systems in extreme dynamical environments. Computational Method: The paper uses high-precision N-body simulations with a point-particle model to study how planetary perturbations in binary star systems lead to the ejection of hypervelocity stars, focusing on the effects of planetary separation, binary orbit, and initial phase angles on dynamical outcomes. The Fate of Planetary Systems: Disruption of binary star systems by a massive black hole leads to the production of hypervelocity stars (HVSs) and hypervelocity planets (HVPs), with planetary outcomes depending on initial stellar separation and configuration, resulting in a fraction of planets either bound to the MBH or ejected as HVPs. Origin of Hypervelocity Stars and Hypervelocity Planets: Hypervelocity stars and planets are ejected from binary systems disrupted by supermassive black holes, with hypervelocity planets achieving velocities 1.5–4 times higher than hypervelocity stars on average, though only a small fraction reach extremely high speeds.",
+        "highlight": {
+          "abstract": [
+            "The disruption of a binary star system by the massive black hole at the Galactic Centre, SgrA*, can lead to the capture of one star around SgrA* and the ejection of its companion as a <em>hypervelocity</em> star",
+            "We consider the possibility that these <em>stars</em> may have planets and study the dynamics of these planets."
+          ],
+          "title": [
+            "<em>Hypervelocity</em> Planets and Transits Around <em>Hypervelocity</em> <em>Stars</em>"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.95,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Purely theoretical N-body simulation study of binary disruption dynamics and planetary ejection scenarios around Sgr A*. No observational data or object-level catalog presented.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:16:30"
+      }
+    },
+    {
+      "arxiv_id": "1201.4794",
+      "title": "Ejection and Capture Dynamics in Restricted Three-Body Encounters",
+      "authors": [
+        "Shiho Kobayashi",
+        "Yanir Hainick",
+        "Re'em Sari",
+        "Elena M. Rossi"
+      ],
+      "author_names": "Shiho Kobayashi Yanir Hainick Re'em Sari Elena M. Rossi",
+      "categories": [
+        "astro-ph.HE",
+        "astro-ph.EP",
+        "astro-ph.GA"
+      ],
+      "published_at": "2012-01-23 00:00:00",
+      "updated_at": "2012-01-23 18:17:23",
+      "links": {
+        "abs": "https://arxiv.org/abs/1201.4794",
+        "pdf": "https://arxiv.org/pdf/1201.4794"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We study the tidal disruption of binaries by a massive point mass (e.g. the black hole at the Galactic center), and we discuss how the ejection and capture preference between unequal-mass binary members depends on which orbit they approach the massive object. We show that the restricted three-body approximation provides a simple and clear description of the dynamics. The orbit of a binary with mass m around a massive object M should be almost parabolic with an eccentricity |1-e| < (m/M)^{1/3} << 1 for a member to be captured, while the other is ejected. Indeed, the energy change of the members obtained for a parabolic orbit can be used to describe non-parabolic cases. If a binary has an encounter velocity much larger than (M/m)^{1/3} times the binary rotation velocity, it would be abruptly disrupted, and the energy change at the encounter can be evaluated in a simple disruption model. We evaluate the probability distributions for the ejection and capture of circular binary members and for the final energies. In principle, for any hyperbolic (elliptic) orbit, the heavier member has more chance to be ejected (captured), because it carries a larger fraction of the orbital energy. However, if the orbital energy is close to zero, the difference between the two members becomes small, and there is practically no ejection and capture preference. The preference becomes significant when the orbital energy is comparable to the typical energy change at the encounter. We discuss its implications to hypervelocity stars and irregular satellites around giant planets."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 12.284966
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Weak title match: stellar ejection mechanisms, Hills mechanism and tidal binary disruption LLM confirmed: Explicitly discusses ejection dynamics relevant to hypervelocity stars and mentions hypervelocity stars directly in abstract"
+      },
+      "deepxiv": {
+        "score": 12.284966,
+        "best_score": 12.284966,
+        "search_keywords": null,
+        "citations": "24"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T221534"
+      },
+      "source_fields": {
+        "pg_id": 2105080,
+        "venue": null,
+        "journal_name": "The Astrophysical Journal",
+        "status": "extracted",
+        "token_count": 19598,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 04:00:34",
+        "sections_text": "Conclusions: The ejection and capture of binary members during tidal encounters with a massive object depend on the encounter energy, penetration factor, and binary orientation, with outcomes being symmetric for both members except in high-energy regimes where the heavier component is more likely to be ejected or captured, and such dynamics may explain the formation of irregular satellites and hypervelocity stars. Introduction: This paper introduces a generalized restricted three-body approximation for binary-star encounters with massive black holes on arbitrary eccentric orbits, enabling efficient and insightful predictions of ejection and capture probabilities without the computational cost of full three-body simulations. Numerical Results: The restricted three-body approximation accurately reproduces full three-body simulation results with less than 0.1% energy deviation, showing that the parabolic approximation (with $e=1$) closely matches non-parabolic cases for $|e-1|/D=0.1$, while energy change exhibits symmetry $\\\\Delta\\\\bar{E}(\\\\phi+\\\\pi) = -\\\\Delta\\\\bar{E}(\\\\phi)$ and is largely independent of initial radius $r_0$ when $r_0 \\\\gg r_t$. High Energy Regime: In the high energy regime, the tidal disruption of a binary occurs only when the orbital energy is sufficiently large, leading to specific conditions on the tidal radius and disruption dynamics, with the energy change at encounter being dominated by mutual binary forces and exhibiting a sinusoidal dependence on binary phase. Which gets kicked out?: In tidal disruption of unequal-mass binaries by a massive black hole, the lighter secondary is preferentially captured or ejected depending on the binary's semi-major axis and initial energy, with smaller orbital distances favoring ejection of the lighter member due to its higher initial energy relative to the primary. Energy change at the BH encounter: The energy change of binary star members during a tidal encounter with a massive black hole is dominated by the tidal interaction, resulting in a dimensionless energy shift $\\\\Delta\\\\bar{E}$ of order unity that depends on orbital parameters and determines whether a star is ejected or captured. The Restricted Three-Body Problem: The section derives the dimensionless equations of motion for the relative position of a binary system in the Restricted Three-Body Problem, under the approximation that the binary's separation is small compared to its distance from a massive point mass, and shows how the dynamics depend on the eccentricity and true anomaly of the binary's orbit. Irregular satellites around giant planets: This section revisits the capture mechanism of irregular satellites like Triton via gravitational encounters with Neptune using the restricted three-body problem, showing that the capture probability and binary disruption dynamics are well-described by the model, with the parabolic approximation providing good agreement even at high velocities.",
+        "highlight": {
+          "abstract": [
+            "We discuss its implications to <em>hypervelocity</em> <em>stars</em> and irregular satellites around giant planets."
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.9,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Theoretical analysis of ejection/capture dynamics in restricted three-body encounters. Discusses implications for hypervelocity stars but presents no observational data or object catalog.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:16:30"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 2,
+    "catalog_count": 0,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T22:16:30"
+  }
+}

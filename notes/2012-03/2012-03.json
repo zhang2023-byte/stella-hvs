@@ -1,0 +1,424 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2012-03",
+  "date_from": "2012-03-01",
+  "date_to": "2012-03-31",
+  "run": {
+    "run_id": "20260419T221534",
+    "started_at": "2026-04-19T22:15:34"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2012-03",
+    "date_from": "2012-03-01",
+    "date_to": "2012-03-31",
+    "raw_unique": 32,
+    "relevant_count": 3,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 32,
+    "classifier_included": 3,
+    "classifier_filtered": 29,
+    "classifier_errors": 0,
+    "direct_rule_included": 2,
+    "weak_rule_candidates": 1,
+    "weak_llm_reviewed": 1,
+    "weak_llm_included": 1,
+    "brief_eligible_count": 2,
+    "brief_skipped_weak_count": 1
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 92,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 189,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 92,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 93,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 92,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1203.6685",
+      "title": "Binary Disruption by Massive Black Holes: Hypervelocity Stars, S Stars, and Tidal Disruption Events",
+      "authors": [
+        "Benjamin C. Bromley",
+        "Scott J. Kenyon",
+        "Margaret J. Geller",
+        "Warren R. Brown"
+      ],
+      "author_names": "Benjamin C. Bromley Scott J. Kenyon Margaret J. Geller Warren R. Brown",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2012-03-29 00:00:00",
+      "updated_at": "2012-03-29 23:10:26",
+      "links": {
+        "abs": "https://arxiv.org/abs/1203.6685",
+        "pdf": "https://arxiv.org/pdf/1203.6685"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We examine whether disrupted binary stars can fuel black hole growth. In this mechanism, tidal disruption produces a single hypervelocity star (HVS) ejected at high velocity and a former companion star bound to the black hole. After a cluster of bound stars forms, orbital diffusion allows the black hole to accrete stars by tidal disruption at a rate comparable to the capture rate. In the Milky Way, HVSs and the S star cluster imply similar rates of 10^{-5}--10^{-3} yr^{-1} for binary disruption. These rates are consistent with estimates for the tidal disruption rate in nearby galaxies and imply significant black hole growth from disrupted binaries on 10 Gyr time scales."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 30.850603
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars"
+      },
+      "deepxiv": {
+        "score": 30.850603,
+        "best_score": 30.850603,
+        "search_keywords": null,
+        "citations": "33"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] The paper quantifies the rate at which binary star systems are disrupted by supermassive black holes, producing hypervelocity stars (HVSs) and bound stellar companions. Using a two-body relaxation model, it shows that orbital diffusion enables captured stars to reach tidal disruption orbits at a rate of $10^{-5}-10^{-3}$ yr⁻¹, consistent with observed HVSs and the S star cluster in the Galactic Center. This mechanism provides a viable pathway for black hole growth over 10 Gyr via sustained tidal disruption of bound stars from binary systems, offering a robust alternative to gas accretion in stellar mass growth.",
+        "keywords": [
+          "binary disruption",
+          "tidal disruption events",
+          "hypervelocity stars",
+          "stellar capture",
+          "orbital diffusion"
+        ],
+        "citations": "33",
+        "published_at": "2012-03-29T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1203.6685",
+          "src_url": "https://arxiv.org/pdf/1203.6685",
+          "title": "Binary Disruption by Massive Black Holes: Hypervelocity Stars, S Stars, and Tidal Disruption Events"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T221534"
+      },
+      "source_fields": {
+        "pg_id": 2040349,
+        "venue": null,
+        "journal_name": "The Astrophysical Journal Letters",
+        "status": "extracted",
+        "token_count": 11352,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 20:20:04",
+        "sections_text": "Summary: This section presents a unified model in which binary disruptions near the Galactic Center produce hypervelocity stars, S stars, and tidal disruption events, with observational data supporting the model's predictions and offering testable constraints through future surveys and simulations. Introduction: This paper introduces a novel framework showing that binary star capture—via the Hills mechanism—efficiently generates both hypervelocity stars and bound stars that feed tidal disruption events, providing a viable pathway for the growth of supermassive black holes consistent with observational constraints. Growth of the Central Black Hole: The growth of the central black hole via binary disruption depends on initial seed mass, accretion efficiency, central density, and binary fraction, with current models suggesting Sgr A* was significantly less massive in the past due to lower disruption rates. Binary Disruption Rates from HVSs and S Stars: Binary star interactions with the supermassive black hole at the Galactic Center are a key mechanism for producing high-velocity stars (HVSs) and bound S stars, with observational evidence supporting the predictions of the Hills capture model. Long-term Orbital Evolution of the S Stars and Tidal Disruption Events: The long-term orbital evolution of bound stars around supermassive black holes, driven by gravitational interactions and governed by relaxation times, leads to a steady-state accretion rate that produces tidal disruption events every $10^3$–$10^5$ years, consistent with observed TDE rates and suggesting a common origin for binary disruption and stellar disruption events.",
+        "highlight": {
+          "abstract": [
+            "We examine whether disrupted binary <em>stars</em> can fuel black hole growth.",
+            "In this mechanism, tidal disruption produces a single <em>hypervelocity</em> star (HVS) ejected at high velocity and a former companion star bound to the black hole.",
+            "After a cluster of bound <em>stars</em> forms, orbital diffusion allows the black hole to accrete <em>stars</em> by tidal disruption at a rate comparable to the capture rate."
+          ],
+          "title": [
+            "Binary Disruption by Massive Black Holes: <em>Hypervelocity</em> <em>Stars</em>, S <em>Stars</em>, and Tidal Disruption Events"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.95,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Purely theoretical paper on binary disruption mechanisms and rates. Uses observed HVSs and S stars only as motivation/consistency check for theoretical rates.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:16:42"
+      }
+    },
+    {
+      "arxiv_id": "1203.3543",
+      "title": "MMT Hypervelocity Star Survey. II. Five New Unbound Stars",
+      "authors": [
+        "Warren R. Brown",
+        "Margaret J. Geller",
+        "Scott J. Kenyon"
+      ],
+      "author_names": "Warren R. Brown Margaret J. Geller Scott J. Kenyon",
+      "categories": [
+        "astro-ph.GA",
+        "astro-ph.SR"
+      ],
+      "published_at": "2012-03-15 00:00:00",
+      "updated_at": "2012-03-15 20:00:09",
+      "links": {
+        "abs": "https://arxiv.org/abs/1203.3543",
+        "pdf": "https://arxiv.org/pdf/1203.3543"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We present the discovery of five new unbound hypervelocity stars (HVSs) in the outer Milky Way halo. Using a conservative estimate of Galactic escape velocity, our targeted spectroscopic survey has now identified 16 unbound HVSs as well as a comparable number of HVSs ejected on bound trajectories. A Galactic center origin for the HVSs is supported by their unbound velocities, the observed number of unbound stars, their stellar nature, their ejection time distribution, and their Galactic latitude and longitude distribution. Other proposed origins for the unbound HVSs, such as runaway ejections from the disk or dwarf galaxy tidal debris, cannot be reconciled with the observations. An intriguing result is the spatial anisotropy of HVSs on the sky, which possibly reflects an anisotropic potential in the central 10-100 pc region of the Galaxy. Further progress requires measurement of the spatial distribution of HVSs over the southern sky. Our survey also identifies seven B supergiants associated with known star-forming galaxies; the absence of B supergiants elsewhere in the survey implies there are no new star-forming galaxies in our survey footprint to a depth of 1-2 Mpc."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 32.06152
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars, unbound, escaping, or ejected stars, high-velocity star surveys or candidates"
+      },
+      "deepxiv": {
+        "score": 31.677332,
+        "best_score": 32.06152,
+        "search_keywords": null,
+        "citations": "50"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] A spectroscopic survey of the outer Milky Way halo identifies five new unbound hypervelocity stars (HVSs) with velocities exceeding Galactic escape velocity, supporting a Galactic center origin via three-body interactions with a supermassive black hole. The HVSs exhibit spectral characteristics consistent with short-lived B-type main sequence stars, and their spatial distribution shows significant anisotropy, suggesting an anisotropic gravitational potential in the central 10–100 pc region. The absence of B supergiants in non-star-forming regions implies no new star-forming galaxies within 1–2 Mpc, constraining extragalactic origins.",
+        "keywords": [
+          "hypervelocity star dynamics",
+          "three-body gravitational interactions",
+          "galactic center potential anisotropy",
+          "stellar ejection mechanisms",
+          "outer halo kinematics"
+        ],
+        "citations": "50",
+        "published_at": "2012-03-15T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1203.3543",
+          "src_url": "https://arxiv.org/pdf/1203.3543",
+          "title": "MMT Hypervelocity Star Survey. II. Five New Unbound Stars"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T221534"
+      },
+      "source_fields": {
+        "pg_id": 2036718,
+        "venue": null,
+        "journal_name": "The Astrophysical Journal",
+        "status": "extracted",
+        "token_count": 20010,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": null,
+        "sections_text": "Data: The HVS survey selects faint, 2.5–4 M⊙ main sequence stars in the outer halo using SDSS photometry to maximize contrast with the Milky Way's stellar population and efficiently detect hypervelocity stars. Results: The experiment identifies 18 bound high-velocity stars at $+300\\\\,\\\\mathrm{km\\\\,s^{-1}}$ with main-sequence masses of $\\\\simeq 3M_{\\\\odot}$, consistent with ejection models, while no unbound stars are found at $v_{rf} < -400\\\\,\\\\mathrm{km\\\\,s^{-1}}$, indicating asymmetric ejection and short main-sequence lifetimes. Conclusions: The HVS Survey identifies 16 unbound hypervelocity stars, with strong evidence supporting a Galactic center supermassive black hole origin, while highlighting unresolved questions about their spatial anisotropy and the need for deeper sky coverage to fully understand their origin and the Galactic potential. Introduction: This paper presents a novel spectroscopic survey identifying five new unbound hypervelocity stars with stellar properties consistent with ejection from the Galactic center, addressing the long-standing problem of explaining their extreme velocities beyond stellar binary disruption limits by providing strong observational support for the massive black hole ejection mechanism. Spatial Anisotropy: The spatial distribution of HVSs shows significant anisotropy, particularly in Galactic longitude, indicating a non-random origin likely tied to ejection mechanisms such as a central supermassive black hole, rather than tidal debris. Five New Hypervelocity Stars: This section presents five newly discovered hypervelocity stars, with detailed kinematic, spectral, and distance properties indicating they are unbound, not part of compact binaries, and suggesting diverse ejection histories, particularly in the Leo region.",
+        "highlight": {
+          "abstract": [
+            "We present the discovery of five new unbound <em>hypervelocity</em> <em>stars</em> (HVSs) in the outer Milky Way halo.",
+            "A Galactic center origin for the HVSs is supported by their unbound velocities, the observed number of unbound <em>stars</em>, their stellar nature, their ejection time distribution, and their Galactic latitude"
+          ],
+          "title": [
+            "MMT <em>Hypervelocity</em> Star Survey. II. Five New Unbound <em>Stars</em>"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.99,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Title indicates survey presenting new discoveries. Abstract explicitly states 'discovery of five new unbound hypervelocity stars' and references a targeted spectroscopic survey identifying 16 unbound HVSs. Paper presents observational data from survey.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "spectra",
+          "radial_velocities",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:16:42"
+      }
+    },
+    {
+      "arxiv_id": "1203.2625",
+      "title": "The S-Star Cluster at the Center of the Milky Way: On the nature of diffuse NIR emission in the inner tenth of a parsec",
+      "authors": [
+        "Nadeen Sabha",
+        "Andreas Eckart",
+        "David Merritt",
+        "Mohammad Zamaninasab",
+        "Gunther Witzel",
+        "Macarena García-Marín",
+        "Behrang Jalali",
+        "Monica Valencia-S.",
+        "Senol Yazici",
+        "Rainer Buchholz",
+        "Banafsheh Shahzamanian",
+        "Christian Straubmeier"
+      ],
+      "author_names": "Nadeen Sabha Andreas Eckart David Merritt Mohammad Zamaninasab Gunther Witzel Macarena García-Marín Behrang Jalali Monica Valencia-S. Senol Yazici Rainer Buchholz Banafsheh Shahzamanian Christian Straubmeier",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2012-03-12 00:00:00",
+      "updated_at": "2013-01-04 21:16:36",
+      "links": {
+        "abs": "https://arxiv.org/abs/1203.2625",
+        "pdf": "https://arxiv.org/pdf/1203.2625"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Sagittarius A*, the super-massive black hole at the center of the Milky Way, is surrounded by a small cluster of high velocity stars, known as the S-stars. We aim to constrain the amount and nature of stellar and dark mass associated with the cluster in the immediate vicinity of Sagittarius A*. We use near-infrared imaging to determine the $K_\\\\\\\\mathrm{s}$-band luminosity function of the S-star cluster members, and the distribution of the diffuse background emission and the stellar number density counts around the central black hole. This allows us to determine the stellar light and mass contribution expected from the faint members of the cluster. We then use post-Newtonian N-body techniques to investigate the effect of stellar perturbations on the motion of S2, as a means of detecting the number and masses of the perturbers. We find that the stellar mass derived from the $K_\\\\\\\\mathrm{s}$-band luminosity extrapolation is much smaller than the amount of mass that might be present considering the uncertainties in the orbital motion of the star S2. Also the amount of light from the fainter S-cluster members is below the amount of residual light at the position of the S-star cluster after removing the bright cluster members. If the distribution of stars and stellar remnants is strongly enough peaked near Sagittarius A*, observed changes in the orbital elements of S2 can be used to constrain both their masses and numbers. Based on simulations of the cluster of high velocity stars we find that at a wavelength of 2.2 $\\\\\\\\mu$m close to the confusion level for 8 m class telescopes blend stars will occur (preferentially near the position of Sagittarius A*) that last for typically 3 years before they dissolve due to proper motions."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 13.687278
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.9,
+        "reason": "Weak title match: galactic-center dynamical origins LLM confirmed: Explicitly mentions 'cluster of high velocity stars' (S-stars) orbiting Sgr A*, focuses on their kinematics, mass distribution, and orbital perturbations."
+      },
+      "deepxiv": {
+        "score": 7.4586115,
+        "best_score": 13.687278,
+        "search_keywords": null,
+        "citations": "45"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T221534"
+      },
+      "source_fields": {
+        "pg_id": 2037726,
+        "venue": null,
+        "journal_name": "Astronomy and Astrophysics",
+        "status": "extracted",
+        "token_count": 28736,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 20:36:12",
+        "sections_text": "Introduction: This paper presents a novel analysis of the stellar environment near Sgr A* using high-precision NIR imaging and spectroscopy to investigate the formation mechanisms of the S-stars, particularly addressing the challenge of how such young, massive stars could form in or be transported to the galactic center despite theoretical constraints. Summary and conclusion: This section concludes that the stellar and dark mass in the S-star cluster near Sgr A* are poorly constrained by current observations, with faint stars and blend stars significantly affecting measurements, and that high-precision astrometry of multiple stars is essential to accurately determine the mass distribution and dynamics near the supermassive black hole. Observations and data reduction: Near-infrared observations of Sgr A* were conducted with NACO at the VLT in 2004, with flux densities measured and calibrated using aperture photometry and extinction corrections based on known sources. The central few tenths of parsecs: This section demonstrates that the stellar light from the S-star cluster in the central few arcseconds of the Milky Way can be accurately modeled using a KLF with a slope of $ \\\\alpha = 0.18 \\\\pm 0.07 $, confirming the consistency of stellar contributions and supporting the detection of Sgr A* against a well-characterized background. Dynamical probes of the distributed mass: Dynamical probes of the distributed mass near Sgr A*, through precise measurements of orbital deviations such as peribothron advance, allow constraints on both the total mass and the granularity of the stellar population, with relativistic effects providing a baseline against which non-Keplerian perturbations can be isolated. Simulating the distribution of fainter stars: This section presents a simulation method to assess the likelihood of false detections of faint stars in the Sgr A* region by modeling the combined light of unresolved stars, showing that strong apparent clusterings brighter than the faintest detected source are highly probable under certain KLF and power-law profile assumptions.",
+        "highlight": {
+          "abstract": [
+            "Sagittarius A*, the super-massive black hole at the center of the Milky Way, is surrounded by a small cluster of high velocity <em>stars</em>, known as the S-<em>stars</em>.",
+            "If the distribution of <em>stars</em> and stellar remnants is strongly enough peaked near Sagittarius A*, observed changes in the orbital elements of S2 can be used to constrain both their masses and numbers.",
+            "Based on simulations of the cluster of high velocity <em>stars</em> we find that at a wavelength of 2.2 $\\\\\\\\mu$m close to the confusion level for 8 m class telescopes blend <em>stars</em> will occur (preferentially near"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.9,
+        "catalog_role": "uses_existing_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Focuses on the S-star cluster around Sgr A*. Uses near-infrared imaging to determine Ks-band luminosity function and stellar number density counts. Analyzes actual observational data (imaging, orbital motions) of known high-velocity S-stars.",
+        "data_products": [
+          "coordinates",
+          "astrometry",
+          "photometry",
+          "orbit_integrations"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:16:42"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 3,
+    "catalog_count": 2,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T22:16:42"
+  }
+}

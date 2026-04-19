@@ -1,0 +1,319 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2016-11",
+  "date_from": "2016-11-01",
+  "date_to": "2016-11-30",
+  "run": {
+    "run_id": "20260419T220616",
+    "started_at": "2026-04-19T22:06:16"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2016-11",
+    "date_from": "2016-11-01",
+    "date_to": "2016-11-30",
+    "raw_unique": 32,
+    "relevant_count": 2,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 32,
+    "classifier_included": 2,
+    "classifier_filtered": 30,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 1,
+    "weak_llm_reviewed": 1,
+    "weak_llm_included": 1,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 1
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 142,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 369,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 144,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 144,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 146,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1611.05504",
+      "title": "Gaia TGAS search for Large Magellanic Cloud runaway supergiant stars:Candidate hypervelocity star discovery, and the nature of R71",
+      "authors": [
+        "Daniel J. Lennon",
+        "Roeland P. van der Marel",
+        "Mercedes Ramos Lerate",
+        "William O’Mullane",
+        "Johannes Sahlmann"
+      ],
+      "author_names": "Daniel J. Lennon Roeland P. van der Marel Mercedes Ramos Lerate William O’Mullane Johannes Sahlmann",
+      "categories": [
+        "astro-ph.SR",
+        "astro-ph.GA"
+      ],
+      "published_at": "2016-11-16 00:00:00",
+      "updated_at": "2017-03-11 17:34:25",
+      "links": {
+        "abs": "https://arxiv.org/abs/1611.05504",
+        "pdf": "https://arxiv.org/pdf/1611.05504"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We search for runaway stars in the Large Magellanic Cloud (LMC) by computing the space velocities of the visually brightest stars in the LMC that are included in the Gaia TGAS proper motion catalog. We compare with predictions from stellar dynamical models to obtain (peculiar) velocities relative to their local stellar environment. Two of the 31 stars have unusually high proper motions. Of the remaining 29 stars we find that most objects in this sample have velocities in very good agreement with model predictions of a circularly rotating disk model. Indeed the excellent fit to the model implies that the TGAS uncertainty estimates are likely overestimated. The fastest outliers in this subsample contain the LBV R71 and a few other well known emission line objects though in no case do we derive velocities consistent with fast (~100 km/s) runaways. Our results imply that R 71 in particular has a moderate deviation from the local stellar velocity field (40 km/s) lending support to the proposition that this object cannot have evolved as a normal single star since it lies too far from massive star forming complexes to have arrived at its current position during its lifetime. Our findings therefore strengthen the case for this LBV being the result of binary evolution. Of the two stars with unusually high proper motions we find that one, the isolated B1.5 Ia+ supergiant Sk-67 2 (HIP 22237), is a candidate hypervelocity star, the TGAS proper motion implying a very large peculiar transverse velocity (~360 km/s) directed radially away from the LMC centre. If confirmed, for example by Gaia Data Release 2, it would imply that this massive supergiant, on the periphery of the LMC, is leaving the galaxy where it will explode as a supernova."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 19.214338
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars, high-velocity star surveys or candidates"
+      },
+      "deepxiv": {
+        "score": 19.214338,
+        "best_score": 19.214338,
+        "search_keywords": null,
+        "citations": "13"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] The study analyzes space velocities of 31 bright supergiant stars in the Large Magellanic Cloud (LMC) using Gaia TGAS proper motions and published radial velocities to test for runaway or hypervelocity behavior. Most stars align with predicted circular disk dynamics, suggesting no runaway origins, but two exhibit unusually high proper motions: one, Sk-67 2 (HIP 22237), shows a transverse velocity of ~360 km/s, making it a candidate hypervelocity star likely ejected from the LMC; R 71, a luminous blue variable, has a moderate peculiar velocity (~40 km/s) inconsistent with single-star evolution, supporting a binary evolution origin rather than a runaway path.",
+        "keywords": [
+          "runaway star kinematics",
+          "stellar dynamical models",
+          "proper motions",
+          "binary evolution",
+          "hypervelocity star"
+        ],
+        "citations": "13",
+        "published_at": "2016-11-16T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1611.05504",
+          "src_url": "https://arxiv.org/pdf/1611.05504",
+          "title": "Gaia TGAS search for Large Magellanic Cloud runaway supergiant stars:Candidate hypervelocity star discovery, and the nature of R71"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T220616"
+      },
+      "source_fields": {
+        "pg_id": 405526,
+        "venue": null,
+        "journal_name": "arXiv: Solar and Stellar Astrophysics",
+        "status": "extracted",
+        "token_count": 13699,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 04:22:50",
+        "sections_text": "Summary: The Gaia DR1 data reveal that most luminous massive stars in the LMC are not runaways, R 71 may be a product of binary evolution, and Sk-67 2 is a candidate hypervelocity star possibly ejected by a central black hole. Introduction: This paper presents a novel dynamical analysis of the Large Magellanic Cloud using Gaia TGAS proper motions to identify runaway stars among massive, isolated objects like LBVs, addressing the lack of precise velocity data needed to distinguish between in situ formation and ejection mechanisms. Stellar relative velocities: This section analyzes the proper motions and peculiar velocities of 29 Hipparcos-stellar sources in the LMC, finding excellent agreement with the vdMS rotation model and no runaway stars beyond ~50 km/s, despite high precision in TGAS measurements. Discussion: Individual objects of special interest: The analysis of R 71 reveals a systemic radial velocity of 204 km/s, resulting in a peculiar LOS velocity of only −34 km/s, which contradicts claims of it being a fast runaway and challenges the binary rejuvenation hypothesis for this isolated LBV.",
+        "highlight": {
+          "abstract": [
+            "We search for runaway <em>stars</em> in the Large Magellanic Cloud (LMC) by computing the space velocities of the visually brightest <em>stars</em> in the LMC that are included in the Gaia TGAS proper motion catalog.",
+            "Two of the 31 <em>stars</em> have unusually high proper motions.",
+            "Of the remaining 29 <em>stars</em> we find that most objects in this sample have velocities in very good agreement with model predictions of a circularly rotating disk model.",
+            "Of the two <em>stars</em> with unusually high proper motions we find that one, the isolated B1.5 Ia+ supergiant Sk-67 2 (HIP 22237), is a candidate <em>hypervelocity</em> star, the TGAS proper motion implying a very large"
+          ],
+          "title": [
+            "Gaia TGAS search for Large Magellanic Cloud runaway supergiant stars:Candidate <em>hypervelocity</em> star discovery"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper analyzes space velocities of 31 bright supergiant stars in LMC using Gaia TGAS proper motions and radial velocities. Presents candidate hypervelocity star (Sk-67 2) and discusses kinematics of specific objects like R71.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:08:28"
+      }
+    },
+    {
+      "arxiv_id": "1611.01185",
+      "title": "Runaway Dwarf Carbon Stars as Candidate Supernova Ejecta",
+      "authors": [
+        "Kathryn A. Plant",
+        "Bruce Margon",
+        "Puragra Guhathakurta",
+        "Emily C. Cunningham",
+        "Elisa Toloba",
+        "Jeffrey A. Munn"
+      ],
+      "author_names": "Kathryn A. Plant Bruce Margon Puragra Guhathakurta Emily C. Cunningham Elisa Toloba Jeffrey A. Munn",
+      "categories": [
+        "astro-ph.SR",
+        "astro-ph.GA"
+      ],
+      "published_at": "2016-11-03 00:00:00",
+      "updated_at": "2016-12-03 21:33:40",
+      "links": {
+        "abs": "https://arxiv.org/abs/1611.01185",
+        "pdf": "https://arxiv.org/pdf/1611.01185"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "The dwarf carbon (dC) star SDSS J112801.67+004034.6 has an unusually high radial velocity, 531$\\\\\\\\pm 4$ km s$^{-1}$. We present proper motion and new spectroscopic observations which imply a large Galactic rest frame velocity, 425$\\\\\\\\pm 9$ km s$^{-1}$. Several other SDSS dC stars are also inferred to have very high galactocentric velocities, again each based on both high heliocentric radial velocity and also confidently detected proper motions. Extreme velocities and the presence of $C_2$ bands in the spectra of dwarf stars are both rare. Passage near the Galactic center can accelerate stars to such extreme velocities, but the large orbital angular momentum of SDSS J1128 precludes this explanation. Ejection from a supernova in a binary system or disruption of a binary by other stars are possibilities, particularly as dC stars are thought to obtain their photospheric $C_2$ via mass transfer from an evolved companion."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 27.44591
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Weak title match: runaway-related mechanisms LLM confirmed: Title explicitly mentions 'Runaway Dwarf Carbon Stars' and abstract discusses extreme galactocentric velocities (425 km/s), ejection mechanisms (supernova in binary system), and classifies them as runaway stars."
+      },
+      "deepxiv": {
+        "score": 13.504521,
+        "best_score": 27.44591,
+        "search_keywords": null,
+        "citations": "6"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T220616"
+      },
+      "source_fields": {
+        "pg_id": 407907,
+        "venue": null,
+        "journal_name": "The Astrophysical Journal",
+        "status": "extracted",
+        "token_count": 6415,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 04:22:51",
+        "sections_text": "Introduction: This paper presents the novel discovery that extreme radial velocities in nearby dwarf carbon stars—unexplained by standard binary pollution models—may indicate hypervelocity ejection from binary systems via supernova explosions, offering a new solution to the origin of carbon in these stars. Discussion and Conclusions: J1128, with a galactocentric velocity of $425\\\\pm 9~{}$km s⁻¹ and high specific angular momentum, is likely a high-velocity ejecta from a binary system—consistent with supernova or dynamical ejection—due to its extreme motion and carbon-rich photosphere, though its rarity among high-velocity dC stars suggests the ejection occurred late in the evolution of a massive companion. Motion in the Galactic Frame: The Monte Carlo analysis of J1128's motion in the Galactic frame reveals a high galactocentric velocity of $425 \\\\pm 9$ km s⁻¹, predominantly directed away from the Galactic disk with significant specific angular momentum, indicating a non-radial trajectory likely driven by an external acceleration mechanism. Sample Selection, Astrometry, and Spectroscopy: This section identifies extreme runaway dC stars by selecting dC candidates with the highest radial velocities from a sample of stars with significant proper motions, confirming their status as nearby dwarfs through astrometry and spectroscopy, and ruling out binary contributions as a source of their high velocities.",
+        "highlight": {
+          "abstract": [
+            "Several other SDSS dC <em>stars</em> are also inferred to have very high galactocentric velocities, again each based on both high heliocentric radial velocity and also confidently detected proper motions.",
+            "Extreme velocities and the presence of $C_2$ bands in the spectra of dwarf <em>stars</em> are both rare.",
+            "Passage near the Galactic center can accelerate <em>stars</em> to such extreme velocities, but the large orbital angular momentum of SDSS J1128 precludes this explanation.",
+            "Ejection from a supernova in a binary system or disruption of a binary by other <em>stars</em> are possibilities, particularly as dC <em>stars</em> are thought to obtain their photospheric $C_2$ via mass transfer from an"
+          ],
+          "title": [
+            "Runaway Dwarf Carbon <em>Stars</em> as Candidate Supernova Ejecta"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.9,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Focuses on dwarf carbon stars with extreme velocities, specifically SDSS J112801.67+004034.6 and 'several other SDSS dC stars'. Presents proper motion and spectroscopic observations with measured radial velocities and galactocentric velocities.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "spectra"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:08:28"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 2,
+    "catalog_count": 2,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T22:08:28"
+  }
+}

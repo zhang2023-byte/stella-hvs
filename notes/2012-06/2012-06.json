@@ -1,0 +1,213 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2012-06",
+  "date_from": "2012-06-01",
+  "date_to": "2012-06-30",
+  "run": {
+    "run_id": "20260419T221534",
+    "started_at": "2026-04-19T22:15:34"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2012-06",
+    "date_from": "2012-06-01",
+    "date_to": "2012-06-30",
+    "raw_unique": 35,
+    "relevant_count": 1,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 35,
+    "classifier_included": 1,
+    "classifier_filtered": 34,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 0,
+    "weak_llm_reviewed": 0,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 87,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 159,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 88,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 88,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 87,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1206.4057",
+      "title": "The Nature of Hypervelocity Stars and the Time Between Their Formation and Ejection",
+      "authors": [
+        "Warren R. Brown",
+        "Judith G. Cohen",
+        "Margaret J. Geller",
+        "Scott J. Kenyon"
+      ],
+      "author_names": "Warren R. Brown Judith G. Cohen Margaret J. Geller Scott J. Kenyon",
+      "categories": [
+        "astro-ph.GA",
+        "astro-ph.SR"
+      ],
+      "published_at": "2012-06-18 00:00:00",
+      "updated_at": "2012-06-18 20:00:59",
+      "links": {
+        "abs": "https://arxiv.org/abs/1206.4057",
+        "pdf": "https://arxiv.org/pdf/1206.4057"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We obtain Keck HIRES spectroscopy of HVS5, one of the fastest unbound stars in the Milky Way halo. We show that HVS5 is a 3.62 +- 0.11 Msun main sequence B star at a distance of 50 +- 5 kpc. The difference between its age and its flight time from the Galactic center is 105 +-18(stat)+-30(sys) Myr; flight times from locations elsewhere in the Galactic disk are similar. This 10^8 yr `arrival time' between formation and ejection is difficult to reconcile with any ejection scenario involving massive stars that live for only 10^7 yr. For comparison, we derive arrival times of 10^7 yr for two unbound runaway B stars, consistent with their disk origin where ejection results from a supernova in a binary system or dynamical interactions between massive stars in a dense star cluster. For HVS5, ejection during the first 10^7 yr of its lifetime is ruled out at the 3-sigma level. Together with the 10^8 yr arrival times inferred for three other well-studied hypervelocity stars (HVSs), these results are consistent with a Galactic center origin for the HVSs. If the HVSs were indeed ejected by the central black hole, then the Galactic center was forming stars ~200 Myr ago, and the progenitors of the HVSs took ~100 Myr to enter the black hole's loss cone."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 27.966764
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars"
+      },
+      "deepxiv": {
+        "score": 27.966764,
+        "best_score": 27.966764,
+        "search_keywords": null,
+        "citations": "27"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[astronomical research paper] High-resolution spectroscopy of HVS5 reveals it is a rapidly rotating, 3.62 M☉ main-sequence B star with a 105±18 Myr arrival time—the time between its formation and ejection—far exceeding the 10⁷ yr lifetime of massive stars, ruling out ejection via supernova-driven binary interactions or cluster dynamical processes. This long arrival time is inconsistent with disk-origin models and supports a Galactic center origin, implying that HVSs were formed near the supermassive black hole and took ∼100 Myr to fall into its loss cone, suggesting star formation in the central region occurred ∼200 Myr ago.",
+        "keywords": [
+          "arrival time",
+          "hypervelocity star",
+          "stellar rotation",
+          "Galactic center origin",
+          "loss cone dynamics"
+        ],
+        "citations": "27",
+        "published_at": "2012-06-18T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1206.4057",
+          "src_url": "https://arxiv.org/pdf/1206.4057",
+          "title": "The Nature of Hypervelocity Stars and the Time Between Their Formation and Ejection"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T221534"
+      },
+      "source_fields": {
+        "pg_id": 2092913,
+        "venue": null,
+        "journal_name": "The Astrophysical Journal Letters",
+        "status": "extracted",
+        "token_count": 10609,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 07:36:59",
+        "sections_text": "2. DATA: This section describes the high-resolution spectroscopic observations and analysis of the ultra-fast stellar object HVS5, determining its projected rotational velocity of approximately 130 km s⁻¹ and heliocentric radial velocity of +552 km s⁻¹, consistent with it being a single star resulting from a binary disruption. 3. DISCUSSION: Hypervelocity stars (HVS5, HVS7, HVS8, HVS1) have ages of 170–220 Myr and flight times of 45–175 Myr, consistent with ejection via binary disruption or dynamical encounters within young star clusters, as no known mechanism can produce their unbound velocities on shorter timescales. 4. CONCLUSION: The derived arrival time of HVS5 supports the central black hole ejection model for unbound runaways, as it is consistent with a formation time of 105 Myr and difficult to explain through traditional disk ejection mechanisms. 1. INTRODUCTION: This paper introduces a novel method to determine the arrival time ($t_{\\\\rm arr}$) of hypervelocity stars and unbound runaways using projected stellar rotation ($v\\\\sin{i}$) as a discriminant, enabling a clear distinction between Galactic center ejection (via black hole interactions, implying older ages and $t_{\\\\rm arr} \\\\sim 0.1$–1 Gyr) and Galactic disk ejection (via supernovae or dynamical interactions, implying young ages and $t_{\\\\rm arr} \\\\lesssim 10$ Myr), thus solving the ambiguity in the evolutionary origins of known HVSs.",
+        "highlight": {
+          "abstract": [
+            "We obtain Keck HIRES spectroscopy of HVS5, one of the fastest unbound <em>stars</em> in the Milky Way halo. We show that HVS5 is a 3.62 +- 0.11 Msun main sequence B star at a distance of 50 +- 5 kpc.",
+            "This 10^8 yr `arrival time' between formation and ejection is difficult to reconcile with any ejection scenario involving massive <em>stars</em> that live for only 10^7 yr.",
+            "between massive <em>stars</em> in a dense star cluster.",
+            "Together with the 10^8 yr arrival times inferred for three other well-studied <em>hypervelocity</em> <em>stars</em> (HVSs), these results are consistent with a Galactic center origin for the HVSs.",
+            "If the HVSs were indeed ejected by the central black hole, then the Galactic center was forming <em>stars</em> ~200 Myr ago, and the progenitors of the HVSs took ~100 Myr to enter the black hole's loss cone."
+          ],
+          "title": [
+            "The Nature of <em>Hypervelocity</em> <em>Stars</em> and the Time Between Their Formation and Ejection"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "followup_observations",
+        "object_scope": "single_object",
+        "evidence": "Paper presents Keck HIRES spectroscopy of HVS5, a specific hypervelocity star, with detailed measurements of mass, distance, age, and flight time calculations.",
+        "data_products": [
+          "spectra",
+          "radial_velocities",
+          "abundances",
+          "orbit_integrations"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:17:04"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T22:17:04"
+  }
+}

@@ -1,0 +1,306 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2011-11",
+  "date_from": "2011-11-01",
+  "date_to": "2011-11-30",
+  "run": {
+    "run_id": "20260419T221736",
+    "started_at": "2026-04-19T22:17:36"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2011-11",
+    "date_from": "2011-11-01",
+    "date_to": "2011-11-30",
+    "raw_unique": 35,
+    "relevant_count": 2,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 35,
+    "classifier_included": 2,
+    "classifier_filtered": 33,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 1,
+    "weak_llm_reviewed": 1,
+    "weak_llm_included": 1,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 1
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 85,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 163,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 86,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 86,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 85,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1111.3644",
+      "title": "The Origin of OB Runaway Stars",
+      "authors": [
+        "Michiko S. Fujii",
+        "Simon Portegies Zwart"
+      ],
+      "author_names": "Michiko S. Fujii Simon Portegies Zwart",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2011-11-15 00:00:00",
+      "updated_at": "2011-11-15 21:00:31",
+      "links": {
+        "abs": "https://arxiv.org/abs/1111.3644",
+        "pdf": "https://arxiv.org/pdf/1111.3644"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "About 20% of all massive stars in the Milky Way have unusually high velocities, the origin of which has puzzled astronomers for half a century. We argue that these velocities originate from strong gravitational interactions between single stars and binaries in the centers of star clusters. The ejecting binary forms naturally during the collapse of a young ($\\\\\\\\aplt 1$\\\\\\\\,Myr) star cluster. This model replicates the key characteristics of OB runaways in our galaxy and it explains the $\\\\\\\\apgt 100$\\\\\\\\,\\\\\\\\Msun\\\\\\\\, runaway stars around young star clusters, e.g. R136 and Westerlund~2. The high proportion and the distributions in mass and velocity of runaways in the Milky Way is reproduced if the majority of massive stars are born in dense and relatively low-mass (5000-10000 \\\\\\\\Msun) clusters."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 32.41687
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: runaway stars"
+      },
+      "deepxiv": {
+        "score": 12.428794,
+        "best_score": 32.41687,
+        "search_keywords": null,
+        "citations": "116"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[theoretical astrophysics / dynamical modeling] The paper proposes that OB runaway stars originate from dynamical ejection during core collapse of dense, young star clusters, where a 'bully' binary forms naturally via gravothermal collapse and ejects a single star with high velocity. Simulations show that regardless of cluster mass, each core collapse produces ~23 ejected stars with v > 30 km/s, of which ~5 have mass >8 M☉—matching observations of R136 and Westerlund 2. The runaway mass function matches the core mass function, showing strong mass segregation and a steep high-mass end consistent with energy equipartition and observed data.",
+        "keywords": [
+          "gravothermal collapse",
+          "dynamical ejection",
+          "binary hardening",
+          "mass segregation",
+          "core collapse dynamics"
+        ],
+        "citations": "116",
+        "published_at": "2011-11-15T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1111.3644",
+          "src_url": "https://arxiv.org/pdf/1111.3644",
+          "title": "The Origin of OB Runaway Stars"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T221736"
+      },
+      "source_fields": {
+        "pg_id": 508778,
+        "venue": "Science",
+        "journal_name": "Science",
+        "status": "extracted",
+        "token_count": 14038,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 20:05:25",
+        "sections_text": "References and Notes: This section cites key astronomical studies on the space motions, binary frequencies, and origins of high-velocity O- and B-type \"runaway\" stars. Supporting Online Material: This section details numerical simulations and analytical models of three-body interactions and cluster dynamics in massive young star clusters, focusing on the ejection mechanisms of runaway stars—particularly in the core-collapsed environment of R136—using initial conditions derived from observational data. Appendix B Simulations of massive young star clusters: This section presents N-body simulations of massive young star clusters to study the formation and ejection of runaway stars, finding that cluster mass, size, and initial conditions significantly influence the number and mass distribution of ejected stars. Appendix A Numerical three-body scattering experiments: Wide and massive binaries have significantly higher interaction cross sections that lead to stellar ejection (with velocities >30 km/s) compared to tight binaries, with the most efficient ejection occurring in systems with orbital periods around 1000 days, as shown by three-body scattering simulations.",
+        "highlight": {
+          "abstract": [
+            "About 20% of all massive <em>stars</em> in the Milky Way have unusually high velocities, the origin of which has puzzled astronomers for half a century.",
+            "We argue that these velocities originate from strong gravitational interactions between single <em>stars</em> and binaries in the centers of star clusters.",
+            "This model replicates the key characteristics of OB runaways in our galaxy and it explains the $\\\\\\\\apgt 100$\\\\\\\\,\\\\\\\\Msun\\\\\\\\, runaway <em>stars</em> around young star clusters, e.g. R136 and Westerlund~2.",
+            "The high proportion and the distributions in mass and velocity of runaways in the Milky Way is reproduced if the majority of massive <em>stars</em> are born in dense and relatively low-mass (5000-10000 \\\\\\\\Msun"
+          ],
+          "title": [
+            "The Origin of OB Runaway <em>Stars</em>"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.95,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Purely theoretical paper proposing dynamical ejection mechanism for OB runaway stars using simulations and modeling. No observational data tables, candidate lists, or object-level measurements presented.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:18:30"
+      }
+    },
+    {
+      "arxiv_id": "1111.0291",
+      "title": "Runaway massive stars from R136: VFTS 682 is very likely a \"slow runaway\"",
+      "authors": [
+        "Sambaran Banerjee",
+        "Pavel Kroupa",
+        "Seungkyung Oh"
+      ],
+      "author_names": "Sambaran Banerjee Pavel Kroupa Seungkyung Oh",
+      "categories": [
+        "astro-ph.GA",
+        "astro-ph.SR"
+      ],
+      "published_at": "2011-11-01 00:00:00",
+      "updated_at": "2011-11-01 20:00:00",
+      "links": {
+        "abs": "https://arxiv.org/abs/1111.0291",
+        "pdf": "https://arxiv.org/pdf/1111.0291"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We conduct a theoretical study on the ejection of runaway massive stars from R136 --- the central massive, star-burst cluster in the 30 Doradus complex of the Large Magellanic Cloud. Specifically, we investigate the possibility of the very massive star (VMS) VFTS 682 being a runaway member of R136. Recent observations of the above VMS, by virtue of its isolated location and its moderate peculiar motion, have raised the fundamental question whether isolated massive star formation is indeed possible. We perform the first realistic N-body computations of fully mass-segregated R136-type star clusters in which all the massive stars are in primordial binary systems. These calculations confirm that the dynamical ejection of a VMS from a R136-like cluster, with kinematic properties similar to those of VFTS 682, is common. Hence the conjecture of isolated massive star formation is unnecessary to account for this VMS. Our results are also quite consistent with the ejection of 30 Dor 016, another suspected runaway VMS from R136. We further note that during the clusters' evolution, mergers of massive binaries produce a few single stars per cluster with masses significantly exceeding the canonical upper-limit of 150 solar mass. The observations of such single super-canonical stars in R136, therefore, do not imply an IMF with an upper limit greatly exceeding the accepted canonical 150 solar mass limit, as has been suggested recently, and they are consistent with the canonical upper limit."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 31.81956
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Weak title match: runaway-related mechanisms LLM confirmed: Directly studies runaway massive stars from R136 cluster, specifically VFTS 682 as a 'slow runaway'"
+      },
+      "deepxiv": {
+        "score": 10.063242,
+        "best_score": 31.81956,
+        "search_keywords": null,
+        "citations": "58"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T221736"
+      },
+      "source_fields": {
+        "pg_id": 504967,
+        "venue": null,
+        "journal_name": "The Astrophysical Journal",
+        "status": "extracted",
+        "token_count": 17971,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 19:51:45",
+        "sections_text": "Results: The experiment finds that within 3 Myr, a significant number of fast runaway massive stars (up to ~300 km s⁻¹) are ejected from clusters, with super-canonical single stars (up to ~250 M⊙) formed via massive binary mergers, explaining observed VMSs in R136 without requiring a non-canonical IMF. Computations: The N-body simulations begin with R136-like Plummer models of $10^5 M_\\\\odot$ and 0.8 pc half-mass radius, featuring a canonical IMF, low metallicity, and massive binaries (with mass ratios near unity and short periods) to efficiently produce runaway massive stars through dynamical ejections. Introduction: This paper introduces a novel kinematic and dynamical analysis to resolve the origin of the extremely massive runaway star VFTS 682 in the LMC, addressing the fundamental question of whether massive stars form only in dense clusters or can arise in isolation by combining proper motion constraints, binary ejection dynamics, and the implications of the two-step ejection process. Discussions and outlook: Our N-body simulations show that VFTS 682 is most likely a \"slow runaway\" ejected from R136 via binary interactions, and that massive binary mergers can produce single stars up to ~300 M⊙, explaining the presence of super-canonical massive stars without requiring isolated massive star formation.",
+        "highlight": {
+          "abstract": [
+            "We conduct a theoretical study on the ejection of runaway massive <em>stars</em> from R136 --- the central massive, star-burst cluster in the 30 Doradus complex of the Large Magellanic Cloud.",
+            "We perform the first realistic N-body computations of fully mass-segregated R136-type star clusters in which all the massive <em>stars</em> are in primordial binary systems.",
+            "We further note that during the clusters' evolution, mergers of massive binaries produce a few single <em>stars</em> per cluster with masses significantly exceeding the canonical upper-limit of 150 solar mass.",
+            "The observations of such single super-canonical <em>stars</em> in R136, therefore, do not imply an IMF with an upper limit greatly exceeding the accepted canonical 150 solar mass limit, as has been suggested recently"
+          ],
+          "title": [
+            "Runaway massive <em>stars</em> from R136: VFTS 682 is very likely a \"slow runaway\""
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.85,
+        "catalog_role": "uses_existing_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper analyzes specific observed stars (VFTS 682, 30 Dor 016) with kinematic properties, performing N-body simulations to explain their origins as runaways from R136 cluster. References observational data for these objects.",
+        "data_products": [
+          "coordinates",
+          "astrometry",
+          "radial_velocities"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:18:30"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 2,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T22:18:30"
+  }
+}

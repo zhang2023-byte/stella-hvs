@@ -1,0 +1,204 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2015-10",
+  "date_from": "2015-10-01",
+  "date_to": "2015-10-31",
+  "run": {
+    "run_id": "20260419T220916",
+    "started_at": "2026-04-19T22:09:16"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2015-10",
+    "date_from": "2015-10-01",
+    "date_to": "2015-10-31",
+    "raw_unique": 30,
+    "relevant_count": 1,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 30,
+    "classifier_included": 1,
+    "classifier_filtered": 29,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 0,
+    "weak_llm_reviewed": 0,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 128,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 349,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 129,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 130,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 130,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1510.08310",
+      "title": "High velocity stars from the interaction of a globular cluster and a massive black hole binary",
+      "authors": [
+        "Giacomo Fragione",
+        "Roberto Capuzzo-Dolcetta"
+      ],
+      "author_names": "Giacomo Fragione Roberto Capuzzo-Dolcetta",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2015-10-28 00:00:00",
+      "updated_at": "2015-10-28 13:58:35",
+      "links": {
+        "abs": "https://arxiv.org/abs/1510.08310",
+        "pdf": "https://arxiv.org/pdf/1510.08310"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "High velocity stars are stars moving at velocities so high to require an acceleration mechanism involving binary systems or the presence of a massive central black hole. In the frame of a galaxy hosting a supermassive black hole binary (of total mass $10^8$ M$_\\\\\\\\odot$), we investigated a mechanism for the production of high velocity stars due to the close interaction between a massive and orbitally decayed globular cluster and the super massive black hole binary. Some stars of the cluster acquire high velocities by conversion of gravitational energy into kinetic energy deriving from their interaction with the black hole binary. After the interaction, few stars reach a velocity sufficient to overcome the galactic gravitational well, while some of them are just stripped from the globular cluster and start orbiting around the galactic centre."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 25.522263
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: high-velocity or extreme-velocity stars"
+      },
+      "deepxiv": {
+        "score": 9.937223,
+        "best_score": 25.522263,
+        "search_keywords": null,
+        "citations": "33"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[theoretical astrophysics / galactic dynamics] The paper models the production of high-velocity stars via gravitational interactions between a massive, orbitally decayed globular cluster and a supermassive black hole binary (SMBHB) in a galactic nucleus. Stars gain kinetic energy through gravitational slingshots and tidal stripping, with a subset achieving escape velocities from the galactic potential, while others are left in bound orbits around the center. The mechanism provides a dynamical pathway for high-velocity star formation in SMBHB environments, offering a potential explanation for observed stellar kinematics in galactic halos and nuclei.",
+        "keywords": [
+          "black hole binary dynamics",
+          "globular cluster interaction",
+          "gravitational slingshot",
+          "high-velocity star formation",
+          "galactic halo kinematics"
+        ],
+        "citations": "33",
+        "published_at": "2015-10-28T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1510.08310",
+          "src_url": "https://arxiv.org/pdf/1510.08310",
+          "title": "High velocity stars from the interaction of a globular cluster and a massive black hole binary"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T220916"
+      },
+      "source_fields": {
+        "pg_id": 1967377,
+        "venue": null,
+        "journal_name": "Monthly Notices of the Royal Astronomical Society",
+        "status": "extracted",
+        "token_count": 13484,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 01:25:31",
+        "sections_text": "Method: The paper proposes a numerical simulation method to study star scattering in systems containing a supermassive binary black hole (SMBHB), a globular cluster (GC), and a test star, by modeling their initial orbital configurations and interactions under varying eccentricities, masses, and distances, with the core idea of examining how the dynamical friction and orbital dynamics of the GC influence star scattering in the vicinity of the SMBHB. Results: Scattering experiments show that stars ejected by SMBHB interactions achieve significantly higher ejection velocities—up to ~1000 km s⁻¹ for high mass ratios (ν = 1/3)—compared to single BH cases (~300 km s⁻¹), with velocity distributions broadened and enhanced by gravitational energy transfer, while low mass ratios suppress ejection velocities and reduce the velocity tail. Conclusions: This study shows that the presence of a massive black hole binary (SMBHB) significantly enhances the ejection of high-velocity stars by producing a broader velocity distribution and higher ejection probabilities, particularly when the mass ratio is above 1/20, with eccentricity having a negligible effect. Introduction: This paper introduces a refined model of Black Hole Binary evolution that incorporates realistic galactic potentials and gas dynamics to resolve the final parsec problem, enabling accurate predictions of BHB merger timescales and addressing the long-standing challenge of BHB survival in dense galactic nuclei.",
+        "highlight": {
+          "abstract": [
+            "High velocity <em>stars</em> are <em>stars</em> moving at velocities so high to require an acceleration mechanism involving binary systems or the presence of a massive central black hole.",
+            "In the frame of a galaxy hosting a supermassive black hole binary (of total mass $10^8$ M$_\\\\\\\\odot$), we investigated a mechanism for the production of high velocity <em>stars</em> due to the close interaction",
+            "Some <em>stars</em> of the cluster acquire high velocities by conversion of gravitational energy into kinetic energy deriving from their interaction with the black hole binary.",
+            "After the interaction, few <em>stars</em> reach a velocity sufficient to overcome the galactic gravitational well, while some of them are just stripped from the globular cluster and start orbiting around the galactic"
+          ],
+          "title": [
+            "High velocity <em>stars</em> from the interaction of a globular cluster and a massive black hole binary"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.95,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Purely theoretical simulation paper modeling gravitational interactions between globular clusters and black hole binaries to produce high-velocity stars. No observational data, candidate lists, or actual stellar objects mentioned.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:11:19"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 0,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T22:11:19"
+  }
+}

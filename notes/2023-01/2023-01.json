@@ -1,0 +1,204 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2023-01",
+  "date_from": "2023-01-01",
+  "date_to": "2023-01-31",
+  "run": {
+    "run_id": "20260419T214239",
+    "started_at": "2026-04-19T21:42:39"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2023-01",
+    "date_from": "2023-01-01",
+    "date_to": "2023-01-31",
+    "raw_unique": 32,
+    "relevant_count": 1,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 32,
+    "classifier_included": 1,
+    "classifier_filtered": 31,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 0,
+    "weak_llm_reviewed": 0,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 174,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 421,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 175,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 179,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 178,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2301.03311",
+      "title": "Unbound stars hold the key to young star cluster history",
+      "authors": [
+        "Arunima Arunima",
+        "Susanne Pfalzner",
+        "Amith Govind"
+      ],
+      "author_names": "Arunima Arunima Susanne Pfalzner Amith Govind",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2023-01-09 00:00:00",
+      "updated_at": "2023-01-09 13:01:33",
+      "links": {
+        "abs": "https://arxiv.org/abs/2301.03311",
+        "pdf": "https://arxiv.org/pdf/2301.03311"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Aims. GAIA delivers the positions and velocities of stars at unprecedented precision. Therefore, for star clusters, there exists much higher confidence in whether a specific star is a member of a particular group. However, membership determination is still challenging for young star clusters. At ages 2-10 Myr, the gas is expelled, leading to cluster expansion, while many former members become unbound. We aim to assess the accuracy of the methods used to distinguish between bound and unbound cluster members. After identifying the most suitable technique, we wish to understand which of the two populations provides more insights into the initial configuration and the dynamic history of a cluster. Methods. Here, we perform N-body simulations of the dynamics of such young star clusters. We investigate how cluster dynamics and observational limitations affect the recovered information about the cluster from a theoretical perspective. Results. We find that the much-used method of distance and velocity cutoffs for membership determination often leads to false negatives and positives alike. Often observational studies focus on the stars remaining bound. However, they quickly lose the memory of the pre-gas expulsion phase due to interactions with other cluster members. Our study shows that the unbound stars hold the key to charting a cluster's dynamic history. Backtracking unbound stars can provide the original cluster size and determine the time of gas expulsion. This information is lost in the bound population. In addition, former members are often better indicators for disc lifetimes or initial binary fractions. We apply the backtracking analysis, with varying success, to the clusters: Upper Scorpius and NGC 6530. For highly substructured clusters such as Upper Scorpius, backtracking to the individual subcluster centres will provide better results in the future (abridged)."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 30.47289
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: unbound, escaping, or ejected stars"
+      },
+      "deepxiv": {
+        "score": 10.61595,
+        "best_score": 30.47289,
+        "search_keywords": null,
+        "citations": "4"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] N-body simulations reveal that conventional distance-velocity cutoff methods for identifying bound vs. unbound stars in young star clusters suffer from significant false positives and negatives. Bound stars rapidly lose memory of the pre-expansion phase due to dynamical interactions, while unbound stars retain critical information about the cluster's initial size and gas expulsion time—key parameters currently poorly constrained. Backtracking unbound stars enables reconstruction of the cluster's early history, including expansion timing and initial binary fractions, with promising results in clusters like Upper Scorpius and NGC 6530, especially in substructured systems.",
+        "keywords": [
+          "cluster backtracking",
+          "unbound stars",
+          "gas expulsion dynamics",
+          "young star cluster evolution",
+          "dynamical history reconstruction"
+        ],
+        "citations": "4",
+        "published_at": "2023-01-09T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2301.03311",
+          "src_url": "https://arxiv.org/pdf/2301.03311",
+          "title": "Unbound stars hold the key to young star cluster history"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T214239"
+      },
+      "source_fields": {
+        "pg_id": 2272289,
+        "venue": "Astronomy &amp; Astrophysics",
+        "journal_name": "Astronomy &amp; Astrophysics",
+        "status": "extracted",
+        "token_count": 24591,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-23 04:46:28",
+        "sections_text": "Results: Backtracking to distinguish bound and unbound stars using total energy is more reliable than relying on velocity vectors, as velocity-based methods fail in most cases due to bound stars having outward velocities and unbound stars having inward velocities near the cluster center, though accuracy improves in older clusters (>15 Myr). Discussion: The backtracking analysis of Upper Sco is hindered by substructure and astrometric uncertainties, leading to underestimated ages and overestimated sizes at gas expulsion, with kinematic age estimates likely biased due to poor radial velocity data and incomplete membership definitions. Introduction: This paper introduces a novel approach that combines cluster dynamics simulations with Gaia-derived three-dimensional data to accurately distinguish between currently bound and formerly unbound members in young star clusters, thereby addressing the critical problem of membership bias in early-stage cluster evolution studies. Summary and conclusion: Backtracking unbound stars in young clusters using Gaia data allows accurate determination of gas expulsion times and pre-expansion sizes, with systematic errors corrected by accounting for their outer location and using velocity-based classification, though performance is limited in substructured clusters. Appendix A Mass of stars: This section presents the distributions of backtracked half-mass radii and gas expulsion times for stellar clusters across different assumed stellar masses, highlighting the sensitivity of these parameters to mass assumptions. Cluster simulation method: The paper proposes a suite of N-body simulations using NBODY6++GPU to model the dynamical evolution of young star clusters, assuming instantaneous gas expulsion and a King-profile initial density distribution, to study cluster expansion and stellar dynamics across different masses and sizes. Cluster observation techniques: Cluster observation techniques have evolved from visual identification to data-driven, multi-dimensional analyses using Gaia data and clustering algorithms, with youth indicators and kinematic methods providing membership confirmation, though challenges remain due to dynamical evolution, observational limitations, and environmental obscuration. Appendix C Upper Sco subclusters: This section identifies and characterizes two subclusters within the Upper Sco association, based on density and kinematic properties, and compares them with previously defined groups from Kerr et al. (2021), providing key parameters such as member counts, positions, kinematic ages, and half-mass radii. Application to observational data: Applying backtracking to the young cluster NGC 6530 reveals that astrometric uncertainties significantly impact the derived cluster properties, yielding a gas expulsion time consistent with the cluster's age and a half-mass radius of $4.16 \\\\pm 0.23$ pc. Appendix B Velocity in the $z$ direction: This section presents distributions of backtracked half-mass radii and gas expulsion times under various $v_z$ assumptions, illustrating the impact of velocity errors on backtracking analysis of young star clusters.",
+        "highlight": {
+          "abstract": [
+            "GAIA delivers the positions and velocities of <em>stars</em> at unprecedented precision.",
+            "Often observational studies focus on the <em>stars</em> remaining bound. However, they quickly lose the memory of the pre-gas expulsion phase due to interactions with other cluster members.",
+            "Our study shows that the unbound <em>stars</em> hold the key to charting a cluster's dynamic history. Backtracking unbound <em>stars</em> can provide the original cluster size and determine the time of gas expulsion."
+          ],
+          "title": [
+            "Unbound <em>stars</em> hold the key to young star cluster history"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.9,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Paper presents N-body simulations and theoretical analysis of cluster dynamics; mentions applying backtracking to real clusters but focuses on methodology rather than presenting new observational data",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:44:25"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 0,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:44:25"
+  }
+}

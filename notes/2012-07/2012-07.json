@@ -1,0 +1,245 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2012-07",
+  "date_from": "2012-07-01",
+  "date_to": "2012-07-31",
+  "run": {
+    "run_id": "20260419T221534",
+    "started_at": "2026-04-19T22:15:34"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2012-07",
+    "date_from": "2012-07-01",
+    "date_to": "2012-07-31",
+    "raw_unique": 31,
+    "relevant_count": 1,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 31,
+    "classifier_included": 1,
+    "classifier_filtered": 30,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 1,
+    "weak_llm_reviewed": 1,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 88,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 171,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 88,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 88,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 90,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1207.3797",
+      "title": "The Apache Point Observatory Galactic Evolution Experiment: First Detection of High Velocity Milky Way Bar Stars",
+      "authors": [
+        "David L. Nidever",
+        "Gail Zasowski",
+        "Steven R. Majewski",
+        "Jonathan Bird",
+        "Annie C. Robin",
+        "Inma Martinez-Valpuesta",
+        "Rachael L. Beaton",
+        "Ralph Schönrich",
+        "Mathias Schultheis",
+        "John C. Wilson",
+        "Michael F. Skrutskie",
+        "Robert W. O’Connell",
+        "Matthew Shetrone",
+        "Ricardo P. Schiavon",
+        "Jennifer A. Johnson",
+        "Benjamin Weiner",
+        "Ortwin Gerhard",
+        "Donald P. Schneider",
+        "Carlos Allende Prieto",
+        "Kris Sellgren",
+        "Dmitry Bizyaev",
+        "Howard Brewington",
+        "Jon Brinkmann",
+        "Daniel J. Eisenstein",
+        "Peter M. Frinchaboy",
+        "Ana Elia Garcia Perez",
+        "Jon Holtzman",
+        "Fred R. Hearty",
+        "Elena Malanushenko",
+        "Viktor Malanushenko",
+        "Demitri Muna",
+        "Daniel Oravetz",
+        "Kaike Pan",
+        "Audrey Simmons",
+        "Stephanie Snedden",
+        "Benjamin A. Weaver"
+      ],
+      "author_names": "David L. Nidever Gail Zasowski Steven R. Majewski Jonathan Bird Annie C. Robin Inma Martinez-Valpuesta Rachael L. Beaton Ralph Schönrich Mathias Schultheis John C. Wilson Michael F. Skrutskie Robert W. O’Connell Matthew Shetrone Ricardo P. Schiavon Jennifer A. Johnson Benjamin Weiner Ortwin Gerhard Donald P. Schneider Carlos Allende Prieto Kris Sellgren Dmitry Bizyaev Howard Brewington Jon Brinkmann Daniel J. Eisenstein Peter M. Frinchaboy Ana Elia Garcia Perez Jon Holtzman Fred R. Hearty Elena Malanushenko Viktor Malanushenko Demitri Muna Daniel Oravetz Kaike Pan Audrey Simmons Stephanie Snedden Benjamin A. Weaver",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2012-07-16 00:00:00",
+      "updated_at": "2012-07-16 20:00:00",
+      "links": {
+        "abs": "https://arxiv.org/abs/1207.3797",
+        "pdf": "https://arxiv.org/pdf/1207.3797"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Commissioning observations with the Apache Point Observatory Galactic Evolution Experiment (APOGEE), part of the Sloan Digital Sky Survey III, have produced radial velocities (RVs) for ~4700 K/M-giant stars in the Milky Way bulge. These high-resolution (R \\\\\\\\sim 22,500), high-S/N (>100 per resolution element), near-infrared (1.51-1.70 um; NIR) spectra provide accurate RVs (epsilon_v~0.2 km/s) for the sample of stars in 18 Galactic bulge fields spanning -1<l<20 deg, |b|<20 deg, and dec>-32 deg. This represents the largest NIR high-resolution spectroscopic sample of giant stars ever assembled in this region of the Galaxy. A cold (sigma_v~30 km/s), high-velocity peak (V_GSR \\\\\\\\sim +200 km/s) is found to comprise a significant fraction (~10%) of stars in many of these fields. These high RVs have not been detected in previous MW surveys and are not expected for a simple, circularly rotating disk. Preliminary distance estimates rule out an origin from the background Sagittarius tidal stream or a new stream in the MW disk. Comparison to various Galactic models suggests that these high RVs are best explained by stars in orbits of the Galactic bar potential, although some observational features remain unexplained."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 24.737328
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: high-velocity or extreme-velocity stars"
+      },
+      "deepxiv": {
+        "score": 9.459331,
+        "best_score": 24.737328,
+        "search_keywords": null,
+        "citations": "53"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] APOGEE observations of 4700 K/M-giant stars in the Milky Way bulge reveal a previously undetected population of stars with high radial velocities (~+200 km s⁻¹), exhibiting a cold velocity dispersion (~30 km s⁻¹) and a significant fraction (~10%) in multiple fields. These velocities are inconsistent with disk kinematics or known tidal streams and are best explained by stars on bar potential orbits, though some kinematic features remain unexplained by current Galactic models.",
+        "keywords": [
+          "galactic bar kinematics",
+          "high-velocity stellar populations",
+          "radial velocity dispersion",
+          "bulge stellar dynamics",
+          "Milky Way structure"
+        ],
+        "citations": "53",
+        "published_at": "2012-07-16T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1207.3797",
+          "src_url": "https://arxiv.org/pdf/1207.3797",
+          "title": "The Apache Point Observatory Galactic Evolution Experiment: First Detection of High Velocity Milky Way Bar Stars"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T221534"
+      },
+      "source_fields": {
+        "pg_id": 2066462,
+        "venue": null,
+        "journal_name": "The Astrophysical Journal Letters",
+        "status": "extracted",
+        "token_count": 11748,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 11:31:40",
+        "sections_text": "4. Discussion: The experiment detects a previously undetected population of high-velocity stars in the APOGEE bulge with radial velocities around +170 km s⁻¹, which are most likely members of the Galactic bar located on its far (leading) edge, as supported by N-body models and the absence of evidence for alternative explanations such as Sgr tidal tails or halo substructures. 1. Introduction: This paper presents the first detection of a \"cold\" kinematical feature in the Milky Way's inner disk via APOGEE data, revealing a previously unseen stellar velocity signature likely associated with specific bar orbits and addressing the long-standing challenge of directly probing bulge/bar kinematics due to high extinction. 2. Observations And Data Reduction: The APOGEE project observed bulge stars using a near-IR spectrograph with a customized data reduction pipeline that achieved high-precision radial velocity measurements, revealing a dual-peak velocity structure in the Galactic bulge. 3. Radial Velocity Distributions: Data and Models: The paper proposes a two-Gaussian fitting method to identify and characterize high-velocity stellar components in APOGEE bulge data, leveraging their consistent spatial and velocity patterns to infer real kinematic features rather than stochastic effects.",
+        "highlight": {
+          "abstract": [
+            "Commissioning observations with the Apache Point Observatory Galactic Evolution Experiment (APOGEE), part of the Sloan Digital Sky Survey III, have produced radial velocities (RVs) for ~4700 K/M-giant <em>stars</em>",
+            "These high-resolution (R \\\\\\\\sim 22,500), high-S/N (>100 per resolution element), near-infrared (1.51-1.70 um; NIR) spectra provide accurate RVs (epsilon_v~0.2 km/s) for the sample of <em>stars</em> in 18 Galactic",
+            "This represents the largest NIR high-resolution spectroscopic sample of giant <em>stars</em> ever assembled in this region of the Galaxy.",
+            "A cold (sigma_v~30 km/s), high-velocity peak (V_GSR \\\\\\\\sim +200 km/s) is found to comprise a significant fraction (~10%) of <em>stars</em> in many of these fields.",
+            "Comparison to various Galactic models suggests that these high RVs are best explained by <em>stars</em> in orbits of the Galactic bar potential, although some observational features remain unexplained."
+          ],
+          "title": [
+            "Apache Point Observatory Galactic Evolution Experiment: First Detection of High Velocity Milky Way Bar <em>Stars</em>"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper presents radial velocities for ~4700 K/M-giant stars from APOGEE commissioning observations, specifically identifying a high-velocity population with V_GSR ~ +200 km/s",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "radial_velocities",
+          "spectra",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:17:09"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T22:17:09"
+  }
+}

@@ -1,0 +1,308 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2016-08",
+  "date_from": "2016-08-01",
+  "date_to": "2016-08-31",
+  "run": {
+    "run_id": "20260419T220616",
+    "started_at": "2026-04-19T22:06:16"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2016-08",
+    "date_from": "2016-08-01",
+    "date_to": "2016-08-31",
+    "raw_unique": 31,
+    "relevant_count": 2,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 31,
+    "classifier_included": 2,
+    "classifier_filtered": 29,
+    "classifier_errors": 0,
+    "direct_rule_included": 2,
+    "weak_rule_candidates": 0,
+    "weak_llm_reviewed": 0,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 2,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 121,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 305,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 121,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 123,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 122,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1608.02000",
+      "title": "Joint constraints on the Galactic dark matter halo and Galactic Centre from hypervelocity stars",
+      "authors": [
+        "Elena M. Rossi",
+        "T. Marchetti",
+        "M. Cacciato",
+        "M. Kuiack",
+        "R. Sari"
+      ],
+      "author_names": "Elena M. Rossi T. Marchetti M. Cacciato M. Kuiack R. Sari",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2016-08-05 00:00:00",
+      "updated_at": "2017-01-23 09:27:25",
+      "links": {
+        "abs": "https://arxiv.org/abs/1608.02000",
+        "pdf": "https://arxiv.org/pdf/1608.02000"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "The mass assembly history of the Milky Way can inform both theory of galaxy formation and the underlying cosmological model. Thus, observational constraints on the properties of both its baryonic and dark matter contents are sought. Here we show that hypervelocity stars (HVSs) can in principle provide such constraints. We model the observed velocity distribution of HVSs, produced by tidal break-up of stellar binaries caused by Sgr A*. Considering a Galactic Centre (GC) binary population consistent with that inferred in more observationally accessible regions, a fit to current HVS data with significance level > 5\\\\\\\\% can only be obtained if the escape velocity from the GC to 50 kpc is $V_G < 850$ km/s, regardless of the enclosed mass distribution. When a NFW matter density profile for the dark matter halo is assumed, haloes with $V_G < 850$ km/s are in agreement with predictions in the $\\\\\\\\Lambda$CDM model and that a subset of models around $M_{200} \\\\\\\\sim 0.5-1.5 \\\\\\\\times 10^{12}$ solar masses and $r_s < 35$ kpc can also reproduce Galactic circular velocity data. HVS data alone cannot currently exclude potentials with $V_G > 850$ km/s. Finally, specific constraints on the halo mass from HVS data are highly dependent on the assumed baryonic mass potentials. This first attempt to simultaneously constrain GC and dark halo properties is primarily hampered by the paucity and quality of data. It nevertheless demonstrates the potential of our method, that may be fully realised with the ESA Gaia mission."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 26.348835
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars"
+      },
+      "deepxiv": {
+        "score": 26.348835,
+        "best_score": 26.348835,
+        "search_keywords": null,
+        "citations": "40"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] Hypervelocity stars (HVSs) produced by tidal disruption of stellar binaries near Sgr A* provide joint constraints on the Galactic Centre (GC) and dark matter halo properties. A fit to observed HVS velocity distributions requires the escape velocity from the GC to 50 kpc to be ≤850 km s⁻¹, implying a GC potential consistent with a low-mass dark matter halo (M₂₀₀ ∼ 0.5–1.5×10¹² M⊙, rₛ ≤35 kpc) under an NFW profile, which aligns with ΛCDM predictions. However, current data limitations prevent exclusion of higher escape velocities or robust halo mass constraints without baryonic mass assumptions.",
+        "keywords": [
+          "hypervelocity stars",
+          "Galactic Centre dynamics",
+          "dark matter halo profile",
+          "tidal disruption",
+          "escape velocity constraints"
+        ],
+        "citations": "40",
+        "published_at": "2016-08-05T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1608.02000",
+          "src_url": "https://arxiv.org/pdf/1608.02000",
+          "title": "Joint constraints on the Galactic dark matter halo and Galactic Centre from hypervelocity stars"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T220616"
+      },
+      "source_fields": {
+        "pg_id": 393554,
+        "venue": null,
+        "journal_name": "Monthly Notices of the Royal Astronomical Society",
+        "status": "extracted",
+        "token_count": 33501,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 21:05:15",
+        "sections_text": "Introduction: This paper introduces a novel synergy between high-precision astrometric data and cosmological simulations to resolve the uncertainty in the Milky Way's dark matter halo mass and shape, thereby addressing the conflicting constraints from satellite observations and the \"too big to fail\" problem in the ΛCDM model. Discussion and conclusions: HVS data constrain the Galactic escape velocity at the GC to $V_{\\\\rm G} \\\\lower 2.15277pt\\\\hbox{$\\\\;\\\\buildrel<\\\\over{\\\\sim}\\\\;$}850$ km s⁻¹ under standard binary assumptions, with NFW dark matter halo models remaining consistent with $\\\\Lambda$CDM, though results are sensitive to baryonic mass distributions and the minimum companion mass, highlighting the need for improved observational constraints on binary populations in the Galactic center. Ejection velocity distributions: The ejection velocity distribution of hypervelocity stars from the Hills mechanism is well-described by a simple analytical formula derived from parabolic binary encounters with Sgr A*, which enables efficient prediction across a wide parameter space without relying on computationally intensive N-body simulations. Second approach: assuming a Galactic Potential model: The paper proposes a method that models the Galactic dark matter and baryonic potentials using an NFW halo, a Hernquist bulge, and a Miyamoto-Nagai disc, then integrates hypervelocity star trajectories in a simplified one-dimensional approximation to constrain the dark matter halo mass and scale radius. Predicting velocity distributions in the halo: first approach.: The method proposes a simplified approach to compute hypervelocity star velocity distributions by using a single parameter, the minimum velocity $V_{\\\\rm G}$ at the Galactic center, which captures the net deceleration experienced by stars beyond a threshold radius without requiring a specific dark matter halo profile or detailed potential modeling. Appendix A Markov Chain Monte Carlo to fit the observed circular velocity: This section uses a Markov Chain Monte Carlo method to constrain the dark matter halo mass and scale radius of the Milky Way by fitting observed circular velocity data, finding a best-fit model with good agreement between data and predictions.",
+        "highlight": {
+          "abstract": [
+            "Here we show that <em>hypervelocity</em> <em>stars</em> (HVSs) can in principle provide such constraints."
+          ],
+          "title": [
+            "Joint constraints on the Galactic dark matter halo and Galactic Centre from <em>hypervelocity</em> <em>stars</em>"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.9,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Paper models velocity distribution of HVSs to constrain Galactic potential; mentions 'paucity and quality of data' and uses HVSs as theoretical probes without presenting new observational catalog.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:08:05"
+      }
+    },
+    {
+      "arxiv_id": "1608.01517",
+      "title": "Constraining Milky Way mass with Hypervelocity Stars",
+      "authors": [
+        "Giacomo Fragione",
+        "Abraham Loeb"
+      ],
+      "author_names": "Giacomo Fragione Abraham Loeb",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2016-08-04 00:00:00",
+      "updated_at": "2016-11-04 10:55:39",
+      "links": {
+        "abs": "https://arxiv.org/abs/1608.01517",
+        "pdf": "https://arxiv.org/pdf/1608.01517"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Context. Although a variety of techniques have been employed for determining the Milky Way dark matter halo mass distribution, the range of allowed masses spans both light and heavy values. Knowing the precise mass of our Galaxy is important for placing the Milky Way in a cosmological $\\\\\\\\Lambda$CDM context. Aims. We show that hypervelocity stars (HVSs) ejected from the center of the Milky Way galaxy can be used to constrain the mass of its dark matter halo. Methods. We use the asymmetry in the radial velocity distribution of halo stars due to escaping HVSs, which depends on the halo potential (escape speed) as long as the round trip orbital time is shorter than the stellar lifetime, to discriminate between different models for the Milky Way gravitational potential. Results. Adopting a characteristic HVS travel time of $330$ Myr, which corresponds to the average mass of main sequence HVSs, we find that current data favors a mass for the Milky Way in the range $(1.2$-$1.9)\\\\\\\\times 10^{12} \\\\\\\\mathrm{M}_\\\\\\\\odot$."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 33.51133
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars"
+      },
+      "deepxiv": {
+        "score": 33.51133,
+        "best_score": 33.51133,
+        "search_keywords": null,
+        "citations": "37"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] The paper uses the kinematic asymmetry in the radial velocity distribution of hypervelocity stars (HVSs) ejected from the Galactic Center to constrain the Milky Way's dark matter halo mass. By modeling HVS orbits under different gravitational potentials and assuming a characteristic travel time of 330 Myr, it finds that current observational data favor a halo mass of (1.2–1.9)×10¹² M⊙, providing a direct dynamical probe that helps resolve cosmological tensions like the Too-Big-to-Fail problem.",
+        "keywords": [
+          "hypervelocity stars",
+          "gravitational potential modeling",
+          "dark matter halo mass",
+          "radial velocity asymmetry",
+          "Galactic center dynamics"
+        ],
+        "citations": "37",
+        "published_at": "2016-08-04T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1608.01517",
+          "src_url": "https://arxiv.org/pdf/1608.01517",
+          "title": "Constraining Milky Way mass with Hypervelocity Stars"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T220616"
+      },
+      "source_fields": {
+        "pg_id": 398315,
+        "venue": null,
+        "journal_name": "New Astronomy",
+        "status": "extracted",
+        "token_count": 11278,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 04:22:48",
+        "sections_text": "Method: The method uses the observed asymmetry in the radial velocity distribution of Galactic halo stars—specifically, the deficit of ingoing stars with velocities below the local escape speed—to constrain the Milky Way's gravitational potential by distinguishing between bound and unbound hypervelocity stars ejected from the galactic center. Results: The critical lines in the v–r plane show that the zero-velocity point increases with both dark halo mass ($M_{DM}$) and stellar propagation time ($t_{*}$), indicating that heavier halos and longer travel times allow HVSs to reach greater galactocentric distances before falling back, with the MMT star sample's kinematic constraints favoring a halo mass consistent with $M_{DM} \\\\gtrsim 10^{12} \\\\, M_\\\\odot$ and $t_{*} \\\\approx 330$ Myr. Conclusions: The kinematics of halo velocity stars with a fixed travel time of 330 Myr constrain the Milky Way's halo mass to $(1.2$–$1.9)\\\\times 10^{12}\\\\mathrm{M}_{\\\\odot}$ within the virial radius. Introduction: This paper introduces a novel method using the kinematics of hypervelocity stars to constrain the total dark halo mass of the Milky Way, addressing the longstanding uncertainty in galactic mass distribution by leveraging precise velocity measurements to discriminate among potential models and improve cosmological context. Models for the MW gravitational potential: The paper proposes a method that constrains the dark matter halo mass of the Milky Way by varying the NFW halo's mass parameter $M_{DM}$ while adjusting the scale radius $r_s$ to maintain a fixed circular velocity at the Sun's distance, using a 4-component gravitational potential model with fixed baryonic components.",
+        "highlight": {
+          "abstract": [
+            "We show that <em>hypervelocity</em> <em>stars</em> (HVSs) ejected from the center of the Milky Way galaxy can be used to constrain the mass of its dark matter halo. Methods.",
+            "We use the asymmetry in the radial velocity distribution of halo <em>stars</em> due to escaping HVSs, which depends on the halo potential (escape speed) as long as the round trip orbital time is shorter than the"
+          ],
+          "title": [
+            "Constraining Milky Way mass with <em>Hypervelocity</em> <em>Stars</em>"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.9,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Uses kinematic asymmetry in radial velocity distribution of HVSs to constrain halo mass; focuses on modeling and theoretical constraints rather than presenting new observational object-level data.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:08:05"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 2,
+    "catalog_count": 0,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T22:08:05"
+  }
+}

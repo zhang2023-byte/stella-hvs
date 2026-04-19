@@ -1,0 +1,203 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2009-09",
+  "date_from": "2009-09-01",
+  "date_to": "2009-09-30",
+  "run": {
+    "run_id": "20260419T222008",
+    "started_at": "2026-04-19T22:20:08"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2009-09",
+    "date_from": "2009-09-01",
+    "date_to": "2009-09-30",
+    "raw_unique": 31,
+    "relevant_count": 1,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 31,
+    "classifier_included": 1,
+    "classifier_filtered": 30,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 0,
+    "weak_llm_reviewed": 0,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 86,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 187,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 87,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 87,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 86,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "0909.4928",
+      "title": "On the origin of the hypervelocity runaway star HD271791",
+      "authors": [
+        "V.V. Gvaramadze"
+      ],
+      "author_names": "V.V. Gvaramadze",
+      "categories": [
+        "astro-ph.SR",
+        "astro-ph.GA"
+      ],
+      "published_at": "2009-09-27 00:00:00",
+      "updated_at": "2009-09-27 11:26:13",
+      "links": {
+        "abs": "https://arxiv.org/abs/0909.4928",
+        "pdf": "https://arxiv.org/pdf/0909.4928"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We discuss the origin of the runaway early B-type star HD271791 and show that its extremely high velocity (\\\\\\\\simeq 530-920 km/s) cannot be explained within the framework of the binary-supernova ejection scenario. Instead, we suggest that HD271791 attained its peculiar velocity in the course of a strong dynamical encounter between two hard massive binaries or via an exchange encounter between a hard massive binary and a very massive star, formed through runaway mergers of ordinary massive stars in the dense core of a young massive star cluster."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 22.951754
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: runaway stars"
+      },
+      "deepxiv": {
+        "score": 20.309496,
+        "best_score": 22.951754,
+        "search_keywords": null,
+        "citations": "0"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] The paper challenges the binary-supernova ejection scenario as the origin of the hypervelocity runaway star HD 271791, arguing that its velocity exceeds what can be achieved via symmetric SN disruption in a tight binary. Instead, it proposes that HD 271791 acquired its extreme velocity (530–920 km/s) through a dynamical encounter—either between two hard massive binaries or via an exchange interaction between a hard binary and a very massive star formed by runaway mergers in a dense young star cluster core.",
+        "keywords": [
+          "dynamical encounter",
+          "hard massive binaries",
+          "runaway merger",
+          "star cluster core dynamics",
+          "hypervelocity star ejection"
+        ],
+        "citations": "0",
+        "published_at": "2009-09-27T00:00:00",
+        "source_fields": {
+          "arxiv_id": "0909.4928",
+          "src_url": "https://arxiv.org/pdf/0909.4928",
+          "title": "On the origin of the hypervelocity runaway star HD271791"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T222008"
+      },
+      "source_fields": {
+        "pg_id": 2451427,
+        "venue": "Proceedings of the International Astronomical Union",
+        "journal_name": "Proceedings of the International Astronomical Union",
+        "status": "extracted",
+        "token_count": 6749,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": null,
+        "sections_text": "Introduction: This paper makes the novel contribution of evaluating and refining the hypothesis that HD 271791 acquired its hypervelocity through the disintegration of a massive binary system following a supernova explosion, thereby addressing the problem of identifying a plausible dynamical origin for this high-velocity runaway star outside of Galactic Centre ejection scenarios. Dynamical ejection scenario: The dynamical ejection scenario explains the origin of high-velocity runaway stars through binary-binary encounters or close interactions between massive binaries and very massive stars, with both channels capable of producing runaways with velocities up to several hundred km s⁻¹, consistent with observations of stars like HD 271791. Binary-supernova ejection scenario: The binary-supernova ejection scenario produces runaway stars through symmetric supernova explosions in tight binary systems, where the secondary star gains high peculiar velocities—up to ~500 km s⁻¹—due to orbital dynamics, though stellar evolution limits pre-SN masses and thus the achievable speeds. HD 271791: former secondary in a massive binary system: HD 271791 is a former secondary star in a massive tight binary system that was ejected after the primary star underwent an asymmetric supernova explosion, leading to its α-element enrichment, subsolar iron abundance, and high space velocity.",
+        "highlight": {
+          "abstract": [
+            "a strong dynamical encounter between two hard massive binaries or via an exchange encounter between a hard massive binary and a very massive star, formed through runaway mergers of ordinary massive <em>stars</em>"
+          ],
+          "title": [
+            "On the origin of the <em>hypervelocity</em> runaway star HD271791"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.9,
+        "catalog_role": "followup_observations",
+        "object_scope": "single_object",
+        "evidence": "Paper focuses on explaining the origin of the specific observed star HD271791, which has measured high velocity (530-920 km/s). Title and abstract indicate analysis of real observational data for this individual object.",
+        "data_products": [
+          "source_ids",
+          "radial_velocities",
+          "astrometry"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:21:03"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T22:21:03"
+  }
+}

@@ -1,0 +1,649 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2022-06",
+  "date_from": "2022-06-01",
+  "date_to": "2022-06-30",
+  "run": {
+    "run_id": "20260419T214540",
+    "started_at": "2026-04-19T21:45:40"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2022-06",
+    "date_from": "2022-06-01",
+    "date_to": "2022-06-30",
+    "raw_unique": 38,
+    "relevant_count": 5,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 38,
+    "classifier_included": 5,
+    "classifier_filtered": 33,
+    "classifier_errors": 0,
+    "direct_rule_included": 3,
+    "weak_rule_candidates": 2,
+    "weak_llm_reviewed": 2,
+    "weak_llm_included": 2,
+    "brief_eligible_count": 3,
+    "brief_skipped_weak_count": 2
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 217,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 454,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 217,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 220,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 218,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2206.13002",
+      "title": "60 candidate high-velocity stars originating from the Sagittarius dwarf spheroidal galaxy in Gaia EDR3",
+      "authors": [
+        "Hefan Li",
+        "Cuihua Du",
+        "Jun Ma",
+        "Jianrong Shi",
+        "Heidi Jo Newberg",
+        "Yunsong Piao"
+      ],
+      "author_names": "Hefan Li Cuihua Du Jun Ma Jianrong Shi Heidi Jo Newberg Yunsong Piao",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2022-06-27 00:00:00",
+      "updated_at": "2022-06-27 00:49:45",
+      "links": {
+        "abs": "https://arxiv.org/abs/2206.13002",
+        "pdf": "https://arxiv.org/pdf/2206.13002"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Using proper motions from Gaia Early Data Release 3 (Gaia EDR 3) and radial velocities from several surveys, we identify 60 candidate high-velocity stars with total velocity greater than 75\\\\\\\\% escape velocity that probably origin from Sagittarius dwarf spheroidal galaxy (Sgr) by orbital analysis. Sgr's gravity has little effect on the results and the Large Magellanic Cloud's gravity has non-negligible effect on only a few stars. The closest approach of these stars to the Sgr occurs when the Sgr passed its pericenter ($\\\\\\\\sim$ 38.2 Myr ago), which suggest they were tidally stripped from the Sgr. The positions of these stars in the HR diagram and the chemical properties of 19 of them with available [Fe/H] are similar with the Sgr stream member stars. This is consistent with the assumption of their accretion origin. Two of the 60 are hypervelocity stars, which may also be produced by Hills mechanism."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 26.085169
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: high-velocity or extreme-velocity stars, high-velocity star surveys or candidates"
+      },
+      "deepxiv": {
+        "score": 20.934599,
+        "best_score": 26.085169,
+        "search_keywords": null,
+        "citations": "8"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] The study identifies 60 candidate high-velocity stars likely originating from the Sagittarius dwarf spheroidal galaxy (Sgr) via orbital analysis of Gaia EDR3 proper motions and radial velocities from multiple surveys. Orbital modeling shows these stars' closest approach to Sgr occurred ~38.2 Myr ago, consistent with tidal stripping, and their HR diagram positions and chemical abundances (for 19 stars) align with Sgr stream members. Two of the 60 are hypervelocity stars (≥1000 km/s), potentially ejected via the Hills mechanism requiring a central supermassive black hole in Sgr, suggesting dynamical ejection from a disrupted dwarf galaxy.",
+        "keywords": [
+          "stellar dynamics",
+          "tidal stripping",
+          "orbital analysis",
+          "hypervelocity stars",
+          "Sagittarius dwarf spheroidal galaxy"
+        ],
+        "citations": "8",
+        "published_at": "2022-06-27T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2206.13002",
+          "src_url": "https://arxiv.org/pdf/2206.13002",
+          "title": "60 candidate high-velocity stars originating from the Sagittarius dwarf spheroidal galaxy in Gaia EDR3"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T214540"
+      },
+      "source_fields": {
+        "pg_id": 1005439,
+        "venue": "Astrophysical Journal Letters",
+        "journal_name": "The Astrophysical Journal Letters",
+        "status": "extracted",
+        "token_count": 11830,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 07:26:55",
+        "sections_text": "Samples: This section describes the integration of multi-survey radial velocity data with Gaia EDR3, including cross-matching, systematic velocity offsets, and error corrections using a mixture model to improve radial velocity accuracy and consistency across surveys. Discussion: The study identifies 60 high-velocity stars with velocities exceeding 0.75 times the escape speed of the Galactic Center, most of which are late-type giants and chemically similar to the Sagittarius stream, with 19 showing [Fe/H] consistency, and two hypervelocity stars (vₑⱼ ∼ 740 km/s) potentially ejected via the Hills mechanism, suggesting a strong link between these stars and the Sagittarius dwarf galaxy's recent pericenter passage. Introduction: This paper presents the discovery of 60 candidate high-velocity stars likely originating from the Sagittarius dwarf galaxy, with two extreme velocity candidates suggesting the presence of a central supermassive black hole in Sgr via the Hills ejection mechanism—offering direct evidence for such a black hole and resolving the origin ambiguity of high-velocity stars from disrupted dwarf galaxies. Orbit Analysis: The orbit analysis shows that most high-velocity stars likely originated from the Sagittarius dwarf galaxy, with minimal influence from other dwarf galaxies or globular clusters, and the gravitational potential of the LMC has a negligible effect on their orbital proximity to Sgr. candidate high-velocity stars originating from the Sagittarius dwarf spheroidal galaxy in Gaia EDR3: This section identifies high-velocity stars originating from the Sagittarius dwarf spheroidal galaxy using data from Gaia EDR3.",
+        "highlight": {
+          "abstract": [
+            "Using proper motions from Gaia Early Data Release 3 (Gaia EDR 3) and radial velocities from several surveys, we identify 60 candidate high-velocity <em>stars</em> with total velocity greater than 75\\\\\\\\% escape",
+            "Sgr's gravity has little effect on the results and the Large Magellanic Cloud's gravity has non-negligible effect on only a few <em>stars</em>.",
+            "The closest approach of these <em>stars</em> to the Sgr occurs when the Sgr passed its pericenter ($\\\\\\\\sim$ 38.2 Myr ago), which suggest they were tidally stripped from the Sgr.",
+            "The positions of these <em>stars</em> in the HR diagram and the chemical properties of 19 of them with available [Fe/H] are similar with the Sgr stream member <em>stars</em>.",
+            "Two of the 60 are <em>hypervelocity</em> <em>stars</em>, which may also be produced by Hills mechanism."
+          ],
+          "title": [
+            "60 candidate high-velocity <em>stars</em> originating from the Sagittarius dwarf spheroidal galaxy in Gaia EDR3"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Title and abstract explicitly state identification of 60 candidate high-velocity stars using Gaia EDR3 proper motions and radial velocities from surveys. Paper presents a candidate list with orbital analysis and chemical properties for subset.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "abundances",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:47:31"
+      }
+    },
+    {
+      "arxiv_id": "2206.06962",
+      "title": "Gaia DR3 in 6D: The search for fast hypervelocity stars and constraints on the Galactic Centre environment",
+      "authors": [
+        "Tommaso Marchetti",
+        "Fraser A. Evans",
+        "Elena Maria Rossi"
+      ],
+      "author_names": "Tommaso Marchetti Fraser A. Evans Elena Maria Rossi",
+      "categories": [
+        "astro-ph.GA",
+        "astro-ph.SR"
+      ],
+      "published_at": "2022-06-14 00:00:00",
+      "updated_at": "2022-06-24 03:33:55",
+      "links": {
+        "abs": "https://arxiv.org/abs/2206.06962",
+        "pdf": "https://arxiv.org/pdf/2206.06962"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "The third data release (DR3) of the European Space Agency satellite Gaia provides coordinates, parallaxes, proper motions, and radial velocities for a sample of $\\\\\\\\sim 34$ million stars. We use the combined 6-dimensional phase space information to search for hypervelocity stars (HVSs), unbound stars accelerated by dynamical processes happening in the Galactic Centre. By looking at the kinematics of Gaia DR3 stars in Galactocentric coordinates and by integrating their orbits in the Galactic potential, we do not identify any HVS candidates with a velocity higher than $700$ km s$^{-1}$ and robustly observed kinematics. Assuming a scenario wherein the interaction between a stellar binary and the massive black hole Sgr A$^*$ is responsible for HVS ejections from the Galactic Centre, we derive degenerate limits on the ejection rate of HVSs and the slope of the initial mass function of the primary star among binaries in the Galactic Centre. Our results indicate that the HVS ejection rate is $\\\\\\\\lesssim 8\\\\\\\\times10^{-5}$ yr$^{-1}$ assuming a Salpeter mass function, and this upper limit becomes progressively smaller for an increasingly top-heavy mass distribution. A fiducial HVS ejection rate of $10^{-4}$ yr$^{-1}$ prefers a mass function slope $\\\\\\\\lesssim -2.35$, disfavouring previously claimed top-heavy initial mass functions among stars in the Galactic Centre."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "unbound stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 26.183191
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars, high-velocity star surveys or candidates"
+      },
+      "deepxiv": {
+        "score": 26.183191,
+        "best_score": 26.183191,
+        "search_keywords": null,
+        "citations": "16"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[astronomical research paper] Using Gaia DR3's 6D phase space data (positions, parallaxes, proper motions, radial velocities), the authors perform a kinematic search for hypervelocity stars (HVSs) ejected from the Galactic Centre via binary-star interactions with Sgr A*. No HVS candidates above 700 km/s are found, leading to upper limits on the HVS ejection rate (≤8×10⁻⁵ yr⁻¹ under Salpeter IMF) and constraining the initial mass function of Galactic Centre binaries to a slope ≤−2.35, disfavoring previously proposed top-heavy mass functions.",
+        "keywords": [
+          "hypervelocity star kinematics",
+          "Galactic Centre dynamics",
+          "binary-star interaction",
+          "stellar ejection rate",
+          "initial mass function"
+        ],
+        "citations": "16",
+        "published_at": "2022-06-14T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2206.06962",
+          "src_url": "https://arxiv.org/pdf/2206.06962",
+          "title": "Gaia DR3 in 6D: The search for fast hypervelocity stars and constraints on the Galactic Centre environment"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T214540"
+      },
+      "source_fields": {
+        "pg_id": 1012311,
+        "venue": null,
+        "journal_name": null,
+        "status": "extracted",
+        "token_count": 23962,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 15:01:52",
+        "sections_text": "Method: The paper proposes a Monte Carlo method to sample distance and velocity distributions for stars with precise Gaia parallaxes and radial velocities, correcting astrometric and radial velocity data for systematic biases and assuming uncorrelated observables to reconstruct three-dimensional stellar orbits in the Galaxy. Introduction: This paper leverages the unprecedented combination of Gaia DR3's all-sky, high-precision photometric, astrometric, and spectroscopic data—particularly its 34 million radial velocities—to systematically identify and characterize hypervelocity stars originating from the Galactic Centre, addressing the long-standing challenge of detecting such rare, high-velocity stars with improved statistical power and reliability. Discussion and Conclusions: No fast hypervelocity stars (with $v_{\\\\mathrm{GC}} > 700$ km s$^{-1}$) are detected in Gaia DR3, leading to an upper limit of $\\\\eta \\\\lesssim 8 \\\\times 10^{-5}$ yr$^{-1}$ on the HVS ejection rate under the Hills mechanism and disfavoring a top-heavy initial mass function with $\\\\kappa = -1.7$. Searching for HVS candidates: This section outlines the criteria used to select robustly measured stars from the Gaia DR3 catalogue to minimize measurement errors and identify reliable candidates for hypervelocity stars ejected from the Galactic Centre. Constraints on the Galactic Centre population: This section presents Bayesian constraints on the initial mass function slope of Galactic Centre binary primaries ($\\\\kappa$) and the hypervelocity star ejection rate ($\\\\eta$) derived from the absence of detected unbound hypervelocity stars in Gaia DR3.",
+        "highlight": {
+          "abstract": [
+            "The third data release (DR3) of the European Space Agency satellite Gaia provides coordinates, parallaxes, proper motions, and radial velocities for a sample of $\\\\\\\\sim 34$ million <em>stars</em>.",
+            "We use the combined 6-dimensional phase space information to search for <em>hypervelocity</em> <em>stars</em> (HVSs), unbound <em>stars</em> accelerated by dynamical processes happening in the Galactic Centre.",
+            "By looking at the kinematics of Gaia DR3 <em>stars</em> in Galactocentric coordinates and by integrating their orbits in the Galactic potential, we do not identify any HVS candidates with a velocity higher than",
+            "A fiducial HVS ejection rate of $10^{-4}$ yr$^{-1}$ prefers a mass function slope $\\\\\\\\lesssim -2.35$, disfavouring previously claimed top-heavy initial mass functions among <em>stars</em> in the Galactic Centre"
+          ],
+          "title": [
+            "Gaia DR3 in 6D: The search for fast <em>hypervelocity</em> <em>stars</em> and constraints on the Galactic Centre environment"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.85,
+        "catalog_role": "uses_existing_catalog",
+        "object_scope": "none",
+        "evidence": "Uses Gaia DR3 data to search for hypervelocity stars but finds none above 700 km/s. Paper focuses on deriving constraints on ejection rates and IMF slopes rather than presenting new object-level observational catalog.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:47:31"
+      }
+    },
+    {
+      "arxiv_id": "2206.00417",
+      "title": "Milky Way archaeology using RR Lyrae and type II Cepheids II. High velocity RR Lyrae stars, and mass of the Milky Way",
+      "authors": [
+        "Z. Prudil",
+        "A. J. Koch-Hansen",
+        "B. Lemasle",
+        "E. K. Grebel",
+        "T. Marchetti",
+        "C. J. Hansen",
+        "J. Crestani",
+        "V. F. Braga",
+        "G. Bono",
+        "B. Chaboyer",
+        "M. Fabrizio",
+        "M. Dall'Ora",
+        "C. E. Martínez-Vázquez"
+      ],
+      "author_names": "Z. Prudil A. J. Koch-Hansen B. Lemasle E. K. Grebel T. Marchetti C. J. Hansen J. Crestani V. F. Braga G. Bono B. Chaboyer M. Fabrizio M. Dall'Ora C. E. Martínez-Vázquez",
+      "categories": [
+        "astro-ph.GA",
+        "astro-ph.SR"
+      ],
+      "published_at": "2022-06-01 00:00:00",
+      "updated_at": "2022-06-01 11:41:41",
+      "links": {
+        "abs": "https://arxiv.org/abs/2206.00417",
+        "pdf": "https://arxiv.org/pdf/2206.00417"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We report the discovery of high velocity candidates among RR~Lyrae stars found in the Milky Way halo. We identified 9 RR~Lyrae stars with Galactocentric velocities exceeding the local escape velocity based on the assumed Galaxy potential. Based on close examination of their orbits', we ruled out their ejection location in the Milky Way disk and bulge. The spatial distribution revealed that seven out of 9 pulsators overlap with the position of the Sagittarius stellar stream. Two out of these seven RR~Lyrae stars can be tentatively linked to the Sagittarius dwarf spheroidal galaxy on the basis of their orbits. Focusing on the high-velocity tail of the RR~Lyrae velocity distribution we estimate the escape velocity in the Solar neighborhood to be $v_{\\\\\\\\rm esc}=512^{+94}_{-37}$\\\\\\\\,km\\\\\\\\,s$^{-1}$~($4$ to $12$\\\\\\\\,kpc), and beyond the Solar neighborhood as $v_{\\\\\\\\rm esc}=436^{+44}_{-22}$\\\\\\\\,km\\\\\\\\,s$^{-1}$~and $v_{\\\\\\\\rm esc}=393^{+53}_{-26}$\\\\\\\\,km\\\\\\\\,s$^{-1}$~(for distances between $12$ to $20$\\\\\\\\,kpc and $20$ to $28$\\\\\\\\,kpc), respectively. We utilized three escape velocity estimates together with the local circular velocity to estimate the Milky Way mass. The resulting measurement $M_{\\\\\\\\rm 200}=0.83^{+0.29}_{-0.16} \\\\\\\\cdot 10^{12}$\\\\\\\\,M$_{\\\\\\\\odot}$ falls on the lower end of the current Milky Way mass estimates, but once corrected for the likely bias in the escape velocity (approximately $10$ percent increase of the escape velocity), our mass estimate yields $M_{\\\\\\\\rm 200}=1.26^{+0.40}_{-0.22} \\\\\\\\cdot 10^{12}$\\\\\\\\,M$_{\\\\\\\\odot}$, which is in agreement with estimates based on different diagnostics of the Milky Way mass. The MW mass within $20$\\\\\\\\,kpc then corresponds to $M_{\\\\\\\\rm MW} \\\\\\\\left(r < 20\\\\\\\\,\\\\\\\\text{kpc} \\\\\\\\right)=1.9^{+0.2}_{-0.1} \\\\\\\\times 10^{11}$\\\\\\\\,M$_{\\\\\\\\odot}$ without correction for bias, and $M_{\\\\\\\\rm MW} \\\\\\\\left(r < 20\\\\\\\\,\\\\\\\\text{kpc} \\\\\\\\right)=2.1^{+0.2}_{-0.1} \\\\\\\\times 10^{11}$\\\\\\\\,M$_{\\\\\\\\odot}$ corrected for a likely offset in escape velocities."
+      },
+      "match": {
+        "queries": [
+          "high-velocity stars",
+          "unbound stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 22.121273
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: high-velocity or extreme-velocity stars"
+      },
+      "deepxiv": {
+        "score": 22.121273,
+        "best_score": 22.121273,
+        "search_keywords": null,
+        "citations": ""
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] The study identifies nine high-velocity RR Lyrae stars with Galactocentric velocities exceeding the local escape velocity, ruling out ejection from the disk or bulge. Seven of these overlap with the Sagittarius stellar stream, with two potentially linked to the Sagittarius dwarf spheroidal galaxy. Using velocity distributions, the paper estimates escape velocities at different galactocentric radii and derives a Milky Way mass of $M_{200} = 1.26_{-0.22}^{+0.40} \\times 10^{12} \\, M_\\odot$ after correcting for a likely 10% bias in escape velocity, aligning with other mass estimates. This mass corresponds to $M_{\\mathrm{MW}}(r < 20\\, \\mathrm{kpc}) = 2.1_{-0.1}^{+0.2} \\times 10^{11} \\, M_\\odot$, providing a robust dynamical constraint on the Galaxy's structure and mass distribution in the outer halo.",
+        "keywords": [
+          "high-velocity stellar dynamics",
+          "RR Lyrae kinematics",
+          "Galactic escape velocity",
+          "Sagittarius stellar stream",
+          "dwarf galaxy interactions"
+        ],
+        "citations": "",
+        "published_at": "2022-06-01T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2206.00417",
+          "src_url": "https://arxiv.org/pdf/2206.00417",
+          "title": "Milky Way archaeology using RR Lyrae and type II Cepheids II. High velocity RR Lyrae stars, and mass of the Milky Way"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T214540"
+      },
+      "source_fields": {
+        "pg_id": 1016453,
+        "venue": null,
+        "journal_name": null,
+        "status": "extracted",
+        "token_count": 30049,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": null,
+        "sections_text": "Footnotes: The section provides definitions, references, and methodological details for various astronomical terms, datasets, and analytical techniques used in the study, including telescope acronyms, velocity comparisons, astrometric cuts, stellar classifications, and statistical methods. Conclusions: This study identifies seven potential unbound RR Lyrae stars, likely originating from the Sagittarius stream or dwarf galaxy, with their unbound status being sensitive to halo mass and velocity uncertainties, while suggesting a revised Galactic escape velocity consistent with recent observations. Introduction: This paper introduces a novel method to constrain the Milky Way's mass by analyzing weakly bound halo stars in the high-velocity tail, addressing the long-standing uncertainty in galactic mass estimates through dynamical observations of stars near the escape velocity boundary. High velocity tail: This section models the velocity distribution of high-velocity, bound halo RR Lyrae stars using a power-law distribution function, accounting for measurement uncertainties and sample purity through a convolution approach and Toomre selection. Dataset and analysis: The dataset comprises 4247 RR Lyrae stars with complete 6D kinematic and metalliclicity information, derived from Gaia, PanSTARRS, SDSS, and LAMOST surveys, and expanded with additional spectra and velocities using spectral synthesis to identify high-velocity RR Lyrae variables. High velocity variables: This section identifies and classifies nine high-velocity RR Lyrae variables, with a focus on reclassifying two stars—HV-RRL-03 and HV-RRL-04—from first-overtone to fundamental-mode pulsators based on photometric and color-magnitude diagram analysis, consistent with their positions beyond the red edge of the instability strip and supported by multi-survey data. Mass of the MW based on the RR Lyrae velocity tail: This section estimates the mass and concentration of the Milky Way using Bayesian analysis of escape and circular velocities, with the escape velocity defined relative to twice the virial radius and accounting for asymmetric uncertainties and prior constraints.",
+        "highlight": {
+          "abstract": [
+            "We report the discovery of <em>high</em> <em>velocity</em> candidates among RR~Lyrae <em>stars</em> found in the Milky Way halo.",
+            "We identified 9 RR~Lyrae <em>stars</em> with Galactocentric velocities exceeding the local escape <em>velocity</em> based on the assumed Galaxy potential.",
+            "Two out of these seven RR~Lyrae <em>stars</em> can be tentatively linked to the Sagittarius dwarf spheroidal galaxy on the basis of their orbits.",
+            "Focusing on the <em>high</em>-<em>velocity</em> tail of the RR~Lyrae <em>velocity</em> distribution we estimate the escape <em>velocity</em> in the Solar neighborhood to be $v_{\\\\\\\\rm esc}=512^{+94}_{-37}$\\\\\\\\,km\\\\\\\\,s$^{-1}$~($4$ to $12",
+            "We utilized three escape <em>velocity</em> estimates together with the local circular <em>velocity</em> to estimate the Milky Way mass."
+          ],
+          "title": [
+            "<em>High</em> <em>velocity</em> RR Lyrae <em>stars</em>, and mass of the Milky Way"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.9,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Reports discovery of 9 high-velocity RR Lyrae stars with measured velocities exceeding escape velocity. Paper identifies specific objects, examines their orbits, and links them to Sagittarius stream.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "radial_velocities",
+          "orbit_integrations"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:47:31"
+      }
+    },
+    {
+      "arxiv_id": "2206.14806",
+      "title": "Discovery of an optical cocoon tail behind the runaway HD 185806",
+      "authors": [
+        "Z.T. Spetsieri",
+        "P. Boumis",
+        "A. Chiotellis",
+        "S. Akras",
+        "S. Derlopa",
+        "S. Shetye",
+        "D.M.A. Meyer",
+        "D.M. Bowman",
+        "V.V. Gvaramadze"
+      ],
+      "author_names": "Z.T. Spetsieri P. Boumis A. Chiotellis S. Akras S. Derlopa S. Shetye D.M.A. Meyer D.M. Bowman V.V. Gvaramadze",
+      "categories": [
+        "astro-ph.SR",
+        "astro-ph.GA"
+      ],
+      "published_at": "2022-06-29 00:00:00",
+      "updated_at": "2022-06-29 17:59:57",
+      "links": {
+        "abs": "https://arxiv.org/abs/2206.14806",
+        "pdf": "https://arxiv.org/pdf/2206.14806"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Studies on the circumstellar structures around evolved stars provide vital information on the evolution of the parent star and the properties of the local interstellar medium. In this work, we present the discovery and characterization of an optical cocoon tail behind the star HD 185806. The cocoon apex emission is puzzling, as it is detected in the infrared but shows no signal in the optical wavelength. The H-alpha and [OIII] fluxes of the nebular structure vary from 2.7 to 8.5x10^{-12} erg s^{-1} cm^ {-2} and from 0.9 to 7.0x10^{-13} erg s^{-1} cm^{-2}, respectively. Through high-resolution spectroscopy, we derive the spectral type of the star, construct the position-velocity diagrams of the cocoon tail for the H-alpha, [OIII] and [NII] emission lines, and determine its velocity in the range of -100 to 40 km s ^{-1} . Furthermore, we use SED fitting and MESA evolutionary models adopting a distance of 900 pc, and classify HD 185806 as a 1.3 M star, in the transition phase between the RGB and early AGB stages. Finally, we study the morpho-kinematic structure of the cocoon tail using the astronomical software SHAPE. An ellipsoidal structure, with an inclination of 19 degrees with respect to the plane of sky is found to better reproduce the observed cocoon tail of HD 185806."
+      },
+      "match": {
+        "queries": [
+          "runaway stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 15.099307
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Weak title match: runaway-related mechanisms LLM confirmed: Title explicitly identifies HD 185806 as a 'runaway' star, and the abstract discusses its circumstellar structure and kinematics, which are directly relevant to runaway star studies."
+      },
+      "deepxiv": {
+        "score": 15.099307,
+        "best_score": 15.099307,
+        "search_keywords": null,
+        "citations": "0"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T214540"
+      },
+      "source_fields": {
+        "pg_id": 1003790,
+        "venue": "Monthly notices of the Royal Astronomical Society",
+        "journal_name": "Monthly Notices of the Royal Astronomical Society",
+        "status": "extracted",
+        "token_count": 25146,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 22:52:11",
+        "sections_text": "Results: High-resolution spectroscopy reveals that the optical cocoon tail around HD 185806 exhibits significant emission with heliocentric velocities ranging from −100 to 40 km s⁻¹, showing stronger emission on the outer sides (positions A, C, D) and distinct filamentary structures, while the regions opposite the star show faint or no emission, indicating asymmetric gas dynamics and a possible shock-driven cocoon formation. Discussion: HD 185806 is an M4-type long-period variable star at 909 pc with Teff = 3400 ± 100 K, L = 1548 ± 200 L⊙, a mass of 1.3 M⊙, and an age consistent with the red giant branch phase, as determined by VOSA SED analysis and MESA evolutionary tracks. Conclusions: The study concludes that HD 185806 is an M-type, 1.3 M⊙ star in the RGB/early-AGB phase with a detectable optical cocoon tail, whose morphology and kinematics are consistent with a low-density wind bubble formed due to evolutionary changes in mass loss and wind velocity, explaining the absence of a visible bow shock. Introduction: This paper introduces a novel framework that unifies and extends existing models of bow shock formation in supersonically moving stars by integrating the roles of stellar dynamics, ambient medium interactions, and wind-momentum coupling, thereby solving the problem of accurately constraining the mass loss history, stellar motion, and ISM properties from observed circumstellar morphologies. Observations: High-resolution optical imaging and spectroscopy of HD 185806 revealed an optical cocoon tail through detailed analysis of emission lines in Hα, [Nii], and [Oiii], with imaging and spectroscopic data providing evidence of extended nebular structures and kinematic properties.",
+        "highlight": {
+          "abstract": [
+            "Studies on the circumstellar structures around evolved <em>stars</em> provide vital information on the evolution of the parent star and the properties of the local interstellar medium."
+          ],
+          "title": [
+            "Discovery of an optical cocoon tail behind the <em>runaway</em> HD 185806"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.8,
+        "catalog_role": "followup_observations",
+        "object_scope": "single_object",
+        "evidence": "Focuses on detailed study of a single runaway star HD 185806 and its circumstellar structure. Presents optical/IR observations, spectroscopy, and modeling of cocoon tail, but not a catalog of multiple high-velocity objects.",
+        "data_products": [
+          "spectra",
+          "coordinates",
+          "radial_velocities"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:47:31"
+      }
+    },
+    {
+      "arxiv_id": "2206.09281",
+      "title": "Kinematics of the Central Stars Powering Bowshock Nebulae and the Large Multiplicity Fraction of Runaway OB Stars",
+      "authors": [
+        "Henry A. Kobulnicky",
+        "William T. Chick"
+      ],
+      "author_names": "Henry A. Kobulnicky William T. Chick",
+      "categories": [
+        "astro-ph.SR",
+        "astro-ph.GA"
+      ],
+      "published_at": "2022-06-18 00:00:00",
+      "updated_at": "2022-06-18 20:58:41",
+      "links": {
+        "abs": "https://arxiv.org/abs/2206.09281",
+        "pdf": "https://arxiv.org/pdf/2206.09281"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "OB stars powering stellar bowshock nebulae (SBNe) have been presumed to have large peculiar velocities. We measured peculiar velocities of SBN central stars to assess their kinematics relative to the general O star population using $Gaia$ EDR3 data for 267 SBN central stars and a sample of 455 Galactic O stars to derive projected velocities $v_{\\\\\\\\rm 2D}$. For a subset of each sample we obtained new optical spectroscopy to measure radial velocities and identify multiple-star systems. We find a minimum multiplicity fraction of 36$\\\\\\\\pm$6% among SBN central stars, consistent with $>$28% among runaway Galactic O stars. The large multiplicity fraction among runaways implicates very efficient dynamical ejection rather than binary-supernova origins. The median $v_{\\\\\\\\rm 2D}$ of SBN central stars is $v_{\\\\\\\\rm 2D}$=14.6 km s$^{-1}$, larger than the median $v_{\\\\\\\\rm 2D}$=11.4 km s$^{-1}$ for non-bowshock O stars. Central stars of SBNe have a runaway ($v_{\\\\\\\\rm 2D}$$>$25 km s$^{-1}$) fraction of 24$^{+9}_{-7}$%, consistent with the 22$^{+3}_{-3}$% for control-sample O stars. Most (76%) of SBNe central stars are not runaways. Our analysis of alignment ($\\\\\\\\Delta_{\\\\\\\\rm PA}$) between the nebular morphological and $v_{\\\\\\\\rm 2D}$ kinematic position angles reveals two populations: a highly aligned ($\\\\\\\\sigma_{PA}$=25$^\\\\\\\\circ$) population that includes stars with the largest $v_{\\\\\\\\rm 2D}$ (31% of the sample) and a random (non-aligned) population (69% of the sample). SBNe that lie within or near HII regions comprise a larger fraction of this latter component than SBNe in isolated environments, implicating localized ISM flows as a factor shaping their orientations and morphologies. We outline a new conceptual approach to computing the Solar LSR motion, yielding [U$_\\\\\\\\odot$, V$_\\\\\\\\odot$, W$_\\\\\\\\odot$]= [5.5, 7.5, 4.5] km s$^{-1}$."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 26.667496
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 1.0,
+        "reason": "Weak title match: runaway-related mechanisms LLM confirmed: Title and abstract focus on kinematics and multiplicity of runaway OB stars powering bowshock nebulae, directly addressing high-velocity/runaway star populations, their origins, and kinematics."
+      },
+      "deepxiv": {
+        "score": 12.333081,
+        "best_score": 26.667496,
+        "search_keywords": null,
+        "citations": "3"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T214540"
+      },
+      "source_fields": {
+        "pg_id": 1015296,
+        "venue": "Astronomical Journal",
+        "journal_name": "The Astronomical Journal",
+        "status": "extracted",
+        "token_count": 89857,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 15:53:03",
+        "sections_text": "Results: The experiment finds that 22% ± 3% of Galactic O stars have 2D peculiar velocities exceeding 25 km s⁻¹, significantly higher than previous studies, due to the use of true peculiar velocities rather than biased proper motion analyses. Conclusions: Analysis of Gaia EDR3 and spectroscopic data shows that stellar bowshock nebulae have runaway fractions and multiplicity rates consistent with dynamical ejection in young clusters (DES) rather than supernova ejection (BSS), with strong alignment between nebulae and stellar motion supporting a cluster origin for many of these runaway stars. Introduction: This paper introduces a novel classification and physical analysis of bow shock nebulae that resolves ambiguities in existing subtypes by combining high-resolution spectroscopy with hydrodynamical constraints, addressing the problem of distinguishing between bow shocks, bow waves, and dust waves in a statistically robust framework. Sbn Central Star Sample Analysis: This section analyzes the kinematics and environmental classifications of 267 central stars in stellar bowshock nebulae, finding that most are OB-type stars and that re-evaluating their local environments using infrared data confirms or modifies K16 classifications, with significant updates due to improved spatial context and structure identification. Kinematic Analysis And New Spectroscopic Data: This section describes the selection of 267 stellar sources from SBNe candidates with reliable Gaia EDR3 astrometric data, their kinematic analysis to derive Galactic positions and peculiar velocities, and compares their distribution and motion to a sample of O stars, revealing that SBN central stars are more centrally located and farther away than O stars.",
+        "highlight": {
+          "abstract": [
+            "<em>stars</em> to derive projected velocities $v_{\\\\\\\\rm 2D}$.",
+            "We find a minimum multiplicity fraction of 36$\\\\\\\\pm$6% among SBN central <em>stars</em>, consistent with $>$28% among runaway Galactic O <em>stars</em>.",
+            "The median $v_{\\\\\\\\rm 2D}$ of SBN central <em>stars</em> is $v_{\\\\\\\\rm 2D}$=14.6 km s$^{-1}$, larger than the median $v_{\\\\\\\\rm 2D}$=11.4 km s$^{-1}$ for non-bowshock O <em>stars</em>.",
+            "Central <em>stars</em> of SBNe have a runaway ($v_{\\\\\\\\rm 2D}$$>$25 km s$^{-1}$) fraction of 24$^{+9}_{-7}$%, consistent with the 22$^{+3}_{-3}$% for control-sample O <em>stars</em>.",
+            "Most (76%) of SBNe central <em>stars</em> are not runaways."
+          ],
+          "title": [
+            "Kinematics of the Central <em>Stars</em> Powering Bowshock Nebulae and the Large Multiplicity Fraction of Runaway",
+            "OB <em>Stars</em>"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.9,
+        "catalog_role": "compiled_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Analyzes kinematics of 267 SBN central stars using Gaia EDR3 data, measures peculiar velocities, identifies runaway fractions, and studies multiplicity. Presents compiled sample with measured velocities and classifications.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:47:31"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 5,
+    "catalog_count": 3,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:47:31"
+  }
+}

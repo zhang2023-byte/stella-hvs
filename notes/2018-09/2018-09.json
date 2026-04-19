@@ -1,0 +1,196 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2018-09",
+  "date_from": "2018-09-01",
+  "date_to": "2018-09-30",
+  "run": {
+    "run_id": "20260419T215908",
+    "started_at": "2026-04-19T21:59:08"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2018-09",
+    "date_from": "2018-09-01",
+    "date_to": "2018-09-30",
+    "raw_unique": 35,
+    "relevant_count": 1,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 35,
+    "classifier_included": 1,
+    "classifier_filtered": 34,
+    "classifier_errors": 0,
+    "direct_rule_included": 0,
+    "weak_rule_candidates": 1,
+    "weak_llm_reviewed": 1,
+    "weak_llm_included": 1,
+    "brief_eligible_count": 0,
+    "brief_skipped_weak_count": 1
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 124,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 356,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 131,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 128,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 125,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1809.07339",
+      "title": "The Keplerian three-body encounter I. Insights on the origin of the S-stars and the G-objects in the Galactic center",
+      "authors": [
+        "Alessandro A. Trani",
+        "Michiko S. Fujii",
+        "Mario Spera"
+      ],
+      "author_names": "Alessandro A. Trani Michiko S. Fujii Mario Spera",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2018-09-19 00:00:00",
+      "updated_at": "2019-04-01 09:14:24",
+      "links": {
+        "abs": "https://arxiv.org/abs/1809.07339",
+        "pdf": "https://arxiv.org/pdf/1809.07339"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Recent spectroscopic analysis has set an upper limit to the age of the S-stars, the ~30 B-type stars in highly eccentric orbits around the supermassive black hole (SMBH) in the Galactic center. The inferred age (<15 Myr) is in tension with the binary break-up scenario proposed to explain their origin. However, the new estimate is compatible with the age of the disk of O-type stars that lies at a farther distance from the SMBH. Here we investigate a new formation scenario, assuming that both S-stars and the O-type stars were born in the same disk around SgrA*. We simulate encounters between binaries of the stellar disk and stellar black holes from a dark cusp around SgrA*. We find that B-type binaries can be easily broken up by the encounters and their binary components are kicked into highly eccentric orbits around the SMBH. In contrast, O-type binaries are less frequently disrupted and their members remain in low eccentricity orbits. This mechanism can reproduce 12 S-stars just by assuming that the binaries initially lie within the stellar disk as observed nowadays. To reproduce all the S-stars, the original disk must have been extended down to 0.006 pc. However in this case many B- and O-type stars remain in low eccentricity orbits below 0.03 pc, in contrast with the observations. Therefore, some other mechanism is necessary to disrupt the disk below 0.03 pc. This scenario can also explain the high eccentricity of the G-objects, if they have a stellar origin."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 11.831354
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.85,
+        "reason": "Weak title match: galactic-center dynamical origins LLM confirmed: Paper investigates origin of S-stars (B-type stars) in highly eccentric orbits around SMBH via binary disruption mechanisms, which relates to ejected/runaway stellar populations in Galactic center context."
+      },
+      "deepxiv": {
+        "score": 9.792569,
+        "best_score": 11.831354,
+        "search_keywords": null,
+        "citations": "22"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T215908"
+      },
+      "source_fields": {
+        "pg_id": 1617209,
+        "venue": "Astrophysical Journal",
+        "journal_name": "The Astrophysical Journal",
+        "status": "extracted",
+        "token_count": 16034,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 18:53:33",
+        "sections_text": "2. Methods: The paper proposes a 4-body simulation method to study stellar encounters between binaries in the Galactic center and a stellar black hole, with the core idea of testing how the extended history of the circumblack hole disk influences binary disruption and merger outcomes by varying binary and black hole properties across four distinct simulation sets. 3. Results: The simulations show that ionization of binary stars occurs in 4.70% (Set A) and 24.50% (Set B) of encounters, with ionization peaking at a relative velocity corresponding to a 21° mutual inclination, and the resulting semimajor axes and eccentricities of ionized binaries closely match those of observed S-stars and G-objects, particularly in the CW disk and early-type S-stars. 4. Discussion: The scattering mechanism cannot reproduce the innermost S-stars without assuming a more extended past disk, as only 15% of stars in set B exhibit high eccentricities—consistent with observations—and the required binary population (~86 B-stars) is within the range of current estimates, supporting the scenario's plausibility. 5. Conclusions: Four-body simulations show that binary origins in the CW disk can reproduce S-star and G2 orbits, but predict a low-eccentricity stellar population below 0.016 pc inconsistent with observations, suggesting these stars may originate from a distinct population despite shared age. 1. Introduction: This paper introduces a novel mechanism in which the absence of WR/O-type stars in the S-stars' orbits is explained by selective tidal disruption of massive binaries in a gaseous disk, resolving the discrepancy between the young stellar population and the observed stellar properties near SgrA*. Appendix A Repeated encounters: Repeated encounters do not significantly alter the orbital parameters or migration of surviving binaries, leading to ionized stars with distributions similar to those from single encounters. Appendix B Simulations with different black holes masses: Simulations show that black holes of various masses can ionize B-type binaries and produce highly eccentric orbits, with intermediate-mass black holes (IMBHs) more effectively creating such orbits that may explain the origin of S-stars and G-objects in the Galactic center.",
+        "highlight": {
+          "abstract": [
+            "Recent spectroscopic analysis has set an upper limit to the age of the S-<em>stars</em>, the ~30 B-type <em>stars</em> in highly eccentric orbits around the supermassive black hole (SMBH) in the Galactic center.",
+            "However, the new estimate is compatible with the age of the disk of O-type <em>stars</em> that lies at a farther distance from the SMBH.",
+            "Here we investigate a new formation scenario, assuming that both S-<em>stars</em> and the O-type <em>stars</em> were born in the same disk around SgrA*.",
+            "To reproduce all the S-<em>stars</em>, the original disk must have been extended down to 0.006 pc.",
+            "However in this case many B- and O-type <em>stars</em> remain in low eccentricity orbits below 0.03 pc, in contrast with the observations."
+          ],
+          "title": [
+            "Insights on the origin of the S-<em>stars</em> and the G-objects in the Galactic center"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.9,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Paper presents theoretical simulations of binary disruption mechanisms to explain origin of known S-stars and G-objects, not new observational data or catalog compilation.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:02:29"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 0,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T22:02:29"
+  }
+}

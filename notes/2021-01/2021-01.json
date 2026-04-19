@@ -1,0 +1,333 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2021-01",
+  "date_from": "2021-01-01",
+  "date_to": "2021-01-31",
+  "run": {
+    "run_id": "20260419T214845",
+    "started_at": "2026-04-19T21:48:45"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2021-01",
+    "date_from": "2021-01-01",
+    "date_to": "2021-01-31",
+    "raw_unique": 35,
+    "relevant_count": 2,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 35,
+    "classifier_included": 2,
+    "classifier_filtered": 33,
+    "classifier_errors": 0,
+    "direct_rule_included": 2,
+    "weak_rule_candidates": 0,
+    "weak_llm_reviewed": 0,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 2,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 141,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 377,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 145,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 142,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 141,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2101.10878",
+      "title": "Blue extreme disk-runaway stars with Gaia EDR3",
+      "authors": [
+        "Andreas Irrgang",
+        "Markus Dimpel",
+        "Ulrich Heber",
+        "Roberto Raddi"
+      ],
+      "author_names": "Andreas Irrgang Markus Dimpel Ulrich Heber Roberto Raddi",
+      "categories": [
+        "astro-ph.GA",
+        "astro-ph.SR"
+      ],
+      "published_at": "2021-01-26 00:00:00",
+      "updated_at": "2021-01-26 15:41:05",
+      "links": {
+        "abs": "https://arxiv.org/abs/2101.10878",
+        "pdf": "https://arxiv.org/pdf/2101.10878"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Since the discovery of hypervelocity stars in 2005, it has been widely believed that only the disruption of a binary system by a supermassive black hole at the Galactic center (GC), that is, the so-called Hills mechanism, is capable of accelerating stars to beyond the Galactic escape velocity. In the meantime, however, driven by the Gaia space mission, there is mounting evidence that many of the most extreme high-velocity early-type stars at high Galactic latitudes do originate in the Galactic disk and not in the GC. Moreover, the ejection velocities of these extreme disk-runaway stars exceed the predicted limits of the classical scenarios for the production of runaway stars. Based on proper motions from the Gaia early data release 3 and on recent and new spectrophotometric distances, we studied the kinematics of 30 such extreme disk-runaway stars, allowing us to deduce their spatial origins in and their ejection velocities from the Galactic disk with unprecedented precision. Only three stars in the sample have past trajectories that are consistent with an origin in the GC, most notably S5-HVS1, which is the most extreme object in the sample by far. All other program stars are shown to be disk runaways with ejection velocities that sharply contrast at least with classical ejection scenarios. They include HVS5 and HVS6, which are both gravitationally unbound to the Milky Way. While most stars originate from within a galactocentric radius of 15kpc, which corresponds to the observed extent of the spiral arms, a group of five stars stems from radii of about 21-29kpc. This indicates a possible link to outer Galactic rings and a potential origin from infalling satellite galaxies."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 30.508947
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: runaway stars"
+      },
+      "deepxiv": {
+        "score": 19.025843,
+        "best_score": 30.508947,
+        "search_keywords": null,
+        "citations": "9"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] The study uses Gaia EDR3 proper motions and updated spectrophotometric distances to analyze 30 extreme disk-runaway early-type stars, revealing that the vast majority originate in the Galactic disk (within 15 kpc) and exhibit ejection velocities exceeding the theoretical limits of classical runaway mechanisms (binary supernova and dynamical ejection). Only three stars show GC-origin consistency, with S5-HVS 1 being the most extreme and likely a Hills mechanism product; however, the majority of stars—including HVS 5 and HVS 6—achieve velocities beyond predictions for standard models, suggesting the need for a new ejection mechanism involving very massive stars or outer Galactic structures such as infalling satellite galaxies or outer rings.",
+        "keywords": [
+          "disk-runaway stars",
+          "ejection velocities",
+          "Galactic kinematics",
+          "Hills mechanism",
+          "outer Galactic rings"
+        ],
+        "citations": "9",
+        "published_at": "2021-01-26T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2101.10878",
+          "src_url": "https://arxiv.org/pdf/2101.10878",
+          "title": "Blue extreme disk-runaway stars with Gaia EDR3"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T214845"
+      },
+      "source_fields": {
+        "pg_id": 1795262,
+        "venue": "Astronomy & Astrophysics",
+        "journal_name": "Astronomy & Astrophysics",
+        "status": "extracted",
+        "token_count": 25099,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 04:23:12",
+        "sections_text": "Footnotes: The parallaxes from EDR3 favor a blue horizontal branch origin for B576 and a main sequence origin for B598, with the latter potentially being a rejuvenated blue straggler to reconcile its young age with its long flight time. Conclusion: The kinematic analysis of extreme blue runaway stars using Gaia EDR3 data shows that most originate from the Galactic disk rather than the Galactic Center, with high ejection velocities suggesting dynamical mechanisms involving massive stars or intermediate-mass black holes, and some originating in outer Galactic rings, indicating diverse formation pathways. Introduction: This paper presents a novel analysis using Gaia DR2 astrometric data to precisely determine the space velocities and ejection velocities of Galactic halo runaway stars, enabling a definitive identification of true hypervelocity stars ejected by the Galactic center's supermassive black hole and resolving the long-standing ambiguity between Hills mechanism-driven HVSs and hyper-runaway stars originating from the disk. Target selection: The study selects a comprehensive sample of high-velocity stars, including known and candidate hyper-runaways and disk-runaways, for spectroscopic and kinematic analysis to identify those with both high ejection velocities and well-constrained origins. Gaia EDR3 update on kinematics: This section uses Gaia EDR3 data to analyze the kinematics of stars, identifying their ejection velocities and origins within the Milky Way disk, with a focus on distinguishing Galactic center origins, disk runaways, and outer disk ejections through precise backward integration in a realistic Galactic potential model. Quantitative spectrophotometric analysis: This section describes the use of spectrophotometric distance and atmospheric parameters derived from high-precision spectral analysis to overcome the limitations of Gaia's parallax measurements for distant stars in a kinematic study.",
+        "highlight": {
+          "abstract": [
+            "Since the discovery of <em>hypervelocity</em> <em>stars</em> in 2005, it has been widely believed that only the disruption of a binary system by a supermassive black hole at the Galactic center (GC), that is, the so-called",
+            "Hills mechanism, is capable of accelerating <em>stars</em> to beyond the Galactic escape velocity.",
+            "Moreover, the ejection velocities of these extreme disk-runaway <em>stars</em> exceed the predicted limits of the classical scenarios for the production of runaway <em>stars</em>.",
+            "All other program <em>stars</em> are shown to be disk runaways with ejection velocities that sharply contrast at least with classical ejection scenarios.",
+            "While most <em>stars</em> originate from within a galactocentric radius of 15kpc, which corresponds to the observed extent of the spiral arms, a group of five <em>stars</em> stems from radii of about 21-29kpc."
+          ],
+          "title": [
+            "Blue extreme disk-runaway <em>stars</em> with Gaia EDR3"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "uses_existing_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper analyzes kinematics of 30 extreme disk-runaway stars using Gaia EDR3 proper motions and spectrophotometric distances, with specific objects mentioned (S5-HVS1, HVS5, HVS6).",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "orbit_integrations",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:50:04"
+      }
+    },
+    {
+      "arxiv_id": "2101.05771",
+      "title": "A search for runaway stars in twelve Galactic supernova remnants",
+      "authors": [
+        "Oliver Lux",
+        "R. Neuhäuser",
+        "M. Mugrauer",
+        "R. Bischoff"
+      ],
+      "author_names": "Oliver Lux R. Neuhäuser M. Mugrauer R. Bischoff",
+      "categories": [
+        "astro-ph.SR",
+        "astro-ph.GA"
+      ],
+      "published_at": "2021-01-14 00:00:00",
+      "updated_at": "2021-01-14 18:21:44",
+      "links": {
+        "abs": "https://arxiv.org/abs/2101.05771",
+        "pdf": "https://arxiv.org/pdf/2101.05771"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Runaway stars can result from core-collapse supernovae in multiple stellar systems. If the supernova disrupts the system, the companion gets ejected with its former orbital velocity. A clear identification of a runaway star can yield the time and place of the explosion as well as orbital parameters of the pre-supernova binary system. Previous searches have mostly considered O- and B-type stars as runaway stars because they are always young in absolute terms (not much older than the lifetime of the progenitor) and can be detected up to larger distances. We present here a search for runaway stars of all spectral types. For late-type stars, a young age can be inferred from the lithium test. We used Gaia data to identify and characterise runaway star candidates in nearby supernova remnants, obtained spectra of 39 stars with UVES at the VLT and HDS at the Subaru telescope and found a significant amount of lithium in the spectra of six dwarf stars. We present the spectral analysis, including measurements of radial velocities, atmospheric parameters and lithium abundances. Then we estimate the ages of our targets from the Hertzsprung-Russell diagram and with the lithium test, present a selection of promising runaway star candidates and draw constraints on the number of ejected runaway stars compared to model expectations."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 30.363607
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: runaway stars"
+      },
+      "deepxiv": {
+        "score": 11.125347,
+        "best_score": 30.363607,
+        "search_keywords": null,
+        "citations": "4"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] A systematic search for runaway stars across all spectral types in twelve nearby Galactic supernova remnants identifies six late-type dwarf stars with significant lithium abundances, indicating youth consistent with a binary supernova ejection origin. High-resolution spectroscopy reveals radial velocities and atmospheric parameters, enabling age estimation via the Hertzsprung-Russell diagram and lithium depletion tests; the findings suggest a non-negligible population of late-type runaway stars, challenging the long-standing focus on O/B-type stars and providing constraints on binary supernova ejection models.",
+        "keywords": [
+          "lithium test",
+          "binary supernova ejection",
+          "runaway star kinematics",
+          "supernova remnant association",
+          "stellar age estimation"
+        ],
+        "citations": "4",
+        "published_at": "2021-01-14T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2101.05771",
+          "src_url": "https://arxiv.org/pdf/2101.05771",
+          "title": "A search for runaway stars in twelve Galactic supernova remnants"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T214845"
+      },
+      "source_fields": {
+        "pg_id": 1790649,
+        "venue": "Astronomical Notes - Astronomische Nachrichten",
+        "journal_name": "Astronomische Nachrichten",
+        "status": "extracted",
+        "token_count": 44712,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": null,
+        "sections_text": "Footnotes: The footnotes provide citations, references, and methodological details for observational data, spectral analysis, and online resources used in the study. Discussion: The experiment confirms HD 37424 as a runaway star originating from the SNR G180.0–01.7, with key results showing that among 192 candidates across SNRs, only one (HD 37424) was verified via UVES observations, while others remain unconfirmed or inconsistent with known pulsar trajectories, and Gaia DR2 significantly reduced candidate numbers by tightening positional constraints. Conclusions: The search identified 74 promising runaway star candidates, primarily K-type dwarfs with lithium, among which only HD 37424 is confirmed, and further observations with high resolution and precise explosion site determination are needed to confirm a binary explosion (BES) origin. Introduction: This paper introduces a novel classification framework that treats all stars with a possible binary supernova ejection origin—regardless of their peculiar velocity—as runaway star candidates, addressing the ambiguity in distinguishing between runaway and walkaway stars and enabling a more comprehensive statistical study of binary supernova ejection mechanisms. Observations: This section describes the observational strategies and results of spectroscopic surveys of runaway star candidates using UVES at the VLT and HDS at the Subaru telescope, focusing on southern and northern supernova remnants to study stellar properties and lithium abundance. | Spectral Analysis: Spectral analysis reveals Li absorption in ten VLT spectra, with six Li-rich stars identified in the Monoceros Loop and Vela/Vela Jr., including a new double-lined spectroscopic binary, TYC159-251-1, whose components were disentangled using template subtraction. | Candidate Selection: The candidate selection process for supernova remnants (SNRs) and runaway star candidates involved combining positional data from the Green catalogue and Manitoba catalogue, applying magnitude and distance limits based on observational constraints and Gaia data releases to ensure sufficient signal-to-noise ratios and feasible follow-up observations, with special attention to historically known SNRs for accurate age and distance determination. A search for runaway stars in twelve Galactic supernova remnants†: This study identifies six lithium-rich dwarf stars in nearby supernova remnants as potential runaway stars, using Gaia data and high-resolution spectroscopy to constrain their ages and orbital histories, offering new insights into binary supernova ejection mechanisms.",
+        "highlight": {
+          "abstract": [
+            "Runaway <em>stars</em> can result from core-collapse supernovae in multiple stellar systems. If the supernova disrupts the system, the companion gets ejected with its former orbital velocity.",
+            "Previous searches have mostly considered O- and B-type <em>stars</em> as runaway <em>stars</em> because they are always young in absolute terms (not much older than the lifetime of the progenitor) and can be detected up",
+            "We present here a search for runaway <em>stars</em> of all spectral types. For late-type <em>stars</em>, a young age can be inferred from the lithium test.",
+            "We used Gaia data to identify and characterise runaway star candidates in nearby supernova remnants, obtained spectra of 39 <em>stars</em> with UVES at the VLT and HDS at the Subaru telescope and found a significant",
+            "amount of lithium in the spectra of six dwarf <em>stars</em>."
+          ],
+          "title": [
+            "A search for runaway <em>stars</em> in twelve Galactic supernova remnants"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.9,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Search for runaway stars in 12 supernova remnants using Gaia data, with spectra obtained for 39 stars and detailed analysis of 6 lithium-rich dwarfs including radial velocities and atmospheric parameters.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "spectra",
+          "abundances",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:50:04"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 2,
+    "catalog_count": 2,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:50:04"
+  }
+}

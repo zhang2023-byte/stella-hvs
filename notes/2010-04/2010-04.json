@@ -1,0 +1,200 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2010-04",
+  "date_from": "2010-04-01",
+  "date_to": "2010-04-30",
+  "run": {
+    "run_id": "20260419T221845",
+    "started_at": "2026-04-19T22:18:45"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2010-04",
+    "date_from": "2010-04-01",
+    "date_to": "2010-04-30",
+    "raw_unique": 29,
+    "relevant_count": 1,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 29,
+    "classifier_included": 1,
+    "classifier_filtered": 28,
+    "classifier_errors": 0,
+    "direct_rule_included": 0,
+    "weak_rule_candidates": 1,
+    "weak_llm_reviewed": 1,
+    "weak_llm_included": 1,
+    "brief_eligible_count": 0,
+    "brief_skipped_weak_count": 1
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 61,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 130,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 61,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 62,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 62,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1004.2703",
+      "title": "Dynamical constraints on the origin of the young B-stars in the Galactic center",
+      "authors": [
+        "Hagai B. Perets",
+        "Alessia Gualandris"
+      ],
+      "author_names": "Hagai B. Perets Alessia Gualandris",
+      "categories": [
+        "astro-ph.GA",
+        "astro-ph.SR"
+      ],
+      "published_at": "2010-04-15 00:00:00",
+      "updated_at": "2010-04-15 20:00:03",
+      "links": {
+        "abs": "https://arxiv.org/abs/1004.2703",
+        "pdf": "https://arxiv.org/pdf/1004.2703"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Regular star formation is thought to be inhibited close to the massive black hole (MBH) in the Galactic center. Nevertheless, tens of young main sequence B stars have been observed in an isotropic distribution close to it. Various models have been suggested for the formation of the B-stars closest to the MBH (<0.05 pc; the S-stars), typically involving the migration of these stars from their original birthplace to their currently observed position. Here we explore the orbital phase space distribution of the B-stars throughout the central pc expected from the various suggested models for the origin of the B-stars. We find that most of these models have difficulties in explaining, by themselves, both the population of the S-stars (<0.05 pc), and the population of the young B-stars further away (up to 0.5 pc). Most models grossly over-predict the number of B-stars up to 0.5 pc, given the observed number of S-stars. Such models include the intermediate-mass black hole assisted cluster inspiral scenario, Kozai-like perturbations by two disks, spiral density waves migration in a gaseous disk, and some of the eccentric disk instability models. We focus on one of the other models, the massive perturber induced binary disruption, which is consistent with both the S-stars and the extended population of B-stars further away. For this model we use analytical arguments and N-body simulations to provide further observational predictions. These could be compared with future observations to further support this model, constrain it or refute it. These predictions include the radial distribution of the young B-stars, their eccentricity distribution and its dependence on distance from the MBH (higher eccentricities at larger distances from the MBH), as well as less specific expectations regarding their mass function."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 10.575067
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.85,
+        "reason": "Weak title match: galactic-center dynamical origins LLM confirmed: Paper discusses young B-stars in Galactic center with high eccentricities and migration/ejection mechanisms from binary disruption, consistent with runaway/high-velocity star origins."
+      },
+      "deepxiv": {
+        "score": 10.569336,
+        "best_score": 10.575067,
+        "search_keywords": null,
+        "citations": "44"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T221845"
+      },
+      "source_fields": {
+        "pg_id": 1359409,
+        "venue": null,
+        "journal_name": "The Astrophysical Journal",
+        "status": "extracted",
+        "token_count": 16161,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 06:57:10",
+        "sections_text": "5. Summary: This study demonstrates that only the external formation plus binary disruption model can consistently explain both the S-stars and extended young B-stars in the Galactic center, and provides predictive dynamical signatures for this scenario. 4. Discussion: The most consistent model for the origin of GC B-stars is external formation followed by binary disruption, which predicts a higher eccentricity distribution in the outer region and a bi-modal radial distribution with a peak in the inner region, matching observed constraints on the inner/outer star ratio and eccentricity trends. the central pc: This section details the binary disruption model for the origin of B-stars in the Galactic center, showing how the radial distribution and orbital properties of captured stars arise from the disruption of binaries approaching the massive black hole, with predictions that can serve as strong constraints on the model. 1. Introduction: This paper proposes a novel model in which a single origin—via massive perturber-induced binary disruption—explains the isotropic distribution and diverse orbital properties of all B-stars in the Galactic Center, including both the S-stars and extended population, and provides specific observational predictions for this scenario. 2. Origins and evolution: The origin of young B-stars in the galactic center is likely due to either in-situ star formation in gaseous clumps or migration of stars formed farther out, with current observations strongly constraining and largely excluding simple in-situ models that produce the observed populations, including the inner S-stars.",
+        "highlight": {
+          "abstract": [
+            "Various models have been suggested for the formation of the B-<em>stars</em> closest to the MBH (<0.05 pc; the S-<em>stars</em>), typically involving the migration of these <em>stars</em> from their original birthplace to their",
+            "Here we explore the orbital phase space distribution of the B-<em>stars</em> throughout the central pc expected from the various suggested models for the origin of the B-<em>stars</em>.",
+            "We find that most of these models have difficulties in explaining, by themselves, both the population of the S-<em>stars</em> (<0.05 pc), and the population of the young B-<em>stars</em> further away (up to 0.5 pc).",
+            "Most models grossly over-predict the number of B-<em>stars</em> up to 0.5 pc, given the observed number of S-<em>stars</em>.",
+            "We focus on one of the other models, the massive perturber induced binary disruption, which is consistent with both the S-<em>stars</em> and the extended population of B-<em>stars</em> further away."
+          ],
+          "title": [
+            "Dynamical constraints on the origin of the young B-<em>stars</em> in the Galactic center"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.8,
+        "catalog_role": "uses_existing_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper analyzes observed population of young B-stars in Galactic center with specific orbital constraints (radial distribution, eccentricities) and compares models to existing observational data.",
+        "data_products": [
+          "coordinates",
+          "astrometry",
+          "orbit_integrations"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:19:32"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T22:19:32"
+  }
+}

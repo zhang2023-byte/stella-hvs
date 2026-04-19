@@ -1,0 +1,210 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2021-05",
+  "date_from": "2021-05-01",
+  "date_to": "2021-05-31",
+  "run": {
+    "run_id": "20260419T214845",
+    "started_at": "2026-04-19T21:48:45"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2021-05",
+    "date_from": "2021-05-01",
+    "date_to": "2021-05-31",
+    "raw_unique": 34,
+    "relevant_count": 1,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 34,
+    "classifier_included": 1,
+    "classifier_filtered": 33,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 1,
+    "weak_llm_reviewed": 1,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 139,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 341,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 141,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 140,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 140,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2105.12600",
+      "title": "Analysis of Selected Runaway Stars in the Orion Nebula Based on Data from the Gaia EDR3 Catalogue",
+      "authors": [
+        "V. V. Bobylev",
+        "A. T. Bajkova"
+      ],
+      "author_names": "V. V. Bobylev A. T. Bajkova",
+      "categories": [
+        "astro-ph.SR",
+        "astro-ph.GA"
+      ],
+      "published_at": "2021-05-26 00:00:00",
+      "updated_at": "2021-05-26 14:56:14",
+      "links": {
+        "abs": "https://arxiv.org/abs/2105.12600",
+        "pdf": "https://arxiv.org/pdf/2105.12600"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We have performed Monte Carlo simulations of the trajectories of several runaway stars using their parallaxes and proper motions from the Gaia EDR3 catalogue. We have confirmed the hypothesis that the stars AE Aur and $\\\\\\\\mu$Col are a product of the multiple system breakup $\\\\\\\\sim$2.5 Myr ago and the Orion Trapezium may be the parent cluster for this pair of stars. We show that the data from the Gaia EDR3 catalogue for the star $\\\\\\\\iota$Ori, mainly the parallax, do not allow us to talk about the breakup of the multiple system of AE Aur, $\\\\\\\\mu$Col, and $\\\\\\\\iota$Ori. The existence of close pair encounters between the stars HD 30112 and HD 43112 $\\\\\\\\sim$1 Myr ago has been confirmed. Close triple encounters confirm the hypothesis that the stars HD 30112 and HD 43112 escaped from the parent cluster Col 69. We show that the stars HIP 28133 and TYC 5368-1541-1 have a nonzero probability of escape from the region within 10 pc of the center of the Orion Trapezium cluster and a fairly high probability (about 8\\\\\\\\%) that they were both at distances less than 20 pc from the center of the Orion Trapezium $\\\\\\\\sim$2.5 Myr ago. It has been established for the first time that the stars Gaia EDR3 3021115184676332288 and Gaia EDR3 2983790269606043648 have a probability of about 0.5\\\\\\\\% that they broke up as a binary system $\\\\\\\\sim$1.1 Myr ago. The star Gaia EDR3 3021115184676332288 has a probability of about 16\\\\\\\\% that it escaped from the region within 10 pc of the center of the Orion Trapezium cluster $\\\\\\\\sim$1 Myr ago."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 23.03337
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: runaway stars"
+      },
+      "deepxiv": {
+        "score": 9.676123,
+        "best_score": 23.03337,
+        "search_keywords": null,
+        "citations": "1"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[astronomical research paper] Monte Carlo trajectory simulations of runaway stars in the Orion Nebula using Gaia EDR3 data reveal that AE Aur and μCol likely originated from a multiple system breakup ~2.5 Myr ago, with the Orion Trapezium as their parent cluster; Gaia EDR3 parallaxes and proper motions significantly improve distance and motion accuracy over prior catalogs, enabling more precise detection of stellar encounters and ejection events; new evidence supports a close pair encounter between HD 30112 and HD 43112 ~1 Myr ago and confirms their ejection from Col 69, while the breakup of Gaia EDR3 3021115184676332288 and Gaia EDR3 2983790269606043648 as a binary ~1.1 Myr ago is found with ~0.5% probability, and one of these stars has a 16% chance of escaping the 10 pc region of the Orion Trapezium cluster ~1 Myr ago.",
+        "keywords": [
+          "runaway star dynamics",
+          "stellar encounter simulation",
+          "multiple system breakup",
+          "Orion Trapezium cluster",
+          "Gaia EDR3 parallax accuracy"
+        ],
+        "citations": "1",
+        "published_at": "2021-05-26T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2105.12600",
+          "src_url": "https://arxiv.org/pdf/2105.12600",
+          "title": "Analysis of Selected Runaway Stars in the Orion Nebula Based on Data from the Gaia EDR3 Catalogue"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T214845"
+      },
+      "source_fields": {
+        "pg_id": 1680650,
+        "venue": "Astronomy letters",
+        "journal_name": "Astronomy Letters",
+        "status": "extracted",
+        "token_count": 12138,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 17:57:10",
+        "sections_text": "DATA: This section presents and compares kinematic data from various catalogs for AE Aur, μCol, and ιOri, highlighting improved accuracy in Gaia EDR3 measurements and emphasizing the use of VLBI data for high-precision parallaxes and proper motions to identify potential runaway stars in the Orion Nebula. METHOD: The paper proposes a method that uses an axisymmetric Galactic potential model to simulate stellar orbits backward in time, computes minimum separations and encounter times between stars (and triples) via numerical integration and Monte Carlo error propagation, and analyzes their distributions to identify potential stellar encounters. CONCLUSIONS: Monte Carlo simulations using Gaia EDR3 data confirm the binary breakup origins and escape histories of several runaway stars, supporting historical hypotheses while revealing new evidence for recent binary disruptions and ejections from the Orion Trapezium cluster. INTRODUCTION: This paper makes a novel contribution by using high-precision Gaia EDR3 data to refine the trajectories of runaway stars in the Orion Nebula, thereby testing the binary collision ejection scenario and quantifying the proximity of stellar encounters with the Orion Trapezium and Col 69 clusters—addressing the problem of identifying the origin and dynamical history of these high-velocity stars. RESULTS AND DISCUSSION: The simulations reveal that AE Aur and $\\\\mu$Col experienced a close encounter $\\\\sim$2.5 Myr ago, supporting their origin as a binary disruption product from the Orion Trapezium cluster, while the triple encounter involving $\\\\iota$Ori shows a double-humped separation distribution due to its late arrival and measurement biases, inconsistent with earlier studies but consistent when using Hipparcos parallaxes.",
+        "highlight": {
+          "abstract": [
+            "We have performed Monte Carlo simulations of the trajectories of several runaway <em>stars</em> using their parallaxes and proper motions from the Gaia EDR3 catalogue.",
+            "We have confirmed the hypothesis that the <em>stars</em> AE Aur and $\\\\\\\\mu$Col are a product of the multiple system breakup $\\\\\\\\sim$2.5 Myr ago and the Orion Trapezium may be the parent cluster for this pair",
+            "of <em>stars</em>.",
+            "The existence of close pair encounters between the <em>stars</em> HD 30112 and HD 43112 $\\\\\\\\sim$1 Myr ago has been confirmed.",
+            "Close triple encounters confirm the hypothesis that the <em>stars</em> HD 30112 and HD 43112 escaped from the parent cluster Col 69."
+          ],
+          "title": [
+            "Analysis of Selected Runaway <em>Stars</em> in the Orion Nebula Based on Data from the Gaia EDR3 Catalogue"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.9,
+        "catalog_role": "uses_existing_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper analyzes specific runaway stars using Gaia EDR3 observational data (parallaxes, proper motions) for trajectory simulations. Mentions specific stars by name and Gaia source IDs.",
+        "data_products": [
+          "coordinates",
+          "astrometry",
+          "source_ids"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:50:33"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:50:33"
+  }
+}

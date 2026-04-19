@@ -1,0 +1,196 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2018-03",
+  "date_from": "2018-03-01",
+  "date_to": "2018-03-31",
+  "run": {
+    "run_id": "20260419T215908",
+    "started_at": "2026-04-19T21:59:08"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2018-03",
+    "date_from": "2018-03-01",
+    "date_to": "2018-03-31",
+    "raw_unique": 29,
+    "relevant_count": 1,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 29,
+    "classifier_included": 1,
+    "classifier_filtered": 28,
+    "classifier_errors": 0,
+    "direct_rule_included": 0,
+    "weak_rule_candidates": 2,
+    "weak_llm_reviewed": 2,
+    "weak_llm_included": 1,
+    "brief_eligible_count": 0,
+    "brief_skipped_weak_count": 1
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 133,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 328,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 135,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 134,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 134,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1803.10107",
+      "title": "The secular tidal disruption of stars by low-mass Super Massive Black Holes secondaries in galactic nuclei",
+      "authors": [
+        "Giacomo Fragione",
+        "Nathan Leigh"
+      ],
+      "author_names": "Giacomo Fragione Nathan Leigh",
+      "categories": [
+        "astro-ph.GA",
+        "astro-ph.HE"
+      ],
+      "published_at": "2018-03-27 00:00:00",
+      "updated_at": "2018-08-19 12:48:10",
+      "links": {
+        "abs": "https://arxiv.org/abs/1803.10107",
+        "pdf": "https://arxiv.org/pdf/1803.10107"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Stars passing too close to a super massive black hole (SMBH) can produce tidal disruption events (TDEs). Since the resulting stellar debris can produce an electromagnetic flare, TDEs are believed to probe the presence of single SMBHs in galactic nuclei, which otherwise remain dark. In this paper, we show how stars orbiting an IMBH secondary are perturbed by an SMBH primary. We find that the evolution of the stellar orbits are severely affected by the primary SMBH due to secular effects and stars orbiting with high inclinations with respect to the SMBH-IMBH orbital plane end their lives as TDEs due to Kozai-Lidov oscillations, hence illuminating the secondary SMBH/IMBH. Above a critical SMBH mass of $\\\\\\\\approx 1.15 \\\\\\\\times 10^8$ M$_{\\\\\\\\odot}$, no TDE can occur for typical stars in an old stellar population since the Schwarzschild radius exceeds the tidal disruption radius. Consequently, any TDEs due to such massive SMBHs will remain dark. It follows that no TDEs should be observed in galaxies with bulges more massive than $\\\\\\\\approx 4.15\\\\\\\\times 10^{10}$ M$_{\\\\\\\\odot}$, unless a lower-mass secondary SMBH or IMBH is also present. The secular mechanism for producing TDEs considered here therefore offers a useful probe of SMBH-SMBH/IMBH binarity in the most massive galaxies. We further show that the TDE rate can be $\\\\\\\\approx 10^{-4}-10^{-3}$ yr$^{-1}$, and that most TDEs occur on $\\\\\\\\approx 0.5$ Myr. Finally, we show that stars may be ejected with velocities up to thousands of km s$^{-1}$, which could contribute to the observed population of Galactic hypervelocity stars."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 16.310759
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.8,
+        "reason": "Weak title match: stellar interactions in dense systems LLM confirmed: Abstract explicitly mentions ejection of stars with velocities up to thousands of km/s contributing to hypervelocity star population"
+      },
+      "deepxiv": {
+        "score": 16.310759,
+        "best_score": 16.310759,
+        "search_keywords": null,
+        "citations": "25"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T215908"
+      },
+      "source_fields": {
+        "pg_id": 1510473,
+        "venue": "Monthly notices of the Royal Astronomical Society",
+        "journal_name": "Monthly Notices of the Royal Astronomical Society",
+        "status": "extracted",
+        "token_count": 15550,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 16:08:24",
+        "sections_text": "Method: The paper proposes a secular dynamical model that tracks how stars in a massive black hole binary system experience Kozai-Lidov oscillations and general relativistic damping, leading to eccentricity excitation and eventual tidal disruption or scattering, depending on the mass ratio and orbital parameters of the SMBH-IMBH binary. Results: In a 1 Myr simulation of an SMBH-IMBH binary, stars survive in a toroidal distribution near the IMBH, with TDE rates and semimajor axis distributions depending on IMBH mass, and tidal disruption occurs when the star's pericenter falls below $3R_t$, yielding a TDE event rate of approximately 0.1–1 per Myr for typical parameters. Introduction: This paper introduces a novel mechanism by which IMBHs can significantly enhance the tidal disruption event (TDE) rate in galactic nuclei—particularly in SMBH-IMBH binaries—through the Kozai-Lidov mechanism, thereby providing a detectable observational signature to resolve the long-standing lack of direct evidence for IMBHs. Discussions and Conclusions: High-precision N-body simulations show that a secondary SMBH perturbs stellar orbits in an IMBH-hosting binary, leading to Kozai-Lidov-driven TDEs at rates of $10^{-4}-10^{-3}$ yr$^{-1}$ with typical timescales of 0.5 Myr, forming a torus-like stellar distribution resolvable by current telescopes, and enabling TDEs onto IMBHs in massive galaxies above a critical SMBH mass of $1.15 \\\\times 10^8$ M$_\\\\odot$, while also producing ejected HVSs at $\\\\approx 1\\\\%$ of the standard Hills rate.",
+        "highlight": {
+          "abstract": [
+            "<em>Stars</em> passing too close to a super massive black hole (SMBH) can produce tidal disruption events (TDEs).",
+            "In this paper, we show how <em>stars</em> orbiting an IMBH secondary are perturbed by an SMBH primary.",
+            "We find that the evolution of the stellar orbits are severely affected by the primary SMBH due to secular effects and <em>stars</em> orbiting with high inclinations with respect to the SMBH-IMBH orbital plane end",
+            "Above a critical SMBH mass of $\\\\\\\\approx 1.15 \\\\\\\\times 10^8$ M$_{\\\\\\\\odot}$, no TDE can occur for typical <em>stars</em> in an old stellar population since the Schwarzschild radius exceeds the tidal disruption",
+            "Finally, we show that <em>stars</em> may be ejected with velocities up to thousands of km s$^{-1}$, which could contribute to the observed population of Galactic <em>hypervelocity</em> <em>stars</em>."
+          ],
+          "title": [
+            "The secular tidal disruption of <em>stars</em> by low-mass Super Massive Black Holes secondaries in galactic nuclei"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.95,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Purely theoretical paper on tidal disruption mechanisms and ejection velocities, no observational data presented",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:01:00"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 0,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T22:01:00"
+  }
+}

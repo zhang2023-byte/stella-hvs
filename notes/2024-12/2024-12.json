@@ -1,0 +1,311 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2024-12",
+  "date_from": "2024-12-01",
+  "date_to": "2024-12-31",
+  "run": {
+    "run_id": "20260419T213844",
+    "started_at": "2026-04-19T21:38:44"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2024-12",
+    "date_from": "2024-12-01",
+    "date_to": "2024-12-31",
+    "raw_unique": 40,
+    "relevant_count": 2,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 40,
+    "classifier_included": 2,
+    "classifier_filtered": 38,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 1,
+    "weak_llm_reviewed": 1,
+    "weak_llm_included": 1,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 1
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 173,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 425,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 178,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 175,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 175,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2412.00975",
+      "title": "On the Orbital Effects of Stellar Collisions in Galactic Nuclei: Tidal Disruption Events and Ejected Stars",
+      "authors": [
+        "Sanaea C. Rose",
+        "Brenna Mockler"
+      ],
+      "author_names": "Sanaea C. Rose Brenna Mockler",
+      "categories": [
+        "astro-ph.GA",
+        "astro-ph.HE"
+      ],
+      "published_at": "2024-12-01 00:00:00",
+      "updated_at": "2025-05-04 18:58:50",
+      "links": {
+        "abs": "https://arxiv.org/abs/2412.00975",
+        "pdf": "https://arxiv.org/pdf/2412.00975"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Dense stellar clusters surround the supermassive black holes (SMBH) in galactic nuclei. Interactions within the cluster can alter the stellar orbits, occasionally driving a star into the SMBH's tidal radius where it becomes ruptured, or expelling a star from the nuclear cluster. This proof-of-concept study examines the orbital effects of stellar collisions using a semi-analytic model. Both low and high speed collisions occur in the SMBH's sphere of influence. We find that collisions can place stars on nearly radial orbits. Depositing stars within the tidal radius, collisions may drive the disruption of stars with unusual masses and structures: depending on the nature of the collision, the star could be the product of a recent merger, or it could have lost its outer layers in a previous high speed impact, appearing as a stripped star. We also find that high speed collisions near the periapsis of an eccentric orbit can unbind stars from the SMBH. However, dissipation during these high-speed collisions can substantially reduce the number of unbound stars achieved in our simulations. We conclude that tidal disruption events (TDEs) and ejected stars, even in the hypervelocity regime, are plausible outcomes of stellar collisions, though their frequency in a three-dimensional nuclear star cluster are uncertain. Future work will address the rates and properties of these events."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "unbound stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 17.520107
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: unbound, escaping, or ejected stars"
+      },
+      "deepxiv": {
+        "score": 17.520107,
+        "best_score": 17.520107,
+        "search_keywords": null,
+        "citations": "1"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] A semi-analytic model demonstrates that stellar collisions in galactic nuclei can deposit stars onto TDE-producing orbits, particularly through near-radial trajectories induced by low- and high-speed impacts. High-speed collisions near periastron can eject stars from the SMBH, but dynamical dissipation suppresses unbound star yields; collision outcomes include merged or stripped stars with unusual masses and compositions, potentially explaining observed TDEs with elevated N/C ratios. The study highlights orbital transformation mechanisms in dense stellar environments, with implications for the origin of rare stellar populations and electromagnetic signatures in galactic centers.",
+        "keywords": [
+          "stellar dynamics",
+          "collisional orbit transformation",
+          "tidal disruption events",
+          "stripped stars",
+          "hypervelocity star ejection"
+        ],
+        "citations": "1",
+        "published_at": "2024-12-01T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2412.00975",
+          "src_url": "https://arxiv.org/pdf/2412.00975",
+          "title": "On the Orbital Effects of Stellar Collisions in Galactic Nuclei: Tidal Disruption Events and Ejected Stars"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T213844"
+      },
+      "source_fields": {
+        "pg_id": 1197190,
+        "venue": "Astrophysical Journal Letters",
+        "journal_name": "The Astrophysical Journal Letters",
+        "status": "extracted",
+        "token_count": 21477,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-23 16:15:36",
+        "sections_text": "Results: Stellar collisions in the inner 0.1 pc of the cluster produce a significant fraction of TDEs via high-speed impacts, with 5% of stars experiencing unbound orbits and a notable population of partial TDEs (with orbital periods <30 yr) originating from merger and high-speed collision events, highlighting the importance of dynamical interactions in TDE formation. Results#2: Including two-body relaxation, collisions induce TDEs in about 0.7% of stars with half showing significant orbital disruption and only a small fraction experiencing >10% mass loss, yielding a collision-TDE rate of $10^{-8}$ to $10^{-7}$ per galaxy per year—about 100–1000× lower than the overall TDE rate, though rising to ~30–300× lower when including stars with significant stripping or mergers. Conclusion: This study demonstrates that both merger and high-speed collision events in dense stellar clusters can alter stellar orbits, leading to tidal disruption events by driving stars into highly eccentric or close-in orbits, with potential for significant orbital evolution through subsequent interactions. Introduction: This paper introduces a novel framework linking stellar collisions in galactic nuclei to tidal disruption events by demonstrating that high-speed collisions can produce stripped stars with elevated N/C ratios, offering a compelling explanation for unexpected TDE observations that cannot be accounted for by standard single-star evolution models. Semi-Analytic Model: The method uses a statistical approach to simulate the evolution of a sample of $1M_{\\\\odot}$ stars in a stellar cluster, accounting for collisions and two-body relaxation through a collision timescale that depends on density, orbital eccentricity, and gravitational focusing, with collisions occurring when a random probability threshold is met over fixed timesteps. Model Nuclear Star Cluster: The paper proposes a semi-analytic model that simulates stellar collisions in a nuclear star cluster by using a power-law density profile and velocity dispersion derived from the gravitational influence of a supermassive black hole, with the core idea that stellar interaction rates are governed by local density and velocity dispersion to drive dynamical evolution.",
+        "highlight": {
+          "abstract": [
+            "We find that collisions can place <em>stars</em> on nearly radial orbits.",
+            "Depositing <em>stars</em> within the tidal radius, collisions may drive the disruption of <em>stars</em> with unusual masses and structures: depending on the nature of the collision, the star could be the product of a recent",
+            "We also find that high speed collisions near the periapsis of an eccentric orbit can unbind <em>stars</em> from the SMBH.",
+            "However, dissipation during these high-speed collisions can substantially reduce the number of unbound <em>stars</em> achieved in our simulations.",
+            "We conclude that tidal disruption events (TDEs) and ejected <em>stars</em>, even in the <em>hypervelocity</em> regime, are plausible outcomes of stellar collisions, though their frequency in a three-dimensional nuclear"
+          ],
+          "title": [
+            "the Orbital Effects of Stellar Collisions in Galactic Nuclei: Tidal Disruption Events and Ejected <em>Stars</em>"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.95,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Purely theoretical/simulation study of stellar collision effects on orbits in galactic nuclei; no observational data or catalog presented.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:42:07"
+      }
+    },
+    {
+      "arxiv_id": "2412.07738",
+      "title": "Runaway O and Be stars found using Gaia DR3, new stellar bow shocks and search for binaries",
+      "authors": [
+        "M. Carretero-Castrillo",
+        "M. Ribó",
+        "J. M. Paredes",
+        "P. Benaglia"
+      ],
+      "author_names": "M. Carretero-Castrillo M. Ribó J. M. Paredes P. Benaglia",
+      "categories": [
+        "astro-ph.SR",
+        "astro-ph.GA",
+        "astro-ph.HE"
+      ],
+      "published_at": "2024-12-10 00:00:00",
+      "updated_at": "2024-12-10 18:34:44",
+      "links": {
+        "abs": "https://arxiv.org/abs/2412.07738",
+        "pdf": "https://arxiv.org/pdf/2412.07738"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "A relevant fraction of massive stars are runaways, moving with a significant peculiar velocity with respect to their environment. Kicks from supernova explosions or the dynamical ejection of stars from clusters can account for the runaway genesis. We have used Gaia DR3 data to study the velocity distribution of massive O and Be stars from the GOSC and BeSS catalogs and identify runaway stars using a 2D-velocity method. We have discovered 42 new runaways from GOSC and 47 from BeSS, among a total of 106 and 69 runaways found within these catalogs, respectively. These numbers imply a percentage of runaways of ~25% for O-type stars ~5% for Be-type stars. The higher percentages and higher velocities found for O-type compared to Be-type runaways suggest that the dynamical ejection scenario is more likely than the supernova explosion scenario. We have also performed multi-wavelength studies of our runaways. We have used WISE infrared images to discover 13 new stellar bow shocks around the runaway stars. We have also conducted VLA radio observations of some of these bow shocks. Finally, our runaway stars include six X-ray binaries and one gamma-ray binary, implying that new such systems could be found by conducting detailed multi-wavelength studies. In this work we report on this ongoing project to find new runaway stars, study their interaction with the ISM and search for high-energy binary systems."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 27.26744
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.99,
+        "reason": "Weak title match: runaway-related mechanisms LLM confirmed: Directly studies runaway O and Be stars using Gaia DR3, identifies new runaways, discusses ejection mechanisms (supernova kicks, dynamical ejection), and includes kinematics, catalogues, and multi-wavelength observations."
+      },
+      "deepxiv": {
+        "score": 10.227642,
+        "best_score": 27.26744,
+        "search_keywords": null,
+        "citations": "1"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T213844"
+      },
+      "source_fields": {
+        "pg_id": 1183669,
+        "venue": "Bulletin de la Société royale des sciences de Liège",
+        "journal_name": "Bulletin de la Société Royale des Sciences de Liège",
+        "status": "extracted",
+        "token_count": 11289,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 23:08:10",
+        "sections_text": "Conclusion: This study identifies 175 runaway stars, including 89 new discoveries, supports a dynamical ejection origin over supernova ejection, detects 13 new bow shocks with derived ISM densities, and finds one gamma-ray binary and six HMXBs, highlighting the potential for further discoveries through multi-wavelength observations. Introduction: This paper presents a refined, comprehensive study of massive runaway stars using Gaia's high-precision proper motions and parallaxes, addressing the ambiguity in runaway star formation scenarios by providing a more accurate census of O, B, and Be stars and evaluating the relative contributions of the dynamical ejection and binary supernova scenarios. Search for binaries: This section identifies six HMXBs and one gamma-ray binary among runaway stars, with notable first identifications of Vela X-1 and SAX J2103.5+4545 as runaway HMXBs, and outlines future multi-wavelength studies and radial velocity/rotation analyses to refine candidates for high-energy binary systems. Search for stellar bow shocks: A search using WISE data identified 13 new and 16 known stellar bow shocks, primarily associated with O-type stars, and estimated median interstellar medium densities of ∼4 cm⁻³, while radio counterparts remained inconclusive due to morphological mismatches. Search for runaway stars with Gaia DR3: This section describes the selection and processing of O-type and Be stars from Gaia DR3 data to identify potential runaway stars, using astrometric and photometric quality cuts and Galactic rotation models to derive distances and velocities.",
+        "highlight": {
+          "abstract": [
+            "A relevant fraction of massive <em>stars</em> are runaways, moving with a significant peculiar velocity with respect to their environment.",
+            "Kicks from supernova explosions or the dynamical ejection of <em>stars</em> from clusters can account for the runaway genesis.",
+            "We have used Gaia DR3 data to study the velocity distribution of massive O and Be <em>stars</em> from the GOSC and BeSS catalogs and identify runaway <em>stars</em> using a 2D-velocity method.",
+            "These numbers imply a percentage of runaways of ~25% for O-type <em>stars</em> ~5% for Be-type <em>stars</em>.",
+            "In this work we report on this ongoing project to find new runaway <em>stars</em>, study their interaction with the ISM and search for high-energy binary systems."
+          ],
+          "title": [
+            "Runaway O and Be <em>stars</em> found using Gaia DR3, new stellar bow shocks and search for binaries"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.98,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Uses Gaia DR3 to identify runaway O and Be stars from GOSC/BeSS catalogs, discovers 42+47 new runaways, presents candidate lists with kinematics, and includes multi-wavelength observations.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:42:07"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 2,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:42:07"
+  }
+}

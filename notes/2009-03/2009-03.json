@@ -1,0 +1,198 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2009-03",
+  "date_from": "2009-03-01",
+  "date_to": "2009-03-31",
+  "run": {
+    "run_id": "20260419T222008",
+    "started_at": "2026-04-19T22:20:08"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2009-03",
+    "date_from": "2009-03-01",
+    "date_to": "2009-03-31",
+    "raw_unique": 28,
+    "relevant_count": 1,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 28,
+    "classifier_included": 1,
+    "classifier_filtered": 27,
+    "classifier_errors": 0,
+    "direct_rule_included": 0,
+    "weak_rule_candidates": 1,
+    "weak_llm_reviewed": 1,
+    "weak_llm_included": 1,
+    "brief_eligible_count": 0,
+    "brief_skipped_weak_count": 1
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 115,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 208,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 116,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 115,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 115,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "0903.1843",
+      "title": "The Runaway White Dwarf LP400-22 Has a Companion",
+      "authors": [
+        "Mukremin Kilic",
+        "Warren R. Brown",
+        "Carlos Allende Prieto",
+        "B. Swift",
+        "S. J. Kenyon",
+        "J. Liebert",
+        "M. A. Agueros"
+      ],
+      "author_names": "Mukremin Kilic Warren R. Brown Carlos Allende Prieto B. Swift S. J. Kenyon J. Liebert M. A. Agueros",
+      "categories": [
+        "astro-ph.GA",
+        "astro-ph.SR"
+      ],
+      "published_at": "2009-03-10 00:00:00",
+      "updated_at": "2009-03-10 20:01:29",
+      "links": {
+        "abs": "https://arxiv.org/abs/0903.1843",
+        "pdf": "https://arxiv.org/pdf/0903.1843"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We report the detection of a radial velocity companion to the extremely low mass white dwarf LP400-22. The radial velocity of the white dwarf shows variations with a semi-amplitude of 119 km/s and a 0.98776 day period, which implies a companion mass of M > 0.37 Msun. The optical photometry rules out a main sequence companion. Thus the invisible companion is another white dwarf or a neutron star. Using proper motion measurements and the radial velocity of the binary system, we find that it has an unusual Galactic orbit. LP400-22 is moving away from the Galactic center with a velocity of 396 km/s, which is very difficult to explain by supernova runaway ejection mechanisms. Dynamical interactions with a massive black hole like that in the Galactic center can in principle explain its peculiar velocity, if the progenitor was a triple star system comprised of a close binary and a distant tertiary companion. Until better proper motions become available, we consider LP400-22 to be most likely a halo star with a very unusual orbit."
+      },
+      "match": {
+        "queries": [
+          "runaway stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 17.58285
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.9,
+        "reason": "Weak title match: runaway-related mechanisms LLM confirmed: Explicitly about a runaway white dwarf with high velocity (396 km/s) and discusses ejection mechanisms"
+      },
+      "deepxiv": {
+        "score": 17.58285,
+        "best_score": 17.58285,
+        "search_keywords": null,
+        "citations": "20"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T222008"
+      },
+      "source_fields": {
+        "pg_id": 2411012,
+        "venue": null,
+        "journal_name": "The Astrophysical Journal",
+        "status": "extracted",
+        "token_count": 8948,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 17:10:29",
+        "sections_text": "5. DISCUSSION: LP400–22 is a binary system with a 0.98776-day orbital period and a high space velocity of 398 ± 50 km s⁻¹, indicating it is a halo star with kinematics distinct from typical halo or disk runaways, ruling out supernova kicks and SNe Ia origins, and suggesting it is not a disk runaway or Galactic center ejection. 6. CONCLUSIONS: LP400–22 likely has a white dwarf companion and is part of a rare group of halo white dwarfs with unusual orbits, supporting a binary formation scenario for extremely low-mass white dwarfs. 1. INTRODUCTION: This paper presents the first radial velocity detection of a companion to the ultra-low-mass white dwarf LP400–22, providing critical observational evidence to test binary mass-loss scenarios and constrain the formation pathways of extremely low-mass white dwarfs. 2. OBSERVATIONS: This section describes the high-precision radial velocity measurements of LP400−22 obtained through moderate-resolution spectroscopy, with velocities derived from self-cross-correlation of co-added spectra and validated through multiple independent methods, yielding reliable results with systematic errors below 10 km s⁻¹. 4. THE NATURE OF THE COMPANION: The companion to LP400–22 is likely a low-mass white dwarf formed through a binary evolution involving a common envelope phase, with no detectable optical signature ruling out a main-sequence companion, and the system's properties are consistent with a 0.48 M⊙ white dwarf companion originating from a 2.0 M⊙ progenitor. 3. LP400$-$22 AND ITS COMPANION: The radial velocity variations of LP400$-$22 reveal a binary companion with a circular orbit of period 0.98776 days and radial velocity amplitude 118.7 km s⁻¹, while spectroscopic analysis confirms it as an extremely low-mass white dwarf with effective temperature of 11290 ± 50 K and surface gravity log g = 6.30 ± 0.02.",
+        "highlight": {
+          "abstract": [
+            "LP400-22 is moving away from the Galactic center with a velocity of 396 km/s, which is very difficult to explain by supernova <em>runaway</em> ejection mechanisms."
+          ],
+          "title": [
+            "The <em>Runaway</em> White Dwarf LP400-22 Has a Companion"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "followup_observations",
+        "object_scope": "single_object",
+        "evidence": "Paper reports detection of radial velocity companion to specific runaway white dwarf LP400-22, presents observational data including radial velocity variations, proper motion measurements, and orbital parameters.",
+        "data_products": [
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "orbit_integrations"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:20:47"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T22:20:47"
+  }
+}

@@ -1,0 +1,204 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2019-09",
+  "date_from": "2019-09-01",
+  "date_to": "2019-09-30",
+  "run": {
+    "run_id": "20260419T215548",
+    "started_at": "2026-04-19T21:55:48"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2019-09",
+    "date_from": "2019-09-01",
+    "date_to": "2019-09-30",
+    "raw_unique": 39,
+    "relevant_count": 1,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 39,
+    "classifier_included": 1,
+    "classifier_filtered": 38,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 0,
+    "weak_llm_reviewed": 0,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 184,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 457,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 185,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 182,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 184,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1909.03321",
+      "title": "The shape of the dark matter halo revealed from a hypervelocity star",
+      "authors": [
+        "Kohei Hattori",
+        "Monica Valluri"
+      ],
+      "author_names": "Kohei Hattori Monica Valluri",
+      "categories": [
+        "astro-ph.GA",
+        "astro-ph.CO",
+        "astro-ph.SR"
+      ],
+      "published_at": "2019-09-07 00:00:00",
+      "updated_at": "2019-09-07 19:06:28",
+      "links": {
+        "abs": "https://arxiv.org/abs/1909.03321",
+        "pdf": "https://arxiv.org/pdf/1909.03321"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "A recently discovered young, high-velocity giant star J01020100-7122208 is a good candidate of hypervelocity star ejected from the Galactic center, although it has a bound orbit. If we assume that this star was ejected from the Galactic center, it can be used to constrain the Galactic potential, because the deviation of its orbit from a purely radial orbit informs us of the torque that this star has received after its ejection. Based on this assumption, we estimate the flattening of the dark matter halo of the Milky Way by using the Gaia DR2 data and the circular velocity data from Eilers et al. (2019). Our Bayesian analysis shows that the orbit of J01020100-7122208 favors a prolate dark matter halo within $\\\\\\\\sim$ 10 kpc from the Galactic center. The posterior distribution of the density flattening $q$ shows a broad distribution at $q \\\\\\\\gtrsim1$ and peaks at $q \\\\\\\\simeq 1.5$. Also, 98.5\\\\\\\\% of the posterior distribution is located at $q>1$, highly disfavoring an oblate halo."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 19.382963
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars"
+      },
+      "deepxiv": {
+        "score": 19.382963,
+        "best_score": 19.382963,
+        "search_keywords": null,
+        "citations": "3"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] A Bayesian analysis of the hypervelocity star J01020100-7122208's orbit, using Gaia DR2 astrometry and circular velocity data, constrains the Milky Way's dark matter halo shape. The posterior distribution of the density flattening parameter $q$ favors a prolate halo with $q \\gtrsim 1$, peaking at $q \\simeq 1.5$, and strongly disfavors an oblate halo ($q < 1$) with 98.5% of the posterior at $q > 1$, indicating significant deviation from axial symmetry.",
+        "keywords": [
+          "dark matter halo flattening",
+          "hypervelocity star kinematics",
+          "Galactic potential reconstruction",
+          "Bayesian orbit analysis",
+          "astrometric systematic error correction"
+        ],
+        "citations": "3",
+        "published_at": "2019-09-07T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1909.03321",
+          "src_url": "https://arxiv.org/pdf/1909.03321",
+          "title": "The shape of the dark matter halo revealed from a hypervelocity star"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T215548"
+      },
+      "source_fields": {
+        "pg_id": 376364,
+        "venue": "Proceedings of the International Astronomical Union",
+        "journal_name": "Proceedings of the International Astronomical Union",
+        "status": "extracted",
+        "token_count": 5563,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 04:23:49",
+        "sections_text": "Data: This section presents corrected astrometric and kinematic data for the high-velocity star J0102, including systematic error adjustments to parallax and proper motion, and provides a circular velocity curve with combined random and systematic errors to contextualize the star's orbit within the Galactic potential. Formulation: This section presents a Bayesian framework to infer the Galactic potential and orbital history of star J0102, incorporating a realistic axisymmetric potential model, probabilistic disc crossing scenarios, and constraints from its observed 6D position and ejection from the Galactic center. Introduction: This paper presents a novel application of hypervelocity star orbital dynamics to constrain the dark halo's flattening $q$ using the newly discovered HVS candidate J0102, addressing the problem of accurately inferring the Galactic dark matter distribution from precise astrometric and velocimetric data. Analysis and results: The analysis shows that the dark matter halo is prolate with a posterior peak at $q \\\\simeq 1.5$ and 98.5% of the posterior lying above $q = 1$, demonstrating the effectiveness of hypervelocity star data in constraining halo shape despite limited constraints from circular velocity curves alone.",
+        "highlight": {
+          "abstract": [
+            "A recently discovered young, high-velocity giant star J01020100-7122208 is a good candidate of <em>hypervelocity</em> star ejected from the Galactic center, although it has a bound orbit."
+          ],
+          "title": [
+            "The shape of the dark matter halo revealed from a <em>hypervelocity</em> star"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.9,
+        "catalog_role": "uses_existing_catalog",
+        "object_scope": "single_object",
+        "evidence": "Paper analyzes specific hypervelocity star J01020100-7122208 using Gaia DR2 astrometry and radial velocity data to constrain dark matter halo shape",
+        "data_products": [
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "orbit_integrations"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:58:29"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:58:29"
+  }
+}

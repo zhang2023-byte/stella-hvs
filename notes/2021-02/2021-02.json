@@ -1,0 +1,200 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2021-02",
+  "date_from": "2021-02-01",
+  "date_to": "2021-02-28",
+  "run": {
+    "run_id": "20260419T214845",
+    "started_at": "2026-04-19T21:48:45"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2021-02",
+    "date_from": "2021-02-01",
+    "date_to": "2021-02-28",
+    "raw_unique": 36,
+    "relevant_count": 1,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 36,
+    "classifier_included": 1,
+    "classifier_filtered": 35,
+    "classifier_errors": 0,
+    "direct_rule_included": 0,
+    "weak_rule_candidates": 2,
+    "weak_llm_reviewed": 2,
+    "weak_llm_included": 1,
+    "brief_eligible_count": 0,
+    "brief_skipped_weak_count": 1
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 137,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 345,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 137,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 138,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 138,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2102.10210",
+      "title": "Bayesian Cross-Matching of High Proper Motion Stars in Gaia DR2 and Photometric Metallicities for $\\\\\\\\sim$1.7 million K and M Dwarfs",
+      "authors": [
+        "Ilija Medan",
+        "Sébastien Lépine",
+        "Zachary Hartman"
+      ],
+      "author_names": "Ilija Medan Sébastien Lépine Zachary Hartman",
+      "categories": [
+        "astro-ph.SR",
+        "astro-ph.GA",
+        "astro-ph.IM"
+      ],
+      "published_at": "2021-02-20 00:00:00",
+      "updated_at": "2021-02-20 00:07:27",
+      "links": {
+        "abs": "https://arxiv.org/abs/2102.10210",
+        "pdf": "https://arxiv.org/pdf/2102.10210"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "We present a Bayesian method to cross-match 5,827,988 high proper motion Gaia sources ($\\\\\\\\mu>40 \\\\\\\\ mas \\\\\\\\ yr^{-1}$) to various photometric surveys: 2MASS, AllWISE, GALEX, RAVE, SDSS and Pan-STARRS. To efficiently associate these objects across catalogs, we develop a technique that compares the multidimensional distribution of all sources in the vicinity of each Gaia star to a reference distribution of random field stars obtained by extracting all sources in a region on the sky displaced 2$^\\\\\\\\prime$. This offset preserves the local field stellar density and magnitude distribution allowing us to characterize the frequency of chance alignments. The resulting catalog with Bayesian probabilities $>$95% has a marginally higher match rate than current internal Gaia DR2 matches for most catalogs. However, a significant improvement is found with Pan-STARRS, where $\\\\\\\\sim$99.8% of the sample within the Pan-STARRS footprint is recovered, as compared to a low $\\\\\\\\sim$20.8% in Gaia DR2. Using these results, we train a Gaussian Process Regressor to calibrate two photometric metallicity relationships. For dwarfs of $3500<T_{eff}<5280$ K, we use metallicity values of 4,378 stars from APOGEE and Hejazi et al. (2020) to calibrate the relationship, producing results with a $1\\\\\\\\sigma$ precision of 0.12 dex and few systematic errors. We then indirectly infer the metallicity of 4,018 stars with $2850<T_{eff}<3500$ K, that are wide companions of primaries whose metallicities are estimated with our first regressor, to produce a relationship with a $1\\\\\\\\sigma$ precision of 0.21 dex and significant systematic errors. Additional work is needed to better remove unresolved binaries from this sample to reduce these systematic errors."
+      },
+      "match": {
+        "queries": [
+          "high-velocity stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 12.722382
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.85,
+        "reason": "Weak title match: high proper-motion or unusual kinematics LLM confirmed: Focuses on high proper motion stars (μ>40 mas/yr) which includes potential high-velocity/runaway stars, though not exclusively about them"
+      },
+      "deepxiv": {
+        "score": 12.722382,
+        "best_score": 12.722382,
+        "search_keywords": null,
+        "citations": "7"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T214845"
+      },
+      "source_fields": {
+        "pg_id": 1693947,
+        "venue": "Astronomical Journal",
+        "journal_name": "The Astronomical Journal",
+        "status": "extracted",
+        "token_count": 44186,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 21:14:10",
+        "sections_text": "Data Sets: This section describes a collection of external astronomical catalogs—Gaia, 2MASS, AllWISE, GALEX DR5, RAVE DR5, and SDSS DR12—used for cross-matching with a high proper motion Gaia subset, emphasizing their observational properties, sensitivities, and relevance to the study. Discussion: Our method, which combines astrometry and photometry, achieves higher cross-match rates than Marrese et al. (2019) for most external catalogs, particularly in deep catalogs like SDSS and Pan-STARRS, where it recovers nearly 100% of Gaia sources with high proper motions, whereas Marrese et al. (2019) shows significant proper motion dependence and lower match rates. Conclusions: This study develops a Bayesian cross-matching framework for high proper motion stars, improves photometric catalog quality, and establishes robust Gaussian Process regressors to estimate metallicities for K and early M dwarfs with superior accuracy and extended metal-poor reach, extending to later-type M dwarfs in binary systems. Introduction: This paper introduces a novel Bayesian matching framework that jointly incorporates astrometric proper motions and photometric data across multiple wavelengths to accurately match high proper motion stars, addressing the limitations of existing methods that either ignore photometry or assume independent distributions without handling variable epochs or observational biases. Catalog Cross-Match: The catalog cross-match accounts for epoch differences and proper motions by adjusting external catalog source positions to the Gaia epoch and applying a refined cross-matching criterion based on angular separation, with additional epoch uncertainty testing to ensure robust match identification. Photometric Metallicity Determination: This section presents a photometric metallicity calibration for K and early M dwarfs using Gaia, Pan-STARRS, 2MASS, and AllWISE photometry, combined with APOGEE and Hejazi et al. spectroscopic data, and validated through Gaussian Process regression to derive metallicity from broadband colors and magnitudes.",
+        "highlight": {
+          "abstract": [
+            "We present a Bayesian method to cross-match 5,827,988 <em>high</em> proper motion Gaia sources ($\\\\\\\\mu>40 \\\\\\\\ mas \\\\\\\\ yr^{-1}$) to various photometric surveys: 2MASS, AllWISE, GALEX, RAVE, SDSS and Pan-STARRS",
+            "associate these objects across catalogs, we develop a technique that compares the multidimensional distribution of all sources in the vicinity of each Gaia star to a reference distribution of random field <em>stars</em>",
+            "For dwarfs of $3500<T_{eff}<5280$ K, we use metallicity values of 4,378 <em>stars</em> from APOGEE and Hejazi et al. (2020) to calibrate the relationship, producing results with a $1\\\\\\\\sigma$ precision of 0.12",
+            "We then indirectly infer the metallicity of 4,018 <em>stars</em> with $2850<T_{eff}<3500$ K, that are wide companions of primaries whose metallicities are estimated with our first regressor, to produce a relationship"
+          ],
+          "title": [
+            "Bayesian Cross-Matching of <em>High</em> Proper Motion <em>Stars</em> in Gaia DR2 and Photometric Metallicities for $\\\\"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "compiled_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper presents cross-matched catalog of 5.8M high proper motion Gaia sources (μ>40 mas/yr) with Bayesian probabilities >95%, includes source matching across multiple surveys and derived photometric metallicities",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "photometry",
+          "metallicities",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:50:14"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:50:14"
+  }
+}

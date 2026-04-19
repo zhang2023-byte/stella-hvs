@@ -1,0 +1,209 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2015-01",
+  "date_from": "2015-01-01",
+  "date_to": "2015-01-31",
+  "run": {
+    "run_id": "20260419T220916",
+    "started_at": "2026-04-19T22:09:16"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2015-01",
+    "date_from": "2015-01-01",
+    "date_to": "2015-01-31",
+    "raw_unique": 32,
+    "relevant_count": 1,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 32,
+    "classifier_included": 1,
+    "classifier_filtered": 31,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 2,
+    "weak_llm_reviewed": 2,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 110,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 290,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 110,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 112,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 111,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1501.07824",
+      "title": "Nearby Low-Mass Hypervelocity Stars",
+      "authors": [
+        "Yanqiong Zhang",
+        "Martin C. Smith",
+        "Jeffrey L. Carlin"
+      ],
+      "author_names": "Yanqiong Zhang Martin C. Smith Jeffrey L. Carlin",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2015-01-30 00:00:00",
+      "updated_at": "2015-01-30 16:29:41",
+      "links": {
+        "abs": "https://arxiv.org/abs/1501.07824",
+        "pdf": "https://arxiv.org/pdf/1501.07824"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Hypervelocity stars are those that have speeds exceeding the escape speed and are hence unbound from the Milky Way. We investigate a sample of low-mass hypervelocity candidates obtained using data from the high-precision SDSS Stripe 82 catalogue, which we have combined with spectroscopy from the 200-inch Hale Telescope at Palomar Observatory. We find four good candidates, but without metallicities it is difficult to pin-down their distances and therefore total velocities. Our best candidate has a significant likelihood that it is escaping the Milky Way for a wide-range of metallicities."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 37.637604
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars"
+      },
+      "deepxiv": {
+        "score": 37.637604,
+        "best_score": 37.637604,
+        "search_keywords": null,
+        "citations": "2"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[astronomical research paper] The authors identify four low-mass hypervelocity star (HVS) candidates using high-precision proper motion data from the SDSS Stripe 82 survey, combined with spectroscopic radial velocity measurements from the Hale Telescope. Due to lack of metallicity data for K/M-type stars, distances and total velocities are estimated under a conservative [Fe/H] = -2 dex assumption, yielding total velocities exceeding 400 km/s for the best candidates; one candidate (NHCa) shows a high likelihood of being unbound from the Milky Way across a wide range of metallicities, suggesting a possible origin via tidal disruption by the galactic center.",
+        "keywords": [
+          "proper motion analysis",
+          "hypervelocity stars",
+          "stellar kinematics",
+          "tidal disruption",
+          "metallicity uncertainty"
+        ],
+        "citations": "2",
+        "published_at": "2015-01-30T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1501.07824",
+          "src_url": "https://arxiv.org/pdf/1501.07824",
+          "title": "Nearby Low-Mass Hypervelocity Stars"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T220916"
+      },
+      "source_fields": {
+        "pg_id": 2012604,
+        "venue": null,
+        "journal_name": "arXiv: Astrophysics of Galaxies",
+        "status": "extracted",
+        "token_count": 4274,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 10:11:56",
+        "sections_text": "Introduction: This paper introduces a novel search for low-mass hypervelocity star candidates using Stripe 82 data, addressing the gap in identifying such stars beyond O/B-type stars that are inconsistent with Galactic centre ejection scenarios. Data and methods: The paper proposes a method to identify nearby hypervelocity star candidates by selecting red main-sequence stars from the Stripe 82 dataset, excluding white dwarfs, assuming a low metallicity to estimate distances, and filtering for high tangential velocities and low proper motion errors, followed by spectroscopic confirmation of 3D velocities. Candidate hypervelocity stars: This section presents four nearby hypervelocity star candidates with high probabilities of being unbound from the Milky Way, emphasizing the importance of accurate proper motions and metallicity-dependent distance estimates in determining their escape velocities.",
+        "highlight": {
+          "abstract": [
+            "<em>Hypervelocity</em> <em>stars</em> are those that have speeds exceeding the escape speed and are hence unbound from the Milky Way.",
+            "We investigate a sample of low-mass <em>hypervelocity</em> candidates obtained using data from the high-precision SDSS Stripe 82 catalogue, which we have combined with spectroscopy from the 200-inch Hale Telescope"
+          ],
+          "title": [
+            "Nearby Low-Mass <em>Hypervelocity</em> <em>Stars</em>"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper presents four identified HVS candidates using SDSS Stripe 82 proper motion data and Palomar spectroscopy, with specific analysis of candidate NHCa.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:10:38"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T22:10:38"
+  }
+}

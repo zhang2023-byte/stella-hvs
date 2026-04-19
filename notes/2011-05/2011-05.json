@@ -1,0 +1,205 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2011-05",
+  "date_from": "2011-05-01",
+  "date_to": "2011-05-31",
+  "run": {
+    "run_id": "20260419T221736",
+    "started_at": "2026-04-19T22:17:36"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2011-05",
+    "date_from": "2011-05-01",
+    "date_to": "2011-05-31",
+    "raw_unique": 30,
+    "relevant_count": 1,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 30,
+    "classifier_included": 1,
+    "classifier_filtered": 29,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 0,
+    "weak_llm_reviewed": 0,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 70,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 149,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 70,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 72,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 70,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "1105.1432",
+      "title": "The spatial and velocity distributions of hypervelocity stars",
+      "authors": [
+        "Fupeng Zhang",
+        "Youjun Lu",
+        "Qingjuan Yu"
+      ],
+      "author_names": "Fupeng Zhang Youjun Lu Qingjuan Yu",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2011-05-07 00:00:00",
+      "updated_at": "2011-05-07 10:15:24",
+      "links": {
+        "abs": "https://arxiv.org/abs/1105.1432",
+        "pdf": "https://arxiv.org/pdf/1105.1432"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Hypervelocity stars (HVSs) found in the Galactic halo are probably the dynamical products of interactions between (binary) stars and the massive black hole(s) (MBH) in the Galactic center (GC). It has been shown that the detected HVSs are spatially consistent with being located on two thin disks (Lu et al.), one of which has the same orientation as the clockwise-rotating stellar disk in the GC. Here we perform a large number of three-body experiments of the interactions between the MBH and binary stars bound to it, and find that the probability of ejecting HVSs is substantially enhanced by multiple encounters between the MBH and binary stars at distances substantially larger than the initial tidal breakup radii. Assuming that the HVS progenitors are originated from the two disks, the inclination distribution of the HVSs relative to the disk planes can be reproduced by either the mechanism of tidal breakup of binary stars or the mechanism of ejecting HVSs by a hypothetical binary black hole (BBH) in the GC. However, an isotropical origination of HVS progenitors is inconsistent with the observed inclination distribution. Assuming that the HVSs were ejected out by the tidal breakup mechanism, its velocity distribution can be reproduced if their progenitors diffuse onto low angular momentum orbits slowly and most of the progenitors were broken up at relatively large distances due to multiple encounters. Assuming that the HVSs were ejected out by a BBH within the allowed parameter space in the GC, our simulations produce relatively flatter velocity spectra compared to the observed ones; however, the BBH mechanism cannot be statistically ruled out, yet. Future surveys of HVSs and better statistics of their spatial and velocity distributions should enable to distinguish the ejection mechanisms of HVSs and shed new light on the dynamical environment of the MBH.(abridged)"
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 31.7449
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars"
+      },
+      "deepxiv": {
+        "score": 31.7449,
+        "best_score": 31.7449,
+        "search_keywords": null,
+        "citations": "24"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] The paper uses large-scale three-body simulations to investigate how the spatial and velocity distributions of hypervelocity stars (HVSs) are shaped by their origin and ejection mechanisms in the Galactic center. It finds that HVSs originating from two thin disks (aligned with the GC's stellar disk) reproduce observed inclination distributions via either tidal breakup of binaries or binary black hole (BBH) ejection, but an isotropic progenitor distribution is ruled out. The velocity distribution matches tidal breakup only when progenitors diffuse onto low-angular-momentum orbits and break up at large distances; BBH ejection produces flatter high-velocity spectra inconsistent with observations, though not statistically ruled out. These results constrain the dynamical environment of the central massive black hole and highlight the importance of progenitor orbital evolution in shaping HVS properties.",
+        "keywords": [
+          "tidal breakup of binary stars",
+          "binary black hole ejection",
+          "orbital diffusion",
+          "hypervelocity star kinematics",
+          "Galactic center dynamical environment"
+        ],
+        "citations": "24",
+        "published_at": "2011-05-07T00:00:00",
+        "source_fields": {
+          "arxiv_id": "1105.1432",
+          "src_url": "https://arxiv.org/pdf/1105.1432",
+          "title": "The spatial and velocity distributions of hypervelocity stars"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T221736"
+      },
+      "source_fields": {
+        "pg_id": 541743,
+        "venue": null,
+        "journal_name": "The Astrophysical Journal",
+        "status": "extracted",
+        "token_count": 40727,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-23 09:45:54",
+        "sections_text": "1. Introduction: This paper presents a novel contribution by using Monte Carlo simulations to show that the spatial and inclination distributions of hypervelocity stars are consistent with progenitor origins in disk-like structures near the Galactic center, while an isotropic origin is ruled out, thereby supporting the tidal breakup mechanism and constraining the progenitor distribution in dynamical ejection models. 6. Conclusions and discussions: Multiple encounters between the supermassive black hole and stellar binaries significantly enhance HVS ejection probabilities, with velocities being smaller due to orbital excitations, and the observed HVS velocity and inclination distributions are best explained by tidal breakup of binaries in disk-like structures (e.g., the CWS disk) rather than a BBH mechanism, though the BBH scenario remains statistically possible. 5. Ejecting HVSs by a hypothetical BBH in the GC: This section explores the feasibility of a hypothetical black hole binary (BBH) in the Galactic Center ejecting hypervelocity stars (HVSs), deriving constraints on its parameter space—such as semimajor axis, mass ratio, and initial orbit—from observational data and dynamical simulations. 3. Tidal breakup of binary stars bound to the MBH: This section investigates the tidal breakup of binary stars bound to the central supermassive black hole (MBH) through detailed three-body numerical simulations, using a dimensionless penetration parameter $D$ to characterize the proximity of the binary to the MBH relative to its tidal breakup radius. 2. Spatial and velocity distributions of the detected HVSs: The spatial distribution of detected hypervelocity stars (HVSs) is best described by two distinct thin disk populations aligned with the central bulge's disk and the northern arm of the minispiral, as evidenced by their inclination distributions. 4. Inclination and velocity distributions of HVSs from the TBK mechanism: This section outlines realistic initial conditions for stellar and outer binaries in the TBK mechanism, including orbital, mass, and orientation distributions, to study the resulting spatial and velocity distributions of high-velocity stars.",
+        "highlight": {
+          "abstract": [
+            "<em>Hypervelocity</em> <em>stars</em> (HVSs) found in the Galactic halo are probably the dynamical products of interactions between (binary) <em>stars</em> and the massive black hole(s) (MBH) in the Galactic center (GC).",
+            "Here we perform a large number of three-body experiments of the interactions between the MBH and binary <em>stars</em> bound to it, and find that the probability of ejecting HVSs is substantially enhanced by multiple",
+            "encounters between the MBH and binary <em>stars</em> at distances substantially larger than the initial tidal breakup radii.",
+            "that the HVS progenitors are originated from the two disks, the inclination distribution of the HVSs relative to the disk planes can be reproduced by either the mechanism of tidal breakup of binary <em>stars</em>"
+          ],
+          "title": [
+            "The spatial and velocity distributions of <em>hypervelocity</em> <em>stars</em>"
+          ]
+        }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.95,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Purely theoretical simulation paper analyzing ejection mechanisms and distributions, no observational data presented",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T22:18:21"
+      }
+    }
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 0,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T22:18:21"
+  }
+}
