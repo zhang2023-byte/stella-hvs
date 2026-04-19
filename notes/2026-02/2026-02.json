@@ -174,7 +174,31 @@
             "Identifying additional <em>stars</em> like IRS 9 will be essential for understanding these various dynamical processes."
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper presents new proper motion measurements for 23 SiO-maser emitting stars derived from 14 epochs of HST observations, includes 3D velocities and orbit integrations for candidate high-velocity stars.",
+        "data_products": [
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "orbit_integrations",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:06:57"
       }
     }
-  ]
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:06:57"
+  }
 }

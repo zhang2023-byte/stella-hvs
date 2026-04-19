@@ -187,6 +187,24 @@
             "An observational study of rotation and binarity of Galactic O-type runaway <em>stars</em>"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "uses_existing_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper analyzes 214 O-type runaway stars using Gaia DR3 and IACOB spectroscopy, presenting object-level data including kinematics, rotational velocities, and binarity classifications.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "spectra",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:06:29"
       }
     },
     {
@@ -276,7 +294,27 @@
             "Threading the Magellanic Needle: <em>Hypervelocity</em> <em>Stars</em> Trace the Past Location of the LMC"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.85,
+        "catalog_role": "not_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper uses three known hypervelocity stars as dynamical tracers for orbit modeling, but focuses on theoretical reconstruction of LMC's past orbit rather than presenting new observational data or catalog of stars.",
+        "data_products": [
+          "orbit_integrations"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:06:29"
       }
     }
-  ]
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 2,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:06:29"
+  }
 }

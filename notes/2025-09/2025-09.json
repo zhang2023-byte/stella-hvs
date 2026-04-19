@@ -182,7 +182,33 @@
             "Search for Distant <em>Hypervelocity</em> Star Candidates Using RR Lyrae <em>Stars</em>"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper presents a search resulting in 165 hypervelocity RR Lyrae candidates, with 87 reliable ones, using observational data from Gaia DR3, SDSS, and LAMOST. It explicitly mentions catalogs of 8,172 and 135,873 RRLs with derived parameters.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "spectra",
+          "abundances",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:06:23"
       }
     }
-  ]
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:06:23"
+  }
 }

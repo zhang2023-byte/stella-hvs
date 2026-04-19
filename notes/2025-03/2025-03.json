@@ -184,6 +184,22 @@
             "Spectroscopic Follow-Up of Candidate Runaway <em>Stars</em>"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "followup_observations",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper reports results of long-term spectroscopic monitoring of 188 runaway star candidates, providing precise radial velocities and orbital solutions.",
+        "data_products": [
+          "source_ids",
+          "radial_velocities",
+          "spectra",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:05:18"
       }
     },
     {
@@ -273,6 +289,17 @@
             "The impact of the Galactic bar and the Large Magellanic Cloud on <em>hypervelocity</em> star trajectories"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.9,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Pure simulation study of 28,000 simulated HVS trajectories to assess impact of Galactic bar and LMC. No observational data or real stellar objects analyzed.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:05:18"
       }
     },
     {
@@ -355,7 +382,25 @@
             "The results suggest that interactions with low-mass MBH binaries formed in merging star clusters are an important additional channel for producing runaway and <em>high</em>-<em>velocity</em> <em>stars</em>, free-floating stellar"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.85,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "N-body simulations of star cluster mergers producing runaway and high-velocity stars. Theoretical/numerical study without observational data.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:05:18"
       }
     }
-  ]
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 3,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:05:18"
+  }
 }

@@ -178,7 +178,33 @@
             "Formed in the immediate vicinity of Sgr~A$^\\ast$, these <em>stars</em> are accelerated to velocities high enough to escape the GC and be observable in the Galactic halo."
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "new_catalog",
+        "object_scope": "single_object",
+        "evidence": "Paper presents discovery of specific hypervelocity star candidate DESI-312 with detailed observational data including spectroscopy from DESI and astrometry from Gaia, providing coordinates, radial velocity, metallicity measurements, and orbital analysis.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "spectra",
+          "abundances",
+          "orbit_integrations"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:06:51"
       }
     }
-  ]
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:06:51"
+  }
 }

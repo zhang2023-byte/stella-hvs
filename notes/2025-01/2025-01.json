@@ -185,6 +185,22 @@
             "<em>Hypervelocity</em> <em>Stars</em> Trace a Supermassive Black Hole in the Large Magellanic Cloud"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.9,
+        "catalog_role": "uses_existing_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper reanalyzes trajectories of 21 unbound B-type HVSs from the HVS Survey using Gaia DR3 proper motions. Explicitly mentions specific observational sample with source-level data.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:04:51"
       }
     },
     {
@@ -278,7 +294,31 @@
             "Kinematics of High-Velocity <em>Stars</em> Utilizing LAMOST and Gaia DR3 Archives within 100 kpc"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "compiled_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Explicitly analyzes 1,200 high-velocity stars from LAMOST and Gaia DR3 archives. Mentions three high-velocity programs with specific star counts (591, 87, 519 stars). Derives kinematic parameters from observational data.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "spectra"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:04:51"
       }
     }
-  ]
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 2,
+    "catalog_count": 2,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:04:51"
+  }
 }

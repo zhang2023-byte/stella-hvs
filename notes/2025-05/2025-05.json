@@ -177,6 +177,17 @@
             "Radio polarization from <em>runaway</em> star bowshocks-I. The general case"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.95,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Purely theoretical modeling paper on synchrotron emission and polarization in runaway star bowshocks using MHD simulations. No observational data or object lists presented.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:05:35"
       }
     },
     {
@@ -276,6 +287,17 @@
             "Rapid formation of a very massive star >50000 $M_\\\\odot$ and subsequently an IMBH from <em>runaway</em> collisions"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.9,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Simulation paper using N-body and Monte Carlo methods to study runaway stellar collisions forming VMS and IMBH. No observational stellar data or catalogs.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:05:35"
       }
     },
     {
@@ -360,7 +382,25 @@
             "Disruptions of <em>stars</em> and binary systems on chaotic orbits in an axisymmetric Milky Way center"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.85,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Theoretical study of disruption mechanisms producing hypervelocity stars in Milky Way center using dynamical modeling. Mentions HVS production but presents no observational catalog or object-level data.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:05:35"
       }
     }
-  ]
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 3,
+    "catalog_count": 0,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:05:35"
+  }
 }

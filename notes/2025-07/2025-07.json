@@ -185,6 +185,23 @@
             "The Binary Fraction of B-type Runaway <em>Stars</em> from LAMOST DR8"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "uses_existing_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Analyzes 203 Galactic B-type runaway stars identified from LAMOST DR8 database, presents binary fraction analysis with radial velocity variations.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "radial_velocities",
+          "spectra",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:06:10"
       }
     },
     {
@@ -281,6 +298,24 @@
             "Apparently, both <em>stars</em> are very metal poor and old halo main-sequence (sdF) <em>stars</em> with masses slightly below the halo turn-off mass, and share the low metallicity ([Fe/H]=-2.3,-2.6) and strong alpha enhancement"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.9,
+        "catalog_role": "followup_observations",
+        "object_scope": "single_object",
+        "evidence": "Follow-up spectroscopy of specific high-velocity candidate J1903-0023 using X-shooter at VLT, includes atmospheric parameters, abundances, light curve analysis.",
+        "data_products": [
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "spectra",
+          "abundances",
+          "light_curves"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:06:10"
       }
     },
     {
@@ -377,7 +412,27 @@
             "The five <em>stars</em> will undergo supernova explosions in the coming 5\\\\\\\\,Myr at a distance of $\\\\\\\\sim 180$\\\\\\\\,pc to $\\\\\\\\sim 332$\\\\\\\\,pc from their birth location (R\\\\\\\\,136)."
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.85,
+        "catalog_role": "not_catalog",
+        "object_scope": "single_object",
+        "evidence": "Dynamical reconstruction paper focusing on ejection mechanism of specific binary Mel 34 from R136 cluster, uses Gaia data for backtracking but no new observational catalog presented.",
+        "data_products": [
+          "orbit_integrations"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:06:10"
       }
     }
-  ]
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 3,
+    "catalog_count": 2,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:06:10"
+  }
 }

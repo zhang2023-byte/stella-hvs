@@ -179,6 +179,25 @@
             "Revisiting candidate high-velocity <em>stars</em> associated with the Sagittarius dwarf spheroidal galaxy"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper identifies 95 candidate HVSs using Gaia DR3, DESI DR1, and LAMOST DR12 data, providing object-level selection criteria (galactocentric velocities >400 km/s, orbital proximity to Sgr dSph). Abstract explicitly states 'We identified 95 candidates' and discusses their kinematics and metallicity distribution.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "spectra",
+          "abundances",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:07:02"
       }
     },
     {
@@ -255,6 +274,17 @@
             "We find that stellar collisions are ubiquitous in many high-redshift environments, with runaway sequences naturally leading to the formation of very massive <em>stars</em> at early times."
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.9,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Paper presents a theoretical/cosmological framework and analytic model for stellar collisions in dense environments at high redshift. Abstract describes 'bottom-up framework', 'analytic model', and 'analytic predictions validated against Monte Carlo simulations'. No observational data or catalog of actual stars is presented; focus is on theoretical mechanisms and simulations.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:07:02"
       }
     },
     {
@@ -335,7 +365,30 @@
             "We find 5 LMC GCs to be kinematically outlying based on PM differences alone, and additional 6 GCs if LoS <em>velocity</em> information is also used."
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.85,
+        "catalog_role": "uses_existing_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper analyzes specific globular clusters (GCs) of the LMC using Gaia DR3 proper motions and line-of-sight velocity measurements. Identifies 5-11 kinematically outlying GCs based on observational velocity data compared to field stars. While focused on GCs (stellar systems), it uses object-level astrometric and kinematic data for actual cataloged objects.",
+        "data_products": [
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:07:02"
       }
     }
-  ]
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 3,
+    "catalog_count": 2,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:07:02"
+  }
 }

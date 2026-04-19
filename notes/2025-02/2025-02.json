@@ -181,6 +181,23 @@
             "or the bow shock of a <em>runaway</em> star?"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.9,
+        "catalog_role": "followup_observations",
+        "object_scope": "single_object",
+        "evidence": "Multi-epoch VLA observations of a specific compact radio source (CKR02A) with measured proper motion and spectral index. Paper presents new observational data for a candidate runaway star.",
+        "data_products": [
+          "coordinates",
+          "astrometry",
+          "spectral_index",
+          "proper_motion",
+          "radio_images"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:05:01"
       }
     },
     {
@@ -280,6 +297,24 @@
             "New stellar bow shocks and bubbles found around runaway <em>stars</em>"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Systematic survey using Gaia DR3 catalog of runaway stars to identify and characterize new bow shock candidates. Presents 9 new bow shock candidates, 3 bubble candidates, and geometric characterization.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "candidate_table",
+          "ISM_density"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:05:01"
       }
     },
     {
@@ -365,6 +400,19 @@
             "evolved S-<em>stars</em> originated in an old stellar population such as the NSC."
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.85,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Theoretical/numerical study of Hills mechanism for S-star and hypervelocity star formation. Forward-models binary disruptions but does not present new observational data or catalog of actual stars.",
+        "data_products": [
+          "orbit_integrations"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:05:01"
       }
     },
     {
@@ -448,7 +496,28 @@
             "Light curves and spectra for stellar collisions between main-sequence <em>stars</em> in galactic nuclei"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.9,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Hydrodynamical and radiative transfer simulations of high-velocity stellar collisions. Paper focuses on theoretical light curves and spectra, not observational data of actual stars.",
+        "data_products": [
+          "light_curves",
+          "spectra"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:05:01"
       }
     }
-  ]
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 4,
+    "catalog_count": 2,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:05:01"
+  }
 }

@@ -186,6 +186,24 @@
             "By identifying the pre-supernova companion and the possible parent cluster, we showed that the progenitor zero-age main sequence mass is <em>high</em>: $31-64$ M$_\\\\\\\\odot$."
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "followup_observations",
+        "object_scope": "single_object",
+        "evidence": "Paper presents detailed observational analysis of a single runaway star HD 254577, including spectroscopic observations, Gaia DR3 astrometry/photometry, and derived parameters (temperature, velocity, distance).",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "spectra",
+          "abundances"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:06:38"
       }
     },
     {
@@ -268,7 +286,25 @@
             "We demonstrate that the change in stellar <em>velocity</em> follows the tidal-dissipation limit for grazing encounters, while the deflection angle is well-approximated by point-particle dynamics for periapses $"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.9,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Purely theoretical/simulation paper using hydrodynamic SPH simulations and machine learning to model stellar collisions in galactic nuclei. No observational data or catalog of real stars presented.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:06:38"
       }
     }
-  ]
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 2,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:06:38"
+  }
 }

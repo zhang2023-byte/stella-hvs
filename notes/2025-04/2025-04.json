@@ -186,7 +186,31 @@
             "Systematic search for blue hyper-velocity <em>stars</em> from LAMOST survey"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Title and abstract explicitly describe systematic search from LAMOST DR10 identifying 125 high-velocity candidates and reporting 10 new unbound HVS candidates with designations LAMOST-HVS5 through LAMOST-HVS14",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "spectra",
+          "radial_velocities",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:05:29"
       }
     }
-  ]
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 1,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:05:29"
+  }
 }

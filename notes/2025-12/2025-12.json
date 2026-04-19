@@ -188,7 +188,28 @@
             "Lyman Continuum escaping from in-situ formed <em>stars</em> in a tidal bridge at z = 3"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.9,
+        "catalog_role": "not_catalog",
+        "object_scope": "single_object",
+        "evidence": "Paper focuses on detailed analysis of a single high-redshift galaxy (LACES104037) using JWST/HST data to study Lyman Continuum escape mechanisms, not a catalog of stellar objects.",
+        "data_products": [
+          "coordinates",
+          "spectra"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:06:46"
       }
     }
-  ]
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 1,
+    "catalog_count": 0,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:06:46"
+  }
 }

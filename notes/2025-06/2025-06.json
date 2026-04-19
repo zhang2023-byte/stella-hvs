@@ -188,6 +188,24 @@
             "Searching for new <em>Hypervelocity</em> <em>Stars</em> with Gaia DR3 and VLT/FORS2 Spectroscopy"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Paper identifies 149 hypervelocity star candidates from Gaia DR3 and presents follow-up spectroscopy for 23 targets. Provides object-level data: source selection, velocity estimates, orbital origins.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "candidate_table",
+          "orbit_integrations"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:05:46"
       }
     },
     {
@@ -285,6 +303,22 @@
             "Searching for <em>stars</em> ejected from the Galactic Centre in DESI"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.85,
+        "catalog_role": "uses_existing_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Uses DESI DR1 and Gaia DR3 data to search for ejected stars from Galactic Centre. Analysis is based on observational catalog data (metallicity, angular momentum) to place constraints on ejection rates.",
+        "data_products": [
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "abundances"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:05:46"
       }
     },
     {
@@ -386,6 +420,17 @@
             "The ejection and detectability of high- and hyper-velocity <em>stars</em> by compact object binaries in globular"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": false,
+        "confidence": 0.9,
+        "catalog_role": "not_catalog",
+        "object_scope": "none",
+        "evidence": "Purely theoretical/simulation paper. Uses Monte Carlo N-body simulations and particle spray codes to model ejection from globular clusters. No observational stellar data presented.",
+        "data_products": [],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:05:46"
       }
     },
     {
@@ -481,6 +526,22 @@
             "Evolutionary Map of the Universe: Detection and Analysis of the Shell Surrounding the <em>Runaway</em> Wolf-Rayet"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.9,
+        "catalog_role": "followup_observations",
+        "object_scope": "single_object",
+        "evidence": "Presents radio continuum detection and analysis of a single runaway Wolf-Rayet star (WR16). Includes Gaia parallax, proper motions, peculiar velocities, and shell kinematics.",
+        "data_products": [
+          "coordinates",
+          "astrometry",
+          "spectra",
+          "orbit_integrations"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:05:46"
       }
     },
     {
@@ -571,6 +632,22 @@
             "Counterculture <em>Stars</em>: Slow and Retrograde <em>Stars</em> with Low-Alpha Disk Abundances"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.8,
+        "catalog_role": "uses_existing_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Identifies and investigates ~70 stars with thin-disk abundances and unusual kinematics. Analysis based on existing observational data (abundances, velocities) to study ejection mechanisms.",
+        "data_products": [
+          "coordinates",
+          "astrometry",
+          "radial_velocities",
+          "abundances"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:05:46"
       }
     },
     {
@@ -674,7 +751,31 @@
             "Fundamental Parameters for Central <em>Stars</em> of 103 Infrared Bowshock Nebulae"
           ]
         }
+      },
+      "catalog_assessment": {
+        "has_observational_catalog": true,
+        "confidence": 0.95,
+        "catalog_role": "new_catalog",
+        "object_scope": "multiple_objects",
+        "evidence": "Presents fundamental parameters for 103 bowshock nebula central stars. Includes new spectroscopic observations, stellar parameters, and identifies 19 runaway stars with measured 2D velocities.",
+        "data_products": [
+          "source_ids",
+          "coordinates",
+          "spectra",
+          "abundances",
+          "candidate_table"
+        ],
+        "method": "llm",
+        "model": "deepseek-chat",
+        "assessed_at": "2026-04-19T21:05:46"
       }
     }
-  ]
+  ],
+  "catalog_assessment_summary": {
+    "assessed_count": 6,
+    "catalog_count": 5,
+    "method": "llm",
+    "model": "deepseek-chat",
+    "updated_at": "2026-04-19T21:05:46"
+  }
 }
