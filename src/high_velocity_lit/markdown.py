@@ -65,7 +65,14 @@ def render_month_note(
         lines.append(f"- 标题复核：直接相关规则自动收录；弱相关规则交给 LLM `{config.llm_model}` 复核")
     else:
         lines.append(f"- 标题复核：`{config.classifier}`")
-    lines.append(f"- 简介生成：DeepXiv `brief` {'启用' if config.use_brief else '未启用'}")
+    if config.use_brief:
+        lines.append(
+            f"- 简介生成：DeepXiv `brief` 仅用于强相关/直接相关；"
+            f"本月拉取 {stats.get('brief_eligible_count', 0)} 篇，"
+            f"弱相关跳过 {stats.get('brief_skipped_weak_count', 0)} 篇"
+        )
+    else:
+        lines.append("- 简介生成：DeepXiv `brief` 未启用")
     lines.append(f"- 去重后候选：{stats['raw_unique']} 篇；标题复核通过：{stats['relevant_count']} 篇")
     lines.append(
         f"- 清洗统计：分类过滤 {stats.get('category_filtered', 0)} 篇；"
@@ -134,6 +141,8 @@ def render_month_note(
                 label = classifier.get("label") or config.classifier
                 reason = classifier.get("reason") or ""
                 lines.append(f"- 标题复核：{label}，confidence={confidence}，{reason}")
+            if paper.get("_brief_skipped"):
+                lines.append("- DeepXiv brief：弱相关条目未拉取；仅保留 search 阶段元数据")
             if keywords:
                 lines.append(f"- DeepXiv keywords：{keywords}")
             if tldr:

@@ -187,6 +187,15 @@ def is_rate_limit_error(exc: Exception) -> bool:
     return type(exc).__name__ == "RateLimitError" or "Daily limit reached" in str(exc)
 
 
+def classifier_label(paper: dict[str, Any]) -> str:
+    classifier = paper.get("_classifier") or {}
+    return str(classifier.get("label") or "")
+
+
+def should_fetch_brief(paper: dict[str, Any]) -> bool:
+    return not classifier_label(paper).startswith("rule-weak")
+
+
 def run_parameter_lines(config: SearchConfig, deepxiv_token: str | None) -> list[str]:
     return [
         f"--from: {config.start_date.isoformat()}",
@@ -585,12 +594,18 @@ def search_month(
         reverse=True,
     )
 
+    brief_candidates = [paper for paper in relevant if should_fetch_brief(paper)]
+    brief_skipped_weak = len(relevant) - len(brief_candidates)
+    for paper in relevant:
+        if not should_fetch_brief(paper):
+            paper["_brief_skipped"] = "weak rule match; retained with search metadata only"
+
     if config.use_brief:
-        for index, paper in enumerate(relevant, start=1):
+        for index, paper in enumerate(brief_candidates, start=1):
             arxiv_id = paper_id(paper)
             if not arxiv_id:
                 if progress:
-                    progress.update("Brief", index, len(relevant), f"{month.slug} missing arXiv ID")
+                    progress.update("Brief", index, len(brief_candidates), f"{month.slug} missing arXiv ID")
                 continue
             started = datetime.now()
             fatal_error: Exception | None = None
@@ -614,7 +629,7 @@ def search_month(
                 },
             )
             if progress:
-                progress.update("Brief", index, len(relevant), f"{month.slug} {arxiv_id}")
+                progress.update("Brief", index, len(brief_candidates), f"{month.slug} {arxiv_id}")
             if fatal_error:
                 raise fatal_error
             if config.brief_sleep_seconds > 0:
@@ -630,6 +645,8 @@ def search_month(
         "score_filtered": score_filtered,
         "classifier_candidates": len(candidates),
         **classifier_stats,
+        "brief_eligible_count": len(brief_candidates) if config.use_brief else 0,
+        "brief_skipped_weak_count": brief_skipped_weak if config.use_brief else 0,
         "query_stats": query_stats,
     }
     return relevant, stats

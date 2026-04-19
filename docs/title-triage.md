@@ -26,6 +26,8 @@ hypervelocity/high-velocity star surveys, searches, candidates, catalogues
 ## Weak Matches
 
 Weak matches are accepted by default and labeled `rule-weak`.
+They are kept in the monthly note with the metadata returned by DeepXiv search,
+but DeepXiv `brief` is not fetched for them by default.
 
 They cover mechanism or proxy topics such as:
 
@@ -81,6 +83,8 @@ In this mode:
 - `rule-weak` papers are sent to the LLM.
 - LLM-confirmed weak papers are labeled `rule-weak-llm-confirmed`.
 - LLM-rejected weak papers are filtered out.
+- DeepXiv `brief` is still fetched only for `rule-direct` papers; weak matches
+  use search metadata only.
 
 To use full LLM title classification instead:
 

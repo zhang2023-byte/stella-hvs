@@ -86,6 +86,11 @@ recall pass.
 an effect with `--classifier rules`; it sends weak rule matches to the LLM and
 requires a configured LLM API key.
 
+With the default rules classifier, `--brief True` fetches DeepXiv brief only for
+strong/direct matches (`rule-direct`). Weak matches (`rule-weak*`) stay in the
+monthly note but use only metadata already returned by DeepXiv search, such as
+title, abstract, score, categories, and matched queries.
+
 If DeepXiv returns a daily limit error, completed months are kept. The script
 writes a partial summary to `logs/partial_<run_id>.json`, appends it to
 `logs/runs.jsonl` with `status: partial`, prints the resume command, and exits
