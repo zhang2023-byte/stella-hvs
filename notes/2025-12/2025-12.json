@@ -1,0 +1,194 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2025-12",
+  "date_from": "2025-12-01",
+  "date_to": "2025-12-31",
+  "run": {
+    "run_id": "20260419T195644",
+    "started_at": "2026-04-19T19:56:44"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2025-12",
+    "date_from": "2025-12-01",
+    "date_to": "2025-12-31",
+    "raw_unique": 33,
+    "relevant_count": 1,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 33,
+    "classifier_included": 1,
+    "classifier_filtered": 32,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 0,
+    "weak_llm_reviewed": 0,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 60,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 224,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 60,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 63,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 61,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2512.19967",
+      "title": "Lyman Continuum escaping from in-situ formed stars in a tidal bridge at z = 3",
+      "authors": [
+        "T. E. Rivera-Thorsen",
+        "A. Le Reste",
+        "M. J. Hayes",
+        "S. Flury",
+        "A. Saldana-Lopez",
+        "B. Welch",
+        "S. Choe",
+        "K. Sharon",
+        "K. Kim",
+        "M. R. Owens",
+        "E. Solhaug",
+        "H. Dahle"
+      ],
+      "author_names": "T. E. Rivera-Thorsen A. Le Reste M. J. Hayes S. Flury A. Saldana-Lopez B. Welch S. Choe K. Sharon K. Kim M. R. Owens E. Solhaug H. Dahle",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2025-12-23 01:31:01",
+      "updated_at": "2026-01-19 03:36:49",
+      "links": {
+        "abs": "https://arxiv.org/abs/2512.19967",
+        "pdf": "https://arxiv.org/pdf/2512.19967"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "In order to account for reionization of the early Universe, galaxies at that time must have had significantly higher escape fractions of Lyman Continuum (LyC) than observed in the present Universe. Any explanation invoked to explain LyC escape must agree with this dramatic cosmic evolution. Galaxy mergers are often suggested as such a regulating mechanism. They occur an order or magnitude more frequently at $z \\\\ge 3$ than in the local Universe, and they can trigger LyC escape either by inducing strong nuclear starbursts, or by tidally displacing the neutral ISM from the bulk of the stars. In the local Universe, LyC escape has been found to correlate with a range of physical and observable properties closely associated with strong star formation. For this reason, interest in mergers as drivers of LyC escape have been mainly focused on their capacity to induce strong star formation. However, at $z \\\\ge 2$, these correlations are weaker, and we observe a much more diverse Lyman Continuum Emitter (LCE) population. This suggests that processes external to the LCE galaxies are more important for facilitating the escape at higher redshifts, which makes tidal displacement an interesting explanatory model; however, this has only been conclusively observed once before. In this letter, we present archival JWST/NIRSpec IFU and HST UVIS and IR imaging observations of the z = 3 Lyman-Continuum emitter LACES104037. We find that its Lyman-Continuum escape originates in a tidal bridge in the direction towards an interacting companion galaxy first identified in this work. LyC escape from tidal stripping or in-situ formed stars in tidal features could help explain both the higher cosmic LyC escape fraction and the greater diversity of LCE galaxy properties at higher redshifts."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 19.522806
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: unbound, escaping, or ejected stars"
+      },
+      "deepxiv": {
+        "score": 8.095339,
+        "best_score": 19.522806,
+        "search_keywords": null,
+        "citations": "2"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[Letter to the Editor] This letter presents direct observational evidence from JWST and HST data of a $z=3$ Lyman-Continuum emitter (LACES104037) where LyC escape originates not from in-situ star formation, but from a tidal bridge formed by galaxy interaction. The findings support a model where tidal displacement of the neutral interstellar medium (ISM) — rather than starbursts — enables LyC escape at high redshifts, explaining the observed diversity of LCEs and the higher cosmic escape fractions required for reionization. This challenges the prevailing focus on star formation-driven escape and highlights external dynamical processes as dominant at $z \\gtrsim 2$.",
+        "keywords": [
+          "tidal displacement",
+          "Lyman-Continuum escape",
+          "galaxy interactions",
+          "in-situ star formation",
+          "high-redshift galaxy dynamics"
+        ],
+        "citations": "2",
+        "published_at": "2025-12-23T01:31:01",
+        "source_fields": {
+          "arxiv_id": "2512.19967",
+          "src_url": "https://arxiv.org/pdf/2512.19967",
+          "title": "Lyman Continuum escaping from in-situ formed stars in a tidal bridge at z = 3"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T195644"
+      },
+      "source_fields": {
+        "pg_id": 2932201,
+        "venue": null,
+        "journal_name": null,
+        "status": "extracted",
+        "token_count": null,
+        "created_at": "2026-01-19 03:36:49",
+        "modified_at": "2026-01-23 02:42:03",
+        "sections_text": "Results: The experiment reveals that LyC emission in LACES104037 originates from a tidal tail offset by ~0′62 from the central star-forming regions, with kinematic mapping confirming a physical interaction with a companion galaxy ~12.5 kpc away and blueshifted by ~450 km s⁻¹, supporting LyC escape due to tidal disruption. Summary: This study reveals that LyC escape in LACES104037 arises from a tidal bridge star cluster rather than the galactic core, highlighting that merging systems with offset LyC emission may be systematically excluded in current surveys, leading to an underestimation of the true cosmic LyC escape fraction. Introduction: This paper introduces a novel framework linking the rise in LyC escape fraction at high redshifts to external environmental triggers—specifically galaxy mergers and interactions—that disrupt the interstellar medium and enable photon escape, addressing the gap in understanding why observed correlations break down at $z \\\\gtrsim 2$ and how the cosmic LyC escape rate evolves to meet EoR requirements. Target and observations: LACES104037, a galaxy with extended F160W morphology flagged as a potential interloper in earlier studies, was observed with JWST/NIRSpec and HST archival data, with careful alignment of the imaging datasets to ensure accurate spatial registration.",
+        "highlight": {
+          "abstract": [
+            "more frequently at $z \\\\ge 3$ than in the local Universe, and they can trigger LyC escape either by inducing strong nuclear starbursts, or by tidally displacing the neutral ISM from the bulk of the <em>stars</em>",
+            "LyC escape from tidal stripping or in-situ formed <em>stars</em> in tidal features could help explain both the higher cosmic LyC escape fraction and the greater diversity of LCE galaxy properties at higher redshifts"
+          ],
+          "title": [
+            "Lyman Continuum escaping from in-situ formed <em>stars</em> in a tidal bridge at z = 3"
+          ]
+        }
+      }
+    }
+  ]
+}

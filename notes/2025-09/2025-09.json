@@ -1,0 +1,188 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2025-09",
+  "date_from": "2025-09-01",
+  "date_to": "2025-09-30",
+  "run": {
+    "run_id": "20260419T195644",
+    "started_at": "2026-04-19T19:56:44"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2025-09",
+    "date_from": "2025-09-01",
+    "date_to": "2025-09-30",
+    "raw_unique": 37,
+    "relevant_count": 1,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 37,
+    "classifier_included": 1,
+    "classifier_filtered": 36,
+    "classifier_errors": 0,
+    "direct_rule_included": 1,
+    "weak_rule_candidates": 1,
+    "weak_llm_reviewed": 1,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 1,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 229,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 611,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 230,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 236,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 233,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2509.24010",
+      "title": "Search for Distant Hypervelocity Star Candidates Using RR Lyrae Stars",
+      "authors": [
+        "Haozhu Fu",
+        "Yang Huang",
+        "Huawei Zhang"
+      ],
+      "author_names": "Haozhu Fu Yang Huang Huawei Zhang",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2025-09-28 00:00:00",
+      "updated_at": "2025-09-30 12:32:31",
+      "links": {
+        "abs": "https://arxiv.org/abs/2509.24010",
+        "pdf": "https://arxiv.org/pdf/2509.24010"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Hypervelocity stars (HVSs) are stars with velocities exceeding their local escape velocities. Searching for HVSs and studying their origins can be an important way to study the properties of the Milky Way. In this paper, we utilize precise distances for RR Lyrae stars (RRLs) derived from the period-absolute magnitude-metallicity (PMZ) relation, along with proper motions from Gaia DR3, to conduct a large-volume search for HVSs. Our sample consists of a catalog with 8,172 RRLs with metallicity, distance and radial velocities estimated from SDSS and LAMOST spectroscopic data, and an extended catalog of 135,873 RRLs with metallicity and distance estimated from Gaia photometry. After careful quality cuts, 165 hypervelocity RRL candidates were found. We performed further checks on their light curves, and selected the most reliable 87 hypervelocity RRLs. All of them exceed the Milky Way's escape velocity in the tangential component. Among them, 7 stars have tangential velocity over 800 km s^-1. We identified two spatially distinct distributions of hypervelocity RRLs: one concentrated toward the Galactic Center and another localized around the Magellanic Clouds, suggesting that their origins are likely associated with these regions through the Hills or other mechanisms. Furthermore, we detected a significant number of RRLs associated with dwarf galaxies that exceed the Milky Way's escape velocity, likely ejected from their host systems. Future Gaia releases and spectroscopic follow-up observations will provide further insight into their ejection origin."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 32.396145
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars, high-velocity star surveys or candidates"
+      },
+      "deepxiv": {
+        "score": 32.396145,
+        "best_score": 32.396145,
+        "search_keywords": null,
+        "citations": "0"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] A large-scale search for hypervelocity stars (HVSs) using RR Lyrae stars leverages precise distances from the period-magnitude-metallicity (PMZ) relation and Gaia DR3 proper motions to identify candidates with tangential velocities exceeding the Milky Way’s escape velocity. The study finds 165 HVS candidates, with 87 confirmed as reliable, all showing tangential velocities above escape speed—7 exceeding 800 km/s—and reveals two distinct spatial distributions: one toward the Galactic Center and another near the Magellanic Clouds, suggesting ejection from these regions via Hills mechanism or tidal disruption of dwarf galaxies. The results imply that a significant fraction of HVSs originate from satellite galaxies, offering new constraints on Milky Way dynamics and dark matter halo structure.",
+        "keywords": [
+          "aggregated stellar kinematics",
+          "RR Lyrae distance calibration",
+          "Galactic center ejection mechanisms",
+          "tidal disruption of dwarf galaxies",
+          "proper motion astrometry"
+        ],
+        "citations": "0",
+        "published_at": "2025-09-28T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2509.24010",
+          "src_url": "https://arxiv.org/pdf/2509.24010",
+          "title": "Search for Distant Hypervelocity Star Candidates Using RR Lyrae Stars"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T195644"
+      },
+      "source_fields": {
+        "pg_id": 782324,
+        "venue": "Astrophysical Journal",
+        "journal_name": "The Astrophysical Journal",
+        "status": "extracted",
+        "token_count": 20157,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 09:40:01",
+        "sections_text": "Results: The experiment identifies seven hypervelocity RR Lyrae candidates in the gold and silver samples with tangential velocities exceeding 800 km s⁻¹ (three surpassing 1000 km s⁻¹), all located just above the Milky Way’s escape velocity curves—consistent across multiple potential models—and finds their unbound probabilities to be significant, especially under higher escape velocity models, while excluding the bronze sample due to unreliable light curves. Summary: We identified 165 hypervelocity RR Lyrae candidates, categorized by light curve reliability, and found evidence of their origins in the Galactic Center, Sagittarius dwarf spheroid, or other dwarf galaxies, with some exceeding Milky Way escape velocities, supporting theoretical models of stellar ejection. discussion: The radial velocity of J1300+0256 is corrected to 441.1 km s⁻¹, exceeding the local escape velocity and showing no clear Galactic Center association, though it can approach NGC 5824 within 0.37 kpc in Monte Carlo simulations, while comparisons with prior studies reveal differences in candidate selection due to stricter velocity uncertainty cuts and classification criteria. Introduction: This paper advances the understanding of hypervelocity star origins by presenting a comprehensive analysis that not only confirms the Hills mechanism as a dominant source but also identifies and characterizes alternative ejection pathways, including those involving intermediate-mass black holes and type Ia supernovae, thereby solving the long-standing problem of pinpointing the diverse astrophysical origins of these high-velocity stars. Sample and Method: The paper proposes a method that combines high-precision photometric metallicity estimates from Gaia DR3-based RRL catalogs with rigorous data quality control using Gaia astrometric parameters to select a high-quality sample of RR Lyrae stars for studying their metallicity, distance, and kinematic properties.",
+        "highlight": {
+          "abstract": [
+            "<em>Hypervelocity</em> <em>stars</em> (HVSs) are <em>stars</em> with velocities exceeding their local escape velocities.",
+            "In this paper, we utilize precise distances for RR Lyrae <em>stars</em> (RRLs) derived from the period-absolute magnitude-metallicity (PMZ) relation, along with proper motions from Gaia DR3, to conduct a large-volume",
+            "After careful quality cuts, 165 <em>hypervelocity</em> RRL candidates were found. We performed further checks on their light curves, and selected the most reliable 87 <em>hypervelocity</em> RRLs.",
+            "Among them, 7 <em>stars</em> have tangential velocity over 800 km s^-1.",
+            "We identified two spatially distinct distributions of <em>hypervelocity</em> RRLs: one concentrated toward the Galactic Center and another localized around the Magellanic Clouds, suggesting that their origins are"
+          ],
+          "title": [
+            "Search for Distant <em>Hypervelocity</em> Star Candidates Using RR Lyrae <em>Stars</em>"
+          ]
+        }
+      }
+    }
+  ]
+}

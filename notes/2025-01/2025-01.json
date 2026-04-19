@@ -1,0 +1,284 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2025-01",
+  "date_from": "2025-01-01",
+  "date_to": "2025-01-31",
+  "run": {
+    "run_id": "20260419T195644",
+    "started_at": "2026-04-19T19:56:44"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2025-01",
+    "date_from": "2025-01-01",
+    "date_to": "2025-01-31",
+    "raw_unique": 35,
+    "relevant_count": 2,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 35,
+    "classifier_included": 2,
+    "classifier_filtered": 33,
+    "classifier_errors": 0,
+    "direct_rule_included": 2,
+    "weak_rule_candidates": 1,
+    "weak_llm_reviewed": 1,
+    "weak_llm_included": 0,
+    "brief_eligible_count": 2,
+    "brief_skipped_weak_count": 0
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 179,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 448,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 182,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 184,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 180,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2502.00102",
+      "title": "Hypervelocity Stars Trace a Supermassive Black Hole in the Large Magellanic Cloud",
+      "authors": [
+        "Jiwon Jesse Han",
+        "Kareem El-Badry",
+        "Scott Lucchini",
+        "Lars Hernquist",
+        "Warren Brown",
+        "Nico Garavito-Camargo",
+        "Charlie Conroy",
+        "Re'em Sari"
+      ],
+      "author_names": "Jiwon Jesse Han Kareem El-Badry Scott Lucchini Lars Hernquist Warren Brown Nico Garavito-Camargo Charlie Conroy Re'em Sari",
+      "categories": [
+        "astro-ph.GA"
+      ],
+      "published_at": "2025-01-31 00:00:00",
+      "updated_at": "2025-03-06 14:09:42",
+      "links": {
+        "abs": "https://arxiv.org/abs/2502.00102",
+        "pdf": "https://arxiv.org/pdf/2502.00102"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Hypervelocity stars (HVSs) are produced by the Hills mechanism when a stellar binary is disrupted by a supermassive black hole (SMBH). The HVS Survey detected 21 unbound B-type main-sequence stars in the Milky Way's outer halo that are consistent with ejection via the Hills mechanism. We revisit the trajectories of these stars in light of proper motions from {\\\\\\\\it Gaia} DR3 and modern constraints on the Milky Way -- Large Magellanic Cloud (LMC) orbit. We find that half of the unbound HVSs discovered by the HVS Survey trace back not the Galactic Center, but to the LMC. Motivated by this finding, we construct a forward-model for HVSs ejected from an SMBH in the LMC and observed through the selection function of the HVS Survey. The predicted spatial and kinematic distributions of simulated HVSs are remarkably similar to the observed distributions. In particular, we reproduce the conspicuous angular clustering of HVSs around the constellation Leo. This clustering occurs because HVSs from the LMC are boosted by $\\\\\\\\sim300\\\\\\\\,{\\\\\\\\rm km\\\\\\\\,s^{-1}}$ by the orbital motion of the LMC, and stars launched parallel to this motion are preferentially selected as HVS candidates. We find that the birth rate and clustering of LMC HVSs cannot be explained by supernova runaways or dynamical ejection scenarios not involving a SMBH. From the ejection velocities and relative number of Magellanic vs. Galactic HVSs, we constrain the mass of the LMC SMBH to be $10^{5.8^{+0.2}_{-0.4}} M_{\\\\\\\\odot}$ ($\\\\\\\\simeq 6\\\\\\\\times10^5 M_{\\\\\\\\odot}$)."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 28.021782
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: hypervelocity stars"
+      },
+      "deepxiv": {
+        "score": 28.021782,
+        "best_score": 28.021782,
+        "search_keywords": null,
+        "citations": "10"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] The authors reanalyze the trajectories of 21 hypervelocity B-type stars (HVSs) using Gaia DR3 proper motions and updated Milky Way–Large Magellanic Cloud (LMC) orbital constraints, finding that half of the stars trace back to the LMC rather than the Galactic Center. They construct a forward model of HVS ejection from an LMC supermassive black hole (SMBH), showing that the observed angular clustering—specifically the 'Leo Overdensity'—arises due to orbital boosting of LMC-origin HVSs by ~300 km/s, which preferentially selects stars aligned with the LMC's motion. This SMBH-driven mechanism rules out supernova runaways and dynamical ejections, and yields a mass constraint of $10^{5.8_{-0.4}^{+0.2}}M_{\bigodot}$ ($\backsimeq 6\times10^5M_{\bigodot}$) for the LMC SMBH.",
+        "keywords": [
+          "hypervelocity star dynamics",
+          "supermassive black hole ejection",
+          "LMC orbital boosting",
+          "proper motion trajectory reconstruction",
+          "anisotropic stellar clustering"
+        ],
+        "citations": "10",
+        "published_at": "2025-01-31T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2502.00102",
+          "src_url": "https://arxiv.org/pdf/2502.00102",
+          "title": "Hypervelocity Stars Trace a Supermassive Black Hole in the Large Magellanic Cloud"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T195644"
+      },
+      "source_fields": {
+        "pg_id": 691809,
+        "venue": "Astrophysical Journal",
+        "journal_name": "The Astrophysical Journal",
+        "status": "extracted",
+        "token_count": 21936,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-22 13:51:11",
+        "sections_text": "Method: The paper proposes a method that uses a time-varying gravitational potential derived from a Milky Way-Large Magellanic Cloud simulation to rapidly integrate the orbits of high-velocity stars, leveraging their kinematic and stellar properties to infer the impact of the LMC's gravitational influence on their trajectories. Discussion: The experiment finds that 9 out of 16 unbound B-type main sequence stars originate from the LMC center due to a supermassive black hole (LMC*), with a mass of $10^{5.8_{-0.4}^{+0.2}}M_{\\\\odot}$, consistent with the Hills mechanism and the observed sky distribution and velocities, including an overdensity at the Leo Overdensity, and significantly larger than previous estimates. Introduction: This paper introduces a novel explanation for the Leo Overdensity of hypervelocity stars by proposing that the anisotropic distribution arises from the preferential ejection of stars from binary systems interacting with the supermassive black hole in a dynamically biased region near the Galactic center, thereby resolving the discrepancy between observed HVS clustering and alternative models. Weighing Lmc*: The mass of the LMC* is constrained to be $10^{5.8_{-0.4}^{+0.2}} M_{\\\\odot}$ (approximately $6 \\\\times 10^5 M_{\\\\odot}$) based on the observed HVS count ratio and ejection velocities, with the LMC* mass being the dominant parameter determining the production rate of LMC-origin HVSs. Forward Modeling The Hvs Survey: The paper proposes a forward model of the Hills mechanism to simulate hypervelocity star (HVS) ejection from a supermassive black hole (SMBH) in the Large Magellanic Cloud (LMC), using binary star properties, pericenter distances, and SMBH mass to predict ejection velocities and probabilities, and demonstrates that the model reproduces the observed HVS overdensity consistent with an LMC-origin SMBH. Inverse Modeling The Hvs Survey: The paper proposes a statistical method that uses Monte Carlo sampling of stellar orbit uncertainties to compute Mahalanobis distances and likelihood ratios, assessing whether high-velocity stars originated from the Galactic Center or the Large Magellanic Cloud by analyzing their closest approaches to these regions.",
+        "highlight": {
+          "abstract": [
+            "<em>Hypervelocity</em> <em>stars</em> (HVSs) are produced by the Hills mechanism when a stellar binary is disrupted by a supermassive black hole (SMBH).",
+            "The HVS Survey detected 21 unbound B-type main-sequence <em>stars</em> in the Milky Way's outer halo that are consistent with ejection via the Hills mechanism.",
+            "We revisit the trajectories of these <em>stars</em> in light of proper motions from {\\\\\\\\it Gaia} DR3 and modern constraints on the Milky Way -- Large Magellanic Cloud (LMC) orbit.",
+            "This clustering occurs because HVSs from the LMC are boosted by $\\\\\\\\sim300\\\\\\\\,{\\\\\\\\rm km\\\\\\\\,s^{-1}}$ by the orbital motion of the LMC, and <em>stars</em> launched parallel to this motion are preferentially selected"
+          ],
+          "title": [
+            "<em>Hypervelocity</em> <em>Stars</em> Trace a Supermassive Black Hole in the Large Magellanic Cloud"
+          ]
+        }
+      }
+    },
+    {
+      "arxiv_id": "2501.12478",
+      "title": "Kinematics of High-Velocity Stars Utilizing LAMOST and Gaia DR3 Archives within 100 kpc",
+      "authors": [
+        "W. H. Elsanhoury"
+      ],
+      "author_names": "W. H. Elsanhoury",
+      "categories": [
+        "astro-ph.SR",
+        "astro-ph.GA"
+      ],
+      "published_at": "2025-01-21 00:00:00",
+      "updated_at": "2025-01-21 20:06:14",
+      "links": {
+        "abs": "https://arxiv.org/abs/2501.12478",
+        "pdf": "https://arxiv.org/pdf/2501.12478"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "The kinematic parameters identified from high-velocity stars situated within 100 kpc are examined and analyzed. We included three high velocity programs comprising 591, 87, and 519 stars as a function of distances ranging from 0.10 to nearly 109 kpc. In this analysis, we will determine the spatial velocities (U, V, W) in galactic coordinates along with their velocity dispersion (sigma_1, sigma_2, sigma_3), the convergent point (Ao, Do), and therefore, the solar motion (S_sun)."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "high-velocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 26.806236
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: high-velocity or extreme-velocity stars"
+      },
+      "deepxiv": {
+        "score": 9.784779,
+        "best_score": 26.806236,
+        "search_keywords": null,
+        "citations": "0"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] This study analyzes the kinematics of 1,200 high-velocity stars from LAMOST and Gaia DR3 data within 100 kpc, deriving spatial velocity components (U,V,W), velocity dispersion, convergent point parameters (Ao, Do), and solar motion. Using velocity ellipsoid modeling and the AD-chart method, it computes Oort constants A = 11.94 ± 0.29 km s⁻¹ kpc⁻¹ and B = −17.78 ± 0.24 km s⁻¹ kpc⁻¹, yielding a rotational rate of |A−B| = 25.07 ± 5.01 km s⁻¹ kpc⁻¹ and average rotational velocity Vo = 243.72 ± 15.61 km s⁻¹, providing empirical constraints on galactic rotation and dark matter halo structure via extreme stellar dynamics.",
+        "keywords": [
+          "velocity ellipsoid",
+          "Oort constants",
+          "convergent point",
+          "galactic rotation",
+          "high-velocity stars"
+        ],
+        "citations": "0",
+        "published_at": "2025-01-21T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2501.12478",
+          "src_url": "https://arxiv.org/pdf/2501.12478",
+          "title": "Kinematics of High-Velocity Stars Utilizing LAMOST and Gaia DR3 Archives within 100 kpc"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T195644"
+      },
+      "source_fields": {
+        "pg_id": 837554,
+        "venue": "Contributions of the Astronomical Observatory Skalnaté Pleso",
+        "journal_name": "Contributions of the Astronomical Observatory Skalnaté Pleso",
+        "status": "extracted",
+        "token_count": 23609,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-23 08:03:33",
+        "sections_text": "Discussion: The study found that high-velocity stars exhibit mean spatial velocities and velocity dispersions with Program II showing the highest values, convergent points consistent with previous studies, and Oort constants $A = 11.94 \\\\pm 0.29$ and $B = -17.78 \\\\pm 0.24\\\\ \\\\mathrm{km\\\\ s^{-1}\\\\ kpc^{-1}}$, yielding a rotational velocity $V_o = 243.72 \\\\pm 15.61\\\\ \\\\mathrm{km\\\\ s^{-1}}$ and angular velocity $|A - B| = 25.07 \\\\pm 5.01\\\\ \\\\mathrm{km\\\\ s^{-1}\\\\ kpc^{-1}}$, with measured values potentially affected by large distances and kinematic model choices. VEPs and CP: This section describes the transformation of radial velocities into galactic velocity components (U, V, W) using a velocity ellipsoid model and Gaia DR3 data, enabling the analysis of stellar motions in the Milky Way's galactic coordinate system. Introduction: This paper introduces a novel, data-driven classification framework that resolves the origin of high-velocity stars by combining Gaia DR3, LAMOST, and SEGUE kinematic data to distinguish between black hole ejection, supernova explosion, and dynamic ejection mechanisms, thereby addressing the long-standing problem of identifying the astrophysical processes responsible for extreme stellar velocities in the Milky Way. Selected data: This section highlights key stellar data from major surveys—LAMOST, Gaia DR3, SDSS, RAVE, APOGEE, and GALAH—emphasizing their extensive coverage, high astrometric and spectroscopic precision, and combined use in identifying high-velocity stars (HiVels) in the galactic halo. Galactic rotation constants: The Oort constants $A$ and $B$ describe the differential rotation and shear of the Milky Way's galactic disk, with recent measurements refining their values and confirming the Galaxy's non-rigid rotation.",
+        "highlight": {
+          "abstract": [
+            "The kinematic parameters identified from high-velocity <em>stars</em> situated within 100 kpc are examined and analyzed.",
+            "We included three high velocity programs comprising 591, 87, and 519 <em>stars</em> as a function of distances ranging from 0.10 to nearly 109 kpc."
+          ],
+          "title": [
+            "Kinematics of High-Velocity <em>Stars</em> Utilizing LAMOST and Gaia DR3 Archives within 100 kpc"
+          ]
+        }
+      }
+    }
+  ]
+}

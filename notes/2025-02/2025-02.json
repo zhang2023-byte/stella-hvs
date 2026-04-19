@@ -1,0 +1,454 @@
+{
+  "schema_version": "stella.literature.month.v1",
+  "month": "2025-02",
+  "date_from": "2025-02-01",
+  "date_to": "2025-02-28",
+  "run": {
+    "run_id": "20260419T195644",
+    "started_at": "2026-04-19T19:56:44"
+  },
+  "config": {
+    "source": "deepxiv",
+    "queries": [
+      "hypervelocity stars",
+      "high-velocity stars",
+      "runaway stars",
+      "unbound stars",
+      "escaping stars"
+    ],
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "max_results": 20,
+    "search_mode": "hybrid",
+    "min_score": null,
+    "classifier": "rules",
+    "llm_review": true,
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-chat",
+    "llm_batch_size": 25,
+    "use_brief": true,
+    "brief_policy": "direct_only"
+  },
+  "stats": {
+    "month": "2025-02",
+    "date_from": "2025-02-01",
+    "date_to": "2025-02-28",
+    "raw_unique": 32,
+    "relevant_count": 4,
+    "category_filtered": 0,
+    "score_filtered": 0,
+    "classifier_candidates": 32,
+    "classifier_included": 4,
+    "classifier_filtered": 28,
+    "classifier_errors": 0,
+    "direct_rule_included": 2,
+    "weak_rule_candidates": 2,
+    "weak_llm_reviewed": 2,
+    "weak_llm_included": 2,
+    "brief_eligible_count": 2,
+    "brief_skipped_weak_count": 2
+  },
+  "search_log": [
+    {
+      "query": "hypervelocity stars",
+      "category": "astro-ph.GA",
+      "total": 177,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "high-velocity stars",
+      "category": "astro-ph.GA",
+      "total": 451,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "runaway stars",
+      "category": "astro-ph.GA",
+      "total": 179,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "unbound stars",
+      "category": "astro-ph.GA",
+      "total": 181,
+      "returned": 20,
+      "error": null
+    },
+    {
+      "query": "escaping stars",
+      "category": "astro-ph.GA",
+      "total": 178,
+      "returned": 20,
+      "error": null
+    }
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2502.17588",
+      "title": "The arc-shaped radio source at the center of NGC 6334A: Is it a colliding wind region of two young massive stars or the bow shock of a runaway star?",
+      "authors": [
+        "Vanessa Yanza",
+        "Sergio A. Dzib",
+        "Aina Palau",
+        "Luis F. Rodríguez",
+        "Josep M. Masque",
+        "Pedro R. Rivera-Ortiz",
+        "Sac-Nicté X. Medina"
+      ],
+      "author_names": "Vanessa Yanza Sergio A. Dzib Aina Palau Luis F. Rodríguez Josep M. Masque Pedro R. Rivera-Ortiz Sac-Nicté X. Medina",
+      "categories": [
+        "astro-ph.SR",
+        "astro-ph.GA"
+      ],
+      "published_at": "2025-02-24 00:00:00",
+      "updated_at": "2025-02-24 19:12:39",
+      "links": {
+        "abs": "https://arxiv.org/abs/2502.17588",
+        "pdf": "https://arxiv.org/pdf/2502.17588"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "New multi-wavelength Karl G. Jansky VLA observations of CKR02A, the compact radio source in the center of the compact HII region NGC 6334A, are presented. The observations were carried out in five epochs and included the frequency ranges 8.0 - 12.0 GHz (X-band), 18.0 - 26.0 GHz (K-band), and 29.0 - 37.0 GHz (Ka-band). The source is detected and resolved in all the observed epochs and in all bands. The source shows a clear arc-shaped structure consistent with a bow shock. The analysis of the spectral index maps indicates that its spectral index is $\\\\\\\\alpha=-0.68\\\\\\\\pm0.17$, suggesting that the emission is non-thermal. Two astronomical objects can explain the emission nature and morphology of the source: a colliding wind region of two massive stars or the bow shock of a massive runaway star. However, no massive stars are reported so far in the center of NGC 6334A, though its presence is also suggested by the free-free radio emission of the C-HII region itself. Using ancillary VLA data, we measured a preliminary proper motion of $19\\\\\\\\pm6$ mas yr$^{-1}$, equivalent to a velocity of $120\\\\\\\\pm40$ km s$^{-1}$. A detailed discussion of the implications of both scenarios is provided. Finally, a list of compact radio sources in the vicinity of NGC 6334A is given and briefly discussed."
+      },
+      "match": {
+        "queries": [
+          "runaway stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 17.44737
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: runaway stars"
+      },
+      "deepxiv": {
+        "score": 17.44737,
+        "best_score": 17.44737,
+        "search_keywords": null,
+        "citations": "1"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[astronomical observational study] Multi-epoch, multi-band VLA observations of CKR02A, a compact radio source at the center of NGC 6334A, reveal a clear arc-shaped structure with a non-thermal spectral index (α = −0.68 ± 0.17), consistent with a bow shock. A preliminary proper motion of 19 ± 6 mas yr⁻¹ (120 ± 40 km s⁻¹) supports a runaway star origin, though the absence of detected massive stars in the region challenges the colliding wind scenario; the data favor a bow shock from a single massive runaway star over a binary colliding wind system.",
+        "keywords": [
+          "bow shock",
+          "runaway star",
+          "non-thermal radio emission",
+          "interferometric imaging",
+          "HII region morphology"
+        ],
+        "citations": "1",
+        "published_at": "2025-02-24T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2502.17588",
+          "src_url": "https://arxiv.org/pdf/2502.17588",
+          "title": "The arc-shaped radio source at the center of NGC 6334A: Is it a colliding wind region of two young massive stars or the bow shock of a runaway star?"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T195644"
+      },
+      "source_fields": {
+        "pg_id": 677241,
+        "venue": "Monthly notices of the Royal Astronomical Society",
+        "journal_name": "Monthly Notices of the Royal Astronomical Society",
+        "status": "extracted",
+        "token_count": 24566,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 04:13:46",
+        "sections_text": "Results: The high-angular-resolution radio image of NGC 6334A reveals a squared-shell structure with CKR02A at its center, showing substructure not resolved in prior studies, and CKR02A exhibits an arc-shaped morphology with a spectral index of α = −0.52 ± 0.03, detected across all observed bands with peak flux densities and sizes measured in the 3σ contour. Appendix#2: This appendix analyzes the spectral energy distribution and physical parameters of a single energy injection event in NGC 6334A, using observed radio data to infer properties of the resulting HII shell. Conclusion: The high-angular-resolution observations of CKR02A suggest it could be either a colliding wind remnant from a binary system of O/B-type stars or a bow shock from a runaway B-type star, offering a unique opportunity to study early-stage massive star formation processes. Discussion: The experiment confirms that CKR02A is a non-thermal radio source with a spectral index of α = −0.68 ± 0.17, exhibiting a bow shock morphology consistent with a wind-wind collision region, though no associated massive stars are detected at optical or infrared wavelengths, challenging its classification as a classical CWR or runaway star scenario. Introduction: This paper presents a multi-wavelength study of the compact radio source CKR02A in the NGC 6334A C-H II region, addressing the problem of the discrepancy between predicted and observed radio flux densities from ionized stellar winds by investigating alternative emission mechanisms such as photo-evaporated disks or magnetically active components, thereby providing new insights into the physical nature of central compact radio sources in massive star-forming regions. Observations: The VLA observations of the target source were conducted across X, K, and Ka bands with careful calibration and imaging, revealing significant data quality issues in one epoch and elevated noise levels in X-band due to strong foreground radio emission, leading to the exclusion of one epoch and the application of corrective procedures.",
+        "highlight": {
+          "abstract": [
+            "Two astronomical objects can explain the emission nature and morphology of the source: a colliding wind region of two massive <em>stars</em> or the bow shock of a massive <em>runaway</em> star.",
+            "However, no massive <em>stars</em> are reported so far in the center of NGC 6334A, though its presence is also suggested by the free-free radio emission of the C-HII region itself."
+          ],
+          "title": [
+            "arc-shaped radio source at the center of NGC 6334A: Is it a colliding wind region of two young massive <em>stars</em>",
+            "or the bow shock of a <em>runaway</em> star?"
+          ]
+        }
+      }
+    },
+    {
+      "arxiv_id": "2502.02658",
+      "title": "New stellar bow shocks and bubbles found around runaway stars",
+      "authors": [
+        "M. Carretero-Castrillo",
+        "P. Benaglia",
+        "J. M. Paredes",
+        "M. Ribó"
+      ],
+      "author_names": "M. Carretero-Castrillo P. Benaglia J. M. Paredes M. Ribó",
+      "categories": [
+        "astro-ph.SR",
+        "astro-ph.GA",
+        "astro-ph.HE"
+      ],
+      "published_at": "2025-02-04 00:00:00",
+      "updated_at": "2025-02-04 19:01:06",
+      "links": {
+        "abs": "https://arxiv.org/abs/2502.02658",
+        "pdf": "https://arxiv.org/pdf/2502.02658"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "Runaway stars with peculiar high velocities can generate stellar bow shocks. Only a few bow shocks show clear radio emission. Our goal is to identify and characterize new stellar bow shocks around O and Be runaway stars in the infrared (IR), and to study their possible radio emission and nature. Our input data is a catalog of O and Be runaways compiled using Gaia DR3. We used WISE IR images to search for bow shocks around these runaways, Gaia DR3 data to determine the actual motion of the runaway stars corrected for interstellar medium (ISM) motion caused by Galactic rotation, and archival radio data to search for emission signatures. We finally explored the radio detectability of these sources under thermal and nonthermal scenarios. We found 9 new stellar bow shock candidates, 3 new bubble candidates, and 1 intermediate structure candidate. One of them is an in situ bow shock candidate. We also found 17 already known bow shocks in our sample, though we discarded one, and 62 miscellaneous sources showing some IR emission around the runaways. We geometrically characterized the sources in IR using the WISE-4 band and estimated the ISM density at the bow shock positions, obtaining median values of ~6 and ~4 cm$^{-3}$ using 2D and 3D peculiar velocities. Most of the new discovered bow shocks come from new runaway discoveries. Within our samples we found that ~24% of the O-type runaway stars show bow shocks, while this decreases to ~3% for Be-type runaway stars. Two bow shocks present radio emission but not as clear counterparts, and two others show hints of radio emission. The physical scenarios indicate that two sources could still be compatible with nonthermal radio emission. The new sample of O and Be runaway stars allowed us to discover both new stellar bow shocks and bubbles. Their geometrical characterization can be used to assess the physical scenario of the radio emission. (Abridged)"
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars",
+          "runaway stars",
+          "unbound stars",
+          "escaping stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 29.901558
+      },
+      "triage": {
+        "level": "direct",
+        "label": "rule-direct",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Direct title match: runaway stars"
+      },
+      "deepxiv": {
+        "score": 10.901146,
+        "best_score": 29.901558,
+        "search_keywords": null,
+        "citations": "1"
+      },
+      "brief": {
+        "fetched": true,
+        "source": "deepxiv",
+        "skipped_reason": null,
+        "error": null,
+        "tldr": "[research paper] A systematic survey of O and Be runaway stars using Gaia DR3 and WISE IR data identifies nine new stellar bow shock candidates, three bubble candidates, and one intermediate structure, with 24% of O-type runaways showing bow shocks versus 3% of Be-type. Geometric characterization reveals median ISM densities of ~6 cm⁻³ (2D) and ~4 cm⁻³ (3D), and radio emission hints are found in two bow shocks, suggesting possible nonthermal emission; deeper radio observations are needed to confirm a detectable population of radio-bright bow shocks.",
+        "keywords": [
+          "stellar bow shocks",
+          "interstellar medium density",
+          "radio continuum emission",
+          "nonthermal radiation",
+          "runaway star dynamics"
+        ],
+        "citations": "1",
+        "published_at": "2025-02-04T00:00:00",
+        "source_fields": {
+          "arxiv_id": "2502.02658",
+          "src_url": "https://arxiv.org/pdf/2502.02658",
+          "title": "New stellar bow shocks and bubbles found around runaway stars"
+        }
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": "deepxiv",
+        "run_id": "20260419T195644"
+      },
+      "source_fields": {
+        "pg_id": 682380,
+        "venue": "Astronomy &amp; Astrophysics",
+        "journal_name": "Astronomy &amp; Astrophysics",
+        "status": "extracted",
+        "token_count": 36545,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 04:08:08",
+        "sections_text": "Data: This section presents a catalog of 106 O-type and 69 Be-type runaway stars identified using Gaia DR3 data, with 25.4% and 5.2% of respective stars classified as runaways based on a statistical measure (E-value) indicating the significance of their runaway motion. Method: The paper proposes a visual search method for identifying bow shocks around runaway stars using WISE images, combined with corrected proper motions derived by subtracting the local interstellar medium's motion—computed via the A5 Galactic rotation model—to ensure that any detected arc-like structures align with the star's true motion relative to its surroundings. Results: The experiment identified 13 new IR bow shock and bubble candidates, with nine bow shocks and three bubbles primarily associated with O-type runaway stars, and found that their ISM densities range from 0.8 to ~220 cm⁻³ (2D) and 0.6 to ~200 cm⁻³ (3D), median values of 6.4 and 3.8 cm⁻³, respectively, while excluding three cases with large misalignments as in situ bow shocks due to lack of nearby H II regions. Appendix#2: This section reports on the misalignments between the corrected proper motion directions of runaway stars and their associated bow shock directions, with several cases showing significant discrepancies that suggest some bow shocks may originate in situ rather than being directly aligned with the stellar motion. Appendix#3: This appendix details the search for radio counterparts to infrared bow shock sources, finding no definitive radio emission associated with the runaway stars, though some weak or overlapping emission is noted, and highlights a potential association between one source and a new Fermi gamma-ray source. Appendix#4: This appendix presents WISE RGB images of miscellaneous infrared structures around runaway stars, revealing diverse IR morphologies such as complex fields, mini-bubbles, and trails, with most sources showing point-like emission likely linked to circumstellar disks in Be-type stars. Discussion: This study identifies nine new stellar bow shock candidates, three new bubble candidates, and one new intermediate structure, confirming 16 of 17 known bow shocks while finding that O-type runaways have a 23.6% bow shock rate (similar to prior work) and Be-type runaways have a much lower 3% rate, with new discoveries showing slower velocities and closer proximity to the runaway threshold due to more detailed analyses using Gaia DR3 data. Introduction: This paper introduces a novel, comprehensive identification and characterization framework for stellar bow shocks by combining high-resolution infrared data with precise runaway star velocity measurements, addressing the long-standing problem of accurately associating bow shock phenomena with their runaway stellar sources and improving the reliability of bow shock catalogs. Summary and future work: This study identifies new stellar bow shock and bubble candidates, primarily associated with O-type stars, and estimates interstellar medium densities consistent with previous works, highlighting the potential for discovering hidden bow shocks through deeper searches of runaway stars with Gaia DR3 data.",
+        "highlight": {
+          "abstract": [
+            "Runaway <em>stars</em> with peculiar high velocities can generate stellar bow shocks. Only a few bow shocks show clear radio emission.",
+            "Our goal is to identify and characterize new stellar bow shocks around O and Be runaway <em>stars</em> in the infrared (IR), and to study their possible radio emission and nature.",
+            "We used WISE IR images to search for bow shocks around these runaways, Gaia DR3 data to determine the actual motion of the runaway <em>stars</em> corrected for interstellar medium (ISM) motion caused by Galactic",
+            "Within our samples we found that ~24% of the O-type runaway <em>stars</em> show bow shocks, while this decreases to ~3% for Be-type runaway <em>stars</em>.",
+            "The new sample of O and Be runaway <em>stars</em> allowed us to discover both new stellar bow shocks and bubbles."
+          ],
+          "title": [
+            "New stellar bow shocks and bubbles found around runaway <em>stars</em>"
+          ]
+        }
+      }
+    },
+    {
+      "arxiv_id": "2502.17165",
+      "title": "Double progenitor origin of the S-star cluster",
+      "authors": [
+        "Sill Verberne",
+        "Elena Maria Rossi",
+        "Sergey E. Koposov",
+        "Zephyr Penoyre",
+        "Manuel Cavernes",
+        "Konrad Kuijken"
+      ],
+      "author_names": "Sill Verberne Elena Maria Rossi Sergey E. Koposov Zephyr Penoyre Manuel Cavernes Konrad Kuijken",
+      "categories": [
+        "astro-ph.GA",
+        "astro-ph.HE",
+        "astro-ph.SR"
+      ],
+      "published_at": "2025-02-24 00:00:00",
+      "updated_at": "2025-04-07 08:34:31",
+      "links": {
+        "abs": "https://arxiv.org/abs/2502.17165",
+        "pdf": "https://arxiv.org/pdf/2502.17165"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "The origin of the cluster of S-stars located in the Galactic Centre is tied to the supermassive black hole Sagittarius A*, but exactly how is still debated. In this paper, we investigate whether the Hills mechanism can simultaneously reproduce both the S-star cluster's properties and the observed number of hypervelocity stars. To do so, we forward-model the capture and disruption of binary stars originating from the nuclear star cluster (NSC) and the clockwise disk (CWD). We find that the ratio of evolved to main-sequence S-stars is highly sensitive to the origin of the binaries, and that neither the injection of binaries from the CWD nor from the NSC exclusively can reproduce all observations. However, when considering the injection of binaries from both locations, we are able to reproduce all the observations simultaneously, including the number of observed hypervelocity stars, the evolutionary stage of the S-stars, their luminosity function and the distribution of their semi-major axes. The implications of our findings include that ~90% of hypervelocity stars ejected over the past ~10 Myr should originate from the CWD, that the main-sequence S-stars originated in the CWD, and that the evolved S-stars originated in an old stellar population such as the NSC."
+      },
+      "match": {
+        "queries": [
+          "hypervelocity stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 23.61222
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.95,
+        "reason": "Weak title match: galactic-center dynamical origins LLM confirmed: Explicitly models hypervelocity star production via Hills mechanism and connects S-star cluster to hypervelocity star population"
+      },
+      "deepxiv": {
+        "score": 23.61222,
+        "best_score": 23.61222,
+        "search_keywords": null,
+        "citations": "1"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T195644"
+      },
+      "source_fields": {
+        "pg_id": 678983,
+        "venue": "Astronomy &amp; Astrophysics",
+        "journal_name": "Astronomy &amp; Astrophysics",
+        "status": "extracted",
+        "token_count": 16622,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 04:08:53",
+        "sections_text": "Method: The paper proposes a forward modeling approach based on the Hills mechanism to predict the number and properties of S-stars and hypervelocity stars (HVSs) formed from binary disruptions near Sgr A*, with the core idea that tidal disruption of binaries leads to the ejection of one star as an HVS and the capture of the other into tight orbits matching the observed S-star properties. Conclusion: The conclusion shows that only a binary population composed of both young (CWD) and old (NSC) progenitors can simultaneously explain the observed populations of main-sequence, evolved S-stars, and HVSs via the Hills mechanism, with the majority of ejected stars originating from the young CWD population. Discussion: The experiment finds that a young progenitor population, such as the CWD, is required to produce sufficient main-sequence S-stars consistent with observations, with simulations showing a good match to observed HVSs, evolved S-stars, and main-sequence S-stars in terms of number and semi-major axis distribution, while ruling out old populations like the NSC alone. Introduction: This study makes a novel contribution by simultaneously simulating and comparing the populations of S-star cluster members and hypervelocity stars formed via the Hills mechanism with state-of-the-art observations to determine whether the S-star cluster could have formed entirely through this process. The S-star cluster: The S-star cluster consists of isotropically distributed, massive B-type stars with short orbital periods and a thermal eccentricity distribution, distinct from the top-heavy, young clockwise disc formed ~2–6 Myr ago, while observational biases limit the completeness and representativeness of available orbital data. Progenitor populations: This section finds that binaries originating from the nuclear star cluster (NSC) cannot explain the observed properties of S-stars and HVSs due to inconsistencies in predicted numbers and unsustainable depletion of the NSC, prompting consideration of an alternative origin from the central wide binary (CWD) population.",
+        "highlight": {
+          "abstract": [
+            "In this paper, we investigate whether the Hills mechanism can simultaneously reproduce both the S-star cluster's properties and the observed number of <em>hypervelocity</em> <em>stars</em>.",
+            "However, when considering the injection of binaries from both locations, we are able to reproduce all the observations simultaneously, including the number of observed <em>hypervelocity</em> <em>stars</em>, the evolutionary",
+            "stage of the S-<em>stars</em>, their luminosity function and the distribution of their semi-major axes.",
+            "The implications of our findings include that ~90% of <em>hypervelocity</em> <em>stars</em> ejected over the past ~10 Myr should originate from the CWD, that the main-sequence S-<em>stars</em> originated in the CWD, and that the",
+            "evolved S-<em>stars</em> originated in an old stellar population such as the NSC."
+          ]
+        }
+      }
+    },
+    {
+      "arxiv_id": "2502.05265",
+      "title": "Light curves and spectra for stellar collisions between main-sequence stars in galactic nuclei",
+      "authors": [
+        "Taeho Ryu",
+        "Luc Dessart"
+      ],
+      "author_names": "Taeho Ryu Luc Dessart",
+      "categories": [
+        "astro-ph.HE",
+        "astro-ph.GA",
+        "astro-ph.SR"
+      ],
+      "published_at": "2025-02-07 00:00:00",
+      "updated_at": "2025-05-16 06:27:55",
+      "links": {
+        "abs": "https://arxiv.org/abs/2502.05265",
+        "pdf": "https://arxiv.org/pdf/2502.05265"
+      },
+      "abstract": {
+        "source": "deepxiv",
+        "text": "High-velocity stellar collisions in galactic nuclei produce ejecta that generate potentially observable electromagnetic radiation, making them promising nuclear transients. However, the photometric and spectroscopic properties of these collisions, which would more frequently involve main-sequence stars, remain largely unexplored. Here, using 3D hydrodynamics and 1D radiative-transfer simulations, we investigate the properties and observables of the debris produced in high-velocity collisions between terminal-age main-sequence stars, covering a wide range of collision configurations. The ejecta produce bright ultraviolet (UV) flares with bolometric luminosities typically peaking at $\\\\\\\\gtrsim10^{43}$ erg s$^{-1}$, declining steeply as $t^{-2}-t^{-4}$ to reach $\\\\\\\\gtrsim10^{41}-10^{42}$ erg s$^{-1}$ at 0.5 d and leveling off on a plateau at $10^{39}-10^{41.5}$ erg s$^{-1}$ ($M_V$ between $-$10 to $-$15 mag) after a few days. Their spectra evolve considerably during the first few days, morphing from UV- to optical-dominated. The UV range shows numerous resonance transitions from metals like C, N, and O, whereas the optical primarily shows H I Balmer lines. These properties are qualitatively similar to those observed, as well as obtained in models of Type II supernovae. Observables from these events exhibit clear correlations with collision configurations, including impact parameter, relative velocity, and stellar masses. We provide fitting formulae to describe these correlations. Detecting these flares requires sub-day cadence surveys such as ULTRASAT, combined with spectroscopic observations to disentangle degeneracies and infer collision characteristics."
+      },
+      "match": {
+        "queries": [
+          "high-velocity stars"
+        ],
+        "categories": [
+          "astro-ph.GA"
+        ],
+        "best_score": 15.927778
+      },
+      "triage": {
+        "level": "weak",
+        "label": "rule-weak-llm-confirmed",
+        "include": true,
+        "confidence": 0.85,
+        "reason": "Weak title match: stellar interactions in dense systems LLM confirmed: Paper explicitly studies high-velocity stellar collisions in galactic nuclei, focusing on collisions between main-sequence stars at high velocities. The abstract repeatedly mentions 'high-velocity collisions' and discusses the resulting ejecta and observables, directly relating to stellar ejection mechanisms."
+      },
+      "deepxiv": {
+        "score": 15.927778,
+        "best_score": 15.927778,
+        "search_keywords": null,
+        "citations": "0"
+      },
+      "brief": {
+        "fetched": false,
+        "source": null,
+        "skipped_reason": "weak rule match; retained with search metadata only",
+        "error": null,
+        "tldr": "",
+        "keywords": null,
+        "citations": "",
+        "published_at": "",
+        "source_fields": {}
+      },
+      "provenance": {
+        "search_source": "deepxiv",
+        "brief_source": null,
+        "run_id": "20260419T195644"
+      },
+      "source_fields": {
+        "pg_id": 678741,
+        "venue": "Astronomy &amp; Astrophysics",
+        "journal_name": "Astronomy &amp; Astrophysics",
+        "status": "extracted",
+        "token_count": 24074,
+        "created_at": "2026-01-12 08:54:46",
+        "modified_at": "2026-01-21 04:13:34",
+        "sections_text": "Appendix#2: This appendix presents the time-dependent bolometric, UVW1, and V-band light curves, as well as spectral evolution, for six sets of models. Conclusion: High-velocity collisions between main-sequence stars in galactic nuclei produce observable, short-lived transients with luminosities up to several times $10^{42}$ erg s$^{-1}$, whose properties are primarily governed by impact parameter and kinetic energy, leading to a degeneracy in stellar mass and velocity that can be broken with spectroscopic velocity measurements. Correlations: Ejecta mass in main-sequence star collisions strongly depends on impact parameter with a weak dependence on kinetic energy, while giant star collisions produce nearly complete envelope ejection due to the resistance of compact, high-binding-energy helium cores, leading to distinct correlations between ejecta properties and collision parameters. Introduction: This paper introduces a novel framework that reinterprets stellar collision dynamics in nuclear stellar clusters by using relative velocity as a proxy for distance in a fixed black hole mass scenario, resolving the ambiguity in prior studies by clarifying the conditions under which low-velocity mergers (forming blue stragglers) and high-velocity non-destructive collisions occur, thereby providing a more accurate prediction of collisional outcomes in dense galactic environments. Data availability: All radiative-transfer simulations are publicly available via Zenodo, and the work was supported by multiple high-performance computing facilities and grants in Germany, France, and through national funding programs. Hydrodynamics simulations: This section describes a suite of 3D hydrodynamics simulations of high-velocity stellar collisions using AREPO, based on realistic main-sequence stellar models evolved to terminal age with varying masses, velocities, and impact parameters to study collision outcomes. Radiative-transfer simulations: Radiative-transfer simulations are performed using 1D NLTE models to derive accurate light curves and spectra of high-velocity main-sequence star collisions, starting from spherical-averaged hydrodynamic ejecta after the debris enter a coasting phase.",
+        "highlight": {
+          "abstract": [
+            "<em>High</em>-<em>velocity</em> stellar collisions in galactic nuclei produce ejecta that generate potentially observable electromagnetic radiation, making them promising nuclear transients.",
+            "However, the photometric and spectroscopic properties of these collisions, which would more frequently involve main-sequence <em>stars</em>, remain largely unexplored.",
+            "Here, using 3D hydrodynamics and 1D radiative-transfer simulations, we investigate the properties and observables of the debris produced in <em>high</em>-<em>velocity</em> collisions between terminal-age main-sequence <em>stars</em>",
+            "Observables from these events exhibit clear correlations with collision configurations, including impact parameter, relative <em>velocity</em>, and stellar masses."
+          ],
+          "title": [
+            "Light curves and spectra for stellar collisions between main-sequence <em>stars</em> in galactic nuclei"
+          ]
+        }
+      }
+    }
+  ]
+}
