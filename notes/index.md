@@ -1,7 +1,7 @@
-# 高速星逐月文献索引
+# Monthly High-Velocity Star Literature Index
 
-- 运行编号：`20260419T195644`
-- 运行时间：2026-04-19T19:56:44
+- Run ID: `20260419T195644`
+- Started at: 2026-04-19T19:56:44
 
 | Month | Relevant papers | Unique candidates | Note |
 | --- | ---: | ---: | --- |

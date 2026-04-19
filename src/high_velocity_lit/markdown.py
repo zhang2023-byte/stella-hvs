@@ -30,6 +30,12 @@ def is_weak_match(paper: dict[str, Any]) -> bool:
     return triage.get("level") == "weak"
 
 
+def pluralize(count: Any, singular: str, plural: str | None = None) -> str:
+    value = int(count or 0)
+    noun = singular if value == 1 else (plural or f"{singular}s")
+    return f"{value} {noun}"
+
+
 def render_month_note(record: dict[str, Any]) -> str:
     config = record.get("config") or {}
     stats = record.get("stats") or {}
@@ -39,76 +45,82 @@ def render_month_note(record: dict[str, Any]) -> str:
     source = str(config.get("source") or "")
 
     lines: list[str] = []
-    lines.append(f"# 高速星文献简介 - {month}")
+    lines.append(f"# High-Velocity Star Literature Note - {month}")
     lines.append("")
-    lines.append(f"- 日期范围：{record.get('date_from')} 至 {record.get('date_to')}")
-    lines.append(f"- 运行编号：`{run.get('run_id')}`")
-    lines.append(f"- 运行时间：{run.get('started_at')}")
+    lines.append(f"- Date range: {record.get('date_from')} to {record.get('date_to')}")
+    lines.append(f"- Run ID: `{run.get('run_id')}`")
+    lines.append(f"- Started at: {run.get('started_at')}")
     source_label = "DeepXiv SDK" if source == "deepxiv" else "arXiv API"
-    lines.append(f"- 候选检索：{source_label}；每个关键词最多取 `{config.get('max_results')}` 条")
+    lines.append(f"- Candidate search: {source_label}; up to `{config.get('max_results')}` records per query")
     if source == "deepxiv":
-        lines.append(f"- DeepXiv 搜索模式：`{config.get('search_mode')}`")
+        lines.append(f"- DeepXiv search mode: `{config.get('search_mode')}`")
     categories = config.get("categories") or []
     if categories:
-        lines.append(f"- 分类过滤：{', '.join(f'`{cat}`' for cat in categories)}")
+        lines.append(f"- Category filter: {', '.join(f'`{cat}`' for cat in categories)}")
     if config.get("min_score") is not None:
-        lines.append(f"- DeepXiv score 下限：`{config.get('min_score')}`")
+        lines.append(f"- DeepXiv score floor: `{config.get('min_score')}`")
     if config.get("classifier") == "llm":
-        lines.append(f"- 标题复核：LLM `{config.get('llm_model')}`，base URL `{config.get('llm_base_url')}`")
+        lines.append(f"- Title triage: LLM `{config.get('llm_model')}`, base URL `{config.get('llm_base_url')}`")
     elif config.get("classifier") == "rules" and config.get("llm_review"):
-        lines.append(f"- 标题复核：直接相关规则自动收录；弱相关规则交给 LLM `{config.get('llm_model')}` 复核")
-    else:
-        lines.append(f"- 标题复核：`{config.get('classifier')}`")
-    if config.get("use_brief"):
         lines.append(
-            f"- 简介生成：DeepXiv `brief` 仅用于强相关/直接相关；"
-            f"本月拉取 {stats.get('brief_eligible_count', 0)} 篇，"
-            f"弱相关跳过 {stats.get('brief_skipped_weak_count', 0)} 篇"
+            f"- Title triage: direct rule matches accepted automatically; "
+            f"weak rule matches reviewed by LLM `{config.get('llm_model')}`"
         )
     else:
-        lines.append("- 简介生成：DeepXiv `brief` 未启用")
-    lines.append(f"- 去重后候选：{stats.get('raw_unique', 0)} 篇；标题复核通过：{stats.get('relevant_count', 0)} 篇")
+        lines.append(f"- Title triage: `{config.get('classifier')}`")
+    if config.get("use_brief"):
+        lines.append(
+            f"- Brief generation: DeepXiv `brief` only for strong/direct matches; "
+            f"fetched {pluralize(stats.get('brief_eligible_count', 0), 'paper')}, "
+            f"skipped {pluralize(stats.get('brief_skipped_weak_count', 0), 'weak match', 'weak matches')}"
+        )
+    else:
+        lines.append("- Brief generation: DeepXiv `brief` disabled")
     lines.append(
-        f"- 清洗统计：分类过滤 {stats.get('category_filtered', 0)} 篇；"
-        f"score 过滤 {stats.get('score_filtered', 0)} 篇；"
-        f"标题复核过滤 {stats.get('classifier_filtered', 0)} 篇"
+        f"- Deduplicated candidates: {pluralize(stats.get('raw_unique', 0), 'paper')}; "
+        f"accepted after title triage: {pluralize(stats.get('relevant_count', 0), 'paper')}"
+    )
+    lines.append(
+        f"- Filtering stats: category-filtered {pluralize(stats.get('category_filtered', 0), 'paper')}; "
+        f"score-filtered {pluralize(stats.get('score_filtered', 0), 'paper')}; "
+        f"title-triage-filtered {pluralize(stats.get('classifier_filtered', 0), 'paper')}"
     )
     if config.get("classifier") == "rules":
         rule_summary = (
-            f"- 规则分层：直接相关 {stats.get('direct_rule_included', 0)} 篇；"
-            f"弱相关 {stats.get('weak_rule_candidates', 0)} 篇"
+            f"- Rule tiers: direct {pluralize(stats.get('direct_rule_included', 0), 'paper')}; "
+            f"weak {pluralize(stats.get('weak_rule_candidates', 0), 'paper')}"
         )
         if config.get("llm_review"):
             rule_summary += (
-                f"；弱相关 LLM 复核 {stats.get('weak_llm_reviewed', 0)} 篇；"
-                f"复核后保留 {stats.get('weak_llm_included', 0)} 篇"
+                f"; weak matches reviewed by LLM {pluralize(stats.get('weak_llm_reviewed', 0), 'paper')}; "
+                f"kept after review {pluralize(stats.get('weak_llm_included', 0), 'paper')}"
             )
         lines.append(rule_summary)
     catalog_summary = record.get("catalog_assessment_summary") or {}
     if catalog_summary:
         lines.append(
-            f"- 观测 catalog 判定：已判定 {catalog_summary.get('assessed_count', 0)} 篇；"
-            f"疑似包含真实观测 catalog/样本 {catalog_summary.get('catalog_count', 0)} 篇；"
-            f"方法 `{catalog_summary.get('method')}` / `{catalog_summary.get('model')}`"
+            f"- Observational catalog assessment: assessed {pluralize(catalog_summary.get('assessed_count', 0), 'paper')}; "
+            f"likely observational catalog/sample {pluralize(catalog_summary.get('catalog_count', 0), 'paper')}; "
+            f"method `{catalog_summary.get('method')}` / `{catalog_summary.get('model')}`"
         )
     lines.append("")
-    lines.append("## 检索关键词")
+    lines.append("## Search Queries")
     lines.append("")
     for query in config.get("queries") or []:
         lines.append(f"- `{query}`")
     lines.append("")
-    lines.append("## 本月结果")
+    lines.append("## Monthly Results")
     lines.append("")
 
     if not papers:
-        lines.append("本月没有通过标题复核的 DeepXiv/arXiv 结果。")
+        lines.append("No DeepXiv/arXiv results passed title triage this month.")
         lines.append("")
     else:
-        lines.append("排序：强相关/直接相关在前，弱相关在后；同一层级内按发布时间和 score 排序。")
+        lines.append("Order: strong/direct matches first, weak matches second; within each tier, sorted by date and score.")
         lines.append("")
         grouped_papers = [
-            ("强相关 / 直接相关", [paper for paper in papers if not is_weak_match(paper)]),
-            ("弱相关", [paper for paper in papers if is_weak_match(paper)]),
+            ("Strong / Direct Matches", [paper for paper in papers if not is_weak_match(paper)]),
+            ("Weak Matches", [paper for paper in papers if is_weak_match(paper)]),
         ]
         item_index = 0
         rendered_groups = 0
@@ -149,44 +161,44 @@ def render_month_note(record: dict[str, Any]) -> str:
                 abs_url = first_present(links.get("abs"))
                 pdf = first_present(links.get("pdf"))
                 if arxiv_id and abs_url and pdf:
-                    lines.append(f"- arXiv：[{arxiv_id}]({abs_url})；[PDF]({pdf})")
+                    lines.append(f"- arXiv: [{arxiv_id}]({abs_url}); [PDF]({pdf})")
                 elif arxiv_id:
-                    lines.append(f"- arXiv：{arxiv_id}")
+                    lines.append(f"- arXiv: {arxiv_id}")
                 if publish_at:
-                    lines.append(f"- 发布时间：{publish_at}")
+                    lines.append(f"- Published at: {publish_at}")
                 if authors:
-                    lines.append(f"- 作者：{authors}")
+                    lines.append(f"- Authors: {authors}")
                 if categories_text:
-                    lines.append(f"- 分类：{categories_text}")
+                    lines.append(f"- Categories: {categories_text}")
                 if citations:
-                    lines.append(f"- 引用数：{citations}")
+                    lines.append(f"- Citations: {citations}")
                 if score:
-                    lines.append(f"- DeepXiv score：{score}")
+                    lines.append(f"- DeepXiv score: {score}")
                 if matched_queries:
-                    lines.append(f"- 命中关键词：{matched_queries}")
+                    lines.append(f"- Matched queries: {matched_queries}")
                 if matched_categories:
-                    lines.append(f"- 命中分类：{matched_categories}")
+                    lines.append(f"- Matched categories: {matched_categories}")
                 if triage:
                     lines.append(
-                        f"- 标题复核：{triage.get('label')}，"
-                        f"confidence={triage.get('confidence')}，{triage.get('reason') or ''}"
+                        f"- Title triage: {triage.get('label')}, "
+                        f"confidence={triage.get('confidence')}, {triage.get('reason') or ''}"
                     )
                 if catalog_assessment:
-                    has_catalog = "是" if catalog_assessment.get("has_observational_catalog") else "否"
+                    has_catalog = "Likely" if catalog_assessment.get("has_observational_catalog") else "Unlikely"
                     data_products = first_present(catalog_assessment.get("data_products"))
                     lines.append(
-                        f"- 观测 catalog 判定：{has_catalog}；"
-                        f"role={catalog_assessment.get('catalog_role')}；"
-                        f"scope={catalog_assessment.get('object_scope')}；"
-                        f"confidence={catalog_assessment.get('confidence')}；"
+                        f"- Observational catalog assessment: {has_catalog}; "
+                        f"role={catalog_assessment.get('catalog_role')}; "
+                        f"scope={catalog_assessment.get('object_scope')}; "
+                        f"confidence={catalog_assessment.get('confidence')}; "
                         f"{catalog_assessment.get('evidence') or ''}"
                     )
                     if data_products:
-                        lines.append(f"- 可能数据产品：{data_products}")
+                        lines.append(f"- Possible data products: {data_products}")
                 if not brief.get("fetched") and brief.get("skipped_reason"):
-                    lines.append("- DeepXiv brief：弱相关条目未拉取；仅保留 search 阶段元数据")
+                    lines.append("- DeepXiv brief: weak match not fetched; only search-stage metadata is retained")
                 if keywords:
-                    lines.append(f"- DeepXiv keywords：{keywords}")
+                    lines.append(f"- DeepXiv keywords: {keywords}")
                 if tldr:
                     lines.append("")
                     lines.append("**DeepXiv brief**")
@@ -194,12 +206,12 @@ def render_month_note(record: dict[str, Any]) -> str:
                     lines.append(tldr)
                 if abstract_text:
                     lines.append("")
-                    lines.append("**Search 返回摘要**")
+                    lines.append("**Search Abstract**")
                     lines.append("")
                     lines.append(abstract_text)
                 lines.append("")
 
-    lines.append("## 本月运行日志摘要")
+    lines.append("## Monthly Run Log Summary")
     lines.append("")
     total_label = "DeepXiv total" if source == "deepxiv" else "arXiv total"
     lines.append(f"| Query | Category | {total_label} | Returned | Error |")
@@ -218,10 +230,10 @@ def render_month_note(record: dict[str, Any]) -> str:
 def render_index(record: dict[str, Any]) -> str:
     run = record.get("run") or {}
     lines = [
-        "# 高速星逐月文献索引",
+        "# Monthly High-Velocity Star Literature Index",
         "",
-        f"- 运行编号：`{run.get('run_id')}`",
-        f"- 运行时间：{run.get('started_at')}",
+        f"- Run ID: `{run.get('run_id')}`",
+        f"- Started at: {run.get('started_at')}",
         "",
         "| Month | Relevant papers | Unique candidates | Note |",
         "| --- | ---: | ---: | --- |",

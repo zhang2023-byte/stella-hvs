@@ -160,9 +160,9 @@ class CatalogAssessmentTest(unittest.TestCase):
         self.assertEqual(assessment["catalog_role"], "new_catalog")
 
         markdown = render_month_note(record)
-        self.assertIn("观测 catalog 判定：已判定 1 篇", markdown)
-        self.assertIn("观测 catalog 判定：是；role=new_catalog", markdown)
-        self.assertIn("可能数据产品：candidate_table, astrometry", markdown)
+        self.assertIn("Observational catalog assessment: assessed 1 paper", markdown)
+        self.assertIn("Observational catalog assessment: Likely; role=new_catalog", markdown)
+        self.assertIn("Possible data products: candidate_table, astrometry", markdown)
 
     def test_llm_payload_includes_abstract_and_brief(self) -> None:
         captured: dict[str, object] = {}

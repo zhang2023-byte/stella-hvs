@@ -97,7 +97,7 @@ monthly note but use only metadata already returned by DeepXiv search, such as
 title, abstract, score, categories, and matched queries.
 
 Monthly results are split into strong/direct and weak sections with a divider
-between them. The note's `Search 返回摘要` section is the abstract returned by
+between them. The note's `Search Abstract` section is the abstract returned by
 DeepXiv search; it does not mean an extra `brief` request was made.
 
 JSON is the source of truth. Each run writes monthly records and generated
