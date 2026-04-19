@@ -69,6 +69,7 @@ class PipelinePartialRunTest(unittest.TestCase):
                 workspace=root,
                 notes_dir=root / "notes",
                 logs_dir=root / "logs",
+                data_dir=root / "data" / "literature",
                 start_date=date(2025, 1, 1),
                 end_date=date(2025, 2, 28),
                 source="deepxiv",
@@ -111,6 +112,9 @@ class PipelinePartialRunTest(unittest.TestCase):
 
             self.assertTrue((config.notes_dir / "2025-01.md").exists())
             self.assertFalse((config.notes_dir / "2025-02.md").exists())
+            self.assertTrue((config.data_dir / "monthly" / "2025-01.json").exists())
+            self.assertFalse((config.data_dir / "monthly" / "2025-02.json").exists())
+            self.assertEqual(summary["data_dir"], str(config.data_dir))
 
             runs = [
                 json.loads(line)

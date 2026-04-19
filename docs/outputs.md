@@ -1,5 +1,16 @@
 # Outputs
 
+JSON is canonical. Markdown is generated from JSON and should stay fully
+corresponding to it.
+
+Canonical data:
+
+```text
+data/literature/index.json             Collection index for completed months
+data/literature/monthly/YYYY-MM.json   Monthly canonical record
+data/literature/papers.jsonl           Flat paper stream for machine readers
+```
+
 Generated notes:
 
 ```text
@@ -16,17 +27,21 @@ logs/run_<timestamp>.log
 
 `logs/` is ignored by Git.
 
-Each monthly note includes:
+Each monthly JSON record includes:
 
 - date range and run ID
-- search source and categories
-- selected papers with arXiv/PDF links
+- resolved search/classifier/brief config
+- per-query/category search log
+- selected papers with arXiv/PDF links and provenance
 - matched queries and categories
 - title-triage label, confidence, and reason
+- direct/weak triage level
+- search-returned abstract
+- DeepXiv brief content and fetched/skipped status
 - direct/weak rule counts
-- DeepXiv brief for direct matches and search-returned abstracts when available
-- direct matches listed before weak matches
-- per-query/category search summary
+
+Monthly Markdown notes are rendered from those fields. They list direct matches
+before weak matches and use a divider between the two sections.
 
 Main log event types:
 

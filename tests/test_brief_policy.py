@@ -74,6 +74,7 @@ class BriefPolicyTest(unittest.TestCase):
                 workspace=root,
                 notes_dir=root / "notes",
                 logs_dir=root / "logs",
+                data_dir=root / "data" / "literature",
                 start_date=date(2025, 1, 1),
                 end_date=date(2025, 1, 31),
                 source="deepxiv",
@@ -103,6 +104,7 @@ class BriefPolicyTest(unittest.TestCase):
 
             self.assertEqual(summary["status"], "complete")
             self.assertEqual(FakeDeepXivClient.brief_calls, ["2501.00001"])
+            self.assertEqual(summary["data_dir"], str(config.data_dir))
 
             run_log = Path(summary["run_log"])
             records = [json.loads(line) for line in run_log.read_text(encoding="utf-8").splitlines()]
@@ -120,6 +122,27 @@ class BriefPolicyTest(unittest.TestCase):
                 note.index("Discovery of a hypervelocity star candidate"),
                 note.index("Stellar Escape from Globular Clusters"),
             )
+
+            month_json = config.data_dir / "monthly" / "2025-01.json"
+            index_json = config.data_dir / "index.json"
+            papers_jsonl = config.data_dir / "papers.jsonl"
+            self.assertTrue(month_json.exists())
+            self.assertTrue(index_json.exists())
+            self.assertTrue(papers_jsonl.exists())
+
+            record = json.loads(month_json.read_text(encoding="utf-8"))
+            self.assertEqual(record["schema_version"], "stella.literature.month.v1")
+            self.assertEqual(record["papers"][0]["triage"]["level"], "direct")
+            self.assertEqual(record["papers"][1]["triage"]["level"], "weak")
+            self.assertTrue(record["papers"][0]["brief"]["fetched"])
+            self.assertFalse(record["papers"][1]["brief"]["fetched"])
+            self.assertEqual(record["papers"][1]["abstract"]["text"], "Weak-match search abstract.")
+
+            flat_records = [
+                json.loads(line)
+                for line in papers_jsonl.read_text(encoding="utf-8").splitlines()
+            ]
+            self.assertEqual([item["arxiv_id"] for item in flat_records], ["2501.00001", "2501.00002"])
 
 
 if __name__ == "__main__":

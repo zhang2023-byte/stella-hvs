@@ -202,6 +202,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--brief", type=parse_bool, default=True, metavar="True|False", help="Fetch DeepXiv brief. Default: True.")
     parser.add_argument("--progress", type=parse_bool, default=True, metavar="True|False", help="Show terminal progress bars. Default: True.")
     parser.add_argument("--token", default=None, help="Optional DeepXiv token. Defaults to DEEPXIV_TOKEN from loaded .env files.")
+    parser.add_argument("--data-dir", type=Path, default=WORKSPACE / "data" / "literature")
     parser.add_argument("--notes-dir", type=Path, default=WORKSPACE / "notes")
     parser.add_argument("--logs-dir", type=Path, default=WORKSPACE / "logs")
     return parser
@@ -228,6 +229,7 @@ def main() -> int:
         workspace=WORKSPACE,
         notes_dir=args.notes_dir,
         logs_dir=args.logs_dir,
+        data_dir=args.data_dir,
         start_date=start_date,
         end_date=end_date,
         source=args.source,

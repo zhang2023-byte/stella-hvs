@@ -16,6 +16,7 @@ from .deepxiv_client import DeepXivClient
 from .filters import category_matches, score_matches
 from .markdown import render_index, render_month_note
 from .models import MonthWindow, SearchConfig
+from .records import build_index_record, build_month_record
 from .title_classifier import LLMTitleClassifier, TitleDecision, heuristic_title_decision, load_llm_api_key
 
 
@@ -125,6 +126,22 @@ def append_jsonl(path: Path, record: dict[str, Any]) -> None:
         handle.write(json.dumps(record, ensure_ascii=False, sort_keys=True) + "\n")
 
 
+def write_json(path: Path, record: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(record, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def read_json(path: Path) -> dict[str, Any]:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def write_jsonl(path: Path, records: Iterable[dict[str, Any]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as handle:
+        for record in records:
+            handle.write(json.dumps(record, ensure_ascii=False, sort_keys=True) + "\n")
+
+
 def parse_datetime(value: Any) -> datetime:
     if not value:
         return datetime.min
@@ -192,8 +209,12 @@ def classifier_label(paper: dict[str, Any]) -> str:
     return str(classifier.get("label") or "")
 
 
+def is_weak_label(label: str) -> bool:
+    return label.startswith("rule-weak") or "weak" in label.lower()
+
+
 def should_fetch_brief(paper: dict[str, Any]) -> bool:
-    return not classifier_label(paper).startswith("rule-weak")
+    return not is_weak_label(classifier_label(paper))
 
 
 def relevance_sort_key(paper: dict[str, Any]) -> tuple[int, datetime, float]:
@@ -224,6 +245,7 @@ def run_parameter_lines(config: SearchConfig, deepxiv_token: str | None) -> list
         f"--llm-batch-size: {config.llm_batch_size}",
         f"--llm-api-key: {configured_text(config.llm_api_key)}",
         f"--token/DEEPXIV_TOKEN: {configured_text(deepxiv_token)}",
+        f"--data-dir: {config.data_dir}",
         f"--notes-dir: {config.notes_dir}",
         f"--logs-dir: {config.logs_dir}",
         f"queries: {list_text(config.queries, empty='none')}",
@@ -252,6 +274,12 @@ def resume_command(config: SearchConfig, failed_month: MonthWindow) -> str:
         config.classifier,
         "--llm-review",
         bool_text(config.llm_review),
+        "--data-dir",
+        str(config.data_dir),
+        "--notes-dir",
+        str(config.notes_dir),
+        "--logs-dir",
+        str(config.logs_dir),
     ]
     if config.categories:
         command_parts.extend(["--categories", ",".join(config.categories)])
@@ -283,6 +311,9 @@ def build_run_summary(
         "duration_seconds": round((finished_at - started_at).total_seconds(), 3),
         "notes_dir": str(config.notes_dir),
         "logs_dir": str(config.logs_dir),
+        "data_dir": str(config.data_dir),
+        "index_json": str(config.data_dir / "index.json"),
+        "papers_jsonl": str(config.data_dir / "papers.jsonl"),
         "run_log": str(run_log),
         "months": month_summaries,
         "completed_months": [item["month"] for item in month_summaries],
@@ -327,6 +358,39 @@ def write_partial_summary(
     append_jsonl(run_log, {"event": "partial_finish", **summary})
     append_jsonl(config.logs_dir / "runs.jsonl", summary)
     return summary
+
+
+def write_collection_outputs(
+    *,
+    config: SearchConfig,
+    run_id: str,
+    started_at: datetime,
+    month_summaries: list[dict[str, Any]],
+    month_records: list[dict[str, Any]],
+) -> None:
+    index_record = build_index_record(
+        month_summaries,
+        run_id=run_id,
+        started_at=started_at,
+        config=config,
+    )
+    index_json = config.data_dir / "index.json"
+    write_json(index_json, index_record)
+    persisted_index = read_json(index_json)
+    (config.notes_dir / "index.md").write_text(render_index(persisted_index), encoding="utf-8")
+
+    paper_records: list[dict[str, Any]] = []
+    for month_record in month_records:
+        month = month_record.get("month")
+        for paper in month_record.get("papers") or []:
+            paper_records.append(
+                {
+                    "month": month,
+                    "run_id": run_id,
+                    **paper,
+                }
+            )
+    write_jsonl(config.data_dir / "papers.jsonl", paper_records)
 
 
 def classify_candidates(
@@ -657,6 +721,7 @@ def search_month(
 def run_pipeline(config: SearchConfig) -> dict[str, Any]:
     config.notes_dir.mkdir(parents=True, exist_ok=True)
     config.logs_dir.mkdir(parents=True, exist_ok=True)
+    (config.data_dir / "monthly").mkdir(parents=True, exist_ok=True)
 
     started_at = datetime.now()
     run_id = started_at.strftime("%Y%m%dT%H%M%S")
@@ -664,6 +729,7 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
     arxiv_client = ArxivClient()
     deepxiv_client = DeepXivClient(token=config.token)
     month_summaries: list[dict[str, Any]] = []
+    month_records: list[dict[str, Any]] = []
     months = list(iter_months(config))
     progress = ProgressReporter(config.progress)
     search_state = {"done": 0, "total": search_call_count(config, months)}
@@ -679,6 +745,8 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
             "query_count": len(config.queries),
             "max_results": config.max_results,
             "candidate_source": config.source,
+            "data_dir": str(config.data_dir),
+            "notes_dir": str(config.notes_dir),
             "categories": config.categories,
             "category_filter_stage": "deepxiv_per_category" if config.source == "deepxiv" else "local",
             "search_mode": config.search_mode,
@@ -725,8 +793,13 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
                     run_log=run_log,
                 )
                 raise PartialRunError(summary, exc) from exc
-            note = render_month_note(month, papers, stats, config, run_id=run_id, started_at=started_at)
-            (config.notes_dir / f"{month.slug}.md").write_text(note, encoding="utf-8")
+            month_record = build_month_record(month, papers, stats, config, run_id=run_id, started_at=started_at)
+            month_json_path = config.data_dir / "monthly" / f"{month.slug}.json"
+            write_json(month_json_path, month_record)
+            persisted_month = read_json(month_json_path)
+            note_path = config.notes_dir / f"{month.slug}.md"
+            note_path.write_text(render_month_note(persisted_month), encoding="utf-8")
+            month_records.append(persisted_month)
             month_summaries.append(
                 {
                     "month": month.slug,
@@ -734,12 +807,18 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
                     "date_to": month.date_to,
                     "raw_unique": stats["raw_unique"],
                     "relevant_count": stats["relevant_count"],
+                    "json_path": str(month_json_path),
+                    "note_path": str(note_path),
                 }
             )
+            write_collection_outputs(
+                config=config,
+                run_id=run_id,
+                started_at=started_at,
+                month_summaries=month_summaries,
+                month_records=month_records,
+            )
             append_jsonl(run_log, {"event": "month_done", "run_id": run_id, **month_summaries[-1]})
-
-        index = render_index(month_summaries, run_id=run_id, started_at=started_at)
-        (config.notes_dir / "index.md").write_text(index, encoding="utf-8")
 
         finished_at = datetime.now()
         summary = build_run_summary(
