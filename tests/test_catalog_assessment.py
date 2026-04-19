@@ -118,13 +118,13 @@ class CatalogAssessmentTest(unittest.TestCase):
     def test_omitted_to_defaults_to_today(self) -> None:
         self.assertEqual(annotate_cli.infer_period_end("2025-03", today=date(2026, 4, 19)), date(2026, 4, 19))
 
-    def test_on_selection_supports_one_month_or_bracket_list(self) -> None:
+    def test_on_selection_supports_one_month_or_comma_list(self) -> None:
         self.assertEqual(
             annotate_cli.parse_on_value("2025-01"),
             ["2025-01"],
         )
         self.assertEqual(
-            annotate_cli.parse_on_value("[2025-03, 2025-06,2026-01]"),
+            annotate_cli.parse_on_value("2025-03,2025-06, 2026-01"),
             ["2025-03", "2025-06", "2026-01"],
         )
         self.assertEqual(
@@ -135,8 +135,8 @@ class CatalogAssessmentTest(unittest.TestCase):
             ],
         )
 
-    def test_on_selection_rejects_bare_lists(self) -> None:
-        for value in ("2025-01,2025-03", "list:[2025-01,2025-03]", "[2025-01"):
+    def test_on_selection_rejects_brackets_and_list_prefix(self) -> None:
+        for value in ("[2025-01,2025-03]", "list:[2025-01,2025-03]", "[2025-01"):
             with self.subTest(value=value):
                 with self.assertRaises(ValueError):
                     annotate_cli.parse_on_value(value)
