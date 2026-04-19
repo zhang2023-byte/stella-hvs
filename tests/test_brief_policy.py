@@ -74,7 +74,6 @@ class BriefPolicyTest(unittest.TestCase):
                 workspace=root,
                 notes_dir=root / "notes",
                 logs_dir=root / "logs",
-                data_dir=root / "data" / "literature",
                 start_date=date(2025, 1, 1),
                 end_date=date(2025, 1, 31),
                 source="deepxiv",
@@ -104,14 +103,14 @@ class BriefPolicyTest(unittest.TestCase):
 
             self.assertEqual(summary["status"], "complete")
             self.assertEqual(FakeDeepXivClient.brief_calls, ["2501.00001"])
-            self.assertEqual(summary["data_dir"], str(config.data_dir))
+            self.assertEqual(summary["index_json"], str(config.notes_dir / "index.json"))
 
             run_log = Path(summary["run_log"])
             records = [json.loads(line) for line in run_log.read_text(encoding="utf-8").splitlines()]
             brief_events = [record for record in records if record.get("event") == "brief"]
             self.assertEqual([event["arxiv_id"] for event in brief_events], ["2501.00001"])
 
-            note = (config.notes_dir / "2025-01.md").read_text(encoding="utf-8")
+            note = (config.notes_dir / "2025-01" / "2025-01.md").read_text(encoding="utf-8")
             self.assertIn("Brief for 2501.00001.", note)
             self.assertIn("弱相关条目未拉取", note)
             self.assertIn("Weak-match search abstract.", note)
@@ -123,12 +122,12 @@ class BriefPolicyTest(unittest.TestCase):
                 note.index("Stellar Escape from Globular Clusters"),
             )
 
-            month_json = config.data_dir / "monthly" / "2025-01.json"
-            index_json = config.data_dir / "index.json"
-            papers_jsonl = config.data_dir / "papers.jsonl"
+            month_json = config.notes_dir / "2025-01" / "2025-01.json"
+            index_json = config.notes_dir / "index.json"
             self.assertTrue(month_json.exists())
             self.assertTrue(index_json.exists())
-            self.assertTrue(papers_jsonl.exists())
+            self.assertFalse((config.notes_dir / "papers.jsonl").exists())
+            self.assertIn("[2025-01.md](2025-01/2025-01.md)", (config.notes_dir / "index.md").read_text(encoding="utf-8"))
 
             record = json.loads(month_json.read_text(encoding="utf-8"))
             self.assertEqual(record["schema_version"], "stella.literature.month.v1")
@@ -137,12 +136,6 @@ class BriefPolicyTest(unittest.TestCase):
             self.assertTrue(record["papers"][0]["brief"]["fetched"])
             self.assertFalse(record["papers"][1]["brief"]["fetched"])
             self.assertEqual(record["papers"][1]["abstract"]["text"], "Weak-match search abstract.")
-
-            flat_records = [
-                json.loads(line)
-                for line in papers_jsonl.read_text(encoding="utf-8").splitlines()
-            ]
-            self.assertEqual([item["arxiv_id"] for item in flat_records], ["2501.00001", "2501.00002"])
 
 
 if __name__ == "__main__":

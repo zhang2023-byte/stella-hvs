@@ -236,7 +236,6 @@ def build_index_record(
             "run_id": run_id,
             "started_at": started_at.isoformat(timespec="seconds"),
         },
-        "data_dir": str(config.data_dir),
         "notes_dir": str(config.notes_dir),
         "config": config_record(config),
         "months": month_summaries,

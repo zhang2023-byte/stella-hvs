@@ -8,7 +8,7 @@ Default flow:
 - Split by arXiv category.
 - Deduplicate by arXiv ID.
 - Classify titles with local rules.
-- Save canonical JSON, then generate Markdown notes from that JSON.
+- Save canonical JSON under `notes/`, then generate Markdown notes from that JSON.
 
 ## Setup
 
@@ -48,9 +48,9 @@ More commands, defaults, and date rules: [docs/usage.md](docs/usage.md)
 
 ```text
 scripts/fetch_high_velocity_lit.py   Main CLI
+scripts/render_lit_notes.py          Regenerate Markdown from note JSON
 scripts/run_2025_2026.sh             Convenience batch runner
-data/literature/                     Canonical JSON outputs
 docs/                                Detailed docs
-notes/                               Markdown generated from JSON
+notes/                               Canonical JSON and generated Markdown notes
 src/high_velocity_lit/               Pipeline implementation
 ```

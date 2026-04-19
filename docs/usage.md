@@ -48,8 +48,7 @@ Useful options:
 --min-score X                Optional DeepXiv score floor. Default: disabled.
 --progress True|False        Show terminal progress bars. Default: True.
 --token TOKEN                Override DEEPXIV_TOKEN.
---data-dir PATH              Canonical JSON output directory. Default: data/literature.
---notes-dir PATH             Markdown output directory. Default: notes.
+--notes-dir PATH             Canonical JSON and Markdown output directory. Default: notes.
 --logs-dir PATH              Local run logs. Default: logs.
 ```
 
@@ -71,7 +70,6 @@ Defaults:
 --llm-base-url      LLM_BASE_URL/OPENAI_BASE_URL/DEEPXIV_AGENT_BASE_URL, else https://api.openai.com/v1
 --llm-model         LLM_MODEL/OPENAI_MODEL/DEEPXIV_AGENT_MODEL, else gpt-4o-mini
 --llm-batch-size    25
---data-dir          data/literature
 --notes-dir         notes
 --logs-dir          logs
 ```
@@ -102,11 +100,31 @@ Monthly results are split into strong/direct and weak sections with a divider
 between them. The note's `Search 返回摘要` section is the abstract returned by
 DeepXiv search; it does not mean an extra `brief` request was made.
 
-JSON is the source of truth. Each run writes monthly records to
-`data/literature/monthly/YYYY-MM.json`, a collection index to
-`data/literature/index.json`, and a flat machine-readable stream to
-`data/literature/papers.jsonl`. Markdown files in `notes/` are generated from
-those JSON records and should be treated as a reading view.
+JSON is the source of truth. Each run writes monthly records and generated
+Markdown into the same monthly note folder:
+
+```text
+notes/index.json
+notes/index.md
+notes/YYYY-MM/YYYY-MM.json
+notes/YYYY-MM/YYYY-MM.md
+```
+
+The exact date range is stored inside each monthly JSON record as
+`date_from`/`date_to`. Markdown files are generated from those JSON records and
+should be treated as reading views.
+
+To regenerate Markdown from existing JSON without calling DeepXiv:
+
+```bash
+conda run -n stella-env python scripts/render_lit_notes.py
+```
+
+Or regenerate one month:
+
+```bash
+conda run -n stella-env python scripts/render_lit_notes.py --month 2026-03
+```
 
 If DeepXiv returns a daily limit error, completed months are kept. The script
 writes a partial summary to `logs/partial_<run_id>.json`, appends it to

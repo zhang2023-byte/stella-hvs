@@ -33,7 +33,6 @@ class SearchConfig:
     workspace: Path
     notes_dir: Path
     logs_dir: Path
-    data_dir: Path
     start_date: date
     end_date: date
     source: str

@@ -210,7 +210,7 @@ def render_index(record: dict[str, Any]) -> str:
         slug = summary["month"]
         lines.append(
             f"| {slug} | {summary['relevant_count']} | {summary['raw_unique']} | "
-            f"[{slug}.md]({slug}.md) |"
+            f"[{slug}.md]({slug}/{slug}.md) |"
         )
     lines.append("")
     return "\n".join(lines)

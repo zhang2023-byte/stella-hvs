@@ -6,16 +6,15 @@ corresponding to it.
 Canonical data:
 
 ```text
-data/literature/index.json             Collection index for completed months
-data/literature/monthly/YYYY-MM.json   Monthly canonical record
-data/literature/papers.jsonl           Flat paper stream for machine readers
+notes/index.json             Collection index for completed months
+notes/YYYY-MM/YYYY-MM.json   Monthly canonical record
 ```
 
 Generated notes:
 
 ```text
 notes/index.md      Monthly index
-notes/YYYY-MM.md    Monthly literature note
+notes/YYYY-MM/YYYY-MM.md    Monthly literature note generated from JSON
 ```
 
 Local logs:

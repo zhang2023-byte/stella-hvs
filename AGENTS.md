@@ -22,14 +22,13 @@ JSON is the source of truth. Markdown is a human-readable view generated from JS
 Default outputs:
 
 ```text
-data/literature/monthly/YYYY-MM.json   Monthly canonical record
-data/literature/index.json             Collection index
-data/literature/papers.jsonl           Flat paper stream for machine readers
-notes/YYYY-MM.md                       Reading note generated from monthly JSON
-notes/index.md                         Index generated from index JSON
+notes/YYYY-MM/YYYY-MM.json   Monthly canonical record
+notes/YYYY-MM/YYYY-MM.md     Reading note generated from monthly JSON
+notes/index.json             Collection index
+notes/index.md               Index generated from index JSON
 ```
 
-Do not manually edit generated Markdown to fix data or presentation issues. If an output is wrong, update the JSON record builder or Markdown renderer, then regenerate.
+Do not manually edit generated Markdown to fix data or presentation issues. If an output is wrong, update the JSON record builder or Markdown renderer, then regenerate with `scripts/render_lit_notes.py`.
 
 ## Literature Workflow
 

@@ -67,11 +67,6 @@ class CliOptionParsingTest(unittest.TestCase):
         args = parser.parse_args(["--from", "2026-03"])
         self.assertEqual(args.categories, "astro-ph.GA")
 
-    def test_default_data_dir_is_json_literature_store(self) -> None:
-        parser = cli.build_parser()
-        args = parser.parse_args(["--from", "2026-03"])
-        self.assertEqual(args.data_dir, cli.WORKSPACE / "data" / "literature")
-
     def test_default_queries_avoid_singular_plural_duplicates(self) -> None:
         self.assertEqual(
             cli.load_queries(None, []),
