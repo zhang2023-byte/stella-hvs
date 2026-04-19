@@ -55,6 +55,8 @@ Default rule triage has two levels:
 
 LLM classification or review should use title, search-returned abstract, and categories together. Do not send title-only payloads unless the user explicitly asks for a title-only comparison.
 
+Use `scripts/annotate_catalog_data.py --from YYYY-MM --to YYYY-MM` to add `catalog_assessment` fields to existing note JSON. That assessment should use abstract and brief content together, then refresh the sibling Markdown file.
+
 ## Engineering Rules
 
 - Test in `stella-env`: `conda run -n stella-env python -m unittest discover tests`.

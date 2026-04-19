@@ -48,6 +48,7 @@ More commands, defaults, and date rules: [docs/usage.md](docs/usage.md)
 
 ```text
 scripts/fetch_high_velocity_lit.py   Main CLI
+scripts/annotate_catalog_data.py     Add observational catalog assessments to note JSON
 scripts/render_lit_notes.py          Regenerate Markdown from note JSON
 scripts/run_2025_2026.sh             Convenience batch runner
 docs/                                Detailed docs

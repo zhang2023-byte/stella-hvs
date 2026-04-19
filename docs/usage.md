@@ -126,6 +126,38 @@ Or regenerate one month:
 conda run -n stella-env python scripts/render_lit_notes.py --month 2026-03
 ```
 
+Catalog-data assessment uses an LLM to decide whether papers in existing note
+JSON likely contain real observational high-velocity-star data or catalog/sample
+tables. It uses each paper's abstract and DeepXiv brief when available, then
+updates the JSON and refreshes the sibling Markdown file. It requires the same
+LLM API environment variables as weak-match LLM review.
+
+Assess one monthly note:
+
+```bash
+conda run -n stella-env python scripts/annotate_catalog_data.py --from 2026-03
+```
+
+Assess a range:
+
+```bash
+conda run -n stella-env python scripts/annotate_catalog_data.py \
+  --from 2025-01 \
+  --to 2025-06
+```
+
+You can also pass explicit JSON paths:
+
+```bash
+conda run -n stella-env python scripts/annotate_catalog_data.py \
+  notes/2026-03/2026-03.json
+```
+
+For this annotation script, omitted `--to` selects the same period as `--from`:
+`--from 2026-03` selects March 2026, while `--from 2025` selects all 2025 note
+months. Existing `catalog_assessment` fields are skipped unless `--force True`
+is set.
+
 If DeepXiv returns a daily limit error, completed months are kept. The script
 writes a partial summary to `logs/partial_<run_id>.json`, appends it to
 `logs/runs.jsonl` with `status: partial`, prints the resume command, and exits

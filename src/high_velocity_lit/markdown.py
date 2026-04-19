@@ -84,6 +84,13 @@ def render_month_note(record: dict[str, Any]) -> str:
                 f"复核后保留 {stats.get('weak_llm_included', 0)} 篇"
             )
         lines.append(rule_summary)
+    catalog_summary = record.get("catalog_assessment_summary") or {}
+    if catalog_summary:
+        lines.append(
+            f"- 观测 catalog 判定：已判定 {catalog_summary.get('assessed_count', 0)} 篇；"
+            f"疑似包含真实观测 catalog/样本 {catalog_summary.get('catalog_count', 0)} 篇；"
+            f"方法 `{catalog_summary.get('method')}` / `{catalog_summary.get('model')}`"
+        )
     lines.append("")
     lines.append("## 检索关键词")
     lines.append("")
@@ -122,6 +129,7 @@ def render_month_note(record: dict[str, Any]) -> str:
                 match = paper.get("match") or {}
                 triage = paper.get("triage") or {}
                 deepxiv = paper.get("deepxiv") or {}
+                catalog_assessment = paper.get("catalog_assessment") or {}
 
                 arxiv_id = first_present(paper.get("arxiv_id"))
                 title = first_present(paper.get("title"), "Untitled")
@@ -163,6 +171,18 @@ def render_month_note(record: dict[str, Any]) -> str:
                         f"- 标题复核：{triage.get('label')}，"
                         f"confidence={triage.get('confidence')}，{triage.get('reason') or ''}"
                     )
+                if catalog_assessment:
+                    has_catalog = "是" if catalog_assessment.get("has_observational_catalog") else "否"
+                    data_products = first_present(catalog_assessment.get("data_products"))
+                    lines.append(
+                        f"- 观测 catalog 判定：{has_catalog}；"
+                        f"role={catalog_assessment.get('catalog_role')}；"
+                        f"scope={catalog_assessment.get('object_scope')}；"
+                        f"confidence={catalog_assessment.get('confidence')}；"
+                        f"{catalog_assessment.get('evidence') or ''}"
+                    )
+                    if data_products:
+                        lines.append(f"- 可能数据产品：{data_products}")
                 if not brief.get("fetched") and brief.get("skipped_reason"):
                     lines.append("- DeepXiv brief：弱相关条目未拉取；仅保留 search 阶段元数据")
                 if keywords:

@@ -37,10 +37,13 @@ Each monthly JSON record includes:
 - direct/weak triage level
 - search-returned abstract
 - DeepXiv brief content and fetched/skipped status
+- optional `catalog_assessment` fields for observational catalog/sample checks
 - direct/weak rule counts
 
 Monthly Markdown notes are rendered from those fields. They list direct matches
-before weak matches and use a divider between the two sections.
+before weak matches and use a divider between the two sections. When present,
+catalog assessments are rendered beside each paper and summarized near the top
+of the note.
 
 Main log event types:
 
