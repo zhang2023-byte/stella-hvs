@@ -1,4 +1,4 @@
-"""Title-only paper relevance classifiers."""
+"""Paper relevance classifiers for search-result triage."""
 
 from __future__ import annotations
 
@@ -203,19 +203,21 @@ class LLMTitleClassifier:
             {
                 "arxiv_id": paper.get("arxiv_id") or paper.get("id"),
                 "title": clean_text(paper.get("title")),
+                "abstract": clean_text(paper.get("abstract")),
                 "categories": paper.get("categories") or [],
             }
             for paper in papers
         ]
         prompt = (
-            "Classify arXiv paper titles for a literature search on high-velocity stars. "
-            "Include papers whose title likely concerns hypervelocity stars, high-velocity stars, runaway stars, "
+            "Classify arXiv search results for a literature search on high-velocity stars. "
+            "Use the title, abstract, and categories. Include papers that likely concern hypervelocity stars, "
+            "high-velocity stars, runaway stars, "
             "OB runaway stars, unbound/escaping/ejected stars, stellar escapers, walkaway stars, or direct mechanisms, "
             "observations, catalogues, origins, or kinematics of those stellar populations. "
-            "Be inclusive when the title strongly suggests the topic, because the next step will fetch a brief. "
+            "Be inclusive when the title or abstract strongly suggests the topic. "
             "Exclude titles about compact/neutron/dark/radiating stars, impacts/cratering, generic binary stars, "
             "galaxies/AGN simulations, or ordinary stellar populations unless they clearly involve high-velocity/runaway stars. "
-            "Use only the title and categories. Return only a JSON array with objects: "
+            "Return only a JSON array with objects: "
             '{"arxiv_id": "...", "include": true/false, "confidence": 0-1, "reason": "short reason", "label": "short label"}.'
         )
         payload = {

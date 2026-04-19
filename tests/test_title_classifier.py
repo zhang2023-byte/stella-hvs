@@ -1,14 +1,16 @@
 from __future__ import annotations
 
+import json
 import sys
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from high_velocity_lit.title_classifier import heuristic_title_decision  # noqa: E402
+from high_velocity_lit.title_classifier import LLMTitleClassifier, heuristic_title_decision  # noqa: E402
 
 
 class TitleClassifierRulesTest(unittest.TestCase):
@@ -65,6 +67,64 @@ class TitleClassifierRulesTest(unittest.TestCase):
         for title in rejected_titles:
             with self.subTest(title=title):
                 self.assert_rejected(title)
+
+
+class LLMClassifierPayloadTest(unittest.TestCase):
+    def test_llm_payload_includes_abstract(self) -> None:
+        captured: dict[str, object] = {}
+
+        class FakeResponse:
+            def __enter__(self) -> "FakeResponse":
+                return self
+
+            def __exit__(self, exc_type: object, exc: object, traceback: object) -> None:
+                return None
+
+            def read(self) -> bytes:
+                return json.dumps(
+                    {
+                        "choices": [
+                            {
+                                "message": {
+                                    "content": json.dumps(
+                                        [
+                                            {
+                                                "arxiv_id": "2501.00001",
+                                                "include": True,
+                                                "confidence": 0.9,
+                                                "reason": "abstract mentions high-velocity stars",
+                                                "label": "llm-direct",
+                                            }
+                                        ]
+                                    )
+                                }
+                            }
+                        ]
+                    }
+                ).encode("utf-8")
+
+        def fake_urlopen(request: object, timeout: int) -> FakeResponse:
+            captured["payload"] = json.loads(request.data.decode("utf-8"))  # type: ignore[attr-defined]
+            return FakeResponse()
+
+        classifier = LLMTitleClassifier(api_key="test", base_url="https://example.test", model="test-model")
+        with patch("urllib.request.urlopen", fake_urlopen):
+            decisions = classifier.classify_batch(
+                [
+                    {
+                        "arxiv_id": "2501.00001",
+                        "title": "A subtle stellar kinematics paper",
+                        "abstract": "The abstract reports a high-velocity star candidate.",
+                        "categories": ["astro-ph.GA"],
+                    }
+                ]
+            )
+
+        self.assertTrue(decisions["2501.00001"].include)
+        messages = captured["payload"]["messages"]  # type: ignore[index]
+        user_message = messages[1]["content"]  # type: ignore[index]
+        self.assertIn('"abstract": "The abstract reports a high-velocity star candidate."', user_message)
+        self.assertIn("Use the title, abstract, and categories.", user_message)
 
 
 if __name__ == "__main__":

@@ -84,7 +84,8 @@ recall pass.
 
 `--classifier llm` uses pure LLM classification. `--llm-review True` only has
 an effect with `--classifier rules`; it sends weak rule matches to the LLM and
-requires a configured LLM API key.
+requires a configured LLM API key. LLM review/classification uses the title,
+abstract returned by DeepXiv/arXiv search, and categories.
 
 With the default rules classifier, `--brief True` fetches DeepXiv brief only for
 strong/direct matches (`rule-direct`). Weak matches (`rule-weak*`) stay in the

@@ -82,7 +82,7 @@ conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
 In this mode:
 
 - `rule-direct` papers are kept immediately.
-- `rule-weak` papers are sent to the LLM.
+- `rule-weak` papers are sent to the LLM with title, search-returned abstract, and categories.
 - LLM-confirmed weak papers are labeled `rule-weak-llm-confirmed`.
 - LLM-rejected weak papers are filtered out.
 - DeepXiv `brief` is still fetched only for `rule-direct` papers; weak matches
@@ -96,3 +96,5 @@ conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
   --to 2026-03 \
   --classifier llm
 ```
+
+Full LLM classification also uses title, search-returned abstract, and categories.
