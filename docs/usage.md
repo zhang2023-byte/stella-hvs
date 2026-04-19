@@ -154,16 +154,11 @@ Assess several non-contiguous months:
 
 ```bash
 conda run -n stella-env python scripts/annotate_catalog_data.py \
-  --on 2025-01 \
-  --on 2025-03
+  --on '[2025-01, 2025-03, 2026-02]'
 ```
 
-`--on` also accepts a quoted list:
-
-```bash
-conda run -n stella-env python scripts/annotate_catalog_data.py \
-  --on 'list:[2025-01, 2025-03, 2026-02]'
-```
+`--on` accepts either one `YYYY-MM` value or one quoted bracketed list. Do not
+repeat `--on`, and do not pass bare comma lists.
 
 Existing `catalog_assessment` fields are skipped unless `--force True` is set.
 

@@ -89,18 +89,16 @@ def validate_month_slug(value: str) -> str:
     return text
 
 
-def parse_on_values(values: list[str]) -> list[str]:
-    slugs: list[str] = []
-    for value in values:
-        text = value.strip()
-        if text.lower().startswith("list:"):
-            text = text[5:].strip()
-        if text.startswith("[") and text.endswith("]"):
-            text = text[1:-1]
-        for item in re.split(r"[,\s]+", text):
-            if item.strip():
-                slugs.append(validate_month_slug(item))
-    return slugs
+def parse_on_value(value: str) -> list[str]:
+    text = value.strip()
+    if text.startswith("[") and text.endswith("]"):
+        inner = text[1:-1].strip()
+        if not inner:
+            raise ValueError("--on list cannot be empty")
+        return [validate_month_slug(item) for item in (part.strip() for part in inner.split(",")) if item]
+    if "," in text or text.lower().startswith("list:") or text.startswith("[") or text.endswith("]"):
+        raise ValueError("--on must be either YYYY-MM or a bracketed list like '[YYYY-MM, YYYY-MM]'")
+    return [validate_month_slug(text)]
 
 
 def month_slugs(start: date, end: date) -> list[str]:
@@ -165,8 +163,8 @@ def build_parser() -> argparse.ArgumentParser:
         "--on",
         action="append",
         default=[],
-        metavar="MONTHS",
-        help="Select specific note months. Supports YYYY-MM, repeated --on, comma lists, or 'list:[YYYY-MM,YYYY-MM]'.",
+        metavar="MONTH|[MONTH,...]",
+        help="Select note months. Use YYYY-MM or a quoted bracketed list like '[YYYY-MM, YYYY-MM]'.",
     )
     parser.add_argument("--notes-dir", type=Path, default=WORKSPACE / "notes")
     parser.add_argument("--llm-api-key", default=os.environ.get("LLM_API_KEY") or os.environ.get("OPENAI_API_KEY") or os.environ.get("DEEPXIV_AGENT_API_KEY"))
@@ -185,8 +183,12 @@ def main() -> int:
         raise SystemExit("--llm-batch-size must be at least 1")
     selected_paths: list[Path] = []
     if args.on:
+        if len(args.on) > 1:
+            raise SystemExit("Use a single --on value: YYYY-MM or '[YYYY-MM, YYYY-MM]'.")
+        if args.from_value or args.to_value:
+            raise SystemExit("--on cannot be combined with --from/--to")
         try:
-            selected_paths.extend(json_paths_from_months(args.notes_dir, parse_on_values(args.on)))
+            selected_paths.extend(json_paths_from_months(args.notes_dir, parse_on_value(args.on[0])))
         except ValueError as exc:
             raise SystemExit(str(exc)) from exc
     if args.from_value:
