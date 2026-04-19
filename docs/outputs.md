@@ -24,7 +24,8 @@ Each monthly note includes:
 - matched queries and categories
 - title-triage label, confidence, and reason
 - direct/weak rule counts
-- DeepXiv brief and arXiv abstract when available
+- DeepXiv brief for direct matches and search-returned abstracts when available
+- direct matches listed before weak matches
 - per-query/category search summary
 
 Main log event types:

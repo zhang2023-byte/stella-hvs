@@ -113,6 +113,13 @@ class BriefPolicyTest(unittest.TestCase):
             self.assertIn("Brief for 2501.00001.", note)
             self.assertIn("弱相关条目未拉取", note)
             self.assertIn("Weak-match search abstract.", note)
+            self.assertIn("**Search 返回摘要**", note)
+            self.assertIn("**强相关 / 直接相关**", note)
+            self.assertIn("---\n\n**弱相关**", note)
+            self.assertLess(
+                note.index("Discovery of a hypervelocity star candidate"),
+                note.index("Stellar Escape from Globular Clusters"),
+            )
 
 
 if __name__ == "__main__":

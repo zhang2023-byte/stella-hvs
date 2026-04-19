@@ -196,6 +196,14 @@ def should_fetch_brief(paper: dict[str, Any]) -> bool:
     return not classifier_label(paper).startswith("rule-weak")
 
 
+def relevance_sort_key(paper: dict[str, Any]) -> tuple[int, datetime, float]:
+    return (
+        1 if should_fetch_brief(paper) else 0,
+        parse_datetime(paper.get("publish_at")),
+        float(paper.get("_best_score") or 0),
+    )
+
+
 def run_parameter_lines(config: SearchConfig, deepxiv_token: str | None) -> list[str]:
     return [
         f"--from: {config.start_date.isoformat()}",
@@ -586,13 +594,7 @@ def search_month(
         progress=progress,
     )
 
-    relevant.sort(
-        key=lambda paper: (
-            parse_datetime(paper.get("publish_at")),
-            float(paper.get("_best_score") or 0),
-        ),
-        reverse=True,
-    )
+    relevant.sort(key=relevance_sort_key, reverse=True)
 
     brief_candidates = [paper for paper in relevant if should_fetch_brief(paper)]
     brief_skipped_weak = len(relevant) - len(brief_candidates)

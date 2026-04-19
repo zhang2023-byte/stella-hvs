@@ -28,6 +28,15 @@ def first_present(*values: Any) -> str:
     return ""
 
 
+def classifier_label(paper: dict[str, Any]) -> str:
+    classifier = paper.get("_classifier") or {}
+    return str(classifier.get("label") or "")
+
+
+def is_weak_match(paper: dict[str, Any]) -> bool:
+    return classifier_label(paper).startswith("rule-weak")
+
+
 def paper_url(arxiv_id: str) -> str:
     return f"https://arxiv.org/abs/{arxiv_id}"
 
@@ -103,59 +112,78 @@ def render_month_note(
         lines.append("本月没有通过标题复核的 DeepXiv/arXiv 结果。")
         lines.append("")
     else:
-        for idx, paper in enumerate(papers, 1):
-            arxiv_id = first_present(paper.get("arxiv_id"), paper.get("id"))
-            title = first_present(paper.get("title"), "Untitled")
-            brief = paper.get("_brief") or {}
-            tldr = first_present(brief.get("tldr"), paper.get("tldr"))
-            abstract = first_present(paper.get("abstract"))
-            keywords = first_present(brief.get("keywords"), paper.get("keywords"))
-            publish_at = first_present(brief.get("publish_at"), paper.get("publish_at"))
-            authors = first_present(paper.get("author_names"), paper.get("authors"))
-            categories = first_present(paper.get("categories"))
-            citations = first_present(brief.get("citations"), paper.get("citation"))
-            score = first_present(paper.get("_best_score"), paper.get("score"))
-            matched_queries = ", ".join(f"`{q}`" for q in paper.get("_matched_queries", []))
-            matched_categories = ", ".join(f"`{cat}`" for cat in paper.get("_matched_categories", []))
-            classifier = paper.get("_classifier") or {}
+        lines.append("排序：强相关/直接相关在前，弱相关在后；同一层级内按发布时间和 score 排序。")
+        lines.append("")
+        grouped_papers = [
+            ("强相关 / 直接相关", [paper for paper in papers if not is_weak_match(paper)]),
+            ("弱相关", [paper for paper in papers if is_weak_match(paper)]),
+        ]
+        item_index = 0
+        rendered_groups = 0
+        for group_title, group_papers in grouped_papers:
+            if not group_papers:
+                continue
+            if rendered_groups:
+                lines.append("---")
+                lines.append("")
+            lines.append(f"**{group_title}**")
+            lines.append("")
+            rendered_groups += 1
+            for paper in group_papers:
+                item_index += 1
+                idx = item_index
+                arxiv_id = first_present(paper.get("arxiv_id"), paper.get("id"))
+                title = first_present(paper.get("title"), "Untitled")
+                brief = paper.get("_brief") or {}
+                tldr = first_present(brief.get("tldr"), paper.get("tldr"))
+                abstract = first_present(paper.get("abstract"))
+                keywords = first_present(brief.get("keywords"), paper.get("keywords"))
+                publish_at = first_present(brief.get("publish_at"), paper.get("publish_at"))
+                authors = first_present(paper.get("author_names"), paper.get("authors"))
+                categories = first_present(paper.get("categories"))
+                citations = first_present(brief.get("citations"), paper.get("citation"))
+                score = first_present(paper.get("_best_score"), paper.get("score"))
+                matched_queries = ", ".join(f"`{q}`" for q in paper.get("_matched_queries", []))
+                matched_categories = ", ".join(f"`{cat}`" for cat in paper.get("_matched_categories", []))
+                classifier = paper.get("_classifier") or {}
 
-            lines.append(f"### {idx}. {title}")
-            lines.append("")
-            lines.append(f"- arXiv：[{arxiv_id}]({paper_url(arxiv_id)})；[PDF]({pdf_url(arxiv_id)})")
-            if publish_at:
-                lines.append(f"- 发布时间：{publish_at}")
-            if authors:
-                lines.append(f"- 作者：{authors}")
-            if categories:
-                lines.append(f"- 分类：{categories}")
-            if citations:
-                lines.append(f"- 引用数：{citations}")
-            if score:
-                lines.append(f"- DeepXiv score：{score}")
-            if matched_queries:
-                lines.append(f"- 命中关键词：{matched_queries}")
-            if matched_categories:
-                lines.append(f"- 命中分类：{matched_categories}")
-            if classifier:
-                confidence = classifier.get("confidence")
-                label = classifier.get("label") or config.classifier
-                reason = classifier.get("reason") or ""
-                lines.append(f"- 标题复核：{label}，confidence={confidence}，{reason}")
-            if paper.get("_brief_skipped"):
-                lines.append("- DeepXiv brief：弱相关条目未拉取；仅保留 search 阶段元数据")
-            if keywords:
-                lines.append(f"- DeepXiv keywords：{keywords}")
-            if tldr:
+                lines.append(f"### {idx}. {title}")
                 lines.append("")
-                lines.append("**DeepXiv brief**")
+                lines.append(f"- arXiv：[{arxiv_id}]({paper_url(arxiv_id)})；[PDF]({pdf_url(arxiv_id)})")
+                if publish_at:
+                    lines.append(f"- 发布时间：{publish_at}")
+                if authors:
+                    lines.append(f"- 作者：{authors}")
+                if categories:
+                    lines.append(f"- 分类：{categories}")
+                if citations:
+                    lines.append(f"- 引用数：{citations}")
+                if score:
+                    lines.append(f"- DeepXiv score：{score}")
+                if matched_queries:
+                    lines.append(f"- 命中关键词：{matched_queries}")
+                if matched_categories:
+                    lines.append(f"- 命中分类：{matched_categories}")
+                if classifier:
+                    confidence = classifier.get("confidence")
+                    label = classifier.get("label") or config.classifier
+                    reason = classifier.get("reason") or ""
+                    lines.append(f"- 标题复核：{label}，confidence={confidence}，{reason}")
+                if paper.get("_brief_skipped"):
+                    lines.append("- DeepXiv brief：弱相关条目未拉取；仅保留 search 阶段元数据")
+                if keywords:
+                    lines.append(f"- DeepXiv keywords：{keywords}")
+                if tldr:
+                    lines.append("")
+                    lines.append("**DeepXiv brief**")
+                    lines.append("")
+                    lines.append(tldr)
+                if abstract:
+                    lines.append("")
+                    lines.append("**Search 返回摘要**")
+                    lines.append("")
+                    lines.append(abstract)
                 lines.append("")
-                lines.append(tldr)
-            if abstract:
-                lines.append("")
-                lines.append("**摘要**")
-                lines.append("")
-                lines.append(abstract)
-            lines.append("")
 
     lines.append("## 本月运行日志摘要")
     lines.append("")

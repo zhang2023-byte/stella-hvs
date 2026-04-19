@@ -28,6 +28,8 @@ hypervelocity/high-velocity star surveys, searches, candidates, catalogues
 Weak matches are accepted by default and labeled `rule-weak`.
 They are kept in the monthly note with the metadata returned by DeepXiv search,
 but DeepXiv `brief` is not fetched for them by default.
+In monthly notes, direct matches are listed before weak matches, with a divider
+between the two sections.
 
 They cover mechanism or proxy topics such as:
 

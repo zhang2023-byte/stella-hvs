@@ -91,6 +91,10 @@ strong/direct matches (`rule-direct`). Weak matches (`rule-weak*`) stay in the
 monthly note but use only metadata already returned by DeepXiv search, such as
 title, abstract, score, categories, and matched queries.
 
+Monthly results are split into strong/direct and weak sections with a divider
+between them. The note's `Search 返回摘要` section is the abstract returned by
+DeepXiv search; it does not mean an extra `brief` request was made.
+
 If DeepXiv returns a daily limit error, completed months are kept. The script
 writes a partial summary to `logs/partial_<run_id>.json`, appends it to
 `logs/runs.jsonl` with `status: partial`, prints the resume command, and exits
