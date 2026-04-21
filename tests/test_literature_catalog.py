@@ -12,10 +12,12 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from high_velocity_lit.literature_catalog import (  # noqa: E402
+    apply_external_catalog_urls,
     analyze_catalog_text,
     extract_tables_from_tex,
     load_index_md_candidates,
     parse_abs_page,
+    pdf_verification_passed,
     resolve_catalog_location,
     select_relevant_sections,
     verify_paper_catalog,
@@ -124,6 +126,31 @@ class LiteratureCatalogTest(unittest.TestCase):
 
         self.assertEqual(location, "mixed")
 
+    def test_apply_external_catalog_urls_promotes_internal_location_to_mixed(self) -> None:
+        self.assertEqual(
+            apply_external_catalog_urls("internal_only", ["https://vizier.cds.unistra.fr/viz-bin/VizieR"]),
+            "mixed",
+        )
+        self.assertEqual(apply_external_catalog_urls("not_found", ["https://zenodo.org/records/1"]), "external_only")
+
+    def test_pdf_verification_requires_trusted_extraction_for_possible_verdicts(self) -> None:
+        self.assertFalse(
+            pdf_verification_passed(
+                {
+                    "analysis": {"verdict": "possible"},
+                    "extractor": "raw_strings",
+                }
+            )
+        )
+        self.assertTrue(
+            pdf_verification_passed(
+                {
+                    "analysis": {"verdict": "possible"},
+                    "extractor": "pypdf",
+                }
+            )
+        )
+
     def test_load_index_md_candidates_resolves_titles_back_to_month_json(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -150,6 +177,29 @@ class LiteratureCatalogTest(unittest.TestCase):
 
             candidates = load_index_md_candidates(notes_dir / "index.md")
 
+        self.assertEqual(candidates[0]["arxiv_id"], "2603.00001")
+
+    def test_load_index_md_candidates_supports_current_yearly_index_markdown(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            notes_dir = root / "notes"
+            month_dir = notes_dir / "2026" / "2026-03"
+            month_dir.mkdir(parents=True)
+            (notes_dir / "index.md").write_text(
+                "# Yearly High-Velocity Star Literature Index\n\n"
+                "## 2026\n\n"
+                "- [A stellar catalog paper](2026/2026-03/2026-03.md)\n"
+                "  - 2026-03; 2026-03-12 00:00:00\n",
+                encoding="utf-8",
+            )
+            (month_dir / "2026-03.json").write_text(
+                json.dumps({"papers": [{"title": "A stellar catalog paper", "arxiv_id": "2603.00001"}]}),
+                encoding="utf-8",
+            )
+
+            candidates = load_index_md_candidates(notes_dir / "index.md")
+
+        self.assertEqual(candidates[0]["month"], "2026-03")
         self.assertEqual(candidates[0]["arxiv_id"], "2603.00001")
 
     def test_extract_tables_from_tex_writes_csv(self) -> None:
@@ -244,6 +294,128 @@ class LiteratureCatalogTest(unittest.TestCase):
             self.assertTrue(record["source"]["tables"])
             self.assertTrue((output_root / "2603.00001" / "record.json").exists())
             self.assertTrue((output_root / "2603.00001" / "summary.md").exists())
+
+    def test_verify_paper_catalog_keeps_abs_page_external_catalog_links(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            output_root = Path(tmp) / "literature"
+
+            def fake_download_text(url: str, timeout: int = 45) -> str:
+                if url.endswith("/abs/2603.00001"):
+                    return """
+                    <div class="full-text">
+                      <li><a href="/pdf/2603.00001" class="abs-button download-pdf">View PDF</a></li>
+                      <li><a href="https://arxiv.org/html/2603.00001v1" id="latexml-download-link">HTML</a></li>
+                      <li><a href="/src/2603.00001" class="abs-button download-eprint">TeX Source</a></li>
+                      <li><a href="https://vizier.cds.unistra.fr/viz-bin/VizieR">CDS</a></li>
+                    </div>
+                    <td class="tablecell comments"><span class="descriptor">Comments:</span> Machine-readable catalog at CDS.</td>
+                    """
+                return "<html><body>Table 1 lists 42 stars with radial velocity and parallax.</body></html>"
+
+            def fake_download_to_path(url: str, destination: Path, retries: int = 3, timeout: int = 60) -> dict[str, object]:
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                destination.write_bytes(b"placeholder")
+                return {"ok": True, "url": url, "path": str(destination), "size_bytes": 11, "sha256": "abc"}
+
+            def fake_extract_pdf_text(pdf_path: Path) -> dict[str, object]:
+                return {
+                    "text": "Table 1 lists 42 stars with radial velocity and parallax.",
+                    "page_count": 12,
+                    "extractor": "pypdf",
+                }
+
+            def fake_safe_extract_tar(archive_path: Path, destination: Path) -> list[str]:
+                destination.mkdir(parents=True, exist_ok=True)
+                (destination / "paper.tex").write_text(
+                    r"""
+                    \begin{deluxetable}{cc}
+                    \tablehead{\colhead{Name} & \colhead{RV}}
+                    \startdata
+                    HVS1 & 720 \\
+                    \enddata
+                    \end{deluxetable}
+                    """,
+                    encoding="utf-8",
+                )
+                return ["paper.tex"]
+
+            with (
+                patch("high_velocity_lit.literature_catalog.download_text", fake_download_text),
+                patch("high_velocity_lit.literature_catalog.download_to_path", fake_download_to_path),
+                patch("high_velocity_lit.literature_catalog.extract_pdf_text", fake_extract_pdf_text),
+                patch("high_velocity_lit.literature_catalog.safe_extract_tar", fake_safe_extract_tar),
+            ):
+                record = verify_paper_catalog(
+                    arxiv_id="2603.00001",
+                    output_root=output_root,
+                    deepxiv_client=FakeDeepXivClient(),
+                    arxiv_client=FakeArxivClient(),
+                    force=True,
+                    max_sections=3,
+                )
+
+        self.assertIn("https://vizier.cds.unistra.fr/viz-bin/VizieR", record["catalog"]["external_urls"])
+        self.assertEqual(record["catalog"]["location"], "mixed")
+
+    def test_verify_paper_catalog_uses_source_fallback_when_pdf_is_only_raw_strings(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            output_root = Path(tmp) / "literature"
+
+            def fake_download_text(url: str, timeout: int = 45) -> str:
+                if url.endswith("/abs/2603.00001"):
+                    return """
+                    <div class="full-text">
+                      <li><a href="/pdf/2603.00001" class="abs-button download-pdf">View PDF</a></li>
+                      <li><a href="/src/2603.00001" class="abs-button download-eprint">TeX Source</a></li>
+                    </div>
+                    """
+                return ""
+
+            def fake_download_to_path(url: str, destination: Path, retries: int = 3, timeout: int = 60) -> dict[str, object]:
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                destination.write_bytes(b"placeholder")
+                return {"ok": True, "url": url, "path": str(destination), "size_bytes": 11, "sha256": "abc"}
+
+            def fake_extract_pdf_text(pdf_path: Path) -> dict[str, object]:
+                return {
+                    "text": "<< /Type /Annot /Subtype /Link /A << /D (table.1) /S /GoTo >>",
+                    "page_count": None,
+                    "extractor": "raw_strings",
+                }
+
+            def fake_safe_extract_tar(archive_path: Path, destination: Path) -> list[str]:
+                destination.mkdir(parents=True, exist_ok=True)
+                (destination / "paper.tex").write_text(
+                    r"""
+                    We present a catalog of 42 stars.
+                    \begin{deluxetable}{cc}
+                    \tablehead{\colhead{Name} & \colhead{RV}}
+                    \startdata
+                    HVS1 & 720 \\
+                    \enddata
+                    \end{deluxetable}
+                    """,
+                    encoding="utf-8",
+                )
+                return ["paper.tex"]
+
+            with (
+                patch("high_velocity_lit.literature_catalog.download_text", fake_download_text),
+                patch("high_velocity_lit.literature_catalog.download_to_path", fake_download_to_path),
+                patch("high_velocity_lit.literature_catalog.extract_pdf_text", fake_extract_pdf_text),
+                patch("high_velocity_lit.literature_catalog.safe_extract_tar", fake_safe_extract_tar),
+            ):
+                record = verify_paper_catalog(
+                    arxiv_id="2603.00001",
+                    output_root=output_root,
+                    deepxiv_client=FakeDeepXivClient(),
+                    arxiv_client=FakeArxivClient(),
+                    force=True,
+                    max_sections=3,
+                )
+
+        self.assertFalse(record["verification"]["pdf_verified"])
+        self.assertEqual(record["verification"]["overall_verdict"], "confirmed_with_source_fallback")
 
 
 if __name__ == "__main__":

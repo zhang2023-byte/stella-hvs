@@ -113,7 +113,11 @@ DATA_SUFFIXES = {
     ".json",
     ".parquet",
 }
-INDEX_MD_ENTRY_RE = re.compile(r"^- \[(?P<title>.+?)\]\((?P<path>[^)]+)\) \((?P<month>\d{4}-\d{2})\)")
+TRUSTED_PDF_EXTRACTORS = {"pypdf", "arxiv_html_fallback"}
+INDEX_MD_ENTRY_RE = re.compile(
+    r"^- \[(?P<title>.+?)\]\((?P<path>[^)]+)\)(?: \((?P<month>\d{4}-\d{2})\))?(?:\s+-.*)?$"
+)
+MONTH_SLUG_RE = re.compile(r"^\d{4}-\d{2}$")
 URL_RE = re.compile(r"https?://[^\s<>\]\"')]+", re.IGNORECASE)
 DESCRIPTOR_RE = re.compile(
     r'<span class="descriptor">(?P<label>[^<:]+):</span>\s*(?P<value>.*?)</(?:td|div)>',
@@ -156,6 +160,11 @@ def relative_to(path: Path, root: Path) -> str:
         return str(path.relative_to(root))
     except ValueError:
         return str(path)
+
+
+def month_slug_from_note_path(note_rel: str) -> str:
+    stem = Path(note_rel).stem
+    return stem if MONTH_SLUG_RE.fullmatch(stem) else ""
 
 
 def download_to_path(url: str, destination: Path, *, retries: int = 3, timeout: int = 60) -> dict[str, Any]:
@@ -625,6 +634,24 @@ def resolve_catalog_location(*, deepxiv: dict[str, Any], pdf: dict[str, Any], so
     return "not_found"
 
 
+def apply_external_catalog_urls(location: str, external_urls: list[str]) -> str:
+    if not external_urls:
+        return location
+    if location == "internal_only":
+        return "mixed"
+    if location == "not_found":
+        return "external_only"
+    return location
+
+
+def pdf_verification_passed(pdf_record: dict[str, Any]) -> bool:
+    verdict = (pdf_record.get("analysis") or {}).get("verdict")
+    extractor = str(pdf_record.get("extractor") or "")
+    if verdict == "present":
+        return True
+    return verdict == "possible" and extractor in TRUSTED_PDF_EXTRACTORS
+
+
 def render_summary(record: dict[str, Any]) -> str:
     lines = [
         f"# {record.get('title') or record.get('arxiv_id')}",
@@ -665,6 +692,9 @@ def load_index_md_candidates(index_md_path: Path) -> list[dict[str, Any]]:
             continue
         title = match.group("title")
         note_rel = match.group("path")
+        month = match.group("month") or month_slug_from_note_path(note_rel)
+        if not month:
+            continue
         json_path = notes_dir / Path(note_rel).with_suffix(".json")
         if json_path not in month_cache and json_path.exists():
             month_cache[json_path] = read_json(json_path)
@@ -678,7 +708,7 @@ def load_index_md_candidates(index_md_path: Path) -> list[dict[str, Any]]:
                     {
                         "title": title,
                         "arxiv_id": arxiv_id,
-                        "month": match.group("month"),
+                        "month": month,
                         "note_path": note_rel,
                     }
                 )
@@ -732,6 +762,17 @@ def verify_paper_catalog(
     abs_html = download_text(abs_url)
     write_text(paper_dir / "arxiv_abs.html", abs_html)
     abs_page = parse_abs_page(abs_html)
+    abs_page_analysis = analyze_catalog_text(
+        "\n".join(str(value) for value in (abs_page.get("descriptors") or {}).values()),
+        source="arxiv_abs_page",
+    )
+    abs_external_catalog_urls = sorted(
+        dict.fromkeys(
+            link.get("url") or ""
+            for link in (abs_page.get("external_links") or [])
+            if is_external_catalog_url(link.get("url") or "")
+        )
+    )
 
     links = {
         "abs": abs_url,
@@ -862,8 +903,19 @@ def verify_paper_catalog(
         pdf=pdf_record,
         source=source_record,
     )
+    catalog_external_urls = sorted(
+        dict.fromkeys(
+            abs_external_catalog_urls
+            + abs_page_analysis["external_urls"]
+            + deepxiv_record["analysis"]["external_urls"]
+            + pdf_record["analysis"]["external_urls"]
+            + source_record["analysis"]["external_urls"]
+        )
+    )
+    overall_location = apply_external_catalog_urls(overall_location, catalog_external_urls)
+    pdf_verified = pdf_verification_passed(pdf_record)
     overall_verdict = "not_confirmed"
-    if deepxiv_record["analysis"]["verdict"] != "absent" and pdf_record["analysis"]["verdict"] != "absent":
+    if deepxiv_record["analysis"]["verdict"] != "absent" and pdf_verified:
         overall_verdict = "confirmed"
     elif (
         deepxiv_record["analysis"]["verdict"] == "present"
@@ -893,25 +945,21 @@ def verify_paper_catalog(
             "metadata_error": metadata_error or None,
             "abs_page_path": str(paper_dir / "arxiv_abs.html"),
             "abs_page": abs_page,
+            "abs_page_analysis": abs_page_analysis,
         },
         "deepxiv": deepxiv_record,
         "pdf": pdf_record,
         "source": source_record,
         "catalog": {
             "location": overall_location,
-            "external_urls": sorted(
-                dict.fromkeys(
-                    deepxiv_record["analysis"]["external_urls"]
-                    + pdf_record["analysis"]["external_urls"]
-                    + source_record["analysis"]["external_urls"]
-                )
-            ),
+            "external_urls": catalog_external_urls,
             "data_files": source_record.get("data_files") or [],
             "tables": source_record.get("tables") or [],
         },
         "verification": {
             "deepxiv_verdict": deepxiv_record["analysis"]["verdict"],
             "pdf_verdict": pdf_record["analysis"]["verdict"],
+            "pdf_verified": pdf_verified,
             "source_verdict": source_record["analysis"]["verdict"],
             "overall_verdict": overall_verdict,
         },
