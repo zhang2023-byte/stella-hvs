@@ -12,12 +12,24 @@ from pathlib import Path
 from typing import Any, Iterable, TextIO
 
 from .arxiv_client import ArxivClient
+from .config import DEFAULT_QUERIES
 from .deepxiv_client import DeepXivClient
 from .filters import category_matches, score_matches
+from .indexing import write_index_outputs
 from .markdown import render_index, render_month_note
 from .models import MonthWindow, SearchConfig
-from .records import build_index_record, build_month_record
+from .note_paths import month_dir as build_month_dir
+from .note_paths import month_json_path as build_month_json_path
+from .note_paths import month_markdown_path as build_month_markdown_path
+from .records import build_month_record
 from .title_classifier import LLMTitleClassifier, TitleDecision, heuristic_title_decision, load_llm_api_key
+
+LEGACY_GALACTIC_CATEGORY = "astro-ph"
+MODERN_GALACTIC_CATEGORY = "astro-ph.GA"
+LEGACY_CATEGORY_LAST_MONTH = (2008, 11)
+TRANSITION_CATEGORY_MONTH = (2008, 12)
+LEGACY_QUERY_LAST_MONTH = (2008, 12)
+LEGACY_EXTRA_QUERIES = ["hyper-velocity star"]
 
 
 class PartialRunError(RuntimeError):
@@ -136,15 +148,15 @@ def read_json(path: Path) -> dict[str, Any]:
 
 
 def month_note_dir(config: SearchConfig, month_slug: str) -> Path:
-    return config.notes_dir / month_slug
+    return build_month_dir(config.notes_dir, month_slug)
 
 
 def month_json_path(config: SearchConfig, month_slug: str) -> Path:
-    return month_note_dir(config, month_slug) / f"{month_slug}.json"
+    return build_month_json_path(config.notes_dir, month_slug)
 
 
 def month_markdown_path(config: SearchConfig, month_slug: str) -> Path:
-    return month_note_dir(config, month_slug) / f"{month_slug}.md"
+    return build_month_markdown_path(config.notes_dir, month_slug)
 
 
 def index_json_path(config: SearchConfig) -> Path:
@@ -168,6 +180,57 @@ def parse_datetime(value: Any) -> datetime:
         return datetime.fromisoformat(text)
     except ValueError:
         return datetime.min
+
+
+def paper_publication_date(paper: dict[str, Any]) -> date | None:
+    for key in ("publish_at", "published_at", "published"):
+        value = paper.get(key)
+        if not value:
+            continue
+        parsed = parse_datetime(value)
+        if parsed != datetime.min:
+            return parsed.date()
+    return None
+
+
+def publication_date_in_month_window(paper: dict[str, Any], month: MonthWindow) -> bool:
+    published = paper_publication_date(paper)
+    if published is None:
+        return False
+    return month.start <= published <= month.end
+
+
+def fetch_arxiv_metadata(
+    arxiv_client: ArxivClient,
+    arxiv_id: str,
+    metadata_cache: dict[str, dict[str, Any]],
+) -> dict[str, Any]:
+    cached = metadata_cache.get(arxiv_id)
+    if cached is not None:
+        return cached
+    metadata = arxiv_client.metadata(arxiv_id)
+    metadata_cache[arxiv_id] = metadata
+    return metadata
+
+
+def backfill_paper_metadata(
+    paper: dict[str, Any],
+    *,
+    arxiv_client: ArxivClient,
+    metadata_cache: dict[str, dict[str, Any]],
+) -> None:
+    if paper_publication_date(paper) is not None:
+        return
+    arxiv_id = paper_id(paper)
+    if not arxiv_id:
+        return
+    try:
+        metadata = fetch_arxiv_metadata(arxiv_client, arxiv_id, metadata_cache)
+    except Exception:
+        return
+    for key in ("publish_at", "published_at", "published", "updated_at", "authors", "author_names", "categories"):
+        if metadata.get(key) and not paper.get(key):
+            paper[key] = metadata[key]
 
 
 def paper_id(paper: dict[str, Any]) -> str:
@@ -196,9 +259,46 @@ def classifier_batches(papers: list[dict[str, Any]], batch_size: int) -> Iterabl
         yield papers[index : index + size]
 
 
+def uses_default_galactic_category(config: SearchConfig) -> bool:
+    return config.source == "deepxiv" and config.categories == [MODERN_GALACTIC_CATEGORY]
+
+
+def uses_default_queries(config: SearchConfig) -> bool:
+    return config.queries == DEFAULT_QUERIES
+
+
+def resolved_categories_for_month(config: SearchConfig, month: MonthWindow) -> list[str]:
+    if config.source != "deepxiv":
+        return config.categories
+    if not uses_default_galactic_category(config):
+        return config.categories
+    if (month.year, month.month) <= LEGACY_CATEGORY_LAST_MONTH:
+        return [LEGACY_GALACTIC_CATEGORY]
+    if (month.year, month.month) == TRANSITION_CATEGORY_MONTH:
+        return [LEGACY_GALACTIC_CATEGORY, MODERN_GALACTIC_CATEGORY]
+    return [MODERN_GALACTIC_CATEGORY]
+
+
+def resolved_queries_for_month(config: SearchConfig, month: MonthWindow) -> list[str]:
+    queries = list(config.queries)
+    if not uses_default_queries(config):
+        return queries
+    if (month.year, month.month) > LEGACY_QUERY_LAST_MONTH:
+        return queries
+    for query in LEGACY_EXTRA_QUERIES:
+        if query not in queries:
+            queries.append(query)
+    return queries
+
+
 def search_call_count(config: SearchConfig, months: list[MonthWindow]) -> int:
-    category_count = len(config.categories) if config.source == "deepxiv" and config.categories else 1
-    return len(months) * len(config.queries) * category_count
+    total = 0
+    for month in months:
+        month_categories = resolved_categories_for_month(config, month)
+        month_queries = resolved_queries_for_month(config, month)
+        category_count = len(month_categories) if config.source == "deepxiv" and month_categories else 1
+        total += len(month_queries) * category_count
+    return total
 
 
 def bool_text(value: bool) -> str:
@@ -239,7 +339,7 @@ def relevance_sort_key(paper: dict[str, Any]) -> tuple[int, datetime, float]:
 
 
 def run_parameter_lines(config: SearchConfig, deepxiv_token: str | None) -> list[str]:
-    return [
+    lines = [
         f"--from: {config.start_date.isoformat()}",
         f"--to: {config.end_date.isoformat()}",
         f"--source: {config.source}",
@@ -262,6 +362,14 @@ def run_parameter_lines(config: SearchConfig, deepxiv_token: str | None) -> list
         f"--logs-dir: {config.logs_dir}",
         f"queries: {list_text(config.queries, empty='none')}",
     ]
+    if uses_default_galactic_category(config):
+        lines.append(
+            "historical categories: <= 2008-11 -> astro-ph; "
+            "2008-12 -> astro-ph + astro-ph.GA; >= 2009-01 -> astro-ph.GA"
+        )
+    if uses_default_queries(config):
+        lines.append("historical queries: through 2008-12 also add `hyper-velocity star`")
+    return lines
 
 
 def resume_command(config: SearchConfig, failed_month: MonthWindow) -> str:
@@ -371,20 +479,11 @@ def write_partial_summary(
 def write_collection_outputs(
     *,
     config: SearchConfig,
-    run_id: str,
-    started_at: datetime,
     month_summaries: list[dict[str, Any]],
 ) -> None:
-    index_record = build_index_record(
-        month_summaries,
-        run_id=run_id,
-        started_at=started_at,
-        config=config,
-    )
-    index_json = index_json_path(config)
-    write_json(index_json, index_record)
-    persisted_index = read_json(index_json)
-    index_markdown_path(config).write_text(render_index(persisted_index), encoding="utf-8")
+    del month_summaries
+    index_record = write_index_outputs(config.notes_dir)
+    index_markdown_path(config).write_text(render_index(index_record), encoding="utf-8")
 
 
 def classify_candidates(
@@ -537,12 +636,16 @@ def search_month(
     run_log: Path,
     progress: ProgressReporter | None = None,
     search_state: dict[str, int] | None = None,
+    metadata_cache: dict[str, dict[str, Any]] | None = None,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     merged: dict[str, dict[str, Any]] = {}
     query_stats: list[dict[str, Any]] = []
+    metadata_cache = metadata_cache if metadata_cache is not None else {}
+    month_categories = resolved_categories_for_month(config, month)
+    month_queries = resolved_queries_for_month(config, month)
 
-    for query in config.queries:
-        categories_for_query = config.categories if config.source == "deepxiv" and config.categories else [None]
+    for query in month_queries:
+        categories_for_query = month_categories if config.source == "deepxiv" and month_categories else [None]
         for category in categories_for_query:
             row = {"query": query, "category": category, "total": None, "returned": 0, "error": None}
             started = datetime.now()
@@ -624,9 +727,24 @@ def search_month(
         pass
 
     candidates: list[dict[str, Any]] = []
+    date_window_filtered = 0
+    missing_publication_date = 0
     category_filtered = 0
     score_filtered = 0
     for paper in merged.values():
+        if config.source == "deepxiv":
+            backfill_paper_metadata(
+                paper,
+                arxiv_client=arxiv_client,
+                metadata_cache=metadata_cache,
+            )
+        published = paper_publication_date(paper)
+        if published is None:
+            missing_publication_date += 1
+            continue
+        if not publication_date_in_month_window(paper, month):
+            date_window_filtered += 1
+            continue
         if config.source != "deepxiv" and not category_matches(paper, config.categories):
             category_filtered += 1
             continue
@@ -699,8 +817,12 @@ def search_month(
         "month": month.slug,
         "date_from": month.date_from,
         "date_to": month.date_to,
+        "resolved_categories": month_categories,
+        "resolved_queries": month_queries,
         "raw_unique": len(merged),
         "relevant_count": len(relevant),
+        "date_window_filtered": date_window_filtered,
+        "missing_publication_date": missing_publication_date,
         "category_filtered": category_filtered,
         "score_filtered": score_filtered,
         "classifier_candidates": len(candidates),
@@ -721,6 +843,7 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
     run_log = config.logs_dir / f"run_{run_id}.log"
     arxiv_client = ArxivClient()
     deepxiv_client = DeepXivClient(token=config.token)
+    metadata_cache: dict[str, dict[str, Any]] = {}
     month_summaries: list[dict[str, Any]] = []
     months = list(iter_months(config))
     progress = ProgressReporter(config.progress)
@@ -769,6 +892,7 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
                     run_log=run_log,
                     progress=progress,
                     search_state=search_state,
+                    metadata_cache=metadata_cache,
                 )
             except Exception as exc:
                 if not is_rate_limit_error(exc):
@@ -804,8 +928,6 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
             )
             write_collection_outputs(
                 config=config,
-                run_id=run_id,
-                started_at=started_at,
                 month_summaries=month_summaries,
             )
             append_jsonl(run_log, {"event": "month_done", "run_id": run_id, **month_summaries[-1]})

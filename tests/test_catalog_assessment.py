@@ -109,9 +109,9 @@ class CatalogAssessmentTest(unittest.TestCase):
         self.assertEqual(
             annotate_cli.json_paths_from_range(notes_dir, start, end),
             [
-                notes_dir / "2025-02" / "2025-02.json",
-                notes_dir / "2025-03" / "2025-03.json",
-                notes_dir / "2025-04" / "2025-04.json",
+                notes_dir / "2025" / "2025-02" / "2025-02.json",
+                notes_dir / "2025" / "2025-03" / "2025-03.json",
+                notes_dir / "2025" / "2025-04" / "2025-04.json",
             ],
         )
 
@@ -130,8 +130,8 @@ class CatalogAssessmentTest(unittest.TestCase):
         self.assertEqual(
             annotate_cli.json_paths_from_months(Path("/tmp/notes"), ["2025-01", "2025-03"]),
             [
-                Path("/tmp/notes") / "2025-01" / "2025-01.json",
-                Path("/tmp/notes") / "2025-03" / "2025-03.json",
+                Path("/tmp/notes") / "2025" / "2025-01" / "2025-01.json",
+                Path("/tmp/notes") / "2025" / "2025-03" / "2025-03.json",
             ],
         )
 

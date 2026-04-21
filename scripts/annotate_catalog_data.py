@@ -29,6 +29,7 @@ except ImportError:
 from high_velocity_lit.catalog_assessment import LLMCatalogAssessor, annotate_record  # noqa: E402
 from high_velocity_lit.config import DEFAULT_LLM_BASE_URL, DEFAULT_LLM_BATCH_SIZE, DEFAULT_LLM_MODEL  # noqa: E402
 from high_velocity_lit.markdown import render_month_note  # noqa: E402
+from high_velocity_lit.note_paths import resolve_month_json_path  # noqa: E402
 from high_velocity_lit.title_classifier import load_llm_api_key  # noqa: E402
 
 
@@ -112,11 +113,11 @@ def month_slugs(start: date, end: date) -> list[str]:
 
 
 def json_paths_from_range(notes_dir: Path, start: date, end: date) -> list[Path]:
-    return [notes_dir / slug / f"{slug}.json" for slug in month_slugs(start, end)]
+    return [resolve_month_json_path(notes_dir, slug) for slug in month_slugs(start, end)]
 
 
 def json_paths_from_months(notes_dir: Path, slugs: list[str]) -> list[Path]:
-    return [notes_dir / slug / f"{slug}.json" for slug in slugs]
+    return [resolve_month_json_path(notes_dir, slug) for slug in slugs]
 
 
 def unique_paths(paths: list[Path]) -> list[Path]:

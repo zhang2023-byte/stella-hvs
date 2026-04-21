@@ -36,6 +36,17 @@ conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
   --from 2026-03
 ```
 
+Catalog verification for one paper or a sampled set from `notes/index.md`:
+
+```bash
+conda run -n stella-env python scripts/verify_literature_catalog.py \
+  --arxiv-id 2405.04750
+
+conda run -n stella-env python scripts/verify_literature_catalog.py \
+  --sample-index-md 3 \
+  --seed 7
+```
+
 More commands, defaults, and date rules: [docs/usage.md](docs/usage.md)
 
 ## Key Docs
@@ -49,9 +60,11 @@ More commands, defaults, and date rules: [docs/usage.md](docs/usage.md)
 ```text
 scripts/fetch_high_velocity_lit.py   Main CLI
 scripts/annotate_catalog_data.py     Add observational catalog assessments to note JSON
+scripts/verify_literature_catalog.py Verify one paper's catalog content across DeepXiv, PDF, and source
 scripts/render_lit_notes.py          Regenerate Markdown from note JSON
 scripts/run_2025_2026.sh             Convenience batch runner
 docs/                                Detailed docs
+literature/                          Per-paper catalog verification records and extracted source artifacts
 notes/                               Canonical JSON and generated Markdown notes
 src/high_velocity_lit/               Pipeline implementation
 ```

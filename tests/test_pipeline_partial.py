@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from high_velocity_lit.models import SearchConfig  # noqa: E402
 from high_velocity_lit import pipeline  # noqa: E402
+from high_velocity_lit.note_paths import month_json_path, month_markdown_path  # noqa: E402
 
 
 class RateLimitError(Exception):
@@ -109,10 +110,10 @@ class PipelinePartialRunTest(unittest.TestCase):
             saved = json.loads(partial_path.read_text(encoding="utf-8"))
             self.assertEqual(saved["status"], "partial")
 
-            self.assertTrue((config.notes_dir / "2025-01" / "2025-01.md").exists())
-            self.assertFalse((config.notes_dir / "2025-02" / "2025-02.md").exists())
-            self.assertTrue((config.notes_dir / "2025-01" / "2025-01.json").exists())
-            self.assertFalse((config.notes_dir / "2025-02" / "2025-02.json").exists())
+            self.assertTrue(month_markdown_path(config.notes_dir, "2025-01").exists())
+            self.assertFalse(month_markdown_path(config.notes_dir, "2025-02").exists())
+            self.assertTrue(month_json_path(config.notes_dir, "2025-01").exists())
+            self.assertFalse(month_json_path(config.notes_dir, "2025-02").exists())
             self.assertEqual(summary["index_json"], str(config.notes_dir / "index.json"))
 
             runs = [

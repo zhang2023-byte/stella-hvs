@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from high_velocity_lit import pipeline  # noqa: E402
 from high_velocity_lit.models import SearchConfig  # noqa: E402
+from high_velocity_lit.note_paths import month_dir, month_json_path, month_markdown_path  # noqa: E402
 
 
 class FakeArxivClient:
@@ -95,6 +96,37 @@ class BriefPolicyTest(unittest.TestCase):
                 token=None,
             )
 
+            existing_month_dir = month_dir(config.notes_dir, "2024-12")
+            existing_month_dir.mkdir(parents=True, exist_ok=True)
+            (existing_month_dir / "2024-12.json").write_text(
+                json.dumps(
+                    {
+                        "schema_version": "stella.literature.month.v1",
+                        "month": "2024-12",
+                        "date_from": "2024-12-01",
+                        "date_to": "2024-12-31",
+                        "papers": [
+                            {
+                                "arxiv_id": "2412.00001",
+                                "title": "A data-rich hypervelocity star catalog",
+                                "published_at": "2024-12-15",
+                                "links": {
+                                    "abs": "https://arxiv.org/abs/2412.00001",
+                                    "pdf": "https://arxiv.org/pdf/2412.00001",
+                                },
+                                "catalog_assessment": {
+                                    "has_observational_catalog": True,
+                                },
+                            }
+                        ],
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
             with (
                 patch.object(pipeline, "ArxivClient", FakeArxivClient),
                 patch.object(pipeline, "DeepXivClient", FakeDeepXivClient),
@@ -110,7 +142,7 @@ class BriefPolicyTest(unittest.TestCase):
             brief_events = [record for record in records if record.get("event") == "brief"]
             self.assertEqual([event["arxiv_id"] for event in brief_events], ["2501.00001"])
 
-            note = (config.notes_dir / "2025-01" / "2025-01.md").read_text(encoding="utf-8")
+            note = month_markdown_path(config.notes_dir, "2025-01").read_text(encoding="utf-8")
             self.assertIn("Brief for 2501.00001.", note)
             self.assertIn("weak match not fetched", note)
             self.assertIn("Weak-match search abstract.", note)
@@ -122,12 +154,14 @@ class BriefPolicyTest(unittest.TestCase):
                 note.index("Stellar Escape from Globular Clusters"),
             )
 
-            month_json = config.notes_dir / "2025-01" / "2025-01.json"
+            month_json = month_json_path(config.notes_dir, "2025-01")
             index_json = config.notes_dir / "index.json"
             self.assertTrue(month_json.exists())
             self.assertTrue(index_json.exists())
             self.assertFalse((config.notes_dir / "papers.jsonl").exists())
-            self.assertIn("[2025-01.md](2025-01/2025-01.md)", (config.notes_dir / "index.md").read_text(encoding="utf-8"))
+            index_markdown = (config.notes_dir / "index.md").read_text(encoding="utf-8")
+            self.assertIn("| 2025 | 2 | 0 |", index_markdown)
+            self.assertIn("[A data-rich hypervelocity star catalog](2024/2024-12/2024-12.md)", index_markdown)
 
             record = json.loads(month_json.read_text(encoding="utf-8"))
             self.assertEqual(record["schema_version"], "stella.literature.month.v1")
@@ -136,6 +170,18 @@ class BriefPolicyTest(unittest.TestCase):
             self.assertTrue(record["papers"][0]["brief"]["fetched"])
             self.assertFalse(record["papers"][1]["brief"]["fetched"])
             self.assertEqual(record["papers"][1]["abstract"]["text"], "Weak-match search abstract.")
+
+            index = json.loads(index_json.read_text(encoding="utf-8"))
+            self.assertEqual(index["schema_version"], "stella.literature.index.v2")
+            years = {item["year"]: item for item in index["years"]}
+            self.assertEqual(years["2025"]["literature_count"], 2)
+            self.assertEqual(years["2025"]["data_related_count"], 0)
+            self.assertEqual(years["2024"]["literature_count"], 1)
+            self.assertEqual(years["2024"]["data_related_count"], 1)
+            self.assertEqual(
+                years["2024"]["data_related_papers"][0]["navigation_path"],
+                "2024/2024-12/2024-12.md",
+            )
 
 
 if __name__ == "__main__":

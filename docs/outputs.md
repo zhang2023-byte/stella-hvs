@@ -29,8 +29,9 @@ logs/run_<timestamp>.log
 Each monthly JSON record includes:
 
 - date range and run ID
-- resolved search/classifier/brief config
+- resolved search/classifier/brief config, including the actual month-level categories and queries used
 - per-query/category search log
+- local month-window filtering stats, including out-of-window and missing-date drops
 - selected papers with arXiv/PDF links and provenance
 - matched queries and categories
 - title-triage label, confidence, and reason

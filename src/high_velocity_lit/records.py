@@ -3,13 +3,15 @@
 from __future__ import annotations
 
 from datetime import datetime
+from pathlib import Path
 from typing import Any
 
 from .models import MonthWindow, SearchConfig
+from .note_paths import month_json_path, month_markdown_path
 
 
 MONTH_SCHEMA_VERSION = "stella.literature.month.v1"
-INDEX_SCHEMA_VERSION = "stella.literature.index.v1"
+INDEX_SCHEMA_VERSION = "stella.literature.index.v2"
 
 
 def as_text(value: Any) -> str:
@@ -65,6 +67,19 @@ def paper_url(arxiv_id: str) -> str:
 
 def pdf_url(arxiv_id: str) -> str:
     return f"https://arxiv.org/pdf/{arxiv_id}"
+
+
+def note_navigation_path(month: str) -> str:
+    return str(month_markdown_path(Path("."), month))
+
+
+def month_json_navigation_path(month: str) -> str:
+    return str(month_json_path(Path("."), month))
+
+
+def has_observational_catalog(paper: dict[str, Any]) -> bool:
+    assessment = paper.get("catalog_assessment") or {}
+    return assessment.get("has_observational_catalog") is True
 
 
 def source_field_record(paper: dict[str, Any]) -> dict[str, Any]:
@@ -178,11 +193,16 @@ def paper_record(paper: dict[str, Any], *, config: SearchConfig, run_id: str) ->
     return record
 
 
-def config_record(config: SearchConfig) -> dict[str, Any]:
+def config_record(
+    config: SearchConfig,
+    *,
+    categories: list[str] | None = None,
+    queries: list[str] | None = None,
+) -> dict[str, Any]:
     return {
         "source": config.source,
-        "queries": config.queries,
-        "categories": config.categories,
+        "queries": config.queries if queries is None else queries,
+        "categories": config.categories if categories is None else categories,
         "max_results": config.max_results,
         "search_mode": config.search_mode,
         "min_score": config.min_score,
@@ -215,29 +235,12 @@ def build_month_record(
             "run_id": run_id,
             "started_at": started_at.isoformat(timespec="seconds"),
         },
-        "config": config_record(config),
+        "config": config_record(
+            config,
+            categories=stats.get("resolved_categories"),
+            queries=stats.get("resolved_queries"),
+        ),
         "stats": stats_record,
         "search_log": stats.get("query_stats", []),
         "papers": [paper_record(paper, config=config, run_id=run_id) for paper in papers],
-    }
-
-
-def build_index_record(
-    month_summaries: list[dict[str, Any]],
-    *,
-    run_id: str,
-    started_at: datetime,
-    config: SearchConfig,
-) -> dict[str, Any]:
-    return {
-        "schema_version": INDEX_SCHEMA_VERSION,
-        "month_schema_version": MONTH_SCHEMA_VERSION,
-        "run": {
-            "run_id": run_id,
-            "started_at": started_at.isoformat(timespec="seconds"),
-        },
-        "notes_dir": str(config.notes_dir),
-        "config": config_record(config),
-        "months": month_summaries,
-        "total_relevant": sum(item["relevant_count"] for item in month_summaries),
     }

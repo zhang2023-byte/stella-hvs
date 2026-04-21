@@ -162,6 +162,44 @@ conda run -n stella-env python scripts/annotate_catalog_data.py \
 
 Existing `catalog_assessment` fields are skipped unless `--force True` is set.
 
+Per-paper catalog verification runs a deeper three-stage workflow on a selected
+paper:
+
+1. Use DeepXiv progressively (`head`, selected sections, optional raw fallback)
+   to decide whether the paper appears to contain object-level catalog data.
+2. Download the arXiv PDF and try to confirm the signal from the PDF text. When
+   direct PDF text extraction is weak, Stella records that limitation and may
+   continue with a source fallback if DeepXiv already gave a strong signal.
+3. Download arXiv source safely, extract tables and data-like files, and store
+   any external catalog path (for example VizieR/CDS) mentioned in the source.
+
+Verify one paper:
+
+```bash
+conda run -n stella-env python scripts/verify_literature_catalog.py \
+  --arxiv-id 2405.04750
+```
+
+Randomly sample a few papers from `notes/index.md`:
+
+```bash
+conda run -n stella-env python scripts/verify_literature_catalog.py \
+  --sample-index-md 3 \
+  --seed 7
+```
+
+Useful options:
+
+```text
+--arxiv-id ID[,ID...]       One arXiv ID or a comma-separated list.
+--sample-index-md N         Randomly sample N papers from notes/index.md.
+--seed N                    Seed for reproducible sampling.
+--output-dir PATH           Output root. Default: literature.
+--force                     Recompute even when literature/<id>/record.json exists.
+--token TOKEN               Override DEEPXIV_TOKEN.
+--max-sections N            Max DeepXiv sections before raw fallback. Default: 4.
+```
+
 If DeepXiv returns a daily limit error, completed months are kept. The script
 writes a partial summary to `logs/partial_<run_id>.json`, appends it to
 `logs/runs.jsonl` with `status: partial`, prints the resume command, and exits

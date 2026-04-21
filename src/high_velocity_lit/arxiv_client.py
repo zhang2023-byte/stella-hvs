@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+import time
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -41,6 +42,23 @@ def strip_version(arxiv_id: str) -> str:
 
 
 class ArxivClient:
+    def _fetch(self, params: dict[str, Any]) -> bytes:
+        url = f"{BASE_URL}?{urllib.parse.urlencode(params)}"
+        request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+        last_error: Exception | None = None
+        for attempt in range(1, 4):
+            try:
+                with urllib.request.urlopen(request, timeout=45) as response:
+                    return response.read()
+            except Exception as exc:
+                last_error = exc
+                if attempt >= 3:
+                    raise
+                time.sleep(min(2 ** (attempt - 1), 4))
+        if last_error is not None:
+            raise last_error
+        raise RuntimeError("arXiv request failed without an exception")
+
     def search(self, query: str, *, size: int, date_from: str, date_to: str) -> dict[str, Any]:
         phrase = query.replace('"', "").strip()
         submitted_from = compact_date(date_from, "0000")
@@ -53,15 +71,24 @@ class ArxivClient:
             "sortBy": "submittedDate",
             "sortOrder": "descending",
         }
-        url = f"{BASE_URL}?{urllib.parse.urlencode(params)}"
-        request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-        with urllib.request.urlopen(request, timeout=45) as response:
-            payload = response.read()
-
+        payload = self._fetch(params)
         root = ET.fromstring(payload)
         total = int(root.findtext(opensearch_name("totalResults")) or 0)
         entries = [self._entry_to_paper(entry) for entry in root.findall(atom_name("entry"))]
         return {"total": total, "results": entries}
+
+    def metadata(self, arxiv_id: str) -> dict[str, Any]:
+        params = {
+            "id_list": arxiv_id,
+            "start": 0,
+            "max_results": 1,
+        }
+        payload = self._fetch(params)
+        root = ET.fromstring(payload)
+        entry = root.find(atom_name("entry"))
+        if entry is None:
+            return {"arxiv_id": strip_version(arxiv_id)}
+        return self._entry_to_metadata(entry)
 
     def _entry_to_paper(self, entry: ET.Element) -> dict[str, Any]:
         raw_id = (entry.findtext(atom_name("id")) or "").rsplit("/", 1)[-1]
@@ -92,4 +119,41 @@ class ArxivClient:
             "updated_at": normalize_space(entry.findtext(atom_name("updated"))),
             "score": 0,
             "source": "arxiv",
+        }
+
+    def _entry_to_metadata(self, entry: ET.Element) -> dict[str, Any]:
+        paper = self._entry_to_paper(entry)
+        links: dict[str, str] = {}
+        for link in entry.findall(atom_name("link")):
+            href = normalize_space(link.attrib.get("href"))
+            title = normalize_space(link.attrib.get("title"))
+            rel = normalize_space(link.attrib.get("rel"))
+            link_type = normalize_space(link.attrib.get("type"))
+            if title == "pdf" and href:
+                links["pdf"] = href
+            elif rel == "alternate" and href:
+                links["abs"] = href
+            elif title == "doi" and href:
+                links["doi"] = href
+            elif link_type == "application/atom+xml" and href:
+                links["api"] = href
+
+        comments = normalize_space(entry.findtext(arxiv_name("comment")))
+        journal_ref = normalize_space(entry.findtext(arxiv_name("journal_ref")))
+        doi = normalize_space(entry.findtext(arxiv_name("doi")))
+        affiliations = [
+            normalize_space(author.findtext(arxiv_name("affiliation")))
+            for author in entry.findall(atom_name("author"))
+            if normalize_space(author.findtext(arxiv_name("affiliation")))
+        ]
+        primary = entry.find(arxiv_name("primary_category"))
+
+        return {
+            **paper,
+            "links": links,
+            "comment": comments,
+            "journal_ref": journal_ref,
+            "doi": doi,
+            "author_affiliations": affiliations,
+            "primary_category": primary.attrib.get("term", "") if primary is not None else "",
         }

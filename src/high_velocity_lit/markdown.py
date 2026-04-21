@@ -81,7 +81,9 @@ def render_month_note(record: dict[str, Any]) -> str:
         f"accepted after title triage: {pluralize(stats.get('relevant_count', 0), 'paper')}"
     )
     lines.append(
-        f"- Filtering stats: category-filtered {pluralize(stats.get('category_filtered', 0), 'paper')}; "
+        f"- Filtering stats: date-window-filtered {pluralize(stats.get('date_window_filtered', 0), 'paper')}; "
+        f"missing publication date {pluralize(stats.get('missing_publication_date', 0), 'paper')}; "
+        f"category-filtered {pluralize(stats.get('category_filtered', 0), 'paper')}; "
         f"score-filtered {pluralize(stats.get('score_filtered', 0), 'paper')}; "
         f"title-triage-filtered {pluralize(stats.get('classifier_filtered', 0), 'paper')}"
     )
@@ -228,21 +230,62 @@ def render_month_note(record: dict[str, Any]) -> str:
 
 
 def render_index(record: dict[str, Any]) -> str:
-    run = record.get("run") or {}
+    if record.get("years") is None:
+        run = record.get("run") or {}
+        lines = [
+            "# Monthly High-Velocity Star Literature Index",
+            "",
+            f"- Run ID: `{run.get('run_id')}`",
+            f"- Started at: {run.get('started_at')}",
+            "",
+            "| Month | Relevant papers | Unique candidates | Note |",
+            "| --- | ---: | ---: | --- |",
+        ]
+        for summary in record.get("months") or []:
+            slug = summary["month"]
+            lines.append(
+                f"| {slug} | {summary['relevant_count']} | {summary['raw_unique']} | "
+                f"[{slug}.md]({slug}/{slug}.md) |"
+            )
+        lines.append("")
+        return "\n".join(lines)
+
+    summary = record.get("summary") or {}
     lines = [
-        "# Monthly High-Velocity Star Literature Index",
+        "# Yearly High-Velocity Star Literature Index",
         "",
-        f"- Run ID: `{run.get('run_id')}`",
-        f"- Started at: {run.get('started_at')}",
+        f"- Generated at: {record.get('generated_at')}",
+        f"- Total relevant literature: {pluralize(summary.get('literature_count', 0), 'paper')}",
+        f"- Total data-related literature: {pluralize(summary.get('data_related_count', 0), 'paper')}",
         "",
-        "| Month | Relevant papers | Unique candidates | Note |",
-        "| --- | ---: | ---: | --- |",
+        "| Year | Relevant literature | Data-related literature |",
+        "| --- | ---: | ---: |",
     ]
-    for summary in record.get("months") or []:
-        slug = summary["month"]
+    for year in record.get("years") or []:
         lines.append(
-            f"| {slug} | {summary['relevant_count']} | {summary['raw_unique']} | "
-            f"[{slug}.md]({slug}/{slug}.md) |"
+            f"| {year.get('year')} | {year.get('literature_count', 0)} | {year.get('data_related_count', 0)} |"
         )
-    lines.append("")
+
+    for year in record.get("years") or []:
+        papers = year.get("data_related_papers") or []
+        if not papers:
+            continue
+        lines.append("")
+        lines.append(f"## {year.get('year')}")
+        lines.append("")
+        lines.append(f"Data-related literature: {pluralize(year.get('data_related_count', 0), 'paper')}")
+        lines.append("")
+        for paper in papers:
+            title = first_present(paper.get("title"), "Untitled")
+            navigation_path = first_present(paper.get("navigation_path"))
+            month = first_present(paper.get("month"))
+            published_at = first_present(paper.get("published_at"))
+            if navigation_path:
+                lines.append(f"- [{title}]({navigation_path})")
+            else:
+                lines.append(f"- {title}")
+            details = [item for item in (month, published_at) if item]
+            if details:
+                lines.append(f"  - {'; '.join(details)}")
+        lines.append("")
     return "\n".join(lines)
