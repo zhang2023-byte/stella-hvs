@@ -13,6 +13,7 @@ Default flow:
 ## Setup
 
 ```bash
+conda env create -f environment.yml
 conda activate stella-env
 cp scripts/env.example .env
 ```
@@ -36,14 +37,14 @@ conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
   --from 2026-03
 ```
 
-Catalog verification for one paper or a sampled set from `notes/index.md`:
+Catalog verification for one paper or a sampled set from `notes/index.json`:
 
 ```bash
 conda run -n stella-env python scripts/verify_literature_catalog.py \
   --arxiv-id 2405.04750
 
 conda run -n stella-env python scripts/verify_literature_catalog.py \
-  --sample-index-md 3 \
+  --sample-index 3 \
   --seed 7
 ```
 
@@ -65,6 +66,6 @@ scripts/render_lit_notes.py          Regenerate Markdown from note JSON
 scripts/run_2025_2026.sh             Convenience batch runner
 docs/                                Detailed docs
 literature/                          Per-paper catalog verification records and extracted source artifacts
-notes/                               Canonical JSON and generated Markdown notes
+notes/                               Canonical JSON under YYYY/YYYY-MM/ plus generated Markdown and collection index
 src/high_velocity_lit/               Pipeline implementation
 ```

@@ -28,6 +28,7 @@ except ImportError:
 
 from high_velocity_lit.catalog_assessment import LLMCatalogAssessor, annotate_record  # noqa: E402
 from high_velocity_lit.config import DEFAULT_LLM_BASE_URL, DEFAULT_LLM_BATCH_SIZE, DEFAULT_LLM_MODEL  # noqa: E402
+from high_velocity_lit.indexing import refresh_index_outputs  # noqa: E402
 from high_velocity_lit.markdown import render_month_note  # noqa: E402
 from high_velocity_lit.note_paths import resolve_month_json_path  # noqa: E402
 from high_velocity_lit.title_classifier import load_llm_api_key  # noqa: E402
@@ -220,6 +221,7 @@ def main() -> int:
     )
     results: list[dict[str, object]] = []
     totals = {"pending": 0, "assessed": 0, "missing": 0, "catalog_count": 0}
+    index_outputs: dict[str, object] | None = None
     for json_path in selected_paths:
         record = read_json(json_path)
         summary = annotate_record(
@@ -245,7 +247,10 @@ def main() -> int:
             }
         )
 
-    output = {"dry_run": args.dry_run, "files": results, "totals": totals}
+    if not args.dry_run:
+        index_outputs = refresh_index_outputs(args.notes_dir)
+
+    output = {"dry_run": args.dry_run, "files": results, "totals": totals, "index": index_outputs}
     print(json.dumps(output, ensure_ascii=False, indent=2))
     return 0
 

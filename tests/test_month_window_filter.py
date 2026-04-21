@@ -33,6 +33,11 @@ class MetadataBackfillArxivClient:
         return {"arxiv_id": arxiv_id}
 
 
+class TimeoutMetadataArxivClient:
+    def metadata(self, arxiv_id: str) -> dict[str, object]:
+        raise TimeoutError(f"timed out while fetching {arxiv_id}")
+
+
 class FakeDeepXivClient:
     token = "fake-token"
     brief_calls: list[str] = []
@@ -124,17 +129,31 @@ class MonthWindowFilterTest(unittest.TestCase):
 
             self.assertEqual(summary["status"], "complete")
             self.assertEqual(FakeDeepXivClient.brief_calls, ["2501.00001"])
+            self.assertEqual(summary["arxiv_metadata"]["requested_count"], 1)
+            self.assertEqual(summary["arxiv_metadata"]["error_count"], 1)
+            self.assertEqual(summary["arxiv_metadata"]["timeout_count"], 0)
+            self.assertEqual(summary["arxiv_metadata"]["reported_count"], 1)
 
             record = json.loads(month_json_path(config.notes_dir, "2025-01").read_text(encoding="utf-8"))
             self.assertEqual([paper["arxiv_id"] for paper in record["papers"]], ["2501.00001"])
             self.assertEqual(record["stats"]["raw_unique"], 3)
             self.assertEqual(record["stats"]["date_window_filtered"], 1)
             self.assertEqual(record["stats"]["missing_publication_date"], 1)
+            self.assertEqual(record["stats"]["arxiv_metadata_requested_count"], 1)
+            self.assertEqual(record["stats"]["arxiv_metadata_error_count"], 1)
             self.assertEqual(record["stats"]["relevant_count"], 1)
 
             note = month_markdown_path(config.notes_dir, "2025-01").read_text(encoding="utf-8")
             self.assertIn("date-window-filtered 1 paper", note)
             self.assertIn("missing publication date 1 paper", note)
+            self.assertIn("arXiv metadata backfill: attempted 1 paper missing dates", note)
+            self.assertIn("other errors 1 paper", note)
+
+            report = json.loads(Path(str(summary["arxiv_metadata_report_path"])).read_text(encoding="utf-8"))
+            self.assertEqual(report["summary"]["requested_count"], 1)
+            self.assertEqual(report["summary"]["error_count"], 1)
+            self.assertEqual(report["summary"]["reported_count"], 1)
+            self.assertEqual(report["entries"][0]["status"], "error")
 
             index = json.loads((config.notes_dir / "index.json").read_text(encoding="utf-8"))
             years = {item["year"]: item for item in index["years"]}
@@ -175,10 +194,75 @@ class MonthWindowFilterTest(unittest.TestCase):
                 summary = pipeline.run_pipeline(config)
 
             self.assertEqual(summary["status"], "complete")
+            self.assertEqual(summary["arxiv_metadata"]["requested_count"], 1)
+            self.assertEqual(summary["arxiv_metadata"]["publication_date_backfilled_count"], 1)
+            self.assertEqual(summary["arxiv_metadata"]["reported_count"], 0)
             record = json.loads(month_json_path(config.notes_dir, "2025-01").read_text(encoding="utf-8"))
             self.assertEqual([paper["arxiv_id"] for paper in record["papers"]], ["2501.00003", "2501.00001"])
             self.assertEqual(record["stats"]["date_window_filtered"], 1)
             self.assertEqual(record["stats"]["missing_publication_date"], 0)
+            self.assertEqual(record["stats"]["arxiv_publication_date_backfilled_count"], 1)
+
+            report = json.loads(Path(str(summary["arxiv_metadata_report_path"])).read_text(encoding="utf-8"))
+            self.assertEqual(report["summary"]["publication_date_backfilled_count"], 1)
+            self.assertEqual(report["summary"]["reported_count"], 0)
+            self.assertEqual(report["entries"], [])
+
+    def test_pipeline_skips_timed_out_arxiv_metadata_and_writes_timeout_report(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            config = SearchConfig(
+                workspace=root,
+                notes_dir=root / "notes",
+                logs_dir=root / "logs",
+                start_date=date(2025, 1, 1),
+                end_date=date(2025, 1, 31),
+                source="deepxiv",
+                queries=["hypervelocity stars"],
+                categories=["astro-ph.GA"],
+                max_results=3,
+                search_mode="hybrid",
+                min_score=None,
+                classifier="rules",
+                llm_api_key=None,
+                llm_base_url="https://api.openai.com/v1",
+                llm_model="gpt-4o-mini",
+                llm_batch_size=25,
+                llm_review=False,
+                search_sleep_seconds=0,
+                brief_sleep_seconds=0,
+                use_brief=True,
+                progress=False,
+                token=None,
+            )
+
+            with (
+                patch.object(pipeline, "ArxivClient", TimeoutMetadataArxivClient),
+                patch.object(pipeline, "DeepXivClient", FakeDeepXivClient),
+            ):
+                summary = pipeline.run_pipeline(config)
+
+            self.assertEqual(summary["status"], "complete")
+            self.assertEqual(summary["arxiv_metadata"]["requested_count"], 1)
+            self.assertEqual(summary["arxiv_metadata"]["timeout_count"], 1)
+            self.assertEqual(summary["arxiv_metadata"]["error_count"], 0)
+            self.assertEqual(summary["arxiv_metadata"]["reported_count"], 1)
+
+            record = json.loads(month_json_path(config.notes_dir, "2025-01").read_text(encoding="utf-8"))
+            self.assertEqual([paper["arxiv_id"] for paper in record["papers"]], ["2501.00001"])
+            self.assertEqual(record["stats"]["missing_publication_date"], 1)
+            self.assertEqual(record["stats"]["arxiv_metadata_requested_count"], 1)
+            self.assertEqual(record["stats"]["arxiv_metadata_timeout_count"], 1)
+            self.assertEqual(record["stats"]["arxiv_metadata_error_count"], 0)
+
+            note = month_markdown_path(config.notes_dir, "2025-01").read_text(encoding="utf-8")
+            self.assertIn("timed out 1 paper", note)
+
+            report = json.loads(Path(str(summary["arxiv_metadata_report_path"])).read_text(encoding="utf-8"))
+            self.assertEqual(report["summary"]["timeout_count"], 1)
+            self.assertEqual(report["summary"]["reported_count"], 1)
+            self.assertEqual(report["entries"][0]["status"], "timeout")
+            self.assertTrue(report["entries"][0]["timed_out"])
 
 
 if __name__ == "__main__":

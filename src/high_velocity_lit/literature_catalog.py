@@ -19,6 +19,9 @@ from urllib.request import Request, urlopen
 
 from .arxiv_client import ArxivClient
 from .deepxiv_client import DeepXivClient
+from .indexing import refresh_index_outputs
+from .markdown import render_month_note
+from .note_paths import iter_month_json_paths
 
 
 USER_AGENT = "stella-high-velocity-lit/0.1"
@@ -114,10 +117,6 @@ DATA_SUFFIXES = {
     ".parquet",
 }
 TRUSTED_PDF_EXTRACTORS = {"pypdf", "arxiv_html_fallback"}
-INDEX_MD_ENTRY_RE = re.compile(
-    r"^- \[(?P<title>.+?)\]\((?P<path>[^)]+)\)(?: \((?P<month>\d{4}-\d{2})\))?(?:\s+-.*)?$"
-)
-MONTH_SLUG_RE = re.compile(r"^\d{4}-\d{2}$")
 URL_RE = re.compile(r"https?://[^\s<>\]\"')]+", re.IGNORECASE)
 DESCRIPTOR_RE = re.compile(
     r'<span class="descriptor">(?P<label>[^<:]+):</span>\s*(?P<value>.*?)</(?:td|div)>',
@@ -160,11 +159,6 @@ def relative_to(path: Path, root: Path) -> str:
         return str(path.relative_to(root))
     except ValueError:
         return str(path)
-
-
-def month_slug_from_note_path(note_rel: str) -> str:
-    stem = Path(note_rel).stem
-    return stem if MONTH_SLUG_RE.fullmatch(stem) else ""
 
 
 def download_to_path(url: str, destination: Path, *, retries: int = 3, timeout: int = 60) -> dict[str, Any]:
@@ -682,46 +676,186 @@ def render_summary(record: dict[str, Any]) -> str:
     return "\n".join(lines).rstrip() + "\n"
 
 
-def load_index_md_candidates(index_md_path: Path) -> list[dict[str, Any]]:
-    notes_dir = index_md_path.parent
-    month_cache: dict[Path, dict[str, Any]] = {}
-    candidates: list[dict[str, Any]] = []
-    for line in index_md_path.read_text(encoding="utf-8").splitlines():
-        match = INDEX_MD_ENTRY_RE.match(line.strip())
-        if not match:
-            continue
-        title = match.group("title")
-        note_rel = match.group("path")
-        month = match.group("month") or month_slug_from_note_path(note_rel)
-        if not month:
-            continue
-        json_path = notes_dir / Path(note_rel).with_suffix(".json")
-        if json_path not in month_cache and json_path.exists():
-            month_cache[json_path] = read_json(json_path)
-        record = month_cache.get(json_path) or {}
-        for paper in record.get("papers") or []:
-            if normalize_space(str((paper or {}).get("title") or "")) != normalize_space(title):
+def load_index_json_candidates(index_json_path: Path) -> list[dict[str, Any]]:
+    record = read_json(index_json_path)
+    papers = record.get("papers")
+    if isinstance(papers, list) and papers:
+        candidates: list[dict[str, Any]] = []
+        for paper in papers:
+            if not isinstance(paper, dict):
                 continue
-            arxiv_id = normalize_space(str((paper or {}).get("arxiv_id") or ""))
-            if arxiv_id:
-                candidates.append(
-                    {
-                        "title": title,
-                        "arxiv_id": arxiv_id,
-                        "month": month,
-                        "note_path": note_rel,
-                    }
-                )
-            break
+            arxiv_id = normalize_space(str(paper.get("arxiv_id") or ""))
+            if not arxiv_id:
+                continue
+            candidates.append(
+                {
+                    "title": normalize_space(str(paper.get("title") or "Untitled")),
+                    "arxiv_id": arxiv_id,
+                    "month": normalize_space(str(paper.get("month") or "")),
+                    "note_path": normalize_space(str(paper.get("navigation_path") or "")),
+                    "json_path": normalize_space(str(paper.get("json_path") or "")),
+                    "catalog_verification": paper.get("catalog_verification") or {},
+                }
+            )
+        return candidates
+
+    # Compatibility fallback for older v2 index.json files that only store
+    # data-related papers under yearly buckets.
+    candidates = []
+    for year in record.get("years") or []:
+        for paper in (year or {}).get("data_related_papers") or []:
+            if not isinstance(paper, dict):
+                continue
+            arxiv_id = normalize_space(str(paper.get("arxiv_id") or ""))
+            if not arxiv_id:
+                continue
+            candidates.append(
+                {
+                    "title": normalize_space(str(paper.get("title") or "Untitled")),
+                    "arxiv_id": arxiv_id,
+                    "month": normalize_space(str(paper.get("month") or "")),
+                    "note_path": normalize_space(str(paper.get("navigation_path") or "")),
+                    "json_path": normalize_space(str(paper.get("json_path") or "")),
+                    "catalog_verification": paper.get("catalog_verification") or {},
+                }
+            )
     return candidates
 
 
-def sample_index_md_candidates(index_md_path: Path, *, count: int, seed: int | None = None) -> list[dict[str, Any]]:
-    candidates = load_index_md_candidates(index_md_path)
+def _filter_index_candidates(candidates: list[dict[str, Any]], *, only_unverified: bool) -> list[dict[str, Any]]:
+    if not only_unverified:
+        return candidates
+    filtered: list[dict[str, Any]] = []
+    for candidate in candidates:
+        verification = candidate.get("catalog_verification") or {}
+        if isinstance(verification, dict) and verification.get("verified") is True:
+            continue
+        filtered.append(candidate)
+    return filtered
+
+
+def sample_index_json_candidates(
+    index_json_path: Path,
+    *,
+    count: int,
+    seed: int | None = None,
+    only_unverified: bool = False,
+) -> list[dict[str, Any]]:
+    candidates = _filter_index_candidates(load_index_json_candidates(index_json_path), only_unverified=only_unverified)
     if count >= len(candidates):
         return candidates
     rng = random.Random(seed)
     return rng.sample(candidates, count)
+
+
+def take_index_json_candidates(
+    index_json_path: Path,
+    *,
+    count: int,
+    offset: int = 0,
+    only_unverified: bool = False,
+) -> list[dict[str, Any]]:
+    candidates = _filter_index_candidates(load_index_json_candidates(index_json_path), only_unverified=only_unverified)
+    if count <= 0:
+        return []
+    start = max(offset, 0)
+    return candidates[start : start + count]
+
+
+def verification_has_catalog(record: dict[str, Any]) -> bool:
+    verdict = normalize_space(str((record.get("verification") or {}).get("overall_verdict") or ""))
+    return verdict.startswith("confirmed")
+
+
+def build_catalog_verification_summary(
+    record: dict[str, Any],
+    *,
+    paper_dir: Path,
+    workspace_root: Path,
+) -> dict[str, Any]:
+    return {
+        "verified": True,
+        "verified_at": normalize_space(str(record.get("generated_at") or now_iso())),
+        "has_catalog": verification_has_catalog(record),
+        "overall_verdict": normalize_space(str((record.get("verification") or {}).get("overall_verdict") or "")),
+        "catalog_location": normalize_space(str((record.get("catalog") or {}).get("location") or "")),
+        "record_path": relative_to(paper_dir / "record.json", workspace_root),
+        "summary_path": relative_to(paper_dir / "summary.md", workspace_root),
+    }
+
+
+def sync_verification_to_notes(
+    *,
+    notes_dir: Path,
+    arxiv_id: str,
+    verification_record: dict[str, Any],
+    literature_root: Path,
+    workspace_root: Path | None = None,
+) -> dict[str, Any]:
+    if not notes_dir.exists():
+        return {
+            "matched_months": [],
+            "updated_paper_count": 0,
+            "updated_json_paths": [],
+            "updated_markdown_paths": [],
+            "index_json_path": None,
+            "index_markdown_path": None,
+        }
+
+    workspace_root = workspace_root or notes_dir.parent
+    paper_dir = literature_root / arxiv_id
+    summary = build_catalog_verification_summary(
+        verification_record,
+        paper_dir=paper_dir,
+        workspace_root=workspace_root,
+    )
+    matched_months: list[str] = []
+    updated_json_paths: list[str] = []
+    updated_markdown_paths: list[str] = []
+    updated_paper_count = 0
+
+    for json_path in iter_month_json_paths(notes_dir):
+        record = read_json(json_path)
+        papers = record.get("papers") or []
+        touched = False
+        matched = False
+        for paper in papers:
+            if not isinstance(paper, dict):
+                continue
+            if normalize_space(str(paper.get("arxiv_id") or "")) != arxiv_id:
+                continue
+            matched = True
+            if paper.get("catalog_verification") == summary:
+                continue
+            paper["catalog_verification"] = summary
+            touched = True
+            updated_paper_count += 1
+        if not matched:
+            continue
+        matched_months.append(normalize_space(str(record.get("month") or json_path.stem)))
+        if not touched:
+            continue
+        write_json(json_path, record)
+        markdown_path = json_path.parent / f"{record.get('month') or json_path.stem}.md"
+        write_text(markdown_path, render_month_note(record))
+        updated_json_paths.append(str(json_path))
+        updated_markdown_paths.append(str(markdown_path))
+
+    index_json_path = None
+    index_markdown_path = None
+    if updated_json_paths:
+        index_outputs = refresh_index_outputs(notes_dir)
+        index_json_path = str(index_outputs.get("index_json_path") or "")
+        index_markdown_path = str(index_outputs.get("index_markdown_path") or "")
+
+    return {
+        "matched_months": matched_months,
+        "updated_paper_count": updated_paper_count,
+        "updated_json_paths": updated_json_paths,
+        "updated_markdown_paths": updated_markdown_paths,
+        "index_json_path": index_json_path,
+        "index_markdown_path": index_markdown_path,
+    }
 
 
 def verify_paper_catalog(

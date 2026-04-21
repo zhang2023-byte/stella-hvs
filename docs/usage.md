@@ -79,6 +79,15 @@ including defaults. It writes to the terminal when available so `conda run`
 still shows the status output. Secret values are never printed; tokens and API
 keys are shown only as `configured` or `not configured`.
 
+When Stella uses `--source deepxiv`, some search hits arrive without a usable
+publication date. The pipeline then makes a best-effort arXiv metadata lookup
+to recover that date. Those metadata calls are intentionally soft-fail: if an
+arXiv metadata request times out or errors, Stella skips that backfill attempt,
+continues the month, and writes a structured report to
+`logs/arxiv_metadata_<run_id>.json`. Monthly JSON/Markdown also record counts
+for how many missing-date candidates were rescued, timed out, errored, or still
+lacked a publication date after the lookup.
+
 The default search is intentionally modest because high-velocity star papers are
 a relatively small field and DeepXiv quota appears to scale with returned
 records. It searches five representative query phrases in `astro-ph.GA`, for a
@@ -94,7 +103,9 @@ abstract returned by DeepXiv/arXiv search, and categories.
 With the default rules classifier, `--brief True` fetches DeepXiv brief only for
 strong/direct matches (`rule-direct`). Weak matches (`rule-weak*`) stay in the
 monthly note but use only metadata already returned by DeepXiv search, such as
-title, abstract, score, categories, and matched queries.
+title, abstract, score, categories, and matched queries. With `--llm-review True`,
+the LLM only decides whether weak rule matches are kept or filtered; it does not
+change the strong/weak grouping.
 
 Monthly results are split into strong/direct and weak sections with a divider
 between them. The note's `Search Abstract` section is the abstract returned by
@@ -106,13 +117,18 @@ Markdown into the same monthly note folder:
 ```text
 notes/index.json
 notes/index.md
-notes/YYYY-MM/YYYY-MM.json
-notes/YYYY-MM/YYYY-MM.md
+notes/YYYY/YYYY-MM/YYYY-MM.json
+notes/YYYY/YYYY-MM/YYYY-MM.md
 ```
 
 The exact date range is stored inside each monthly JSON record as
 `date_from`/`date_to`. Markdown files are generated from those JSON records and
 should be treated as reading views.
+
+`notes/index.json` is rebuilt from all monthly JSON records. It currently stores
+both yearly summaries and a flat machine-readable `papers` list for downstream
+sampling or tooling. The current `notes/index.md` is a yearly human-readable
+view generated from that index JSON.
 
 To regenerate Markdown from existing JSON without calling DeepXiv:
 
@@ -126,11 +142,18 @@ Or regenerate one month:
 conda run -n stella-env python scripts/render_lit_notes.py --month 2026-03
 ```
 
+To rebuild the collection index from monthly JSON and refresh `notes/index.md`:
+
+```bash
+conda run -n stella-env python scripts/render_lit_notes.py --index-only
+```
+
 Catalog-data assessment uses an LLM to decide whether papers in existing note
 JSON likely contain real observational high-velocity-star data or catalog/sample
 tables. It uses each paper's abstract and DeepXiv brief when available, then
-updates the JSON and refreshes the sibling Markdown file. It requires the same
-LLM API environment variables as weak-match LLM review.
+updates the JSON, refreshes the sibling Markdown file, and rebuilds the
+collection index. It requires the same LLM API environment variables as
+weak-match LLM review.
 
 Assess one monthly note:
 
@@ -180,11 +203,11 @@ conda run -n stella-env python scripts/verify_literature_catalog.py \
   --arxiv-id 2405.04750
 ```
 
-Randomly sample a few papers from `notes/index.md`:
+Randomly sample a few papers from `notes/index.json`:
 
 ```bash
 conda run -n stella-env python scripts/verify_literature_catalog.py \
-  --sample-index-md 3 \
+  --sample-index 3 \
   --seed 7
 ```
 
@@ -192,8 +215,9 @@ Useful options:
 
 ```text
 --arxiv-id ID[,ID...]       One arXiv ID or a comma-separated list.
---sample-index-md N         Randomly sample N papers from notes/index.md.
+--sample-index N            Randomly sample N papers from notes/index.json.
 --seed N                    Seed for reproducible sampling.
+--index-json PATH           Input collection index JSON. Default: notes/index.json.
 --output-dir PATH           Output root. Default: literature.
 --force                     Recompute even when literature/<id>/record.json exists.
 --token TOKEN               Override DEEPXIV_TOKEN.
@@ -205,6 +229,10 @@ writes a partial summary to `logs/partial_<run_id>.json`, appends it to
 `logs/runs.jsonl` with `status: partial`, prints the resume command, and exits
 without a Python traceback. Resume from the reported failed month after quota
 recovers.
+
+The run summary JSON printed by the CLI also includes `arxiv_metadata` totals
+plus `arxiv_metadata_report_path`, so you can quickly tell whether any metadata
+lookups were skipped and where the detailed report was written.
 
 Date parsing:
 

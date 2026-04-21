@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-import json
 import importlib.util
+import json
 import sys
+import tempfile
 import unittest
 from datetime import date, datetime
 from pathlib import Path
@@ -213,6 +214,53 @@ class CatalogAssessmentTest(unittest.TestCase):
         user_message = messages[1]["content"]  # type: ignore[index]
         self.assertIn("We present a catalog of high-velocity star candidates", user_message)
         self.assertIn("object-level candidate tables and astrometry", user_message)
+
+    def test_cli_rebuilds_collection_index_after_annotation(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            notes_dir = Path(tmp) / "notes"
+            month_dir = notes_dir / "2026" / "2026-03"
+            month_dir.mkdir(parents=True)
+            json_path = month_dir / "2026-03.json"
+            json_path.write_text(json.dumps(sample_record(), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            (notes_dir / "index.json").write_text(
+                json.dumps(
+                    {
+                        "schema_version": "stella.literature.index.v3",
+                        "summary": {"literature_count": 0, "data_related_count": 0},
+                        "years": [],
+                        "papers": [],
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            with (
+                patch.object(
+                    sys,
+                    "argv",
+                    [
+                        "annotate_catalog_data.py",
+                        "--on",
+                        "2026-03",
+                        "--notes-dir",
+                        str(notes_dir),
+                    ],
+                ),
+                patch.object(annotate_cli, "LLMCatalogAssessor", return_value=FakeAssessor()),
+                patch.object(annotate_cli, "load_llm_api_key", return_value="test-key"),
+            ):
+                exit_code = annotate_cli.main()
+
+            self.assertEqual(exit_code, 0)
+            index = json.loads((notes_dir / "index.json").read_text(encoding="utf-8"))
+            self.assertEqual(index["summary"]["literature_count"], 1)
+            self.assertEqual(index["summary"]["data_related_count"], 1)
+            self.assertEqual(index["papers"][0]["arxiv_id"], "2603.00001")
+            index_markdown = (notes_dir / "index.md").read_text(encoding="utf-8")
+            self.assertIn("A catalog of hypervelocity star candidates", index_markdown)
 
 
 if __name__ == "__main__":

@@ -104,11 +104,19 @@ class PipelinePartialRunTest(unittest.TestCase):
             self.assertEqual(summary["failed_month"], "2025-02")
             self.assertEqual(summary["resume_from"], "2025-02")
             self.assertIn("--from 2025-02", summary["resume_command"])
+            self.assertEqual(summary["arxiv_metadata"]["requested_count"], 0)
+            self.assertEqual(summary["arxiv_metadata"]["reported_count"], 0)
 
             partial_path = Path(str(summary["partial_summary_path"]))
             self.assertTrue(partial_path.exists())
             saved = json.loads(partial_path.read_text(encoding="utf-8"))
             self.assertEqual(saved["status"], "partial")
+
+            report_path = Path(str(summary["arxiv_metadata_report_path"]))
+            self.assertTrue(report_path.exists())
+            report = json.loads(report_path.read_text(encoding="utf-8"))
+            self.assertEqual(report["summary"]["requested_count"], 0)
+            self.assertEqual(report["summary"]["reported_count"], 0)
 
             self.assertTrue(month_markdown_path(config.notes_dir, "2025-01").exists())
             self.assertFalse(month_markdown_path(config.notes_dir, "2025-02").exists())

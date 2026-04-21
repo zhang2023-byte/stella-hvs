@@ -15,10 +15,13 @@ from high_velocity_lit.literature_catalog import (  # noqa: E402
     apply_external_catalog_urls,
     analyze_catalog_text,
     extract_tables_from_tex,
-    load_index_md_candidates,
+    load_index_json_candidates,
     parse_abs_page,
     pdf_verification_passed,
     resolve_catalog_location,
+    sample_index_json_candidates,
+    sync_verification_to_notes,
+    take_index_json_candidates,
     select_relevant_sections,
     verify_paper_catalog,
 )
@@ -151,56 +154,92 @@ class LiteratureCatalogTest(unittest.TestCase):
             )
         )
 
-    def test_load_index_md_candidates_resolves_titles_back_to_month_json(self) -> None:
+    def test_load_index_json_candidates_reads_flat_paper_index(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             notes_dir = root / "notes"
-            month_dir = notes_dir / "2026" / "2026-03"
-            month_dir.mkdir(parents=True)
-            (notes_dir / "index.md").write_text(
-                "- [A stellar catalog paper](2026/2026-03/2026-03.md) (2026-03) - `2026/2026-03/2026-03.md`\n",
-                encoding="utf-8",
-            )
-            (month_dir / "2026-03.json").write_text(
+            notes_dir.mkdir(parents=True)
+            (notes_dir / "index.json").write_text(
                 json.dumps(
                     {
+                        "schema_version": "stella.literature.index.v4",
                         "papers": [
                             {
                                 "title": "A stellar catalog paper",
                                 "arxiv_id": "2603.00001",
-                            }
-                        ]
+                                "month": "2026-03",
+                                "navigation_path": "2026/2026-03/2026-03.md",
+                                "json_path": "2026/2026-03/2026-03.json",
+                            },
+                            {
+                                "title": "A second paper",
+                                "arxiv_id": "2603.00002",
+                                "month": "2026-03",
+                                "navigation_path": "2026/2026-03/2026-03.md",
+                                "json_path": "2026/2026-03/2026-03.json",
+                            },
+                        ],
                     }
                 ),
                 encoding="utf-8",
             )
 
-            candidates = load_index_md_candidates(notes_dir / "index.md")
+            candidates = load_index_json_candidates(notes_dir / "index.json")
 
-        self.assertEqual(candidates[0]["arxiv_id"], "2603.00001")
+        self.assertEqual([item["arxiv_id"] for item in candidates], ["2603.00001", "2603.00002"])
 
-    def test_load_index_md_candidates_supports_current_yearly_index_markdown(self) -> None:
+    def test_sample_index_json_candidates_uses_seeded_sampling(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             notes_dir = root / "notes"
-            month_dir = notes_dir / "2026" / "2026-03"
-            month_dir.mkdir(parents=True)
-            (notes_dir / "index.md").write_text(
-                "# Yearly High-Velocity Star Literature Index\n\n"
-                "## 2026\n\n"
-                "- [A stellar catalog paper](2026/2026-03/2026-03.md)\n"
-                "  - 2026-03; 2026-03-12 00:00:00\n",
-                encoding="utf-8",
-            )
-            (month_dir / "2026-03.json").write_text(
-                json.dumps({"papers": [{"title": "A stellar catalog paper", "arxiv_id": "2603.00001"}]}),
+            notes_dir.mkdir(parents=True)
+            (notes_dir / "index.json").write_text(
+                json.dumps(
+                    {
+                        "schema_version": "stella.literature.index.v4",
+                        "papers": [
+                            {"title": "Paper 1", "arxiv_id": "2603.00001", "month": "2026-03", "navigation_path": "a"},
+                            {"title": "Paper 2", "arxiv_id": "2603.00002", "month": "2026-03", "navigation_path": "b"},
+                            {"title": "Paper 3", "arxiv_id": "2603.00003", "month": "2026-03", "navigation_path": "c"},
+                        ],
+                    }
+                ),
                 encoding="utf-8",
             )
 
-            candidates = load_index_md_candidates(notes_dir / "index.md")
+            sampled = sample_index_json_candidates(notes_dir / "index.json", count=2, seed=7)
 
-        self.assertEqual(candidates[0]["month"], "2026-03")
-        self.assertEqual(candidates[0]["arxiv_id"], "2603.00001")
+        self.assertEqual(len(sampled), 2)
+        self.assertEqual([item["arxiv_id"] for item in sampled], ["2603.00002", "2603.00001"])
+
+    def test_take_index_json_candidates_can_skip_verified_entries(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            notes_dir = root / "notes"
+            notes_dir.mkdir(parents=True)
+            (notes_dir / "index.json").write_text(
+                json.dumps(
+                    {
+                        "schema_version": "stella.literature.index.v4",
+                        "papers": [
+                            {
+                                "title": "Verified paper",
+                                "arxiv_id": "2603.00001",
+                                "month": "2026-03",
+                                "navigation_path": "a",
+                                "catalog_verification": {"verified": True, "has_catalog": True},
+                            },
+                            {"title": "Pending paper 1", "arxiv_id": "2603.00002", "month": "2026-03", "navigation_path": "b"},
+                            {"title": "Pending paper 2", "arxiv_id": "2603.00003", "month": "2026-03", "navigation_path": "c"},
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            taken = take_index_json_candidates(notes_dir / "index.json", count=2, only_unverified=True)
+
+        self.assertEqual([item["arxiv_id"] for item in taken], ["2603.00002", "2603.00003"])
 
     def test_extract_tables_from_tex_writes_csv(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -416,6 +455,90 @@ class LiteratureCatalogTest(unittest.TestCase):
 
         self.assertFalse(record["verification"]["pdf_verified"])
         self.assertEqual(record["verification"]["overall_verdict"], "confirmed_with_source_fallback")
+
+    def test_sync_verification_to_notes_updates_month_json_and_index(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            notes_dir = root / "notes"
+            month_dir = notes_dir / "2026" / "2026-03"
+            month_dir.mkdir(parents=True)
+            month_json = month_dir / "2026-03.json"
+            month_json.write_text(
+                json.dumps(
+                    {
+                        "schema_version": "stella.literature.month.v2",
+                        "month": "2026-03",
+                        "date_from": "2026-03-01",
+                        "date_to": "2026-03-31",
+                        "run": {"run_id": "run-1", "started_at": "2026-04-21T10:00:00"},
+                        "config": {"source": "deepxiv", "classifier": "rules", "queries": [], "max_results": 20},
+                        "stats": {"relevant_count": 1, "raw_unique": 1},
+                        "search_log": [],
+                        "papers": [
+                            {
+                                "title": "A stellar catalog paper",
+                                "arxiv_id": "2603.00001",
+                                "published_at": "2026-03-12",
+                                "links": {
+                                    "abs": "https://arxiv.org/abs/2603.00001",
+                                    "pdf": "https://arxiv.org/pdf/2603.00001",
+                                },
+                                "triage": {"level": "direct", "label": "rule-direct"},
+                                "abstract": {"source": "deepxiv", "text": "We present a catalog of high-velocity stars."},
+                                "brief": {"fetched": False, "skipped_reason": None},
+                            }
+                        ],
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                ),
+                encoding="utf-8",
+            )
+
+            literature_root = root / "literature"
+            paper_dir = literature_root / "2603.00001"
+            paper_dir.mkdir(parents=True)
+            (paper_dir / "record.json").write_text("{}", encoding="utf-8")
+            (paper_dir / "summary.md").write_text("# Summary\n", encoding="utf-8")
+
+            result = sync_verification_to_notes(
+                notes_dir=notes_dir,
+                arxiv_id="2603.00001",
+                verification_record={
+                    "generated_at": "2026-04-21T12:34:56",
+                    "catalog": {"location": "mixed"},
+                    "verification": {"overall_verdict": "confirmed"},
+                },
+                literature_root=literature_root,
+                workspace_root=root,
+            )
+
+            updated_record = json.loads(month_json.read_text(encoding="utf-8"))
+            updated_paper = updated_record["papers"][0]
+            index_record = json.loads((notes_dir / "index.json").read_text(encoding="utf-8"))
+            markdown = (month_dir / "2026-03.md").read_text(encoding="utf-8")
+            index_markdown = (notes_dir / "index.md").read_text(encoding="utf-8")
+
+        self.assertEqual(result["matched_months"], ["2026-03"])
+        self.assertEqual(result["updated_paper_count"], 1)
+        self.assertEqual(
+            updated_paper["catalog_verification"],
+            {
+                "verified": True,
+                "verified_at": "2026-04-21T12:34:56",
+                "has_catalog": True,
+                "overall_verdict": "confirmed",
+                "catalog_location": "mixed",
+                "record_path": "literature/2603.00001/record.json",
+                "summary_path": "literature/2603.00001/summary.md",
+            },
+        )
+        self.assertEqual(index_record["schema_version"], "stella.literature.index.v4")
+        self.assertEqual(index_record["summary"]["verified_count"], 1)
+        self.assertEqual(index_record["summary"]["verified_catalog_count"], 1)
+        self.assertTrue(index_record["papers"][0]["catalog_verification"]["has_catalog"])
+        self.assertIn("Paper-level catalog verification", markdown)
+        self.assertIn("Paper-level verification: 1 paper checked; 1 paper with catalog confirmed", index_markdown)
 
 
 if __name__ == "__main__":

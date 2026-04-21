@@ -5,8 +5,10 @@ from __future__ import annotations
 import calendar
 import json
 import shlex
+import socket
 import sys
 import time
+import urllib.error
 from datetime import date, datetime
 from pathlib import Path
 from typing import Any, Iterable, TextIO
@@ -15,8 +17,8 @@ from .arxiv_client import ArxivClient
 from .config import DEFAULT_QUERIES
 from .deepxiv_client import DeepXivClient
 from .filters import category_matches, score_matches
-from .indexing import write_index_outputs
-from .markdown import render_index, render_month_note
+from .indexing import refresh_index_outputs
+from .markdown import render_month_note
 from .models import MonthWindow, SearchConfig
 from .note_paths import month_dir as build_month_dir
 from .note_paths import month_json_path as build_month_json_path
@@ -30,6 +32,7 @@ LEGACY_CATEGORY_LAST_MONTH = (2008, 11)
 TRANSITION_CATEGORY_MONTH = (2008, 12)
 LEGACY_QUERY_LAST_MONTH = (2008, 12)
 LEGACY_EXTRA_QUERIES = ["hyper-velocity star"]
+ARXIV_METADATA_REPORT_SCHEMA_VERSION = "stella.arxiv.metadata.report.v1"
 
 
 class PartialRunError(RuntimeError):
@@ -163,10 +166,6 @@ def index_json_path(config: SearchConfig) -> Path:
     return config.notes_dir / "index.json"
 
 
-def index_markdown_path(config: SearchConfig) -> Path:
-    return config.notes_dir / "index.md"
-
-
 def parse_datetime(value: Any) -> datetime:
     if not value:
         return datetime.min
@@ -218,19 +217,55 @@ def backfill_paper_metadata(
     *,
     arxiv_client: ArxivClient,
     metadata_cache: dict[str, dict[str, Any]],
-) -> None:
+) -> dict[str, Any]:
     if paper_publication_date(paper) is not None:
-        return
+        return {
+            "attempted": False,
+            "status": "not_needed",
+            "arxiv_id": paper_id(paper),
+            "title": str(paper.get("title") or ""),
+            "timed_out": False,
+            "error": None,
+            "applied_fields": [],
+        }
     arxiv_id = paper_id(paper)
     if not arxiv_id:
-        return
+        return {
+            "attempted": False,
+            "status": "missing_arxiv_id",
+            "arxiv_id": "",
+            "title": str(paper.get("title") or ""),
+            "timed_out": False,
+            "error": None,
+            "applied_fields": [],
+        }
     try:
         metadata = fetch_arxiv_metadata(arxiv_client, arxiv_id, metadata_cache)
-    except Exception:
-        return
+    except Exception as exc:
+        timed_out = is_timeout_error(exc)
+        return {
+            "attempted": True,
+            "status": "timeout" if timed_out else "error",
+            "arxiv_id": arxiv_id,
+            "title": str(paper.get("title") or ""),
+            "timed_out": timed_out,
+            "error": f"{type(exc).__name__}: {exc}",
+            "applied_fields": [],
+        }
+    applied_fields: list[str] = []
     for key in ("publish_at", "published_at", "published", "updated_at", "authors", "author_names", "categories"):
         if metadata.get(key) and not paper.get(key):
             paper[key] = metadata[key]
+            applied_fields.append(key)
+    return {
+        "attempted": True,
+        "status": "publication_backfilled" if paper_publication_date(paper) is not None else "no_publication_date",
+        "arxiv_id": arxiv_id,
+        "title": str(paper.get("title") or ""),
+        "timed_out": False,
+        "error": None,
+        "applied_fields": applied_fields,
+    }
 
 
 def paper_id(paper: dict[str, Any]) -> str:
@@ -315,6 +350,37 @@ def configured_text(value: str | None) -> str:
 
 def is_rate_limit_error(exc: Exception) -> bool:
     return type(exc).__name__ == "RateLimitError" or "Daily limit reached" in str(exc)
+
+
+def is_timeout_error(exc: Exception) -> bool:
+    if isinstance(exc, (TimeoutError, socket.timeout)):
+        return True
+    if isinstance(exc, urllib.error.URLError):
+        reason = exc.reason
+        return isinstance(reason, (TimeoutError, socket.timeout)) or "timed out" in str(reason).lower()
+    return "timed out" in str(exc).lower()
+
+
+def empty_arxiv_metadata_summary() -> dict[str, int]:
+    return {
+        "requested_count": 0,
+        "publication_date_backfilled_count": 0,
+        "timeout_count": 0,
+        "error_count": 0,
+        "no_publication_date_count": 0,
+        "reported_count": 0,
+    }
+
+
+def summarize_arxiv_metadata(month_summaries: list[dict[str, Any]]) -> dict[str, int]:
+    summary = empty_arxiv_metadata_summary()
+    for item in month_summaries:
+        summary["requested_count"] += int(item.get("arxiv_metadata_requested_count") or 0)
+        summary["publication_date_backfilled_count"] += int(item.get("arxiv_publication_date_backfilled_count") or 0)
+        summary["timeout_count"] += int(item.get("arxiv_metadata_timeout_count") or 0)
+        summary["error_count"] += int(item.get("arxiv_metadata_error_count") or 0)
+        summary["no_publication_date_count"] += int(item.get("arxiv_metadata_no_publication_date_count") or 0)
+    return summary
 
 
 def classifier_label(paper: dict[str, Any]) -> str:
@@ -435,7 +501,58 @@ def build_run_summary(
         "completed_months": [item["month"] for item in month_summaries],
         "requested_months": [month.slug for month in requested_months],
         "total_relevant": sum(item["relevant_count"] for item in month_summaries),
+        "arxiv_metadata": summarize_arxiv_metadata(month_summaries),
     }
+
+
+def build_arxiv_metadata_report(
+    *,
+    status: str,
+    run_id: str,
+    started_at: datetime,
+    finished_at: datetime,
+    requested_months: list[MonthWindow],
+    month_summaries: list[dict[str, Any]],
+    entries: list[dict[str, Any]],
+) -> dict[str, Any]:
+    summary = summarize_arxiv_metadata(month_summaries)
+    summary["reported_count"] = len(entries)
+    return {
+        "schema_version": ARXIV_METADATA_REPORT_SCHEMA_VERSION,
+        "status": status,
+        "run_id": run_id,
+        "started_at": started_at.isoformat(timespec="seconds"),
+        "finished_at": finished_at.isoformat(timespec="seconds"),
+        "requested_months": [month.slug for month in requested_months],
+        "completed_months": [item["month"] for item in month_summaries],
+        "summary": summary,
+        "entries": entries,
+    }
+
+
+def write_arxiv_metadata_report(
+    *,
+    config: SearchConfig,
+    status: str,
+    run_id: str,
+    started_at: datetime,
+    finished_at: datetime,
+    requested_months: list[MonthWindow],
+    month_summaries: list[dict[str, Any]],
+    entries: list[dict[str, Any]],
+) -> Path:
+    report_path = config.logs_dir / f"arxiv_metadata_{run_id}.json"
+    report = build_arxiv_metadata_report(
+        status=status,
+        run_id=run_id,
+        started_at=started_at,
+        finished_at=finished_at,
+        requested_months=requested_months,
+        month_summaries=month_summaries,
+        entries=entries,
+    )
+    report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return report_path
 
 
 def write_partial_summary(
@@ -448,6 +565,7 @@ def write_partial_summary(
     failed_month: MonthWindow,
     error: Exception,
     run_log: Path,
+    arxiv_metadata_entries: list[dict[str, Any]],
 ) -> dict[str, Any]:
     finished_at = datetime.now()
     partial_path = config.logs_dir / f"partial_{run_id}.json"
@@ -461,6 +579,16 @@ def write_partial_summary(
         run_log=run_log,
         requested_months=requested_months,
     )
+    report_path = write_arxiv_metadata_report(
+        config=config,
+        status="partial",
+        run_id=run_id,
+        started_at=started_at,
+        finished_at=finished_at,
+        requested_months=requested_months,
+        month_summaries=month_summaries,
+        entries=arxiv_metadata_entries,
+    )
     summary.update(
         {
             "error": f"{type(error).__name__}: {error}",
@@ -468,8 +596,10 @@ def write_partial_summary(
             "resume_from": failed_month.slug,
             "resume_command": resume_command(config, failed_month),
             "partial_summary_path": str(partial_path),
+            "arxiv_metadata_report_path": str(report_path),
         }
     )
+    summary["arxiv_metadata"]["reported_count"] = len(arxiv_metadata_entries)
     partial_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     append_jsonl(run_log, {"event": "partial_finish", **summary})
     append_jsonl(config.logs_dir / "runs.jsonl", summary)
@@ -482,8 +612,7 @@ def write_collection_outputs(
     month_summaries: list[dict[str, Any]],
 ) -> None:
     del month_summaries
-    index_record = write_index_outputs(config.notes_dir)
-    index_markdown_path(config).write_text(render_index(index_record), encoding="utf-8")
+    refresh_index_outputs(config.notes_dir)
 
 
 def classify_candidates(
@@ -637,9 +766,10 @@ def search_month(
     progress: ProgressReporter | None = None,
     search_state: dict[str, int] | None = None,
     metadata_cache: dict[str, dict[str, Any]] | None = None,
-) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+) -> tuple[list[dict[str, Any]], dict[str, Any], list[dict[str, Any]]]:
     merged: dict[str, dict[str, Any]] = {}
     query_stats: list[dict[str, Any]] = []
+    metadata_report_entries: list[dict[str, Any]] = []
     metadata_cache = metadata_cache if metadata_cache is not None else {}
     month_categories = resolved_categories_for_month(config, month)
     month_queries = resolved_queries_for_month(config, month)
@@ -731,13 +861,48 @@ def search_month(
     missing_publication_date = 0
     category_filtered = 0
     score_filtered = 0
+    arxiv_metadata_requested_count = 0
+    arxiv_publication_date_backfilled_count = 0
+    arxiv_metadata_timeout_count = 0
+    arxiv_metadata_error_count = 0
+    arxiv_metadata_no_publication_date_count = 0
     for paper in merged.values():
         if config.source == "deepxiv":
-            backfill_paper_metadata(
+            metadata_result = backfill_paper_metadata(
                 paper,
                 arxiv_client=arxiv_client,
                 metadata_cache=metadata_cache,
             )
+            if metadata_result.get("attempted"):
+                arxiv_metadata_requested_count += 1
+                status = str(metadata_result.get("status") or "")
+                if status == "publication_backfilled":
+                    arxiv_publication_date_backfilled_count += 1
+                elif status == "timeout":
+                    arxiv_metadata_timeout_count += 1
+                elif status == "error":
+                    arxiv_metadata_error_count += 1
+                elif status == "no_publication_date":
+                    arxiv_metadata_no_publication_date_count += 1
+
+                if status in {"timeout", "error", "no_publication_date"}:
+                    entry = {
+                        "month": month.slug,
+                        "arxiv_id": metadata_result.get("arxiv_id"),
+                        "title": metadata_result.get("title"),
+                        "status": status,
+                        "timed_out": metadata_result.get("timed_out") is True,
+                        "error": metadata_result.get("error"),
+                    }
+                    metadata_report_entries.append(entry)
+                    append_jsonl(
+                        run_log,
+                        {
+                            "event": "arxiv_metadata",
+                            "run_id": run_id,
+                            **entry,
+                        },
+                    )
         published = paper_publication_date(paper)
         if published is None:
             missing_publication_date += 1
@@ -823,6 +988,11 @@ def search_month(
         "relevant_count": len(relevant),
         "date_window_filtered": date_window_filtered,
         "missing_publication_date": missing_publication_date,
+        "arxiv_metadata_requested_count": arxiv_metadata_requested_count,
+        "arxiv_publication_date_backfilled_count": arxiv_publication_date_backfilled_count,
+        "arxiv_metadata_timeout_count": arxiv_metadata_timeout_count,
+        "arxiv_metadata_error_count": arxiv_metadata_error_count,
+        "arxiv_metadata_no_publication_date_count": arxiv_metadata_no_publication_date_count,
         "category_filtered": category_filtered,
         "score_filtered": score_filtered,
         "classifier_candidates": len(candidates),
@@ -831,7 +1001,7 @@ def search_month(
         "brief_skipped_weak_count": brief_skipped_weak if config.use_brief else 0,
         "query_stats": query_stats,
     }
-    return relevant, stats
+    return relevant, stats, metadata_report_entries
 
 
 def run_pipeline(config: SearchConfig) -> dict[str, Any]:
@@ -844,6 +1014,7 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
     arxiv_client = ArxivClient()
     deepxiv_client = DeepXivClient(token=config.token)
     metadata_cache: dict[str, dict[str, Any]] = {}
+    arxiv_metadata_entries: list[dict[str, Any]] = []
     month_summaries: list[dict[str, Any]] = []
     months = list(iter_months(config))
     progress = ProgressReporter(config.progress)
@@ -883,7 +1054,7 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
         for month_index, month in enumerate(months, start=1):
             progress.message(f"Month {month_index}/{len(months)} {month.slug}: {month.date_from} to {month.date_to}")
             try:
-                papers, stats = search_month(
+                papers, stats, month_arxiv_metadata_entries = search_month(
                     arxiv_client,
                     deepxiv_client,
                     month,
@@ -894,6 +1065,7 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
                     search_state=search_state,
                     metadata_cache=metadata_cache,
                 )
+                arxiv_metadata_entries.extend(month_arxiv_metadata_entries)
             except Exception as exc:
                 if not is_rate_limit_error(exc):
                     raise
@@ -906,6 +1078,7 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
                     failed_month=month,
                     error=exc,
                     run_log=run_log,
+                    arxiv_metadata_entries=arxiv_metadata_entries,
                 )
                 raise PartialRunError(summary, exc) from exc
             month_record = build_month_record(month, papers, stats, config, run_id=run_id, started_at=started_at)
@@ -922,6 +1095,11 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
                     "date_to": month.date_to,
                     "raw_unique": stats["raw_unique"],
                     "relevant_count": stats["relevant_count"],
+                    "arxiv_metadata_requested_count": stats["arxiv_metadata_requested_count"],
+                    "arxiv_publication_date_backfilled_count": stats["arxiv_publication_date_backfilled_count"],
+                    "arxiv_metadata_timeout_count": stats["arxiv_metadata_timeout_count"],
+                    "arxiv_metadata_error_count": stats["arxiv_metadata_error_count"],
+                    "arxiv_metadata_no_publication_date_count": stats["arxiv_metadata_no_publication_date_count"],
                     "json_path": str(month_json),
                     "note_path": str(note_path),
                 }
@@ -943,6 +1121,18 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
             run_log=run_log,
             requested_months=months,
         )
+        report_path = write_arxiv_metadata_report(
+            config=config,
+            status="complete",
+            run_id=run_id,
+            started_at=started_at,
+            finished_at=finished_at,
+            requested_months=months,
+            month_summaries=month_summaries,
+            entries=arxiv_metadata_entries,
+        )
+        summary["arxiv_metadata_report_path"] = str(report_path)
+        summary["arxiv_metadata"]["reported_count"] = len(arxiv_metadata_entries)
         append_jsonl(run_log, {"event": "finish", **summary})
         append_jsonl(config.logs_dir / "runs.jsonl", summary)
         progress.message(f"Done: {len(month_summaries)} months, {summary['total_relevant']} relevant papers")

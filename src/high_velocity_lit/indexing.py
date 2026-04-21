@@ -11,10 +11,14 @@ from .note_paths import iter_month_json_paths
 from .records import (
     INDEX_SCHEMA_VERSION,
     MONTH_SCHEMA_VERSION,
+    catalog_verification_record,
     has_observational_catalog,
+    has_verified_catalog,
+    is_catalog_verified,
     month_json_navigation_path,
     note_navigation_path,
 )
+from .markdown import render_index
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -34,8 +38,30 @@ def _paper_sort_key(item: dict[str, Any]) -> tuple[str, str, str]:
     )
 
 
+def _index_paper_item(paper: dict[str, Any], *, month: str) -> dict[str, Any]:
+    triage = paper.get("triage") or {}
+    assessment = paper.get("catalog_assessment") or {}
+    item = {
+        "title": str(paper.get("title") or "Untitled"),
+        "arxiv_id": str(paper.get("arxiv_id") or ""),
+        "month": month,
+        "published_at": str(paper.get("published_at") or ""),
+        "navigation_path": note_navigation_path(month),
+        "json_path": month_json_navigation_path(month),
+        "links": paper.get("links") or {},
+        "triage_level": str(triage.get("level") or ""),
+        "triage_label": str(triage.get("label") or ""),
+        "has_observational_catalog": assessment.get("has_observational_catalog") is True,
+    }
+    verification = catalog_verification_record(paper)
+    if verification:
+        item["catalog_verification"] = verification
+    return item
+
+
 def rebuild_index(notes_dir: Path) -> dict[str, Any]:
     years: dict[str, dict[str, Any]] = {}
+    flat_papers: list[dict[str, Any]] = []
     total_literature_count = 0
     total_data_related_count = 0
 
@@ -49,6 +75,8 @@ def rebuild_index(notes_dir: Path) -> dict[str, Any]:
                 "year": year,
                 "literature_count": 0,
                 "data_related_count": 0,
+                "verified_count": 0,
+                "verified_catalog_count": 0,
                 "data_related_papers": [],
             },
         )
@@ -59,17 +87,16 @@ def rebuild_index(notes_dir: Path) -> dict[str, Any]:
         total_literature_count += literature_count
 
         for paper in papers:
-            if not isinstance(paper, dict) or not has_observational_catalog(paper):
+            if not isinstance(paper, dict):
                 continue
-            item = {
-                "title": str(paper.get("title") or "Untitled"),
-                "arxiv_id": str(paper.get("arxiv_id") or ""),
-                "month": month,
-                "published_at": str(paper.get("published_at") or ""),
-                "navigation_path": note_navigation_path(month),
-                "json_path": month_json_navigation_path(month),
-                "links": paper.get("links") or {},
-            }
+            item = _index_paper_item(paper, month=month)
+            flat_papers.append(item)
+            if is_catalog_verified(paper):
+                year_bucket["verified_count"] += 1
+            if has_verified_catalog(paper):
+                year_bucket["verified_catalog_count"] += 1
+            if not has_observational_catalog(paper):
+                continue
             year_bucket["data_related_papers"].append(item)
             year_bucket["data_related_count"] += 1
             total_data_related_count += 1
@@ -79,6 +106,7 @@ def rebuild_index(notes_dir: Path) -> dict[str, Any]:
         bucket = years[year]
         bucket["data_related_papers"].sort(key=_paper_sort_key, reverse=True)
         year_records.append(bucket)
+    flat_papers.sort(key=_paper_sort_key, reverse=True)
 
     return {
         "schema_version": INDEX_SCHEMA_VERSION,
@@ -89,8 +117,11 @@ def rebuild_index(notes_dir: Path) -> dict[str, Any]:
             "year_count": len(year_records),
             "literature_count": total_literature_count,
             "data_related_count": total_data_related_count,
+            "verified_count": sum(int(year.get("verified_count") or 0) for year in year_records),
+            "verified_catalog_count": sum(int(year.get("verified_catalog_count") or 0) for year in year_records),
         },
         "years": year_records,
+        "papers": flat_papers,
     }
 
 
@@ -98,3 +129,14 @@ def write_index_outputs(notes_dir: Path) -> dict[str, Any]:
     index_record = rebuild_index(notes_dir)
     write_json(notes_dir / "index.json", index_record)
     return index_record
+
+
+def refresh_index_outputs(notes_dir: Path) -> dict[str, Any]:
+    index_record = write_index_outputs(notes_dir)
+    index_markdown_path = notes_dir / "index.md"
+    index_markdown_path.write_text(render_index(index_record), encoding="utf-8")
+    return {
+        "index_record": index_record,
+        "index_json_path": str(notes_dir / "index.json"),
+        "index_markdown_path": str(index_markdown_path),
+    }

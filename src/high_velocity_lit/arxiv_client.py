@@ -42,17 +42,30 @@ def strip_version(arxiv_id: str) -> str:
 
 
 class ArxivClient:
-    def _fetch(self, params: dict[str, Any]) -> bytes:
+    def __init__(
+        self,
+        *,
+        search_timeout: int = 45,
+        search_retries: int = 3,
+        metadata_timeout: int = 10,
+        metadata_retries: int = 1,
+    ) -> None:
+        self.search_timeout = search_timeout
+        self.search_retries = search_retries
+        self.metadata_timeout = metadata_timeout
+        self.metadata_retries = metadata_retries
+
+    def _fetch(self, params: dict[str, Any], *, timeout: int, retries: int) -> bytes:
         url = f"{BASE_URL}?{urllib.parse.urlencode(params)}"
         request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
         last_error: Exception | None = None
-        for attempt in range(1, 4):
+        for attempt in range(1, max(1, retries) + 1):
             try:
-                with urllib.request.urlopen(request, timeout=45) as response:
+                with urllib.request.urlopen(request, timeout=timeout) as response:
                     return response.read()
             except Exception as exc:
                 last_error = exc
-                if attempt >= 3:
+                if attempt >= max(1, retries):
                     raise
                 time.sleep(min(2 ** (attempt - 1), 4))
         if last_error is not None:
@@ -71,7 +84,7 @@ class ArxivClient:
             "sortBy": "submittedDate",
             "sortOrder": "descending",
         }
-        payload = self._fetch(params)
+        payload = self._fetch(params, timeout=self.search_timeout, retries=self.search_retries)
         root = ET.fromstring(payload)
         total = int(root.findtext(opensearch_name("totalResults")) or 0)
         entries = [self._entry_to_paper(entry) for entry in root.findall(atom_name("entry"))]
@@ -83,7 +96,7 @@ class ArxivClient:
             "start": 0,
             "max_results": 1,
         }
-        payload = self._fetch(params)
+        payload = self._fetch(params, timeout=self.metadata_timeout, retries=self.metadata_retries)
         root = ET.fromstring(payload)
         entry = root.find(atom_name("entry"))
         if entry is None:

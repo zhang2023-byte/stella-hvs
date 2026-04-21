@@ -14,7 +14,7 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from high_velocity_lit.markdown import render_index, render_month_note  # noqa: E402
-from high_velocity_lit.indexing import write_index_outputs  # noqa: E402
+from high_velocity_lit.indexing import refresh_index_outputs  # noqa: E402
 from high_velocity_lit.note_paths import iter_month_json_paths, resolve_month_json_path  # noqa: E402
 
 
@@ -43,8 +43,7 @@ def main() -> int:
 
     index_json = args.notes_dir / "index.json"
     if args.index_only:
-        index_record = write_index_outputs(args.notes_dir)
-        (args.notes_dir / "index.md").write_text(render_index(index_record), encoding="utf-8")
+        refresh_index_outputs(args.notes_dir)
         print("Rebuilt yearly index.")
         return 0
 

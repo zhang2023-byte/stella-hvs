@@ -1,0 +1,10 @@
+name: stella-env
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pip
+  - pip:
+      - deepxiv-sdk==0.2.4
+      - python-dotenv==1.2.2
+      - pypdf>=5,<6

@@ -67,6 +67,23 @@ class FakeDeepXivClient:
         return {"tldr": f"Brief for {arxiv_id}."}
 
 
+class FakeLLMTitleClassifier:
+    def __init__(self, *, api_key: str, base_url: str, model: str) -> None:
+        self.api_key = api_key
+        self.base_url = base_url
+        self.model = model
+
+    def classify_batch(self, papers: list[dict[str, object]]) -> dict[str, object]:
+        return {
+            "2501.00002": pipeline.TitleDecision(
+                True,
+                0.88,
+                "Abstract and title indicate a directly relevant high-velocity-star paper.",
+                "llm-direct",
+            )
+        }
+
+
 class BriefPolicyTest(unittest.TestCase):
     def test_brief_is_only_fetched_for_direct_rule_matches(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -164,7 +181,7 @@ class BriefPolicyTest(unittest.TestCase):
             self.assertIn("[A data-rich hypervelocity star catalog](2024/2024-12/2024-12.md)", index_markdown)
 
             record = json.loads(month_json.read_text(encoding="utf-8"))
-            self.assertEqual(record["schema_version"], "stella.literature.month.v1")
+            self.assertEqual(record["schema_version"], "stella.literature.month.v2")
             self.assertEqual(record["papers"][0]["triage"]["level"], "direct")
             self.assertEqual(record["papers"][1]["triage"]["level"], "weak")
             self.assertTrue(record["papers"][0]["brief"]["fetched"])
@@ -172,7 +189,7 @@ class BriefPolicyTest(unittest.TestCase):
             self.assertEqual(record["papers"][1]["abstract"]["text"], "Weak-match search abstract.")
 
             index = json.loads(index_json.read_text(encoding="utf-8"))
-            self.assertEqual(index["schema_version"], "stella.literature.index.v2")
+            self.assertEqual(index["schema_version"], "stella.literature.index.v4")
             years = {item["year"]: item for item in index["years"]}
             self.assertEqual(years["2025"]["literature_count"], 2)
             self.assertEqual(years["2025"]["data_related_count"], 0)
@@ -182,6 +199,61 @@ class BriefPolicyTest(unittest.TestCase):
                 years["2024"]["data_related_papers"][0]["navigation_path"],
                 "2024/2024-12/2024-12.md",
             )
+            self.assertEqual(len(index["papers"]), 3)
+
+    def test_llm_review_keeps_confirmed_weak_matches_in_weak_tier_without_brief(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            config = SearchConfig(
+                workspace=root,
+                notes_dir=root / "notes",
+                logs_dir=root / "logs",
+                start_date=date(2025, 1, 1),
+                end_date=date(2025, 1, 31),
+                source="deepxiv",
+                queries=["hypervelocity stars"],
+                categories=["astro-ph.GA"],
+                max_results=2,
+                search_mode="hybrid",
+                min_score=None,
+                classifier="rules",
+                llm_api_key="test-key",
+                llm_base_url="https://example.test/v1",
+                llm_model="test-model",
+                llm_batch_size=25,
+                llm_review=True,
+                search_sleep_seconds=0,
+                brief_sleep_seconds=0,
+                use_brief=True,
+                progress=False,
+                token=None,
+            )
+
+            with (
+                patch.object(pipeline, "ArxivClient", FakeArxivClient),
+                patch.object(pipeline, "DeepXivClient", FakeDeepXivClient),
+                patch.object(pipeline, "LLMTitleClassifier", FakeLLMTitleClassifier),
+                patch.object(pipeline, "load_llm_api_key", return_value="test-key"),
+            ):
+                summary = pipeline.run_pipeline(config)
+
+            self.assertEqual(summary["status"], "complete")
+            self.assertEqual(FakeDeepXivClient.brief_calls, ["2501.00001"])
+
+            month_json = month_json_path(config.notes_dir, "2025-01")
+            record = json.loads(month_json.read_text(encoding="utf-8"))
+            self.assertEqual(record["stats"]["weak_llm_reviewed"], 1)
+            self.assertEqual(record["stats"]["weak_llm_included"], 1)
+            self.assertEqual(record["stats"]["brief_eligible_count"], 1)
+            papers_by_id = {paper["arxiv_id"]: paper for paper in record["papers"]}
+            self.assertEqual(papers_by_id["2501.00002"]["triage"]["level"], "weak")
+            self.assertEqual(papers_by_id["2501.00002"]["triage"]["label"], "rule-weak-llm-confirmed")
+            self.assertFalse(papers_by_id["2501.00002"]["brief"]["fetched"])
+
+            note = month_markdown_path(config.notes_dir, "2025-01").read_text(encoding="utf-8")
+            self.assertIn("kept after review 1 paper", note)
+            self.assertIn("**Weak Matches**", note)
+            self.assertNotIn("Brief for 2501.00002.", note)
 
 
 if __name__ == "__main__":

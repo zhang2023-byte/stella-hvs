@@ -10,8 +10,8 @@ from .models import MonthWindow, SearchConfig
 from .note_paths import month_json_path, month_markdown_path
 
 
-MONTH_SCHEMA_VERSION = "stella.literature.month.v1"
-INDEX_SCHEMA_VERSION = "stella.literature.index.v2"
+MONTH_SCHEMA_VERSION = "stella.literature.month.v2"
+INDEX_SCHEMA_VERSION = "stella.literature.index.v4"
 
 
 def as_text(value: Any) -> str:
@@ -80,6 +80,33 @@ def month_json_navigation_path(month: str) -> str:
 def has_observational_catalog(paper: dict[str, Any]) -> bool:
     assessment = paper.get("catalog_assessment") or {}
     return assessment.get("has_observational_catalog") is True
+
+
+def catalog_verification_record(paper: dict[str, Any]) -> dict[str, Any]:
+    verification = paper.get("catalog_verification")
+    if not isinstance(verification, dict) or not verification:
+        return {}
+    normalized = {
+        "verified": verification.get("verified") is True,
+        "verified_at": first_present(verification.get("verified_at")),
+        "overall_verdict": first_present(verification.get("overall_verdict")),
+        "catalog_location": first_present(verification.get("catalog_location")),
+        "record_path": first_present(verification.get("record_path")),
+        "summary_path": first_present(verification.get("summary_path")),
+    }
+    if "has_catalog" in verification:
+        normalized["has_catalog"] = verification.get("has_catalog") is True
+    return normalized
+
+
+def is_catalog_verified(paper: dict[str, Any]) -> bool:
+    verification = catalog_verification_record(paper)
+    return verification.get("verified") is True
+
+
+def has_verified_catalog(paper: dict[str, Any]) -> bool:
+    verification = catalog_verification_record(paper)
+    return verification.get("has_catalog") is True
 
 
 def source_field_record(paper: dict[str, Any]) -> dict[str, Any]:

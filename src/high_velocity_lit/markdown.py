@@ -36,6 +36,45 @@ def pluralize(count: Any, singular: str, plural: str | None = None) -> str:
     return f"{value} {noun}"
 
 
+def compact_date(text: str) -> str:
+    value = first_present(text)
+    if not value:
+        return ""
+    return value.split("T", 1)[0].split(" ", 1)[0]
+
+
+def index_papers(record: dict[str, Any]) -> list[dict[str, Any]]:
+    papers = record.get("papers")
+    if isinstance(papers, list) and papers:
+        return [paper for paper in papers if isinstance(paper, dict)]
+
+    fallback: list[dict[str, Any]] = []
+    for year in record.get("years") or []:
+        for paper in (year or {}).get("data_related_papers") or []:
+            if isinstance(paper, dict):
+                fallback.append(paper)
+    return fallback
+
+
+def paper_meta_text(paper: dict[str, Any]) -> str:
+    parts: list[str] = []
+    month = first_present(paper.get("month"))
+    published_at = compact_date(first_present(paper.get("published_at")))
+    triage_level = first_present(paper.get("triage_level"))
+    verification = paper.get("catalog_verification") or {}
+    if month:
+        parts.append(month)
+    if published_at and published_at != month:
+        parts.append(published_at)
+    if triage_level:
+        parts.append(triage_level)
+    if paper.get("has_observational_catalog") is True:
+        parts.append("data-related")
+    if isinstance(verification, dict) and verification.get("verified") is True:
+        parts.append("verified: catalog" if verification.get("has_catalog") is True else "verified: no catalog")
+    return "; ".join(parts)
+
+
 def render_month_note(record: dict[str, Any]) -> str:
     config = record.get("config") or {}
     stats = record.get("stats") or {}
@@ -87,6 +126,14 @@ def render_month_note(record: dict[str, Any]) -> str:
         f"score-filtered {pluralize(stats.get('score_filtered', 0), 'paper')}; "
         f"title-triage-filtered {pluralize(stats.get('classifier_filtered', 0), 'paper')}"
     )
+    if int(stats.get("arxiv_metadata_requested_count") or 0) > 0:
+        lines.append(
+            f"- arXiv metadata backfill: attempted {pluralize(stats.get('arxiv_metadata_requested_count', 0), 'paper')} missing dates; "
+            f"publication date rescued {pluralize(stats.get('arxiv_publication_date_backfilled_count', 0), 'paper')}; "
+            f"timed out {pluralize(stats.get('arxiv_metadata_timeout_count', 0), 'paper')}; "
+            f"other errors {pluralize(stats.get('arxiv_metadata_error_count', 0), 'paper')}; "
+            f"fetched but publication date still missing {pluralize(stats.get('arxiv_metadata_no_publication_date_count', 0), 'paper')}"
+        )
     if config.get("classifier") == "rules":
         rule_summary = (
             f"- Rule tiers: direct {pluralize(stats.get('direct_rule_included', 0), 'paper')}; "
@@ -144,6 +191,7 @@ def render_month_note(record: dict[str, Any]) -> str:
                 triage = paper.get("triage") or {}
                 deepxiv = paper.get("deepxiv") or {}
                 catalog_assessment = paper.get("catalog_assessment") or {}
+                catalog_verification = paper.get("catalog_verification") or {}
 
                 arxiv_id = first_present(paper.get("arxiv_id"))
                 title = first_present(paper.get("title"), "Untitled")
@@ -197,6 +245,24 @@ def render_month_note(record: dict[str, Any]) -> str:
                     )
                     if data_products:
                         lines.append(f"- Possible data products: {data_products}")
+                if catalog_verification:
+                    verdict = first_present(catalog_verification.get("overall_verdict"))
+                    location = first_present(catalog_verification.get("catalog_location"))
+                    record_path = first_present(catalog_verification.get("record_path"))
+                    summary_path = first_present(catalog_verification.get("summary_path"))
+                    lines.append(
+                        f"- Paper-level catalog verification: "
+                        f"{'catalog confirmed' if catalog_verification.get('has_catalog') else 'no catalog confirmed'}; "
+                        f"verdict=`{verdict or 'verified'}`; "
+                        f"location=`{location or 'unknown'}`"
+                    )
+                    if record_path or summary_path:
+                        artifact_parts: list[str] = []
+                        if record_path:
+                            artifact_parts.append(f"record `{record_path}`")
+                        if summary_path:
+                            artifact_parts.append(f"summary `{summary_path}`")
+                        lines.append(f"- Verification artifacts: {'; '.join(artifact_parts)}")
                 if not brief.get("fetched") and brief.get("skipped_reason"):
                     lines.append("- DeepXiv brief: weak match not fetched; only search-stage metadata is retained")
                 if keywords:
@@ -251,22 +317,65 @@ def render_index(record: dict[str, Any]) -> str:
         return "\n".join(lines)
 
     summary = record.get("summary") or {}
+    years = record.get("years") or []
+    papers = index_papers(record)
+    recent_papers = papers[:12]
+    first_year = first_present((years[-1] or {}).get("year")) if years else ""
+    last_year = first_present((years[0] or {}).get("year")) if years else ""
+    direct_count = sum(1 for paper in papers if first_present(paper.get("triage_level")) == "direct")
+    weak_count = sum(1 for paper in papers if first_present(paper.get("triage_level")) == "weak")
+    verified_count = int(summary.get("verified_count") or 0)
+    verified_catalog_count = int(summary.get("verified_catalog_count") or 0)
+
     lines = [
         "# Yearly High-Velocity Star Literature Index",
         "",
         f"- Generated at: {record.get('generated_at')}",
-        f"- Total relevant literature: {pluralize(summary.get('literature_count', 0), 'paper')}",
-        f"- Total data-related literature: {pluralize(summary.get('data_related_count', 0), 'paper')}",
-        "",
-        "| Year | Relevant literature | Data-related literature |",
-        "| --- | ---: | ---: |",
     ]
-    for year in record.get("years") or []:
+    if first_year and last_year:
+        lines.append(f"- Coverage: {first_year} to {last_year}")
+    if papers:
+        lines.append(f"- Indexed papers available for sampling: {pluralize(len(papers), 'paper')}")
+    lines.append(f"- Total relevant literature: {pluralize(summary.get('literature_count', 0), 'paper')}")
+    lines.append(f"- Total data-related literature: {pluralize(summary.get('data_related_count', 0), 'paper')}")
+    if verified_count:
         lines.append(
-            f"| {year.get('year')} | {year.get('literature_count', 0)} | {year.get('data_related_count', 0)} |"
+            f"- Paper-level verification: {pluralize(verified_count, 'paper')} checked; "
+            f"{pluralize(verified_catalog_count, 'paper')} with catalog confirmed"
+        )
+    if papers and (direct_count or weak_count):
+        lines.append(
+            f"- Triage mix: {pluralize(direct_count, 'direct paper')}; "
+            f"{pluralize(weak_count, 'weak paper')}"
         )
 
-    for year in record.get("years") or []:
+    if recent_papers:
+        lines.extend(["", "## Recent Literature", ""])
+        for paper in recent_papers:
+            title = first_present(paper.get("title"), "Untitled")
+            navigation_path = first_present(paper.get("navigation_path"))
+            meta = paper_meta_text(paper)
+            line = f"- [{title}]({navigation_path})" if navigation_path else f"- {title}"
+            if meta:
+                line += f" - {meta}"
+            lines.append(line)
+
+    lines.extend(
+        [
+            "",
+            "## Year Overview",
+            "",
+            "| Year | Relevant literature | Data-related literature | Verified papers | Verified catalogs |",
+            "| --- | ---: | ---: | ---: | ---: |",
+        ]
+    )
+    for year in years:
+        lines.append(
+            f"| {year.get('year')} | {year.get('literature_count', 0)} | {year.get('data_related_count', 0)} | "
+            f"{year.get('verified_count', 0)} | {year.get('verified_catalog_count', 0)} |"
+        )
+
+    for year in years:
         papers = year.get("data_related_papers") or []
         if not papers:
             continue
@@ -278,14 +387,10 @@ def render_index(record: dict[str, Any]) -> str:
         for paper in papers:
             title = first_present(paper.get("title"), "Untitled")
             navigation_path = first_present(paper.get("navigation_path"))
-            month = first_present(paper.get("month"))
-            published_at = first_present(paper.get("published_at"))
-            if navigation_path:
-                lines.append(f"- [{title}]({navigation_path})")
-            else:
-                lines.append(f"- {title}")
-            details = [item for item in (month, published_at) if item]
-            if details:
-                lines.append(f"  - {'; '.join(details)}")
+            meta = paper_meta_text(paper)
+            line = f"- [{title}]({navigation_path})" if navigation_path else f"- {title}"
+            if meta:
+                line += f" - {meta}"
+            lines.append(line)
         lines.append("")
     return "\n".join(lines)

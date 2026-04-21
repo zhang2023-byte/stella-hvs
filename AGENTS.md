@@ -22,10 +22,10 @@ JSON is the source of truth. Markdown is a human-readable view generated from JS
 Default outputs:
 
 ```text
-notes/YYYY-MM/YYYY-MM.json   Monthly canonical record
-notes/YYYY-MM/YYYY-MM.md     Reading note generated from monthly JSON
-notes/index.json             Collection index
-notes/index.md               Index generated from index JSON
+notes/YYYY/YYYY-MM/YYYY-MM.json   Monthly canonical record
+notes/YYYY/YYYY-MM/YYYY-MM.md     Reading note generated from monthly JSON
+notes/index.json                  Collection index rebuilt from monthly JSON
+notes/index.md                    Yearly view generated from index JSON
 ```
 
 Do not manually edit generated Markdown to fix data or presentation issues. If an output is wrong, update the JSON record builder or Markdown renderer, then regenerate with `scripts/render_lit_notes.py`.
@@ -53,6 +53,11 @@ Default rule triage has two levels:
 - `direct` / `rule-direct`: strong relevance; fetch DeepXiv brief.
 - `weak` / `rule-weak*`: weak relevance; keep only search-stage metadata unless the user explicitly enables LLM review.
 
+With `--llm-review True`, weak rule matches that the LLM confirms should be
+kept as weak matches. LLM review in rules mode should only decide whether weak
+rule matches are retained or filtered; it should not change the strong/weak
+grouping.
+
 LLM classification or review should use title, search-returned abstract, and categories together. Do not send title-only payloads unless the user explicitly asks for a title-only comparison.
 
 Use `scripts/annotate_catalog_data.py --on YYYY-MM`, `--on YYYY-MM,YYYY-MM`, or `--from DATE --to DATE` to add `catalog_assessment` fields to existing note JSON. That assessment should use abstract and brief content together, then refresh the sibling Markdown file.
@@ -65,6 +70,7 @@ Use `scripts/annotate_catalog_data.py --on YYYY-MM`, `--on YYYY-MM,YYYY-MM`, or 
 - Weak records must be listed after direct records; generated Markdown should keep a divider between the two groups.
 - On rate limits, completed months must still save JSON, Markdown, and the partial summary.
 - Do not revert existing generated notes or unrelated worktree changes. Commit only files relevant to the current task.
+- If you change runtime dependencies or environment bootstrap steps, update the checked-in environment spec and setup docs in the same change.
 
 ## Change Checklist
 
@@ -81,5 +87,11 @@ When changing CLI arguments or defaults, update:
 - `docs/usage.md`
 - the minimal README guidance when needed
 - CLI parsing tests
+
+When changing runtime dependencies or environment setup, update:
+
+- `environment.yml`
+- `docs/setup.md`
+- `README.md` setup guidance when needed
 
 When adding scientific capabilities, design the result as machine-readable JSON first. Add Markdown, prose documentation, or website views only after the structured data model is clear.
