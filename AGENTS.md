@@ -26,6 +26,8 @@ notes/YYYY/YYYY-MM/YYYY-MM.json   Monthly canonical record
 notes/YYYY/YYYY-MM/YYYY-MM.md     Reading note generated from monthly JSON
 notes/index.json                  Collection index rebuilt from monthly JSON
 notes/index.md                    Yearly view generated from index JSON
+literature/<arxiv_id>/record.json Per-paper verification evidence record
+literature/<arxiv_id>/summary.md  Human-readable verification summary
 ```
 
 Do not manually edit generated Markdown to fix data or presentation issues. If an output is wrong, update the JSON record builder or Markdown renderer, then regenerate with `scripts/render_lit_notes.py`.
@@ -62,6 +64,10 @@ LLM classification or review should use title, search-returned abstract, and cat
 
 Use `scripts/annotate_catalog_data.py --on YYYY-MM`, `--on YYYY-MM,YYYY-MM`, or `--from DATE --to DATE` to add `catalog_assessment` fields to existing note JSON. That assessment should use abstract and brief content together, then refresh the sibling Markdown file.
 
+Use `scripts/verify_literature_catalog.py` for deeper paper-level verification. It should keep the full evidence trail under `literature/<arxiv_id>/`, then sync a lightweight `catalog_verification` summary back into the matching monthly note JSON when the paper exists there, refresh that month Markdown file, and rebuild the collection index.
+
+When the automated heuristic is not trustworthy, persist the agent's structured override into `literature/<arxiv_id>/record.json` via `scripts/apply_agent_catalog_adjudication.py`. Monthly note JSON and `notes/index.*` must prefer that `agent_adjudication` over the automated DeepXiv/PDF/source verdict.
+
 ## Engineering Rules
 
 - Test in `stella-env`: `conda run -n stella-env python -m unittest discover tests`.
@@ -70,6 +76,12 @@ Use `scripts/annotate_catalog_data.py --on YYYY-MM`, `--on YYYY-MM,YYYY-MM`, or 
 - Weak records must be listed after direct records; generated Markdown should keep a divider between the two groups.
 - On rate limits, completed months must still save JSON, Markdown, and the partial summary.
 - Do not revert existing generated notes or unrelated worktree changes. Commit only files relevant to the current task.
+- Project-local reusable agent skills live under `skills/`. Prefer adding or updating a skill there when the workflow depends on nuanced judgment that simple heuristics cannot reliably capture.
+- For complex single-paper catalog adjudication, prefer the repo-local `skills/literature-catalog-verifier/` workflow over extending keyword rules blindly.
+- Keep `~/.codex/skills/literature-catalog-verifier` as a symlink to the repo-local `skills/literature-catalog-verifier/` folder when a global Codex entry is needed. Do not maintain a copied duplicate.
+- For actual catalog ingestion after verification, use the repo-local `skills/catalog-ingestor/` workflow. It should produce machine-readable ingestion scaffolds under `literature/<arxiv_id>/catalog_ingest/` before any richer object-level normalization work.
+- Keep `~/.codex/skills/catalog-ingestor` as a symlink to the repo-local `skills/catalog-ingestor/` folder when a global Codex entry is needed. Do not maintain a copied duplicate.
+- Follow the boundary encoded in repo-local skills: deterministic scripts and tools should handle repeatable extraction and syncing, while the agent should handle context-heavy semantic adjudication and explicitly explain any override of automated heuristics.
 - If you change runtime dependencies or environment bootstrap steps, update the checked-in environment spec and setup docs in the same change.
 
 ## Change Checklist

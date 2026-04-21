@@ -196,6 +196,14 @@ paper:
 3. Download arXiv source safely, extract tables and data-like files, and store
    any external catalog path (for example VizieR/CDS) mentioned in the source.
 
+When the verified paper already exists in monthly note JSON, Stella also writes a
+lightweight `catalog_verification` summary back into that paper entry, refreshes
+the sibling monthly Markdown note, and rebuilds `notes/index.json` plus
+`notes/index.md`. The full evidence record remains in `literature/<arxiv_id>/`.
+If that per-paper `record.json` contains an `agent_adjudication`, the synced
+summary and collection index prefer the agent's judgment over the automated
+heuristic.
+
 Verify one paper:
 
 ```bash
@@ -211,17 +219,92 @@ conda run -n stella-env python scripts/verify_literature_catalog.py \
   --seed 7
 ```
 
+Take the next unverified papers in index order:
+
+```bash
+conda run -n stella-env python scripts/verify_literature_catalog.py \
+  --take-index 10 \
+  --only-unverified
+```
+
 Useful options:
 
 ```text
 --arxiv-id ID[,ID...]       One arXiv ID or a comma-separated list.
 --sample-index N            Randomly sample N papers from notes/index.json.
+--take-index N              Take the next N papers from notes/index.json in index order.
+--index-offset N            Skip the first N index entries before --take-index.
+--only-unverified           Restrict index selection to papers without catalog_verification.
 --seed N                    Seed for reproducible sampling.
 --index-json PATH           Input collection index JSON. Default: notes/index.json.
+--notes-dir PATH            Monthly note root to sync after verification. Default: notes.
 --output-dir PATH           Output root. Default: literature.
 --force                     Recompute even when literature/<id>/record.json exists.
 --token TOKEN               Override DEEPXIV_TOKEN.
 --max-sections N            Max DeepXiv sections before raw fallback. Default: 4.
+```
+
+When a paper is semantically ambiguous, keep the automated evidence record but
+persist the final Agent judgment separately into the same `record.json`. That
+agent judgment then becomes the effective result used by monthly notes and the
+collection index:
+
+```bash
+conda run -n stella-env python scripts/apply_agent_catalog_adjudication.py \
+  --arxiv-id 2401.02017 \
+  --has-catalog true \
+  --internal-delivery format_only \
+  --external-delivery full \
+  --location-class mixed \
+  --primary-host china-vo \
+  --confidence high \
+  --evidence "The paper states that the catalog is available on China-VO." \
+  --reasoning-notes "The full machine-readable catalog is externally hosted; the appendix is only guidance."
+```
+
+Useful options:
+
+```text
+--arxiv-id ID               Target literature/<id>/record.json to update.
+--has-catalog BOOL          true/false final agent call.
+--catalog-scope TEXT        Structured scope label. Default: object_level_or_sample_level.
+--internal-delivery TEXT    full|partial|format_only|none|unclear.
+--external-delivery TEXT    full|partial|reference_only|none|unclear.
+--location-class TEXT       internal_only|external_only|mixed|unclear.
+--primary-host TEXT         cds|vizier|china-vo|zenodo|none|unclear.
+--confidence TEXT           high|medium|low.
+--overall-verdict TEXT      Optional explicit stored verdict; default derives from --has-catalog.
+--evidence TEXT             Evidence sentence; repeatable.
+--reasoning-notes TEXT      Short explanation for the override.
+--reviewed-by TEXT          Reviewer label. Default: agent.
+--reviewed-at TEXT          Optional ISO timestamp override.
+--skill-path PATH           Repo-local SKILL.md used for the adjudication. Default: skills/literature-catalog-verifier/SKILL.md.
+--skill-version TEXT        Optional explicit skill version override; otherwise read from the skill frontmatter.
+```
+
+After a paper has been verified and you want to organize the actual catalog
+assets rather than just the paper-level verdict, bootstrap a machine-readable
+ingestion bundle:
+
+```bash
+conda run -n stella-env python scripts/init_catalog_ingestion.py \
+  --arxiv-id 2401.02017
+```
+
+This creates `literature/<arxiv_id>/catalog_ingest/manifest.json`,
+`field_definitions.json`, and `column_mapping.json`. The script is intentionally
+deterministic: it uses the verified paper record plus extracted CSV tables to
+prepare scaffolds. When it finds a schema-definition table with `Label / Unit /
+Description`, it will expand that table into drafted field definitions and first-pass
+column mappings; the agent should then verify and refine those drafts using the
+`skills/catalog-ingestor/` workflow.
+
+Useful options:
+
+```text
+--arxiv-id ID               Target literature/<id>/record.json to bootstrap from.
+--output-dir PATH           Literature root. Default: literature.
+--overwrite                 Replace existing catalog_ingest JSON scaffolds.
 ```
 
 If DeepXiv returns a daily limit error, completed months are kept. The script

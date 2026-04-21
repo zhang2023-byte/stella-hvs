@@ -25,7 +25,8 @@ from .note_paths import iter_month_json_paths
 
 
 USER_AGENT = "stella-high-velocity-lit/0.1"
-SCHEMA_VERSION = "stella.literature.catalog.v1"
+SCHEMA_VERSION = "stella.literature.catalog.v2"
+AGENT_ADJUDICATION_SCHEMA_VERSION = "stella.literature.catalog.agent_adjudication.v1"
 RELEVANT_SECTION_TERMS = {
     "catalog": 8,
     "data availability": 8,
@@ -117,6 +118,10 @@ DATA_SUFFIXES = {
     ".parquet",
 }
 TRUSTED_PDF_EXTRACTORS = {"pypdf", "arxiv_html_fallback"}
+INDEX_MD_ENTRY_RE = re.compile(
+    r"^- \[(?P<title>.+?)\]\((?P<path>[^)]+)\)(?: \((?P<month>\d{4}-\d{2})\))?(?:\s+-.*)?$"
+)
+MONTH_SLUG_RE = re.compile(r"^\d{4}-\d{2}$")
 URL_RE = re.compile(r"https?://[^\s<>\]\"')]+", re.IGNORECASE)
 DESCRIPTOR_RE = re.compile(
     r'<span class="descriptor">(?P<label>[^<:]+):</span>\s*(?P<value>.*?)</(?:td|div)>',
@@ -159,6 +164,11 @@ def relative_to(path: Path, root: Path) -> str:
         return str(path.relative_to(root))
     except ValueError:
         return str(path)
+
+
+def month_slug_from_note_path(note_rel: str) -> str:
+    stem = Path(note_rel).stem
+    return stem if MONTH_SLUG_RE.fullmatch(stem) else ""
 
 
 def download_to_path(url: str, destination: Path, *, retries: int = 3, timeout: int = 60) -> dict[str, Any]:
@@ -646,18 +656,118 @@ def pdf_verification_passed(pdf_record: dict[str, Any]) -> bool:
     return verdict == "possible" and extractor in TRUSTED_PDF_EXTRACTORS
 
 
+def verification_has_catalog(record: dict[str, Any]) -> bool:
+    verdict = normalize_space(str((record.get("verification") or {}).get("overall_verdict") or ""))
+    return verdict.startswith("confirmed")
+
+
+def derive_agent_overall_verdict(has_catalog_data: bool | None) -> str:
+    if has_catalog_data is True:
+        return "agent_confirmed"
+    if has_catalog_data is False:
+        return "agent_rejected"
+    return "agent_unclear"
+
+
+def normalize_agent_adjudication(record: dict[str, Any]) -> dict[str, Any]:
+    adjudication = record.get("agent_adjudication")
+    if not isinstance(adjudication, dict) or not adjudication:
+        return {}
+    has_catalog_data = adjudication.get("has_catalog_data")
+    normalized = {
+        "schema_version": normalize_space(str(adjudication.get("schema_version") or AGENT_ADJUDICATION_SCHEMA_VERSION)),
+        "reviewed_at": normalize_space(str(adjudication.get("reviewed_at") or "")),
+        "reviewed_by": normalize_space(str(adjudication.get("reviewed_by") or "agent")),
+        "skill_path": normalize_space(str(adjudication.get("skill_path") or "")),
+        "skill_version": normalize_space(str(adjudication.get("skill_version") or "")),
+        "catalog_scope": normalize_space(str(adjudication.get("catalog_scope") or "")),
+        "internal_delivery": normalize_space(str(adjudication.get("internal_delivery") or "")),
+        "external_delivery": normalize_space(str(adjudication.get("external_delivery") or "")),
+        "location_class": normalize_space(str(adjudication.get("location_class") or "")),
+        "primary_host": normalize_space(str(adjudication.get("primary_host") or "")),
+        "confidence": normalize_space(str(adjudication.get("confidence") or "")),
+        "overall_verdict": normalize_space(
+            str(adjudication.get("overall_verdict") or derive_agent_overall_verdict(has_catalog_data if isinstance(has_catalog_data, bool) else None))
+        ),
+        "reasoning_notes": normalize_space(str(adjudication.get("reasoning_notes") or "")),
+        "override_automated": adjudication.get("override_automated") is not False,
+    }
+    if isinstance(has_catalog_data, bool):
+        normalized["has_catalog_data"] = has_catalog_data
+    evidence = [
+        normalize_space(str(item))
+        for item in adjudication.get("evidence") or []
+        if normalize_space(str(item))
+    ]
+    if evidence:
+        normalized["evidence"] = evidence
+    automated_snapshot = adjudication.get("automated_snapshot")
+    if isinstance(automated_snapshot, dict) and automated_snapshot:
+        normalized["automated_snapshot"] = {
+            "overall_verdict": normalize_space(str(automated_snapshot.get("overall_verdict") or "")),
+            "catalog_location": normalize_space(str(automated_snapshot.get("catalog_location") or "")),
+        }
+    return normalized
+
+
+def effective_catalog_verification(record: dict[str, Any]) -> dict[str, Any]:
+    adjudication = normalize_agent_adjudication(record)
+    if adjudication:
+        return {
+            "decision_source": "agent",
+            "verified": True,
+            "verified_at": adjudication.get("reviewed_at") or normalize_space(str(record.get("generated_at") or now_iso())),
+            "has_catalog": adjudication.get("has_catalog_data") is True,
+            "overall_verdict": adjudication.get("overall_verdict")
+            or derive_agent_overall_verdict(adjudication.get("has_catalog_data")),
+            "catalog_location": adjudication.get("location_class") or "unclear",
+            "internal_delivery": adjudication.get("internal_delivery") or "",
+            "external_delivery": adjudication.get("external_delivery") or "",
+            "primary_host": adjudication.get("primary_host") or "",
+            "confidence": adjudication.get("confidence") or "",
+        }
+    return {
+        "decision_source": "automated",
+        "verified": True,
+        "verified_at": normalize_space(str(record.get("generated_at") or now_iso())),
+        "has_catalog": verification_has_catalog(record),
+        "overall_verdict": normalize_space(str((record.get("verification") or {}).get("overall_verdict") or "")),
+        "catalog_location": normalize_space(str((record.get("catalog") or {}).get("location") or "")),
+        "internal_delivery": "",
+        "external_delivery": "",
+        "primary_host": "",
+        "confidence": "",
+    }
+
+
 def render_summary(record: dict[str, Any]) -> str:
+    effective = effective_catalog_verification(record)
+    automated_location = record.get("catalog", {}).get("location")
+    automated_verdict = record.get("verification", {}).get("overall_verdict")
     lines = [
         f"# {record.get('title') or record.get('arxiv_id')}",
         "",
         f"- arXiv ID: `{record.get('arxiv_id')}`",
         f"- Generated at: {record.get('generated_at')}",
-        f"- Catalog location: `{record.get('catalog', {}).get('location')}`",
-        f"- Overall verdict: `{record.get('verification', {}).get('overall_verdict')}`",
-        "",
-        "## Links",
-        "",
     ]
+    if effective.get("decision_source") == "agent":
+        lines.extend(
+            [
+                f"- Automated catalog location: `{automated_location}`",
+                f"- Automated overall verdict: `{automated_verdict}`",
+                f"- Effective decision source: `{effective.get('decision_source')}`",
+                f"- Effective catalog location: `{effective.get('catalog_location')}`",
+                f"- Effective overall verdict: `{effective.get('overall_verdict')}`",
+            ]
+        )
+    else:
+        lines.extend(
+            [
+                f"- Catalog location: `{automated_location}`",
+                f"- Overall verdict: `{automated_verdict}`",
+            ]
+        )
+    lines.extend(["", "## Links", ""])
     links = record.get("links") or {}
     for label in ("abs", "pdf", "source", "html", "doi"):
         value = links.get(label)
@@ -673,6 +783,32 @@ def render_summary(record: dict[str, Any]) -> str:
         for item in analysis.get("evidence") or []:
             lines.append(f"- {item}")
         lines.append("")
+    adjudication = normalize_agent_adjudication(record)
+    if adjudication:
+        lines.extend(["## Agent Adjudication", ""])
+        lines.append(f"- reviewed_at: `{adjudication.get('reviewed_at')}`")
+        lines.append(f"- reviewed_by: `{adjudication.get('reviewed_by')}`")
+        if adjudication.get("skill_path"):
+            lines.append(f"- skill_path: `{adjudication.get('skill_path')}`")
+        if adjudication.get("skill_version"):
+            lines.append(f"- skill_version: `{adjudication.get('skill_version')}`")
+        lines.append(f"- has_catalog_data: `{adjudication.get('has_catalog_data')}`")
+        lines.append(f"- overall_verdict: `{adjudication.get('overall_verdict')}`")
+        lines.append(f"- location_class: `{adjudication.get('location_class')}`")
+        if adjudication.get("catalog_scope"):
+            lines.append(f"- catalog_scope: `{adjudication.get('catalog_scope')}`")
+        if adjudication.get("internal_delivery"):
+            lines.append(f"- internal_delivery: `{adjudication.get('internal_delivery')}`")
+        if adjudication.get("external_delivery"):
+            lines.append(f"- external_delivery: `{adjudication.get('external_delivery')}`")
+        if adjudication.get("primary_host"):
+            lines.append(f"- primary_host: `{adjudication.get('primary_host')}`")
+        if adjudication.get("confidence"):
+            lines.append(f"- confidence: `{adjudication.get('confidence')}`")
+        for item in adjudication.get("evidence") or []:
+            lines.append(f"- evidence: {item}")
+        if adjudication.get("reasoning_notes"):
+            lines.extend(["", adjudication.get("reasoning_notes"), ""])
     return "\n".join(lines).rstrip() + "\n"
 
 
@@ -701,7 +837,7 @@ def load_index_json_candidates(index_json_path: Path) -> list[dict[str, Any]]:
 
     # Compatibility fallback for older v2 index.json files that only store
     # data-related papers under yearly buckets.
-    candidates = []
+    candidates: list[dict[str, Any]] = []
     for year in record.get("years") or []:
         for paper in (year or {}).get("data_related_papers") or []:
             if not isinstance(paper, dict):
@@ -734,6 +870,48 @@ def _filter_index_candidates(candidates: list[dict[str, Any]], *, only_unverifie
     return filtered
 
 
+def load_index_md_candidates(index_md_path: Path) -> list[dict[str, Any]]:
+    notes_dir = index_md_path.parent
+    month_cache: dict[Path, dict[str, Any]] = {}
+    candidates: list[dict[str, Any]] = []
+    for line in index_md_path.read_text(encoding="utf-8").splitlines():
+        match = INDEX_MD_ENTRY_RE.match(line.strip())
+        if not match:
+            continue
+        title = match.group("title")
+        note_rel = match.group("path")
+        month = match.group("month") or month_slug_from_note_path(note_rel)
+        if not month:
+            continue
+        json_path = notes_dir / Path(note_rel).with_suffix(".json")
+        if json_path not in month_cache and json_path.exists():
+            month_cache[json_path] = read_json(json_path)
+        record = month_cache.get(json_path) or {}
+        for paper in record.get("papers") or []:
+            if normalize_space(str((paper or {}).get("title") or "")) != normalize_space(title):
+                continue
+            arxiv_id = normalize_space(str((paper or {}).get("arxiv_id") or ""))
+            if arxiv_id:
+                candidates.append(
+                    {
+                        "title": title,
+                        "arxiv_id": arxiv_id,
+                        "month": month,
+                        "note_path": note_rel,
+                    }
+                )
+            break
+    return candidates
+
+
+def sample_index_md_candidates(index_md_path: Path, *, count: int, seed: int | None = None) -> list[dict[str, Any]]:
+    candidates = load_index_md_candidates(index_md_path)
+    if count >= len(candidates):
+        return candidates
+    rng = random.Random(seed)
+    return rng.sample(candidates, count)
+
+
 def sample_index_json_candidates(
     index_json_path: Path,
     *,
@@ -762,26 +940,30 @@ def take_index_json_candidates(
     return candidates[start : start + count]
 
 
-def verification_has_catalog(record: dict[str, Any]) -> bool:
-    verdict = normalize_space(str((record.get("verification") or {}).get("overall_verdict") or ""))
-    return verdict.startswith("confirmed")
-
-
 def build_catalog_verification_summary(
     record: dict[str, Any],
     *,
     paper_dir: Path,
     workspace_root: Path,
 ) -> dict[str, Any]:
-    return {
-        "verified": True,
-        "verified_at": normalize_space(str(record.get("generated_at") or now_iso())),
-        "has_catalog": verification_has_catalog(record),
-        "overall_verdict": normalize_space(str((record.get("verification") or {}).get("overall_verdict") or "")),
-        "catalog_location": normalize_space(str((record.get("catalog") or {}).get("location") or "")),
+    effective = effective_catalog_verification(record)
+    summary = {
+        "verified": effective.get("verified") is True,
+        "verified_at": normalize_space(str(effective.get("verified_at") or now_iso())),
+        "has_catalog": effective.get("has_catalog") is True,
+        "overall_verdict": normalize_space(str(effective.get("overall_verdict") or "")),
+        "catalog_location": normalize_space(str(effective.get("catalog_location") or "")),
         "record_path": relative_to(paper_dir / "record.json", workspace_root),
         "summary_path": relative_to(paper_dir / "summary.md", workspace_root),
     }
+    decision_source = normalize_space(str(effective.get("decision_source") or ""))
+    if decision_source:
+        summary["decision_source"] = decision_source
+    for key in ("internal_delivery", "external_delivery", "primary_host", "confidence"):
+        value = normalize_space(str(effective.get(key) or ""))
+        if value:
+            summary[key] = value
+    return summary
 
 
 def sync_verification_to_notes(
@@ -858,6 +1040,60 @@ def sync_verification_to_notes(
     }
 
 
+def build_agent_adjudication(
+    *,
+    record: dict[str, Any],
+    reviewed_at: str,
+    reviewed_by: str,
+    has_catalog_data: bool,
+    catalog_scope: str,
+    internal_delivery: str,
+    external_delivery: str,
+    location_class: str,
+    primary_host: str,
+    confidence: str,
+    evidence: list[str],
+    reasoning_notes: str,
+    overall_verdict: str = "",
+    skill_path: str = "",
+    skill_version: str = "",
+) -> dict[str, Any]:
+    return {
+        "schema_version": AGENT_ADJUDICATION_SCHEMA_VERSION,
+        "reviewed_at": normalize_space(reviewed_at) or now_iso(),
+        "reviewed_by": normalize_space(reviewed_by) or "agent",
+        "skill_path": normalize_space(skill_path),
+        "skill_version": normalize_space(skill_version),
+        "has_catalog_data": has_catalog_data is True,
+        "catalog_scope": normalize_space(catalog_scope),
+        "internal_delivery": normalize_space(internal_delivery),
+        "external_delivery": normalize_space(external_delivery),
+        "location_class": normalize_space(location_class) or "unclear",
+        "primary_host": normalize_space(primary_host),
+        "confidence": normalize_space(confidence),
+        "overall_verdict": normalize_space(overall_verdict) or derive_agent_overall_verdict(has_catalog_data),
+        "evidence": [normalize_space(item) for item in evidence if normalize_space(item)],
+        "reasoning_notes": normalize_space(reasoning_notes),
+        "override_automated": True,
+        "automated_snapshot": {
+            "overall_verdict": normalize_space(str((record.get("verification") or {}).get("overall_verdict") or "")),
+            "catalog_location": normalize_space(str((record.get("catalog") or {}).get("location") or "")),
+        },
+    }
+
+
+def apply_agent_adjudication(
+    *,
+    record_path: Path,
+    adjudication: dict[str, Any],
+) -> dict[str, Any]:
+    record = read_json(record_path)
+    record["agent_adjudication"] = adjudication
+    write_json(record_path, record)
+    write_text(record_path.parent / "summary.md", render_summary(record))
+    return record
+
+
 def verify_paper_catalog(
     *,
     arxiv_id: str,
@@ -871,6 +1107,14 @@ def verify_paper_catalog(
     record_path = paper_dir / "record.json"
     if record_path.exists() and not force:
         return read_json(record_path)
+
+    existing_agent_adjudication: dict[str, Any] = {}
+    if record_path.exists():
+        try:
+            existing_record = read_json(record_path)
+        except Exception:
+            existing_record = {}
+        existing_agent_adjudication = normalize_agent_adjudication(existing_record)
 
     paper_dir.mkdir(parents=True, exist_ok=True)
     deepxiv_dir = paper_dir / "deepxiv"
@@ -1098,6 +1342,8 @@ def verify_paper_catalog(
             "overall_verdict": overall_verdict,
         },
     }
+    if existing_agent_adjudication:
+        record["agent_adjudication"] = existing_agent_adjudication
     write_json(record_path, record)
     write_text(paper_dir / "summary.md", render_summary(record))
     return record

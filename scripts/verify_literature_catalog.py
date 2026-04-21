@@ -25,6 +25,7 @@ except ImportError:
 from high_velocity_lit.arxiv_client import ArxivClient  # noqa: E402
 from high_velocity_lit.deepxiv_client import DeepXivClient  # noqa: E402
 from high_velocity_lit.literature_catalog import (  # noqa: E402
+    build_catalog_verification_summary,
     sample_index_json_candidates,
     sync_verification_to_notes,
     take_index_json_candidates,
@@ -124,6 +125,11 @@ def main() -> int:
             force=args.force,
             max_sections=args.max_sections,
         )
+        effective_summary = build_catalog_verification_summary(
+            record,
+            paper_dir=args.output_dir / arxiv_id,
+            workspace_root=WORKSPACE,
+        )
         note_sync = sync_verification_to_notes(
             notes_dir=args.notes_dir,
             arxiv_id=arxiv_id,
@@ -137,8 +143,11 @@ def main() -> int:
                 "title": record.get("title"),
                 "record_path": str(args.output_dir / arxiv_id / "record.json"),
                 "summary_path": str(args.output_dir / arxiv_id / "summary.md"),
-                "location": (record.get("catalog") or {}).get("location"),
-                "overall_verdict": (record.get("verification") or {}).get("overall_verdict"),
+                "location": effective_summary.get("catalog_location"),
+                "overall_verdict": effective_summary.get("overall_verdict"),
+                "decision_source": effective_summary.get("decision_source"),
+                "automated_location": (record.get("catalog") or {}).get("location"),
+                "automated_overall_verdict": (record.get("verification") or {}).get("overall_verdict"),
                 "note_sync": note_sync,
             }
         )

@@ -71,7 +71,10 @@ def paper_meta_text(paper: dict[str, Any]) -> str:
     if paper.get("has_observational_catalog") is True:
         parts.append("data-related")
     if isinstance(verification, dict) and verification.get("verified") is True:
-        parts.append("verified: catalog" if verification.get("has_catalog") is True else "verified: no catalog")
+        if first_present(verification.get("decision_source")) == "agent":
+            parts.append("verified: agent catalog" if verification.get("has_catalog") is True else "verified: agent no catalog")
+        else:
+            parts.append("verified: catalog" if verification.get("has_catalog") is True else "verified: no catalog")
     return "; ".join(parts)
 
 
@@ -250,12 +253,30 @@ def render_month_note(record: dict[str, Any]) -> str:
                     location = first_present(catalog_verification.get("catalog_location"))
                     record_path = first_present(catalog_verification.get("record_path"))
                     summary_path = first_present(catalog_verification.get("summary_path"))
+                    decision_source = first_present(catalog_verification.get("decision_source"))
+                    internal_delivery = first_present(catalog_verification.get("internal_delivery"))
+                    external_delivery = first_present(catalog_verification.get("external_delivery"))
+                    primary_host = first_present(catalog_verification.get("primary_host"))
+                    confidence = first_present(catalog_verification.get("confidence"))
                     lines.append(
                         f"- Paper-level catalog verification: "
                         f"{'catalog confirmed' if catalog_verification.get('has_catalog') else 'no catalog confirmed'}; "
                         f"verdict=`{verdict or 'verified'}`; "
                         f"location=`{location or 'unknown'}`"
                     )
+                    if decision_source or internal_delivery or external_delivery or primary_host or confidence:
+                        detail_parts: list[str] = []
+                        if decision_source:
+                            detail_parts.append(f"source=`{decision_source}`")
+                        if internal_delivery:
+                            detail_parts.append(f"internal=`{internal_delivery}`")
+                        if external_delivery:
+                            detail_parts.append(f"external=`{external_delivery}`")
+                        if primary_host:
+                            detail_parts.append(f"host=`{primary_host}`")
+                        if confidence:
+                            detail_parts.append(f"confidence=`{confidence}`")
+                        lines.append(f"- Verification detail: {'; '.join(detail_parts)}")
                     if record_path or summary_path:
                         artifact_parts: list[str] = []
                         if record_path:

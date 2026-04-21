@@ -29,7 +29,7 @@ SPEC.loader.exec_module(annotate_cli)
 
 def sample_record() -> dict[str, object]:
     return {
-        "schema_version": "stella.literature.month.v1",
+        "schema_version": "stella.literature.month.v2",
         "month": "2026-03",
         "date_from": "2026-03-01",
         "date_to": "2026-03-31",

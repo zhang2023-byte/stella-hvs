@@ -41,8 +41,13 @@ class IndexingTest(unittest.TestCase):
                                     "verified": True,
                                     "verified_at": "2026-04-21T12:34:56",
                                     "has_catalog": True,
-                                    "overall_verdict": "confirmed",
+                                    "overall_verdict": "agent_confirmed",
                                     "catalog_location": "mixed",
+                                    "decision_source": "agent",
+                                    "internal_delivery": "full",
+                                    "external_delivery": "full",
+                                    "primary_host": "cds",
+                                    "confidence": "high",
                                     "record_path": "literature/2603.00001/record.json",
                                     "summary_path": "literature/2603.00001/summary.md",
                                 },
@@ -106,6 +111,7 @@ class IndexingTest(unittest.TestCase):
             self.assertEqual(index["papers"][0]["arxiv_id"], "2603.00001")
             self.assertTrue(index["papers"][0]["has_observational_catalog"])
             self.assertTrue(index["papers"][0]["catalog_verification"]["has_catalog"])
+            self.assertEqual(index["papers"][0]["catalog_verification"]["decision_source"], "agent")
             self.assertEqual(index["papers"][1]["arxiv_id"], "2603.00002")
             self.assertFalse(index["papers"][1]["has_observational_catalog"])
             self.assertEqual(index["summary"]["verified_count"], 1)
@@ -119,7 +125,7 @@ class IndexingTest(unittest.TestCase):
             self.assertIn("## Year Overview", markdown)
             self.assertIn("| 2026 | 2 | 1 | 1 | 1 |", markdown)
             self.assertIn(
-                "[A 2026 catalog paper](2026/2026-03/2026-03.md) - 2026-03; 2026-03-12; direct; data-related; verified: catalog",
+                "[A 2026 catalog paper](2026/2026-03/2026-03.md) - 2026-03; 2026-03-12; direct; data-related; verified: agent catalog",
                 markdown,
             )
 

@@ -96,6 +96,10 @@ def catalog_verification_record(paper: dict[str, Any]) -> dict[str, Any]:
     }
     if "has_catalog" in verification:
         normalized["has_catalog"] = verification.get("has_catalog") is True
+    for key in ("decision_source", "internal_delivery", "external_delivery", "primary_host", "confidence"):
+        value = first_present(verification.get(key))
+        if value:
+            normalized[key] = value
     return normalized
 
 
