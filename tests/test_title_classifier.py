@@ -14,14 +14,10 @@ from high_velocity_lit.title_classifier import LLMTitleClassifier, heuristic_tit
 
 
 class TitleClassifierRulesTest(unittest.TestCase):
-    def assert_label(self, title: str, label: str) -> None:
+    def assert_label(self, title: str, label: str, *, include: bool) -> None:
         decision = heuristic_title_decision(title)
         self.assertEqual(decision.label, label, title)
-        self.assertTrue(decision.include, title)
-
-    def assert_rejected(self, title: str) -> None:
-        decision = heuristic_title_decision(title)
-        self.assertFalse(decision.include, title)
+        self.assertEqual(decision.include, include, title)
 
     def test_direct_high_velocity_star_titles(self) -> None:
         direct_titles = [
@@ -37,10 +33,10 @@ class TitleClassifierRulesTest(unittest.TestCase):
         ]
         for title in direct_titles:
             with self.subTest(title=title):
-                self.assert_label(title, "rule-direct")
+                self.assert_label(title, "rule-related", include=True)
 
-    def test_weak_mechanism_and_origin_titles(self) -> None:
-        weak_titles = [
+    def test_mechanism_and_origin_titles_become_no_clear_title_evidence(self) -> None:
+        ambiguous_titles = [
             "Stellar Escape from Globular Clusters. I. Escape Mechanisms and Properties at Ejection",
             "Where do they come from? Identification of globular cluster escaped stars",
             "Hyper-velocity and tidal stars from binaries disrupted by a massive Galactic black hole",
@@ -49,12 +45,12 @@ class TitleClassifierRulesTest(unittest.TestCase):
             "On stellar migration from Andromeda to the Milky Way",
             "Intermediate-mass black holes in binary-rich star clusters",
         ]
-        for title in weak_titles:
+        for title in ambiguous_titles:
             with self.subTest(title=title):
-                self.assert_label(title, "rule-weak")
+                self.assert_label(title, "no-clear-title-evidence", include=False)
 
-    def test_generic_astronomy_or_tools_are_rejected(self) -> None:
-        rejected_titles = [
+    def test_generic_astronomy_or_tools_stay_in_no_clear_title_evidence(self) -> None:
+        ambiguous_titles = [
             "Galaxy formation and evolution",
             "emcee: The MCMC Hammer",
             "galpy: A Python Library for Galactic Dynamics",
@@ -64,9 +60,9 @@ class TitleClassifierRulesTest(unittest.TestCase):
             "Intermediate-mass black holes in dwarf galaxies",
             "The impact of the Galactic bar and the Large Magellanic Cloud on stellar trajectories",
         ]
-        for title in rejected_titles:
+        for title in ambiguous_titles:
             with self.subTest(title=title):
-                self.assert_rejected(title)
+                self.assert_label(title, "no-clear-title-evidence", include=False)
 
 
 class LLMClassifierPayloadTest(unittest.TestCase):

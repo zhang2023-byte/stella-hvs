@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import importlib.util
+import io
 import sys
 import types
 import unittest
+from contextlib import redirect_stderr
 from datetime import date
 from pathlib import Path
 
@@ -66,6 +68,23 @@ class CliOptionParsingTest(unittest.TestCase):
         parser = cli.build_parser()
         args = parser.parse_args(["--from", "2026-03"])
         self.assertEqual(args.categories, "astro-ph.GA")
+
+    def test_default_source_is_arxiv(self) -> None:
+        parser = cli.build_parser()
+        args = parser.parse_args(["--from", "2026-03"])
+        self.assertEqual(args.source, "arxiv")
+
+    def test_classifier_option_is_no_longer_available(self) -> None:
+        parser = cli.build_parser()
+        with redirect_stderr(io.StringIO()):
+            with self.assertRaises(SystemExit):
+                parser.parse_args(["--from", "2026-03", "--classifier", "rules"])
+
+    def test_brief_option_is_no_longer_available(self) -> None:
+        parser = cli.build_parser()
+        with redirect_stderr(io.StringIO()):
+            with self.assertRaises(SystemExit):
+                parser.parse_args(["--from", "2026-03", "--brief", "False"])
 
     def test_default_queries_avoid_singular_plural_duplicates(self) -> None:
         self.assertEqual(

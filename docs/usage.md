@@ -1,22 +1,21 @@
-# Usage
+# 使用方法
 
-Run the default 2025 to 2026-to-date job:
+## 1. 抓取文献
+
+默认批量运行：
 
 ```bash
 bash scripts/run_2025_2026.sh
 ```
 
-Minimal run:
+基础运行：
 
 ```bash
 conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
   --from 2026-03
 ```
 
-Only `--from` is required. With the command above, the script starts on
-2026-03-01 and runs through today, because `--to` defaults to today.
-
-Run exactly one month:
+只给一个月：
 
 ```bash
 conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
@@ -24,144 +23,60 @@ conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
   --to 2026-03
 ```
 
-Run without fetching DeepXiv brief:
-
-```bash
-conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
-  --from 2026-03 \
-  --to 2026-03 \
-  --max-results 20 \
-  --brief False
-```
-
-Useful options:
+### 常用参数
 
 ```text
---source deepxiv|arxiv       Search backend. Default: deepxiv.
---classifier rules|llm       Title classifier. Default: rules.
---from DATE                  Start: YYYY-MM-DD, YYYY-MM, or YYYY.
---to DATE                    End: YYYY-MM-DD, YYYY-MM, YYYY, or none. Default: today.
---brief True|False           Fetch DeepXiv brief. Default: True.
---llm-review True|False      With rules, send weak matches to the LLM. Default: False.
---max-results N              Results per query/category. Default: 20.
---categories A,B,C           arXiv categories. Default: astro-ph.GA.
---min-score X                Optional DeepXiv score floor. Default: disabled.
---progress True|False        Show terminal progress bars. Default: True.
---token TOKEN                Override DEEPXIV_TOKEN.
---notes-dir PATH             Canonical JSON and Markdown output directory. Default: notes.
---logs-dir PATH              Local run logs. Default: logs.
+--source deepxiv|arxiv       搜索后端，默认 arxiv
+--from DATE                  开始时间，可写 YYYY-MM-DD、YYYY-MM、YYYY
+--to DATE                    结束时间，默认今天
+--llm-review True|False      是否让 LLM 复核“标题没有明显证据”的论文，默认 False
+--max-results N              每个 query/category 的返回上限，默认 20
+--categories A,B,C           arXiv 分类，默认 astro-ph.GA
+--min-score X                DeepXiv 分数下限，默认关闭
+--progress True|False        是否显示进度条，默认 True
+--token TOKEN                覆盖 DEEPXIV_TOKEN
+--notes-dir PATH             输出目录，默认 notes
+--logs-dir PATH              日志目录，默认 logs
 ```
 
-Defaults:
+### 默认值
 
 ```text
---to                today; future dates are also clamped to today
---source            deepxiv
---classifier        rules
+--to                今天
+--source            arxiv
 --llm-review        False
---brief             True
---max-results       20 per query/category
+--max-results       20
 --categories        astro-ph.GA
---min-score         disabled
+--min-score         关闭
 --search-mode       hybrid
---progress          True; shown when a terminal is available, including under conda run
---sleep             0.2 seconds between search calls
---brief-sleep       0.2 seconds between brief calls
---llm-base-url      LLM_BASE_URL/OPENAI_BASE_URL/DEEPXIV_AGENT_BASE_URL, else https://api.openai.com/v1
---llm-model         LLM_MODEL/OPENAI_MODEL/DEEPXIV_AGENT_MODEL, else gpt-4o-mini
+--progress          True
+--sleep             0.2
+--llm-base-url      默认 https://api.openai.com/v1
+--llm-model         默认 gpt-4o-mini
 --llm-batch-size    25
 --notes-dir         notes
 --logs-dir          logs
 ```
 
-At the start of a terminal run, the script prints the resolved parameter set,
-including defaults. It writes to the terminal when available so `conda run`
-still shows the status output. Secret values are never printed; tokens and API
-keys are shown only as `configured` or `not configured`.
+### 说明
 
-When Stella uses `--source deepxiv`, some search hits arrive without a usable
-publication date. The pipeline then makes a best-effort arXiv metadata lookup
-to recover that date. Those metadata calls are intentionally soft-fail: if an
-arXiv metadata request times out or errors, Stella skips that backfill attempt,
-continues the month, and writes a structured report to
-`logs/arxiv_metadata_<run_id>.json`. Monthly JSON/Markdown also record counts
-for how many missing-date candidates were rescued, timed out, errored, or still
-lacked a publication date after the lookup.
+- 运行开始时，脚本会打印最终参数
+- 密钥不会明文打印
+- 去重后会先做规则标题初筛，并写出 `YYYY-MM.title-triage.json`
+- `--llm-review True` 时，只复核“标题没有明显证据”的论文
+- 最终月度 note 只收录规则直判相关论文，以及被 LLM 复核确认相关的论文
+- `fetch_high_velocity_lit.py` 不再调用 `DeepXiv brief`
+- 默认候选检索走 `arXiv API`
 
-The default search is intentionally modest because high-velocity star papers are
-a relatively small field and DeepXiv quota appears to scale with returned
-records. It searches five representative query phrases in `astro-ph.GA`, for a
-default maximum of 100 returned records per full month. Increase `--max-results`,
-add `--extra-query`, or pass more `--categories` only when doing a broader
-recall pass.
+## 2. 补数据相关判断
 
-`--classifier llm` uses pure LLM classification. `--llm-review True` only has
-an effect with `--classifier rules`; it sends weak rule matches to the LLM and
-requires a configured LLM API key. LLM review/classification uses the title,
-abstract returned by DeepXiv/arXiv search, and categories.
-
-With the default rules classifier, `--brief True` fetches DeepXiv brief only for
-strong/direct matches (`rule-direct`). Weak matches (`rule-weak*`) stay in the
-monthly note but use only metadata already returned by DeepXiv search, such as
-title, abstract, score, categories, and matched queries. With `--llm-review True`,
-the LLM only decides whether weak rule matches are kept or filtered; it does not
-change the strong/weak grouping.
-
-Monthly results are split into strong/direct and weak sections with a divider
-between them. The note's `Search Abstract` section is the abstract returned by
-DeepXiv search; it does not mean an extra `brief` request was made.
-
-JSON is the source of truth. Each run writes monthly records and generated
-Markdown into the same monthly note folder:
-
-```text
-notes/index.json
-notes/index.md
-notes/YYYY/YYYY-MM/YYYY-MM.json
-notes/YYYY/YYYY-MM/YYYY-MM.md
-```
-
-The exact date range is stored inside each monthly JSON record as
-`date_from`/`date_to`. Markdown files are generated from those JSON records and
-should be treated as reading views.
-
-`notes/index.json` is rebuilt from all monthly JSON records. It currently stores
-both yearly summaries and a flat machine-readable `papers` list for downstream
-sampling or tooling. The current `notes/index.md` is a yearly human-readable
-view generated from that index JSON.
-
-To regenerate Markdown from existing JSON without calling DeepXiv:
-
-```bash
-conda run -n stella-env python scripts/render_lit_notes.py
-```
-
-Or regenerate one month:
-
-```bash
-conda run -n stella-env python scripts/render_lit_notes.py --month 2026-03
-```
-
-To rebuild the collection index from monthly JSON and refresh `notes/index.md`:
-
-```bash
-conda run -n stella-env python scripts/render_lit_notes.py --index-only
-```
-
-Catalog-data assessment uses an LLM to decide whether papers in existing note
-JSON likely contain real observational high-velocity-star data or catalog/sample
-tables. It uses each paper's abstract and DeepXiv brief when available, then
-updates the JSON, refreshes the sibling Markdown file, and rebuilds the
-collection index. It requires the same LLM API environment variables as
-weak-match LLM review.
-
-Assess one monthly note:
+给一个月补 `catalog_assessment`：
 
 ```bash
 conda run -n stella-env python scripts/annotate_catalog_data.py --on 2026-03
 ```
 
-Assess a range:
+给一个范围补：
 
 ```bash
 conda run -n stella-env python scripts/annotate_catalog_data.py \
@@ -169,169 +84,130 @@ conda run -n stella-env python scripts/annotate_catalog_data.py \
   --to 2025-06
 ```
 
-When `--to` is omitted, `--from` runs from that date/month/year through today.
-For example, `--from 2025-01` selects all note months from January 2025 through
-the current month.
-
-Assess several non-contiguous months:
+给多个不连续月份补：
 
 ```bash
 conda run -n stella-env python scripts/annotate_catalog_data.py \
   --on 2025-01,2025-03,2026-02
 ```
 
-`--on` accepts either one `YYYY-MM` value or one comma-separated list of
-`YYYY-MM` values. Do not repeat `--on`, and do not use brackets.
-
-Existing `catalog_assessment` fields are skipped unless `--force True` is set.
-
-Per-paper catalog verification runs a deeper three-stage workflow on a selected
-paper:
-
-1. Use DeepXiv progressively (`head`, selected sections, optional raw fallback)
-   to decide whether the paper appears to contain object-level catalog data.
-2. Download the arXiv PDF and try to confirm the signal from the PDF text. When
-   direct PDF text extraction is weak, Stella records that limitation and may
-   continue with a source fallback if DeepXiv already gave a strong signal.
-3. Download arXiv source safely, extract tables and data-like files, and store
-   any external catalog path (for example VizieR/CDS) mentioned in the source.
-
-When the verified paper already exists in monthly note JSON, Stella also writes a
-lightweight `catalog_verification` summary back into that paper entry, refreshes
-the sibling monthly Markdown note, and rebuilds `notes/index.json` plus
-`notes/index.md`. The full evidence record remains in `literature/<arxiv_id>/`.
-If that per-paper `record.json` contains an `agent_adjudication`, the synced
-summary and collection index prefer the agent's judgment over the automated
-heuristic.
-
-Verify one paper:
-
-```bash
-conda run -n stella-env python scripts/verify_literature_catalog.py \
-  --arxiv-id 2405.04750
-```
-
-Randomly sample a few papers from `notes/index.json`:
-
-```bash
-conda run -n stella-env python scripts/verify_literature_catalog.py \
-  --sample-index 3 \
-  --seed 7
-```
-
-Take the next unverified papers in index order:
-
-```bash
-conda run -n stella-env python scripts/verify_literature_catalog.py \
-  --take-index 10 \
-  --only-unverified
-```
-
-Useful options:
+### 常用参数
 
 ```text
---arxiv-id ID[,ID...]       One arXiv ID or a comma-separated list.
---sample-index N            Randomly sample N papers from notes/index.json.
---take-index N              Take the next N papers from notes/index.json in index order.
---index-offset N            Skip the first N index entries before --take-index.
---only-unverified           Restrict index selection to papers without catalog_verification.
---seed N                    Seed for reproducible sampling.
---index-json PATH           Input collection index JSON. Default: notes/index.json.
---notes-dir PATH            Monthly note root to sync after verification. Default: notes.
---output-dir PATH           Output root. Default: literature.
---force                     Recompute even when literature/<id>/record.json exists.
---token TOKEN               Override DEEPXIV_TOKEN.
---max-sections N            Max DeepXiv sections before raw fallback. Default: 4.
+--on MONTH[,MONTH...]       一个或多个 YYYY-MM
+--from DATE                 开始月份或日期
+--to DATE                   结束月份或日期
+--notes-dir PATH            notes 根目录，默认 notes
+--llm-api-key KEY           覆盖 LLM_API_KEY
+--llm-base-url URL          覆盖 LLM_BASE_URL
+--llm-model MODEL           覆盖 LLM_MODEL
+--llm-batch-size N          LLM 批大小，默认 25
+--render True|False         是否刷新 Markdown 和索引，默认 True
+--dry-run True|False        只显示将要修改什么
 ```
 
-When a paper is semantically ambiguous, keep the automated evidence record but
-persist the final Agent judgment separately into the same `record.json`. That
-agent judgment then becomes the effective result used by monthly notes and the
-collection index:
+### 说明
+
+- `catalog_assessment` 会先通过本地 `deepxiv` CLI 获取 `DeepXiv brief`
+- 同时会读取 Introduction 的最后一段，以及各个 section 的标题和第一段
+- LLM 综合使用 `title + abstract + DeepXiv brief + 引言末段 + 各 section 标题与首段 + categories`
+- 只有 `catalog_assessment_context.deepxiv_brief` 会写回月度 JSON；section 摘录只在本次判断中使用
+- 重新运行 `annotate_catalog_data.py` 时会重算已有 `catalog_assessment`
+
+## 3. 重生成 Markdown
+
+重生成全部月度 Markdown：
 
 ```bash
-conda run -n stella-env python scripts/apply_agent_catalog_adjudication.py \
-  --arxiv-id 2401.02017 \
-  --has-catalog true \
-  --internal-delivery format_only \
-  --external-delivery full \
-  --location-class mixed \
-  --primary-host china-vo \
-  --confidence high \
-  --evidence "The paper states that the catalog is available on China-VO." \
-  --reasoning-notes "The full machine-readable catalog is externally hosted; the appendix is only guidance."
+conda run -n stella-env python scripts/render_lit_notes.py
 ```
 
-Useful options:
-
-```text
---arxiv-id ID               Target literature/<id>/record.json to update.
---has-catalog BOOL          true/false final agent call.
---catalog-scope TEXT        Structured scope label. Default: object_level_or_sample_level.
---internal-delivery TEXT    full|partial|format_only|none|unclear.
---external-delivery TEXT    full|partial|reference_only|none|unclear.
---location-class TEXT       internal_only|external_only|mixed|unclear.
---primary-host TEXT         cds|vizier|china-vo|zenodo|none|unclear.
---confidence TEXT           high|medium|low.
---overall-verdict TEXT      Optional explicit stored verdict; default derives from --has-catalog.
---evidence TEXT             Evidence sentence; repeatable.
---reasoning-notes TEXT      Short explanation for the override.
---reviewed-by TEXT          Reviewer label. Default: agent.
---reviewed-at TEXT          Optional ISO timestamp override.
---skill-path PATH           Repo-local SKILL.md used for the adjudication. Default: skills/literature-catalog-verifier/SKILL.md.
---skill-version TEXT        Optional explicit skill version override; otherwise read from the skill frontmatter.
-```
-
-After a paper has been verified and you want to organize the actual catalog
-assets rather than just the paper-level verdict, bootstrap a machine-readable
-ingestion bundle:
+只重生成一个月：
 
 ```bash
-conda run -n stella-env python scripts/init_catalog_ingestion.py \
-  --arxiv-id 2401.02017
+conda run -n stella-env python scripts/render_lit_notes.py --month 2026-03
 ```
 
-This creates `literature/<arxiv_id>/catalog_ingest/manifest.json`,
-`field_definitions.json`, and `column_mapping.json`. The script is intentionally
-deterministic: it uses the verified paper record plus extracted CSV tables to
-prepare scaffolds. When it finds a schema-definition table with `Label / Unit /
-Description`, it will expand that table into drafted field definitions and first-pass
-column mappings; the agent should then verify and refine those drafts using the
-`skills/catalog-ingestor/` workflow.
+重建年度索引：
 
-Useful options:
+```bash
+conda run -n stella-env python scripts/render_lit_notes.py --index-only
+```
+
+## 4. 拉取本地文献资料
+
+给一个范围内、已经被判定为 data-related 的论文拉取本地资料：
+
+```bash
+conda run -n stella-env python scripts/pull_literature_assets.py \
+  --from 2024-01 \
+  --to 2026-04
+```
+
+只拉取某几个月：
+
+```bash
+conda run -n stella-env python scripts/pull_literature_assets.py \
+  --on 2025-07,2025-11
+```
+
+只拉取指定论文：
+
+```bash
+conda run -n stella-env python scripts/pull_literature_assets.py \
+  --arxiv-id 2402.10714,2507.07558
+```
+
+### 常用参数
 
 ```text
---arxiv-id ID               Target literature/<id>/record.json to bootstrap from.
---output-dir PATH           Literature root. Default: literature.
---overwrite                 Replace existing catalog_ingest JSON scaffolds.
+--on MONTH[,MONTH...]       一个或多个 YYYY-MM
+--from DATE                 开始月份或日期
+--to DATE                   结束月份或日期
+--arxiv-id ID[,ID...]       指定 arXiv ID
+--notes-dir PATH            notes 根目录，默认 notes
+--literature-dir PATH       资料归档根目录，默认 literature
+--timeout N                 单次网络请求超时秒数，默认 60
+--dry-run True|False        只解析选择结果，不实际下载，默认 False
 ```
 
-If DeepXiv returns a daily limit error, completed months are kept. The script
-writes a partial summary to `logs/partial_<run_id>.json`, appends it to
-`logs/runs.jsonl` with `status: partial`, prints the resume command, and exits
-without a Python traceback. Resume from the reported failed month after quota
-recovers.
+### 说明
 
-The run summary JSON printed by the CLI also includes `arxiv_metadata` totals
-plus `arxiv_metadata_report_path`, so you can quickly tell whether any metadata
-lookups were skipped and where the detailed report was written.
+- 只会处理 `notes/` 中 `catalog_assessment.has_observational_catalog == true` 的论文
+- 每篇论文会写到 `literature/<arxiv_id>/`
+- 默认尝试保存：
+  - arXiv 页面 HTML
+  - arXiv PDF
+  - arXiv source（如果响应看起来真的是源码包）
+  - 解压后的 `arxiv_source/` 目录
+  - NASA ADS 页面 HTML
+- 每篇论文都会生成 `audit.json`，记录各类资产的成功/失败状态
 
-Date parsing:
+## 5. 时间写法
 
 ```text
---from 2026-03-15  starts on 2026-03-15
---from 2026-03     starts on 2026-03-01
---from 2026        starts on 2026-01-01
---to 2026-03-15    ends on 2026-03-15
---to 2026-03       ends on 2026-03-31
---to 2026          ends on 2026-12-31
---to none          ends today
+--from 2026-03-15  表示从 2026-03-15 开始
+--from 2026-03     表示从 2026-03-01 开始
+--from 2026        表示从 2026-01-01 开始
+--to 2026-03-15    表示到 2026-03-15 结束
+--to 2026-03       表示到 2026-03-31 结束
+--to 2026          表示到 2026-12-31 结束
+--to none          表示到今天
 ```
 
-Future dates are clamped to today. Invalid date formats fail fast.
+未来日期会自动截到今天。
+非法日期格式会直接报错。
 
-Default queries:
+## 6. 额外说明
+
+当 DeepXiv 返回限额错误时：
+
+- 已完成的月份仍会保存
+- 脚本会写出 `logs/partial_<run_id>.json`
+- 同时把结果追加到 `logs/runs.jsonl`
+- 然后打印恢复命令并退出
+
+默认搜索词：
 
 ```text
 hypervelocity stars
@@ -339,13 +215,4 @@ high-velocity stars
 runaway stars
 unbound stars
 escaping stars
-```
-
-Broader category recall example:
-
-```bash
-conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
-  --from 2026-03 \
-  --to 2026-03 \
-  --categories astro-ph.GA,astro-ph.SR,astro-ph.IM
 ```

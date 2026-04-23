@@ -1,4 +1,4 @@
-"""Monthly DeepXiv search pipeline for high-velocity star literature."""
+"""Monthly literature search pipeline for high-velocity star papers."""
 
 from __future__ import annotations
 
@@ -23,7 +23,8 @@ from .models import MonthWindow, SearchConfig
 from .note_paths import month_dir as build_month_dir
 from .note_paths import month_json_path as build_month_json_path
 from .note_paths import month_markdown_path as build_month_markdown_path
-from .records import build_month_record
+from .note_paths import month_title_triage_path as build_month_title_triage_path
+from .records import build_month_record, build_title_triage_record
 from .title_classifier import LLMTitleClassifier, TitleDecision, heuristic_title_decision, load_llm_api_key
 
 LEGACY_GALACTIC_CATEGORY = "astro-ph"
@@ -160,6 +161,10 @@ def month_json_path(config: SearchConfig, month_slug: str) -> Path:
 
 def month_markdown_path(config: SearchConfig, month_slug: str) -> Path:
     return build_month_markdown_path(config.notes_dir, month_slug)
+
+
+def month_title_triage_path(config: SearchConfig, month_slug: str) -> Path:
+    return build_month_title_triage_path(config.notes_dir, month_slug)
 
 
 def index_json_path(config: SearchConfig) -> Path:
@@ -383,22 +388,9 @@ def summarize_arxiv_metadata(month_summaries: list[dict[str, Any]]) -> dict[str,
     return summary
 
 
-def classifier_label(paper: dict[str, Any]) -> str:
-    classifier = paper.get("_classifier") or {}
-    return str(classifier.get("label") or "")
-
-
-def is_weak_label(label: str) -> bool:
-    return label.startswith("rule-weak") or "weak" in label.lower()
-
-
-def should_fetch_brief(paper: dict[str, Any]) -> bool:
-    return not is_weak_label(classifier_label(paper))
-
-
 def relevance_sort_key(paper: dict[str, Any]) -> tuple[int, datetime, float]:
     return (
-        1 if should_fetch_brief(paper) else 0,
+        1,
         parse_datetime(paper.get("publish_at")),
         float(paper.get("_best_score") or 0),
     )
@@ -410,24 +402,22 @@ def run_parameter_lines(config: SearchConfig, deepxiv_token: str | None) -> list
         f"--to: {config.end_date.isoformat()}",
         f"--source: {config.source}",
         f"--max-results: {config.max_results}",
-        f"--brief: {bool_text(config.use_brief)}",
-        f"--classifier: {config.classifier}",
         f"--llm-review: {bool_text(config.llm_review)}",
         f"--categories: {list_text(config.categories)}",
         f"--min-score: {config.min_score if config.min_score is not None else 'disabled'}",
         f"--search-mode: {config.search_mode}",
         f"--progress: {bool_text(config.progress)}",
         f"--sleep: {config.search_sleep_seconds}",
-        f"--brief-sleep: {config.brief_sleep_seconds}",
         f"--llm-base-url: {config.llm_base_url}",
         f"--llm-model: {config.llm_model}",
         f"--llm-batch-size: {config.llm_batch_size}",
         f"--llm-api-key: {configured_text(config.llm_api_key)}",
-        f"--token/DEEPXIV_TOKEN: {configured_text(deepxiv_token)}",
         f"--notes-dir: {config.notes_dir}",
         f"--logs-dir: {config.logs_dir}",
         f"queries: {list_text(config.queries, empty='none')}",
     ]
+    if config.source == "deepxiv":
+        lines.append(f"--token/DEEPXIV_TOKEN: {configured_text(deepxiv_token)}")
     if uses_default_galactic_category(config):
         lines.append(
             "historical categories: <= 2008-11 -> astro-ph; "
@@ -452,12 +442,8 @@ def resume_command(config: SearchConfig, failed_month: MonthWindow) -> str:
         config.end_date.isoformat(),
         "--max-results",
         str(config.max_results),
-        "--brief",
-        bool_text(config.use_brief),
         "--source",
         config.source,
-        "--classifier",
-        config.classifier,
         "--llm-review",
         bool_text(config.llm_review),
         "--notes-dir",
@@ -623,84 +609,20 @@ def classify_candidates(
     month: MonthWindow,
     run_log: Path,
     progress: ProgressReporter | None = None,
-) -> tuple[list[dict[str, Any]], dict[str, int]]:
-    included: list[dict[str, Any]] = []
-    filtered = 0
-    errors = 0
-    direct_rule_included = 0
-    weak_rule_candidates = 0
-    weak_llm_reviewed = 0
-    weak_llm_included = 0
-
-    llm: LLMTitleClassifier | None = None
-    use_llm = config.classifier == "llm" or (config.classifier == "rules" and config.llm_review)
-    if use_llm:
-        api_key = load_llm_api_key(config.llm_api_key)
-        if not api_key:
-            raise RuntimeError(
-                "LLM classifier requires LLM_API_KEY, OPENAI_API_KEY, or DEEPXIV_AGENT_API_KEY "
-                "in the environment, or --llm-api-key."
-            )
-        llm = LLMTitleClassifier(
-            api_key=api_key,
-            base_url=config.llm_base_url,
-            model=config.llm_model,
-        )
-
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, int]]:
+    rule_related: list[dict[str, Any]] = []
+    no_clear_title_evidence: list[dict[str, Any]] = []
     batches = list(classifier_batches(papers, config.llm_batch_size))
     for batch_index, batch in enumerate(batches, start=1):
         started = datetime.now()
         decisions: dict[str, TitleDecision] = {}
         error: str | None = None
-        batch_weak_llm_reviewed = 0
         try:
-            if config.classifier == "llm":
-                assert llm is not None
-                decisions = llm.classify_batch(batch)
-            else:
-                decisions = {
-                    paper_id(paper): heuristic_title_decision(str(paper.get("title") or ""))
-                    for paper in batch
-                }
-                if config.llm_review:
-                    weak_batch = [
-                        paper
-                        for paper in batch
-                        if decisions.get(paper_id(paper), TitleDecision(False, 0, "", "")).label == "rule-weak"
-                    ]
-                    if weak_batch:
-                        assert llm is not None
-                        batch_weak_llm_reviewed = len(weak_batch)
-                        weak_llm_reviewed += len(weak_batch)
-                        llm_decisions = llm.classify_batch(weak_batch)
-                        for paper in weak_batch:
-                            arxiv_id = paper_id(paper)
-                            rule_decision = decisions[arxiv_id]
-                            llm_decision = llm_decisions.get(arxiv_id)
-                            if llm_decision is None:
-                                decisions[arxiv_id] = TitleDecision(
-                                    False,
-                                    0.0,
-                                    rule_decision.reason + " LLM did not return a decision for this weak match.",
-                                    "rule-weak-llm-missing",
-                                )
-                            elif llm_decision.include:
-                                weak_llm_included += 1
-                                decisions[arxiv_id] = TitleDecision(
-                                    True,
-                                    llm_decision.confidence,
-                                    rule_decision.reason + " LLM confirmed: " + llm_decision.reason,
-                                    "rule-weak-llm-confirmed",
-                                )
-                            else:
-                                decisions[arxiv_id] = TitleDecision(
-                                    False,
-                                    llm_decision.confidence,
-                                    rule_decision.reason + " LLM rejected: " + llm_decision.reason,
-                                    "rule-weak-llm-rejected",
-                                )
+            decisions = {
+                paper_id(paper): heuristic_title_decision(str(paper.get("title") or ""))
+                for paper in batch
+            }
         except Exception as exc:
-            errors += len(batch)
             error = f"{type(exc).__name__}: {exc}"
             raise
         finally:
@@ -708,13 +630,10 @@ def classify_candidates(
                 run_log,
                 {
                     "event": "classify",
+                    "stage": "rules",
                     "run_id": run_id,
                     "month": month.slug,
-                    "classifier": config.classifier,
-                    "llm_review": config.llm_review,
-                    "model": config.llm_model if use_llm else None,
                     "batch_size": len(batch),
-                    "weak_llm_reviewed": batch_weak_llm_reviewed,
                     "error": error,
                     "duration_seconds": round((datetime.now() - started).total_seconds(), 3),
                 },
@@ -726,41 +645,131 @@ def classify_candidates(
             arxiv_id = paper_id(paper)
             decision = decisions.get(arxiv_id)
             if decision is None:
-                decision = TitleDecision(False, 0.0, "Classifier did not return a decision for this paper.", "missing")
-            paper["_classifier"] = {
+                decision = TitleDecision(
+                    False,
+                    0.0,
+                    "Rule triage did not return a decision for this paper.",
+                    "no-clear-title-evidence",
+                )
+            paper["_title_triage"] = {
                 "include": decision.include,
                 "confidence": decision.confidence,
                 "reason": decision.reason,
                 "label": decision.label,
             }
-            if decision.include:
-                if decision.label == "rule-direct":
-                    direct_rule_included += 1
-                elif decision.label.startswith("rule-weak"):
-                    weak_rule_candidates += 1
-                included.append(paper)
+            if decision.label == "rule-related":
+                rule_related.append(paper)
             else:
-                if decision.label.startswith("rule-weak"):
-                    weak_rule_candidates += 1
-                filtered += 1
+                no_clear_title_evidence.append(paper)
 
-    return included, {
-        "classifier_included": len(included),
-        "classifier_filtered": filtered,
-        "classifier_errors": errors,
-        "direct_rule_included": direct_rule_included,
-        "weak_rule_candidates": weak_rule_candidates,
-        "weak_llm_reviewed": weak_llm_reviewed,
-        "weak_llm_included": weak_llm_included,
+    return rule_related, no_clear_title_evidence, {
+        "rule_related_count": len(rule_related),
+        "no_clear_title_evidence_count": len(no_clear_title_evidence),
+    }
+
+
+def review_title_candidates(
+    papers: list[dict[str, Any]],
+    config: SearchConfig,
+    *,
+    run_id: str,
+    month: MonthWindow,
+    run_log: Path,
+    progress: ProgressReporter | None = None,
+) -> dict[str, int]:
+    if not papers:
+        return {
+            "llm_reviewed_count": 0,
+            "llm_confirmed_count": 0,
+            "llm_not_confirmed_count": 0,
+            "llm_missing_count": 0,
+        }
+
+    api_key = load_llm_api_key(config.llm_api_key)
+    if not api_key:
+        raise RuntimeError(
+            "LLM review requires LLM_API_KEY, OPENAI_API_KEY, or DEEPXIV_AGENT_API_KEY "
+            "in the environment, or --llm-api-key."
+        )
+    llm = LLMTitleClassifier(
+        api_key=api_key,
+        base_url=config.llm_base_url,
+        model=config.llm_model,
+    )
+
+    reviewed_count = 0
+    confirmed_count = 0
+    not_confirmed_count = 0
+    missing_count = 0
+    reviewed_at = datetime.now()
+    batches = list(classifier_batches(papers, config.llm_batch_size))
+    for batch_index, batch in enumerate(batches, start=1):
+        started = datetime.now()
+        decisions: dict[str, TitleDecision] = {}
+        error: str | None = None
+        try:
+            decisions = llm.classify_batch(batch)
+        except Exception as exc:
+            error = f"{type(exc).__name__}: {exc}"
+            raise
+        finally:
+            append_jsonl(
+                run_log,
+                {
+                    "event": "classify",
+                    "stage": "llm_review",
+                    "run_id": run_id,
+                    "month": month.slug,
+                    "batch_size": len(batch),
+                    "model": config.llm_model,
+                    "error": error,
+                    "duration_seconds": round((datetime.now() - started).total_seconds(), 3),
+                },
+            )
+            if progress:
+                progress.update("Review", batch_index, len(batches), f"{month.slug} {len(batch)} titles")
+
+        for paper in batch:
+            reviewed_count += 1
+            decision = decisions.get(paper_id(paper))
+            if decision is None:
+                status = "missing"
+                confidence = None
+                reason = "LLM did not return a review result for this title."
+                missing_count += 1
+            elif decision.include:
+                status = "confirmed"
+                confidence = decision.confidence
+                reason = decision.reason
+                confirmed_count += 1
+            else:
+                status = "not_confirmed"
+                confidence = decision.confidence
+                reason = decision.reason
+                not_confirmed_count += 1
+            paper["_review"] = {
+                "status": status,
+                "confidence": confidence,
+                "reason": reason,
+                "model": config.llm_model,
+                "reviewed_at": reviewed_at.isoformat(timespec="seconds"),
+            }
+
+    return {
+        "llm_reviewed_count": reviewed_count,
+        "llm_confirmed_count": confirmed_count,
+        "llm_not_confirmed_count": not_confirmed_count,
+        "llm_missing_count": missing_count,
     }
 
 
 def search_month(
     arxiv_client: ArxivClient,
-    deepxiv_client: DeepXivClient,
+    deepxiv_client: DeepXivClient | None,
     month: MonthWindow,
     config: SearchConfig,
     *,
+    started_at: datetime,
     run_id: str,
     run_log: Path,
     progress: ProgressReporter | None = None,
@@ -771,6 +780,7 @@ def search_month(
     query_stats: list[dict[str, Any]] = []
     metadata_report_entries: list[dict[str, Any]] = []
     metadata_cache = metadata_cache if metadata_cache is not None else {}
+    title_triage_json = month_title_triage_path(config, month.slug)
     month_categories = resolved_categories_for_month(config, month)
     month_queries = resolved_queries_for_month(config, month)
 
@@ -782,6 +792,8 @@ def search_month(
             fatal_error: Exception | None = None
             try:
                 if config.source == "deepxiv":
+                    if deepxiv_client is None:
+                        raise RuntimeError("DeepXiv client is required when --source deepxiv is selected.")
                     result = deepxiv_client.search(
                         query,
                         size=config.max_results,
@@ -926,7 +938,7 @@ def search_month(
         reverse=True,
     )
 
-    relevant, classifier_stats = classify_candidates(
+    rule_related, no_clear_title_evidence, classifier_stats = classify_candidates(
         candidates,
         config,
         run_id=run_id,
@@ -934,54 +946,70 @@ def search_month(
         run_log=run_log,
         progress=progress,
     )
+    review_stats = {
+        "llm_reviewed_count": 0,
+        "llm_confirmed_count": 0,
+        "llm_not_confirmed_count": 0,
+        "llm_missing_count": 0,
+    }
+    initial_triage_stats = {
+        "month": month.slug,
+        "date_from": month.date_from,
+        "date_to": month.date_to,
+        "resolved_categories": month_categories,
+        "resolved_queries": month_queries,
+        "raw_unique": len(merged),
+        "relevant_count": len(rule_related),
+        "date_window_filtered": date_window_filtered,
+        "missing_publication_date": missing_publication_date,
+        "arxiv_metadata_requested_count": arxiv_metadata_requested_count,
+        "arxiv_publication_date_backfilled_count": arxiv_publication_date_backfilled_count,
+        "arxiv_metadata_timeout_count": arxiv_metadata_timeout_count,
+        "arxiv_metadata_error_count": arxiv_metadata_error_count,
+        "arxiv_metadata_no_publication_date_count": arxiv_metadata_no_publication_date_count,
+        "category_filtered": category_filtered,
+        "score_filtered": score_filtered,
+        "classifier_candidates": len(candidates),
+        **classifier_stats,
+        **review_stats,
+        "query_stats": query_stats,
+    }
+    write_json(
+        title_triage_json,
+        build_title_triage_record(
+            month,
+            rule_related_papers=rule_related,
+            no_clear_title_evidence_papers=no_clear_title_evidence,
+            stats=initial_triage_stats,
+            config=config,
+            run_id=run_id,
+            started_at=started_at,
+        ),
+    )
 
+    if config.llm_review:
+        review_stats = review_title_candidates(
+            no_clear_title_evidence,
+            config,
+            run_id=run_id,
+            month=month,
+            run_log=run_log,
+            progress=progress,
+        )
+
+    llm_confirmed = [
+        paper
+        for paper in no_clear_title_evidence
+        if ((paper.get("_review") or {}).get("status") == "confirmed")
+    ]
+    relevant = list(rule_related) + llm_confirmed
     relevant.sort(key=relevance_sort_key, reverse=True)
-
-    brief_candidates = [paper for paper in relevant if should_fetch_brief(paper)]
-    brief_skipped_weak = len(relevant) - len(brief_candidates)
-    for paper in relevant:
-        if not should_fetch_brief(paper):
-            paper["_brief_skipped"] = "weak rule match; retained with search metadata only"
-
-    if config.use_brief:
-        for index, paper in enumerate(brief_candidates, start=1):
-            arxiv_id = paper_id(paper)
-            if not arxiv_id:
-                if progress:
-                    progress.update("Brief", index, len(brief_candidates), f"{month.slug} missing arXiv ID")
-                continue
-            started = datetime.now()
-            fatal_error: Exception | None = None
-            try:
-                paper["_brief"] = deepxiv_client.brief(arxiv_id)
-                error = None
-            except Exception as exc:
-                paper["_brief_error"] = f"{type(exc).__name__}: {exc}"
-                error = paper["_brief_error"]
-                if type(exc).__name__ in {"AuthenticationError", "RateLimitError"}:
-                    fatal_error = exc
-            append_jsonl(
-                run_log,
-                {
-                    "event": "brief",
-                    "run_id": run_id,
-                    "month": month.slug,
-                    "arxiv_id": arxiv_id,
-                    "error": error,
-                    "duration_seconds": round((datetime.now() - started).total_seconds(), 3),
-                },
-            )
-            if progress:
-                progress.update("Brief", index, len(brief_candidates), f"{month.slug} {arxiv_id}")
-            if fatal_error:
-                raise fatal_error
-            if config.brief_sleep_seconds > 0:
-                time.sleep(config.brief_sleep_seconds)
 
     stats = {
         "month": month.slug,
         "date_from": month.date_from,
         "date_to": month.date_to,
+        "title_triage_json_path": str(title_triage_json),
         "resolved_categories": month_categories,
         "resolved_queries": month_queries,
         "raw_unique": len(merged),
@@ -997,10 +1025,21 @@ def search_month(
         "score_filtered": score_filtered,
         "classifier_candidates": len(candidates),
         **classifier_stats,
-        "brief_eligible_count": len(brief_candidates) if config.use_brief else 0,
-        "brief_skipped_weak_count": brief_skipped_weak if config.use_brief else 0,
+        **review_stats,
         "query_stats": query_stats,
     }
+    write_json(
+        title_triage_json,
+        build_title_triage_record(
+            month,
+            rule_related_papers=rule_related,
+            no_clear_title_evidence_papers=no_clear_title_evidence,
+            stats=stats,
+            config=config,
+            run_id=run_id,
+            started_at=started_at,
+        ),
+    )
     return relevant, stats, metadata_report_entries
 
 
@@ -1012,7 +1051,7 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
     run_id = started_at.strftime("%Y%m%dT%H%M%S")
     run_log = config.logs_dir / f"run_{run_id}.log"
     arxiv_client = ArxivClient()
-    deepxiv_client = DeepXivClient(token=config.token)
+    deepxiv_client = DeepXivClient(token=config.token) if config.source == "deepxiv" else None
     metadata_cache: dict[str, dict[str, Any]] = {}
     arxiv_metadata_entries: list[dict[str, Any]] = []
     month_summaries: list[dict[str, Any]] = []
@@ -1036,17 +1075,15 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
             "category_filter_stage": "deepxiv_per_category" if config.source == "deepxiv" else "local",
             "search_mode": config.search_mode,
             "min_score": config.min_score,
-            "classifier": config.classifier,
             "llm_review": config.llm_review,
-            "llm_base_url": config.llm_base_url if config.classifier == "llm" or config.llm_review else None,
-            "llm_model": config.llm_model if config.classifier == "llm" or config.llm_review else None,
-            "llm_batch_size": config.llm_batch_size if config.classifier == "llm" or config.llm_review else None,
-            "use_brief": config.use_brief,
+            "llm_base_url": config.llm_base_url if config.llm_review else None,
+            "llm_model": config.llm_model if config.llm_review else None,
+            "llm_batch_size": config.llm_batch_size if config.llm_review else None,
         },
     )
 
     try:
-        progress.block("Resolved parameters:", run_parameter_lines(config, deepxiv_client.token))
+        progress.block("Resolved parameters:", run_parameter_lines(config, getattr(deepxiv_client, "token", None)))
         progress.message(
             f"Run {run_id}: {config.start_date.isoformat()} to {config.end_date.isoformat()} "
             f"({len(months)} month{'s' if len(months) != 1 else ''})"
@@ -1059,6 +1096,7 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
                     deepxiv_client,
                     month,
                     config,
+                    started_at=started_at,
                     run_id=run_id,
                     run_log=run_log,
                     progress=progress,
@@ -1100,6 +1138,7 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
                     "arxiv_metadata_timeout_count": stats["arxiv_metadata_timeout_count"],
                     "arxiv_metadata_error_count": stats["arxiv_metadata_error_count"],
                     "arxiv_metadata_no_publication_date_count": stats["arxiv_metadata_no_publication_date_count"],
+                    "title_triage_json_path": stats["title_triage_json_path"],
                     "json_path": str(month_json),
                     "note_path": str(note_path),
                 }

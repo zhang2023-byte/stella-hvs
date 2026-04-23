@@ -11,10 +11,7 @@ from .note_paths import iter_month_json_paths
 from .records import (
     INDEX_SCHEMA_VERSION,
     MONTH_SCHEMA_VERSION,
-    catalog_verification_record,
     has_observational_catalog,
-    has_verified_catalog,
-    is_catalog_verified,
     month_json_navigation_path,
     note_navigation_path,
 )
@@ -39,7 +36,6 @@ def _paper_sort_key(item: dict[str, Any]) -> tuple[str, str, str]:
 
 
 def _index_paper_item(paper: dict[str, Any], *, month: str) -> dict[str, Any]:
-    triage = paper.get("triage") or {}
     assessment = paper.get("catalog_assessment") or {}
     item = {
         "title": str(paper.get("title") or "Untitled"),
@@ -49,13 +45,8 @@ def _index_paper_item(paper: dict[str, Any], *, month: str) -> dict[str, Any]:
         "navigation_path": note_navigation_path(month),
         "json_path": month_json_navigation_path(month),
         "links": paper.get("links") or {},
-        "triage_level": str(triage.get("level") or ""),
-        "triage_label": str(triage.get("label") or ""),
         "has_observational_catalog": assessment.get("has_observational_catalog") is True,
     }
-    verification = catalog_verification_record(paper)
-    if verification:
-        item["catalog_verification"] = verification
     return item
 
 
@@ -75,8 +66,6 @@ def rebuild_index(notes_dir: Path) -> dict[str, Any]:
                 "year": year,
                 "literature_count": 0,
                 "data_related_count": 0,
-                "verified_count": 0,
-                "verified_catalog_count": 0,
                 "data_related_papers": [],
             },
         )
@@ -91,10 +80,6 @@ def rebuild_index(notes_dir: Path) -> dict[str, Any]:
                 continue
             item = _index_paper_item(paper, month=month)
             flat_papers.append(item)
-            if is_catalog_verified(paper):
-                year_bucket["verified_count"] += 1
-            if has_verified_catalog(paper):
-                year_bucket["verified_catalog_count"] += 1
             if not has_observational_catalog(paper):
                 continue
             year_bucket["data_related_papers"].append(item)
@@ -117,8 +102,6 @@ def rebuild_index(notes_dir: Path) -> dict[str, Any]:
             "year_count": len(year_records),
             "literature_count": total_literature_count,
             "data_related_count": total_data_related_count,
-            "verified_count": sum(int(year.get("verified_count") or 0) for year in year_records),
-            "verified_catalog_count": sum(int(year.get("verified_catalog_count") or 0) for year in year_records),
         },
         "years": year_records,
         "papers": flat_papers,

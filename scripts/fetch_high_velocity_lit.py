@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fetch monthly high-velocity star literature notes from DeepXiv."""
+"""Fetch monthly high-velocity star literature notes."""
 
 from __future__ import annotations
 
@@ -28,13 +28,11 @@ except ImportError:
 
 from high_velocity_lit.config import (  # noqa: E402
     DEFAULT_CATEGORIES,
-    DEFAULT_CLASSIFIER,
     DEFAULT_LLM_BASE_URL,
     DEFAULT_LLM_BATCH_SIZE,
     DEFAULT_LLM_MODEL,
     DEFAULT_MAX_RESULTS,
     DEFAULT_QUERIES,
-    DEFAULT_BRIEF_SLEEP_SECONDS,
     DEFAULT_SOURCE,
     DEFAULT_SEARCH_MODE,
     DEFAULT_SEARCH_SLEEP_SECONDS,
@@ -126,7 +124,7 @@ def print_partial_notice(summary: dict[str, object]) -> None:
     else:
         completed_text = "none"
 
-    sys.stderr.write("\nDeepXiv daily limit reached. Partial results were saved.\n")
+    sys.stderr.write("\nAPI rate limit reached. Partial results were saved.\n")
     sys.stderr.write(f"Completed months: {completed_text}\n")
     sys.stderr.write(f"Partial summary: {summary.get('partial_summary_path')}\n")
     sys.stderr.write(f"Run log: {summary.get('run_log')}\n")
@@ -138,7 +136,7 @@ def print_partial_notice(summary: dict[str, object]) -> None:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Collect monthly DeepXiv/arXiv notes for high-velocity star literature."
+        description="Collect monthly arXiv/DeepXiv notes for high-velocity star literature."
     )
     parser.add_argument(
         "--from",
@@ -168,12 +166,6 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         help="Optional DeepXiv score floor. Default is no score floor to avoid missing papers.",
     )
-    parser.add_argument(
-        "--classifier",
-        default=DEFAULT_CLASSIFIER,
-        choices=["llm", "rules"],
-        help="How to confirm candidate relevance before brief. Default: rules.",
-    )
     parser.add_argument("--llm-api-key", default=os.environ.get("LLM_API_KEY") or os.environ.get("OPENAI_API_KEY") or os.environ.get("DEEPXIV_AGENT_API_KEY"))
     parser.add_argument("--llm-base-url", default=os.environ.get("LLM_BASE_URL") or os.environ.get("OPENAI_BASE_URL") or os.environ.get("DEEPXIV_AGENT_BASE_URL") or DEFAULT_LLM_BASE_URL)
     parser.add_argument("--llm-model", default=os.environ.get("LLM_MODEL") or os.environ.get("OPENAI_MODEL") or os.environ.get("DEEPXIV_AGENT_MODEL") or DEFAULT_LLM_MODEL)
@@ -183,7 +175,7 @@ def build_parser() -> argparse.ArgumentParser:
         type=parse_bool,
         default=False,
         metavar="True|False",
-        help="With --classifier rules, send weak rule matches to the LLM. Default: False.",
+        help="Review titles without clear evidence using the LLM. Default: False.",
     )
     parser.add_argument(
         "--sleep",
@@ -191,17 +183,10 @@ def build_parser() -> argparse.ArgumentParser:
         default=DEFAULT_SEARCH_SLEEP_SECONDS,
         help="Seconds to sleep between candidate search calls.",
     )
-    parser.add_argument(
-        "--brief-sleep",
-        type=float,
-        default=DEFAULT_BRIEF_SLEEP_SECONDS,
-        help="Seconds to sleep between DeepXiv brief calls.",
-    )
     parser.add_argument("--query-file", type=Path, default=None, help="One query per line. Replaces defaults.")
     parser.add_argument("--extra-query", action="append", default=[], help="Add an extra query. Can be repeated.")
-    parser.add_argument("--brief", type=parse_bool, default=True, metavar="True|False", help="Fetch DeepXiv brief. Default: True.")
     parser.add_argument("--progress", type=parse_bool, default=True, metavar="True|False", help="Show terminal progress bars. Default: True.")
-    parser.add_argument("--token", default=None, help="Optional DeepXiv token. Defaults to DEEPXIV_TOKEN from loaded .env files.")
+    parser.add_argument("--token", default=None, help="Optional DeepXiv token for --source deepxiv.")
     parser.add_argument("--notes-dir", type=Path, default=WORKSPACE / "notes")
     parser.add_argument("--logs-dir", type=Path, default=WORKSPACE / "logs")
     return parser
@@ -219,9 +204,9 @@ def main() -> int:
         parser.error(f"--from date {start_date.isoformat()} is after --to date {end_date.isoformat()}")
     if args.max_results < 1:
         parser.error("--max-results must be at least 1")
-    if args.classifier in {"llm", "rules"} and (args.classifier == "llm" or args.llm_review):
+    if args.llm_review:
         if not args.llm_api_key:
-            parser.error("--classifier llm or --llm-review True requires LLM_API_KEY or --llm-api-key")
+            parser.error("--llm-review True requires LLM_API_KEY or --llm-api-key")
 
     queries = load_queries(args.query_file, args.extra_query)
     config = SearchConfig(
@@ -236,15 +221,12 @@ def main() -> int:
         max_results=args.max_results,
         search_mode=args.search_mode,
         min_score=args.min_score,
-        classifier=args.classifier,
         llm_api_key=args.llm_api_key,
         llm_base_url=args.llm_base_url,
         llm_model=args.llm_model,
         llm_batch_size=args.llm_batch_size,
-        llm_review=args.llm_review if args.classifier == "rules" else False,
+        llm_review=args.llm_review,
         search_sleep_seconds=args.sleep,
-        brief_sleep_seconds=args.brief_sleep,
-        use_brief=args.brief,
         progress=args.progress,
         token=args.token,
     )

@@ -1,31 +1,53 @@
-# TODO
+# Stella 愿景与路线
 
-This file tracks deferred work that is intentionally not part of the current
-implementation.
+这个文件记录项目的长期目标和后续实施方向。
 
-## Deferred: Semantic Agent Backend
+Stella 的目标，不只是收集文献，而是逐步建设一个面向高速星研究的、
+可追溯、可复现、可持续更新的对象级数据与知识系统。
 
-Status: deferred until Stella is deployed on a stable coding-agent platform.
+设计上应始终坚持这些原则：
 
-Current short-term approach:
+- 以恒星对象为基本单元，而不是只停留在论文条目层面
+- 所有关键结果都要保留来源和处理过程
+- 先产出机器可读结构，再考虑阅读视图或网站展示
+- 工作流应能逐步扩展，从文献整理走向数据整合、物理验证和数据库维护
 
-- Keep using the remote OpenAI-compatible LLM backend for semantic tasks.
-- Existing semantic tasks include weak relevance review and observational catalog assessment.
-- Use the configured DeepSeek/OpenAI-compatible environment variables for these calls.
+## 核心能力
 
-Future direction:
+1. 文献获取能力  
+   准确定位高速星相关文献，识别其中的方法、数据集和关键对象。  
+   数据源以 ADS 为主，arXiv / DeepXiv 为辅助。  
+   输出应尽量整理成机器可读的 Markdown、CSV 或结构化 JSON，并保留 provenance。
 
-- Introduce a Stella-owned semantic job protocol so the pipeline can hand structured tasks to a reviewer backend.
-- Keep the pipeline deterministic: create job JSON, validate result JSON, write results back into note JSON, then render Markdown.
-- Support multiple reviewer backends behind one interface:
-  - `llm`: current remote LLM API mode.
-  - `pending`: write jobs for the active coding Agent to process manually or with its own sub-agent tools.
-  - `command`: call a scriptable agent runner such as OpenClaw, Claude Code, Codex CLI, or a custom runner if a stable CLI/API exists.
-- Version task instructions and output schemas, for example `catalog_assessment.v1`.
-- Store provenance in results: reviewer backend, model/agent name, instruction version, reviewed time, confidence, and evidence.
+2. 数据补充能力  
+   根据论文中的恒星 ID、坐标等信息，继续从 Astroquery、CDS、望远镜官网或其它可追溯来源补充数据。  
+   目标不是只抄论文表格，而是形成以恒星对象为单位的 catalog。  
+   这个 catalog 可以逐步集成不同层级的数据，比如 6D 相空间、恒星参数、光谱和其它派生信息。
 
-Reason to defer:
+3. 物理验证能力  
+   对收集到的恒星对象执行可复现的物理验证流程。  
+   对高速星来说，重点包括速度转换、轨道积分和溯源分析。  
+   这一步应优先考虑 `Skill + CLI` 形式的高层工作流，而不是简单把整个 Python 包直接包成 CLI。  
+   同一个对象最好支持多来源数据、多模型的交叉验证，并完整保存验证过程。
 
-- Different coding Agents expose sub-agent capabilities differently.
-- Some sub-agent tools only exist inside an interactive agent session and cannot be called directly from Python.
-- A premature backend abstraction would add complexity before Stella has a stable deployment target.
+4. 数据库维护能力  
+   让 AI 能持续增量地更新对象数据库，并同步到网站。  
+   网站只是展示层，核心仍是结构化数据库、来源记录和验证结果。  
+   在 demo 阶段，可以考虑 `GitHub + Vercel + Supabase` 这一类前后端方案。
+
+## 后续扩展方向
+
+5. 工作流迭代能力  
+   在文献获取时，不只抽取恒星数据，也抽取数据处理方法。  
+   AI 需要能从方法中总结流程，再逐步改进已有工作流。
+
+6. 知识问答能力  
+   从文献中整理高速星相关知识，包括基本概念和实际操作方法。  
+   目标是帮助后续新进入这个方向的研究者更快上手。
+
+7. 科研能力  
+   在数据库、方法和验证流程逐步成熟后，进一步支持假设生成、实验验证、流程改进和文章撰写。
+
+## 实现顺序
+
+先把前四项核心能力打稳，再逐步补第五到第七项。

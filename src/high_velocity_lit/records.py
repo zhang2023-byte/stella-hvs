@@ -10,8 +10,9 @@ from .models import MonthWindow, SearchConfig
 from .note_paths import month_json_path, month_markdown_path
 
 
-MONTH_SCHEMA_VERSION = "stella.literature.month.v2"
+MONTH_SCHEMA_VERSION = "stella.literature.month.v3"
 INDEX_SCHEMA_VERSION = "stella.literature.index.v4"
+TITLE_TRIAGE_SCHEMA_VERSION = "stella.literature.title_triage.v1"
 
 
 def as_text(value: Any) -> str:
@@ -52,15 +53,6 @@ def as_float(value: Any) -> float | None:
         return None
 
 
-def classifier_label(paper: dict[str, Any]) -> str:
-    classifier = paper.get("_classifier") or {}
-    return str(classifier.get("label") or "")
-
-
-def triage_level(label: str) -> str:
-    return "weak" if label.startswith("rule-weak") or "weak" in label.lower() else "direct"
-
-
 def paper_url(arxiv_id: str) -> str:
     return f"https://arxiv.org/abs/{arxiv_id}"
 
@@ -80,37 +72,6 @@ def month_json_navigation_path(month: str) -> str:
 def has_observational_catalog(paper: dict[str, Any]) -> bool:
     assessment = paper.get("catalog_assessment") or {}
     return assessment.get("has_observational_catalog") is True
-
-
-def catalog_verification_record(paper: dict[str, Any]) -> dict[str, Any]:
-    verification = paper.get("catalog_verification")
-    if not isinstance(verification, dict) or not verification:
-        return {}
-    normalized = {
-        "verified": verification.get("verified") is True,
-        "verified_at": first_present(verification.get("verified_at")),
-        "overall_verdict": first_present(verification.get("overall_verdict")),
-        "catalog_location": first_present(verification.get("catalog_location")),
-        "record_path": first_present(verification.get("record_path")),
-        "summary_path": first_present(verification.get("summary_path")),
-    }
-    if "has_catalog" in verification:
-        normalized["has_catalog"] = verification.get("has_catalog") is True
-    for key in ("decision_source", "internal_delivery", "external_delivery", "primary_host", "confidence"):
-        value = first_present(verification.get(key))
-        if value:
-            normalized[key] = value
-    return normalized
-
-
-def is_catalog_verified(paper: dict[str, Any]) -> bool:
-    verification = catalog_verification_record(paper)
-    return verification.get("verified") is True
-
-
-def has_verified_catalog(paper: dict[str, Any]) -> bool:
-    verification = catalog_verification_record(paper)
-    return verification.get("has_catalog") is True
 
 
 def source_field_record(paper: dict[str, Any]) -> dict[str, Any]:
@@ -138,33 +99,16 @@ def source_field_record(paper: dict[str, Any]) -> dict[str, Any]:
     return {key: value for key, value in paper.items() if not key.startswith("_") and key not in normalized}
 
 
-def brief_field_record(brief: dict[str, Any]) -> dict[str, Any]:
-    normalized = {
-        "tldr",
-        "keywords",
-        "citations",
-        "publish_at",
-        "published_at",
-    }
-    return {key: value for key, value in brief.items() if key not in normalized}
-
-
-def paper_record(paper: dict[str, Any], *, config: SearchConfig, run_id: str) -> dict[str, Any]:
+def base_paper_record(paper: dict[str, Any], *, config: SearchConfig, run_id: str) -> dict[str, Any]:
     arxiv_id = first_present(paper.get("arxiv_id"), paper.get("id"))
-    classifier = paper.get("_classifier") or {}
-    label = str(classifier.get("label") or "")
-    brief = paper.get("_brief") or {}
-    brief_skipped = first_present(paper.get("_brief_skipped"))
-    brief_error = first_present(paper.get("_brief_error"))
     abstract = first_present(paper.get("abstract"), paper.get("summary"))
     best_score = as_float(first_present(paper.get("_best_score"), paper.get("score")))
     source_score = as_float(paper.get("score"))
-    citations = first_present(brief.get("citations"), paper.get("citations"), paper.get("citation"))
+    citations = first_present(paper.get("citations"), paper.get("citation"))
     published_at = first_present(
         paper.get("publish_at"),
         paper.get("published_at"),
         paper.get("published"),
-        brief.get("publish_at"),
     )
 
     record = {
@@ -188,39 +132,44 @@ def paper_record(paper: dict[str, Any], *, config: SearchConfig, run_id: str) ->
             "categories": as_list(paper.get("_matched_categories")),
             "best_score": best_score,
         },
-        "triage": {
-            "level": triage_level(label),
-            "label": label or config.classifier,
-            "include": bool(classifier.get("include", True)),
-            "confidence": as_float(classifier.get("confidence")),
-            "reason": first_present(classifier.get("reason")),
-        },
         "deepxiv": {
             "score": source_score,
             "best_score": best_score,
             "search_keywords": paper.get("keywords"),
             "citations": citations,
         },
-        "brief": {
-            "fetched": bool(brief),
-            "source": "deepxiv" if brief else None,
-            "skipped_reason": brief_skipped or None,
-            "error": brief_error or None,
-            "tldr": first_present(brief.get("tldr"), paper.get("tldr")),
-            "keywords": brief.get("keywords"),
-            "citations": first_present(brief.get("citations")),
-            "published_at": first_present(brief.get("publish_at")),
-            "source_fields": brief_field_record(brief),
-        },
         "provenance": {
             "search_source": config.source,
-            "brief_source": "deepxiv" if brief else None,
             "run_id": run_id,
         },
     }
     raw_fields = source_field_record(paper)
     if raw_fields:
         record["source_fields"] = raw_fields
+    return record
+
+
+def paper_record(paper: dict[str, Any], *, config: SearchConfig, run_id: str) -> dict[str, Any]:
+    return base_paper_record(paper, config=config, run_id=run_id)
+
+
+def title_triage_record(paper: dict[str, Any], *, config: SearchConfig, run_id: str) -> dict[str, Any]:
+    record = base_paper_record(paper, config=config, run_id=run_id)
+    triage = paper.get("_title_triage") or {}
+    review = paper.get("_review") or {}
+    record["title_triage"] = {
+        "label": first_present(triage.get("label")),
+        "confidence": as_float(triage.get("confidence")),
+        "reason": first_present(triage.get("reason")),
+    }
+    if review:
+        record["review"] = {
+            "status": first_present(review.get("status")),
+            "confidence": as_float(review.get("confidence")),
+            "reason": first_present(review.get("reason")),
+            "model": first_present(review.get("model")),
+            "reviewed_at": first_present(review.get("reviewed_at")),
+        }
     return record
 
 
@@ -237,13 +186,10 @@ def config_record(
         "max_results": config.max_results,
         "search_mode": config.search_mode,
         "min_score": config.min_score,
-        "classifier": config.classifier,
         "llm_review": config.llm_review,
         "llm_base_url": config.llm_base_url,
         "llm_model": config.llm_model,
         "llm_batch_size": config.llm_batch_size,
-        "use_brief": config.use_brief,
-        "brief_policy": "direct_only" if config.use_brief else "disabled",
     }
 
 
@@ -274,4 +220,41 @@ def build_month_record(
         "stats": stats_record,
         "search_log": stats.get("query_stats", []),
         "papers": [paper_record(paper, config=config, run_id=run_id) for paper in papers],
+    }
+
+
+def build_title_triage_record(
+    month: MonthWindow,
+    *,
+    rule_related_papers: list[dict[str, Any]],
+    no_clear_title_evidence_papers: list[dict[str, Any]],
+    stats: dict[str, Any],
+    config: SearchConfig,
+    run_id: str,
+    started_at: datetime,
+) -> dict[str, Any]:
+    stats_record = {key: value for key, value in stats.items() if key != "query_stats"}
+    return {
+        "schema_version": TITLE_TRIAGE_SCHEMA_VERSION,
+        "month": month.slug,
+        "date_from": month.date_from,
+        "date_to": month.date_to,
+        "run": {
+            "run_id": run_id,
+            "started_at": started_at.isoformat(timespec="seconds"),
+        },
+        "config": config_record(
+            config,
+            categories=stats.get("resolved_categories"),
+            queries=stats.get("resolved_queries"),
+        ),
+        "stats": stats_record,
+        "search_log": stats.get("query_stats", []),
+        "rule_related_papers": [
+            title_triage_record(paper, config=config, run_id=run_id) for paper in rule_related_papers
+        ],
+        "no_clear_title_evidence_papers": [
+            title_triage_record(paper, config=config, run_id=run_id)
+            for paper in no_clear_title_evidence_papers
+        ],
     }

@@ -62,13 +62,36 @@ class DeepXivClient:
         self.reader = reader_class(token=self.token, timeout=30, max_retries=2) if reader_class is not None else None
 
     @staticmethod
-    def _normalize_search_result(result: dict[str, Any]) -> dict[str, Any]:
+    def _normalize_result_item(item: dict[str, Any]) -> dict[str, Any]:
+        normalized = dict(item)
+        if normalized.get("date") and not normalized.get("publish_at"):
+            normalized["publish_at"] = normalized["date"]
+        if normalized.get("citation_count") is not None and normalized.get("citations") is None:
+            normalized["citations"] = normalized.get("citation_count")
+        authors = normalized.get("authors")
+        if isinstance(authors, list):
+            author_names = [
+                author.get("name", "").strip()
+                for author in authors
+                if isinstance(author, dict) and str(author.get("name") or "").strip()
+            ]
+            if author_names and not normalized.get("author_names"):
+                normalized["author_names"] = ", ".join(author_names)
+        return normalized
+
+    @classmethod
+    def _normalize_search_result(cls, result: dict[str, Any]) -> dict[str, Any]:
         if "results" in result and "total" in result:
-            return result
+            results = result.get("results") or []
+            return {
+                **result,
+                "results": [cls._normalize_result_item(item) for item in results if isinstance(item, dict)],
+            }
         if "result" in result or "total_count" in result:
+            results = result.get("result") or []
             return {
                 "total": result.get("total_count"),
-                "results": result.get("result") or [],
+                "results": [cls._normalize_result_item(item) for item in results if isinstance(item, dict)],
             }
         return result
 
@@ -97,17 +120,9 @@ class DeepXivClient:
         date_to: str,
         categories: Optional[list[str]] = None,
     ) -> dict[str, Any]:
-        if self.reader is not None:
-            result = self.reader.search(
-                query=query,
-                size=size,
-                search_mode=search_mode,
-                date_from=date_from,
-                date_to=date_to,
-                categories=categories,
-            )
-            return self._normalize_search_result(result)
-
+        # The public HTTP endpoint reliably honors date-bounded retrieval.
+        # In practice the SDK Reader.search path has returned stale historical
+        # results for monthly searches even when date_from/date_to are set.
         result = self._request(
             path="/arxiv/",
             query={

@@ -1,16 +1,16 @@
-# High-Velocity Star Literature Workflow
+# 高速星文献工作流
 
-This workspace collects monthly DeepXiv/arXiv literature records for high-velocity star research.
+当前仓库主要提供这些能力：
 
-Default flow:
+- 按月份抓取高速星相关文献
+- 用标题做规则初筛，并可选用 LLM 复核“标题没有明显证据”的论文
+- 保存月度标题分类结果到 `notes/`
+- 把标准结果写入 `notes/`
+- 给可能是数据型文献的论文加上 `catalog_assessment`
+- 给 `notes/` 中已判为数据相关的论文拉取本地资料归档到 `literature/`
+- 从 JSON 生成可读的 Markdown
 
-- Search with DeepXiv.
-- Split by arXiv category.
-- Deduplicate by arXiv ID.
-- Classify titles with local rules.
-- Save canonical JSON under `notes/`, then generate Markdown notes from that JSON.
-
-## Setup
+## 环境准备
 
 ```bash
 conda env create -f environment.yml
@@ -18,75 +18,77 @@ conda activate stella-env
 cp scripts/env.example .env
 ```
 
-Fill `DEEPXIV_TOKEN` in `.env`.
+如果你要使用 `--source deepxiv`，或运行 `catalog_assessment` 的 DeepXiv 增强阅读，再在 `.env` 中填写 `DEEPXIV_TOKEN`。
 
-Details: [docs/setup.md](docs/setup.md)
+详细说明见 [docs/setup.md](docs/setup.md)。
 
-## Run
+## 常用命令
 
-Default batch:
+默认批量运行：
 
 ```bash
 bash scripts/run_2025_2026.sh
 ```
 
-Minimal run:
+基础运行：
 
 ```bash
 conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
   --from 2026-03
 ```
 
-Catalog verification for one paper or a sampled set from `notes/index.json`:
+带 LLM 复核运行：
 
 ```bash
-conda run -n stella-env python scripts/verify_literature_catalog.py \
-  --arxiv-id 2405.04750
-
-conda run -n stella-env python scripts/verify_literature_catalog.py \
-  --sample-index 3 \
-  --seed 7
-
-conda run -n stella-env python scripts/verify_literature_catalog.py \
-  --take-index 10 \
-  --only-unverified
-
-conda run -n stella-env python scripts/apply_agent_catalog_adjudication.py \
-  --arxiv-id 2401.02017 \
-  --has-catalog true \
-  --internal-delivery format_only \
-  --external-delivery full \
-  --location-class mixed \
-  --primary-host china-vo \
-  --confidence high \
-  --evidence "The paper states that the catalog is available on China-VO." \
-  --reasoning-notes "The full machine-readable catalog is externally hosted; the internal appendix is only guidance."
-
-conda run -n stella-env python scripts/init_catalog_ingestion.py \
-  --arxiv-id 2401.02017
+conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
+  --from 2026-03 \
+  --llm-review True
 ```
 
-More commands, defaults, and date rules: [docs/usage.md](docs/usage.md)
+给已有月份补数据相关判断：
 
-## Key Docs
+```bash
+conda run -n stella-env python scripts/annotate_catalog_data.py \
+  --on 2026-03
+```
 
-- Title triage rules and LLM review: [docs/title-triage.md](docs/title-triage.md)
-- Outputs and logs: [docs/outputs.md](docs/outputs.md)
-- Agent context for future work: [AGENTS.md](AGENTS.md)
+这条流程会为每篇待判断论文读取 DeepXiv brief，并抓取引言末段与各 section 的标题和首段，再交给 LLM 综合判断是否属于高速星数据型文献。
 
-## Layout
+给已判定为数据相关的论文拉取本地资料：
+
+```bash
+conda run -n stella-env python scripts/pull_literature_assets.py \
+  --from 2024-01 \
+  --to 2026-04
+```
+
+从 JSON 重生成 Markdown：
+
+```bash
+conda run -n stella-env python scripts/render_lit_notes.py
+```
+
+更多参数见 [docs/usage.md](docs/usage.md)。
+
+## 文档
+
+- 环境说明：[docs/setup.md](docs/setup.md)
+- 使用方法：[docs/usage.md](docs/usage.md)
+- 输出说明：[docs/outputs.md](docs/outputs.md)
+- 标题分类规则：[docs/title-triage.md](docs/title-triage.md)
+- 仓库内代理约束：[AGENTS.md](AGENTS.md)
+
+## 目录
 
 ```text
-scripts/fetch_high_velocity_lit.py   Main CLI
-scripts/annotate_catalog_data.py     Add observational catalog assessments to note JSON
-scripts/verify_literature_catalog.py Verify one paper's catalog content across DeepXiv, PDF, and source
-scripts/apply_agent_catalog_adjudication.py Persist agent overrides for ambiguous per-paper catalog judgments
-scripts/init_catalog_ingestion.py   Bootstrap machine-readable catalog-ingestion scaffolds for a verified paper
-scripts/render_lit_notes.py          Regenerate Markdown from note JSON
-scripts/run_2025_2026.sh             Convenience batch runner
-docs/                                Detailed docs
-literature/                          Per-paper catalog verification records and extracted source artifacts
-skills/                              Repo-local reusable agent skills
-notes/                               Canonical JSON under YYYY/YYYY-MM/ plus generated Markdown and collection index
-src/high_velocity_lit/               Pipeline implementation
+scripts/fetch_high_velocity_lit.py   月度文献抓取主入口
+scripts/annotate_catalog_data.py     给月度 JSON 补 catalog_assessment
+scripts/pull_literature_assets.py    拉取 data-related 文献的本地资料归档
+scripts/render_lit_notes.py          从 JSON 重生成 Markdown
+scripts/run_2025_2026.sh             批量运行脚本
+docs/                                说明文档
+literature/                          本地文献资产归档（默认不纳入 Git）
+notes/                               月度标题分类 JSON、月度 JSON、月度 Markdown、年度索引
+src/high_velocity_lit/               核心实现
+tests/                               测试
 ```

@@ -26,7 +26,7 @@ try:
 except ImportError:
     pass
 
-from high_velocity_lit.catalog_assessment import LLMCatalogAssessor, annotate_record  # noqa: E402
+from high_velocity_lit.catalog_assessment import DeepXivCLIReader, LLMCatalogAssessor, annotate_record  # noqa: E402
 from high_velocity_lit.config import DEFAULT_LLM_BASE_URL, DEFAULT_LLM_BATCH_SIZE, DEFAULT_LLM_MODEL  # noqa: E402
 from high_velocity_lit.indexing import refresh_index_outputs  # noqa: E402
 from high_velocity_lit.markdown import render_month_note  # noqa: E402
@@ -146,6 +146,10 @@ def markdown_path_for(json_path: Path, record: dict[str, object]) -> Path:
     return json_path.with_name(f"{month}.md")
 
 
+def build_deepxiv_reader() -> DeepXivCLIReader:
+    return DeepXivCLIReader()
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Use an LLM to annotate whether note papers contain observational high-velocity-star catalog data."
@@ -170,7 +174,6 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--llm-base-url", default=os.environ.get("LLM_BASE_URL") or os.environ.get("OPENAI_BASE_URL") or os.environ.get("DEEPXIV_AGENT_BASE_URL") or DEFAULT_LLM_BASE_URL)
     parser.add_argument("--llm-model", default=os.environ.get("LLM_MODEL") or os.environ.get("OPENAI_MODEL") or os.environ.get("DEEPXIV_AGENT_MODEL") or DEFAULT_LLM_MODEL)
     parser.add_argument("--llm-batch-size", type=int, default=DEFAULT_LLM_BATCH_SIZE)
-    parser.add_argument("--force", type=parse_bool, default=False, metavar="True|False", help="Recompute existing assessments. Default: False.")
     parser.add_argument("--render", type=parse_bool, default=True, metavar="True|False", help="Refresh sibling Markdown file. Default: True.")
     parser.add_argument("--dry-run", type=parse_bool, default=False, metavar="True|False", help="Run assessment without writing files. Default: False.")
     return parser
@@ -219,6 +222,7 @@ def main() -> int:
         base_url=args.llm_base_url,
         model=args.llm_model,
     )
+    paper_reader = build_deepxiv_reader()
     results: list[dict[str, object]] = []
     totals = {"pending": 0, "assessed": 0, "missing": 0, "catalog_count": 0}
     index_outputs: dict[str, object] | None = None
@@ -230,7 +234,7 @@ def main() -> int:
             batch_size=args.llm_batch_size,
             method="llm",
             model=args.llm_model,
-            force=args.force,
+            paper_reader=paper_reader,
         )
         markdown_path = markdown_path_for(json_path, record)
         if not args.dry_run:

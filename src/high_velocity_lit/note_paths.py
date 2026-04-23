@@ -30,6 +30,10 @@ def month_markdown_path(notes_dir: Path, month_slug: str) -> Path:
     return month_dir(notes_dir, month_slug) / f"{month_slug}.md"
 
 
+def month_title_triage_path(notes_dir: Path, month_slug: str) -> Path:
+    return month_dir(notes_dir, month_slug) / f"{month_slug}.title-triage.json"
+
+
 def candidate_month_json_paths(notes_dir: Path, month_slug: str) -> list[Path]:
     return [
         month_json_path(notes_dir, month_slug),

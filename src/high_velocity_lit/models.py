@@ -41,14 +41,11 @@ class SearchConfig:
     max_results: int
     search_mode: str
     min_score: Optional[float]
-    classifier: str
     llm_api_key: Optional[str]
     llm_base_url: str
     llm_model: str
     llm_batch_size: int
     llm_review: bool
     search_sleep_seconds: float
-    brief_sleep_seconds: float
-    use_brief: bool
     progress: bool
     token: Optional[str] = None

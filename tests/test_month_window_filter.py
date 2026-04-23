@@ -40,10 +40,9 @@ class TimeoutMetadataArxivClient:
 
 class FakeDeepXivClient:
     token = "fake-token"
-    brief_calls: list[str] = []
 
     def __init__(self, token: str | None = None) -> None:
-        type(self).brief_calls = []
+        pass
 
     def search(
         self,
@@ -87,11 +86,6 @@ class FakeDeepXivClient:
             ],
         }
 
-    def brief(self, arxiv_id: str) -> dict[str, object]:
-        type(self).brief_calls.append(arxiv_id)
-        return {"tldr": f"Brief for {arxiv_id}."}
-
-
 class MonthWindowFilterTest(unittest.TestCase):
     def test_pipeline_filters_out_of_window_and_missing_date_results(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -108,15 +102,12 @@ class MonthWindowFilterTest(unittest.TestCase):
                 max_results=3,
                 search_mode="hybrid",
                 min_score=None,
-                classifier="rules",
                 llm_api_key=None,
                 llm_base_url="https://api.openai.com/v1",
                 llm_model="gpt-4o-mini",
                 llm_batch_size=25,
                 llm_review=False,
                 search_sleep_seconds=0,
-                brief_sleep_seconds=0,
-                use_brief=True,
                 progress=False,
                 token=None,
             )
@@ -128,7 +119,6 @@ class MonthWindowFilterTest(unittest.TestCase):
                 summary = pipeline.run_pipeline(config)
 
             self.assertEqual(summary["status"], "complete")
-            self.assertEqual(FakeDeepXivClient.brief_calls, ["2501.00001"])
             self.assertEqual(summary["arxiv_metadata"]["requested_count"], 1)
             self.assertEqual(summary["arxiv_metadata"]["error_count"], 1)
             self.assertEqual(summary["arxiv_metadata"]["timeout_count"], 0)
@@ -174,15 +164,12 @@ class MonthWindowFilterTest(unittest.TestCase):
                 max_results=3,
                 search_mode="hybrid",
                 min_score=None,
-                classifier="rules",
                 llm_api_key=None,
                 llm_base_url="https://api.openai.com/v1",
                 llm_model="gpt-4o-mini",
                 llm_batch_size=25,
                 llm_review=False,
                 search_sleep_seconds=0,
-                brief_sleep_seconds=0,
-                use_brief=True,
                 progress=False,
                 token=None,
             )
@@ -223,15 +210,12 @@ class MonthWindowFilterTest(unittest.TestCase):
                 max_results=3,
                 search_mode="hybrid",
                 min_score=None,
-                classifier="rules",
                 llm_api_key=None,
                 llm_base_url="https://api.openai.com/v1",
                 llm_model="gpt-4o-mini",
                 llm_batch_size=25,
                 llm_review=False,
                 search_sleep_seconds=0,
-                brief_sleep_seconds=0,
-                use_brief=True,
                 progress=False,
                 token=None,
             )

@@ -25,11 +25,6 @@ def first_present(*values: Any) -> str:
     return ""
 
 
-def is_weak_match(paper: dict[str, Any]) -> bool:
-    triage = paper.get("triage") or {}
-    return triage.get("level") == "weak"
-
-
 def pluralize(count: Any, singular: str, plural: str | None = None) -> str:
     value = int(count or 0)
     noun = singular if value == 1 else (plural or f"{singular}s")
@@ -60,21 +55,12 @@ def paper_meta_text(paper: dict[str, Any]) -> str:
     parts: list[str] = []
     month = first_present(paper.get("month"))
     published_at = compact_date(first_present(paper.get("published_at")))
-    triage_level = first_present(paper.get("triage_level"))
-    verification = paper.get("catalog_verification") or {}
     if month:
         parts.append(month)
     if published_at and published_at != month:
         parts.append(published_at)
-    if triage_level:
-        parts.append(triage_level)
     if paper.get("has_observational_catalog") is True:
         parts.append("data-related")
-    if isinstance(verification, dict) and verification.get("verified") is True:
-        if first_present(verification.get("decision_source")) == "agent":
-            parts.append("verified: agent catalog" if verification.get("has_catalog") is True else "verified: agent no catalog")
-        else:
-            parts.append("verified: catalog" if verification.get("has_catalog") is True else "verified: no catalog")
     return "; ".join(parts)
 
 
@@ -101,33 +87,27 @@ def render_month_note(record: dict[str, Any]) -> str:
         lines.append(f"- Category filter: {', '.join(f'`{cat}`' for cat in categories)}")
     if config.get("min_score") is not None:
         lines.append(f"- DeepXiv score floor: `{config.get('min_score')}`")
-    if config.get("classifier") == "llm":
-        lines.append(f"- Title triage: LLM `{config.get('llm_model')}`, base URL `{config.get('llm_base_url')}`")
-    elif config.get("classifier") == "rules" and config.get("llm_review"):
+    if config.get("llm_review"):
         lines.append(
-            f"- Title triage: direct rule matches accepted automatically; "
-            f"weak rule matches reviewed by LLM `{config.get('llm_model')}`"
+            f"- Title triage: rules first; titles without clear evidence reviewed by LLM `{config.get('llm_model')}`"
         )
     else:
-        lines.append(f"- Title triage: `{config.get('classifier')}`")
-    if config.get("use_brief"):
-        lines.append(
-            f"- Brief generation: DeepXiv `brief` only for strong/direct matches; "
-            f"fetched {pluralize(stats.get('brief_eligible_count', 0), 'paper')}, "
-            f"skipped {pluralize(stats.get('brief_skipped_weak_count', 0), 'weak match', 'weak matches')}"
-        )
-    else:
-        lines.append("- Brief generation: DeepXiv `brief` disabled")
+        lines.append("- Title triage: rules only")
     lines.append(
         f"- Deduplicated candidates: {pluralize(stats.get('raw_unique', 0), 'paper')}; "
-        f"accepted after title triage: {pluralize(stats.get('relevant_count', 0), 'paper')}"
+        f"final included literature: {pluralize(stats.get('relevant_count', 0), 'paper')}"
+    )
+    lines.append(
+        f"- Title triage counts: rule-related {pluralize(stats.get('rule_related_count', 0), 'paper')}; "
+        f"no clear title evidence {pluralize(stats.get('no_clear_title_evidence_count', 0), 'paper')}; "
+        f"LLM reviewed {pluralize(stats.get('llm_reviewed_count', 0), 'paper')}; "
+        f"LLM confirmed {pluralize(stats.get('llm_confirmed_count', 0), 'paper')}"
     )
     lines.append(
         f"- Filtering stats: date-window-filtered {pluralize(stats.get('date_window_filtered', 0), 'paper')}; "
         f"missing publication date {pluralize(stats.get('missing_publication_date', 0), 'paper')}; "
         f"category-filtered {pluralize(stats.get('category_filtered', 0), 'paper')}; "
-        f"score-filtered {pluralize(stats.get('score_filtered', 0), 'paper')}; "
-        f"title-triage-filtered {pluralize(stats.get('classifier_filtered', 0), 'paper')}"
+        f"score-filtered {pluralize(stats.get('score_filtered', 0), 'paper')}"
     )
     if int(stats.get("arxiv_metadata_requested_count") or 0) > 0:
         lines.append(
@@ -137,17 +117,6 @@ def render_month_note(record: dict[str, Any]) -> str:
             f"other errors {pluralize(stats.get('arxiv_metadata_error_count', 0), 'paper')}; "
             f"fetched but publication date still missing {pluralize(stats.get('arxiv_metadata_no_publication_date_count', 0), 'paper')}"
         )
-    if config.get("classifier") == "rules":
-        rule_summary = (
-            f"- Rule tiers: direct {pluralize(stats.get('direct_rule_included', 0), 'paper')}; "
-            f"weak {pluralize(stats.get('weak_rule_candidates', 0), 'paper')}"
-        )
-        if config.get("llm_review"):
-            rule_summary += (
-                f"; weak matches reviewed by LLM {pluralize(stats.get('weak_llm_reviewed', 0), 'paper')}; "
-                f"kept after review {pluralize(stats.get('weak_llm_included', 0), 'paper')}"
-            )
-        lines.append(rule_summary)
     catalog_summary = record.get("catalog_assessment_summary") or {}
     if catalog_summary:
         lines.append(
@@ -165,140 +134,71 @@ def render_month_note(record: dict[str, Any]) -> str:
     lines.append("")
 
     if not papers:
-        lines.append("No DeepXiv/arXiv results passed title triage this month.")
+        lines.append("No DeepXiv/arXiv results were included in this month's note.")
         lines.append("")
     else:
-        lines.append("Order: strong/direct matches first, weak matches second; within each tier, sorted by date and score.")
+        lines.append("Sorted by publication date and score.")
         lines.append("")
-        grouped_papers = [
-            ("Strong / Direct Matches", [paper for paper in papers if not is_weak_match(paper)]),
-            ("Weak Matches", [paper for paper in papers if is_weak_match(paper)]),
-        ]
-        item_index = 0
-        rendered_groups = 0
-        for group_title, group_papers in grouped_papers:
-            if not group_papers:
-                continue
-            if rendered_groups:
-                lines.append("---")
-                lines.append("")
-            lines.append(f"**{group_title}**")
+        for item_index, paper in enumerate(papers, start=1):
+            links = paper.get("links") or {}
+            abstract = paper.get("abstract") or {}
+            match = paper.get("match") or {}
+            deepxiv = paper.get("deepxiv") or {}
+            catalog_assessment = paper.get("catalog_assessment") or {}
+            arxiv_id = first_present(paper.get("arxiv_id"))
+            title = first_present(paper.get("title"), "Untitled")
+            abstract_text = first_present(abstract.get("text"))
+            keywords = first_present(deepxiv.get("search_keywords"))
+            publish_at = first_present(paper.get("published_at"))
+            authors = first_present(paper.get("author_names"), paper.get("authors"))
+            categories_text = first_present(paper.get("categories"))
+            citations = first_present(deepxiv.get("citations"))
+            score = first_present(match.get("best_score"), deepxiv.get("best_score"), deepxiv.get("score"))
+            matched_queries = ", ".join(f"`{q}`" for q in match.get("queries", []))
+            matched_categories = ", ".join(f"`{cat}`" for cat in match.get("categories", []))
+
+            lines.append(f"### {item_index}. {title}")
             lines.append("")
-            rendered_groups += 1
-            for paper in group_papers:
-                item_index += 1
-                links = paper.get("links") or {}
-                brief = paper.get("brief") or {}
-                abstract = paper.get("abstract") or {}
-                match = paper.get("match") or {}
-                triage = paper.get("triage") or {}
-                deepxiv = paper.get("deepxiv") or {}
-                catalog_assessment = paper.get("catalog_assessment") or {}
-                catalog_verification = paper.get("catalog_verification") or {}
-
-                arxiv_id = first_present(paper.get("arxiv_id"))
-                title = first_present(paper.get("title"), "Untitled")
-                tldr = first_present(brief.get("tldr"))
-                abstract_text = first_present(abstract.get("text"))
-                keywords = first_present(brief.get("keywords"), deepxiv.get("search_keywords"))
-                publish_at = first_present(paper.get("published_at"), brief.get("published_at"))
-                authors = first_present(paper.get("author_names"), paper.get("authors"))
-                categories_text = first_present(paper.get("categories"))
-                citations = first_present(brief.get("citations"), deepxiv.get("citations"))
-                score = first_present(match.get("best_score"), deepxiv.get("best_score"), deepxiv.get("score"))
-                matched_queries = ", ".join(f"`{q}`" for q in match.get("queries", []))
-                matched_categories = ", ".join(f"`{cat}`" for cat in match.get("categories", []))
-
-                lines.append(f"### {item_index}. {title}")
+            abs_url = first_present(links.get("abs"))
+            pdf = first_present(links.get("pdf"))
+            if arxiv_id and abs_url and pdf:
+                lines.append(f"- arXiv: [{arxiv_id}]({abs_url}); [PDF]({pdf})")
+            elif arxiv_id:
+                lines.append(f"- arXiv: {arxiv_id}")
+            if publish_at:
+                lines.append(f"- Published at: {publish_at}")
+            if authors:
+                lines.append(f"- Authors: {authors}")
+            if categories_text:
+                lines.append(f"- Categories: {categories_text}")
+            if citations:
+                lines.append(f"- Citations: {citations}")
+            if score:
+                lines.append(f"- DeepXiv score: {score}")
+            if matched_queries:
+                lines.append(f"- Matched queries: {matched_queries}")
+            if matched_categories:
+                lines.append(f"- Matched categories: {matched_categories}")
+            if catalog_assessment:
+                has_catalog = "Likely" if catalog_assessment.get("has_observational_catalog") else "Unlikely"
+                data_products = first_present(catalog_assessment.get("data_products"))
+                lines.append(
+                    f"- Observational catalog assessment: {has_catalog}; "
+                    f"role={catalog_assessment.get('catalog_role')}; "
+                    f"scope={catalog_assessment.get('object_scope')}; "
+                    f"confidence={catalog_assessment.get('confidence')}; "
+                    f"{catalog_assessment.get('evidence') or ''}"
+                )
+                if data_products:
+                    lines.append(f"- Possible data products: {data_products}")
+            if keywords:
+                lines.append(f"- DeepXiv keywords: {keywords}")
+            if abstract_text:
                 lines.append("")
-                abs_url = first_present(links.get("abs"))
-                pdf = first_present(links.get("pdf"))
-                if arxiv_id and abs_url and pdf:
-                    lines.append(f"- arXiv: [{arxiv_id}]({abs_url}); [PDF]({pdf})")
-                elif arxiv_id:
-                    lines.append(f"- arXiv: {arxiv_id}")
-                if publish_at:
-                    lines.append(f"- Published at: {publish_at}")
-                if authors:
-                    lines.append(f"- Authors: {authors}")
-                if categories_text:
-                    lines.append(f"- Categories: {categories_text}")
-                if citations:
-                    lines.append(f"- Citations: {citations}")
-                if score:
-                    lines.append(f"- DeepXiv score: {score}")
-                if matched_queries:
-                    lines.append(f"- Matched queries: {matched_queries}")
-                if matched_categories:
-                    lines.append(f"- Matched categories: {matched_categories}")
-                if triage:
-                    lines.append(
-                        f"- Title triage: {triage.get('label')}, "
-                        f"confidence={triage.get('confidence')}, {triage.get('reason') or ''}"
-                    )
-                if catalog_assessment:
-                    has_catalog = "Likely" if catalog_assessment.get("has_observational_catalog") else "Unlikely"
-                    data_products = first_present(catalog_assessment.get("data_products"))
-                    lines.append(
-                        f"- Observational catalog assessment: {has_catalog}; "
-                        f"role={catalog_assessment.get('catalog_role')}; "
-                        f"scope={catalog_assessment.get('object_scope')}; "
-                        f"confidence={catalog_assessment.get('confidence')}; "
-                        f"{catalog_assessment.get('evidence') or ''}"
-                    )
-                    if data_products:
-                        lines.append(f"- Possible data products: {data_products}")
-                if catalog_verification:
-                    verdict = first_present(catalog_verification.get("overall_verdict"))
-                    location = first_present(catalog_verification.get("catalog_location"))
-                    record_path = first_present(catalog_verification.get("record_path"))
-                    summary_path = first_present(catalog_verification.get("summary_path"))
-                    decision_source = first_present(catalog_verification.get("decision_source"))
-                    internal_delivery = first_present(catalog_verification.get("internal_delivery"))
-                    external_delivery = first_present(catalog_verification.get("external_delivery"))
-                    primary_host = first_present(catalog_verification.get("primary_host"))
-                    confidence = first_present(catalog_verification.get("confidence"))
-                    lines.append(
-                        f"- Paper-level catalog verification: "
-                        f"{'catalog confirmed' if catalog_verification.get('has_catalog') else 'no catalog confirmed'}; "
-                        f"verdict=`{verdict or 'verified'}`; "
-                        f"location=`{location or 'unknown'}`"
-                    )
-                    if decision_source or internal_delivery or external_delivery or primary_host or confidence:
-                        detail_parts: list[str] = []
-                        if decision_source:
-                            detail_parts.append(f"source=`{decision_source}`")
-                        if internal_delivery:
-                            detail_parts.append(f"internal=`{internal_delivery}`")
-                        if external_delivery:
-                            detail_parts.append(f"external=`{external_delivery}`")
-                        if primary_host:
-                            detail_parts.append(f"host=`{primary_host}`")
-                        if confidence:
-                            detail_parts.append(f"confidence=`{confidence}`")
-                        lines.append(f"- Verification detail: {'; '.join(detail_parts)}")
-                    if record_path or summary_path:
-                        artifact_parts: list[str] = []
-                        if record_path:
-                            artifact_parts.append(f"record `{record_path}`")
-                        if summary_path:
-                            artifact_parts.append(f"summary `{summary_path}`")
-                        lines.append(f"- Verification artifacts: {'; '.join(artifact_parts)}")
-                if not brief.get("fetched") and brief.get("skipped_reason"):
-                    lines.append("- DeepXiv brief: weak match not fetched; only search-stage metadata is retained")
-                if keywords:
-                    lines.append(f"- DeepXiv keywords: {keywords}")
-                if tldr:
-                    lines.append("")
-                    lines.append("**DeepXiv brief**")
-                    lines.append("")
-                    lines.append(tldr)
-                if abstract_text:
-                    lines.append("")
-                    lines.append("**Search Abstract**")
-                    lines.append("")
-                    lines.append(abstract_text)
+                lines.append("**Search Abstract**")
                 lines.append("")
+                lines.append(abstract_text)
+            lines.append("")
 
     lines.append("## Monthly Run Log Summary")
     lines.append("")
@@ -343,10 +243,6 @@ def render_index(record: dict[str, Any]) -> str:
     recent_papers = papers[:12]
     first_year = first_present((years[-1] or {}).get("year")) if years else ""
     last_year = first_present((years[0] or {}).get("year")) if years else ""
-    direct_count = sum(1 for paper in papers if first_present(paper.get("triage_level")) == "direct")
-    weak_count = sum(1 for paper in papers if first_present(paper.get("triage_level")) == "weak")
-    verified_count = int(summary.get("verified_count") or 0)
-    verified_catalog_count = int(summary.get("verified_catalog_count") or 0)
 
     lines = [
         "# Yearly High-Velocity Star Literature Index",
@@ -359,16 +255,6 @@ def render_index(record: dict[str, Any]) -> str:
         lines.append(f"- Indexed papers available for sampling: {pluralize(len(papers), 'paper')}")
     lines.append(f"- Total relevant literature: {pluralize(summary.get('literature_count', 0), 'paper')}")
     lines.append(f"- Total data-related literature: {pluralize(summary.get('data_related_count', 0), 'paper')}")
-    if verified_count:
-        lines.append(
-            f"- Paper-level verification: {pluralize(verified_count, 'paper')} checked; "
-            f"{pluralize(verified_catalog_count, 'paper')} with catalog confirmed"
-        )
-    if papers and (direct_count or weak_count):
-        lines.append(
-            f"- Triage mix: {pluralize(direct_count, 'direct paper')}; "
-            f"{pluralize(weak_count, 'weak paper')}"
-        )
 
     if recent_papers:
         lines.extend(["", "## Recent Literature", ""])
@@ -386,26 +272,25 @@ def render_index(record: dict[str, Any]) -> str:
             "",
             "## Year Overview",
             "",
-            "| Year | Relevant literature | Data-related literature | Verified papers | Verified catalogs |",
-            "| --- | ---: | ---: | ---: | ---: |",
+            "| Year | Relevant literature | Data-related literature |",
+            "| --- | ---: | ---: |",
         ]
     )
     for year in years:
         lines.append(
-            f"| {year.get('year')} | {year.get('literature_count', 0)} | {year.get('data_related_count', 0)} | "
-            f"{year.get('verified_count', 0)} | {year.get('verified_catalog_count', 0)} |"
+            f"| {year.get('year')} | {year.get('literature_count', 0)} | {year.get('data_related_count', 0)} |"
         )
 
     for year in years:
-        papers = year.get("data_related_papers") or []
-        if not papers:
+        year_papers = year.get("data_related_papers") or []
+        if not year_papers:
             continue
         lines.append("")
         lines.append(f"## {year.get('year')}")
         lines.append("")
         lines.append(f"Data-related literature: {pluralize(year.get('data_related_count', 0), 'paper')}")
         lines.append("")
-        for paper in papers:
+        for paper in year_papers:
             title = first_present(paper.get("title"), "Untitled")
             navigation_path = first_present(paper.get("navigation_path"))
             meta = paper_meta_text(paper)

@@ -1,109 +1,116 @@
-# Stella Agent Guide
+# Stella 代理说明
 
-This file is for future agents working in `stella-workspace`. Read it before changing code or running project workflows.
+本文件写给以后在 `stella-workspace` 中工作的 agent。
 
-## Project Goal
+## 当前仓库内容
 
-Stella is not just a literature-listing tool. The project aims to build a data integration infrastructure for high-velocity star research. Literature retrieval is an upstream capability: first identify relevant papers, then extract methods, datasets, stellar objects, observables, orbit integrations, chemical information, and provenance into a reproducible high-velocity-star knowledge base and object-level catalog.
+当前仓库主要流程：
 
-Long-term directions include:
+- 按月份抓取高速星相关文献
+- 用标题做相关性初筛
+- 把标准结果写入 `notes/`
+- 给已有月度 JSON 加上 `catalog_assessment`
+- 从 JSON 生成 Markdown
 
-- Daily or regular pushes of new field literature.
-- Gaia-era literature consolidation, with per-star cross-comparisons of phase space, spectra, orbital results, chemistry, and possible origins across papers.
-- Cross-matching and calibration between newly released datasets and the existing high-velocity-star object database.
-- Ingesting newly reported high-velocity-star candidates from papers, comparing them against existing datasets, and updating the knowledge base.
-- Reproducible physical validation workflows, including velocity conversion, orbit integration, origin tracing, and multi-model cross-checks.
-- A database and website that make the catalog and knowledge layer searchable, verifiable, and reusable.
+## 项目愿景
 
-## Core Principle
+Stella 的长期目标，是逐步建设一个面向高速星研究的、可追溯、可复现、
+可持续更新的对象级数据与知识系统。
 
-JSON is the source of truth. Markdown is a human-readable view generated from JSON and must stay fully corresponding to it.
+如果需要理解项目的长期方向、实施路线和未来扩展目标，请先阅读根目录的
+`TODO.md`。
 
-Default outputs:
+## 核心原则
+
+JSON 是事实源。Markdown 只是从 JSON 生成的阅读视图，必须和 JSON 对应。
+
+默认输出：
 
 ```text
-notes/YYYY/YYYY-MM/YYYY-MM.json   Monthly canonical record
-notes/YYYY/YYYY-MM/YYYY-MM.md     Reading note generated from monthly JSON
-notes/index.json                  Collection index rebuilt from monthly JSON
-notes/index.md                    Yearly view generated from index JSON
-literature/<arxiv_id>/record.json Per-paper verification evidence record
-literature/<arxiv_id>/summary.md  Human-readable verification summary
+notes/YYYY/YYYY-MM/YYYY-MM.json   月度标准记录
+notes/YYYY/YYYY-MM/YYYY-MM.md     月度阅读笔记
+notes/index.json                  全局索引
+notes/index.md                    年度视图
 ```
 
-Do not manually edit generated Markdown to fix data or presentation issues. If an output is wrong, update the JSON record builder or Markdown renderer, then regenerate with `scripts/render_lit_notes.py`.
+不要手动改生成后的 Markdown。  
+如果输出有问题，应修改 JSON 构建逻辑或 Markdown 渲染逻辑，然后重新生成。
 
-## Literature Workflow
+## 文献流程
 
-The minimal default command only requires `--from`:
+常用命令只需要 `--from`：
 
 ```bash
 conda run -n stella-env python scripts/fetch_high_velocity_lit.py --from 2026-03
 ```
 
-Defaults should remain quota-conscious:
+默认值应保持节省额度：
 
-- `--source deepxiv`
+- `--source arxiv`
 - `--classifier rules`
 - `--llm-review False`
-- `--brief True`
+- 不抓 `DeepXiv brief`
 - `--max-results 20`
 - `--categories astro-ph.GA`
 - `--search-mode hybrid`
 
-Default rule triage has two levels:
+默认标题规则分两层：
 
-- `direct` / `rule-direct`: strong relevance; fetch DeepXiv brief.
-- `weak` / `rule-weak*`: weak relevance; keep only search-stage metadata unless the user explicitly enables LLM review.
+- `direct` / `rule-direct`：强相关
+- `weak` / `rule-weak*`：弱相关，默认只保留搜索阶段元数据
 
-With `--llm-review True`, weak rule matches that the LLM confirms should be
-kept as weak matches. LLM review in rules mode should only decide whether weak
-rule matches are retained or filtered; it should not change the strong/weak
-grouping.
+如果开启 `--llm-review True`：
 
-LLM classification or review should use title, search-returned abstract, and categories together. Do not send title-only payloads unless the user explicitly asks for a title-only comparison.
+- 只让 LLM 判断弱匹配是否保留
+- 不改变强匹配和弱匹配的分组
 
-Use `scripts/annotate_catalog_data.py --on YYYY-MM`, `--on YYYY-MM,YYYY-MM`, or `--from DATE --to DATE` to add `catalog_assessment` fields to existing note JSON. That assessment should use abstract and brief content together, then refresh the sibling Markdown file.
+LLM 分类或复核时，输入应包含：
 
-Use `scripts/verify_literature_catalog.py` for deeper paper-level verification. It should keep the full evidence trail under `literature/<arxiv_id>/`, then sync a lightweight `catalog_verification` summary back into the matching monthly note JSON when the paper exists there, refresh that month Markdown file, and rebuild the collection index.
+- 标题
+- 搜索返回的摘要
+- categories
 
-When the automated heuristic is not trustworthy, persist the agent's structured override into `literature/<arxiv_id>/record.json` via `scripts/apply_agent_catalog_adjudication.py`. Monthly note JSON and `notes/index.*` must prefer that `agent_adjudication` over the automated DeepXiv/PDF/source verdict.
+不要只发标题，除非用户明确要求。
 
-## Engineering Rules
+给已有月份补 `catalog_assessment` 时，使用：
 
-- Test in `stella-env`: `conda run -n stella-env python -m unittest discover tests`.
-- Avoid real DeepXiv calls unless the user explicitly asks to rerun data collection; DeepXiv quota is limited.
-- Preserve provenance in JSON: search source, queries, categories, score, whether brief was fetched, skipped reason, and `run_id`.
-- Weak records must be listed after direct records; generated Markdown should keep a divider between the two groups.
-- On rate limits, completed months must still save JSON, Markdown, and the partial summary.
-- Do not revert existing generated notes or unrelated worktree changes. Commit only files relevant to the current task.
-- Project-local reusable agent skills live under `skills/`. Prefer adding or updating a skill there when the workflow depends on nuanced judgment that simple heuristics cannot reliably capture.
-- For complex single-paper catalog adjudication, prefer the repo-local `skills/literature-catalog-verifier/` workflow over extending keyword rules blindly.
-- Keep `~/.codex/skills/literature-catalog-verifier` as a symlink to the repo-local `skills/literature-catalog-verifier/` folder when a global Codex entry is needed. Do not maintain a copied duplicate.
-- For actual catalog ingestion after verification, use the repo-local `skills/catalog-ingestor/` workflow. It should produce machine-readable ingestion scaffolds under `literature/<arxiv_id>/catalog_ingest/` before any richer object-level normalization work.
-- Keep `~/.codex/skills/catalog-ingestor` as a symlink to the repo-local `skills/catalog-ingestor/` folder when a global Codex entry is needed. Do not maintain a copied duplicate.
-- Follow the boundary encoded in repo-local skills: deterministic scripts and tools should handle repeatable extraction and syncing, while the agent should handle context-heavy semantic adjudication and explicitly explain any override of automated heuristics.
-- If you change runtime dependencies or environment bootstrap steps, update the checked-in environment spec and setup docs in the same change.
+```bash
+conda run -n stella-env python scripts/annotate_catalog_data.py --on 2026-03
+```
 
-## Change Checklist
+判断应结合 abstract；如果记录里已有旧的 brief 字段，也可以一起参考。完成后要刷新对应 Markdown，并重建索引。
 
-When changing output structure, update:
+## 工程规则
+
+- 测试环境：`conda run -n stella-env python -m unittest discover tests`
+- 除非用户明确要求重新抓数据，否则不要做真实 DeepXiv 调用
+- JSON 里要保留 provenance：搜索来源、query、category、score、`run_id`
+- weak 记录必须排在 direct 记录后面
+- 月度 Markdown 中 direct 和 weak 之间要保留分隔线
+- 遇到限额时，已经完成的月份仍然要保存 JSON、Markdown 和 partial summary
+- 不要恢复无关改动，也不要回退用户已有的生成文件
+- 如果改了依赖或环境步骤，要同时更新环境文件和相关文档
+
+## 改动清单
+
+改输出结构时，同时更新：
 
 - `src/high_velocity_lit/records.py`
 - `src/high_velocity_lit/markdown.py`
 - `docs/outputs.md`
-- relevant tests
+- 相关测试
 
-When changing CLI arguments or defaults, update:
+改 CLI 参数或默认值时，同时更新：
 
 - `scripts/fetch_high_velocity_lit.py`
 - `docs/usage.md`
-- the minimal README guidance when needed
-- CLI parsing tests
+- `README.md`
+- CLI 测试
 
-When changing runtime dependencies or environment setup, update:
+改依赖或环境步骤时，同时更新：
 
 - `environment.yml`
 - `docs/setup.md`
-- `README.md` setup guidance when needed
+- `README.md`
 
-When adding scientific capabilities, design the result as machine-readable JSON first. Add Markdown, prose documentation, or website views only after the structured data model is clear.
+新增科学能力时，先设计机器可读 JSON，再考虑 Markdown 或其它展示层。

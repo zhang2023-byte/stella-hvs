@@ -1,81 +1,134 @@
-# Outputs
+# 输出说明
 
-JSON is canonical. Markdown is generated from JSON and should stay fully
-corresponding to it.
+JSON 是标准输出。Markdown 是从 JSON 生成的阅读视图。
 
-Canonical data:
-
-```text
-notes/index.json                  Collection index rebuilt from monthly JSON
-notes/YYYY/YYYY-MM/YYYY-MM.json   Monthly canonical record
-literature/<arxiv_id>/record.json Per-paper verification evidence record
-literature/<arxiv_id>/catalog_ingest/manifest.json           Catalog-ingestion manifest scaffold
-literature/<arxiv_id>/catalog_ingest/field_definitions.json  Per-field semantic-definition scaffold
-literature/<arxiv_id>/catalog_ingest/column_mapping.json     Stella normalization scaffold
-```
-
-Generated notes:
+## 标准数据
 
 ```text
-notes/index.md                   Yearly collection view generated from index JSON
-notes/YYYY/YYYY-MM/YYYY-MM.md    Monthly literature note generated from JSON
-literature/<arxiv_id>/summary.md Human-readable verification summary generated from record JSON
+literature/<arxiv_id>/    本地文献资产目录
+notes/index.json                  从月度 JSON 重建的全局索引
+notes/YYYY/YYYY-MM/YYYY-MM.json   月度标准记录
+notes/YYYY/YYYY-MM/YYYY-MM.title-triage.json   月度标题初筛与复核记录
 ```
 
-Local logs:
+## 生成文件
+
+```text
+literature/<arxiv_id>/audit.json   单篇文献资产拉取审计记录
+literature/<arxiv_id>/arxiv_abs.html
+literature/<arxiv_id>/arxiv.pdf
+literature/<arxiv_id>/arxiv_source*
+literature/<arxiv_id>/arxiv_source/...
+literature/<arxiv_id>/ads_abstract.html
+notes/index.md                   从 index.json 生成的年度视图
+notes/YYYY/YYYY-MM/YYYY-MM.md    从月度 JSON 生成的月度笔记
+```
+
+## 本地日志
 
 ```text
 logs/arxiv_metadata_<timestamp>.json
+logs/partial_<timestamp>.json
 logs/runs.jsonl
 logs/run_<timestamp>.log
 ```
 
-`logs/` is ignored by Git.
+`logs/` 不纳入 Git。
+`literature/` 默认也不纳入 Git。
 
-Each monthly JSON record includes:
+## 月度 JSON 包含什么
 
-- date range and run ID
-- resolved search/classifier/brief config, including the actual month-level categories and queries used
-- per-query/category search log
-- local month-window filtering stats, including out-of-window and missing-date drops
-- best-effort arXiv metadata backfill stats for DeepXiv results that arrived without a publication date
-- selected papers with arXiv/PDF links and provenance
-- matched queries and categories
-- title-triage label, confidence, and reason
-- direct/weak triage level
-- search-returned abstract
-- DeepXiv brief content and fetched/skipped status
-- optional `catalog_assessment` fields for observational catalog/sample checks
-- optional `catalog_verification` summary fields for paper-level DeepXiv/PDF/source verification
-- optional `agent_adjudication` inside `literature/<arxiv_id>/record.json` when an Agent overrides the automated paper-level verdict, including the repo-local `skill_path` and `skill_version` used for that adjudication
-- optional `catalog_ingest/` JSON scaffolds under `literature/<arxiv_id>/` for catalog-level ingestion work after verification; when a `Label / Unit / Description` table describes a full machine-readable catalog, the manifest marks it as `schema_definition` and the bootstrapper drafts per-field definitions and column mappings from it
-- direct/weak rule counts
+- 时间范围和 `run_id`
+- 实际使用的搜索参数
+- 每个 query / category 的搜索日志
+- 月份过滤统计
+- arXiv metadata 回填统计
+- 最终判定和高速星相关、并写入月度 note 的论文列表
+- 匹配到的 query 和 category
+- 搜索返回的摘要
+- 可选的 `catalog_assessment`
+- 可选的 `catalog_assessment_context.deepxiv_brief`
 
-Monthly Markdown notes are rendered from those fields. They list direct matches
-before weak matches and use a divider between the two sections. When present,
-catalog assessments and paper-level verification summaries are rendered beside
-each paper and summarized near the top of the note.
+## 标题分类 JSON 包含什么
 
-The current collection index is rebuilt from monthly JSON and grouped by year.
-`notes/index.md` emphasizes yearly counts, recent literature, data-related
-literature identified through `catalog_assessment`, and paper-level verification
-counts.
-`notes/index.json` also carries a flat `papers` list so downstream scripts can
-sample or filter papers without parsing Markdown. Those flat paper entries now
-also carry optional `catalog_verification` summaries and collection-level counts
-for how many papers have been verified and how many were confirmed to contain a
-catalog. When `catalog_verification.decision_source = agent`, that flat summary
-reflects the effective agent override rather than the automated DeepXiv/PDF/source
-heuristic alone.
+- 规则直判相关的论文：`rule_related_papers`
+- 标题没有明显证据的论文：`no_clear_title_evidence_papers`
+- 若开启 `--llm-review True`，后者会额外包含 `review`
+- 月度搜索日志与筛选统计
 
-Main log event types:
+## 月度 Markdown 怎么组织
+
+- 只列最终收录进月度 note 的论文
+- 不再展示 direct / weak 分层
+- 顶部保留规则初筛、LLM 复核和最终收录数量统计
+- 如果有 `catalog_assessment`，会显示在对应论文旁边
+
+## `catalog_assessment_context` 包含什么
+
+- `deepxiv_brief.source`
+- `deepxiv_brief.fetched`
+- `deepxiv_brief.error`
+- `deepxiv_brief.tldr`
+- `deepxiv_brief.keywords`
+- `deepxiv_brief.citations`
+- `deepxiv_brief.fetched_at`
+
+这里不会持久化 section 摘录。Introduction 末段和各 section 首段只在 `catalog_assessment` 运行时作为临时上下文使用。
+
+## `literature/` 审计记录包含什么
+
+- `arxiv_id`
+- `title`
+- `month`
+- `source_note_json`
+- `folder_name`
+- `run_at`
+- `ads_metadata`
+- `arxiv_abs`
+- `arxiv_pdf`
+- `arxiv_source`
+- `ads_abstract`
+
+其中每个资产状态都会记录：
+
+- `url`
+- `success`
+- `status_code`
+- `content_type`
+- `final_url`
+- `local_path`
+- `error`
+
+`arxiv_source` 还会额外记录：
+
+- `extracted`
+- `extract_dir`
+- `extract_error`
+- `extract_skipped_existing`
+- `source_unavailable_on_arxiv`
+- `source_unavailable_reason`
+
+## 索引文件包含什么
+
+`notes/index.json` 保存：
+
+- 按年份汇总的统计
+- 全部论文的扁平 `papers` 列表
+
+`notes/index.md` 重点展示：
+
+- 每年文献数量
+- 最近文献
+- 被 `catalog_assessment` 判为数据相关的文献
+
+## 主要日志事件
 
 ```text
 start
 query
 arxiv_metadata
 classify
-brief
 month_done
+partial_finish
 finish
 ```
