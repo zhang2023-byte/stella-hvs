@@ -10,6 +10,7 @@
 - 用标题做相关性初筛
 - 把标准结果写入 `notes/`
 - 给已有月度 JSON 加上 `catalog_assessment`
+- 审阅已归档论文源码中的高速星对象 catalog，并写入 `catalog_review.json`
 - 从 JSON 生成 Markdown
 
 ## 项目愿景
@@ -31,10 +32,18 @@ notes/YYYY/YYYY-MM/YYYY-MM.json   月度标准记录
 notes/YYYY/YYYY-MM/YYYY-MM.md     月度阅读笔记
 notes/index.json                  全局索引
 notes/index.md                    年度视图
+literature/<arxiv_id>/catalog_review.json   单篇 catalog 审阅事实源
+literature/catalog_index.json      catalog 审阅全局索引
+literature/catalog_index.md        catalog 审阅阅读视图
 ```
 
 不要手动改生成后的 Markdown。  
 如果输出有问题，应修改 JSON 构建逻辑或 Markdown 渲染逻辑，然后重新生成。
+
+Git 只保存生成这些数据的工具链、说明文档、测试和 skill。`notes/`、
+`literature/`、`logs/` 下的 JSON、Markdown、PDF、源码包、HTML 等数据产物默认
+遵守 `.gitignore`，不要为了保存工作而 `git add -f` 强制纳入版本控制，除非用户
+明确要求这样做。
 
 ## 文献流程
 
@@ -79,6 +88,27 @@ conda run -n stella-env python scripts/annotate_catalog_data.py --on 2026-03
 ```
 
 判断应结合 abstract；如果记录里已有旧的 brief 字段，也可以一起参考。完成后要刷新对应 Markdown，并重建索引。
+
+做高速星对象 catalog 审阅时，使用项目内 `hvs-catalog-review` skill。
+本阶段只判断并记录哪些 LaTeX 表格或外部资源是高速星对象 catalog，
+输出 `literature/<arxiv_id>/catalog_review.json`。不要声称已经提取出标准表格；
+LaTeX 转 CSV、下载外部表格、规范化 schema 应放到后续
+`catalog_sources/` 和 `catalog_tables/` 阶段。
+
+辅助候选清单：
+
+```bash
+conda run -n stella-env python scripts/inventory_catalog_candidates.py --arxiv-id 2402.10714
+```
+
+重建 catalog index：
+
+```bash
+conda run -n stella-env python scripts/build_catalog_index.py
+```
+
+不要手动改 `literature/catalog_index.json` 或 `literature/catalog_index.md`。
+如果输出有问题，应修改 `catalog_review.json` 或索引渲染逻辑，然后重新生成。
 
 ## 工程规则
 

@@ -8,6 +8,7 @@
 - 把标准结果写入 `notes/`
 - 给可能是数据型文献的论文加上 `catalog_assessment`
 - 给 `notes/` 中已判为数据相关的论文拉取本地资料归档到 `literature/`
+- 审阅已归档论文源码中的高速星对象 catalog，并生成 catalog 审阅索引
 - 从 JSON 生成可读的 Markdown
 
 ## 环境准备
@@ -62,6 +63,23 @@ conda run -n stella-env python scripts/pull_literature_assets.py \
   --to 2026-04
 ```
 
+审阅单篇论文的高速星对象 catalog 候选：
+
+```bash
+conda run -n stella-env python scripts/inventory_catalog_candidates.py \
+  --arxiv-id 2402.10714
+```
+
+然后使用项目内 `hvs-catalog-review` skill 结合全文写出
+`literature/<arxiv_id>/catalog_review.json`。本阶段只做审阅和来源定位，
+不转换 CSV、不解析 FITS、不下载外部表格。
+
+重建 catalog 审阅索引：
+
+```bash
+conda run -n stella-env python scripts/build_catalog_index.py
+```
+
 从 JSON 重生成 Markdown：
 
 ```bash
@@ -84,6 +102,8 @@ conda run -n stella-env python scripts/render_lit_notes.py
 scripts/fetch_high_velocity_lit.py   月度文献抓取主入口
 scripts/annotate_catalog_data.py     给月度 JSON 补 catalog_assessment
 scripts/pull_literature_assets.py    拉取 data-related 文献的本地资料归档
+scripts/inventory_catalog_candidates.py   列出单篇论文的 catalog 审阅候选
+scripts/build_catalog_index.py       从 catalog_review.json 重建 catalog 审阅索引
 scripts/render_lit_notes.py          从 JSON 重生成 Markdown
 scripts/run_2025_2026.sh             批量运行脚本
 docs/                                说明文档

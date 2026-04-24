@@ -183,7 +183,44 @@ conda run -n stella-env python scripts/pull_literature_assets.py \
   - NASA ADS 页面 HTML
 - 每篇论文都会生成 `audit.json`，记录各类资产的成功/失败状态
 
-## 5. 时间写法
+## 5. 审阅高速星对象 catalog
+
+对已经拉取到 `literature/<arxiv_id>/` 的论文，先生成候选清单：
+
+```bash
+conda run -n stella-env python scripts/inventory_catalog_candidates.py \
+  --arxiv-id 2402.10714
+```
+
+然后使用项目内 `hvs-catalog-review` skill 结合全文审阅候选表格和资源，
+写出：
+
+```text
+literature/<arxiv_id>/catalog_review.json
+```
+
+本阶段只做语义审阅、来源定位和证据记录，不把 LaTeX 转 CSV，不解析 FITS，也不下载外部表格。
+真正的表格提取阶段后续使用：
+
+```text
+literature/<arxiv_id>/catalog_sources/
+literature/<arxiv_id>/catalog_tables/
+```
+
+重建全局 catalog 审阅索引：
+
+```bash
+conda run -n stella-env python scripts/build_catalog_index.py
+```
+
+输出：
+
+```text
+literature/catalog_index.json
+literature/catalog_index.md
+```
+
+## 6. 时间写法
 
 ```text
 --from 2026-03-15  表示从 2026-03-15 开始
@@ -198,7 +235,7 @@ conda run -n stella-env python scripts/pull_literature_assets.py \
 未来日期会自动截到今天。
 非法日期格式会直接报错。
 
-## 6. 额外说明
+## 7. 额外说明
 
 当 DeepXiv 返回限额错误时：
 

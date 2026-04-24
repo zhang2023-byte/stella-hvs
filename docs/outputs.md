@@ -6,6 +6,8 @@ JSON 是标准输出。Markdown 是从 JSON 生成的阅读视图。
 
 ```text
 literature/<arxiv_id>/    本地文献资产目录
+literature/<arxiv_id>/catalog_review.json   单篇 catalog 审阅事实源
+literature/catalog_index.json       从 catalog_review.json 重建的全局 catalog 审阅索引
 notes/index.json                  从月度 JSON 重建的全局索引
 notes/YYYY/YYYY-MM/YYYY-MM.json   月度标准记录
 notes/YYYY/YYYY-MM/YYYY-MM.title-triage.json   月度标题初筛与复核记录
@@ -20,8 +22,16 @@ literature/<arxiv_id>/arxiv.pdf
 literature/<arxiv_id>/arxiv_source*
 literature/<arxiv_id>/arxiv_source/...
 literature/<arxiv_id>/ads_abstract.html
+literature/catalog_index.md        从 catalog_index.json 生成的 catalog 审阅视图
 notes/index.md                   从 index.json 生成的年度视图
 notes/YYYY/YYYY-MM/YYYY-MM.md    从月度 JSON 生成的月度笔记
+```
+
+后续真正表格提取阶段预留：
+
+```text
+literature/<arxiv_id>/catalog_sources/   原始 catalog 来源文件、下载表格或 LaTeX excerpt
+literature/<arxiv_id>/catalog_tables/    规范化后的 CSV、schema、转换日志
 ```
 
 ## 本地日志
@@ -108,6 +118,19 @@ logs/run_<timestamp>.log
 - `source_unavailable_on_arxiv`
 - `source_unavailable_reason`
 
+## `catalog_review.json` 包含什么
+
+`catalog_review.json` 是 Agent 结合全文审阅后的事实源，不表示已经完成表格抽取。
+
+- `paper`：arXiv ID、标题、月份、月度 JSON 路径、abs/pdf 链接
+- `source`：论文目录、`audit.json`、源码目录、主 TeX、源码可用性
+- `review`：审阅状态、时间、reviewer、总体说明
+- `catalog_candidates`：被判定为高速星对象 catalog 的表格或资源
+- `external_resources`：外部托管或本地机器可读资源及评论
+- `rejected_candidates`：被排除或不确定的候选及原因
+
+本阶段只保存 LaTeX 段落、链接、路径、证据和解释；不把 LaTeX 转 CSV，不下载外部表格。
+
 ## 索引文件包含什么
 
 `notes/index.json` 保存：
@@ -120,6 +143,19 @@ logs/run_<timestamp>.log
 - 每年文献数量
 - 最近文献
 - 被 `catalog_assessment` 判为数据相关的文献
+
+`literature/catalog_index.json` 保存：
+
+- 已有 `catalog_review.json` 的论文汇总
+- review 状态、catalog 候选数量、外部资源数量
+- 按年份聚合的 reviewed / has catalog / needs review 统计
+
+`literature/catalog_index.md` 重点展示：
+
+- 每篇已审阅或待复核论文
+- catalog 候选数量
+- 外部资源数量
+- 指向单篇 `catalog_review.json` 的链接
 
 ## 主要日志事件
 
