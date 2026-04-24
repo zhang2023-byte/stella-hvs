@@ -39,6 +39,8 @@ DEEPXIV_TOKEN=
 LLM_API_KEY=
 LLM_BASE_URL=https://api.openai.com/v1
 LLM_MODEL=gpt-4o-mini
+LLM_THINKING=
+LLM_REASONING_EFFORT=
 ```
 
 脚本会按下面顺序读取环境变量：

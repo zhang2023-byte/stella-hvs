@@ -103,7 +103,13 @@ class LLMClassifierPayloadTest(unittest.TestCase):
             captured["payload"] = json.loads(request.data.decode("utf-8"))  # type: ignore[attr-defined]
             return FakeResponse()
 
-        classifier = LLMTitleClassifier(api_key="test", base_url="https://example.test", model="test-model")
+        classifier = LLMTitleClassifier(
+            api_key="test",
+            base_url="https://example.test",
+            model="test-model",
+            thinking="enabled",
+            reasoning_effort="high",
+        )
         with patch("urllib.request.urlopen", fake_urlopen):
             decisions = classifier.classify_batch(
                 [
@@ -117,6 +123,8 @@ class LLMClassifierPayloadTest(unittest.TestCase):
             )
 
         self.assertTrue(decisions["2501.00001"].include)
+        self.assertEqual(captured["payload"]["thinking"], {"type": "enabled"})  # type: ignore[index]
+        self.assertEqual(captured["payload"]["reasoning_effort"], "high")  # type: ignore[index]
         messages = captured["payload"]["messages"]  # type: ignore[index]
         user_message = messages[1]["content"]  # type: ignore[index]
         self.assertIn('"abstract": "The abstract reports a high-velocity star candidate."', user_message)

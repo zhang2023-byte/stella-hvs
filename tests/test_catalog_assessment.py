@@ -291,11 +291,19 @@ class CatalogAssessmentTest(unittest.TestCase):
                 {"title": "Observations", "first_paragraph": "We present radial velocities and follow-up spectra for each candidate."},
             ],
         }
-        assessor = LLMCatalogAssessor(api_key="test", base_url="https://example.test", model="test-model")
+        assessor = LLMCatalogAssessor(
+            api_key="test",
+            base_url="https://example.test",
+            model="test-model",
+            thinking="enabled",
+            reasoning_effort="high",
+        )
         with patch("urllib.request.urlopen", fake_urlopen):
             decisions = assessor.assess_batch([paper_for_assessment])
 
         self.assertTrue(decisions["2603.00001"].has_observational_catalog)
+        self.assertEqual(captured["payload"]["thinking"], {"type": "enabled"})  # type: ignore[index]
+        self.assertEqual(captured["payload"]["reasoning_effort"], "high")  # type: ignore[index]
         messages = captured["payload"]["messages"]  # type: ignore[index]
         user_message = messages[1]["content"]  # type: ignore[index]
         self.assertIn("We present a catalog of high-velocity star candidates", user_message)

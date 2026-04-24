@@ -16,6 +16,7 @@ from pathlib import Path
 from typing import Any, Protocol, Sequence
 
 from .filters import clean_text
+from .llm_options import apply_llm_request_options
 
 
 @dataclass(frozen=True)
@@ -218,6 +219,8 @@ class LLMCatalogAssessor:
         api_key: str,
         base_url: str,
         model: str,
+        thinking: str | None = None,
+        reasoning_effort: str | None = None,
         temperature: float = 0.0,
         timeout: int = 90,
         max_retries: int = 3,
@@ -225,6 +228,8 @@ class LLMCatalogAssessor:
         self.api_key = api_key
         self.base_url = base_url.rstrip("/")
         self.model = model
+        self.thinking = thinking
+        self.reasoning_effort = reasoning_effort
         self.temperature = temperature
         self.timeout = timeout
         self.max_retries = max_retries
@@ -272,6 +277,11 @@ class LLMCatalogAssessor:
                 {"role": "user", "content": prompt + "\n\nItems:\n" + json.dumps(items, ensure_ascii=False)},
             ],
         }
+        apply_llm_request_options(
+            payload,
+            thinking=self.thinking,
+            reasoning_effort=self.reasoning_effort,
+        )
         request = urllib.request.Request(
             f"{self.base_url}/chat/completions",
             data=json.dumps(payload).encode("utf-8"),
