@@ -269,6 +269,7 @@ conda run -n stella-env python scripts/extract_catalog_tables.py \
 --max-external-files N     每个外部资源最多下载 N 个机器可读文件，默认 5
 --max-external-bytes N     单个外部资源下载硬上限，默认 52428800
 --external-timeout N       外部资源 HTTP 超时秒数，默认 30
+--jobs N                   --all-reviewed 的并行论文 worker 数，默认 1
 --agent-locator Off|Always
                            LLM Agent 页面定位；默认 Always，对 HTML landing page 始终调用 Agent
 --llm-api-key KEY          Agent locator 使用的 OpenAI-compatible API key；也可用 LLM_API_KEY 等环境变量
@@ -288,6 +289,7 @@ conda run -n stella-env python scripts/extract_catalog_tables.py \
 - 外部抓取不会使用搜索引擎、不会递归爬取、不会登录；只允许公网 HTTP(S)，拒绝 localhost、私网 IP、link-local、loopback、multicast、reserved 地址和无 host URL；遇到占位 URL、unsupported content、超时、超过文件数、超过大小上限或解析失败时，会在 JSON 中记录 `stopped_reason`。
 - 外部机器可读后缀统一支持 `.csv/.tsv/.txt/.dat/.tbl/.mrt/.ecsv/.fits/.fit/.fits.gz/.vot/.votable/.xml`。
 - 重跑时，只有 source hash 与列身份匹配，才会保留已人工审核的 `usage` 和列语义；否则语义状态会回到 `needs_agent_review`。
+- 全量重跑可以用 `--jobs 3` 或 `--jobs 4` 按论文并行。并行不会减少 API/网络总成本，只是减少等待时间；外部资源和 Agent locator 较多时收益最明显。
 - 每篇论文会写出 `catalog_extraction.json`，记录来源、运行日志、转换/下载/定位尝试结果、成功失败、CSV 路径、列头、单位行和待补充的列语义字段。
 - CSV 使用 `col_001`、`col_002` 这类稳定列名，尽量忠实保留论文表格，不表示已经完成统一对象 schema。
 - 使用项目内 `hvs-catalog-extraction` skill 时，Agent 需要在提取后手动补充每列 `physical_quantity`、`meaning`、`source_of_definition`、`notes` 和表格 `usage`。

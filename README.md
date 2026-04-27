@@ -100,6 +100,8 @@ locator。外部下载只允许公网 HTTP(S)，拒绝本机/私网/特殊地址
 需要完全禁用时使用 `--agent-locator Off`。
 语义补充使用项目内 `hvs-catalog-extraction` skill；CSV 保持论文/资源表格结构，
 不代表已经进入统一对象 schema。
+全量重跑时可以给 `--all-reviewed` 加 `--jobs 3` 或 `--jobs 4` 按论文并行，
+减少外部资源和 Agent locator 的串行等待。
 
 重建 catalog 审阅索引：
 

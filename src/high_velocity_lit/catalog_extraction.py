@@ -14,6 +14,7 @@ import tempfile
 import time
 import urllib.error
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
@@ -2818,10 +2819,13 @@ def extract_all_reviewed_catalog_tables(
     overwrite: bool = False,
     agent_locator_mode: str = AGENT_LOCATOR_OFF,
     agent_locator: ExternalPageLocator | None = None,
+    jobs: int = 1,
 ) -> dict[str, Any]:
     workspace = workspace or literature_dir.parent
-    results = [
-        extract_catalog_tables(
+    arxiv_ids = reviewed_papers_with_catalogs(literature_dir)
+
+    def extract_one(arxiv_id: str) -> dict[str, Any]:
+        return extract_catalog_tables(
             literature_dir=literature_dir,
             arxiv_id=arxiv_id,
             workspace=workspace,
@@ -2834,12 +2838,17 @@ def extract_all_reviewed_catalog_tables(
             agent_locator_mode=agent_locator_mode,
             agent_locator=agent_locator,
         )
-        for arxiv_id in reviewed_papers_with_catalogs(literature_dir)
-    ]
+
+    if jobs <= 1 or len(arxiv_ids) <= 1:
+        results = [extract_one(arxiv_id) for arxiv_id in arxiv_ids]
+    else:
+        with ThreadPoolExecutor(max_workers=jobs) as executor:
+            results = list(executor.map(extract_one, arxiv_ids))
     return {
         "dry_run": dry_run,
         "literature_dir": str(literature_dir),
         "paper_count": len(results),
+        "jobs": jobs,
         "results": results,
         "summary": {
             "candidate_count": sum(result["summary"]["candidate_count"] for result in results),

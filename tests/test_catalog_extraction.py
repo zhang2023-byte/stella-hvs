@@ -5,6 +5,7 @@ import importlib.util
 import json
 import sys
 import tempfile
+import time
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -18,6 +19,7 @@ from high_velocity_lit.catalog_extraction import (  # noqa: E402
     MAX_EXTERNAL_BYTES,
     UnavailableExternalPageLocator,
     agent_locator_context,
+    extract_all_reviewed_catalog_tables,
     agent_links_from_decision,
     extract_catalog_tables,
     parse_latex_table_excerpt,
@@ -110,10 +112,17 @@ class CatalogExtractionParserTest(unittest.TestCase):
 
         self.assertEqual(args.agent_locator, AGENT_LOCATOR_ALWAYS)
         self.assertEqual(args.max_external_bytes, MAX_EXTERNAL_BYTES)
+        self.assertEqual(args.jobs, 1)
 
     def test_cli_rejects_removed_fallback_locator(self) -> None:
         with self.assertRaises(Exception):
             extract_cli.parse_agent_locator("Fallback")
+
+    def test_cli_accepts_parallel_jobs_for_all_reviewed(self) -> None:
+        parser = extract_cli.build_parser()
+        args = parser.parse_args(["--all-reviewed", "--jobs", "4"])
+
+        self.assertEqual(args.jobs, 4)
 
     def test_parse_simple_latex_table_to_generic_columns(self) -> None:
         parsed = parse_latex_table_excerpt(
@@ -994,6 +1003,45 @@ Byte-by-byte Description of file: table.dat
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
             self.assertEqual(manifest["external_resources"][0]["status"], "skipped")
             self.assertEqual(manifest["external_resources"][0]["stopped_reason"], "network_disabled")
+
+    def test_all_reviewed_parallel_jobs_preserve_result_order(self) -> None:
+        def fake_summary() -> dict[str, int]:
+            return {
+                "candidate_count": 1,
+                "resource_count": 0,
+                "work_count": 1,
+                "table_count": 1,
+                "success_count": 1,
+                "failed_count": 0,
+                "deferred_count": 0,
+                "external_success_count": 0,
+                "external_failed_count": 0,
+                "external_skipped_count": 0,
+                "external_deferred_count": 0,
+            }
+
+        def fake_extract(**kwargs: object) -> dict[str, object]:
+            arxiv_id = str(kwargs["arxiv_id"])
+            if arxiv_id == "2603.00001":
+                time.sleep(0.02)
+            return {"dry_run": False, "arxiv_id": arxiv_id, "summary": fake_summary()}
+
+        with tempfile.TemporaryDirectory() as tmp:
+            literature_dir = Path(tmp) / "literature"
+            literature_dir.mkdir()
+            with (
+                patch("high_velocity_lit.catalog_extraction.reviewed_papers_with_catalogs", return_value=["2603.00001", "2603.00002"]),
+                patch("high_velocity_lit.catalog_extraction.extract_catalog_tables", side_effect=fake_extract),
+            ):
+                payload = extract_all_reviewed_catalog_tables(
+                    literature_dir=literature_dir,
+                    workspace=Path(tmp),
+                    jobs=2,
+                )
+
+        self.assertEqual(payload["jobs"], 2)
+        self.assertEqual([result["arxiv_id"] for result in payload["results"]], ["2603.00001", "2603.00002"])
+        self.assertEqual(payload["summary"]["success_count"], 2)
 
     def test_cli_all_reviewed_auto_does_not_fetch_external_network(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

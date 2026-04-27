@@ -41,6 +41,9 @@ the extraction command. Do edit `catalog_extraction.json` to fill semantic field
    only when regenerating stale conversion artifacts.
    `--fetch-external Auto` enables network for one paper and disables it for
    `--all-reviewed`; local files are still parsed.
+   For full reruns, use `--jobs 3` or `--jobs 4` to parallelize by paper when
+   external pages or Agent locator calls dominate runtime. Keep the default
+   `--jobs 1` when debugging a single failure or avoiding concurrent API calls.
    The CLI default `--agent-locator Always` uses the bounded Agent locator for
    every explicit URL that resolves to an HTML landing page, and for ADS HTML
    when a resource has no `url/local_path`. The Agent sees extracted page/link
