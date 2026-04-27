@@ -2808,7 +2808,7 @@ def reviewed_papers_with_catalogs(literature_dir: Path) -> list[str]:
     return sorted(dict.fromkeys(ids))
 
 
-def auto_catalog_jobs(paper_count: int, *, max_jobs: int = DEFAULT_AUTO_MAX_JOBS) -> int:
+def auto_catalog_jobs(paper_count: int) -> int:
     if paper_count <= 1:
         return 1
     if paper_count <= 8:
@@ -2819,12 +2819,12 @@ def auto_catalog_jobs(paper_count: int, *, max_jobs: int = DEFAULT_AUTO_MAX_JOBS
         jobs = 8
     else:
         jobs = 12
-    return max(1, min(jobs, max_jobs, paper_count))
+    return max(1, min(jobs, DEFAULT_AUTO_MAX_JOBS, paper_count))
 
 
-def resolve_catalog_jobs(jobs: int | str, *, paper_count: int, max_jobs: int = DEFAULT_AUTO_MAX_JOBS) -> int:
+def resolve_catalog_jobs(jobs: int | str, *, paper_count: int) -> int:
     if isinstance(jobs, str) and jobs.strip().lower() == "auto":
-        return auto_catalog_jobs(paper_count, max_jobs=max_jobs)
+        return auto_catalog_jobs(paper_count)
     return max(1, int(jobs))
 
 
@@ -2841,11 +2841,10 @@ def extract_all_reviewed_catalog_tables(
     agent_locator_mode: str = AGENT_LOCATOR_OFF,
     agent_locator: ExternalPageLocator | None = None,
     jobs: int | str = 1,
-    max_jobs: int = DEFAULT_AUTO_MAX_JOBS,
 ) -> dict[str, Any]:
     workspace = workspace or literature_dir.parent
     arxiv_ids = reviewed_papers_with_catalogs(literature_dir)
-    resolved_jobs = resolve_catalog_jobs(jobs, paper_count=len(arxiv_ids), max_jobs=max_jobs)
+    resolved_jobs = resolve_catalog_jobs(jobs, paper_count=len(arxiv_ids))
 
     def extract_one(arxiv_id: str) -> dict[str, Any]:
         return extract_catalog_tables(
@@ -2873,7 +2872,6 @@ def extract_all_reviewed_catalog_tables(
         "paper_count": len(results),
         "jobs": resolved_jobs,
         "jobs_requested": jobs,
-        "max_jobs": max_jobs,
         "results": results,
         "summary": {
             "candidate_count": sum(result["summary"]["candidate_count"] for result in results),

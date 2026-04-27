@@ -16,7 +16,6 @@ if str(SRC) not in sys.path:
 from high_velocity_lit.catalog_extraction import (  # noqa: E402
     AGENT_LOCATOR_ALWAYS,
     AGENT_LOCATOR_OFF,
-    DEFAULT_AUTO_MAX_JOBS,
     LLMExternalPageLocator,
     MAX_EXTERNAL_BYTES,
     UnavailableExternalPageLocator,
@@ -73,17 +72,6 @@ def parse_jobs(value: str) -> int | str:
     return jobs
 
 
-def env_int(name: str, *, default: int) -> int:
-    value = env_value(name)
-    if not value:
-        return default
-    try:
-        parsed = int(value)
-    except ValueError:
-        return default
-    return parsed if parsed >= 1 else default
-
-
 def fetch_external_enabled(value: str, *, all_reviewed: bool) -> bool:
     if value == "True":
         return True
@@ -107,7 +95,6 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--max-external-bytes", type=int, default=MAX_EXTERNAL_BYTES, help="Maximum bytes per downloaded external file. Default: 52428800.")
     parser.add_argument("--external-timeout", type=int, default=30, help="HTTP timeout in seconds for external resources. Default: 30.")
     parser.add_argument("--jobs", type=parse_jobs, default=1, metavar="Auto|N", help="Parallel paper workers for --all-reviewed. Default: 1.")
-    parser.add_argument("--max-jobs", type=int, default=env_int("STELLA_MAX_CATALOG_JOBS", default=DEFAULT_AUTO_MAX_JOBS), help="Upper bound used by --jobs Auto. Default: 12 or STELLA_MAX_CATALOG_JOBS.")
     parser.add_argument("--agent-locator", type=parse_agent_locator, default=AGENT_LOCATOR_ALWAYS, metavar="Off|Always", help="Use an LLM agent to choose bounded landing-page download candidates. Default: Always.")
     parser.add_argument("--llm-api-key", default=env_value("LLM_API_KEY", "OPENAI_API_KEY", "DEEPXIV_AGENT_API_KEY"), help="OpenAI-compatible API key for the Agent locator. Defaults to environment or .env.")
     parser.add_argument("--llm-base-url", default=env_value("LLM_BASE_URL", "OPENAI_BASE_URL", "DEEPXIV_AGENT_BASE_URL", default=DEFAULT_LLM_BASE_URL))
@@ -132,8 +119,6 @@ def main() -> int:
         raise SystemExit("--max-external-files must be at least 1")
     if args.max_external_bytes < 1:
         raise SystemExit("--max-external-bytes must be at least 1")
-    if args.max_jobs < 1:
-        raise SystemExit("--max-jobs must be at least 1")
     fetch_external = fetch_external_enabled(args.fetch_external, all_reviewed=args.all_reviewed)
     agent_locator = None
     if args.agent_locator != AGENT_LOCATOR_OFF:
@@ -167,7 +152,6 @@ def main() -> int:
                 agent_locator_mode=args.agent_locator,
                 agent_locator=agent_locator,
                 jobs=args.jobs,
-                max_jobs=args.max_jobs,
             )
         else:
             payload = extract_catalog_tables(

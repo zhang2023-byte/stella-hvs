@@ -101,8 +101,7 @@ locator。外部下载只允许公网 HTTP(S)，拒绝本机/私网/特殊地址
 语义补充使用项目内 `hvs-catalog-extraction` skill；CSV 保持论文/资源表格结构，
 不代表已经进入统一对象 schema。
 全量重跑时可以给 `--all-reviewed` 加 `--jobs Auto` 按论文并行；
-100 篇以上默认会尝试更高并发，并可用 `--max-jobs` 或
-`STELLA_MAX_CATALOG_JOBS` 控制上限。
+100 篇以上默认会尝试 12 个 jobs。你也可以直接指定 `--jobs N`。
 
 重建 catalog 审阅索引：
 
