@@ -16,9 +16,11 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from high_velocity_lit.catalog_extraction import (  # noqa: E402
     AGENT_LOCATOR_ALWAYS,
+    DEFAULT_AUTO_MAX_JOBS,
     MAX_EXTERNAL_BYTES,
     UnavailableExternalPageLocator,
     agent_locator_context,
+    auto_catalog_jobs,
     extract_all_reviewed_catalog_tables,
     agent_links_from_decision,
     extract_catalog_tables,
@@ -113,6 +115,7 @@ class CatalogExtractionParserTest(unittest.TestCase):
         self.assertEqual(args.agent_locator, AGENT_LOCATOR_ALWAYS)
         self.assertEqual(args.max_external_bytes, MAX_EXTERNAL_BYTES)
         self.assertEqual(args.jobs, 1)
+        self.assertEqual(args.max_jobs, DEFAULT_AUTO_MAX_JOBS)
 
     def test_cli_rejects_removed_fallback_locator(self) -> None:
         with self.assertRaises(Exception):
@@ -123,6 +126,21 @@ class CatalogExtractionParserTest(unittest.TestCase):
         args = parser.parse_args(["--all-reviewed", "--jobs", "4"])
 
         self.assertEqual(args.jobs, 4)
+
+    def test_cli_accepts_auto_jobs_with_max_jobs(self) -> None:
+        parser = extract_cli.build_parser()
+        args = parser.parse_args(["--all-reviewed", "--jobs", "Auto", "--max-jobs", "16"])
+
+        self.assertEqual(args.jobs, "Auto")
+        self.assertEqual(args.max_jobs, 16)
+
+    def test_auto_catalog_jobs_scales_with_paper_count_and_cap(self) -> None:
+        self.assertEqual(auto_catalog_jobs(1, max_jobs=16), 1)
+        self.assertEqual(auto_catalog_jobs(8, max_jobs=16), 2)
+        self.assertEqual(auto_catalog_jobs(30, max_jobs=16), 4)
+        self.assertEqual(auto_catalog_jobs(80, max_jobs=16), 8)
+        self.assertEqual(auto_catalog_jobs(120, max_jobs=16), 12)
+        self.assertEqual(auto_catalog_jobs(120, max_jobs=6), 6)
 
     def test_parse_simple_latex_table_to_generic_columns(self) -> None:
         parsed = parse_latex_table_excerpt(
@@ -1036,10 +1054,13 @@ Byte-by-byte Description of file: table.dat
                 payload = extract_all_reviewed_catalog_tables(
                     literature_dir=literature_dir,
                     workspace=Path(tmp),
-                    jobs=2,
+                    jobs="Auto",
+                    max_jobs=2,
                 )
 
         self.assertEqual(payload["jobs"], 2)
+        self.assertEqual(payload["jobs_requested"], "Auto")
+        self.assertEqual(payload["max_jobs"], 2)
         self.assertEqual([result["arxiv_id"] for result in payload["results"]], ["2603.00001", "2603.00002"])
         self.assertEqual(payload["summary"]["success_count"], 2)
 

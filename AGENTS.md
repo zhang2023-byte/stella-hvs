@@ -133,7 +133,8 @@ LaTeXML、Pandoc、项目内 fallback parser；外部资源优先解析本地机
 CSV 不等于规范化对象库；不要在这一阶段强行统一 schema。外部网络抓取不得使用
 搜索引擎、不得递归爬取、不得登录；只允许公网 HTTP(S)，拒绝 localhost、私网和特殊地址；
 单文件下载受 `--max-external-bytes` 限制；`--all-reviewed --fetch-external Auto` 默认不联网。
-全量重跑可用 `--jobs 3` 或 `--jobs 4` 按论文并行；默认 `--jobs 1` 保持串行。
+全量重跑可用 `--jobs Auto` 按论文数自动并行；100 篇以上会尝试更高并发，
+但应通过 `--max-jobs` 或 `STELLA_MAX_CATALOG_JOBS` 控制 API 压力。
 
 ## 工程规则
 
