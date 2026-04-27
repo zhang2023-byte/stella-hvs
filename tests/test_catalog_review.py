@@ -108,6 +108,8 @@ A & B
         encoding="utf-8",
     )
     (source_dir / "catalog_table.tbl").write_text("source_id velocity\n1 700\n", encoding="utf-8")
+    (source_dir / "catalog_table.mrt").write_text("source_id velocity\n1 700\n", encoding="utf-8")
+    (source_dir / "catalog_table.ecsv").write_text("# %ECSV 1.0\n", encoding="utf-8")
     return literature_dir
 
 
@@ -132,7 +134,8 @@ class CatalogReviewTest(unittest.TestCase):
             self.assertEqual(tables[0]["label"], "tab:hvs")
             self.assertGreaterEqual(tables[0]["start_line"], 4)
             self.assertGreater(tables[0]["end_line"], tables[0]["start_line"])
-            self.assertEqual(inventory["local_machine_readable_files"][0]["source_relative_path"], "catalog_table.tbl")
+            local_paths = sorted(item["source_relative_path"] for item in inventory["local_machine_readable_files"])
+            self.assertEqual(local_paths, ["catalog_table.ecsv", "catalog_table.mrt", "catalog_table.tbl"])
             self.assertEqual(
                 inventory["external_resource_mentions"][0]["url"],
                 "https://vizier.cds.unistra.fr/example",

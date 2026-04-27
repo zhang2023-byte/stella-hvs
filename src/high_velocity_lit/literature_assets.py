@@ -18,6 +18,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from .note_paths import iter_month_json_paths
+from .network_safety import BlockedURL, require_public_http_url
 from .records import has_observational_catalog, paper_url, pdf_url
 
 
@@ -25,6 +26,8 @@ ASSET_AUDIT_SCHEMA_VERSION = "stella.literature.assets_audit.v2"
 ADS_BASE_URL = "https://ui.adsabs.harvard.edu"
 DEFAULT_TIMEOUT = 60
 DEFAULT_USER_AGENT = "stella-literature-assets/1.0"
+MAX_ASSET_BYTES = 100 * 1024 * 1024
+REDIRECT_STATUS_CODES = {301, 302, 303, 307, 308}
 ASSET_FILENAMES = {
     "arxiv_abs": "arxiv_abs.html",
     "arxiv_pdf": "arxiv.pdf",
@@ -139,6 +142,7 @@ def basic_asset_result(*, url: str) -> dict[str, Any]:
         "local_path": None,
         "error": "",
         "skipped_existing": False,
+        "size_bytes": 0,
     }
 
 
@@ -156,7 +160,43 @@ def fetch_response(
     timeout: int,
     headers: dict[str, str] | None = None,
 ) -> requests.Response:
-    return session.get(url, timeout=timeout, allow_redirects=True, headers=headers)
+    current_url = url
+    for _ in range(10):
+        try:
+            require_public_http_url(current_url)
+        except BlockedURL as exc:
+            raise requests.exceptions.InvalidURL(f"blocked URL: {exc}") from exc
+        response = session.get(current_url, timeout=timeout, allow_redirects=False, headers=headers, stream=True)
+        if response.status_code in REDIRECT_STATUS_CODES and response.headers.get("location"):
+            next_url = urljoin(current_url, str(response.headers["location"]))
+            close = getattr(response, "close", None)
+            if callable(close):
+                close()
+            try:
+                require_public_http_url(next_url)
+            except BlockedURL as exc:
+                raise requests.exceptions.InvalidURL(f"blocked redirect URL: {exc}") from exc
+            current_url = next_url
+            continue
+        return response
+    raise requests.exceptions.TooManyRedirects(f"too many redirects for {url}")
+
+
+def response_content_with_limit(response: Any, *, max_bytes: int = MAX_ASSET_BYTES) -> tuple[bytes, bool]:
+    content = bytearray()
+    iter_content = getattr(response, "iter_content", None)
+    if callable(iter_content):
+        for chunk in iter_content(chunk_size=1024 * 1024):
+            if not chunk:
+                continue
+            if len(content) + len(chunk) > max_bytes:
+                return b"", True
+            content.extend(chunk)
+        return bytes(content), False
+    raw = bytes(getattr(response, "content", b"") or b"")
+    if len(raw) > max_bytes:
+        return b"", True
+    return raw, False
 
 
 def write_bytes(path: Path, content: bytes) -> None:
@@ -170,6 +210,7 @@ def fetch_text_asset(
     url: str,
     output_path: Path,
     timeout: int,
+    max_bytes: int = MAX_ASSET_BYTES,
 ) -> tuple[dict[str, Any], str]:
     result = basic_asset_result(url=url)
     if output_path.exists() and output_path.stat().st_size > 0:
@@ -186,7 +227,15 @@ def fetch_text_asset(
         result["content_type"] = response.headers.get("content-type", "")
         result["final_url"] = str(response.url)
         response.raise_for_status()
-        text = response.text
+        content, too_large = response_content_with_limit(response, max_bytes=max_bytes)
+        close = getattr(response, "close", None)
+        if callable(close):
+            close()
+        if too_large:
+            result["error"] = f"download exceeds {max_bytes} bytes"
+            return result, ""
+        result["size_bytes"] = len(content)
+        text = content.decode("utf-8", errors="replace")
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(text, encoding="utf-8")
         result["success"] = True
@@ -208,6 +257,7 @@ def fetch_binary_asset(
     url: str,
     output_path: Path,
     timeout: int,
+    max_bytes: int = MAX_ASSET_BYTES,
 ) -> dict[str, Any]:
     result = basic_asset_result(url=url)
     if output_path.exists() and output_path.stat().st_size > 0:
@@ -221,7 +271,15 @@ def fetch_binary_asset(
         result["content_type"] = response.headers.get("content-type", "")
         result["final_url"] = str(response.url)
         response.raise_for_status()
-        write_bytes(output_path, response.content)
+        content, too_large = response_content_with_limit(response, max_bytes=max_bytes)
+        close = getattr(response, "close", None)
+        if callable(close):
+            close()
+        if too_large:
+            result["error"] = f"download exceeds {max_bytes} bytes"
+            return result
+        result["size_bytes"] = len(content)
+        write_bytes(output_path, content)
         result["success"] = True
         result["local_path"] = output_path.name
         return result
@@ -241,6 +299,7 @@ def fetch_arxiv_source(
     arxiv_id: str,
     output_dir: Path,
     timeout: int,
+    max_bytes: int = MAX_ASSET_BYTES,
 ) -> dict[str, Any]:
     existing = sorted(output_dir.glob("arxiv_source*"))
     if existing:
@@ -264,7 +323,14 @@ def fetch_arxiv_source(
             result["content_type"] = response.headers.get("content-type", "")
             result["final_url"] = str(response.url)
             response.raise_for_status()
-            content = response.content
+            content, too_large = response_content_with_limit(response, max_bytes=max_bytes)
+            close = getattr(response, "close", None)
+            if callable(close):
+                close()
+            if too_large:
+                result["error"] = f"download exceeds {max_bytes} bytes"
+                continue
+            result["size_bytes"] = len(content)
             if not looks_like_source_package(content_type=result["content_type"], content=content):
                 result["error"] = "response did not look like a TeX/source archive"
                 if content.startswith(b"%PDF-") or "application/pdf" in result["content_type"].lower():
@@ -295,6 +361,29 @@ def fetch_arxiv_source(
     return result
 
 
+def validate_archive_member_name(name: str) -> None:
+    path = Path(name)
+    if path.is_absolute() or ".." in path.parts:
+        raise ValueError(f"unsafe archive member path: {name}")
+
+
+def safe_extract_zip(archive: zipfile.ZipFile, extract_dir: Path) -> None:
+    base = extract_dir.resolve()
+    for info in archive.infolist():
+        validate_archive_member_name(info.filename)
+        target = (extract_dir / info.filename).resolve()
+        try:
+            target.relative_to(base)
+        except ValueError as exc:
+            raise ValueError(f"archive member escapes extract directory: {info.filename}") from exc
+    archive.extractall(extract_dir)
+
+
+def validate_tar_members(archive: tarfile.TarFile) -> None:
+    for member in archive.getmembers():
+        validate_archive_member_name(member.name)
+
+
 def extract_source_archive(archive_path: Path) -> dict[str, Any]:
     extract_dir = archive_path.parent / "arxiv_source"
     result = {
@@ -317,10 +406,11 @@ def extract_source_archive(archive_path: Path) -> dict[str, Any]:
     try:
         if tarfile.is_tarfile(archive_path):
             with tarfile.open(archive_path, "r:*") as archive:
+                validate_tar_members(archive)
                 archive.extractall(extract_dir, filter="data")
         elif zipfile.is_zipfile(archive_path):
             with zipfile.ZipFile(archive_path) as archive:
-                archive.extractall(extract_dir)
+                safe_extract_zip(archive, extract_dir)
         elif archive_path.suffix == ".gz":
             output_name = archive_path.stem or "source"
             with gzip.open(archive_path, "rb") as src, (extract_dir / output_name).open("wb") as dst:

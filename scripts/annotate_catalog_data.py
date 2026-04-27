@@ -6,7 +6,6 @@ from __future__ import annotations
 import argparse
 import calendar
 import json
-import os
 import re
 import sys
 from datetime import date
@@ -17,21 +16,15 @@ SRC = WORKSPACE / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-try:
-    from dotenv import load_dotenv
-
-    for env_path in (Path.home() / ".env", WORKSPACE / ".env", Path.cwd() / ".env"):
-        if env_path.exists():
-            load_dotenv(env_path, override=True)
-except ImportError:
-    pass
-
 from high_velocity_lit.catalog_assessment import DeepXivCLIReader, LLMCatalogAssessor, annotate_record  # noqa: E402
 from high_velocity_lit.config import DEFAULT_LLM_BASE_URL, DEFAULT_LLM_BATCH_SIZE, DEFAULT_LLM_MODEL  # noqa: E402
+from high_velocity_lit.env import env_value, load_env_files  # noqa: E402
 from high_velocity_lit.indexing import refresh_index_outputs  # noqa: E402
 from high_velocity_lit.markdown import render_month_note  # noqa: E402
 from high_velocity_lit.note_paths import resolve_month_json_path  # noqa: E402
 from high_velocity_lit.title_classifier import load_llm_api_key  # noqa: E402
+
+load_env_files(WORKSPACE)
 
 
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -170,9 +163,9 @@ def build_parser() -> argparse.ArgumentParser:
         help="Select note months. Use YYYY-MM or comma-separated YYYY-MM values.",
     )
     parser.add_argument("--notes-dir", type=Path, default=WORKSPACE / "notes")
-    parser.add_argument("--llm-api-key", default=os.environ.get("LLM_API_KEY") or os.environ.get("OPENAI_API_KEY") or os.environ.get("DEEPXIV_AGENT_API_KEY"))
-    parser.add_argument("--llm-base-url", default=os.environ.get("LLM_BASE_URL") or os.environ.get("OPENAI_BASE_URL") or os.environ.get("DEEPXIV_AGENT_BASE_URL") or DEFAULT_LLM_BASE_URL)
-    parser.add_argument("--llm-model", default=os.environ.get("LLM_MODEL") or os.environ.get("OPENAI_MODEL") or os.environ.get("DEEPXIV_AGENT_MODEL") or DEFAULT_LLM_MODEL)
+    parser.add_argument("--llm-api-key", default=env_value("LLM_API_KEY", "OPENAI_API_KEY", "DEEPXIV_AGENT_API_KEY"))
+    parser.add_argument("--llm-base-url", default=env_value("LLM_BASE_URL", "OPENAI_BASE_URL", "DEEPXIV_AGENT_BASE_URL", default=DEFAULT_LLM_BASE_URL))
+    parser.add_argument("--llm-model", default=env_value("LLM_MODEL", "OPENAI_MODEL", "DEEPXIV_AGENT_MODEL", default=DEFAULT_LLM_MODEL))
     parser.add_argument("--llm-batch-size", type=int, default=DEFAULT_LLM_BATCH_SIZE)
     parser.add_argument("--render", type=parse_bool, default=True, metavar="True|False", help="Refresh sibling Markdown file. Default: True.")
     parser.add_argument("--dry-run", type=parse_bool, default=False, metavar="True|False", help="Run assessment without writing files. Default: False.")

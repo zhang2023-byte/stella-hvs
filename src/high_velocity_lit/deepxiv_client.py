@@ -15,10 +15,7 @@ from typing import Any, Optional
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-try:
-    from dotenv import load_dotenv
-except ImportError:  # pragma: no cover - python-dotenv is optional in the SDK.
-    load_dotenv = None  # type: ignore[assignment]
+from .env import load_env_files
 
 
 DEEPXIV_BASE_URL = "https://data.rag.ac.cn"
@@ -38,10 +35,7 @@ def load_deepxiv_token(explicit_token: Optional[str] = None) -> Optional[str]:
     if explicit_token:
         return explicit_token
 
-    if load_dotenv is not None:
-        for env_path in (Path.home() / ".env", Path.cwd() / ".env"):
-            if env_path.exists():
-                load_dotenv(env_path, override=True)
+    load_env_files(Path.cwd())
 
     token = os.environ.get("DEEPXIV_TOKEN")
     if token:

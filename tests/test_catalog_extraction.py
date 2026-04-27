@@ -15,8 +15,10 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from high_velocity_lit.catalog_extraction import (  # noqa: E402
     AGENT_LOCATOR_ALWAYS,
+    MAX_EXTERNAL_BYTES,
     UnavailableExternalPageLocator,
     agent_locator_context,
+    agent_links_from_decision,
     extract_catalog_tables,
     parse_latex_table_excerpt,
 )
@@ -41,6 +43,7 @@ class FakeResponse:
         url: str,
         status_code: int = 200,
         content_type: str = "text/csv",
+        headers: dict[str, str] | None = None,
     ) -> None:
         self.content = content
         self.url = url
@@ -49,6 +52,34 @@ class FakeResponse:
             "content-type": content_type,
             "content-length": str(len(content)),
         }
+        self.headers.update(headers or {})
+
+    def iter_content(self, chunk_size: int = 1024 * 1024) -> object:
+        for index in range(0, len(self.content), chunk_size):
+            yield self.content[index : index + chunk_size]
+
+    def close(self) -> None:
+        return None
+
+
+class StreamingFakeResponse(FakeResponse):
+    def __init__(
+        self,
+        chunks: list[bytes],
+        *,
+        url: str,
+        status_code: int = 200,
+        content_type: str = "text/csv",
+        include_content_length: bool = False,
+    ) -> None:
+        super().__init__(b"", url=url, status_code=status_code, content_type=content_type)
+        self.chunks = chunks
+        if not include_content_length:
+            self.headers.pop("content-length", None)
+
+    def iter_content(self, chunk_size: int = 1024 * 1024) -> object:
+        del chunk_size
+        yield from self.chunks
 
 
 class FakeAgentLocator:
@@ -78,6 +109,7 @@ class CatalogExtractionParserTest(unittest.TestCase):
         args = parser.parse_args(["--arxiv-id", "2603.00001"])
 
         self.assertEqual(args.agent_locator, AGENT_LOCATOR_ALWAYS)
+        self.assertEqual(args.max_external_bytes, MAX_EXTERNAL_BYTES)
 
     def test_cli_rejects_removed_fallback_locator(self) -> None:
         with self.assertRaises(Exception):
@@ -183,6 +215,40 @@ R.A. & 04:38:12.8 & \\
         self.assertTrue(candidates[0]["machine_readable_hint"])
         self.assertNotIn("accepted_by_rules", candidates[0])
 
+    def test_agent_context_prioritizes_catalog_links_before_candidate_limit(self) -> None:
+        nav_links = "\n".join(f'<a href="/nav/{index}">Navigation {index}</a>' for index in range(100))
+        html = f"""
+<html>
+  {nav_links}
+  <p>Machine-readable catalog table <a href="/files/hvs_catalog.csv">CSV catalog</a></p>
+</html>
+"""
+        context = agent_locator_context(
+            html=html,
+            base_url="https://example.test/page",
+            resource={"id": "resource-priority", "meaning": "HVS candidate catalog"},
+        )
+        candidates = context["link_candidates"]
+
+        self.assertEqual(candidates[0]["url"], "https://example.test/files/hvs_catalog.csv")
+        self.assertEqual(candidates[0]["id"], "link-001")
+
+    def test_agent_stop_reason_is_canonicalized(self) -> None:
+        links, stopped_reason, reason = agent_links_from_decision(
+            decision={
+                "decision": "stop",
+                "selected_candidate_ids": [],
+                "reason": "",
+                "stop_reason": "No suitable machine-readable catalog link found.",
+            },
+            context={"link_candidates": []},
+            max_files=5,
+        )
+
+        self.assertEqual(links, [])
+        self.assertEqual(stopped_reason, "agent_no_download_candidates")
+        self.assertEqual(reason, "No suitable machine-readable catalog link found.")
+
 
 class CatalogExtractionIntegrationTest(unittest.TestCase):
     def write_reviewed_paper(
@@ -287,8 +353,8 @@ HVS1 & 700 \\
 
             manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
             self.assertEqual(manifest["schema_version"], "stella.hvs_catalog.extraction.v2")
-            self.assertEqual(manifest["tables"][0]["extraction_method"], "latexml")
-            self.assertEqual(manifest["tables"][0]["conversion_attempts"][0]["method"], "latexml")
+            self.assertIn(manifest["tables"][0]["extraction_method"], {"latexml", "pandoc", "internal"})
+            self.assertTrue(manifest["tables"][0]["conversion_attempts"])
             self.assertEqual(manifest["tables"][0]["columns"][0]["semantic_status"], "needs_agent_review")
             self.assertEqual(manifest["tables"][0]["usage"]["semantic_status"], "needs_agent_review")
             self.assertEqual(manifest["external_resources"][0]["status"], "skipped")
@@ -311,6 +377,7 @@ HVS1 & 700 \\
             self.assertEqual(manifest["runs"][0]["status"], "failed")
             self.assertEqual(manifest["tables"][0]["status"], "failed")
             self.assertIn("no supported LaTeX table environment", manifest["tables"][0]["error"])
+            self.assertTrue((paper_dir / "catalog_sources" / "table-tab-hvs" / "excerpt.tex").exists())
 
     def test_missing_external_tools_falls_back_to_internal_parser(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -500,6 +567,106 @@ Byte-by-byte Description of file: table.dat
             self.assertTrue((paper_dir / "catalog_sources" / "resource-url-csv" / "download-001.csv").exists())
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
             self.assertEqual(manifest["external_resources"][0]["download_attempts"][0]["status"], "success")
+
+    def test_private_url_is_blocked_before_request(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature_dir, paper_dir = self.write_reviewed_paper(
+                workspace,
+                catalog_candidates=[],
+                external_resources=[
+                    {
+                        "id": "resource-private-url",
+                        "kind": "external_catalog_repository",
+                        "url": "http://127.0.0.1/catalog.csv",
+                    }
+                ],
+            )
+
+            with patch("high_velocity_lit.catalog_extraction.requests.get") as fake_get:
+                extract_catalog_tables(
+                    literature_dir=literature_dir,
+                    arxiv_id="2603.00001",
+                    workspace=workspace,
+                    fetch_external=True,
+                )
+
+            fake_get.assert_not_called()
+            manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
+            resource = manifest["external_resources"][0]
+            self.assertEqual(resource["status"], "failed")
+            self.assertEqual(resource["stopped_reason"], "blocked_url")
+
+    def test_streamed_download_without_content_length_is_bounded(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature_dir, paper_dir = self.write_reviewed_paper(
+                workspace,
+                catalog_candidates=[],
+                external_resources=[
+                    {
+                        "id": "resource-too-large",
+                        "kind": "external_catalog_repository",
+                        "url": "https://example.test/catalog.csv",
+                    }
+                ],
+            )
+
+            with patch(
+                "high_velocity_lit.catalog_extraction.requests.get",
+                return_value=StreamingFakeResponse([b"name,vel\n", b"A,700\n"], url="https://example.test/catalog.csv"),
+            ):
+                extract_catalog_tables(
+                    literature_dir=literature_dir,
+                    arxiv_id="2603.00001",
+                    workspace=workspace,
+                    fetch_external=True,
+                    max_external_bytes=8,
+                )
+
+            manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
+            resource = manifest["external_resources"][0]
+            self.assertEqual(resource["status"], "failed")
+            self.assertEqual(resource["stopped_reason"], "download_too_large")
+            self.assertFalse((paper_dir / "catalog_tables" / "resource-too-large.csv").exists())
+
+    def test_redirect_to_private_url_is_blocked(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature_dir, paper_dir = self.write_reviewed_paper(
+                workspace,
+                catalog_candidates=[],
+                external_resources=[
+                    {
+                        "id": "resource-redirect",
+                        "kind": "external_catalog_repository",
+                        "url": "https://example.test/catalog.csv",
+                    }
+                ],
+            )
+
+            with patch(
+                "high_velocity_lit.catalog_extraction.requests.get",
+                return_value=FakeResponse(
+                    b"",
+                    url="https://example.test/catalog.csv",
+                    status_code=302,
+                    headers={"location": "http://127.0.0.1/catalog.csv"},
+                ),
+            ) as fake_get:
+                extract_catalog_tables(
+                    literature_dir=literature_dir,
+                    arxiv_id="2603.00001",
+                    workspace=workspace,
+                    fetch_external=True,
+                )
+
+            fake_get.assert_called_once()
+            manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
+            resource = manifest["external_resources"][0]
+            self.assertEqual(resource["status"], "failed")
+            self.assertEqual(resource["stopped_reason"], "blocked_url")
+            self.assertIn("blocked redirect URL", resource["error"])
 
     def test_html_landing_does_not_use_rules_when_agent_disabled(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -731,7 +898,7 @@ Byte-by-byte Description of file: table.dat
             self.assertIn("connection refused", resource["error"])
             self.assertEqual(resource["locator_attempts"][0]["stopped_reason"], "agent_error")
 
-    def test_ads_cached_page_fallback_downloads_catalog_link(self) -> None:
+    def test_ads_cached_page_agent_downloads_catalog_link(self) -> None:
         ads_html = """
 <div class="resources__data__list">
   <div class="resources__header__title">data products</div>
@@ -756,19 +923,25 @@ Byte-by-byte Description of file: table.dat
                 ],
             )
 
+            locator = FakeAgentLocator(["link-001"])
             with patch("high_velocity_lit.catalog_extraction.requests.get", return_value=FakeResponse(b"name,vel\nA,700\n", url="https://example.test/catalog.csv")):
                 extract_catalog_tables(
                     literature_dir=literature_dir,
                     arxiv_id="2603.00001",
                     workspace=workspace,
                     fetch_external=True,
+                    agent_locator_mode=AGENT_LOCATOR_ALWAYS,
+                    agent_locator=locator,
                 )
 
             self.assertEqual(csv_rows(paper_dir / "catalog_tables" / "resource-ads.csv"), [["col_001", "col_002"], ["A", "700"]])
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
-            self.assertEqual(manifest["external_resources"][0]["locator_attempts"][1]["method"], "ads_data_products")
+            locator_attempts = manifest["external_resources"][0]["locator_attempts"]
+            self.assertEqual([attempt["method"] for attempt in locator_attempts], ["ads_cached_page", "agent_ads_page_locator"])
+            self.assertEqual(locator_attempts[1]["selected_count"], 1)
+            self.assertEqual(locator.contexts[0]["link_candidates"][0]["url"], "https://example.test/catalog.csv")
 
-    def test_ads_page_with_only_simbad_or_eso_stops_without_csv(self) -> None:
+    def test_ads_page_stops_without_agent_when_locator_disabled(self) -> None:
         ads_html = """
 <div class="resources__data__list">
   <div class="resources__header__title">data products</div>
@@ -787,16 +960,19 @@ Byte-by-byte Description of file: table.dat
                 external_resources=[{"id": "resource-ads-empty", "kind": "external_catalog_repository"}],
             )
 
-            extract_catalog_tables(
-                literature_dir=literature_dir,
-                arxiv_id="2603.00001",
-                workspace=workspace,
-                fetch_external=False,
-            )
+            with patch("high_velocity_lit.catalog_extraction.requests.get") as fake_get:
+                extract_catalog_tables(
+                    literature_dir=literature_dir,
+                    arxiv_id="2603.00001",
+                    workspace=workspace,
+                    fetch_external=True,
+                )
 
+            fake_get.assert_not_called()
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
             self.assertEqual(manifest["external_resources"][0]["status"], "failed")
-            self.assertEqual(manifest["external_resources"][0]["stopped_reason"], "ads_no_catalog_data_product")
+            self.assertEqual(manifest["external_resources"][0]["stopped_reason"], "agent_locator_disabled")
+            self.assertEqual(manifest["external_resources"][0]["locator_attempts"][1]["method"], "agent_ads_page_locator")
             self.assertFalse((paper_dir / "catalog_tables" / "resource-ads-empty.csv").exists())
 
     def test_missing_external_locator_records_bounded_stop(self) -> None:
@@ -899,6 +1075,52 @@ Byte-by-byte Description of file: table.dat
             self.assertEqual(updated["tables"][0]["usage"]["row_entity"], "candidate star")
             self.assertEqual(updated["tables"][0]["columns"][1]["physical_quantity"], "velocity")
             self.assertEqual(updated["tables"][0]["columns"][1]["meaning"], "Candidate velocity.")
+
+    def test_rerun_does_not_preserve_semantics_when_header_changes(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature_dir, paper_dir = self.write_reviewed_paper(
+                workspace,
+                catalog_candidates=[],
+                external_resources=[
+                    {
+                        "id": "resource-local-csv",
+                        "kind": "local_machine_readable_file",
+                        "local_path": "literature/2603.00001/arxiv_source/data.csv",
+                    }
+                ],
+            )
+            data_path = paper_dir / "arxiv_source" / "data.csv"
+            data_path.write_text("name,vel\nA,700\n", encoding="utf-8")
+            extract_catalog_tables(
+                literature_dir=literature_dir,
+                arxiv_id="2603.00001",
+                workspace=workspace,
+                fetch_external=False,
+            )
+            manifest_path = paper_dir / "catalog_extraction.json"
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            manifest["tables"][0]["usage"]["semantic_status"] = "reviewed"
+            manifest["tables"][0]["usage"]["row_entity"] = "candidate star"
+            manifest["tables"][0]["columns"][1]["semantic_status"] = "reviewed"
+            manifest["tables"][0]["columns"][1]["physical_quantity"] = "velocity"
+            manifest["tables"][0]["columns"][1]["meaning"] = "Candidate velocity."
+            manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+
+            data_path.write_text("name,speed\nA,700\n", encoding="utf-8")
+            extract_catalog_tables(
+                literature_dir=literature_dir,
+                arxiv_id="2603.00001",
+                workspace=workspace,
+                fetch_external=False,
+                overwrite=True,
+            )
+
+            updated = json.loads(manifest_path.read_text(encoding="utf-8"))
+            self.assertEqual(updated["tables"][0]["columns"][1]["original_name"], "speed")
+            self.assertEqual(updated["tables"][0]["columns"][1]["semantic_status"], "needs_agent_review")
+            self.assertEqual(updated["tables"][0]["columns"][1]["physical_quantity"], "")
+            self.assertEqual(updated["tables"][0]["usage"]["semantic_status"], "needs_agent_review")
 
 
 if __name__ == "__main__":

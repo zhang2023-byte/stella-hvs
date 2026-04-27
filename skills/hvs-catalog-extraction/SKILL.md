@@ -28,7 +28,7 @@ the extraction command. Do edit `catalog_extraction.json` to fill semantic field
 1. Confirm prerequisites:
    - `catalog_review.json` exists and has reviewed `catalog_candidates`.
    - `external_resources` entries are ready for local file parsing, explicit URL
-     fetch, or bounded ADS fallback.
+     fetch, or bounded ADS Agent location.
    - `latexmlc` is available; if not, continue but note fallback behavior.
 2. Run extraction:
 
@@ -42,12 +42,14 @@ the extraction command. Do edit `catalog_extraction.json` to fill semantic field
    `--fetch-external Auto` enables network for one paper and disables it for
    `--all-reviewed`; local files are still parsed.
    The CLI default `--agent-locator Always` uses the bounded Agent locator for
-   every explicit URL that resolves to an HTML landing page. Deterministic rules
-   no longer choose the download in this default path; the Agent sees extracted
-   page/link context, returns only candidate IDs, and the script still validates
-   and parses the downloads. Use `--agent-locator Off` when the run must avoid
-   LLM calls entirely; HTML landing pages will then be logged as skipped/failed
-   rather than downloaded by old rules.
+   every explicit URL that resolves to an HTML landing page, and for ADS HTML
+   when a resource has no `url/local_path`. The Agent sees extracted page/link
+   context, treats webpage text as untrusted, returns only candidate IDs, and the
+   script still validates URL safety, file size, type, and table parsing. Use
+   `--agent-locator Off` when the run must avoid LLM calls entirely; HTML and ADS
+   pages will then be logged with a stop reason and no page links downloaded.
+   External downloads are bounded by `--max-external-bytes` and only allow public
+   HTTP(S) URLs. Supported machine-readable suffixes are `.csv/.tsv/.txt/.dat/.tbl/.mrt/.ecsv/.fits/.fit/.fits.gz/.vot/.votable/.xml`.
 3. Inspect `catalog_extraction.json`:
    - `tables[].status`
    - `tables[].extraction_method`
@@ -61,12 +63,14 @@ the extraction command. Do edit `catalog_extraction.json` to fill semantic field
    - row/column counts against the source table
 4. If conversion failed:
    - Read `conversion_attempts[].stderr_tail`.
-   - Inspect saved `latexml.html`, `pandoc.html`, and `excerpt.tex` if present.
+   - Inspect saved `latexml.html`, `pandoc.html`, and `excerpt.tex`; the excerpt
+     should be present even when parsing failed.
    - If the table is commented out, malformed, or not actually a data table, record
      that in `tables[].error` or `usage.caveats`.
 5. For external-resource failures:
-   - Treat `ads_no_catalog_data_product`, `network_disabled`,
-     `ambiguous_placeholder_url`, `unsupported_content_type`, and `parse_failed`
+   - Treat `network_disabled`, `agent_locator_disabled`, `agent_no_download_candidates`,
+     `blocked_url`, `download_too_large`, `ambiguous_placeholder_url`,
+     `unsupported_content_type`, and `parse_failed`
      as bounded outcomes, not invitations to search the web.
    - Do not use search engines, recursive crawling, login flows, or unrelated
      archives unless the user explicitly starts a new task for that resource.
@@ -116,7 +120,7 @@ Use the table itself, not just the column header.
 If a column meaning is uncertain, do not invent it. Set:
 
 ```json
-"semantic_status": "needs_manual_review",
+"semantic_status": "needs_agent_review",
 "confidence": 0.4
 ```
 
@@ -141,8 +145,11 @@ and explain the ambiguity in `notes`.
 
 - This stage still preserves the paper's table structure. Do not map to a global
   Stella object schema unless the user explicitly asks for normalization.
-- External resources are handled only within strict V2 boundaries: local file,
-  explicit URL, or ADS data-products fallback. No broad web search or recursive
-  crawling.
+- External resources are handled only within strict boundaries: local file,
+  explicit URL, or ADS HTML through the bounded Agent locator. No broad web
+  search, ADS DOM scraping download path, or recursive crawling.
+- Reviewed semantic fields may be preserved on rerun only when source hash and
+  column identity still match. If headers or source content changed, review the
+  meanings again instead of carrying them forward.
 - Markdown is not the fact source. Update JSON first; regenerate views only when
   a renderer exists for this stage.

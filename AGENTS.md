@@ -61,22 +61,21 @@ conda run -n stella-env python scripts/fetch_high_velocity_lit.py --from 2026-03
 默认值应保持节省额度：
 
 - `--source arxiv`
-- `--classifier rules`
 - `--llm-review False`
 - 不抓 `DeepXiv brief`
 - `--max-results 20`
 - `--categories astro-ph.GA`
 - `--search-mode hybrid`
 
-默认标题规则分两层：
+默认标题 triage 分两类：
 
-- `direct` / `rule-direct`：强相关
-- `weak` / `rule-weak*`：弱相关，默认只保留搜索阶段元数据
+- `rule-related`：标题明确命中高速星相关规则，直接进入月度 note
+- `no-clear-title-evidence`：标题证据不明确，默认只进入标题分类 JSON
 
 如果开启 `--llm-review True`：
 
-- 只让 LLM 判断弱匹配是否保留
-- 不改变强匹配和弱匹配的分组
+- 只让 LLM 判断 `no-clear-title-evidence` 是否保留
+- 不改变 `rule-related` 的结果
 
 LLM 分类或复核时，输入应包含：
 
@@ -123,22 +122,23 @@ conda run -n stella-env python scripts/extract_catalog_tables.py --arxiv-id 2402
 
 表格提取同时处理 `latex_table` 和 `external_resources`。LaTeX 转换顺序是
 LaTeXML、Pandoc、项目内 fallback parser；外部资源优先解析本地机器可读文件，
-其次抓取明确 URL，没有 URL/local path 时只检查 ADS 页面中的 catalog-like data products。
+其次抓取明确 URL；明确 URL 的 HTML landing page 和没有 URL/local path 时的 ADS HTML
+都走 bounded Agent locator。`--agent-locator Off` 时，HTML/ADS 页面只记录停止原因，
+不下载页面里的链接。
 把原始摘录、下载文件和转换/定位日志写到 `catalog_sources/`，把忠实 CSV 写到
 `catalog_tables/`，并用 `catalog_extraction.json` 记录来源、日志、成功失败、列头、
-列含义和 external stop boundary。
+列含义、source hash 和 external stop boundary。
 运行工具后，Agent 必须结合 caption、table footnote、正文引用和上下文手动补充
 每列 `physical_quantity`、`meaning`、`source_of_definition` 与表格 `usage`。
 CSV 不等于规范化对象库；不要在这一阶段强行统一 schema。外部网络抓取不得使用
-搜索引擎、不得递归爬取、不得登录；`--all-reviewed --fetch-external Auto` 默认不联网。
+搜索引擎、不得递归爬取、不得登录；只允许公网 HTTP(S)，拒绝 localhost、私网和特殊地址；
+单文件下载受 `--max-external-bytes` 限制；`--all-reviewed --fetch-external Auto` 默认不联网。
 
 ## 工程规则
 
 - 测试环境：`conda run -n stella-env python -m unittest discover tests`
 - 除非用户明确要求重新抓数据，否则不要做真实 DeepXiv 调用
 - JSON 里要保留 provenance：搜索来源、query、category、score、`run_id`
-- weak 记录必须排在 direct 记录后面
-- 月度 Markdown 中 direct 和 weak 之间要保留分隔线
 - 遇到限额时，已经完成的月份仍然要保存 JSON、Markdown 和 partial summary
 - 不要恢复无关改动，也不要回退用户已有的生成文件
 - 如果改了依赖或环境步骤，要同时更新环境文件和相关文档

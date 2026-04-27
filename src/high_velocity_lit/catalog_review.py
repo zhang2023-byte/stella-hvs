@@ -33,6 +33,7 @@ MACHINE_READABLE_SUFFIXES = {
     ".fit",
     ".fits",
     ".fits.gz",
+    ".mrt",
     ".tbl",
     ".tsv",
     ".txt",

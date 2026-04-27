@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import sys
 from pathlib import Path
 
@@ -18,12 +17,17 @@ from high_velocity_lit.catalog_extraction import (  # noqa: E402
     AGENT_LOCATOR_ALWAYS,
     AGENT_LOCATOR_OFF,
     LLMExternalPageLocator,
+    MAX_EXTERNAL_BYTES,
     UnavailableExternalPageLocator,
     extract_all_reviewed_catalog_tables,
     extract_catalog_tables,
 )
 from high_velocity_lit.config import DEFAULT_LLM_BASE_URL, DEFAULT_LLM_MODEL  # noqa: E402
+from high_velocity_lit.env import env_value, load_env_files  # noqa: E402
 from high_velocity_lit.title_classifier import load_llm_api_key  # noqa: E402
+
+
+load_env_files(WORKSPACE)
 
 
 def parse_bool(value: str) -> bool:
@@ -63,32 +67,7 @@ def fetch_external_enabled(value: str, *, all_reviewed: bool) -> bool:
     return not all_reviewed
 
 
-def read_project_env(path: Path) -> dict[str, str]:
-    if not path.exists():
-        return {}
-    values: dict[str, str] = {}
-    for raw in path.read_text(encoding="utf-8", errors="replace").splitlines():
-        line = raw.strip()
-        if not line or line.startswith("#") or "=" not in line:
-            continue
-        key, value = line.split("=", 1)
-        key = key.strip()
-        value = value.strip().strip('"').strip("'")
-        if key and value:
-            values[key] = value
-    return values
-
-
-def env_or_project(project_env: dict[str, str], *names: str, default: str = "") -> str:
-    for name in names:
-        value = os.environ.get(name) or project_env.get(name)
-        if value:
-            return value
-    return default
-
-
 def build_parser() -> argparse.ArgumentParser:
-    project_env = read_project_env(WORKSPACE / ".env")
     parser = argparse.ArgumentParser(
         description="Extract reviewed high-velocity-star catalog tables and external catalog resources to CSV."
     )
@@ -100,13 +79,14 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--literature-dir", type=Path, default=WORKSPACE / "literature")
     parser.add_argument("--fetch-external", type=parse_fetch_external, default="Auto", metavar="Auto|True|False", help="Network policy for external resources. Auto enables network for --arxiv-id and disables it for --all-reviewed.")
     parser.add_argument("--max-external-files", type=int, default=5, help="Maximum downloaded external files per resource. Default: 5.")
+    parser.add_argument("--max-external-bytes", type=int, default=MAX_EXTERNAL_BYTES, help="Maximum bytes per downloaded external file. Default: 52428800.")
     parser.add_argument("--external-timeout", type=int, default=30, help="HTTP timeout in seconds for external resources. Default: 30.")
     parser.add_argument("--agent-locator", type=parse_agent_locator, default=AGENT_LOCATOR_ALWAYS, metavar="Off|Always", help="Use an LLM agent to choose bounded landing-page download candidates. Default: Always.")
-    parser.add_argument("--llm-api-key", default=env_or_project(project_env, "LLM_API_KEY", "OPENAI_API_KEY", "DEEPXIV_AGENT_API_KEY"), help="OpenAI-compatible API key for the Agent locator. Defaults to environment or .env.")
-    parser.add_argument("--llm-base-url", default=env_or_project(project_env, "LLM_BASE_URL", "OPENAI_BASE_URL", "DEEPXIV_AGENT_BASE_URL", default=DEFAULT_LLM_BASE_URL))
-    parser.add_argument("--llm-model", default=env_or_project(project_env, "LLM_MODEL", "OPENAI_MODEL", "DEEPXIV_AGENT_MODEL", default=DEFAULT_LLM_MODEL))
-    parser.add_argument("--llm-thinking", default=env_or_project(project_env, "LLM_THINKING"))
-    parser.add_argument("--llm-reasoning-effort", default=env_or_project(project_env, "LLM_REASONING_EFFORT"))
+    parser.add_argument("--llm-api-key", default=env_value("LLM_API_KEY", "OPENAI_API_KEY", "DEEPXIV_AGENT_API_KEY"), help="OpenAI-compatible API key for the Agent locator. Defaults to environment or .env.")
+    parser.add_argument("--llm-base-url", default=env_value("LLM_BASE_URL", "OPENAI_BASE_URL", "DEEPXIV_AGENT_BASE_URL", default=DEFAULT_LLM_BASE_URL))
+    parser.add_argument("--llm-model", default=env_value("LLM_MODEL", "OPENAI_MODEL", "DEEPXIV_AGENT_MODEL", default=DEFAULT_LLM_MODEL))
+    parser.add_argument("--llm-thinking", default=env_value("LLM_THINKING"))
+    parser.add_argument("--llm-reasoning-effort", default=env_value("LLM_REASONING_EFFORT"))
     parser.add_argument("--dry-run", type=parse_bool, default=False, metavar="True|False", help="Parse and report without writing files. Default: False.")
     parser.add_argument("--overwrite", type=parse_bool, default=False, metavar="True|False", help="Rewrite existing source excerpts and CSV files. Default: False.")
     return parser
@@ -121,6 +101,10 @@ def main() -> int:
         raise SystemExit("--candidate-id and --resource-id require --arxiv-id")
     if not literature_dir.exists():
         raise SystemExit(f"literature directory does not exist: {literature_dir}")
+    if args.max_external_files < 1:
+        raise SystemExit("--max-external-files must be at least 1")
+    if args.max_external_bytes < 1:
+        raise SystemExit("--max-external-bytes must be at least 1")
     fetch_external = fetch_external_enabled(args.fetch_external, all_reviewed=args.all_reviewed)
     agent_locator = None
     if args.agent_locator != AGENT_LOCATOR_OFF:
@@ -147,6 +131,7 @@ def main() -> int:
                 workspace=WORKSPACE,
                 fetch_external=fetch_external,
                 max_external_files=args.max_external_files,
+                max_external_bytes=args.max_external_bytes,
                 external_timeout=args.external_timeout,
                 dry_run=args.dry_run,
                 overwrite=args.overwrite,
@@ -162,6 +147,7 @@ def main() -> int:
                 resource_id=args.resource_id,
                 fetch_external=fetch_external,
                 max_external_files=args.max_external_files,
+                max_external_bytes=args.max_external_bytes,
                 external_timeout=args.external_timeout,
                 dry_run=args.dry_run,
                 overwrite=args.overwrite,

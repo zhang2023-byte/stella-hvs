@@ -94,10 +94,12 @@ conda run -n stella-env python scripts/extract_catalog_tables.py \
 LaTeXML，然后是 Pandoc，最后回退到项目内 parser。外部资源会先解析本地
 机器可读文件，再按严格边界抓取明确 URL；明确 URL 返回 HTML landing page 时，
 默认 `--agent-locator Always` 会让 LLM Agent 只从页面已提取链接候选中选择下载项。
+没有 URL/local path 的资源也会在已有/可获取的 ADS HTML 上走同一个 bounded Agent
+locator。外部下载只允许公网 HTTP(S)，拒绝本机/私网/特殊地址，并受文件大小上限保护。
 如果 LLM 未配置、连接失败或返回无效结果，错误会记录到提取日志而不会中断整个流程；
 需要完全禁用时使用 `--agent-locator Off`。
-如果没有定位信息，只检查 ADS 页面中的 catalog-like data products。语义补充使用项目内
-`hvs-catalog-extraction` skill；CSV 保持论文/资源表格结构，不代表已经进入统一对象 schema。
+语义补充使用项目内 `hvs-catalog-extraction` skill；CSV 保持论文/资源表格结构，
+不代表已经进入统一对象 schema。
 
 重建 catalog 审阅索引：
 

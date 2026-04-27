@@ -385,6 +385,7 @@ class CatalogAssessmentTest(unittest.TestCase):
                 patch.object(annotate_cli, "LLMCatalogAssessor", return_value=FakeAssessor()),
                 patch.object(annotate_cli, "build_deepxiv_reader", return_value=FakePaperReader()),
                 patch.object(annotate_cli, "load_llm_api_key", return_value="test-key"),
+                patch("builtins.print"),
             ):
                 exit_code = annotate_cli.main()
 

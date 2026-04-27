@@ -182,6 +182,8 @@ conda run -n stella-env python scripts/pull_literature_assets.py \
   - 解压后的 `arxiv_source/` 目录
   - NASA ADS 页面 HTML
 - 每篇论文都会生成 `audit.json`，记录各类资产的成功/失败状态
+- 资料下载只允许公网 HTTP(S)，拒绝本机/私网/特殊地址；PDF/source 下载会流式读取并按大小上限停止
+- source 解压会拒绝绝对路径、`..` 和任何写出解压目录的 archive member
 
 ## 5. 审阅高速星对象 catalog
 
@@ -265,6 +267,7 @@ conda run -n stella-env python scripts/extract_catalog_tables.py \
 --fetch-external Auto|True|False
                            外部资源网络策略；Auto 下单篇联网、批量不联网
 --max-external-files N     每个外部资源最多下载 N 个机器可读文件，默认 5
+--max-external-bytes N     单个外部资源下载硬上限，默认 52428800
 --external-timeout N       外部资源 HTTP 超时秒数，默认 30
 --agent-locator Off|Always
                            LLM Agent 页面定位；默认 Always，对 HTML landing page 始终调用 Agent
@@ -279,9 +282,12 @@ conda run -n stella-env python scripts/extract_catalog_tables.py \
 ### 说明
 
 - LaTeX 表格会写出 `catalog_sources/<candidate_id>/excerpt.tex`、转换器 HTML/log artifacts 和 `catalog_tables/<candidate_id>.csv`。
-- 外部资源会优先解析 `local_path`，其次抓取明确 URL；没有 `url/local_path` 时，只检查 ADS 页面中的 catalog-like data products 或 Related Materials。
-- `--agent-locator` 默认是 `Always`：明确 URL 返回 HTML landing page 时，下载链接选择交给 LLM Agent。旧的 landing-page 规则优先路径已经移除；`Off` 表示不对 HTML landing page 选择下载链接。Agent 只接收页面标题、可见文本摘录、外部资源 evidence 和页面中提取出的链接候选；它只能返回候选 ID，不能发明 URL。脚本仍会校验链接、下载类型、文件大小和解析结果，并把 `agent_locator_context.json`、`agent_locator_response.json` 作为 provenance 写入 `catalog_sources/<resource_id>/`。如果未配置 API key、LLM 连不上、返回格式错误或选择了无效候选，流程不会崩溃；对应错误会写入 `external_resources[].locator_attempts[]`、`error` 和 `stopped_reason`。需要完全关闭时使用 `--agent-locator Off`。
-- 外部抓取不会使用搜索引擎、不会递归爬取、不会登录；遇到无 catalog data product、占位 URL、unsupported content、超时、超过文件数或解析失败时，会在 JSON 中记录 `stopped_reason`。
+- LaTeX 解析失败也会保留 `excerpt.tex`，便于复查失败上下文。
+- 外部资源会优先解析 `local_path`，其次抓取明确 URL；没有 `url/local_path` 时，会读取已有或可获取的 ADS HTML，并交给同一个 bounded Agent locator 选择候选链接。
+- `--agent-locator` 默认是 `Always`：明确 URL 返回 HTML landing page 或 ADS HTML 需要定位下载项时，下载链接选择交给 LLM Agent。Agent 只接收页面标题、可见文本摘录、外部资源 evidence 和页面中提取出的链接候选；网页正文、链接文字和文件名都被视为不可信数据，它只能返回候选 ID，不能发明 URL。脚本仍会校验链接、下载类型、文件大小和解析结果，并把 `agent_locator_context.json`、`agent_locator_response.json` 作为 provenance 写入 `catalog_sources/<resource_id>/`。如果未配置 API key、LLM 连不上、返回格式错误或选择了无效候选，流程不会崩溃；对应错误会写入 `external_resources[].locator_attempts[]`、`error` 和 `stopped_reason`。需要完全关闭时使用 `--agent-locator Off`，此时 HTML landing page 和 ADS HTML 只记录停止原因，不下载页面链接。
+- 外部抓取不会使用搜索引擎、不会递归爬取、不会登录；只允许公网 HTTP(S)，拒绝 localhost、私网 IP、link-local、loopback、multicast、reserved 地址和无 host URL；遇到占位 URL、unsupported content、超时、超过文件数、超过大小上限或解析失败时，会在 JSON 中记录 `stopped_reason`。
+- 外部机器可读后缀统一支持 `.csv/.tsv/.txt/.dat/.tbl/.mrt/.ecsv/.fits/.fit/.fits.gz/.vot/.votable/.xml`。
+- 重跑时，只有 source hash 与列身份匹配，才会保留已人工审核的 `usage` 和列语义；否则语义状态会回到 `needs_agent_review`。
 - 每篇论文会写出 `catalog_extraction.json`，记录来源、运行日志、转换/下载/定位尝试结果、成功失败、CSV 路径、列头、单位行和待补充的列语义字段。
 - CSV 使用 `col_001`、`col_002` 这类稳定列名，尽量忠实保留论文表格，不表示已经完成统一对象 schema。
 - 使用项目内 `hvs-catalog-extraction` skill 时，Agent 需要在提取后手动补充每列 `physical_quantity`、`meaning`、`source_of_definition`、`notes` 和表格 `usage`。

@@ -3,10 +3,12 @@ from __future__ import annotations
 import importlib.util
 import io
 import json
+import gzip
 import sys
 import tarfile
 import tempfile
 import unittest
+import zipfile
 from pathlib import Path
 from unittest.mock import patch
 
@@ -19,6 +21,9 @@ sys.path.insert(0, str(ROOT / "src"))
 from high_velocity_lit.literature_assets import (  # noqa: E402
     SelectedPaper,
     archive_paper,
+    extract_source_archive,
+    fetch_arxiv_source,
+    fetch_binary_asset,
     parse_ads_metadata,
     resolve_folder,
 )
@@ -46,6 +51,13 @@ class FakeResponse:
         self.text = content.decode("utf-8", errors="replace")
         self.ok = status_code < 400
 
+    def iter_content(self, chunk_size: int = 1024 * 1024) -> object:
+        for index in range(0, len(self.content), chunk_size):
+            yield self.content[index : index + chunk_size]
+
+    def close(self) -> None:
+        return None
+
     def raise_for_status(self) -> None:
         if self.status_code >= 400:
             response = requests.Response()
@@ -55,13 +67,37 @@ class FakeResponse:
             raise requests.HTTPError(f"{self.status_code} error", response=response)
 
 
+class StreamingFakeResponse(FakeResponse):
+    def __init__(
+        self,
+        *,
+        url: str,
+        chunks: list[bytes],
+        status_code: int = 200,
+        headers: dict[str, str] | None = None,
+    ) -> None:
+        super().__init__(url=url, status_code=status_code, content=b"", headers=headers)
+        self.chunks = chunks
+
+    def iter_content(self, chunk_size: int = 1024 * 1024) -> object:
+        del chunk_size
+        yield from self.chunks
+
+
 class FakeSession:
     def __init__(self, responses: dict[str, FakeResponse]) -> None:
         self.responses = responses
         self.headers: dict[str, str] = {}
 
-    def get(self, url: str, timeout: int, allow_redirects: bool = True, headers: dict[str, str] | None = None) -> FakeResponse:
-        del timeout, allow_redirects, headers
+    def get(
+        self,
+        url: str,
+        timeout: int,
+        allow_redirects: bool = True,
+        headers: dict[str, str] | None = None,
+        stream: bool = False,
+    ) -> FakeResponse:
+        del timeout, allow_redirects, headers, stream
         if url not in self.responses:
             raise requests.RequestException(f"missing fake response for {url}")
         return self.responses[url]
@@ -105,6 +141,14 @@ def fake_tar_gz_bytes() -> bytes:
         info = tarfile.TarInfo(name="main.tex")
         info.size = len(data)
         archive.addfile(info, io.BytesIO(data))
+    return buffer.getvalue()
+
+
+def fake_zip_bytes(members: dict[str, bytes]) -> bytes:
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, mode="w") as archive:
+        for name, content in members.items():
+            archive.writestr(name, content)
     return buffer.getvalue()
 
 
@@ -303,6 +347,116 @@ class LiteratureAssetsTest(unittest.TestCase):
                 "arXiv served PDF content instead of a source archive",
             )
             self.assertFalse((literature_dir / "2401.10635" / "arxiv_source").exists())
+
+    def test_extract_source_archive_rejects_unsafe_zip_path(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp)
+            archive_path = folder / "arxiv_source.zip"
+            archive_path.write_bytes(fake_zip_bytes({"../evil.tex": b"bad", "main.tex": b"ok"}))
+
+            result = extract_source_archive(archive_path)
+
+            self.assertFalse(result["extracted"])
+            self.assertIn("unsafe archive member path", result["extract_error"])
+            self.assertFalse((folder.parent / "evil.tex").exists())
+            self.assertFalse((folder / "arxiv_source").exists())
+
+    def test_extract_source_archive_handles_zip_and_gz_sources(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp)
+            zip_path = folder / "source.zip"
+            zip_path.write_bytes(fake_zip_bytes({"main.tex": b"zip source"}))
+            zip_result = extract_source_archive(zip_path)
+            self.assertTrue(zip_result["extracted"])
+            self.assertEqual((folder / "arxiv_source" / "main.tex").read_bytes(), b"zip source")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp)
+            gz_path = folder / "source.tex.gz"
+            with gzip.open(gz_path, "wb") as handle:
+                handle.write(b"gz source")
+            gz_result = extract_source_archive(gz_path)
+            self.assertTrue(gz_result["extracted"])
+            self.assertEqual((folder / "arxiv_source" / "source.tex").read_bytes(), b"gz source")
+
+    def test_fetch_binary_asset_rejects_large_stream_without_writing_pdf(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            output_path = Path(tmp) / "arxiv.pdf"
+            session = FakeSession(
+                {
+                    "https://example.test/paper.pdf": StreamingFakeResponse(
+                        url="https://example.test/paper.pdf",
+                        chunks=[b"12345", b"67890"],
+                        headers={"content-type": "application/pdf"},
+                    )
+                }
+            )
+
+            result = fetch_binary_asset(
+                session,
+                url="https://example.test/paper.pdf",
+                output_path=output_path,
+                timeout=60,
+                max_bytes=8,
+            )
+
+            self.assertFalse(result["success"])
+            self.assertIn("download exceeds 8 bytes", result["error"])
+            self.assertFalse(output_path.exists())
+
+    def test_fetch_binary_asset_blocks_private_redirect(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            output_path = Path(tmp) / "arxiv.pdf"
+            session = FakeSession(
+                {
+                    "https://example.test/paper.pdf": FakeResponse(
+                        url="https://example.test/paper.pdf",
+                        status_code=302,
+                        headers={"location": "http://127.0.0.1/paper.pdf"},
+                    )
+                }
+            )
+
+            result = fetch_binary_asset(
+                session,
+                url="https://example.test/paper.pdf",
+                output_path=output_path,
+                timeout=60,
+            )
+
+            self.assertFalse(result["success"])
+            self.assertIn("blocked redirect URL", result["error"])
+            self.assertFalse(output_path.exists())
+
+    def test_fetch_arxiv_source_rejects_large_stream_without_writing_archive(self) -> None:
+        session = FakeSession(
+            {
+                "https://arxiv.org/e-print/2603.00001": StreamingFakeResponse(
+                    url="https://arxiv.org/e-print/2603.00001",
+                    chunks=[b"12345", b"67890"],
+                    headers={"content-type": "application/gzip"},
+                ),
+                "https://arxiv.org/src/2603.00001": StreamingFakeResponse(
+                    url="https://arxiv.org/src/2603.00001",
+                    chunks=[b"12345", b"67890"],
+                    headers={"content-type": "application/gzip"},
+                ),
+            }
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            output_dir = Path(tmp)
+
+            result = fetch_arxiv_source(
+                session,
+                arxiv_id="2603.00001",
+                output_dir=output_dir,
+                timeout=60,
+                max_bytes=8,
+            )
+
+            self.assertFalse(result["success"])
+            self.assertIn("download exceeds 8 bytes", result["error"])
+            self.assertFalse(any(output_dir.glob("arxiv_source*")))
 
     def test_cli_dry_run_selects_only_data_related_papers(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

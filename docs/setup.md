@@ -63,7 +63,7 @@ LLM_THINKING=
 LLM_REASONING_EFFORT=
 ```
 
-脚本会按下面顺序读取环境变量：
+主要 Python CLI 共用同一个 `.env` loader，会按下面顺序读取环境变量：
 
 - `~/.env`
 - 项目根目录 `.env`

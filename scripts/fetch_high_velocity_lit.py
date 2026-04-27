@@ -6,7 +6,6 @@ from __future__ import annotations
 import argparse
 import calendar
 import json
-import os
 import re
 import sys
 from datetime import date
@@ -16,15 +15,6 @@ WORKSPACE = Path(__file__).resolve().parents[1]
 SRC = WORKSPACE / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
-
-try:
-    from dotenv import load_dotenv
-
-    for env_path in (Path.home() / ".env", WORKSPACE / ".env", Path.cwd() / ".env"):
-        if env_path.exists():
-            load_dotenv(env_path, override=True)
-except ImportError:
-    pass
 
 from high_velocity_lit.config import (  # noqa: E402
     DEFAULT_CATEGORIES,
@@ -37,8 +27,11 @@ from high_velocity_lit.config import (  # noqa: E402
     DEFAULT_SEARCH_MODE,
     DEFAULT_SEARCH_SLEEP_SECONDS,
 )
+from high_velocity_lit.env import env_value, load_env_files  # noqa: E402
 from high_velocity_lit.models import SearchConfig  # noqa: E402
 from high_velocity_lit.pipeline import PartialRunError, run_pipeline  # noqa: E402
+
+load_env_files(WORKSPACE)
 
 
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -166,9 +159,9 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         help="Optional DeepXiv score floor. Default is no score floor to avoid missing papers.",
     )
-    parser.add_argument("--llm-api-key", default=os.environ.get("LLM_API_KEY") or os.environ.get("OPENAI_API_KEY") or os.environ.get("DEEPXIV_AGENT_API_KEY"))
-    parser.add_argument("--llm-base-url", default=os.environ.get("LLM_BASE_URL") or os.environ.get("OPENAI_BASE_URL") or os.environ.get("DEEPXIV_AGENT_BASE_URL") or DEFAULT_LLM_BASE_URL)
-    parser.add_argument("--llm-model", default=os.environ.get("LLM_MODEL") or os.environ.get("OPENAI_MODEL") or os.environ.get("DEEPXIV_AGENT_MODEL") or DEFAULT_LLM_MODEL)
+    parser.add_argument("--llm-api-key", default=env_value("LLM_API_KEY", "OPENAI_API_KEY", "DEEPXIV_AGENT_API_KEY"))
+    parser.add_argument("--llm-base-url", default=env_value("LLM_BASE_URL", "OPENAI_BASE_URL", "DEEPXIV_AGENT_BASE_URL", default=DEFAULT_LLM_BASE_URL))
+    parser.add_argument("--llm-model", default=env_value("LLM_MODEL", "OPENAI_MODEL", "DEEPXIV_AGENT_MODEL", default=DEFAULT_LLM_MODEL))
     parser.add_argument("--llm-batch-size", type=int, default=DEFAULT_LLM_BATCH_SIZE)
     parser.add_argument(
         "--llm-review",
