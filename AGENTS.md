@@ -11,6 +11,7 @@
 - 把标准结果写入 `notes/`
 - 给已有月度 JSON 加上 `catalog_assessment`
 - 审阅已归档论文源码中的高速星对象 catalog，并写入 `catalog_review.json`
+- 根据 `catalog_review.json` 提取论文中的 LaTeX catalog 表格为 CSV，并写入 `catalog_extraction.json`
 - 从 JSON 生成 Markdown
 
 ## 项目愿景
@@ -33,6 +34,10 @@ notes/YYYY/YYYY-MM/YYYY-MM.md     月度阅读笔记
 notes/index.json                  全局索引
 notes/index.md                    年度视图
 literature/<arxiv_id>/catalog_review.json   单篇 catalog 审阅事实源
+literature/<arxiv_id>/catalog_extraction.json   单篇 catalog 表格提取事实源
+literature/<arxiv_id>/catalog_sources/<candidate_id>/excerpt.tex   原始 LaTeX 表格摘录
+literature/<arxiv_id>/catalog_sources/<candidate_id>/latexml.html   LaTeXML 转换视图
+literature/<arxiv_id>/catalog_tables/<candidate_id>.csv   忠实表格 CSV
 literature/catalog_index.json      catalog 审阅全局索引
 literature/catalog_index.md        catalog 审阅阅读视图
 ```
@@ -110,6 +115,23 @@ conda run -n stella-env python scripts/build_catalog_index.py
 不要手动改 `literature/catalog_index.json` 或 `literature/catalog_index.md`。
 如果输出有问题，应修改 `catalog_review.json` 或索引渲染逻辑，然后重新生成。
 
+提取已审阅 catalog 表格时，使用项目内 `hvs-catalog-extraction` skill：
+
+```bash
+conda run -n stella-env python scripts/extract_catalog_tables.py --arxiv-id 2402.10714
+```
+
+表格提取同时处理 `latex_table` 和 `external_resources`。LaTeX 转换顺序是
+LaTeXML、Pandoc、项目内 fallback parser；外部资源优先解析本地机器可读文件，
+其次抓取明确 URL，没有 URL/local path 时只检查 ADS 页面中的 catalog-like data products。
+把原始摘录、下载文件和转换/定位日志写到 `catalog_sources/`，把忠实 CSV 写到
+`catalog_tables/`，并用 `catalog_extraction.json` 记录来源、日志、成功失败、列头、
+列含义和 external stop boundary。
+运行工具后，Agent 必须结合 caption、table footnote、正文引用和上下文手动补充
+每列 `physical_quantity`、`meaning`、`source_of_definition` 与表格 `usage`。
+CSV 不等于规范化对象库；不要在这一阶段强行统一 schema。外部网络抓取不得使用
+搜索引擎、不得递归爬取、不得登录；`--all-reviewed --fetch-external Auto` 默认不联网。
+
 ## 工程规则
 
 - 测试环境：`conda run -n stella-env python -m unittest discover tests`
@@ -133,6 +155,7 @@ conda run -n stella-env python scripts/build_catalog_index.py
 改 CLI 参数或默认值时，同时更新：
 
 - `scripts/fetch_high_velocity_lit.py`
+- 相关新增或改动的 `scripts/*.py`
 - `docs/usage.md`
 - `README.md`
 - CLI 测试

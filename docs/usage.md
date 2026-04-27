@@ -200,12 +200,6 @@ literature/<arxiv_id>/catalog_review.json
 ```
 
 本阶段只做语义审阅、来源定位和证据记录，不把 LaTeX 转 CSV，不解析 FITS，也不下载外部表格。
-真正的表格提取阶段后续使用：
-
-```text
-literature/<arxiv_id>/catalog_sources/
-literature/<arxiv_id>/catalog_tables/
-```
 
 重建全局 catalog 审阅索引：
 
@@ -220,7 +214,79 @@ literature/catalog_index.json
 literature/catalog_index.md
 ```
 
-## 6. 时间写法
+## 6. 提取已审阅 catalog 表格
+
+推荐先安装 LaTeXML：
+
+```bash
+brew install latexml
+```
+
+提取脚本会按顺序尝试 LaTeXML、Pandoc 和项目内 fallback parser；同一次运行也会处理
+`catalog_review.json` 中记录的外部机器可读 catalog。
+
+给单篇论文提取所有已审阅的 LaTeX catalog 表格和 external catalog：
+
+```bash
+conda run -n stella-env python scripts/extract_catalog_tables.py \
+  --arxiv-id 2402.10714
+```
+
+只提取一个候选表格：
+
+```bash
+conda run -n stella-env python scripts/extract_catalog_tables.py \
+  --arxiv-id 2402.10714 \
+  --candidate-id table-tab-72dr3
+```
+
+只提取一个外部资源：
+
+```bash
+conda run -n stella-env python scripts/extract_catalog_tables.py \
+  --arxiv-id 2509.24010 \
+  --resource-id resource-local-final-catalog-fits
+```
+
+提取所有已审阅且有 catalog candidate 的论文：
+
+```bash
+conda run -n stella-env python scripts/extract_catalog_tables.py \
+  --all-reviewed
+```
+
+### 常用参数
+
+```text
+--arxiv-id ID              提取单篇论文
+--all-reviewed             提取所有 reviewed 且有 catalog candidate 或 external resource 的论文
+--candidate-id ID          只提取单个 catalog_candidates[].id，需配合 --arxiv-id
+--resource-id ID           只提取单个 external_resources[].id，需配合 --arxiv-id
+--fetch-external Auto|True|False
+                           外部资源网络策略；Auto 下单篇联网、批量不联网
+--max-external-files N     每个外部资源最多下载 N 个机器可读文件，默认 5
+--external-timeout N       外部资源 HTTP 超时秒数，默认 30
+--agent-locator Off|Always
+                           LLM Agent 页面定位；默认 Always，对 HTML landing page 始终调用 Agent
+--llm-api-key KEY          Agent locator 使用的 OpenAI-compatible API key；也可用 LLM_API_KEY 等环境变量
+--llm-base-url URL         Agent locator API base URL，默认 LLM_BASE_URL 或 https://api.openai.com/v1
+--llm-model MODEL          Agent locator 模型，默认 LLM_MODEL 或 gpt-4o-mini
+--literature-dir PATH      文献归档根目录，默认 literature
+--dry-run True|False       只解析并报告，不写文件，默认 False
+--overwrite True|False     覆盖已有 excerpt.tex 和 CSV，默认 False
+```
+
+### 说明
+
+- LaTeX 表格会写出 `catalog_sources/<candidate_id>/excerpt.tex`、转换器 HTML/log artifacts 和 `catalog_tables/<candidate_id>.csv`。
+- 外部资源会优先解析 `local_path`，其次抓取明确 URL；没有 `url/local_path` 时，只检查 ADS 页面中的 catalog-like data products 或 Related Materials。
+- `--agent-locator` 默认是 `Always`：明确 URL 返回 HTML landing page 时，下载链接选择交给 LLM Agent。旧的 landing-page 规则优先路径已经移除；`Off` 表示不对 HTML landing page 选择下载链接。Agent 只接收页面标题、可见文本摘录、外部资源 evidence 和页面中提取出的链接候选；它只能返回候选 ID，不能发明 URL。脚本仍会校验链接、下载类型、文件大小和解析结果，并把 `agent_locator_context.json`、`agent_locator_response.json` 作为 provenance 写入 `catalog_sources/<resource_id>/`。如果未配置 API key、LLM 连不上、返回格式错误或选择了无效候选，流程不会崩溃；对应错误会写入 `external_resources[].locator_attempts[]`、`error` 和 `stopped_reason`。需要完全关闭时使用 `--agent-locator Off`。
+- 外部抓取不会使用搜索引擎、不会递归爬取、不会登录；遇到无 catalog data product、占位 URL、unsupported content、超时、超过文件数或解析失败时，会在 JSON 中记录 `stopped_reason`。
+- 每篇论文会写出 `catalog_extraction.json`，记录来源、运行日志、转换/下载/定位尝试结果、成功失败、CSV 路径、列头、单位行和待补充的列语义字段。
+- CSV 使用 `col_001`、`col_002` 这类稳定列名，尽量忠实保留论文表格，不表示已经完成统一对象 schema。
+- 使用项目内 `hvs-catalog-extraction` skill 时，Agent 需要在提取后手动补充每列 `physical_quantity`、`meaning`、`source_of_definition`、`notes` 和表格 `usage`。
+
+## 7. 时间写法
 
 ```text
 --from 2026-03-15  表示从 2026-03-15 开始
@@ -235,7 +301,7 @@ literature/catalog_index.md
 未来日期会自动截到今天。
 非法日期格式会直接报错。
 
-## 7. 额外说明
+## 8. 额外说明
 
 当 DeepXiv 返回限额错误时：
 

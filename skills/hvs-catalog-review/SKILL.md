@@ -31,6 +31,17 @@ This is a review workflow, not a table-extraction workflow. Do not convert LaTeX
    conda run -n stella-env python scripts/build_catalog_index.py
    ```
 
+After this review workflow is complete, table extraction is a separate follow-up step:
+
+```bash
+conda run -n stella-env python scripts/extract_catalog_tables.py --arxiv-id <arxiv_id>
+```
+
+Use the `hvs-catalog-extraction` skill for that follow-up. It writes
+`catalog_extraction.json`, `catalog_sources/`, and `catalog_tables/` for both
+LaTeX tables and bounded external resources, then fills per-column meanings and
+table usage notes. Do not perform those writes while using this review skill.
+
 ## Review Boundaries
 
 Include:
@@ -94,9 +105,6 @@ Use `schema_version: "stella.hvs_catalog.review.v1"`.
         }
       ],
       "latex_excerpt": "",
-      "columns": [
-        {"name": "Gaia DR3 source_id", "meaning": "stellar source identifier"}
-      ],
       "meaning": "",
       "evidence": "",
       "confidence": 0.0,
@@ -137,3 +145,5 @@ Allowed `review.status` values: `reviewed`, `partial`, `needs_review`, `source_m
 Suggested `catalog_role` values: `new_catalog`, `compiled_catalog`, `followup_observations`, `uses_existing_catalog`, `unclear`.
 
 Suggested `object_scope` values: `single_object`, `multiple_objects`, `none`, `unclear`.
+
+Do not record table columns in `catalog_review.json`. Preserve accurate `source_refs.start_line` and `source_refs.end_line` so later table-extraction stages can return to the exact TeX span and write precise column schemas under `catalog_extraction.json`, `catalog_sources/`, and `catalog_tables/`.

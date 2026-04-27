@@ -9,6 +9,7 @@
 - 给可能是数据型文献的论文加上 `catalog_assessment`
 - 给 `notes/` 中已判为数据相关的论文拉取本地资料归档到 `literature/`
 - 审阅已归档论文源码中的高速星对象 catalog，并生成 catalog 审阅索引
+- 将已审阅的 LaTeX catalog 表格提取为 CSV，并保留提取 provenance
 - 从 JSON 生成可读的 Markdown
 
 ## 环境准备
@@ -17,6 +18,12 @@
 conda env create -f environment.yml
 conda activate stella-env
 cp scripts/env.example .env
+```
+
+LaTeX 表格提取推荐额外安装 LaTeXML：
+
+```bash
+brew install latexml
 ```
 
 如果你要使用 `--source deepxiv`，或运行 `catalog_assessment` 的 DeepXiv 增强阅读，再在 `.env` 中填写 `DEEPXIV_TOKEN`。
@@ -74,6 +81,24 @@ conda run -n stella-env python scripts/inventory_catalog_candidates.py \
 `literature/<arxiv_id>/catalog_review.json`。本阶段只做审阅和来源定位，
 不转换 CSV、不解析 FITS、不下载外部表格。
 
+提取已审阅的 LaTeX catalog 表格和外部机器可读 catalog，并在提取后由 Agent
+补充每列物理含义：
+
+```bash
+conda run -n stella-env python scripts/extract_catalog_tables.py \
+  --arxiv-id 2402.10714
+```
+
+提取阶段会写出 `literature/<arxiv_id>/catalog_extraction.json`、
+`catalog_sources/<id>/...` 和 `catalog_tables/<id>.csv`。LaTeX 表格优先使用
+LaTeXML，然后是 Pandoc，最后回退到项目内 parser。外部资源会先解析本地
+机器可读文件，再按严格边界抓取明确 URL；明确 URL 返回 HTML landing page 时，
+默认 `--agent-locator Always` 会让 LLM Agent 只从页面已提取链接候选中选择下载项。
+如果 LLM 未配置、连接失败或返回无效结果，错误会记录到提取日志而不会中断整个流程；
+需要完全禁用时使用 `--agent-locator Off`。
+如果没有定位信息，只检查 ADS 页面中的 catalog-like data products。语义补充使用项目内
+`hvs-catalog-extraction` skill；CSV 保持论文/资源表格结构，不代表已经进入统一对象 schema。
+
 重建 catalog 审阅索引：
 
 ```bash
@@ -103,6 +128,7 @@ scripts/fetch_high_velocity_lit.py   月度文献抓取主入口
 scripts/annotate_catalog_data.py     给月度 JSON 补 catalog_assessment
 scripts/pull_literature_assets.py    拉取 data-related 文献的本地资料归档
 scripts/inventory_catalog_candidates.py   列出单篇论文的 catalog 审阅候选
+scripts/extract_catalog_tables.py    从 catalog_review.json 提取 LaTeX 表格为 CSV
 scripts/build_catalog_index.py       从 catalog_review.json 重建 catalog 审阅索引
 scripts/render_lit_notes.py          从 JSON 重生成 Markdown
 scripts/run_2025_2026.sh             批量运行脚本

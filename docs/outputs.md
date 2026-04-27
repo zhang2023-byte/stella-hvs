@@ -7,6 +7,7 @@ JSON 是标准输出。Markdown 是从 JSON 生成的阅读视图。
 ```text
 literature/<arxiv_id>/    本地文献资产目录
 literature/<arxiv_id>/catalog_review.json   单篇 catalog 审阅事实源
+literature/<arxiv_id>/catalog_extraction.json   单篇 catalog 表格提取事实源
 literature/catalog_index.json       从 catalog_review.json 重建的全局 catalog 审阅索引
 notes/index.json                  从月度 JSON 重建的全局索引
 notes/YYYY/YYYY-MM/YYYY-MM.json   月度标准记录
@@ -22,16 +23,25 @@ literature/<arxiv_id>/arxiv.pdf
 literature/<arxiv_id>/arxiv_source*
 literature/<arxiv_id>/arxiv_source/...
 literature/<arxiv_id>/ads_abstract.html
+literature/<arxiv_id>/catalog_sources/<candidate_id>/excerpt.tex
+literature/<arxiv_id>/catalog_sources/<candidate_id>/latexml.html
+literature/<arxiv_id>/catalog_sources/<candidate_id>/latexml.stderr.txt
+literature/<arxiv_id>/catalog_sources/<candidate_id>/pandoc.html
+literature/<arxiv_id>/catalog_sources/<candidate_id>/pandoc.stderr.txt
+literature/<arxiv_id>/catalog_tables/<candidate_id>.csv
+literature/<arxiv_id>/catalog_sources/<resource_id>/download-001.csv
+literature/<arxiv_id>/catalog_sources/<resource_id>/landing.html
+literature/<arxiv_id>/catalog_tables/<resource_id>.csv
 literature/catalog_index.md        从 catalog_index.json 生成的 catalog 审阅视图
 notes/index.md                   从 index.json 生成的年度视图
 notes/YYYY/YYYY-MM/YYYY-MM.md    从月度 JSON 生成的月度笔记
 ```
 
-后续真正表格提取阶段预留：
+表格提取阶段使用：
 
 ```text
-literature/<arxiv_id>/catalog_sources/   原始 catalog 来源文件、下载表格或 LaTeX excerpt
-literature/<arxiv_id>/catalog_tables/    规范化后的 CSV、schema、转换日志
+literature/<arxiv_id>/catalog_sources/   原始 catalog 来源文件或 LaTeX excerpt
+literature/<arxiv_id>/catalog_tables/    忠实 CSV 表格
 ```
 
 ## 本地日志
@@ -129,7 +139,27 @@ logs/run_<timestamp>.log
 - `external_resources`：外部托管或本地机器可读资源及评论
 - `rejected_candidates`：被排除或不确定的候选及原因
 
-本阶段只保存 LaTeX 段落、链接、路径、证据和解释；不把 LaTeX 转 CSV，不下载外部表格。
+本阶段只保存 LaTeX 段落、链接、路径、证据和解释；不把 LaTeX 转 CSV，不下载外部表格，也不记录表格列 schema。后续表格抽取应以 `source_refs.start_line` 和 `source_refs.end_line` 定位原始 TeX，并在 `catalog_sources/` 和 `catalog_tables/` 阶段写入精确列含义。
+
+## `catalog_extraction.json` 包含什么
+
+`catalog_extraction.json` 是表格提取阶段的事实源，输入来自
+`catalog_review.json` 中已经确认的候选。
+
+- `paper`：arXiv ID、标题、月份
+- `review`：来源 `catalog_review.json` 路径、schema 和 review 状态
+- `runs`：每次提取的时间、参数、成功失败统计和状态
+- `sources`：原始 TeX 路径、行号、摘录文件，或 external resource 的本地/下载来源、checksum、获取状态和错误
+- `tables`：CSV 路径、caption/资源说明、label、行列数、解析状态、转换/解析工具尝试记录、warnings、列记录和使用说明
+- `external_resources`：外部资源定位、下载、解析日志，生成的 table outputs，错误和严格停止原因 `stopped_reason`；默认的 `Always` Agent locator 会在明确 URL 返回 HTML landing page 时运行，并记录 bounded agent 的页面候选选择、LLM 缺失/连接/格式错误、`agent_locator_context.json` 和 `agent_locator_response.json`
+
+CSV 使用 `col_001`、`col_002` 等稳定列名，尽量忠实保留论文表格数据。
+列的 `original_header`、`unit_text`、`physical_quantity`、`meaning`、
+`original_name`、`description`、`format`、`data_type`、`null_values`、
+`source_of_definition`、`notes`、`semantic_status` 和 `confidence` 保存在 JSON 中。
+提取器会自动填列头、单位和基础数据类型；
+Agent 使用 `hvs-catalog-extraction` skill 后，需要结合表格 caption、footnote、
+正文引用和上下文手动补充每列物理含义与表格 `usage`。
 
 ## 索引文件包含什么
 

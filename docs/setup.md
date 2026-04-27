@@ -14,7 +14,27 @@ conda env update -f environment.yml --prune
 conda activate stella-env
 ```
 
-这个环境现在也包含本地资料归档流程需要的 HTML 解析与网络请求依赖。
+这个环境现在也包含本地资料归档流程需要的 HTML 解析、网络请求，以及外部
+catalog 表格解析依赖；FITS、VOTable 和 CDS/MRT ASCII 通过 `astropy` 读取。
+
+## 可选外部工具
+
+表格提取流程优先使用 LaTeXML，把论文 LaTeX 表格转换为 HTML 后再生成 CSV。
+macOS 推荐安装：
+
+```bash
+brew install latexml
+```
+
+确认工具可用：
+
+```bash
+which latexmlc
+latexmlc --VERSION
+```
+
+如果没有 LaTeXML，`scripts/extract_catalog_tables.py` 会尝试 Pandoc；
+如果 Pandoc 也不可用，则回退到项目内的轻量 LaTeX parser，但复杂表格保真度会下降。
 
 ## 配置 `.env`
 
