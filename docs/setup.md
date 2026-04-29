@@ -41,7 +41,7 @@ latexmlc --VERSION
 项目密钥写在 `.env` 中，这个文件不会进入 Git：
 
 ```bash
-cp scripts/env.example .env
+cp env.example .env
 ```
 
 如果你要使用 `--source deepxiv`，或运行带 DeepXiv 增强阅读的 `catalog_assessment`，建议填写：
