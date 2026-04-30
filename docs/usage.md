@@ -24,8 +24,10 @@ conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
 --from DATE                  开始时间，可写 YYYY-MM-DD、YYYY-MM、YYYY
 --to DATE                    结束时间，默认今天
 --llm-review True|False      是否让 LLM 复核“标题没有明显证据”的论文，默认 False
---max-results N              每个 query/category 的返回上限，默认 20
---categories A,B,C           arXiv 分类，默认 astro-ph.GA
+--max-results N              每个 arXiv query 或 DeepXiv query/category 的返回上限，默认 20
+--deepxiv-llm-review-max-candidates N
+                             DeepXiv 模式下送入 LLM 复核的 no-clear-title-evidence 候选上限，默认 20
+--categories A,B,C           arXiv 分类，默认 astro-ph.GA,astro-ph.SR,astro-ph.IM
 --min-score X                DeepXiv 分数下限，默认关闭
 --progress True|False        是否显示进度条，默认 True
 --token TOKEN                覆盖 DEEPXIV_TOKEN
@@ -40,7 +42,7 @@ conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
 --source            arxiv
 --llm-review        False
 --max-results       20
---categories        astro-ph.GA
+--categories        astro-ph.GA,astro-ph.SR,astro-ph.IM
 --min-score         关闭
 --search-mode       hybrid
 --progress          True
@@ -48,6 +50,7 @@ conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
 --llm-base-url      默认 https://api.openai.com/v1
 --llm-model         默认 gpt-4o-mini
 --llm-batch-size    25
+--deepxiv-llm-review-max-candidates 20
 --notes-dir         notes
 --logs-dir          logs
 ```
@@ -58,9 +61,15 @@ conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
 - 密钥不会明文打印
 - 去重后会先做规则标题初筛，并写出 `YYYY-MM.title-triage.json`
 - `--llm-review True` 时，只复核“标题没有明显证据”的论文
+- `--source deepxiv --llm-review True` 时，会先按 DeepXiv score 对
+  `no-clear-title-evidence` 候选降序排序，只把前
+  `--deepxiv-llm-review-max-candidates` 篇交给 LLM；其余候选仍保留在
+  `title-triage.json`，并标记为 `review.status=skipped`
 - 最终月度 note 只收录规则直判相关论文，以及被 LLM 复核确认相关的论文
 - `fetch_high_velocity_lit.py` 不再调用 `DeepXiv brief`
 - 默认候选检索走 `arXiv API`
+- arXiv 候选检索会把多个 `--categories` 合并为 OR 条件推入查询，例如
+  `(cat:astro-ph.GA OR cat:astro-ph.SR OR cat:astro-ph.IM)`；DeepXiv 候选检索则按分类分别查询后去重合并
 
 ## 2. 补数据相关判断
 
@@ -317,6 +326,7 @@ conda run -n stella-env python scripts/extract_catalog_tables.py \
 ```text
 hypervelocity stars
 high-velocity stars
+high radial velocity stars
 runaway stars
 unbound stars
 escaping stars

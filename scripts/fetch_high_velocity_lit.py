@@ -18,6 +18,7 @@ if str(SRC) not in sys.path:
 
 from high_velocity_lit.config import (  # noqa: E402
     DEFAULT_CATEGORIES,
+    DEFAULT_DEEPXIV_LLM_REVIEW_MAX_CANDIDATES,
     DEFAULT_LLM_BASE_URL,
     DEFAULT_LLM_BATCH_SIZE,
     DEFAULT_LLM_MODEL,
@@ -164,6 +165,15 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--llm-model", default=env_value("LLM_MODEL", "OPENAI_MODEL", "DEEPXIV_AGENT_MODEL", default=DEFAULT_LLM_MODEL))
     parser.add_argument("--llm-batch-size", type=int, default=DEFAULT_LLM_BATCH_SIZE)
     parser.add_argument(
+        "--deepxiv-llm-review-max-candidates",
+        type=int,
+        default=DEFAULT_DEEPXIV_LLM_REVIEW_MAX_CANDIDATES,
+        help=(
+            "For --source deepxiv, review at most this many no-clear-title-evidence "
+            "candidates with the LLM after dedupe/filtering, sorted by DeepXiv score. Default: 20."
+        ),
+    )
+    parser.add_argument(
         "--llm-review",
         type=parse_bool,
         default=False,
@@ -197,6 +207,8 @@ def main() -> int:
         parser.error(f"--from date {start_date.isoformat()} is after --to date {end_date.isoformat()}")
     if args.max_results < 1:
         parser.error("--max-results must be at least 1")
+    if args.deepxiv_llm_review_max_candidates < 1:
+        parser.error("--deepxiv-llm-review-max-candidates must be at least 1")
     if args.llm_review:
         if not args.llm_api_key:
             parser.error("--llm-review True requires LLM_API_KEY or --llm-api-key")
@@ -221,6 +233,7 @@ def main() -> int:
         llm_review=args.llm_review,
         search_sleep_seconds=args.sleep,
         progress=args.progress,
+        deepxiv_llm_review_max_candidates=args.deepxiv_llm_review_max_candidates,
         token=args.token,
     )
     try:

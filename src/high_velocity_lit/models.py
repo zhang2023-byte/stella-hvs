@@ -48,4 +48,5 @@ class SearchConfig:
     llm_review: bool
     search_sleep_seconds: float
     progress: bool
+    deepxiv_llm_review_max_candidates: int = 20
     token: Optional[str] = None

@@ -101,7 +101,8 @@ def render_month_note(record: dict[str, Any]) -> str:
         f"- Title triage counts: rule-related {pluralize(stats.get('rule_related_count', 0), 'paper')}; "
         f"no clear title evidence {pluralize(stats.get('no_clear_title_evidence_count', 0), 'paper')}; "
         f"LLM reviewed {pluralize(stats.get('llm_reviewed_count', 0), 'paper')}; "
-        f"LLM confirmed {pluralize(stats.get('llm_confirmed_count', 0), 'paper')}"
+        f"LLM confirmed {pluralize(stats.get('llm_confirmed_count', 0), 'paper')}; "
+        f"LLM skipped {pluralize(stats.get('llm_skipped_count', 0), 'paper')}"
     )
     lines.append(
         f"- Filtering stats: date-window-filtered {pluralize(stats.get('date_window_filtered', 0), 'paper')}; "

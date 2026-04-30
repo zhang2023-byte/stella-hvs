@@ -22,6 +22,8 @@ DIRECT_TITLE_RULES: list[tuple[str, re.Pattern[str]]] = [
         "high-velocity or extreme-velocity stars",
         re.compile(
             r"\b(?:high|extreme)[-\s]?velocity\s+(?:[A-Za-z0-9+/-]+\s+){0,4}stars?\b|"
+            r"\bhigh\s+radial\s+velocity\s+(?:[A-Za-z0-9+/-]+\s+){0,4}stars?\b|"
+            r"\bHRV\s+stars?\b|"
             r"\b(?:fastest|fast)\s+stars?\s+in\s+the\s+galax(?:y|ies)\b",
             re.I,
         ),
@@ -42,7 +44,8 @@ DIRECT_TITLE_RULES: list[tuple[str, re.Pattern[str]]] = [
         "high-velocity star surveys or candidates",
         re.compile(
             r"\b(?:candidate|candidates|survey|surveys|search|searching|census|catalog(?:ue)?)\b"
-            r".{0,80}\b(?:hyper[-\s]?velocity|high[-\s]?velocity|extreme[-\s]?velocity|unbound)\s+"
+            r".{0,80}\b(?:hyper[-\s]?velocity|high[-\s]?velocity|high\s+radial\s+velocity|"
+            r"extreme[-\s]?velocity|unbound)\s+"
             r"(?:[A-Za-z0-9+/-]+\s+){0,4}stars?\b",
             re.I | re.S,
         ),
@@ -121,7 +124,7 @@ class LLMTitleClassifier:
         prompt = (
             "Classify arXiv search results for a literature search on high-velocity stars. "
             "Use the title, abstract, and categories. Include papers that likely concern hypervelocity stars, "
-            "high-velocity stars, runaway stars, "
+            "high-velocity stars, high radial velocity or HRV stars, runaway stars, "
             "OB runaway stars, unbound/escaping/ejected stars, stellar escapers, walkaway stars, or direct mechanisms, "
             "observations, catalogues, origins, or kinematics of those stellar populations. "
             "Be inclusive when the title or abstract strongly suggests the topic. "

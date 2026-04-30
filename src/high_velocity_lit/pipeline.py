@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Any, Iterable, TextIO
 
 from .arxiv_client import ArxivClient
-from .config import DEFAULT_QUERIES
+from .config import DEFAULT_CATEGORIES, DEFAULT_QUERIES
 from .deepxiv_client import DeepXivClient
 from .filters import category_matches, score_matches
 from .indexing import refresh_index_outputs
@@ -300,7 +300,10 @@ def classifier_batches(papers: list[dict[str, Any]], batch_size: int) -> Iterabl
 
 
 def uses_default_galactic_category(config: SearchConfig) -> bool:
-    return config.source == "deepxiv" and config.categories == [MODERN_GALACTIC_CATEGORY]
+    return config.source == "deepxiv" and config.categories in (
+        [MODERN_GALACTIC_CATEGORY],
+        DEFAULT_CATEGORIES,
+    )
 
 
 def uses_default_queries(config: SearchConfig) -> bool:
@@ -315,8 +318,8 @@ def resolved_categories_for_month(config: SearchConfig, month: MonthWindow) -> l
     if (month.year, month.month) <= LEGACY_CATEGORY_LAST_MONTH:
         return [LEGACY_GALACTIC_CATEGORY]
     if (month.year, month.month) == TRANSITION_CATEGORY_MONTH:
-        return [LEGACY_GALACTIC_CATEGORY, MODERN_GALACTIC_CATEGORY]
-    return [MODERN_GALACTIC_CATEGORY]
+        return [LEGACY_GALACTIC_CATEGORY, *config.categories]
+    return config.categories
 
 
 def resolved_queries_for_month(config: SearchConfig, month: MonthWindow) -> list[str]:
@@ -411,6 +414,7 @@ def run_parameter_lines(config: SearchConfig, deepxiv_token: str | None) -> list
         f"--llm-base-url: {config.llm_base_url}",
         f"--llm-model: {config.llm_model}",
         f"--llm-batch-size: {config.llm_batch_size}",
+        f"--deepxiv-llm-review-max-candidates: {config.deepxiv_llm_review_max_candidates}",
         f"--llm-api-key: {configured_text(config.llm_api_key)}",
         f"--notes-dir: {config.notes_dir}",
         f"--logs-dir: {config.logs_dir}",
@@ -421,7 +425,8 @@ def run_parameter_lines(config: SearchConfig, deepxiv_token: str | None) -> list
     if uses_default_galactic_category(config):
         lines.append(
             "historical categories: <= 2008-11 -> astro-ph; "
-            "2008-12 -> astro-ph + astro-ph.GA; >= 2009-01 -> astro-ph.GA"
+            "2008-12 -> astro-ph + configured modern categories; "
+            ">= 2009-01 -> configured modern categories"
         )
     if uses_default_queries(config):
         lines.append("historical queries: through 2008-12 also add `hyper-velocity star`")
@@ -446,6 +451,8 @@ def resume_command(config: SearchConfig, failed_month: MonthWindow) -> str:
         config.source,
         "--llm-review",
         bool_text(config.llm_review),
+        "--deepxiv-llm-review-max-candidates",
+        str(config.deepxiv_llm_review_max_candidates),
         "--notes-dir",
         str(config.notes_dir),
         "--logs-dir",
@@ -683,6 +690,7 @@ def review_title_candidates(
             "llm_confirmed_count": 0,
             "llm_not_confirmed_count": 0,
             "llm_missing_count": 0,
+            "llm_skipped_count": 0,
         }
 
     api_key = load_llm_api_key(config.llm_api_key)
@@ -760,7 +768,53 @@ def review_title_candidates(
         "llm_confirmed_count": confirmed_count,
         "llm_not_confirmed_count": not_confirmed_count,
         "llm_missing_count": missing_count,
+        "llm_skipped_count": 0,
     }
+
+
+def empty_review_stats() -> dict[str, int]:
+    return {
+        "llm_reviewed_count": 0,
+        "llm_confirmed_count": 0,
+        "llm_not_confirmed_count": 0,
+        "llm_missing_count": 0,
+        "llm_skipped_count": 0,
+    }
+
+
+def deepxiv_score_sort_key(paper: dict[str, Any]) -> tuple[float, datetime]:
+    try:
+        score = float(paper.get("_best_score") or paper.get("score") or 0)
+    except (TypeError, ValueError):
+        score = 0.0
+    return score, parse_datetime(paper.get("publish_at"))
+
+
+def select_title_review_candidates(
+    papers: list[dict[str, Any]],
+    config: SearchConfig,
+) -> tuple[list[dict[str, Any]], int]:
+    if config.source != "deepxiv":
+        return papers, 0
+
+    limit = config.deepxiv_llm_review_max_candidates
+    ranked = sorted(papers, key=deepxiv_score_sort_key, reverse=True)
+    selected = ranked[:limit]
+    selected_ids = {paper_id(paper) for paper in selected}
+    skipped = [paper for paper in papers if paper_id(paper) not in selected_ids]
+    skipped_at = datetime.now().isoformat(timespec="seconds")
+    for paper in skipped:
+        paper["_review"] = {
+            "status": "skipped",
+            "confidence": None,
+            "reason": (
+                "Skipped before LLM review because --source deepxiv reviews only the top "
+                f"{limit} no-clear-title-evidence candidates by DeepXiv score."
+            ),
+            "model": config.llm_model,
+            "reviewed_at": skipped_at,
+        }
+    return selected, len(skipped)
 
 
 def search_month(
@@ -787,7 +841,10 @@ def search_month(
     for query in month_queries:
         categories_for_query = month_categories if config.source == "deepxiv" and month_categories else [None]
         for category in categories_for_query:
-            row = {"query": query, "category": category, "total": None, "returned": 0, "error": None}
+            category_label = category
+            if config.source != "deepxiv" and month_categories:
+                category_label = ",".join(month_categories)
+            row = {"query": query, "category": category_label, "total": None, "returned": 0, "error": None}
             started = datetime.now()
             fatal_error: Exception | None = None
             try:
@@ -808,6 +865,7 @@ def search_month(
                         size=config.max_results,
                         date_from=month.date_from,
                         date_to=month.date_to,
+                        categories=month_categories,
                     )
                 papers = result.get("results") or []
                 row["total"] = result.get("total")
@@ -839,7 +897,7 @@ def search_month(
                     "run_id": run_id,
                     "month": month.slug,
                     "query": query,
-                    "category": category,
+                    "category": category_label,
                     "date_from": month.date_from,
                     "date_to": month.date_to,
                     "total": row["total"],
@@ -851,8 +909,8 @@ def search_month(
             if progress and search_state is not None:
                 search_state["done"] += 1
                 detail = f"{month.slug} {query}"
-                if category:
-                    detail += f" {category}"
+                if category_label:
+                    detail += f" {category_label}"
                 progress.update("Search", search_state["done"], search_state["total"], detail)
             if fatal_error:
                 raise fatal_error
@@ -860,7 +918,7 @@ def search_month(
                 time.sleep(config.search_sleep_seconds)
 
         if config.source != "deepxiv":
-            # arXiv search does not currently fan out over categories in this script.
+            # arXiv can combine categories with OR in one query.
             # Avoid repeating the same query for each configured category.
             continue
 
@@ -946,12 +1004,7 @@ def search_month(
         run_log=run_log,
         progress=progress,
     )
-    review_stats = {
-        "llm_reviewed_count": 0,
-        "llm_confirmed_count": 0,
-        "llm_not_confirmed_count": 0,
-        "llm_missing_count": 0,
-    }
+    review_stats = empty_review_stats()
     initial_triage_stats = {
         "month": month.slug,
         "date_from": month.date_from,
@@ -988,14 +1041,19 @@ def search_month(
     )
 
     if config.llm_review:
-        review_stats = review_title_candidates(
+        review_candidates, skipped_count = select_title_review_candidates(
             no_clear_title_evidence,
+            config,
+        )
+        review_stats = review_title_candidates(
+            review_candidates,
             config,
             run_id=run_id,
             month=month,
             run_log=run_log,
             progress=progress,
         )
+        review_stats["llm_skipped_count"] = skipped_count
 
     llm_confirmed = [
         paper

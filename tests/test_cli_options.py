@@ -64,10 +64,15 @@ class CliOptionParsingTest(unittest.TestCase):
         args = parser.parse_args(["--from", "2026-03"])
         self.assertEqual(args.max_results, 20)
 
-    def test_default_categories_focus_on_galactic_astrophysics(self) -> None:
+    def test_default_deepxiv_llm_review_cap_is_conservative(self) -> None:
         parser = cli.build_parser()
         args = parser.parse_args(["--from", "2026-03"])
-        self.assertEqual(args.categories, "astro-ph.GA")
+        self.assertEqual(args.deepxiv_llm_review_max_candidates, 20)
+
+    def test_default_categories_cover_galactic_stellar_and_methods_papers(self) -> None:
+        parser = cli.build_parser()
+        args = parser.parse_args(["--from", "2026-03"])
+        self.assertEqual(args.categories, "astro-ph.GA,astro-ph.SR,astro-ph.IM")
 
     def test_default_source_is_arxiv(self) -> None:
         parser = cli.build_parser()
@@ -92,6 +97,7 @@ class CliOptionParsingTest(unittest.TestCase):
             [
                 "hypervelocity stars",
                 "high-velocity stars",
+                "high radial velocity stars",
                 "runaway stars",
                 "unbound stars",
                 "escaping stars",

@@ -26,11 +26,12 @@ class HistoricalCategoryResolutionTest(unittest.TestCase):
             queries=[
                 "hypervelocity stars",
                 "high-velocity stars",
+                "high radial velocity stars",
                 "runaway stars",
                 "unbound stars",
                 "escaping stars",
             ],
-            categories=["astro-ph.GA"],
+            categories=["astro-ph.GA", "astro-ph.SR", "astro-ph.IM"],
             max_results=20,
             search_mode="hybrid",
             min_score=None,
@@ -58,14 +59,14 @@ class HistoricalCategoryResolutionTest(unittest.TestCase):
                 config,
                 MonthWindow(year=2008, month=12, start=date(2008, 12, 1), end=date(2008, 12, 31)),
             ),
-            ["astro-ph", "astro-ph.GA"],
+            ["astro-ph", "astro-ph.GA", "astro-ph.SR", "astro-ph.IM"],
         )
         self.assertEqual(
             pipeline.resolved_categories_for_month(
                 config,
                 MonthWindow(year=2009, month=1, start=date(2009, 1, 1), end=date(2009, 1, 31)),
             ),
-            ["astro-ph.GA"],
+            ["astro-ph.GA", "astro-ph.SR", "astro-ph.IM"],
         )
 
     def test_resolved_queries_add_legacy_variant_through_2008_12(self) -> None:

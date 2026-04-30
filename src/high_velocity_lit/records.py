@@ -190,6 +190,7 @@ def config_record(
         "llm_base_url": config.llm_base_url,
         "llm_model": config.llm_model,
         "llm_batch_size": config.llm_batch_size,
+        "deepxiv_llm_review_max_candidates": config.deepxiv_llm_review_max_candidates,
     }
 
 

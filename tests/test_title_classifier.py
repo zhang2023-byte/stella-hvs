@@ -23,6 +23,8 @@ class TitleClassifierRulesTest(unittest.TestCase):
         direct_titles = [
             "AN ALTERNATIVE ORIGIN FOR HYPERVELOCITY STARS",
             "Milky Way archaeology using RR Lyrae and type II Cepheids. II. High-velocity RR Lyrae stars",
+            "Gaia DR3 high radial velocity stars: Genuine fast-moving objects or outliers?",
+            "A census of HRV stars from Gaia DR3",
             "THE VELOCITY DISTRIBUTION OF HYPERVELOCITY STARS",
             "Systematic search for blue hyper-velocity stars from LAMOST survey",
             "Discovery of a nearby 1700 km s-1 star ejected from the Milky Way by Sgr A*",

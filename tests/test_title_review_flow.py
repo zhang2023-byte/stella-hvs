@@ -79,6 +79,86 @@ class FakeLLMTitleClassifier:
         }
 
 
+class ScoreCapDeepXivClient:
+    token = "fake-token"
+
+    def __init__(self, token: str | None = None) -> None:
+        del token
+
+    def search(
+        self,
+        query: str,
+        *,
+        size: int,
+        search_mode: str,
+        date_from: str,
+        date_to: str,
+        categories: list[str] | None = None,
+    ) -> dict[str, object]:
+        del query, size, search_mode, date_from, date_to, categories
+        return {
+            "total": 4,
+            "results": [
+                {
+                    "arxiv_id": "2501.00001",
+                    "title": "Stellar escape from compact clusters",
+                    "abstract": "Lowest score ambiguous paper.",
+                    "author_names": "A. Low",
+                    "categories": ["astro-ph.GA"],
+                    "publish_at": "2025-01-10T00:00:00",
+                    "score": 0.1,
+                },
+                {
+                    "arxiv_id": "2501.00002",
+                    "title": "Kinematic products of cluster disruption",
+                    "abstract": "Second-highest score ambiguous paper.",
+                    "author_names": "B. High",
+                    "categories": ["astro-ph.GA"],
+                    "publish_at": "2025-01-11T00:00:00",
+                    "score": 2.0,
+                },
+                {
+                    "arxiv_id": "2501.00003",
+                    "title": "Dynamical evolution of stellar populations",
+                    "abstract": "Mid score ambiguous paper.",
+                    "author_names": "C. Mid",
+                    "categories": ["astro-ph.GA"],
+                    "publish_at": "2025-01-12T00:00:00",
+                    "score": 1.0,
+                },
+                {
+                    "arxiv_id": "2501.00004",
+                    "title": "Halo kinematic anomalies in survey data",
+                    "abstract": "Highest score ambiguous paper.",
+                    "author_names": "D. Top",
+                    "categories": ["astro-ph.GA"],
+                    "publish_at": "2025-01-13T00:00:00",
+                    "score": 3.0,
+                },
+            ],
+        }
+
+
+class RecordingLLMTitleClassifier:
+    reviewed_ids: list[str] = []
+
+    def __init__(self, *, api_key: str, base_url: str, model: str) -> None:
+        del api_key, base_url, model
+        self.__class__.reviewed_ids = []
+
+    def classify_batch(self, papers: list[dict[str, object]]) -> dict[str, object]:
+        self.__class__.reviewed_ids.extend(str(paper["arxiv_id"]) for paper in papers)
+        return {
+            str(paper["arxiv_id"]): pipeline.TitleDecision(
+                True,
+                0.8,
+                "Selected by score cap for LLM review.",
+                "llm-related",
+            )
+            for paper in papers
+        }
+
+
 class TitleReviewFlowTest(unittest.TestCase):
     def make_config(self, root: Path, *, llm_review: bool, llm_api_key: str | None = None) -> SearchConfig:
         return SearchConfig(
@@ -201,6 +281,60 @@ class TitleReviewFlowTest(unittest.TestCase):
             note = month_markdown_path(config.notes_dir, "2025-01").read_text(encoding="utf-8")
             self.assertIn("LLM confirmed 1 paper", note)
             self.assertNotIn("DeepXiv brief", note)
+
+    def test_deepxiv_llm_review_caps_ambiguous_candidates_by_score(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            config = SearchConfig(
+                workspace=root,
+                notes_dir=root / "notes",
+                logs_dir=root / "logs",
+                start_date=date(2025, 1, 1),
+                end_date=date(2025, 1, 31),
+                source="deepxiv",
+                queries=["hypervelocity stars"],
+                categories=["astro-ph.GA"],
+                max_results=4,
+                search_mode="hybrid",
+                min_score=None,
+                llm_api_key="test-key",
+                llm_base_url="https://api.openai.com/v1",
+                llm_model="gpt-4o-mini",
+                llm_batch_size=25,
+                llm_review=True,
+                search_sleep_seconds=0,
+                progress=False,
+                deepxiv_llm_review_max_candidates=2,
+                token=None,
+            )
+
+            with (
+                patch.object(pipeline, "ArxivClient", FakeArxivClient),
+                patch.object(pipeline, "DeepXivClient", ScoreCapDeepXivClient),
+                patch.object(pipeline, "LLMTitleClassifier", RecordingLLMTitleClassifier),
+                patch.object(pipeline, "load_llm_api_key", return_value="test-key"),
+            ):
+                pipeline.run_pipeline(config)
+
+            self.assertEqual(RecordingLLMTitleClassifier.reviewed_ids, ["2501.00004", "2501.00002"])
+
+            triage_record = json.loads(
+                month_title_triage_path(config.notes_dir, "2025-01").read_text(encoding="utf-8")
+            )
+            reviews = {
+                paper["arxiv_id"]: paper.get("review", {}).get("status")
+                for paper in triage_record["no_clear_title_evidence_papers"]
+            }
+            self.assertEqual(reviews["2501.00004"], "confirmed")
+            self.assertEqual(reviews["2501.00002"], "confirmed")
+            self.assertEqual(reviews["2501.00003"], "skipped")
+            self.assertEqual(reviews["2501.00001"], "skipped")
+
+            record = json.loads(month_json_path(config.notes_dir, "2025-01").read_text(encoding="utf-8"))
+            self.assertEqual(record["stats"]["no_clear_title_evidence_count"], 4)
+            self.assertEqual(record["stats"]["llm_reviewed_count"], 2)
+            self.assertEqual(record["stats"]["llm_confirmed_count"], 2)
+            self.assertEqual(record["stats"]["llm_skipped_count"], 2)
 
 
 if __name__ == "__main__":

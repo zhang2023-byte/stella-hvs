@@ -72,11 +72,23 @@ class ArxivClient:
             raise last_error
         raise RuntimeError("arXiv request failed without an exception")
 
-    def search(self, query: str, *, size: int, date_from: str, date_to: str) -> dict[str, Any]:
+    def search(
+        self,
+        query: str,
+        *,
+        size: int,
+        date_from: str,
+        date_to: str,
+        categories: list[str] | None = None,
+    ) -> dict[str, Any]:
         phrase = query.replace('"', "").strip()
         submitted_from = compact_date(date_from, "0000")
         submitted_to = compact_date(date_to, "2359")
         search_query = f'all:"{phrase}" AND submittedDate:[{submitted_from} TO {submitted_to}]'
+        category_terms = [category.strip() for category in categories or [] if category.strip()]
+        if category_terms:
+            category_query = " OR ".join(f"cat:{category}" for category in category_terms)
+            search_query = f"{search_query} AND ({category_query})"
         params = {
             "search_query": search_query,
             "start": 0,

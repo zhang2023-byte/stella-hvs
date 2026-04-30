@@ -64,8 +64,17 @@ conda run -n stella-env python scripts/fetch_high_velocity_lit.py --from 2026-03
 - `--llm-review False`
 - 不抓 `DeepXiv brief`
 - `--max-results 20`
-- `--categories astro-ph.GA`
+- `--deepxiv-llm-review-max-candidates 20`
+- `--categories astro-ph.GA,astro-ph.SR,astro-ph.IM`
 - `--search-mode hybrid`
+
+多分类含义是 OR：论文属于 `astro-ph.GA`、`astro-ph.SR`、`astro-ph.IM`
+任意一个分类即可进入候选。arXiv 查询应把分类 OR 条件直接放进 API query，
+不要先抓无分类结果再只靠本地过滤。
+
+如果使用 `--source deepxiv --llm-review True`，DeepXiv 仍按 query/category
+分别检索并去重合并，但送入 LLM 复核的 `no-clear-title-evidence` 候选默认只取
+DeepXiv score 最高的 20 篇；其余候选应保留在 title triage JSON 并标记 skipped。
 
 默认标题 triage 分两类：
 
