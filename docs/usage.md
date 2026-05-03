@@ -206,7 +206,7 @@ literature/<arxiv_id>/catalog_review.json
 
 本阶段只做语义审阅、来源定位和证据记录，不把 LaTeX 转 CSV，不解析 FITS，也不下载外部表格。
 
-重建全局 catalog 审阅索引：
+重建全局 catalog 工作流索引：
 
 ```bash
 conda run -n stella-env python scripts/build_catalog_index.py
@@ -218,6 +218,26 @@ conda run -n stella-env python scripts/build_catalog_index.py
 literature/catalog_index.json
 literature/catalog_index.md
 ```
+
+索引以 `literature/*/catalog_review.json` 为入口；如果同目录存在
+`catalog_extraction.json`，会同时汇总最近一次提取状态、表格成功/失败数量、外部资源
+成功/失败数量，以及 usage/列语义 reviewed 进度。`catalog_index.md` 中 review 状态和
+extraction 状态分开显示，避免 `partial` 在两个阶段混用。
+
+Review 状态含义：
+
+- `reviewed`：catalog 审阅已在可用论文/源码上下文中完成。
+- `partial`：catalog 审阅不完整，或候选覆盖还有未决问题。
+- `needs_review`：尚未完成 catalog 审阅。
+- `source_missing`：无法基于源码完成审阅；如果源码元数据同时显示可用，索引会用 `(!)` 标出不一致。
+
+Extraction 状态含义：
+
+- `success`：最近一次提取运行无表格失败。
+- `partial`：最近一次提取至少产出一个表格，但也有失败。
+- `failed`：最近一次提取或 manifest 读取失败。
+- `not_started`：review 已发现 catalog source，但尚无 `catalog_extraction.json`。
+- `not_applicable`：review 未发现 catalog source，无需提取。
 
 ## 6. 提取已审阅 catalog 表格
 

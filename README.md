@@ -8,7 +8,7 @@
 - 把标准结果写入 `notes/`
 - 给可能是数据型文献的论文加上 `catalog_assessment`
 - 给 `notes/` 中已判为数据相关的论文拉取本地资料归档到 `literature/`
-- 审阅已归档论文源码中的高速星对象 catalog，并生成 catalog 审阅索引
+- 审阅已归档论文源码中的高速星对象 catalog，并生成 catalog 工作流索引
 - 将已审阅的 LaTeX catalog 表格提取为 CSV，并保留提取 provenance
 - 从 JSON 生成可读的 Markdown
 
@@ -101,11 +101,15 @@ locator。外部下载只允许公网 HTTP(S)，拒绝本机/私网/特殊地址
 全量重跑时可以给 `--all-reviewed` 加 `--jobs Auto` 按论文并行；
 100 篇以上默认会尝试 12 个 jobs。你也可以直接指定 `--jobs N`。
 
-重建 catalog 审阅索引：
+重建 catalog 工作流索引：
 
 ```bash
 conda run -n stella-env python scripts/build_catalog_index.py
 ```
+
+该索引以 `catalog_review.json` 为入口，并在存在 `catalog_extraction.json` 时同时展示
+提取状态、表格/外部资源成功失败数量和语义补全进度。Review 状态和 extraction 状态分开
+展示，`partial` 不会跨阶段混用。
 
 从 JSON 重生成 Markdown：
 
@@ -131,7 +135,7 @@ scripts/annotate_catalog_data.py     给月度 JSON 补 catalog_assessment
 scripts/pull_literature_assets.py    拉取 data-related 文献的本地资料归档
 scripts/inventory_catalog_candidates.py   列出单篇论文的 catalog 审阅候选
 scripts/extract_catalog_tables.py    从 catalog_review.json 提取 LaTeX 表格为 CSV
-scripts/build_catalog_index.py       从 catalog_review.json 重建 catalog 审阅索引
+scripts/build_catalog_index.py       从 catalog_review.json 和 catalog_extraction.json 重建 catalog 工作流索引
 scripts/render_lit_notes.py          从 JSON 重生成 Markdown
 docs/                                说明文档
 literature/                          本地文献资产归档（默认不纳入 Git）

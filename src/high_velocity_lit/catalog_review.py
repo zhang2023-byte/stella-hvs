@@ -14,6 +14,7 @@ CATALOG_INVENTORY_SCHEMA_VERSION = "stella.hvs_catalog.inventory.v1"
 CATALOG_INDEX_SCHEMA_VERSION = "stella.hvs_catalog.index.v1"
 
 REVIEW_FILENAME = "catalog_review.json"
+EXTRACTION_FILENAME = "catalog_extraction.json"
 INDEX_JSON_FILENAME = "catalog_index.json"
 INDEX_MARKDOWN_FILENAME = "catalog_index.md"
 
@@ -44,6 +45,15 @@ MACHINE_READABLE_SUFFIXES = {
 URL_RE = re.compile(r"https?://[^\s{}\\)>,]+")
 BEGIN_ENV_RE = re.compile(r"\\begin\{([^}]+)\}")
 END_ENV_TEMPLATE = r"\\end\{%s\}"
+REVIEW_STATUS_MEANINGS = {
+    "reviewed": "Catalog review is complete for the available paper/source context.",
+    "partial": "Catalog review is incomplete or has unresolved coverage questions.",
+    "needs_review": "Catalog review has not been completed yet.",
+    "source_missing": "Catalog review could not be completed from source files.",
+    "unknown": "Catalog review status is missing or unknown.",
+}
+EXTRACTION_SUCCESS_STATUSES = {"success", "would_write", "skipped_existing"}
+EXTRACTION_STATUS_VALUES = {"success", "partial", "failed", "not_started", "not_applicable"}
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -349,6 +359,7 @@ def build_catalog_candidate_inventory(
 
 def _review_item(path: Path, review: dict[str, Any], *, workspace: Path) -> dict[str, Any]:
     paper = review.get("paper") or {}
+    source = review.get("source") if isinstance(review.get("source"), dict) else {}
     review_meta = review.get("review") or {}
     candidates = review.get("catalog_candidates") or []
     external = review.get("external_resources") or []
@@ -357,6 +368,10 @@ def _review_item(path: Path, review: dict[str, Any], *, workspace: Path) -> dict
     month = str(paper.get("month") or "")
     year = month[:4] if month else ""
     status = str(review_meta.get("status") or "unknown")
+    source_available = source.get("source_available")
+    status_warning = ""
+    if status == "source_missing" and source_available is True:
+        status_warning = "review.status=source_missing conflicts with source.source_available=true"
     confidence_values: list[float] = []
     for item in candidates:
         if not isinstance(item, dict) or item.get("confidence") in {None, ""}:
@@ -365,21 +380,123 @@ def _review_item(path: Path, review: dict[str, Any], *, workspace: Path) -> dict
             confidence_values.append(float(item.get("confidence")))
         except (TypeError, ValueError):
             continue
-    return {
+    candidate_count = len(candidates) if isinstance(candidates, list) else 0
+    external_count = len(external) if isinstance(external, list) else 0
+    has_catalog_source = candidate_count + external_count > 0
+    item = {
         "title": str(paper.get("title") or "Untitled"),
         "arxiv_id": arxiv_id,
         "month": month,
         "year": year,
         "review_status": status,
+        "review_status_meaning": REVIEW_STATUS_MEANINGS.get(status, REVIEW_STATUS_MEANINGS["unknown"]),
+        "review_status_warning": status_warning,
         "reviewed_at": str(review_meta.get("reviewed_at") or ""),
         "has_catalog": bool(candidates),
-        "catalog_candidate_count": len(candidates) if isinstance(candidates, list) else 0,
-        "external_resource_count": len(external) if isinstance(external, list) else 0,
+        "has_catalog_source": has_catalog_source,
+        "catalog_candidate_count": candidate_count,
+        "external_resource_count": external_count,
         "rejected_candidate_count": len(rejected) if isinstance(rejected, list) else 0,
         "max_confidence": max(confidence_values) if confidence_values else None,
         "paper_dir": relative_path(path.parent, workspace=workspace),
         "review_json_path": relative_path(path, workspace=workspace),
     }
+    item.update(_extraction_item(path.parent, has_catalog_source=has_catalog_source, workspace=workspace))
+    return item
+
+
+def _last_run_status(manifest: dict[str, Any]) -> str:
+    runs = manifest.get("runs") if isinstance(manifest.get("runs"), list) else []
+    if not runs:
+        return ""
+    last_run = runs[-1]
+    if not isinstance(last_run, dict):
+        return ""
+    return str(last_run.get("status") or "")
+
+
+def _normalize_extraction_status(last_run_status: str, *, has_catalog_source: bool) -> str:
+    if last_run_status in {"success", "partial", "failed"}:
+        return last_run_status
+    if last_run_status == "skipped" and not has_catalog_source:
+        return "not_applicable"
+    if last_run_status == "skipped":
+        return "not_started"
+    return "failed"
+
+
+def _status_count(items: list[dict[str, Any]], statuses: set[str]) -> int:
+    return sum(1 for item in items if str(item.get("status") or "") in statuses)
+
+
+def _semantic_column_counts(tables: list[dict[str, Any]]) -> tuple[int, int]:
+    reviewed = 0
+    total = 0
+    for table in tables:
+        columns = table.get("columns") if isinstance(table.get("columns"), list) else []
+        for column in columns:
+            if not isinstance(column, dict):
+                continue
+            total += 1
+            if column.get("semantic_status") == "reviewed":
+                reviewed += 1
+    return reviewed, total
+
+
+def _extraction_item(paper_directory: Path, *, has_catalog_source: bool, workspace: Path) -> dict[str, Any]:
+    extraction_path = paper_directory / EXTRACTION_FILENAME
+    default_status = "not_started" if has_catalog_source else "not_applicable"
+    item: dict[str, Any] = {
+        "extraction_status": default_status,
+        "extraction_json_path": "",
+        "last_extraction_run_status": "",
+        "extraction_manifest_present": False,
+        "extraction_error": "",
+        "table_success_count": 0,
+        "table_failed_count": 0,
+        "external_success_count": 0,
+        "external_failed_count": 0,
+        "semantic_usage_reviewed_count": 0,
+        "semantic_column_reviewed_count": 0,
+        "semantic_column_count": 0,
+    }
+    if not extraction_path.exists():
+        return item
+
+    item["extraction_manifest_present"] = True
+    item["extraction_json_path"] = relative_path(extraction_path, workspace=workspace)
+    try:
+        manifest = read_json(extraction_path)
+    except (OSError, json.JSONDecodeError) as exc:
+        item["extraction_status"] = "failed"
+        item["last_extraction_run_status"] = "manifest_error"
+        item["extraction_error"] = f"{type(exc).__name__}: {exc}"
+        return item
+
+    last_run_status = _last_run_status(manifest)
+    item["last_extraction_run_status"] = last_run_status
+    item["extraction_status"] = _normalize_extraction_status(last_run_status, has_catalog_source=has_catalog_source)
+    tables = [table for table in (manifest.get("tables") or []) if isinstance(table, dict)]
+    external_resources = [
+        resource for resource in (manifest.get("external_resources") or []) if isinstance(resource, dict)
+    ]
+    semantic_columns_reviewed, semantic_columns_total = _semantic_column_counts(tables)
+    item.update(
+        {
+            "table_success_count": _status_count(tables, EXTRACTION_SUCCESS_STATUSES),
+            "table_failed_count": _status_count(tables, {"failed"}),
+            "external_success_count": _status_count(external_resources, EXTRACTION_SUCCESS_STATUSES),
+            "external_failed_count": _status_count(external_resources, {"failed"}),
+            "semantic_usage_reviewed_count": sum(
+                1
+                for table in tables
+                if isinstance(table.get("usage"), dict) and table["usage"].get("semantic_status") == "reviewed"
+            ),
+            "semantic_column_reviewed_count": semantic_columns_reviewed,
+            "semantic_column_count": semantic_columns_total,
+        }
+    )
+    return item
 
 
 def _catalog_sort_key(item: dict[str, Any]) -> tuple[str, str, str]:
@@ -388,6 +505,63 @@ def _catalog_sort_key(item: dict[str, Any]) -> tuple[str, str, str]:
         str(item.get("reviewed_at") or ""),
         str(item.get("title") or ""),
     )
+
+
+def _empty_catalog_index_counts() -> dict[str, int]:
+    return {
+        "paper_count": 0,
+        "reviewed_count": 0,
+        "has_catalog_count": 0,
+        "has_catalog_source_count": 0,
+        "needs_review_count": 0,
+        "review_status_warning_count": 0,
+        "extraction_manifest_count": 0,
+        "extraction_success_count": 0,
+        "extraction_partial_count": 0,
+        "extraction_failed_count": 0,
+        "extraction_not_started_count": 0,
+        "extraction_not_applicable_count": 0,
+        "table_success_count": 0,
+        "table_failed_count": 0,
+        "external_success_count": 0,
+        "external_failed_count": 0,
+        "semantic_usage_reviewed_count": 0,
+        "semantic_column_reviewed_count": 0,
+        "semantic_column_count": 0,
+    }
+
+
+def _add_catalog_index_counts(counts: dict[str, int], item: dict[str, Any]) -> None:
+    counts["paper_count"] += 1
+    if item.get("review_status") == "reviewed":
+        counts["reviewed_count"] += 1
+    if item.get("has_catalog"):
+        counts["has_catalog_count"] += 1
+    if item.get("has_catalog_source"):
+        counts["has_catalog_source_count"] += 1
+    if item.get("review_status") in {"needs_review", "partial", "unknown"}:
+        counts["needs_review_count"] += 1
+    if item.get("review_status_warning"):
+        counts["review_status_warning_count"] += 1
+    if item.get("extraction_manifest_present"):
+        counts["extraction_manifest_count"] += 1
+
+    extraction_status = str(item.get("extraction_status") or "")
+    if extraction_status in EXTRACTION_STATUS_VALUES:
+        counts[f"extraction_{extraction_status}_count"] += 1
+    else:
+        counts["extraction_failed_count"] += 1
+
+    for field in (
+        "table_success_count",
+        "table_failed_count",
+        "external_success_count",
+        "external_failed_count",
+        "semantic_usage_reviewed_count",
+        "semantic_column_reviewed_count",
+        "semantic_column_count",
+    ):
+        counts[field] += int(item.get(field) or 0)
 
 
 def rebuild_catalog_index(literature_dir: Path, *, workspace: Path | None = None) -> dict[str, Any]:
@@ -411,41 +585,66 @@ def rebuild_catalog_index(literature_dir: Path, *, workspace: Path | None = None
             year,
             {
                 "year": year,
-                "paper_count": 0,
-                "reviewed_count": 0,
-                "has_catalog_count": 0,
-                "needs_review_count": 0,
+                **_empty_catalog_index_counts(),
                 "papers": [],
             },
         )
-        bucket["paper_count"] += 1
-        if item.get("review_status") == "reviewed":
-            bucket["reviewed_count"] += 1
-        if item.get("has_catalog"):
-            bucket["has_catalog_count"] += 1
-        if item.get("review_status") in {"needs_review", "partial", "unknown"}:
-            bucket["needs_review_count"] += 1
+        _add_catalog_index_counts(bucket, item)
         bucket["papers"].append(item)
 
     year_records = [years[year] for year in sorted(years.keys(), reverse=True)]
+    summary = _empty_catalog_index_counts()
+    for item in papers:
+        _add_catalog_index_counts(summary, item)
+    summary["skipped_count"] = len(skipped)
     return {
         "schema_version": CATALOG_INDEX_SCHEMA_VERSION,
         "review_schema_version": CATALOG_REVIEW_SCHEMA_VERSION,
         "generated_at": datetime.now().isoformat(timespec="seconds"),
         "literature_dir": str(literature_dir),
-        "summary": {
-            "paper_count": len(papers),
-            "reviewed_count": sum(1 for item in papers if item.get("review_status") == "reviewed"),
-            "has_catalog_count": sum(1 for item in papers if item.get("has_catalog")),
-            "needs_review_count": sum(
-                1 for item in papers if item.get("review_status") in {"needs_review", "partial", "unknown"}
-            ),
-            "skipped_count": len(skipped),
-        },
+        "summary": summary,
         "years": year_records,
         "papers": papers,
         "skipped": skipped,
     }
+
+
+def _markdown_cell(value: Any) -> str:
+    return str(value or "").replace("|", "\\|")
+
+
+def _review_status_cell(paper: dict[str, Any]) -> str:
+    status = str(paper.get("review_status") or "")
+    if paper.get("review_status_warning"):
+        return f"{status} (!)"
+    return status
+
+
+def _catalog_sources_cell(paper: dict[str, Any]) -> str:
+    return f"{paper.get('catalog_candidate_count', 0)} table, {paper.get('external_resource_count', 0)} external"
+
+
+def _extraction_status_cell(paper: dict[str, Any]) -> str:
+    status = str(paper.get("extraction_status") or "")
+    last_run_status = str(paper.get("last_extraction_run_status") or "")
+    if last_run_status and last_run_status != status:
+        return f"{status} ({last_run_status})"
+    return status
+
+
+def _count_pair_cell(paper: dict[str, Any], success_field: str, failed_field: str) -> str:
+    if not paper.get("extraction_manifest_present"):
+        return "-"
+    return f"{paper.get(success_field, 0)} ok, {paper.get(failed_field, 0)} failed"
+
+
+def _semantics_cell(paper: dict[str, Any]) -> str:
+    if not paper.get("extraction_manifest_present"):
+        return "-"
+    return (
+        f"{paper.get('semantic_usage_reviewed_count', 0)} usage, "
+        f"{paper.get('semantic_column_reviewed_count', 0)}/{paper.get('semantic_column_count', 0)} cols"
+    )
 
 
 def render_catalog_index(record: dict[str, Any]) -> str:
@@ -453,39 +652,96 @@ def render_catalog_index(record: dict[str, Any]) -> str:
     papers = record.get("papers") or []
     years = record.get("years") or []
     lines = [
-        "# High-Velocity Star Catalog Review Index",
+        "# High-Velocity Star Catalog Workflow Index",
         "",
         f"- Generated at: {record.get('generated_at')}",
         f"- Reviewed papers: {summary.get('reviewed_count', 0)} / {summary.get('paper_count', 0)}",
         f"- Papers with catalog candidates: {summary.get('has_catalog_count', 0)}",
+        f"- Papers with catalog sources: {summary.get('has_catalog_source_count', 0)}",
         f"- Papers needing review: {summary.get('needs_review_count', 0)}",
+        f"- Extraction manifests: {summary.get('extraction_manifest_count', 0)}",
+        (
+            "- Extraction status: "
+            f"{summary.get('extraction_success_count', 0)} success / "
+            f"{summary.get('extraction_partial_count', 0)} partial / "
+            f"{summary.get('extraction_failed_count', 0)} failed / "
+            f"{summary.get('extraction_not_started_count', 0)} not started / "
+            f"{summary.get('extraction_not_applicable_count', 0)} not applicable"
+        ),
+        (
+            "- Tables: "
+            f"{summary.get('table_success_count', 0)} success / "
+            f"{summary.get('table_failed_count', 0)} failed"
+        ),
+        (
+            "- External resources: "
+            f"{summary.get('external_success_count', 0)} success / "
+            f"{summary.get('external_failed_count', 0)} failed"
+        ),
+        (
+            "- Column semantics reviewed: "
+            f"{summary.get('semantic_column_reviewed_count', 0)} / "
+            f"{summary.get('semantic_column_count', 0)}"
+        ),
     ]
+    if summary.get("review_status_warning_count"):
+        lines.append(f"- Review status warnings: {summary.get('review_status_warning_count')}")
     if summary.get("skipped_count"):
         lines.append(f"- Skipped malformed review files: {summary.get('skipped_count')}")
 
+    lines.extend(
+        [
+            "",
+            "## Status Legend",
+            "",
+            "- Review `reviewed`: catalog review is complete for the available paper/source context.",
+            "- Review `partial`: catalog review is incomplete or has unresolved coverage questions.",
+            "- Review `needs_review`: catalog review has not been completed yet.",
+            "- Review `source_missing`: catalog review could not be completed from source files; `(!)` means the review says source is missing but the source metadata says it is available.",
+            "- Extraction `success`: the latest extraction run completed without table failures.",
+            "- Extraction `partial`: the latest extraction run produced at least one table and also had failures.",
+            "- Extraction `failed`: the latest extraction run or manifest failed.",
+            "- Extraction `not_started`: review found catalog sources, but no extraction manifest exists yet.",
+            "- Extraction `not_applicable`: review found no catalog sources, so extraction is not needed.",
+        ]
+    )
+
     if papers:
-        lines.extend(["", "## Reviewed Papers", ""])
-        lines.append("| Paper | Month | Status | Catalog candidates | External resources | Review JSON |")
-        lines.append("| --- | --- | --- | ---: | ---: | --- |")
+        lines.extend(["", "## Papers", ""])
+        lines.append(
+            "| Paper | Month | Review | Catalog sources | Extraction | Tables | External | Semantics | Review JSON | Extraction JSON |"
+        )
+        lines.append("| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |")
         for paper in papers:
-            title = str(paper.get("title") or "Untitled").replace("|", "\\|")
+            title = _markdown_cell(paper.get("title") or "Untitled")
             arxiv_id = str(paper.get("arxiv_id") or "")
             label = f"{title} ({arxiv_id})" if arxiv_id else title
             review_path = str(paper.get("review_json_path") or "")
             review_link = f"[JSON]({review_path})" if review_path else ""
+            extraction_path = str(paper.get("extraction_json_path") or "")
+            extraction_link = f"[JSON]({extraction_path})" if extraction_path else ""
             lines.append(
-                f"| {label} | {paper.get('month') or ''} | {paper.get('review_status') or ''} | "
-                f"{paper.get('catalog_candidate_count', 0)} | {paper.get('external_resource_count', 0)} | {review_link} |"
+                f"| {label} | {paper.get('month') or ''} | {_review_status_cell(paper)} | "
+                f"{_catalog_sources_cell(paper)} | {_extraction_status_cell(paper)} | "
+                f"{_count_pair_cell(paper, 'table_success_count', 'table_failed_count')} | "
+                f"{_count_pair_cell(paper, 'external_success_count', 'external_failed_count')} | "
+                f"{_semantics_cell(paper)} | {review_link} | {extraction_link} |"
             )
 
     if years:
         lines.extend(["", "## Year Overview", ""])
-        lines.append("| Year | Papers | Reviewed | With catalog | Needs review |")
-        lines.append("| --- | ---: | ---: | ---: | ---: |")
+        lines.append(
+            "| Year | Papers | Reviewed | With catalog sources | Needs review | Extraction manifests | Success | Partial | Failed | Not started | N/A |"
+        )
+        lines.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
         for year in years:
             lines.append(
                 f"| {year.get('year')} | {year.get('paper_count', 0)} | {year.get('reviewed_count', 0)} | "
-                f"{year.get('has_catalog_count', 0)} | {year.get('needs_review_count', 0)} |"
+                f"{year.get('has_catalog_source_count', 0)} | {year.get('needs_review_count', 0)} | "
+                f"{year.get('extraction_manifest_count', 0)} | {year.get('extraction_success_count', 0)} | "
+                f"{year.get('extraction_partial_count', 0)} | {year.get('extraction_failed_count', 0)} | "
+                f"{year.get('extraction_not_started_count', 0)} | "
+                f"{year.get('extraction_not_applicable_count', 0)} |"
             )
     lines.append("")
     return "\n".join(lines)

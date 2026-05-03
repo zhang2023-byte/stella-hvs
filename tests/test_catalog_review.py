@@ -32,6 +32,11 @@ index_cli = importlib.util.module_from_spec(INDEX_SPEC)
 INDEX_SPEC.loader.exec_module(index_cli)
 
 
+def write_json_file(path: Path, payload: dict[str, object]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
 def write_sample_archive(workspace: Path) -> Path:
     literature_dir = workspace / "literature"
     paper_dir = literature_dir / "2603.00001"
@@ -147,50 +152,40 @@ class CatalogReviewTest(unittest.TestCase):
             literature_dir = workspace / "literature"
             paper_dir = literature_dir / "2603.00001"
             paper_dir.mkdir(parents=True)
-            (paper_dir / "catalog_review.json").write_text(
-                json.dumps(
-                    {
-                        "schema_version": "stella.hvs_catalog.review.v1",
-                        "paper": {
-                            "arxiv_id": "2603.00001",
-                            "title": "A catalog of hypervelocity stars",
-                            "month": "2026-03",
-                        },
-                        "review": {
-                            "status": "reviewed",
-                            "reviewed_at": "2026-04-24T12:00:00",
-                        },
-                        "catalog_candidates": [{"confidence": 0.9}],
-                        "external_resources": [{"url": "https://vizier.example/catalog"}],
-                        "rejected_candidates": [{"reason": "observing log"}],
+            write_json_file(
+                paper_dir / "catalog_review.json",
+                {
+                    "schema_version": "stella.hvs_catalog.review.v1",
+                    "paper": {
+                        "arxiv_id": "2603.00001",
+                        "title": "A catalog of hypervelocity stars",
+                        "month": "2026-03",
                     },
-                    ensure_ascii=False,
-                    indent=2,
-                )
-                + "\n",
-                encoding="utf-8",
+                    "review": {
+                        "status": "reviewed",
+                        "reviewed_at": "2026-04-24T12:00:00",
+                    },
+                    "catalog_candidates": [{"confidence": 0.9}],
+                    "external_resources": [{"url": "https://vizier.example/catalog"}],
+                    "rejected_candidates": [{"reason": "observing log"}],
+                },
             )
             needs_dir = literature_dir / "2603.00002"
             needs_dir.mkdir(parents=True)
-            (needs_dir / "catalog_review.json").write_text(
-                json.dumps(
-                    {
-                        "schema_version": "stella.hvs_catalog.review.v1",
-                        "paper": {
-                            "arxiv_id": "2603.00002",
-                            "title": "A paper needing review",
-                            "month": "2026-03",
-                        },
-                        "review": {"status": "needs_review"},
-                        "catalog_candidates": [],
-                        "external_resources": [],
-                        "rejected_candidates": [],
+            write_json_file(
+                needs_dir / "catalog_review.json",
+                {
+                    "schema_version": "stella.hvs_catalog.review.v1",
+                    "paper": {
+                        "arxiv_id": "2603.00002",
+                        "title": "A paper needing review",
+                        "month": "2026-03",
                     },
-                    ensure_ascii=False,
-                    indent=2,
-                )
-                + "\n",
-                encoding="utf-8",
+                    "review": {"status": "needs_review"},
+                    "catalog_candidates": [],
+                    "external_resources": [],
+                    "rejected_candidates": [],
+                },
             )
 
             index = rebuild_catalog_index(literature_dir, workspace=workspace)
@@ -199,14 +194,152 @@ class CatalogReviewTest(unittest.TestCase):
             self.assertEqual(index["summary"]["paper_count"], 2)
             self.assertEqual(index["summary"]["reviewed_count"], 1)
             self.assertEqual(index["summary"]["has_catalog_count"], 1)
+            self.assertEqual(index["summary"]["has_catalog_source_count"], 1)
             self.assertEqual(index["summary"]["needs_review_count"], 1)
+            self.assertEqual(index["summary"]["extraction_not_started_count"], 1)
+            self.assertEqual(index["summary"]["extraction_not_applicable_count"], 1)
             self.assertEqual(index["years"][0]["year"], "2026")
             self.assertEqual(index["years"][0]["has_catalog_count"], 1)
+            self.assertEqual(index["years"][0]["has_catalog_source_count"], 1)
+            with_catalog = next(item for item in index["papers"] if item["arxiv_id"] == "2603.00001")
+            needs_review = next(item for item in index["papers"] if item["arxiv_id"] == "2603.00002")
+            self.assertEqual(with_catalog["extraction_status"], "not_started")
+            self.assertEqual(needs_review["extraction_status"], "not_applicable")
 
             markdown = render_catalog_index(index)
-            self.assertIn("High-Velocity Star Catalog Review Index", markdown)
+            self.assertIn("High-Velocity Star Catalog Workflow Index", markdown)
+            self.assertIn("## Status Legend", markdown)
             self.assertIn("A catalog of hypervelocity stars (2603.00001)", markdown)
-            self.assertIn("| 2026 | 2 | 1 | 1 | 1 |", markdown)
+            self.assertIn(
+                "| 2026 | 2 | 1 | 1 | 1 | 0 | 0 | 0 | 0 | 1 | 1 |",
+                markdown,
+            )
+
+    def test_rebuild_catalog_index_merges_extraction_manifest_and_warnings(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature_dir = workspace / "literature"
+            paper_dir = literature_dir / "2603.00001"
+            write_json_file(
+                paper_dir / "catalog_review.json",
+                {
+                    "schema_version": "stella.hvs_catalog.review.v1",
+                    "paper": {
+                        "arxiv_id": "2603.00001",
+                        "title": "A partly extracted catalog",
+                        "month": "2026-03",
+                    },
+                    "source": {"source_available": True},
+                    "review": {"status": "reviewed"},
+                    "catalog_candidates": [{"confidence": 0.8}],
+                    "external_resources": [],
+                    "rejected_candidates": [],
+                },
+            )
+            write_json_file(
+                paper_dir / "catalog_extraction.json",
+                {
+                    "schema_version": "stella.hvs_catalog.extraction.v2",
+                    "generated_at": "2026-04-25T12:00:00",
+                    "paper": {"arxiv_id": "2603.00001", "title": "A partly extracted catalog", "month": "2026-03"},
+                    "runs": [{"status": "partial", "summary": {"success_count": 1, "failed_count": 1}}],
+                    "tables": [
+                        {
+                            "id": "table-1",
+                            "status": "success",
+                            "usage": {"semantic_status": "reviewed"},
+                            "columns": [
+                                {"semantic_status": "reviewed"},
+                                {"semantic_status": "reviewed"},
+                                {"semantic_status": "needs_agent_review"},
+                            ],
+                        },
+                        {
+                            "id": "table-2",
+                            "status": "failed",
+                            "usage": {"semantic_status": "needs_agent_review"},
+                            "columns": [],
+                        },
+                    ],
+                    "external_resources": [
+                        {"id": "resource-1", "status": "success"},
+                        {"id": "resource-2", "status": "failed"},
+                    ],
+                },
+            )
+            external_dir = literature_dir / "2603.00002"
+            write_json_file(
+                external_dir / "catalog_review.json",
+                {
+                    "schema_version": "stella.hvs_catalog.review.v1",
+                    "paper": {
+                        "arxiv_id": "2603.00002",
+                        "title": "External only catalog",
+                        "month": "2026-03",
+                    },
+                    "source": {"source_available": True},
+                    "review": {"status": "reviewed"},
+                    "catalog_candidates": [],
+                    "external_resources": [{"id": "resource-1", "url": "https://example.test/catalog.csv"}],
+                    "rejected_candidates": [],
+                },
+            )
+            inconsistent_dir = literature_dir / "2603.00003"
+            write_json_file(
+                inconsistent_dir / "catalog_review.json",
+                {
+                    "schema_version": "stella.hvs_catalog.review.v1",
+                    "paper": {
+                        "arxiv_id": "2603.00003",
+                        "title": "Mislabelled source status",
+                        "month": "2026-03",
+                    },
+                    "source": {"source_available": True},
+                    "review": {"status": "source_missing"},
+                    "catalog_candidates": [],
+                    "external_resources": [],
+                    "rejected_candidates": [],
+                },
+            )
+
+            index = rebuild_catalog_index(literature_dir, workspace=workspace)
+
+            self.assertEqual(index["summary"]["paper_count"], 3)
+            self.assertEqual(index["summary"]["has_catalog_count"], 1)
+            self.assertEqual(index["summary"]["has_catalog_source_count"], 2)
+            self.assertEqual(index["summary"]["extraction_manifest_count"], 1)
+            self.assertEqual(index["summary"]["extraction_partial_count"], 1)
+            self.assertEqual(index["summary"]["extraction_not_started_count"], 1)
+            self.assertEqual(index["summary"]["extraction_not_applicable_count"], 1)
+            self.assertEqual(index["summary"]["table_success_count"], 1)
+            self.assertEqual(index["summary"]["table_failed_count"], 1)
+            self.assertEqual(index["summary"]["external_success_count"], 1)
+            self.assertEqual(index["summary"]["external_failed_count"], 1)
+            self.assertEqual(index["summary"]["semantic_usage_reviewed_count"], 1)
+            self.assertEqual(index["summary"]["semantic_column_reviewed_count"], 2)
+            self.assertEqual(index["summary"]["semantic_column_count"], 3)
+            self.assertEqual(index["summary"]["review_status_warning_count"], 1)
+
+            extracted = next(item for item in index["papers"] if item["arxiv_id"] == "2603.00001")
+            self.assertEqual(extracted["extraction_status"], "partial")
+            self.assertEqual(extracted["last_extraction_run_status"], "partial")
+            self.assertEqual(extracted["extraction_json_path"], "literature/2603.00001/catalog_extraction.json")
+            self.assertEqual(extracted["semantic_column_reviewed_count"], 2)
+            self.assertEqual(extracted["semantic_column_count"], 3)
+
+            external_only = next(item for item in index["papers"] if item["arxiv_id"] == "2603.00002")
+            self.assertFalse(external_only["has_catalog"])
+            self.assertTrue(external_only["has_catalog_source"])
+            self.assertEqual(external_only["extraction_status"], "not_started")
+
+            inconsistent = next(item for item in index["papers"] if item["arxiv_id"] == "2603.00003")
+            self.assertEqual(inconsistent["extraction_status"], "not_applicable")
+            self.assertIn("source_available=true", inconsistent["review_status_warning"])
+
+            markdown = render_catalog_index(index)
+            self.assertIn("source_missing", markdown)
+            self.assertIn("[JSON](literature/2603.00001/catalog_extraction.json)", markdown)
+            self.assertIn("1 usage, 2/3 cols", markdown)
 
     def test_write_catalog_index_outputs_writes_json_and_markdown(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
