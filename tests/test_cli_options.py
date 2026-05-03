@@ -74,10 +74,10 @@ class CliOptionParsingTest(unittest.TestCase):
         args = parser.parse_args(["--from", "2026-03"])
         self.assertEqual(args.categories, "astro-ph.GA,astro-ph.SR,astro-ph.IM")
 
-    def test_default_source_is_arxiv(self) -> None:
+    def test_default_source_is_deepxiv(self) -> None:
         parser = cli.build_parser()
         args = parser.parse_args(["--from", "2026-03"])
-        self.assertEqual(args.source, "arxiv")
+        self.assertEqual(args.source, "deepxiv")
 
     def test_classifier_option_is_no_longer_available(self) -> None:
         parser = cli.build_parser()

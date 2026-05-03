@@ -278,11 +278,24 @@ def paper_id(paper: dict[str, Any]) -> str:
 
 
 def merge_paper(existing: dict[str, Any], incoming: dict[str, Any], query: str) -> None:
-    existing["_matched_queries"].append(query)
+    if query not in existing["_matched_queries"]:
+        existing["_matched_queries"].append(query)
     existing["_best_score"] = max(float(existing.get("_best_score") or 0), float(incoming.get("score") or 0))
     for key, value in incoming.items():
         if value and not existing.get(key):
             existing[key] = value
+
+
+def arxiv_category_label(categories: list[str]) -> str | None:
+    return ",".join(categories) if categories else None
+
+
+def annotate_search_source(paper: dict[str, Any], source: str, *, fallback_from: str | None = None) -> dict[str, Any]:
+    item = dict(paper)
+    item["_search_source"] = source
+    if fallback_from:
+        item["_fallback_from"] = fallback_from
+    return item
 
 
 def add_matched_category(paper: dict[str, Any], category: str | None) -> None:
@@ -829,26 +842,49 @@ def search_month(
     progress: ProgressReporter | None = None,
     search_state: dict[str, int] | None = None,
     metadata_cache: dict[str, dict[str, Any]] | None = None,
+    backend_state: dict[str, Any] | None = None,
 ) -> tuple[list[dict[str, Any]], dict[str, Any], list[dict[str, Any]]]:
     merged: dict[str, dict[str, Any]] = {}
     query_stats: list[dict[str, Any]] = []
     metadata_report_entries: list[dict[str, Any]] = []
     metadata_cache = metadata_cache if metadata_cache is not None else {}
+    backend_state = backend_state if backend_state is not None else {}
     title_triage_json = month_title_triage_path(config, month.slug)
     month_categories = resolved_categories_for_month(config, month)
     month_queries = resolved_queries_for_month(config, month)
+    deepxiv_fallback_count = 0
 
     for query in month_queries:
-        categories_for_query = month_categories if config.source == "deepxiv" and month_categories else [None]
+        categories_for_query = (
+            month_categories
+            if config.source == "deepxiv" and month_categories and not backend_state.get("deepxiv_unavailable")
+            else [None]
+        )
         for category in categories_for_query:
-            category_label = category
-            if config.source != "deepxiv" and month_categories:
-                category_label = ",".join(month_categories)
-            row = {"query": query, "category": category_label, "total": None, "returned": 0, "error": None}
+            original_category = category
+            search_source = (
+                "deepxiv"
+                if config.source == "deepxiv" and not backend_state.get("deepxiv_unavailable")
+                else "arxiv"
+            )
+            category_label = category if search_source == "deepxiv" else arxiv_category_label(month_categories)
+            row = {
+                "query": query,
+                "source": search_source,
+                "category": category_label,
+                "total": None,
+                "returned": 0,
+                "error": None,
+                "fallback_from": None,
+                "fallback_error": None,
+            }
             started = datetime.now()
             fatal_error: Exception | None = None
+            result: dict[str, Any] | None = None
+            fallback_from: str | None = None
+            switched_to_arxiv = False
             try:
-                if config.source == "deepxiv":
+                if search_source == "deepxiv":
                     if deepxiv_client is None:
                         raise RuntimeError("DeepXiv client is required when --source deepxiv is selected.")
                     result = deepxiv_client.search(
@@ -867,33 +903,83 @@ def search_month(
                         date_to=month.date_to,
                         categories=month_categories,
                     )
+            except Exception as exc:
+                error_text = f"{type(exc).__name__}: {exc}"
+                if search_source == "deepxiv":
+                    backend_state["deepxiv_unavailable"] = True
+                    deepxiv_fallback_count += 1
+                    fallback_from = "deepxiv"
+                    switched_to_arxiv = True
+                    search_source = "arxiv"
+                    category = None
+                    category_label = arxiv_category_label(month_categories)
+                    row.update(
+                        {
+                            "source": "arxiv",
+                            "category": category_label,
+                            "error": f"DeepXiv fallback: {error_text}",
+                            "fallback_from": "deepxiv",
+                            "fallback_error": error_text,
+                        }
+                    )
+                    append_jsonl(
+                        run_log,
+                        {
+                            "event": "fallback",
+                            "run_id": run_id,
+                            "month": month.slug,
+                            "from_source": "deepxiv",
+                            "to_source": "arxiv",
+                            "query": query,
+                            "category": original_category,
+                            "error": error_text,
+                        },
+                    )
+                    try:
+                        result = arxiv_client.search(
+                            query,
+                            size=config.max_results,
+                            date_from=month.date_from,
+                            date_to=month.date_to,
+                            categories=month_categories,
+                        )
+                    except Exception as fallback_exc:
+                        fallback_error = f"{type(fallback_exc).__name__}: {fallback_exc}"
+                        row["error"] = f"{row['error']}; arXiv fallback failed: {fallback_error}"
+                        fatal_error = fallback_exc
+                else:
+                    row["error"] = error_text
+                    fatal_error = exc
+
+            if result is not None:
                 papers = result.get("results") or []
                 row["total"] = result.get("total")
                 row["returned"] = len(papers)
                 for paper in papers:
-                    arxiv_id = paper_id(paper)
+                    sourced_paper = annotate_search_source(paper, search_source, fallback_from=fallback_from)
+                    arxiv_id = paper_id(sourced_paper)
                     if not arxiv_id:
                         continue
                     if arxiv_id in merged:
-                        merge_paper(merged[arxiv_id], paper, query)
+                        merge_paper(merged[arxiv_id], sourced_paper, query)
                         add_matched_category(merged[arxiv_id], category)
                     else:
-                        item = dict(paper)
+                        item = sourced_paper
                         item["_matched_queries"] = [query]
                         item["_best_score"] = float(item.get("score") or 0)
                         item["_matched_categories"] = []
                         add_matched_category(item, category)
                         merged[arxiv_id] = item
-            except Exception as exc:
-                row["error"] = f"{type(exc).__name__}: {exc}"
-                fatal_error = exc
 
             query_stats.append(row)
             append_jsonl(
                 run_log,
                 {
                     "event": "query",
-                    "source": config.source,
+                    "source": row["source"],
+                    "configured_source": config.source,
+                    "fallback_from": row["fallback_from"],
+                    "fallback_error": row["fallback_error"],
                     "run_id": run_id,
                     "month": month.slug,
                     "query": query,
@@ -916,6 +1002,8 @@ def search_month(
                 raise fatal_error
             if config.search_sleep_seconds > 0:
                 time.sleep(config.search_sleep_seconds)
+            if switched_to_arxiv:
+                break
 
         if config.source != "deepxiv":
             # arXiv can combine categories with OR in one query.
@@ -983,7 +1071,10 @@ def search_month(
         if config.source != "deepxiv" and not category_matches(paper, config.categories):
             category_filtered += 1
             continue
-        if not score_matches(paper, config.min_score):
+        if (
+            not (config.source == "deepxiv" and paper.get("_search_source") == "arxiv")
+            and not score_matches(paper, config.min_score)
+        ):
             score_filtered += 1
             continue
         candidates.append(paper)
@@ -1022,6 +1113,7 @@ def search_month(
         "arxiv_metadata_no_publication_date_count": arxiv_metadata_no_publication_date_count,
         "category_filtered": category_filtered,
         "score_filtered": score_filtered,
+        "deepxiv_fallback_count": deepxiv_fallback_count,
         "classifier_candidates": len(candidates),
         **classifier_stats,
         **review_stats,
@@ -1081,6 +1173,7 @@ def search_month(
         "arxiv_metadata_no_publication_date_count": arxiv_metadata_no_publication_date_count,
         "category_filtered": category_filtered,
         "score_filtered": score_filtered,
+        "deepxiv_fallback_count": deepxiv_fallback_count,
         "classifier_candidates": len(candidates),
         **classifier_stats,
         **review_stats,
@@ -1109,7 +1202,14 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
     run_id = started_at.strftime("%Y%m%dT%H%M%S")
     run_log = config.logs_dir / f"run_{run_id}.log"
     arxiv_client = ArxivClient()
-    deepxiv_client = DeepXivClient(token=config.token) if config.source == "deepxiv" else None
+    backend_state: dict[str, Any] = {}
+    deepxiv_client: DeepXivClient | None = None
+    if config.source == "deepxiv":
+        try:
+            deepxiv_client = DeepXivClient(token=config.token)
+        except Exception as exc:
+            backend_state["deepxiv_unavailable"] = True
+            backend_state["deepxiv_init_error"] = f"{type(exc).__name__}: {exc}"
     metadata_cache: dict[str, dict[str, Any]] = {}
     arxiv_metadata_entries: list[dict[str, Any]] = []
     month_summaries: list[dict[str, Any]] = []
@@ -1137,6 +1237,7 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
             "llm_base_url": config.llm_base_url if config.llm_review else None,
             "llm_model": config.llm_model if config.llm_review else None,
             "llm_batch_size": config.llm_batch_size if config.llm_review else None,
+            "deepxiv_init_error": backend_state.get("deepxiv_init_error"),
         },
     )
 
@@ -1160,6 +1261,7 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
                     progress=progress,
                     search_state=search_state,
                     metadata_cache=metadata_cache,
+                    backend_state=backend_state,
                 )
                 arxiv_metadata_entries.extend(month_arxiv_metadata_entries)
             except Exception as exc:

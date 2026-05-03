@@ -58,9 +58,10 @@ Git 只保存生成这些数据的工具链、说明文档、测试和 skill。`
 conda run -n stella-env python scripts/fetch_high_velocity_lit.py --from 2026-03
 ```
 
-默认值应保持节省额度：
+默认值应兼顾召回和额度：
 
-- `--source arxiv`
+- `--source deepxiv`
+- DeepXiv 出现额度耗尽、token/API 错误或其它检索异常时，本次运行后续检索自动 fallback 到 arXiv
 - `--llm-review False`
 - 不抓 `DeepXiv brief`
 - `--max-results 20`
@@ -69,8 +70,8 @@ conda run -n stella-env python scripts/fetch_high_velocity_lit.py --from 2026-03
 - `--search-mode hybrid`
 
 多分类含义是 OR：论文属于 `astro-ph.GA`、`astro-ph.SR`、`astro-ph.IM`
-任意一个分类即可进入候选。arXiv 查询应把分类 OR 条件直接放进 API query，
-不要先抓无分类结果再只靠本地过滤。
+任意一个分类即可进入候选。DeepXiv 按 query/category 分别检索并去重合并；
+arXiv 查询应把分类 OR 条件直接放进 API query，不要先抓无分类结果再只靠本地过滤。
 
 如果使用 `--source deepxiv --llm-review True`，DeepXiv 仍按 query/category
 分别检索并去重合并，但送入 LLM 复核的 `no-clear-title-evidence` 候选默认只取

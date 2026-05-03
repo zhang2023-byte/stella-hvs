@@ -22,7 +22,31 @@ class RateLimitError(Exception):
 
 
 class FakeArxivClient:
-    pass
+    def search(
+        self,
+        query: str,
+        *,
+        size: int,
+        date_from: str,
+        date_to: str,
+        categories: list[str] | None = None,
+    ) -> dict[str, object]:
+        del query, size, date_to, categories
+        if date_from == "2025-02-01":
+            raise RateLimitError("Daily limit reached. Email tommy@chien.io for higher limits.")
+        return {
+            "total": 1,
+            "results": [
+                {
+                    "arxiv_id": "2501.00001",
+                    "title": "Discovery of a hypervelocity star candidate",
+                    "abstract": "A test paper.",
+                    "author_names": "A. Author",
+                    "categories": ["astro-ph.GA"],
+                    "published_at": "2025-01-10T00:00:00",
+                }
+            ],
+        }
 
 
 class FakeDeepXivClient:
@@ -63,7 +87,7 @@ class FakeDeepXivClient:
 
 
 class PipelinePartialRunTest(unittest.TestCase):
-    def test_rate_limit_writes_partial_summary(self) -> None:
+    def test_arxiv_rate_limit_writes_partial_summary(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             config = SearchConfig(
@@ -72,7 +96,7 @@ class PipelinePartialRunTest(unittest.TestCase):
                 logs_dir=root / "logs",
                 start_date=date(2025, 1, 1),
                 end_date=date(2025, 2, 28),
-                source="deepxiv",
+                source="arxiv",
                 queries=["hypervelocity stars"],
                 categories=["astro-ph.GA"],
                 max_results=1,

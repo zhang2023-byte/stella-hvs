@@ -105,6 +105,7 @@ def base_paper_record(paper: dict[str, Any], *, config: SearchConfig, run_id: st
     best_score = as_float(first_present(paper.get("_best_score"), paper.get("score")))
     source_score = as_float(paper.get("score"))
     citations = first_present(paper.get("citations"), paper.get("citation"))
+    search_source = first_present(paper.get("_search_source"), config.source)
     published_at = first_present(
         paper.get("publish_at"),
         paper.get("published_at"),
@@ -124,7 +125,7 @@ def base_paper_record(paper: dict[str, Any], *, config: SearchConfig, run_id: st
             "pdf": pdf_url(arxiv_id) if arxiv_id else "",
         },
         "abstract": {
-            "source": config.source if abstract else None,
+            "source": search_source if abstract else None,
             "text": abstract,
         },
         "match": {
@@ -139,10 +140,14 @@ def base_paper_record(paper: dict[str, Any], *, config: SearchConfig, run_id: st
             "citations": citations,
         },
         "provenance": {
-            "search_source": config.source,
+            "search_source": search_source,
             "run_id": run_id,
         },
     }
+    if search_source != config.source:
+        record["provenance"]["configured_search_source"] = config.source
+    if first_present(paper.get("_fallback_from")):
+        record["provenance"]["fallback_from"] = first_present(paper.get("_fallback_from"))
     raw_fields = source_field_record(paper)
     if raw_fields:
         record["source_fields"] = raw_fields

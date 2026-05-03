@@ -110,6 +110,10 @@ def render_month_note(record: dict[str, Any]) -> str:
         f"category-filtered {pluralize(stats.get('category_filtered', 0), 'paper')}; "
         f"score-filtered {pluralize(stats.get('score_filtered', 0), 'paper')}"
     )
+    if int(stats.get("deepxiv_fallback_count") or 0) > 0:
+        lines.append(
+            f"- DeepXiv fallback: switched to arXiv for {pluralize(stats.get('deepxiv_fallback_count', 0), 'query')}"
+        )
     if int(stats.get("arxiv_metadata_requested_count") or 0) > 0:
         lines.append(
             f"- arXiv metadata backfill: attempted {pluralize(stats.get('arxiv_metadata_requested_count', 0), 'paper')} missing dates; "
@@ -203,16 +207,16 @@ def render_month_note(record: dict[str, Any]) -> str:
 
     lines.append("## Monthly Run Log Summary")
     lines.append("")
-    total_label = "DeepXiv total" if source == "deepxiv" else "arXiv total"
-    lines.append(f"| Query | Category | {total_label} | Returned | Error |")
-    lines.append("| --- | --- | ---: | ---: | --- |")
+    lines.append("| Query | Source | Category | Total | Returned | Error |")
+    lines.append("| --- | --- | --- | ---: | ---: | --- |")
     for row in record.get("search_log") or []:
         query = escape_pipe(str(row.get("query") or ""))
+        row_source = escape_pipe(str(row.get("source") or source))
         category = escape_pipe(str(row.get("category") or ""))
         total = row.get("total", "")
         returned = row.get("returned", "")
         error = escape_pipe(str(row.get("error") or ""))
-        lines.append(f"| `{query}` | `{category}` | {total} | {returned} | {error} |")
+        lines.append(f"| `{query}` | `{row_source}` | `{category}` | {total} | {returned} | {error} |")
     lines.append("")
     return "\n".join(lines)
 

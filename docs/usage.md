@@ -20,7 +20,7 @@ conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
 ### 常用参数
 
 ```text
---source deepxiv|arxiv       搜索后端，默认 arxiv
+--source deepxiv|arxiv       搜索后端，默认 deepxiv；DeepXiv 异常时自动 fallback 到 arXiv
 --from DATE                  开始时间，可写 YYYY-MM-DD、YYYY-MM、YYYY
 --to DATE                    结束时间，默认今天
 --llm-review True|False      是否让 LLM 复核“标题没有明显证据”的论文，默认 False
@@ -39,7 +39,7 @@ conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
 
 ```text
 --to                今天
---source            arxiv
+--source            deepxiv
 --llm-review        False
 --max-results       20
 --categories        astro-ph.GA,astro-ph.SR,astro-ph.IM
@@ -67,7 +67,7 @@ conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
   `title-triage.json`，并标记为 `review.status=skipped`
 - 最终月度 note 只收录规则直判相关论文，以及被 LLM 复核确认相关的论文
 - `fetch_high_velocity_lit.py` 不再调用 `DeepXiv brief`
-- 默认候选检索走 `arXiv API`
+- 默认候选检索走 `DeepXiv`；DeepXiv 出现额度耗尽、token/API 错误或其它检索异常时，本次运行后续检索自动 fallback 到 `arXiv API`
 - arXiv 候选检索会把多个 `--categories` 合并为 OR 条件推入查询，例如
   `(cat:astro-ph.GA OR cat:astro-ph.SR OR cat:astro-ph.IM)`；DeepXiv 候选检索则按分类分别查询后去重合并
 

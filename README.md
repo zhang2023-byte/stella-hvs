@@ -39,8 +39,9 @@ conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
   --from 2026-03
 ```
 
-默认候选检索走 arXiv API，分类覆盖 `astro-ph.GA`、`astro-ph.SR` 和
-`astro-ph.IM`；多分类在 arXiv 查询中按 OR 合并。
+默认候选检索走 DeepXiv，分类覆盖 `astro-ph.GA`、`astro-ph.SR` 和
+`astro-ph.IM`；DeepXiv 出现额度耗尽、token/API 错误或其它检索异常时，
+本次运行后续检索会自动 fallback 到 arXiv API。
 
 带 LLM 复核运行：
 
