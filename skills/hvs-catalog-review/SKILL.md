@@ -117,6 +117,14 @@ Use `schema_version: "stella.hvs_catalog.review.v1"`.
       "kind": "external_url",
       "url": "",
       "local_path": "",
+      "source_refs": [
+        {
+          "path": "",
+          "start_line": 0,
+          "end_line": 0,
+          "context": ""
+        }
+      ],
       "meaning": "",
       "evidence": "",
       "comments": ""
@@ -145,5 +153,10 @@ Allowed `review.status` values: `reviewed`, `partial`, `needs_review`, `source_m
 Suggested `catalog_role` values: `new_catalog`, `compiled_catalog`, `followup_observations`, `uses_existing_catalog`, `unclear`.
 
 Suggested `object_scope` values: `single_object`, `multiple_objects`, `none`, `unclear`.
+
+For `external_resources`, use `local_path` only when it points to a local
+machine-readable table file (`.csv/.tsv/.txt/.dat/.tbl/.mrt/.ecsv/.fits/.fit/.fits.gz/.vot/.votable/.xml`).
+If the resource is evidenced by a TeX line, put the TeX path and line range in
+`source_refs`; do not put `.tex` files in `local_path`.
 
 Do not record table columns in `catalog_review.json`. Preserve accurate `source_refs.start_line` and `source_refs.end_line` so later table-extraction stages can return to the exact TeX span and write precise column schemas under `catalog_extraction.json`, `catalog_sources/`, and `catalog_tables/`.

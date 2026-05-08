@@ -43,6 +43,7 @@ MACHINE_READABLE_SUFFIXES = {
     ".xml",
 }
 URL_RE = re.compile(r"https?://[^\s{}\\)>,]+")
+EVIDENCE_LINE_RE = re.compile(r"\blines?\s+(\d+)(?:\s*[-–]\s*(\d+))?", flags=re.IGNORECASE)
 BEGIN_ENV_RE = re.compile(r"\\begin\{([^}]+)\}")
 END_ENV_TEMPLATE = r"\\end\{%s\}"
 REVIEW_STATUS_MEANINGS = {
@@ -63,6 +64,124 @@ def read_json(path: Path) -> dict[str, Any]:
 def write_json(path: Path, record: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(record, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def machine_readable_suffix_from_value(value: str) -> str:
+    lowered = value.lower()
+    if lowered.endswith(".fits.gz"):
+        return ".fits.gz"
+    return Path(value).suffix.lower()
+
+
+def parse_evidence_line_range(evidence: str) -> tuple[int, int]:
+    match = EVIDENCE_LINE_RE.search(evidence or "")
+    if match is None:
+        return 0, 0
+    start_line = int(match.group(1))
+    end_line = int(match.group(2) or start_line)
+    return start_line, end_line
+
+
+def source_ref_from_external_tex_path(local_path: str, evidence: str) -> dict[str, Any]:
+    start_line, end_line = parse_evidence_line_range(evidence)
+    return {
+        "path": local_path,
+        "start_line": start_line,
+        "end_line": end_line,
+        "context": evidence,
+        "source": "migrated_from_external_resources.local_path",
+    }
+
+
+def int_or_zero(value: Any) -> int:
+    try:
+        return int(value or 0)
+    except (TypeError, ValueError):
+        return 0
+
+
+def source_ref_exists(source_refs: list[dict[str, Any]], candidate: dict[str, Any]) -> bool:
+    for item in source_refs:
+        if not isinstance(item, dict):
+            continue
+        if (
+            str(item.get("path") or "") == str(candidate.get("path") or "")
+            and int_or_zero(item.get("start_line")) == int_or_zero(candidate.get("start_line"))
+            and int_or_zero(item.get("end_line")) == int_or_zero(candidate.get("end_line"))
+        ):
+            return True
+    return False
+
+
+def migrate_external_resource_source_refs_in_review(review: dict[str, Any]) -> tuple[dict[str, Any], dict[str, int]]:
+    migrated = json.loads(json.dumps(review))
+    summary = {
+        "resource_count": 0,
+        "migrated_count": 0,
+        "unchanged_count": 0,
+    }
+    resources = migrated.get("external_resources") or []
+    if not isinstance(resources, list):
+        return migrated, summary
+    for resource in resources:
+        if not isinstance(resource, dict):
+            continue
+        summary["resource_count"] += 1
+        local_path = str(resource.get("local_path") or "").strip()
+        suffix = machine_readable_suffix_from_value(local_path) if local_path else ""
+        if suffix != ".tex":
+            summary["unchanged_count"] += 1
+            continue
+        source_refs = [item for item in (resource.get("source_refs") or []) if isinstance(item, dict)]
+        source_ref = source_ref_from_external_tex_path(local_path, str(resource.get("evidence") or ""))
+        if not source_ref_exists(source_refs, source_ref):
+            source_refs.append(source_ref)
+        resource["source_refs"] = source_refs
+        resource["local_path"] = ""
+        summary["migrated_count"] += 1
+    return migrated, summary
+
+
+def migrate_external_resource_source_refs(literature_dir: Path, *, dry_run: bool = False) -> dict[str, Any]:
+    files: list[dict[str, Any]] = []
+    total_resources = 0
+    total_migrated = 0
+    for path in iter_catalog_review_paths(literature_dir):
+        try:
+            review = read_json(path)
+        except (OSError, json.JSONDecodeError) as exc:
+            files.append(
+                {
+                    "path": str(path),
+                    "status": "failed",
+                    "error": f"{type(exc).__name__}: {exc}",
+                    "migrated_count": 0,
+                    "resource_count": 0,
+                }
+            )
+            continue
+        migrated, summary = migrate_external_resource_source_refs_in_review(review)
+        total_resources += summary["resource_count"]
+        total_migrated += summary["migrated_count"]
+        status = "updated" if summary["migrated_count"] else "unchanged"
+        if summary["migrated_count"] and not dry_run:
+            write_json(path, migrated)
+        files.append(
+            {
+                "path": str(path),
+                "status": "would_update" if dry_run and summary["migrated_count"] else status,
+                "resource_count": summary["resource_count"],
+                "migrated_count": summary["migrated_count"],
+            }
+        )
+    return {
+        "dry_run": dry_run,
+        "literature_dir": str(literature_dir),
+        "review_file_count": len(files),
+        "resource_count": total_resources,
+        "migrated_count": total_migrated,
+        "files": files,
+    }
 
 
 def relative_path(path: Path, *, workspace: Path) -> str:

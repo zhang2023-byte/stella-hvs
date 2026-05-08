@@ -291,8 +291,10 @@ conda run -n stella-env python scripts/extract_catalog_tables.py \
                            外部资源网络策略；Auto 下单篇联网、批量不联网
 --max-external-files N     每个外部资源最多下载 N 个机器可读文件，默认 5
 --max-external-bytes N     单个外部资源下载硬上限，默认 52428800
---external-timeout N       外部资源 HTTP 超时秒数，默认 30
+--external-timeout N       外部资源 HTTP 和 Agent locator 超时秒数，默认 60
 --jobs Auto|N              --all-reviewed 的并行论文 worker 数，默认 1
+--provider-resolver On|Off
+                           已知来源结构化 resolver；默认 On，先解析 ADS/CDS/VizieR/Zenodo/NADC
 --agent-locator Off|Always
                            LLM Agent 页面定位；默认 Always，对 HTML landing page 始终调用 Agent
 --llm-api-key KEY          Agent locator 使用的 OpenAI-compatible API key；也可用 LLM_API_KEY 等环境变量
@@ -307,9 +309,17 @@ conda run -n stella-env python scripts/extract_catalog_tables.py \
 
 - LaTeX 表格会写出 `catalog_sources/<candidate_id>/excerpt.tex`、转换器 HTML/log artifacts 和 `catalog_tables/<candidate_id>.csv`。
 - LaTeX 解析失败也会保留 `excerpt.tex`，便于复查失败上下文。
-- 外部资源会优先解析 `local_path`，其次抓取明确 URL；没有 `url/local_path` 时，会读取已有或可获取的 ADS HTML，并交给同一个 bounded Agent locator 选择候选链接。
-- `--agent-locator` 默认是 `Always`：明确 URL 返回 HTML landing page 或 ADS HTML 需要定位下载项时，下载链接选择交给 LLM Agent。Agent 只接收页面标题、可见文本摘录、外部资源 evidence 和页面中提取出的链接候选；网页正文、链接文字和文件名都被视为不可信数据，它只能返回候选 ID，不能发明 URL。脚本仍会校验链接、下载类型、文件大小和解析结果，并把 `agent_locator_context.json`、`agent_locator_response.json` 作为 provenance 写入 `catalog_sources/<resource_id>/`。如果未配置 API key、LLM 连不上、返回格式错误或选择了无效候选，流程不会崩溃；对应错误会写入 `external_resources[].locator_attempts[]`、`error` 和 `stopped_reason`。需要完全关闭时使用 `--agent-locator Off`，此时 HTML landing page 和 ADS HTML 只记录停止原因，不下载页面链接。
-- 外部抓取不会使用搜索引擎、不会递归爬取、不会登录；只允许公网 HTTP(S)，拒绝 localhost、私网 IP、link-local、loopback、multicast、reserved 地址和无 host URL；遇到占位 URL、unsupported content、超时、超过文件数、超过大小上限或解析失败时，会在 JSON 中记录 `stopped_reason`。
+- 外部资源会优先解析机器可读 `local_path`，其次抓取明确 URL。默认 `--provider-resolver On` 会在直接 URL 或 ADS 入口页上优先使用结构化 resolver：CDS/VizieR 通过 catalog id 尝试 ASU TSV/VOTable 和 ReadMe 数据文件，Zenodo 通过 records API 选择机器可读 files，NADC/China-VO 从资源页提取 `file_upload/download` 链接。没有 `url` 或机器可读 `local_path` 时，会读取已有或可获取的 ADS abstract HTML；ADS abstract 只作为入口页，用来定位 data products、ADS catalog record 或白名单 provider 链接，不作为最终下载页。`local_path` 不再用于 TeX 证据；TeX 路径和行号应写在 `external_resources[].source_refs`。旧记录里残留的 `.tex local_path` 会被忽略并记录 warning，不会再被当成外部表解析。
+- 迁移旧 review JSON 可运行：
+
+```bash
+conda run -n stella-env python scripts/migrate_external_resource_source_refs.py
+```
+
+该脚本会把 `external_resources[].local_path` 中的 `.tex` 路径迁入 `source_refs`，并重建 catalog index。
+- `external_resources[].resolver_attempts[]` 记录结构化 resolver 的 provider、输入 URL、候选数、选择链接、artifact 和停止原因。新增停止原因包括 `ads_no_data_product_links`、`ads_catalog_record_unresolved`、`cds_catalog_not_published`、`cds_no_machine_readable_tables`、`zenodo_no_matching_files`、`nadc_no_download_files` 和 `provider_resolver_disabled`。
+- `--agent-locator` 默认是 `Always`：明确 URL 返回非 provider HTML landing page，或结构化 resolver 没找到可解析下载项时，下载链接选择才交给 LLM Agent。Agent 只接收页面标题、可见文本摘录、外部资源 evidence 和页面中提取出的链接候选；网页正文、链接文字和文件名都被视为不可信数据，它只能返回候选 ID，不能发明 URL。脚本仍会校验链接、下载类型、文件大小和解析结果，并把 `agent_locator_context.json`、`agent_locator_response.json` 作为 provenance 写入 `catalog_sources/<resource_id>/`。如果未配置 API key、LLM 连不上、返回格式错误或选择了无效候选，流程不会崩溃；对应错误会写入 `external_resources[].locator_attempts[]`、`error` 和 `stopped_reason`。需要完全关闭时使用 `--agent-locator Off`。
+- 外部抓取不会使用搜索引擎、不会递归爬取、不会登录；ADS 只允许一层白名单二跳到 ADS catalog/data-product、CDS/VizieR、Zenodo 或 NADC。所有 resolver 和 Agent 候选都只允许公网 HTTP(S)，拒绝 localhost、私网 IP、link-local、loopback、multicast、reserved 地址和无 host URL；遇到占位 URL、unsupported content、超时、超过文件数、超过大小上限或解析失败时，会在 JSON 中记录 `stopped_reason`。
 - 外部机器可读后缀统一支持 `.csv/.tsv/.txt/.dat/.tbl/.mrt/.ecsv/.fits/.fit/.fits.gz/.vot/.votable/.xml`。
 - 重跑时，只有 source hash 与列身份匹配，才会保留已人工审核的 `usage` 和列语义；否则语义状态会回到 `needs_agent_review`。
 - 全量重跑可以用 `--jobs Auto` 按论文并行；Auto 会按论文数选择 1/2/4/8/12 个 worker。也可以直接指定 `--jobs N`。并行不会减少 API/网络总成本，只是减少等待时间；外部资源和 Agent locator 较多时收益最明显。DeepSeek API 并发限额是动态的，如果出现 429、timeout 或大量 `agent_error`，下次直接指定更小的 `--jobs N`。

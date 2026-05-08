@@ -90,12 +90,18 @@ conda run -n stella-env python scripts/extract_catalog_tables.py \
 提取阶段会写出 `literature/<arxiv_id>/catalog_extraction.json`、
 `catalog_sources/<id>/...` 和 `catalog_tables/<id>.csv`。LaTeX 表格优先使用
 LaTeXML，然后是 Pandoc，最后回退到项目内 parser。外部资源会先解析本地
-机器可读文件，再按严格边界抓取明确 URL；明确 URL 返回 HTML landing page 时，
-默认 `--agent-locator Always` 会让 LLM Agent 只从页面已提取链接候选中选择下载项。
-没有 URL/local path 的资源也会在已有/可获取的 ADS HTML 上走同一个 bounded Agent
-locator。外部下载只允许公网 HTTP(S)，拒绝本机/私网/特殊地址，并受文件大小上限保护。
+机器可读文件，再按严格边界抓取明确 URL；默认 `--provider-resolver On`
+会优先使用 CDS/VizieR、Zenodo、NADC/China-VO 和 ADS data-product/catalog
+record 的结构化下载路径。明确 URL 返回其它 HTML landing page，或 provider
+resolver 找不到机器可读候选时，默认 `--agent-locator Always` 会让 LLM Agent
+只从当前页面已提取链接候选中选择下载项。ADS abstract 只作为入口页，结构化
+resolver 只允许白名单二跳到 ADS catalog/data-product、CDS/VizieR、Zenodo 或 NADC。
+外部下载只允许公网 HTTP(S)，拒绝本机/私网/特殊地址，并受文件大小上限保护。
 如果 LLM 未配置、连接失败或返回无效结果，错误会记录到提取日志而不会中断整个流程；
 需要完全禁用时使用 `--agent-locator Off`。
+`external_resources[].local_path` 只表示可直接解析的本地机器可读表文件；TeX 证据路径
+应写入 `external_resources[].source_refs`。迁移旧 review JSON 可运行
+`scripts/migrate_external_resource_source_refs.py`。
 语义补充使用项目内 `hvs-catalog-extraction` skill；CSV 保持论文/资源表格结构，
 不代表已经进入统一对象 schema。
 全量重跑时可以给 `--all-reviewed` 加 `--jobs Auto` 按论文并行；
@@ -135,6 +141,7 @@ scripts/annotate_catalog_data.py     给月度 JSON 补 catalog_assessment
 scripts/pull_literature_assets.py    拉取 data-related 文献的本地资料归档
 scripts/inventory_catalog_candidates.py   列出单篇论文的 catalog 审阅候选
 scripts/extract_catalog_tables.py    从 catalog_review.json 提取 LaTeX 表格为 CSV
+scripts/migrate_external_resource_source_refs.py   迁移 external resource 的 TeX 证据路径
 scripts/build_catalog_index.py       从 catalog_review.json 和 catalog_extraction.json 重建 catalog 工作流索引
 scripts/render_lit_notes.py          从 JSON 重生成 Markdown
 docs/                                说明文档

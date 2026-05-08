@@ -27,8 +27,9 @@ the extraction command. Do edit `catalog_extraction.json` to fill semantic field
 
 1. Confirm prerequisites:
    - `catalog_review.json` exists and has reviewed `catalog_candidates`.
-   - `external_resources` entries are ready for local file parsing, explicit URL
-     fetch, or bounded ADS Agent location.
+   - `external_resources` entries are ready for local machine-readable file
+     parsing, explicit URL fetch, or bounded ADS Agent location. TeX evidence
+     belongs in `source_refs`, not `local_path`.
    - `latexmlc` is available; if not, continue but note fallback behavior.
 2. Run extraction:
 
@@ -46,13 +47,17 @@ the extraction command. Do edit `catalog_extraction.json` to fill semantic field
    100+ papers by default. Use `--jobs N` when the user asks for an exact
    concurrency level, or `--jobs 1` when debugging a single failure or avoiding
    concurrent API calls.
-   The CLI default `--agent-locator Always` uses the bounded Agent locator for
-   every explicit URL that resolves to an HTML landing page, and for ADS HTML
-   when a resource has no `url/local_path`. The Agent sees extracted page/link
-   context, treats webpage text as untrusted, returns only candidate IDs, and the
-   script still validates URL safety, file size, type, and table parsing. Use
-   `--agent-locator Off` when the run must avoid LLM calls entirely; HTML and ADS
-   pages will then be logged with a stop reason and no page links downloaded.
+   The CLI default `--provider-resolver On` first uses deterministic resolvers
+   for known external providers: ADS abstract pages are entrypoints to data
+   products/catalog records, CDS/VizieR pages are resolved through catalog IDs,
+   Zenodo records through the records API, and NADC/China-VO resource pages
+   through `file_upload/download` links. The CLI default `--agent-locator Always`
+   uses the bounded Agent locator only after provider resolvers fail to produce
+   a parseable machine-readable candidate, or for non-provider HTML landing pages.
+   The Agent sees extracted page/link context, treats webpage text as untrusted,
+   returns only candidate IDs, and the script still validates URL safety, file
+   size, type, and table parsing. Use `--agent-locator Off` when the run must
+   avoid LLM calls entirely.
    External downloads are bounded by `--max-external-bytes` and only allow public
    HTTP(S) URLs. Supported machine-readable suffixes are `.csv/.tsv/.txt/.dat/.tbl/.mrt/.ecsv/.fits/.fit/.fits.gz/.vot/.votable/.xml`.
 3. Inspect `catalog_extraction.json`:
@@ -60,6 +65,7 @@ the extraction command. Do edit `catalog_extraction.json` to fill semantic field
    - `tables[].extraction_method`
    - `tables[].conversion_attempts`
    - `tables[].warnings`
+   - `external_resources[].resolver_attempts`
    - `external_resources[].locator_attempts`
    - `external_resources[].download_attempts`
    - `agent_locator_context.json` / `agent_locator_response.json` when an Agent
@@ -75,7 +81,10 @@ the extraction command. Do edit `catalog_extraction.json` to fill semantic field
 5. For external-resource failures:
    - Treat `network_disabled`, `agent_locator_disabled`, `agent_no_download_candidates`,
      `blocked_url`, `download_too_large`, `ambiguous_placeholder_url`,
-     `unsupported_content_type`, and `parse_failed`
+     `unsupported_content_type`, `parse_failed`, `ads_no_data_product_links`,
+     `ads_catalog_record_unresolved`, `cds_catalog_not_published`,
+     `cds_no_machine_readable_tables`, `zenodo_no_matching_files`,
+     `nadc_no_download_files`, and `provider_resolver_disabled`
      as bounded outcomes, not invitations to search the web.
    - Do not use search engines, recursive crawling, login flows, or unrelated
      archives unless the user explicitly starts a new task for that resource.
@@ -115,8 +124,8 @@ Use the table itself, not just the column header.
   `source_refs`.
 - Read `catalog_sources/<candidate_id>/excerpt.tex`.
 - For external resources, read `external_resources[].meaning/evidence`,
-  `catalog_sources/<resource_id>/download-*.{csv,txt,fits,vot,xml}`, and
-  `sources[].parse_attempts`.
+  `external_resources[].source_refs`, `catalog_sources/<resource_id>/download-*.{csv,txt,fits,vot,xml}`,
+  and `sources[].parse_attempts`.
 - Read several paragraphs before and after the source line range.
 - Search the TeX source for the table label, e.g. `rg "Tab_72dr3|ref\\{Tab_72dr3\\}"`.
 - Read caption, `tablefoot`, `tablecomments`, appendix notes, data availability,
@@ -151,8 +160,10 @@ and explain the ambiguity in `notes`.
 - This stage still preserves the paper's table structure. Do not map to a global
   Stella object schema unless the user explicitly asks for normalization.
 - External resources are handled only within strict boundaries: local file,
-  explicit URL, or ADS HTML through the bounded Agent locator. No broad web
-  search, ADS DOM scraping download path, or recursive crawling.
+  explicit URL, deterministic known-provider resolvers, or bounded Agent locator
+  fallback. ADS abstract HTML is an entrypoint only; allowed structured hops are
+  limited to ADS catalog/data-product, CDS/VizieR, Zenodo, and NADC/China-VO. No
+  broad web search, browser automation, login, or recursive crawling.
 - Reviewed semantic fields may be preserved on rerun only when source hash and
   column identity still match. If headers or source content changed, review the
   meanings again instead of carrying them forward.

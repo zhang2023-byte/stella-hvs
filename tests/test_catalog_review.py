@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from high_velocity_lit.catalog_review import (  # noqa: E402
     build_catalog_candidate_inventory,
+    migrate_external_resource_source_refs_in_review,
     rebuild_catalog_index,
     render_catalog_index,
     write_catalog_index_outputs,
@@ -119,6 +120,45 @@ A & B
 
 
 class CatalogReviewTest(unittest.TestCase):
+    def test_migrate_external_tex_local_path_to_source_refs(self) -> None:
+        review = {
+            "external_resources": [
+                {
+                    "id": "resource-tex",
+                    "kind": "external_url",
+                    "url": "https://example.test/catalog.csv",
+                    "local_path": "literature/2603.00001/arxiv_source/main.tex",
+                    "evidence": "In main.tex line 42: machine-readable catalog is available.",
+                },
+                {
+                    "id": "resource-local-table",
+                    "kind": "local_machine_readable_file",
+                    "local_path": "literature/2603.00001/arxiv_source/table.mrt",
+                },
+            ]
+        }
+
+        migrated, summary = migrate_external_resource_source_refs_in_review(review)
+
+        self.assertEqual(summary["migrated_count"], 1)
+        self.assertEqual(migrated["external_resources"][0]["local_path"], "")
+        self.assertEqual(
+            migrated["external_resources"][0]["source_refs"],
+            [
+                {
+                    "path": "literature/2603.00001/arxiv_source/main.tex",
+                    "start_line": 42,
+                    "end_line": 42,
+                    "context": "In main.tex line 42: machine-readable catalog is available.",
+                    "source": "migrated_from_external_resources.local_path",
+                }
+            ],
+        )
+        self.assertEqual(
+            migrated["external_resources"][1]["local_path"],
+            "literature/2603.00001/arxiv_source/table.mrt",
+        )
+
     def test_inventory_finds_tex_tables_local_files_and_external_mentions(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)

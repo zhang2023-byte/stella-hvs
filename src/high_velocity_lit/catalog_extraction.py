@@ -19,7 +19,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Protocol
-from urllib.parse import urljoin, urlparse
+from urllib.parse import parse_qs, quote, unquote, urljoin, urlparse
 
 import requests
 from bs4 import BeautifulSoup
@@ -35,6 +35,8 @@ CATALOG_SOURCES_DIR = "catalog_sources"
 CATALOG_TABLES_DIR = "catalog_tables"
 AGENT_LOCATOR_OFF = "Off"
 AGENT_LOCATOR_ALWAYS = "Always"
+PROVIDER_RESOLVER_ON = "On"
+PROVIDER_RESOLVER_OFF = "Off"
 AGENT_STOP_REASONS = {
     "agent_error",
     "agent_invalid_candidate",
@@ -46,7 +48,7 @@ AGENT_STOP_REASONS = {
 }
 
 CONVERTER_TIMEOUT_SECONDS = 120
-DEFAULT_EXTERNAL_TIMEOUT_SECONDS = 30
+DEFAULT_EXTERNAL_TIMEOUT_SECONDS = 60
 DEFAULT_MAX_EXTERNAL_FILES = 5
 MAX_EXTERNAL_BYTES = 50 * 1024 * 1024
 DEFAULT_AUTO_MAX_JOBS = 12
@@ -72,6 +74,15 @@ MACHINE_READABLE_SUFFIXES = {
 }
 TEXT_CONTENT_TYPES = ("text/csv", "text/tab-separated-values", "text/plain")
 VOTABLE_CONTENT_TYPES = ("application/x-votable+xml", "text/xml", "application/xml")
+KNOWN_PROVIDER_STOP_REASONS = {
+    "ads_no_data_product_links",
+    "ads_catalog_record_unresolved",
+    "cds_catalog_not_published",
+    "cds_no_machine_readable_tables",
+    "zenodo_no_matching_files",
+    "nadc_no_download_files",
+    "provider_resolver_disabled",
+}
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -1163,6 +1174,14 @@ class DownloadedExternal:
     attempt: dict[str, Any]
 
 
+@dataclass
+class ProviderLinkResolution:
+    links: list[dict[str, str]]
+    attempts: list[dict[str, Any]]
+    stopped_reason: str = ""
+    error: str = ""
+
+
 class ExternalPageLocator(Protocol):
     def locate(self, context: dict[str, Any]) -> dict[str, Any]:
         """Return a bounded JSON decision selecting page-derived candidate IDs."""
@@ -1294,22 +1313,47 @@ def selected_external_resources(review: dict[str, Any], *, resource_id: str | No
 
 
 def base_external_resource_record(resource: dict[str, Any]) -> dict[str, Any]:
+    resource_warnings = resource.get("warnings") if isinstance(resource.get("warnings"), list) else []
+    routing_warnings = resource.get("_routing_warnings") if isinstance(resource.get("_routing_warnings"), list) else []
     return {
         "id": str(resource.get("id") or "external-resource"),
         "kind": str(resource.get("kind") or "external_resource"),
         "status": "pending",
         "url": str(resource.get("url") or "").strip(),
         "local_path": str(resource.get("local_path") or "").strip(),
+        "source_refs": [item for item in (resource.get("source_refs") or []) if isinstance(item, dict)],
         "meaning": str(resource.get("meaning") or ""),
         "evidence": str(resource.get("evidence") or ""),
         "comments": str(resource.get("comments") or ""),
+        "resolver_attempts": [],
         "locator_attempts": [],
         "download_attempts": [],
         "outputs": [],
-        "warnings": [],
+        "warnings": [
+            *resource_warnings,
+            *routing_warnings,
+        ],
         "error": "",
         "stopped_reason": "",
     }
+
+
+def local_external_path_is_machine_readable(local_path: str) -> bool:
+    return bool(local_path.strip()) and supported_machine_readable(local_path)
+
+
+def external_resource_with_routing_warning(resource: dict[str, Any], *, local_path: str) -> dict[str, Any]:
+    updated = dict(resource)
+    warnings = list(updated.get("_routing_warnings") or [])
+    warnings.append(
+        {
+            "code": "ignored_unsupported_local_path",
+            "local_path": local_path,
+            "message": "external resource local_path is not a supported machine-readable table; routing will use url or ADS locator",
+        }
+    )
+    updated["_routing_warnings"] = warnings
+    return updated
 
 
 def content_looks_html(content: bytes, content_type: str) -> bool:
@@ -1629,6 +1673,516 @@ def locate_links_with_agent(
     return links, attempt
 
 
+def provider_attempt(
+    *,
+    method: str,
+    provider: str,
+    input_url: str,
+) -> dict[str, Any]:
+    return {
+        "method": method,
+        "provider": provider,
+        "input_url": input_url,
+        "final_url": "",
+        "status": "failed",
+        "candidate_count": 0,
+        "selected_count": 0,
+        "links": [],
+        "artifact_path": "",
+        "error": "",
+        "stopped_reason": "",
+    }
+
+
+def provider_for_url(url: str) -> str:
+    parsed = urlparse(url)
+    host = parsed.netloc.lower()
+    path = parsed.path.lower()
+    if host.endswith("adsabs.harvard.edu"):
+        return "ads"
+    if host.endswith("zenodo.org") or host == "doi.org" and "zenodo." in path:
+        return "zenodo"
+    if host.endswith("nadc.china-vo.org"):
+        return "nadc"
+    if (
+        host.endswith("vizier.cds.unistra.fr")
+        or host.endswith("cdsarc.cds.unistra.fr")
+        or host.endswith("cdsweb.u-strasbg.fr")
+        or host.endswith("cds.unistra.fr")
+    ):
+        return "cds_vizier"
+    return ""
+
+
+def score_provider_link(link: dict[str, str], resource: dict[str, Any]) -> int:
+    url = link.get("url", "")
+    candidate = {
+        "url": url,
+        "href": url,
+        "label": link.get("label", ""),
+        "anchor_text": link.get("label", ""),
+        "nearby_text": link.get("nearby_text", ""),
+        "machine_readable_hint": supported_machine_readable(url) or supported_machine_readable(link.get("label", "")),
+    }
+    score = candidate_relevance_score(candidate, resource=resource)
+    if "asu-tsv" in url:
+        score += 300
+    if "votable" in url:
+        score += 250
+    if "/ftp/" in url:
+        score += 50
+    if "/res/file_upload/download" in url:
+        score += 200
+    if "zenodo.org/records/" in url:
+        score += 100
+    return score
+
+
+def dedupe_links(links: list[dict[str, str]]) -> list[dict[str, str]]:
+    deduped: list[dict[str, str]] = []
+    seen: set[str] = set()
+    for link in links:
+        url = str(link.get("url") or "")
+        if not url or url in seen:
+            continue
+        seen.add(url)
+        deduped.append(link)
+    return deduped
+
+
+def sorted_provider_links(links: list[dict[str, str]], resource: dict[str, Any]) -> list[dict[str, str]]:
+    return sorted(
+        dedupe_links(links),
+        key=lambda link: (
+            -score_provider_link(link, resource),
+            int(link.get("_order") or 0),
+        ),
+    )
+
+
+def write_resolver_artifact(
+    *,
+    resource_dir: Path,
+    workspace: Path,
+    name: str,
+    content: bytes,
+    dry_run: bool,
+    overwrite: bool,
+) -> str:
+    if dry_run:
+        return ""
+    path = resource_dir / name
+    write_bytes(path, content, overwrite=overwrite)
+    return relative_path(path, workspace=workspace)
+
+
+def zenodo_record_id_from_url(url: str) -> str:
+    parsed = urlparse(url)
+    text = f"{parsed.netloc}{parsed.path}"
+    match = re.search(r"zenodo\.(\d+)", text)
+    if match:
+        return match.group(1)
+    match = re.search(r"/records?/(\d+)", parsed.path)
+    if match:
+        return match.group(1)
+    return ""
+
+
+def zenodo_file_download_url(record_id: str, file_record: dict[str, Any]) -> str:
+    links = file_record.get("links") if isinstance(file_record.get("links"), dict) else {}
+    for key in ("download", "self"):
+        value = str(links.get(key) or "").strip()
+        if value:
+            return value
+    filename = str(file_record.get("key") or file_record.get("filename") or "").strip()
+    if filename:
+        return f"https://zenodo.org/records/{record_id}/files/{quote(filename)}?download=1"
+    return ""
+
+
+def resolve_zenodo_links(
+    *,
+    url: str,
+    resource: dict[str, Any],
+    resource_dir: Path,
+    workspace: Path,
+    timeout: int,
+    max_bytes: int,
+    dry_run: bool,
+    overwrite: bool,
+) -> ProviderLinkResolution:
+    attempt = provider_attempt(method="zenodo_record_api", provider="zenodo", input_url=url)
+    record_id = zenodo_record_id_from_url(url)
+    if not record_id:
+        attempt.update({"error": "could not parse Zenodo record id", "stopped_reason": "zenodo_no_matching_files"})
+        return ProviderLinkResolution([], [attempt], "zenodo_no_matching_files", attempt["error"])
+    api_url = f"https://zenodo.org/api/records/{record_id}"
+    downloaded = fetch_url(api_url, timeout=timeout, max_bytes=max_bytes)
+    attempt["final_url"] = downloaded.final_url
+    if downloaded.attempt.get("status") != "success":
+        attempt.update(
+            {
+                "error": str(downloaded.attempt.get("error") or ""),
+                "stopped_reason": str(downloaded.attempt.get("stopped_reason") or "download_error"),
+            }
+        )
+        return ProviderLinkResolution([], [attempt], str(attempt["stopped_reason"]), str(attempt["error"]))
+    attempt["artifact_path"] = write_resolver_artifact(
+        resource_dir=resource_dir,
+        workspace=workspace,
+        name="resolver-zenodo-record.json",
+        content=downloaded.content,
+        dry_run=dry_run,
+        overwrite=overwrite,
+    )
+    try:
+        payload = json.loads(downloaded.content.decode("utf-8"))
+    except json.JSONDecodeError as exc:
+        attempt.update({"error": f"invalid Zenodo API JSON: {exc}", "stopped_reason": "zenodo_no_matching_files"})
+        return ProviderLinkResolution([], [attempt], "zenodo_no_matching_files", str(attempt["error"]))
+    files = payload.get("files") if isinstance(payload, dict) else []
+    links: list[dict[str, str]] = []
+    for file_record in files if isinstance(files, list) else []:
+        if not isinstance(file_record, dict):
+            continue
+        filename = str(file_record.get("key") or file_record.get("filename") or "").strip()
+        file_url = zenodo_file_download_url(record_id, file_record)
+        if not file_url or not (supported_machine_readable(filename) or supported_machine_readable(file_url)):
+            continue
+        links.append({"label": filename or Path(urlparse(file_url).path).name, "url": file_url, "nearby_text": filename})
+    links = sorted_provider_links(links, resource)
+    attempt.update(
+        {
+            "status": "success" if links else "failed",
+            "candidate_count": len(files) if isinstance(files, list) else 0,
+            "selected_count": len(links),
+            "links": links,
+            "stopped_reason": "" if links else "zenodo_no_matching_files",
+            "error": "" if links else "no machine-readable Zenodo files matched resource evidence",
+        }
+    )
+    return ProviderLinkResolution(links, [attempt], str(attempt["stopped_reason"]), str(attempt["error"]))
+
+
+def cds_catalog_id_from_url(url: str) -> str:
+    parsed = urlparse(url)
+    query = parse_qs(parsed.query)
+    for key in ("-source", "source"):
+        values = query.get(key)
+        if values:
+            return unquote(values[0]).strip().strip("/")
+    path = unquote(parsed.path)
+    for marker in ("/viz-bin/cat/", "/cgi-bin/qcat?"):
+        if marker in path:
+            return path.split(marker, 1)[1].strip().strip("/")
+    match = re.search(r"J/[A-Za-z0-9+_.-]+/[A-Za-z0-9+_.-]+/[A-Za-z0-9+_.-]+", path)
+    if match:
+        return match.group(0).strip("/")
+    return ""
+
+
+def cds_catalog_id_is_placeholder(catalog_id: str) -> bool:
+    return catalog_id.strip("/.") in {"J/A+A", "J/A+A/"} or catalog_id.endswith("/vol/page")
+
+
+def readme_data_files(readme: str) -> list[str]:
+    names: list[str] = []
+    for match in re.finditer(r"(?<![\w./-])([\w.+-]+\.(?:dat|tbl|txt|csv|tsv|mrt|fits|fit|vot|xml))(?![\w./-])", readme, flags=re.IGNORECASE):
+        name = match.group(1)
+        if name not in names:
+            names.append(name)
+    return names
+
+
+def resolve_cds_vizier_links(
+    *,
+    url: str,
+    resource: dict[str, Any],
+    resource_dir: Path,
+    workspace: Path,
+    timeout: int,
+    max_bytes: int,
+    dry_run: bool,
+    overwrite: bool,
+) -> ProviderLinkResolution:
+    attempt = provider_attempt(method="cds_vizier_resolver", provider="cds_vizier", input_url=url)
+    catalog_id = cds_catalog_id_from_url(url)
+    if not catalog_id or cds_catalog_id_is_placeholder(catalog_id):
+        reason = "cds_catalog_not_published" if catalog_id.endswith("/vol/page") else "cds_no_machine_readable_tables"
+        attempt.update({"error": f"unresolved CDS/VizieR catalog id: {catalog_id or url}", "stopped_reason": reason})
+        return ProviderLinkResolution([], [attempt], reason, str(attempt["error"]))
+    encoded = quote(catalog_id, safe="/+")
+    links = [
+        {
+            "label": f"{catalog_id} ASU TSV",
+            "url": f"https://vizier.cds.unistra.fr/viz-bin/asu-tsv?-source={encoded}&-out.all&-out.max=unlimited",
+            "nearby_text": catalog_id,
+        },
+        {
+            "label": f"{catalog_id} VOTable",
+            "url": f"https://vizier.cds.unistra.fr/viz-bin/votable?-source={encoded}&-out.all&-out.max=unlimited",
+            "nearby_text": catalog_id,
+        },
+    ]
+    readme_url = f"https://cdsarc.cds.unistra.fr/ftp/{encoded}/ReadMe"
+    readme_download = fetch_url(readme_url, timeout=timeout, max_bytes=max_bytes)
+    if readme_download.attempt.get("status") == "success":
+        attempt["artifact_path"] = write_resolver_artifact(
+            resource_dir=resource_dir,
+            workspace=workspace,
+            name="resolver-cds-readme.txt",
+            content=readme_download.content,
+            dry_run=dry_run,
+            overwrite=overwrite,
+        )
+        readme = readme_download.content.decode("utf-8", errors="replace")
+        for filename in readme_data_files(readme):
+            links.append(
+                {
+                    "label": filename,
+                    "url": f"https://cdsarc.cds.unistra.fr/ftp/{encoded}/{quote(filename)}",
+                    "nearby_text": filename,
+                }
+            )
+    links = sorted_provider_links(links, resource)
+    attempt.update(
+        {
+            "status": "success",
+            "candidate_count": len(links),
+            "selected_count": len(links),
+            "links": links,
+            "stopped_reason": "",
+            "error": "",
+        }
+    )
+    return ProviderLinkResolution(links, [attempt])
+
+
+def resolve_nadc_links(
+    *,
+    url: str,
+    resource: dict[str, Any],
+    resource_dir: Path,
+    workspace: Path,
+    timeout: int,
+    max_bytes: int,
+    dry_run: bool,
+    overwrite: bool,
+) -> ProviderLinkResolution:
+    attempt = provider_attempt(method="nadc_resource_page_resolver", provider="nadc", input_url=url)
+    downloaded = fetch_url(url, timeout=timeout, max_bytes=max_bytes)
+    attempt["final_url"] = downloaded.final_url
+    if downloaded.attempt.get("status") != "success":
+        attempt.update(
+            {
+                "error": str(downloaded.attempt.get("error") or ""),
+                "stopped_reason": str(downloaded.attempt.get("stopped_reason") or "download_error"),
+            }
+        )
+        return ProviderLinkResolution([], [attempt], str(attempt["stopped_reason"]), str(attempt["error"]))
+    if not content_looks_html(downloaded.content, downloaded.content_type):
+        attempt.update({"error": "NADC resolver expected HTML resource page", "stopped_reason": "nadc_no_download_files"})
+        return ProviderLinkResolution([], [attempt], "nadc_no_download_files", str(attempt["error"]))
+    attempt["artifact_path"] = write_resolver_artifact(
+        resource_dir=resource_dir,
+        workspace=workspace,
+        name="resolver-nadc-page.html",
+        content=downloaded.content,
+        dry_run=dry_run,
+        overwrite=overwrite,
+    )
+    html = downloaded.content.decode("utf-8", errors="replace")
+    links: list[dict[str, str]] = []
+    for candidate in page_link_candidates(html, base_url=downloaded.final_url):
+        candidate_url = str(candidate.get("url") or "")
+        label = str(candidate.get("label") or candidate.get("anchor_text") or "")
+        nearby = str(candidate.get("nearby_text") or "")
+        if "/res/file_upload/download" in urlparse(candidate_url).path or supported_machine_readable(candidate_url) or machine_readable_token(f"{label} {nearby}"):
+            links.append({"label": label or candidate_url, "url": candidate_url, "nearby_text": nearby})
+    links = sorted_provider_links(links, resource)
+    attempt.update(
+        {
+            "status": "success" if links else "failed",
+            "candidate_count": len(page_link_candidates(html, base_url=downloaded.final_url)),
+            "selected_count": len(links),
+            "links": links,
+            "stopped_reason": "" if links else "nadc_no_download_files",
+            "error": "" if links else "no NADC file download links found",
+        }
+    )
+    return ProviderLinkResolution(links, [attempt], str(attempt["stopped_reason"]), str(attempt["error"]))
+
+
+def ads_catalog_record_url(url: str, label: str = "") -> bool:
+    parsed = urlparse(url)
+    if not parsed.netloc.lower().endswith("adsabs.harvard.edu"):
+        return False
+    path = unquote(parsed.path)
+    if not path.startswith("/abs/"):
+        return False
+    return "yCat" in path or label.strip().startswith("Catalog:")
+
+
+def ads_entrypoint_candidates(html: str, *, base_url: str) -> list[dict[str, str]]:
+    candidates: list[dict[str, str]] = []
+    for candidate in page_link_candidates(html, base_url=base_url):
+        url = str(candidate.get("url") or "")
+        label = str(candidate.get("label") or candidate.get("anchor_text") or "")
+        nearby = str(candidate.get("nearby_text") or "")
+        provider = provider_for_url(url)
+        if provider == "cds_vizier" and not cds_catalog_id_from_url(url):
+            continue
+        if provider in {"cds_vizier", "zenodo", "nadc"} or ads_catalog_record_url(url, label):
+            candidates.append({"label": label or url, "url": url, "nearby_text": nearby})
+    return dedupe_links(candidates)
+
+
+def provider_links_for_url(
+    *,
+    url: str,
+    resource: dict[str, Any],
+    resource_dir: Path,
+    workspace: Path,
+    timeout: int,
+    max_bytes: int,
+    dry_run: bool,
+    overwrite: bool,
+    allow_ads: bool = True,
+) -> ProviderLinkResolution:
+    provider = provider_for_url(url)
+    if provider == "zenodo":
+        return resolve_zenodo_links(url=url, resource=resource, resource_dir=resource_dir, workspace=workspace, timeout=timeout, max_bytes=max_bytes, dry_run=dry_run, overwrite=overwrite)
+    if provider == "cds_vizier":
+        return resolve_cds_vizier_links(url=url, resource=resource, resource_dir=resource_dir, workspace=workspace, timeout=timeout, max_bytes=max_bytes, dry_run=dry_run, overwrite=overwrite)
+    if provider == "nadc":
+        return resolve_nadc_links(url=url, resource=resource, resource_dir=resource_dir, workspace=workspace, timeout=timeout, max_bytes=max_bytes, dry_run=dry_run, overwrite=overwrite)
+    if provider == "ads" and allow_ads:
+        return resolve_ads_entrypoint_links(url=url, html="", resource=resource, resource_dir=resource_dir, workspace=workspace, timeout=timeout, max_bytes=max_bytes, dry_run=dry_run, overwrite=overwrite)
+    return ProviderLinkResolution([], [])
+
+
+def resolve_ads_entrypoint_links(
+    *,
+    url: str,
+    html: str,
+    resource: dict[str, Any],
+    resource_dir: Path,
+    workspace: Path,
+    timeout: int,
+    max_bytes: int,
+    dry_run: bool,
+    overwrite: bool,
+) -> ProviderLinkResolution:
+    attempt = provider_attempt(method="ads_entrypoint_resolver", provider="ads", input_url=url)
+    if not html:
+        downloaded = fetch_url(url, timeout=timeout, max_bytes=max_bytes)
+        attempt["final_url"] = downloaded.final_url
+        if downloaded.attempt.get("status") != "success":
+            attempt.update(
+                {
+                    "error": str(downloaded.attempt.get("error") or ""),
+                    "stopped_reason": str(downloaded.attempt.get("stopped_reason") or "download_error"),
+                }
+            )
+            return ProviderLinkResolution([], [attempt], str(attempt["stopped_reason"]), str(attempt["error"]))
+        html = downloaded.content.decode("utf-8", errors="replace")
+        attempt["artifact_path"] = write_resolver_artifact(
+            resource_dir=resource_dir,
+            workspace=workspace,
+            name="resolver-ads-entrypoint.html",
+            content=downloaded.content,
+            dry_run=dry_run,
+            overwrite=overwrite,
+        )
+    base_url = url
+    candidates = sorted_provider_links(ads_entrypoint_candidates(html, base_url=base_url), resource)
+    links: list[dict[str, str]] = []
+    attempts = [attempt]
+    unresolved_catalog_records = 0
+    for index, candidate in enumerate(candidates, start=1):
+        candidate_url = candidate["url"]
+        if ads_catalog_record_url(candidate_url, candidate.get("label", "")):
+            record_download = fetch_url(candidate_url, timeout=timeout, max_bytes=max_bytes)
+            record_attempt = provider_attempt(method="ads_catalog_record_resolver", provider="ads", input_url=candidate_url)
+            record_attempt["final_url"] = record_download.final_url
+            if record_download.attempt.get("status") != "success":
+                record_attempt.update(
+                    {
+                        "error": str(record_download.attempt.get("error") or ""),
+                        "stopped_reason": str(record_download.attempt.get("stopped_reason") or "download_error"),
+                    }
+                )
+                attempts.append(record_attempt)
+                unresolved_catalog_records += 1
+                continue
+            record_attempt["artifact_path"] = write_resolver_artifact(
+                resource_dir=resource_dir,
+                workspace=workspace,
+                name=f"resolver-ads-catalog-{index:03d}.html",
+                content=record_download.content,
+                dry_run=dry_run,
+                overwrite=overwrite,
+            )
+            record_html = record_download.content.decode("utf-8", errors="replace")
+            provider_candidates = [
+                item
+                for item in ads_entrypoint_candidates(record_html, base_url=record_download.final_url)
+                if provider_for_url(item["url"]) in {"cds_vizier", "zenodo", "nadc"}
+            ]
+            record_attempt.update(
+                {
+                    "status": "success" if provider_candidates else "failed",
+                    "candidate_count": len(provider_candidates),
+                    "selected_count": len(provider_candidates),
+                    "links": provider_candidates,
+                    "stopped_reason": "" if provider_candidates else "ads_catalog_record_unresolved",
+                    "error": "" if provider_candidates else "ADS catalog record did not expose known provider links",
+                }
+            )
+            attempts.append(record_attempt)
+            if not provider_candidates:
+                unresolved_catalog_records += 1
+            for provider_candidate in provider_candidates:
+                resolution = provider_links_for_url(
+                    url=provider_candidate["url"],
+                    resource=resource,
+                    resource_dir=resource_dir,
+                    workspace=workspace,
+                    timeout=timeout,
+                    max_bytes=max_bytes,
+                    dry_run=dry_run,
+                    overwrite=overwrite,
+                    allow_ads=False,
+                )
+                attempts.extend(resolution.attempts)
+                links.extend(resolution.links)
+        else:
+            resolution = provider_links_for_url(
+                url=candidate_url,
+                resource=resource,
+                resource_dir=resource_dir,
+                workspace=workspace,
+                timeout=timeout,
+                max_bytes=max_bytes,
+                dry_run=dry_run,
+                overwrite=overwrite,
+                allow_ads=False,
+            )
+            attempts.extend(resolution.attempts)
+            links.extend(resolution.links)
+    attempt.update(
+        {
+            "status": "success" if links else "failed",
+            "candidate_count": len(candidates),
+            "selected_count": len(links),
+            "links": links,
+            "stopped_reason": "" if links else ("ads_catalog_record_unresolved" if unresolved_catalog_records else "ads_no_data_product_links"),
+            "error": "" if links else "ADS entrypoint did not expose resolvable data product links",
+        }
+    )
+    return ProviderLinkResolution(links, attempts, str(attempt["stopped_reason"]), str(attempt["error"]))
+
+
 def response_content_with_limit(response: Any, *, max_bytes: int) -> tuple[bytes, bool]:
     content = bytearray()
     iter_content = getattr(response, "iter_content", None)
@@ -1721,7 +2275,22 @@ def fetch_url(url: str, *, timeout: int, max_bytes: int = MAX_EXTERNAL_BYTES) ->
                 return DownloadedExternal(b"", final_url, final_url, content_type, attempt)
         except ValueError:
             pass
-    content, too_large = response_content_with_limit(response, max_bytes=max_bytes)
+    try:
+        content, too_large = response_content_with_limit(response, max_bytes=max_bytes)
+    except requests.RequestException as exc:
+        close = getattr(response, "close", None)
+        if callable(close):
+            close()
+        attempt.update(
+            {
+                "final_url": final_url,
+                "status_code": response.status_code,
+                "content_type": content_type,
+                "error": f"{type(exc).__name__}: {exc}",
+                "stopped_reason": "download_error",
+            }
+        )
+        return DownloadedExternal(b"", final_url, final_url, content_type, attempt)
     close = getattr(response, "close", None)
     if callable(close):
         close()
@@ -2063,6 +2632,55 @@ def fetch_and_parse_links(
     return sources, tables, attempts, stopped_reason, last_error
 
 
+def apply_provider_resolution(
+    *,
+    record: dict[str, Any],
+    resolution: ProviderLinkResolution,
+    resource: dict[str, Any],
+    paper_directory: Path,
+    workspace: Path,
+    fetch_network: bool,
+    timeout: int,
+    max_files: int,
+    max_bytes: int,
+    dry_run: bool,
+    overwrite: bool,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], bool]:
+    record["resolver_attempts"].extend(resolution.attempts)
+    if not resolution.links:
+        return [], [], False
+    sources, tables, attempts, stopped_reason, error = fetch_and_parse_links(
+        links=resolution.links,
+        resource=resource,
+        paper_directory=paper_directory,
+        workspace=workspace,
+        fetch_network=fetch_network,
+        timeout=timeout,
+        max_files=max_files,
+        max_bytes=max_bytes,
+        dry_run=dry_run,
+        overwrite=overwrite,
+    )
+    record["download_attempts"].extend(attempts)
+    if tables:
+        record.update(
+            {
+                "status": "would_write" if dry_run else "success",
+                "outputs": [
+                    {"table_id": table["id"], "csv_path": table["csv_path"], "row_count": table["row_count"], "column_count": table["column_count"]}
+                    for table in tables
+                ],
+                "error": "",
+                "stopped_reason": "",
+            }
+        )
+        return sources, tables, True
+    if error or stopped_reason:
+        record["error"] = error
+        record["stopped_reason"] = stopped_reason
+    return sources, tables, False
+
+
 def extract_url_external_resource(
     *,
     resource: dict[str, Any],
@@ -2074,6 +2692,7 @@ def extract_url_external_resource(
     max_bytes: int,
     dry_run: bool,
     overwrite: bool,
+    provider_resolver: bool = True,
     agent_locator_mode: str = AGENT_LOCATOR_OFF,
     agent_locator: ExternalPageLocator | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
@@ -2083,6 +2702,43 @@ def extract_url_external_resource(
     if not fetch_network:
         record.update({"status": "skipped", "error": "network fetch disabled", "stopped_reason": "network_disabled"})
         return [], [], record
+    resource_dir = paper_directory / CATALOG_SOURCES_DIR / safe_identifier(resource_id)
+    if provider_resolver and provider_for_url(url) in {"cds_vizier", "zenodo", "nadc"}:
+        resolution = provider_links_for_url(
+            url=url,
+            resource=resource,
+            resource_dir=resource_dir,
+            workspace=workspace,
+            timeout=timeout,
+            max_bytes=max_bytes,
+            dry_run=dry_run,
+            overwrite=overwrite,
+            allow_ads=False,
+        )
+        sources, tables, handled = apply_provider_resolution(
+            record=record,
+            resolution=resolution,
+            resource=resource,
+            paper_directory=paper_directory,
+            workspace=workspace,
+            fetch_network=fetch_network,
+            timeout=timeout,
+            max_files=max_files,
+            max_bytes=max_bytes,
+            dry_run=dry_run,
+            overwrite=overwrite,
+        )
+        if handled:
+            return sources, tables, record
+    elif not provider_resolver and provider_for_url(url):
+        record["resolver_attempts"].append(
+            {
+                **provider_attempt(method="provider_resolver", provider=provider_for_url(url), input_url=url),
+                "status": "skipped",
+                "stopped_reason": "provider_resolver_disabled",
+                "error": "provider resolver disabled",
+            }
+        )
     downloaded = fetch_url(url, timeout=timeout, max_bytes=max_bytes)
     record["download_attempts"].append(downloaded.attempt)
     if downloaded.attempt.get("status") != "success":
@@ -2272,6 +2928,7 @@ def extract_ads_external_resource(
     max_bytes: int,
     dry_run: bool,
     overwrite: bool,
+    provider_resolver: bool = True,
     agent_locator_mode: str = AGENT_LOCATOR_OFF,
     agent_locator: ExternalPageLocator | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
@@ -2295,6 +2952,42 @@ def extract_ads_external_resource(
         return [], [], record
     links: list[dict[str, str]] = []
     base_url = str(locator.get("final_url") or locator.get("url") or f"https://ui.adsabs.harvard.edu/abs/arXiv:{arxiv_id}/abstract")
+    if provider_resolver:
+        resolution = resolve_ads_entrypoint_links(
+            url=base_url,
+            html=html,
+            resource=resource,
+            resource_dir=resource_dir,
+            workspace=workspace,
+            timeout=timeout,
+            max_bytes=max_bytes,
+            dry_run=dry_run,
+            overwrite=overwrite,
+        )
+        provider_sources, provider_tables, handled = apply_provider_resolution(
+            record=record,
+            resolution=resolution,
+            resource=resource,
+            paper_directory=paper_directory,
+            workspace=workspace,
+            fetch_network=fetch_network,
+            timeout=timeout,
+            max_files=max_files,
+            max_bytes=max_bytes,
+            dry_run=dry_run,
+            overwrite=overwrite,
+        )
+        if handled:
+            return provider_sources, provider_tables, record
+    else:
+        record["resolver_attempts"].append(
+            {
+                **provider_attempt(method="ads_entrypoint_resolver", provider="ads", input_url=base_url),
+                "status": "skipped",
+                "stopped_reason": "provider_resolver_disabled",
+                "error": "provider resolver disabled",
+            }
+        )
     if agent_locator_mode == AGENT_LOCATOR_OFF:
         record["locator_attempts"].append(
             {
@@ -2394,12 +3087,13 @@ def extract_external_resource(
     max_bytes: int,
     dry_run: bool,
     overwrite: bool,
+    provider_resolver: bool = True,
     agent_locator_mode: str = AGENT_LOCATOR_OFF,
     agent_locator: ExternalPageLocator | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
     local_path = str(resource.get("local_path") or "").strip()
     url = str(resource.get("url") or "").strip()
-    if local_path:
+    if local_path and local_external_path_is_machine_readable(local_path):
         return extract_local_external_resource(
             resource=resource,
             paper_directory=paper_directory,
@@ -2407,6 +3101,8 @@ def extract_external_resource(
             dry_run=dry_run,
             overwrite=overwrite,
         )
+    if local_path:
+        resource = external_resource_with_routing_warning(resource, local_path=local_path)
     if url:
         if re.fullmatch(r"https?://(?:cdsweb\.u-strasbg\.fr/cgi-bin/qcat\?J/A\+A/\.?)", url):
             record = base_external_resource_record(resource)
@@ -2422,6 +3118,7 @@ def extract_external_resource(
             max_bytes=max_bytes,
             dry_run=dry_run,
             overwrite=overwrite,
+            provider_resolver=provider_resolver,
             agent_locator_mode=agent_locator_mode,
             agent_locator=agent_locator,
         )
@@ -2436,6 +3133,7 @@ def extract_external_resource(
         max_bytes=max_bytes,
         dry_run=dry_run,
         overwrite=overwrite,
+        provider_resolver=provider_resolver,
         agent_locator_mode=agent_locator_mode,
         agent_locator=agent_locator,
     )
@@ -2450,6 +3148,26 @@ def merge_records(existing: list[dict[str, Any]], new: list[dict[str, Any]]) -> 
         if isinstance(record, dict) and record.get("id"):
             merged[str(record["id"])] = record
     return list(merged.values())
+
+
+def prune_records_for_current_run(
+    records: list[dict[str, Any]],
+    *,
+    resource_ids: set[str],
+    candidate_ids: set[str],
+) -> list[dict[str, Any]]:
+    pruned: list[dict[str, Any]] = []
+    for record in records:
+        if not isinstance(record, dict):
+            continue
+        if str(record.get("resource_id") or "") in resource_ids:
+            continue
+        if str(record.get("candidate_id") or "") in candidate_ids:
+            continue
+        if str(record.get("id") or "") in resource_ids | candidate_ids:
+            continue
+        pruned.append(record)
+    return pruned
 
 
 def column_identity(column: dict[str, Any]) -> tuple[Any, ...]:
@@ -2652,6 +3370,7 @@ def extract_catalog_tables(
     external_timeout: int = DEFAULT_EXTERNAL_TIMEOUT_SECONDS,
     dry_run: bool = False,
     overwrite: bool = False,
+    provider_resolver: bool = True,
     agent_locator_mode: str = AGENT_LOCATOR_OFF,
     agent_locator: ExternalPageLocator | None = None,
 ) -> dict[str, Any]:
@@ -2716,6 +3435,7 @@ def extract_catalog_tables(
             max_bytes=max_external_bytes,
             dry_run=dry_run,
             overwrite=overwrite,
+            provider_resolver=provider_resolver,
             agent_locator_mode=agent_locator_mode,
             agent_locator=agent_locator,
         )
@@ -2752,6 +3472,7 @@ def extract_catalog_tables(
             "external_timeout": external_timeout,
             "dry_run": dry_run,
             "overwrite": overwrite,
+            "provider_resolver": PROVIDER_RESOLVER_ON if provider_resolver else PROVIDER_RESOLVER_OFF,
             "agent_locator": agent_locator_mode,
         },
         "summary": summary,
@@ -2759,7 +3480,24 @@ def extract_catalog_tables(
     }
     manifest_path = paper_directory / EXTRACTION_FILENAME
     existing = read_json(manifest_path) if manifest_path.exists() and not dry_run else {}
+    current_candidate_ids = {str(candidate.get("id") or "catalog-table") for candidate in candidates if isinstance(candidate, dict)}
+    current_resource_ids = {str(resource.get("id") or "external-resource") for resource in resources if isinstance(resource, dict)}
     tables = preserve_table_semantics(existing.get("tables") or [], tables)
+    existing_sources = prune_records_for_current_run(
+        existing.get("sources") or [],
+        resource_ids=current_resource_ids,
+        candidate_ids=current_candidate_ids,
+    )
+    existing_tables = prune_records_for_current_run(
+        existing.get("tables") or [],
+        resource_ids=current_resource_ids,
+        candidate_ids=current_candidate_ids,
+    )
+    existing_external_resources = prune_records_for_current_run(
+        existing.get("external_resources") or [],
+        resource_ids=current_resource_ids,
+        candidate_ids=set(),
+    )
     paper = review.get("paper") if isinstance(review.get("paper"), dict) else {}
     review_meta = review.get("review") if isinstance(review.get("review"), dict) else {}
     manifest = {
@@ -2776,9 +3514,9 @@ def extract_catalog_tables(
             "review_status": str(review_meta.get("status") or ""),
         },
         "runs": [*(existing.get("runs") or []), run_record],
-        "sources": merge_records(existing.get("sources") or [], sources),
-        "tables": merge_records(existing.get("tables") or [], tables),
-        "external_resources": merge_records(existing.get("external_resources") or [], external_records),
+        "sources": merge_records(existing_sources, sources),
+        "tables": merge_records(existing_tables, tables),
+        "external_resources": merge_records(existing_external_resources, external_records),
     }
     result = {
         "dry_run": dry_run,
@@ -2838,6 +3576,7 @@ def extract_all_reviewed_catalog_tables(
     external_timeout: int = DEFAULT_EXTERNAL_TIMEOUT_SECONDS,
     dry_run: bool = False,
     overwrite: bool = False,
+    provider_resolver: bool = True,
     agent_locator_mode: str = AGENT_LOCATOR_OFF,
     agent_locator: ExternalPageLocator | None = None,
     jobs: int | str = 1,
@@ -2857,6 +3596,7 @@ def extract_all_reviewed_catalog_tables(
             external_timeout=external_timeout,
             dry_run=dry_run,
             overwrite=overwrite,
+            provider_resolver=provider_resolver,
             agent_locator_mode=agent_locator_mode,
             agent_locator=agent_locator,
         )

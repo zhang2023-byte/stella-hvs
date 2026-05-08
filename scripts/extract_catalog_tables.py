@@ -16,8 +16,11 @@ if str(SRC) not in sys.path:
 from high_velocity_lit.catalog_extraction import (  # noqa: E402
     AGENT_LOCATOR_ALWAYS,
     AGENT_LOCATOR_OFF,
+    DEFAULT_EXTERNAL_TIMEOUT_SECONDS,
     LLMExternalPageLocator,
     MAX_EXTERNAL_BYTES,
+    PROVIDER_RESOLVER_OFF,
+    PROVIDER_RESOLVER_ON,
     UnavailableExternalPageLocator,
     extract_all_reviewed_catalog_tables,
     extract_catalog_tables,
@@ -59,6 +62,15 @@ def parse_agent_locator(value: str) -> str:
     raise argparse.ArgumentTypeError("expected Off or Always")
 
 
+def parse_provider_resolver(value: str) -> str:
+    normalized = value.strip().lower()
+    if normalized in {"on", "auto", "true", "t", "1", "yes", "y"}:
+        return PROVIDER_RESOLVER_ON
+    if normalized in {"off", "false", "f", "0", "no", "n"}:
+        return PROVIDER_RESOLVER_OFF
+    raise argparse.ArgumentTypeError("expected On or Off")
+
+
 def parse_jobs(value: str) -> int | str:
     normalized = value.strip().lower()
     if normalized == "auto":
@@ -93,8 +105,9 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--fetch-external", type=parse_fetch_external, default="Auto", metavar="Auto|True|False", help="Network policy for external resources. Auto enables network for --arxiv-id and disables it for --all-reviewed.")
     parser.add_argument("--max-external-files", type=int, default=5, help="Maximum downloaded external files per resource. Default: 5.")
     parser.add_argument("--max-external-bytes", type=int, default=MAX_EXTERNAL_BYTES, help="Maximum bytes per downloaded external file. Default: 52428800.")
-    parser.add_argument("--external-timeout", type=int, default=30, help="HTTP timeout in seconds for external resources. Default: 30.")
+    parser.add_argument("--external-timeout", type=int, default=DEFAULT_EXTERNAL_TIMEOUT_SECONDS, help=f"HTTP and Agent locator timeout in seconds for external resources. Default: {DEFAULT_EXTERNAL_TIMEOUT_SECONDS}.")
     parser.add_argument("--jobs", type=parse_jobs, default=1, metavar="Auto|N", help="Parallel paper workers for --all-reviewed. Default: 1.")
+    parser.add_argument("--provider-resolver", type=parse_provider_resolver, default=PROVIDER_RESOLVER_ON, metavar="On|Off", help="Use deterministic provider resolvers for ADS/CDS/VizieR/Zenodo/NADC before Agent locator. Default: On.")
     parser.add_argument("--agent-locator", type=parse_agent_locator, default=AGENT_LOCATOR_ALWAYS, metavar="Off|Always", help="Use an LLM agent to choose bounded landing-page download candidates. Default: Always.")
     parser.add_argument("--llm-api-key", default=env_value("LLM_API_KEY", "OPENAI_API_KEY", "DEEPXIV_AGENT_API_KEY"), help="OpenAI-compatible API key for the Agent locator. Defaults to environment or .env.")
     parser.add_argument("--llm-base-url", default=env_value("LLM_BASE_URL", "OPENAI_BASE_URL", "DEEPXIV_AGENT_BASE_URL", default=DEFAULT_LLM_BASE_URL))
@@ -149,6 +162,7 @@ def main() -> int:
                 external_timeout=args.external_timeout,
                 dry_run=args.dry_run,
                 overwrite=args.overwrite,
+                provider_resolver=args.provider_resolver == PROVIDER_RESOLVER_ON,
                 agent_locator_mode=args.agent_locator,
                 agent_locator=agent_locator,
                 jobs=args.jobs,
@@ -166,6 +180,7 @@ def main() -> int:
                 external_timeout=args.external_timeout,
                 dry_run=args.dry_run,
                 overwrite=args.overwrite,
+                provider_resolver=args.provider_resolver == PROVIDER_RESOLVER_ON,
                 agent_locator_mode=args.agent_locator,
                 agent_locator=agent_locator,
             )

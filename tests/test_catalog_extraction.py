@@ -10,13 +10,17 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
+import requests
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from high_velocity_lit.catalog_extraction import (  # noqa: E402
     AGENT_LOCATOR_ALWAYS,
+    DEFAULT_EXTERNAL_TIMEOUT_SECONDS,
     MAX_EXTERNAL_BYTES,
+    PROVIDER_RESOLVER_OFF,
+    PROVIDER_RESOLVER_ON,
     UnavailableExternalPageLocator,
     agent_locator_context,
     auto_catalog_jobs,
@@ -85,6 +89,13 @@ class StreamingFakeResponse(FakeResponse):
         yield from self.chunks
 
 
+class BrokenStreamingFakeResponse(FakeResponse):
+    def iter_content(self, chunk_size: int = 1024 * 1024) -> object:
+        del chunk_size
+        yield b"name,vel\n"
+        raise requests.exceptions.ChunkedEncodingError("Response ended prematurely")
+
+
 class FakeAgentLocator:
     def __init__(self, selected_ids: list[str]) -> None:
         self.selected_ids = selected_ids
@@ -112,8 +123,16 @@ class CatalogExtractionParserTest(unittest.TestCase):
         args = parser.parse_args(["--arxiv-id", "2603.00001"])
 
         self.assertEqual(args.agent_locator, AGENT_LOCATOR_ALWAYS)
+        self.assertEqual(args.provider_resolver, PROVIDER_RESOLVER_ON)
         self.assertEqual(args.max_external_bytes, MAX_EXTERNAL_BYTES)
+        self.assertEqual(args.external_timeout, DEFAULT_EXTERNAL_TIMEOUT_SECONDS)
         self.assertEqual(args.jobs, 1)
+
+    def test_cli_accepts_provider_resolver_off(self) -> None:
+        parser = extract_cli.build_parser()
+        args = parser.parse_args(["--arxiv-id", "2603.00001", "--provider-resolver", "Off"])
+
+        self.assertEqual(args.provider_resolver, PROVIDER_RESOLVER_OFF)
 
     def test_cli_rejects_removed_fallback_locator(self) -> None:
         with self.assertRaises(Exception):
@@ -591,6 +610,152 @@ Byte-by-byte Description of file: table.dat
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
             self.assertEqual(manifest["external_resources"][0]["download_attempts"][0]["status"], "success")
 
+    def test_url_resource_ignores_tex_local_path_and_downloads_url(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature_dir, paper_dir = self.write_reviewed_paper(
+                workspace,
+                catalog_candidates=[],
+                external_resources=[
+                    {
+                        "id": "resource-url-with-tex-evidence",
+                        "kind": "external_url",
+                        "url": "https://example.test/catalog.csv",
+                        "local_path": "literature/2603.00001/arxiv_source/main.tex",
+                    }
+                ],
+            )
+
+            with patch("high_velocity_lit.catalog_extraction.requests.get", return_value=FakeResponse(b"name,vel\nA,700\n", url="https://example.test/catalog.csv")) as fake_get:
+                extract_catalog_tables(
+                    literature_dir=literature_dir,
+                    arxiv_id="2603.00001",
+                    workspace=workspace,
+                    fetch_external=True,
+                )
+
+            fake_get.assert_called_once()
+            self.assertEqual(csv_rows(paper_dir / "catalog_tables" / "resource-url-with-tex-evidence.csv"), [["col_001", "col_002"], ["A", "700"]])
+            manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
+            resource = manifest["external_resources"][0]
+            self.assertEqual(resource["status"], "success")
+            self.assertEqual(resource["warnings"][0]["code"], "ignored_unsupported_local_path")
+            self.assertEqual(resource["download_attempts"][0]["status"], "success")
+            self.assertFalse(any(source.get("source_path", "").endswith("main.tex") for source in manifest["sources"]))
+
+    def test_tex_only_external_resource_uses_network_policy_not_local_parse(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature_dir, paper_dir = self.write_reviewed_paper(
+                workspace,
+                catalog_candidates=[],
+                external_resources=[
+                    {
+                        "id": "resource-ads-with-tex-evidence",
+                        "kind": "external_url",
+                        "url": "",
+                        "local_path": "literature/2603.00001/arxiv_source/main.tex",
+                    }
+                ],
+            )
+
+            with patch("high_velocity_lit.catalog_extraction.requests.get") as fake_get:
+                extract_catalog_tables(
+                    literature_dir=literature_dir,
+                    arxiv_id="2603.00001",
+                    workspace=workspace,
+                    fetch_external=False,
+                )
+
+            fake_get.assert_not_called()
+            manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
+            resource = manifest["external_resources"][0]
+            self.assertEqual(resource["status"], "skipped")
+            self.assertEqual(resource["stopped_reason"], "network_disabled")
+            self.assertEqual(resource["warnings"][0]["code"], "ignored_unsupported_local_path")
+            self.assertEqual(manifest["sources"], [])
+
+    def test_rerun_prunes_stale_external_source_for_current_resource(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature_dir, paper_dir = self.write_reviewed_paper(
+                workspace,
+                catalog_candidates=[],
+                external_resources=[
+                    {
+                        "id": "resource-stale",
+                        "kind": "external_url",
+                        "url": "",
+                        "local_path": "literature/2603.00001/arxiv_source/main.tex",
+                    }
+                ],
+            )
+            (paper_dir / "catalog_extraction.json").write_text(
+                json.dumps(
+                    {
+                        "schema_version": "stella.hvs_catalog.extraction.v2",
+                        "runs": [],
+                        "sources": [
+                            {
+                                "id": "resource-stale-source-001",
+                                "resource_id": "resource-stale",
+                                "source_kind": "external_resource",
+                                "status": "failed",
+                                "source_path": "literature/2603.00001/arxiv_source/main.tex",
+                                "error": "unsupported external table suffix: .tex",
+                            }
+                        ],
+                        "tables": [],
+                        "external_resources": [{"id": "resource-stale", "status": "failed"}],
+                    },
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            extract_catalog_tables(
+                literature_dir=literature_dir,
+                arxiv_id="2603.00001",
+                workspace=workspace,
+                fetch_external=False,
+            )
+
+            manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
+            self.assertEqual(manifest["sources"], [])
+            self.assertEqual(manifest["external_resources"][0]["stopped_reason"], "network_disabled")
+
+    def test_machine_readable_local_path_still_preempts_url(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature_dir, paper_dir = self.write_reviewed_paper(
+                workspace,
+                catalog_candidates=[],
+                external_resources=[
+                    {
+                        "id": "resource-local-with-url",
+                        "kind": "local_machine_readable_file",
+                        "url": "https://example.test/catalog.csv",
+                        "local_path": "literature/2603.00001/arxiv_source/data.csv",
+                    }
+                ],
+            )
+            (paper_dir / "arxiv_source" / "data.csv").write_text("name,vel\nLocal,701\n", encoding="utf-8")
+
+            with patch("high_velocity_lit.catalog_extraction.requests.get") as fake_get:
+                extract_catalog_tables(
+                    literature_dir=literature_dir,
+                    arxiv_id="2603.00001",
+                    workspace=workspace,
+                    fetch_external=True,
+                )
+
+            fake_get.assert_not_called()
+            self.assertEqual(csv_rows(paper_dir / "catalog_tables" / "resource-local-with-url.csv"), [["col_001", "col_002"], ["Local", "701"]])
+            manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
+            self.assertEqual(manifest["external_resources"][0]["status"], "success")
+            self.assertEqual(manifest["external_resources"][0]["url"], "https://example.test/catalog.csv")
+
     def test_private_url_is_blocked_before_request(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
@@ -652,6 +817,38 @@ Byte-by-byte Description of file: table.dat
             self.assertEqual(resource["status"], "failed")
             self.assertEqual(resource["stopped_reason"], "download_too_large")
             self.assertFalse((paper_dir / "catalog_tables" / "resource-too-large.csv").exists())
+
+    def test_streaming_download_error_is_recorded_without_crashing(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature_dir, paper_dir = self.write_reviewed_paper(
+                workspace,
+                catalog_candidates=[],
+                external_resources=[
+                    {
+                        "id": "resource-broken-stream",
+                        "kind": "external_catalog_repository",
+                        "url": "https://example.test/catalog.csv",
+                    }
+                ],
+            )
+
+            with patch(
+                "high_velocity_lit.catalog_extraction.requests.get",
+                return_value=BrokenStreamingFakeResponse(b"", url="https://example.test/catalog.csv"),
+            ):
+                extract_catalog_tables(
+                    literature_dir=literature_dir,
+                    arxiv_id="2603.00001",
+                    workspace=workspace,
+                    fetch_external=True,
+                )
+
+            manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
+            resource = manifest["external_resources"][0]
+            self.assertEqual(resource["status"], "failed")
+            self.assertEqual(resource["stopped_reason"], "download_error")
+            self.assertIn("ChunkedEncodingError", resource["error"])
 
     def test_redirect_to_private_url_is_blocked(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -920,6 +1117,167 @@ Byte-by-byte Description of file: table.dat
             self.assertEqual(resource["stopped_reason"], "agent_error")
             self.assertIn("connection refused", resource["error"])
             self.assertEqual(resource["locator_attempts"][0]["stopped_reason"], "agent_error")
+
+    def test_cds_vizier_resolver_downloads_asu_tsv(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature_dir, paper_dir = self.write_reviewed_paper(
+                workspace,
+                catalog_candidates=[],
+                external_resources=[
+                    {
+                        "id": "resource-cds-asu",
+                        "kind": "external_catalog_repository",
+                        "url": "https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/684/A91",
+                        "meaning": "Full CDS abundance table.",
+                    }
+                ],
+            )
+
+            def fake_get(url: str, **_: object) -> FakeResponse:
+                if "/ftp/J/A+A/684/A91/ReadMe" in url:
+                    return FakeResponse(b"not found", url=url, status_code=404, content_type="text/plain")
+                if "/viz-bin/asu-tsv" in url:
+                    return FakeResponse(b"name\tvel\nA\t700\n", url=url, content_type="text/tab-separated-values")
+                return FakeResponse(b"", url=url, status_code=404, content_type="text/plain")
+
+            with patch("high_velocity_lit.catalog_extraction.requests.get", side_effect=fake_get):
+                extract_catalog_tables(
+                    literature_dir=literature_dir,
+                    arxiv_id="2603.00001",
+                    workspace=workspace,
+                    fetch_external=True,
+                )
+
+            self.assertEqual(csv_rows(paper_dir / "catalog_tables" / "resource-cds-asu.csv"), [["col_001", "col_002"], ["A", "700"]])
+            manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
+            resource = manifest["external_resources"][0]
+            self.assertEqual(resource["status"], "success")
+            self.assertEqual(resource["resolver_attempts"][0]["provider"], "cds_vizier")
+            self.assertEqual(resource["locator_attempts"], [])
+
+    def test_zenodo_resolver_uses_record_api_files(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature_dir, paper_dir = self.write_reviewed_paper(
+                workspace,
+                catalog_candidates=[],
+                external_resources=[
+                    {
+                        "id": "resource-zenodo",
+                        "kind": "external_catalog_repository",
+                        "url": "https://doi.org/10.5281/zenodo.12345",
+                        "meaning": "Full candidate catalog.",
+                    }
+                ],
+            )
+
+            def fake_get(url: str, **_: object) -> FakeResponse:
+                if url == "https://zenodo.org/api/records/12345":
+                    payload = {
+                        "files": [
+                            {"key": "README.md", "links": {"self": "https://zenodo.org/records/12345/files/README.md?download=1"}},
+                            {"key": "full_candidate_list.txt", "links": {"self": "https://zenodo.org/records/12345/files/full_candidate_list.txt?download=1"}},
+                        ]
+                    }
+                    return FakeResponse(json.dumps(payload).encode("utf-8"), url=url, content_type="application/json")
+                if url.endswith("full_candidate_list.txt?download=1"):
+                    return FakeResponse(b"name vel\nA 700\n", url=url, content_type="text/plain")
+                return FakeResponse(b"", url=url, status_code=404, content_type="text/plain")
+
+            with patch("high_velocity_lit.catalog_extraction.requests.get", side_effect=fake_get):
+                extract_catalog_tables(
+                    literature_dir=literature_dir,
+                    arxiv_id="2603.00001",
+                    workspace=workspace,
+                    fetch_external=True,
+                )
+
+            self.assertEqual(csv_rows(paper_dir / "catalog_tables" / "resource-zenodo.csv"), [["col_001", "col_002"], ["A", "700"]])
+            manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
+            resource = manifest["external_resources"][0]
+            self.assertEqual(resource["resolver_attempts"][0]["method"], "zenodo_record_api")
+            self.assertEqual(resource["download_attempts"][0]["url"], "https://zenodo.org/records/12345/files/full_candidate_list.txt?download=1")
+
+    def test_nadc_resolver_uses_file_upload_download_link(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature_dir, paper_dir = self.write_reviewed_paper(
+                workspace,
+                catalog_candidates=[],
+                external_resources=[
+                    {
+                        "id": "resource-nadc",
+                        "kind": "external_catalog_repository",
+                        "url": "https://nadc.china-vo.org/res/r101304/",
+                        "meaning": "CSV catalog of high-velocity stars.",
+                    }
+                ],
+            )
+
+            def fake_get(url: str, **_: object) -> FakeResponse:
+                if url.endswith("/res/r101304/"):
+                    html = b'<html><div>519_HiVels.csv <a href="/res/file_upload/download?id=46038"><img alt="download"></a></div></html>'
+                    return FakeResponse(html, url=url, content_type="text/html")
+                if url.endswith("/res/file_upload/download?id=46038"):
+                    return FakeResponse(b"name,vel\nA,700\n", url=url, content_type="text/csv")
+                return FakeResponse(b"", url=url, status_code=404, content_type="text/plain")
+
+            with patch("high_velocity_lit.catalog_extraction.requests.get", side_effect=fake_get):
+                extract_catalog_tables(
+                    literature_dir=literature_dir,
+                    arxiv_id="2603.00001",
+                    workspace=workspace,
+                    fetch_external=True,
+                )
+
+            self.assertEqual(csv_rows(paper_dir / "catalog_tables" / "resource-nadc.csv"), [["col_001", "col_002"], ["A", "700"]])
+            manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
+            resource = manifest["external_resources"][0]
+            self.assertEqual(resource["resolver_attempts"][0]["provider"], "nadc")
+            self.assertEqual(resource["locator_attempts"], [])
+
+    def test_ads_entrypoint_resolver_hops_to_catalog_record_and_cds(self) -> None:
+        ads_html = '<html><a href="https://ui.adsabs.harvard.edu/abs/2024yCat..36840091B/abstract">Catalog: 2024yCat..36840091B</a></html>'
+        catalog_html = '<html><a href="https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/684/A91">VizieR catalog</a></html>'
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature_dir, paper_dir = self.write_reviewed_paper(
+                workspace,
+                catalog_candidates=[],
+                ads_html=ads_html,
+                external_resources=[
+                    {
+                        "id": "resource-ads-cds",
+                        "kind": "external_catalog_repository",
+                        "meaning": "CDS abundance table.",
+                    }
+                ],
+            )
+
+            def fake_get(url: str, **_: object) -> FakeResponse:
+                if "2024yCat..36840091B" in url:
+                    return FakeResponse(catalog_html.encode("utf-8"), url=url, content_type="text/html")
+                if "/ftp/J/A+A/684/A91/ReadMe" in url:
+                    return FakeResponse(b"not found", url=url, status_code=404, content_type="text/plain")
+                if "/viz-bin/asu-tsv" in url:
+                    return FakeResponse(b"name\tvel\nA\t700\n", url=url, content_type="text/tab-separated-values")
+                return FakeResponse(b"", url=url, status_code=404, content_type="text/plain")
+
+            with patch("high_velocity_lit.catalog_extraction.requests.get", side_effect=fake_get):
+                extract_catalog_tables(
+                    literature_dir=literature_dir,
+                    arxiv_id="2603.00001",
+                    workspace=workspace,
+                    fetch_external=True,
+                )
+
+            self.assertEqual(csv_rows(paper_dir / "catalog_tables" / "resource-ads-cds.csv"), [["col_001", "col_002"], ["A", "700"]])
+            manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
+            resource = manifest["external_resources"][0]
+            self.assertEqual(resource["status"], "success")
+            self.assertEqual([attempt["method"] for attempt in resource["resolver_attempts"][:3]], ["ads_entrypoint_resolver", "ads_catalog_record_resolver", "cds_vizier_resolver"])
+            self.assertEqual(resource["locator_attempts"][0]["method"], "ads_cached_page")
 
     def test_ads_cached_page_agent_downloads_catalog_link(self) -> None:
         ads_html = """

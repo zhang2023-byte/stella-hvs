@@ -140,10 +140,11 @@ logs/run_<timestamp>.log
 - `source`：论文目录、`audit.json`、源码目录、主 TeX、源码可用性
 - `review`：审阅状态、时间、reviewer、总体说明
 - `catalog_candidates`：被判定为高速星对象 catalog 的表格或资源
-- `external_resources`：外部托管或本地机器可读资源及评论
+- `external_resources`：外部托管或本地机器可读资源及评论；`local_path` 只用于
+  可直接解析的本地机器可读表文件，TeX 证据路径应写入 `source_refs`
 - `rejected_candidates`：被排除或不确定的候选及原因
 
-本阶段只保存 LaTeX 段落、链接、路径、证据和解释；不把 LaTeX 转 CSV，不下载外部表格，也不记录表格列 schema。后续表格抽取应以 `source_refs.start_line` 和 `source_refs.end_line` 定位原始 TeX，并在 `catalog_sources/` 和 `catalog_tables/` 阶段写入精确列含义。
+本阶段只保存 LaTeX 段落、链接、路径、证据和解释；不把 LaTeX 转 CSV，不下载外部表格，也不记录表格列 schema。`external_resources[].local_path` 只表示本地机器可读表文件；如果外部资源只是由 TeX 行、表注或数据可用性段落证明，应把 TeX 路径和行号写入 `external_resources[].source_refs`。后续表格抽取应以 `source_refs.start_line` 和 `source_refs.end_line` 定位原始 TeX，并在 `catalog_sources/` 和 `catalog_tables/` 阶段写入精确列含义。
 
 ## `catalog_extraction.json` 包含什么
 
@@ -155,7 +156,7 @@ logs/run_<timestamp>.log
 - `runs`：每次提取的时间、参数、成功失败统计和状态
 - `sources`：原始 TeX 路径、行号、摘录文件，或 external resource 的本地/下载来源、checksum、获取状态和错误
 - `tables`：CSV 路径、caption/资源说明、label、行列数、解析状态、转换/解析工具尝试记录、warnings、列记录和使用说明
-- `external_resources`：外部资源定位、下载、解析日志，生成的 table outputs，错误和严格停止原因 `stopped_reason`；默认的 `Always` Agent locator 会在明确 URL 返回 HTML landing page 或 ADS HTML 需要定位下载项时运行，并记录 bounded agent 的页面候选选择、LLM 缺失/连接/格式错误、`agent_locator_context.json` 和 `agent_locator_response.json`
+- `external_resources`：外部资源定位、下载、解析日志，生成的 table outputs，错误和严格停止原因 `stopped_reason`；`resolver_attempts[]` 记录 CDS/VizieR、Zenodo、NADC/China-VO 和 ADS data-product/catalog record 等结构化 resolver 的候选选择和 artifacts；默认的 `Always` Agent locator 只在 provider resolver 未解析出机器可读下载项、或明确 URL 返回其它 HTML landing page 时运行，并记录 bounded agent 的页面候选选择、LLM 缺失/连接/格式错误、`agent_locator_context.json` 和 `agent_locator_response.json`
 
 CSV 使用 `col_001`、`col_002` 等稳定列名，尽量忠实保留论文表格数据。
 列的 `original_header`、`unit_text`、`physical_quantity`、`meaning`、
