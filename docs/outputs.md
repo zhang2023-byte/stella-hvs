@@ -8,8 +8,8 @@ JSON 是标准输出。Markdown 是从 JSON 生成的阅读视图。
 literature/<arxiv_id>/    本地文献资产目录
 literature/<arxiv_id>/catalog_review.json   单篇 catalog 审阅事实源
 literature/<arxiv_id>/catalog_extraction.json   单篇 catalog 表格提取事实源
-literature/catalog_index.json       从 catalog_review.json 和 catalog_extraction.json 重建的全局 catalog 工作流索引
-notes/index.json                  从月度 JSON 重建的全局索引
+literature/catalog_workflow_index.json       从 catalog_review.json 和 catalog_extraction.json 重建的全局 catalog 工作流索引
+notes/literature_notes_index.json                  从月度 JSON 重建的全局索引
 notes/YYYY/YYYY-MM/YYYY-MM.json   月度标准记录
 notes/YYYY/YYYY-MM/YYYY-MM.title-triage.json   月度标题初筛与复核记录
 ```
@@ -32,8 +32,8 @@ literature/<arxiv_id>/catalog_tables/<candidate_id>.csv
 literature/<arxiv_id>/catalog_sources/<resource_id>/download-001.csv
 literature/<arxiv_id>/catalog_sources/<resource_id>/landing.html
 literature/<arxiv_id>/catalog_tables/<resource_id>.csv
-literature/catalog_index.md        从 catalog_index.json 生成的 catalog 工作流视图
-notes/index.md                   从 index.json 生成的年度视图
+literature/catalog_workflow_index.md        从 catalog_workflow_index.json 生成的 catalog 工作流视图
+notes/literature_notes_index.md                   从 literature_notes_index.json 生成的年度视图
 notes/YYYY/YYYY-MM/YYYY-MM.md    从月度 JSON 生成的月度笔记
 ```
 
@@ -171,18 +171,18 @@ Agent 使用 `hvs-catalog-extraction` skill 后，需要结合表格 caption、f
 
 ## 索引文件包含什么
 
-`notes/index.json` 保存：
+`notes/literature_notes_index.json` 保存：
 
 - 按年份汇总的统计
 - 全部论文的扁平 `papers` 列表
 
-`notes/index.md` 重点展示：
+`notes/literature_notes_index.md` 重点展示：
 
 - 每年文献数量
 - 最近文献
 - 被 `catalog_assessment` 判为数据相关的文献
 
-`literature/catalog_index.json` 保存：
+`literature/catalog_workflow_index.json` 保存：
 
 - 已有 `catalog_review.json` 的论文汇总
 - review 状态、状态说明、catalog 候选数量、外部资源数量
@@ -190,14 +190,14 @@ Agent 使用 `hvs-catalog-extraction` skill 后，需要结合表格 caption、f
 - 表格 usage 与列语义 reviewed 进度
 - 按年份聚合的 review / catalog source / extraction / semantic 统计
 
-`literature/catalog_index.md` 重点展示：
+`literature/catalog_workflow_index.md` 重点展示：
 
 - 每篇已审阅或待复核论文的 review 状态和 extraction 状态
 - catalog source 数量，包括 LaTeX catalog candidates 和 external resources
 - 表格、外部资源、语义补全进度
 - 指向单篇 `catalog_review.json` 和 `catalog_extraction.json` 的链接
 
-`catalog_index` 中 review 状态和 extraction 状态是两条独立状态轴：
+`catalog_workflow_index` 中 review 状态和 extraction 状态是两条独立状态轴：
 
 - review `reviewed`：catalog 审阅已在可用论文/源码上下文中完成。
 - review `partial`：catalog 审阅不完整，或候选覆盖还有未决问题。

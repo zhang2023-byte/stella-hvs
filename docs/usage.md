@@ -215,13 +215,13 @@ conda run -n stella-env python scripts/build_catalog_index.py
 输出：
 
 ```text
-literature/catalog_index.json
-literature/catalog_index.md
+literature/catalog_workflow_index.json
+literature/catalog_workflow_index.md
 ```
 
 索引以 `literature/*/catalog_review.json` 为入口；如果同目录存在
 `catalog_extraction.json`，会同时汇总最近一次提取状态、表格成功/失败数量、外部资源
-成功/失败数量，以及 usage/列语义 reviewed 进度。`catalog_index.md` 中 review 状态和
+成功/失败数量，以及 usage/列语义 reviewed 进度。`catalog_workflow_index.md` 中 review 状态和
 extraction 状态分开显示，避免 `partial` 在两个阶段混用。
 
 Review 状态含义：

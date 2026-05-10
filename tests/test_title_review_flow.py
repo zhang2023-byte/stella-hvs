@@ -226,7 +226,7 @@ class TitleReviewFlowTest(unittest.TestCase):
                 summary = pipeline.run_pipeline(config)
 
             self.assertEqual(summary["status"], "complete")
-            self.assertEqual(summary["index_json"], str(config.notes_dir / "index.json"))
+            self.assertEqual(summary["index_json"], str(config.notes_dir / "literature_notes_index.json"))
 
             triage_json = month_title_triage_path(config.notes_dir, "2025-01")
             triage_record = json.loads(triage_json.read_text(encoding="utf-8"))

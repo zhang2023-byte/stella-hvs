@@ -143,7 +143,7 @@ class PipelinePartialRunTest(unittest.TestCase):
             self.assertFalse(month_markdown_path(config.notes_dir, "2025-02").exists())
             self.assertTrue(month_json_path(config.notes_dir, "2025-01").exists())
             self.assertFalse(month_json_path(config.notes_dir, "2025-02").exists())
-            self.assertEqual(summary["index_json"], str(config.notes_dir / "index.json"))
+            self.assertEqual(summary["index_json"], str(config.notes_dir / "literature_notes_index.json"))
 
             runs = [
                 json.loads(line)

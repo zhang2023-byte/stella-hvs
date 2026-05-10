@@ -31,15 +31,15 @@ JSON 是事实源。Markdown 只是从 JSON 生成的阅读视图，必须和 JS
 ```text
 notes/YYYY/YYYY-MM/YYYY-MM.json   月度标准记录
 notes/YYYY/YYYY-MM/YYYY-MM.md     月度阅读笔记
-notes/index.json                  全局索引
-notes/index.md                    年度视图
+notes/literature_notes_index.json                  全局索引
+notes/literature_notes_index.md                    年度视图
 literature/<arxiv_id>/catalog_review.json   单篇 catalog 审阅事实源
 literature/<arxiv_id>/catalog_extraction.json   单篇 catalog 表格提取事实源
 literature/<arxiv_id>/catalog_sources/<candidate_id>/excerpt.tex   原始 LaTeX 表格摘录
 literature/<arxiv_id>/catalog_sources/<candidate_id>/latexml.html   LaTeXML 转换视图
 literature/<arxiv_id>/catalog_tables/<candidate_id>.csv   忠实表格 CSV
-literature/catalog_index.json      catalog 审阅全局索引
-literature/catalog_index.md        catalog 审阅阅读视图
+literature/catalog_workflow_index.json      catalog 工作流全局索引
+literature/catalog_workflow_index.md        catalog 工作流阅读视图
 ```
 
 不要手动改生成后的 Markdown。  
@@ -121,7 +121,7 @@ conda run -n stella-env python scripts/inventory_catalog_candidates.py --arxiv-i
 conda run -n stella-env python scripts/build_catalog_index.py
 ```
 
-不要手动改 `literature/catalog_index.json` 或 `literature/catalog_index.md`。
+不要手动改 `literature/catalog_workflow_index.json` 或 `literature/catalog_workflow_index.md`。
 如果输出有问题，应修改 `catalog_review.json` 或索引渲染逻辑，然后重新生成。
 
 提取已审阅 catalog 表格时，使用项目内 `hvs-catalog-extraction` skill：

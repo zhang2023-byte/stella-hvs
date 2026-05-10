@@ -17,7 +17,7 @@ from .arxiv_client import ArxivClient
 from .config import DEFAULT_CATEGORIES, DEFAULT_QUERIES
 from .deepxiv_client import DeepXivClient
 from .filters import category_matches, score_matches
-from .indexing import refresh_index_outputs
+from .indexing import NOTES_INDEX_JSON_FILENAME, refresh_index_outputs
 from .markdown import render_month_note
 from .models import MonthWindow, SearchConfig
 from .note_paths import month_dir as build_month_dir
@@ -168,7 +168,7 @@ def month_title_triage_path(config: SearchConfig, month_slug: str) -> Path:
 
 
 def index_json_path(config: SearchConfig) -> Path:
-    return config.notes_dir / "index.json"
+    return config.notes_dir / NOTES_INDEX_JSON_FILENAME
 
 
 def parse_datetime(value: Any) -> datetime:

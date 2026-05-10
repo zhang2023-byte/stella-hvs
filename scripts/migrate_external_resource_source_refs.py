@@ -34,7 +34,13 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--literature-dir", type=Path, default=WORKSPACE / "literature")
     parser.add_argument("--dry-run", type=parse_bool, default=False, metavar="True|False", help="Report changes without writing JSON. Default: False.")
-    parser.add_argument("--rebuild-index", type=parse_bool, default=True, metavar="True|False", help="Rebuild literature/catalog_index.json and .md after writing. Default: True.")
+    parser.add_argument(
+        "--rebuild-index",
+        type=parse_bool,
+        default=True,
+        metavar="True|False",
+        help="Rebuild literature/catalog_workflow_index.json and .md after writing. Default: True.",
+    )
     return parser
 
 

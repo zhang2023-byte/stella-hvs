@@ -461,8 +461,8 @@ class CatalogReviewTest(unittest.TestCase):
                     exit_code = index_cli.main()
 
             self.assertEqual(exit_code, 0)
-            self.assertTrue((literature_dir / "catalog_index.json").exists())
-            self.assertTrue((literature_dir / "catalog_index.md").exists())
+            self.assertTrue((literature_dir / "catalog_workflow_index.json").exists())
+            self.assertTrue((literature_dir / "catalog_workflow_index.md").exists())
 
 
 if __name__ == "__main__":

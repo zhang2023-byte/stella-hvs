@@ -17,6 +17,10 @@ from .records import (
 )
 from .markdown import render_index
 
+NOTES_INDEX_JSON_FILENAME = "literature_notes_index.json"
+NOTES_INDEX_MARKDOWN_FILENAME = "literature_notes_index.md"
+LEGACY_NOTES_INDEX_JSON_FILENAME = "index.json"
+
 
 def read_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
@@ -110,16 +114,17 @@ def rebuild_index(notes_dir: Path) -> dict[str, Any]:
 
 def write_index_outputs(notes_dir: Path) -> dict[str, Any]:
     index_record = rebuild_index(notes_dir)
-    write_json(notes_dir / "index.json", index_record)
+    write_json(notes_dir / NOTES_INDEX_JSON_FILENAME, index_record)
     return index_record
 
 
 def refresh_index_outputs(notes_dir: Path) -> dict[str, Any]:
     index_record = write_index_outputs(notes_dir)
-    index_markdown_path = notes_dir / "index.md"
+    index_json_path = notes_dir / NOTES_INDEX_JSON_FILENAME
+    index_markdown_path = notes_dir / NOTES_INDEX_MARKDOWN_FILENAME
     index_markdown_path.write_text(render_index(index_record), encoding="utf-8")
     return {
         "index_record": index_record,
-        "index_json_path": str(notes_dir / "index.json"),
+        "index_json_path": str(index_json_path),
         "index_markdown_path": str(index_markdown_path),
     }

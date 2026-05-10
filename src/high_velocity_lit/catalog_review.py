@@ -15,8 +15,8 @@ CATALOG_INDEX_SCHEMA_VERSION = "stella.hvs_catalog.index.v1"
 
 REVIEW_FILENAME = "catalog_review.json"
 EXTRACTION_FILENAME = "catalog_extraction.json"
-INDEX_JSON_FILENAME = "catalog_index.json"
-INDEX_MARKDOWN_FILENAME = "catalog_index.md"
+INDEX_JSON_FILENAME = "catalog_workflow_index.json"
+INDEX_MARKDOWN_FILENAME = "catalog_workflow_index.md"
 
 TABLE_ENVIRONMENTS = {
     "deluxetable",
