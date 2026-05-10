@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Move external-resource TeX evidence paths from local_path to source_refs."""
+"""Migrate catalog source field names and TeX evidence source_refs."""
 
 from __future__ import annotations
 
@@ -30,7 +30,7 @@ def parse_bool(value: str) -> bool:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Migrate external_resources[].local_path TeX evidence into external_resources[].source_refs."
+        description="Migrate catalog source field names and external_catalog_sources[].local_path TeX evidence into source_refs."
     )
     parser.add_argument("--literature-dir", type=Path, default=WORKSPACE / "literature")
     parser.add_argument("--dry-run", type=parse_bool, default=False, metavar="True|False", help="Report changes without writing JSON. Default: False.")

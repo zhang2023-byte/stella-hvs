@@ -99,8 +99,8 @@ resolver 只允许白名单二跳到 ADS catalog/data-product、CDS/VizieR、Zen
 外部下载只允许公网 HTTP(S)，拒绝本机/私网/特殊地址，并受文件大小上限保护。
 如果 LLM 未配置、连接失败或返回无效结果，错误会记录到提取日志而不会中断整个流程；
 需要完全禁用时使用 `--agent-locator Off`。
-`external_resources[].local_path` 只表示可直接解析的本地机器可读表文件；TeX 证据路径
-应写入 `external_resources[].source_refs`。迁移旧 review JSON 可运行
+`external_catalog_sources[].local_path` 只表示可直接解析的本地机器可读表文件；TeX 证据路径
+应写入 `external_catalog_sources[].source_refs`。迁移旧字段和旧 review JSON 可运行
 `scripts/migrate_external_resource_source_refs.py`。
 语义补充使用项目内 `hvs-catalog-extraction` skill；CSV 保持论文/资源表格结构，
 不代表已经进入统一对象 schema。
@@ -141,7 +141,7 @@ scripts/annotate_catalog_data.py     给月度 JSON 补 catalog_assessment
 scripts/pull_literature_assets.py    拉取 data-related 文献的本地资料归档
 scripts/inventory_catalog_candidates.py   列出单篇论文的 catalog 审阅候选
 scripts/extract_catalog_tables.py    从 catalog_review.json 提取 LaTeX 表格为 CSV
-scripts/migrate_external_resource_source_refs.py   迁移 external resource 的 TeX 证据路径
+scripts/migrate_external_resource_source_refs.py   迁移 catalog source 字段和外部来源的 TeX 证据路径
 scripts/build_catalog_index.py       从 catalog_review.json 和 catalog_extraction.json 重建 catalog 工作流索引
 scripts/render_lit_notes.py          从 JSON 重生成 Markdown
 docs/                                说明文档

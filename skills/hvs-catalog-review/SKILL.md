@@ -1,6 +1,6 @@
 ---
 name: hvs-catalog-review
-description: Review archived high-velocity-star papers in Stella to identify object-level catalog tables and data resources from local TeX/source files, then write literature/<arxiv_id>/catalog_review.json. Use when asked to inspect catalog tables, source TeX, machine-readable files, or external catalog resources for a paper.
+description: Review archived high-velocity-star papers in Stella to identify object-level internal catalog tables and external catalog sources from local TeX/source files, then write literature/<arxiv_id>/catalog_review.json. Use when asked to inspect catalog tables, source TeX, machine-readable files, or external catalog sources for a paper.
 ---
 
 # HVS Catalog Review
@@ -39,7 +39,7 @@ conda run -n stella-env python scripts/extract_catalog_tables.py --arxiv-id <arx
 
 Use the `hvs-catalog-extraction` skill for that follow-up. It writes
 `catalog_extraction.json`, `catalog_sources/`, and `catalog_tables/` for both
-LaTeX tables and bounded external resources, then fills per-column meanings and
+LaTeX tables and bounded external catalog sources, then fills per-column meanings and
 table usage notes. Do not perform those writes while using this review skill.
 
 ## Review Boundaries
@@ -56,15 +56,15 @@ Reject:
 - Simulation-only tables, model grids, population summaries, observing logs, or figures without object-level catalog values.
 - Non-stellar high-velocity objects unless the paper clearly connects them to stellar object catalogs.
 
-If uncertain, keep the candidate out of `catalog_candidates` and put it in `rejected_candidates` with `decision: "uncertain"` and a comment explaining what would resolve it.
+If uncertain, keep the source out of `internal_tables` and `external_catalog_sources`, and put it in `rejected_candidates` with `decision: "uncertain"` and a comment explaining what would resolve it.
 
 ## Output Schema
 
-Use `schema_version: "stella.hvs_catalog.review.v1"`.
+Use `schema_version: "stella.hvs_catalog.review.v2"`.
 
 ```json
 {
-  "schema_version": "stella.hvs_catalog.review.v1",
+  "schema_version": "stella.hvs_catalog.review.v2",
   "paper": {
     "arxiv_id": "2402.10714",
     "title": "",
@@ -88,7 +88,7 @@ Use `schema_version: "stella.hvs_catalog.review.v1"`.
     "reviewer": "agent",
     "summary": ""
   },
-  "catalog_candidates": [
+  "internal_tables": [
     {
       "id": "table-1",
       "kind": "latex_table",
@@ -111,7 +111,7 @@ Use `schema_version: "stella.hvs_catalog.review.v1"`.
       "comments": ""
     }
   ],
-  "external_resources": [
+  "external_catalog_sources": [
     {
       "id": "resource-1",
       "kind": "external_url",
@@ -154,7 +154,7 @@ Suggested `catalog_role` values: `new_catalog`, `compiled_catalog`, `followup_ob
 
 Suggested `object_scope` values: `single_object`, `multiple_objects`, `none`, `unclear`.
 
-For `external_resources`, use `local_path` only when it points to a local
+For `external_catalog_sources`, use `local_path` only when it points to a local
 machine-readable table file (`.csv/.tsv/.txt/.dat/.tbl/.mrt/.ecsv/.fits/.fit/.fits.gz/.vot/.votable/.xml`).
 If the resource is evidenced by a TeX line, put the TeX path and line range in
 `source_refs`; do not put `.tex` files in `local_path`.

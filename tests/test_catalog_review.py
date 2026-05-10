@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from high_velocity_lit.catalog_review import (  # noqa: E402
     build_catalog_candidate_inventory,
+    migrate_catalog_extraction_schema,
     migrate_external_resource_source_refs_in_review,
     rebuild_catalog_index,
     render_catalog_index,
@@ -122,7 +123,7 @@ A & B
 class CatalogReviewTest(unittest.TestCase):
     def test_migrate_external_tex_local_path_to_source_refs(self) -> None:
         review = {
-            "external_resources": [
+            "external_catalog_sources": [
                 {
                     "id": "resource-tex",
                     "kind": "external_url",
@@ -141,23 +142,64 @@ class CatalogReviewTest(unittest.TestCase):
         migrated, summary = migrate_external_resource_source_refs_in_review(review)
 
         self.assertEqual(summary["migrated_count"], 1)
-        self.assertEqual(migrated["external_resources"][0]["local_path"], "")
+        self.assertEqual(migrated["external_catalog_sources"][0]["local_path"], "")
         self.assertEqual(
-            migrated["external_resources"][0]["source_refs"],
+            migrated["external_catalog_sources"][0]["source_refs"],
             [
                 {
                     "path": "literature/2603.00001/arxiv_source/main.tex",
                     "start_line": 42,
                     "end_line": 42,
                     "context": "In main.tex line 42: machine-readable catalog is available.",
-                    "source": "migrated_from_external_resources.local_path",
+                    "source": "migrated_from_external_catalog_sources.local_path",
                 }
             ],
         )
         self.assertEqual(
-            migrated["external_resources"][1]["local_path"],
+            migrated["external_catalog_sources"][1]["local_path"],
             "literature/2603.00001/arxiv_source/table.mrt",
         )
+
+    def test_migrate_legacy_catalog_source_fields(self) -> None:
+        review = {
+            "schema_version": "stella.hvs_catalog.review.v1",
+            "catalog_candidates": [{"id": "table-1", "kind": "latex_table"}],
+            "external_resources": [{"id": "resource-1", "kind": "external_url"}],
+        }
+
+        migrated, summary = migrate_external_resource_source_refs_in_review(review)
+
+        self.assertEqual(migrated["schema_version"], "stella.hvs_catalog.review.v2")
+        self.assertEqual(migrated["internal_tables"], [{"id": "table-1", "kind": "latex_table"}])
+        self.assertEqual(migrated["external_catalog_sources"], [{"id": "resource-1", "kind": "external_url"}])
+        self.assertNotIn("catalog_candidates", migrated)
+        self.assertNotIn("external_resources", migrated)
+        self.assertEqual(summary["schema_migrated_count"], 1)
+
+    def test_migrate_legacy_extraction_fields(self) -> None:
+        manifest = {
+            "schema_version": "stella.hvs_catalog.extraction.v2",
+            "runs": [{"options": {"candidate_id": "table-1", "resource_id": ""}}],
+            "sources": [{"id": "table-1", "candidate_id": "table-1"}],
+            "tables": [{"id": "resource-1", "resource_id": "resource-1"}],
+            "external_resources": [{"id": "resource-1", "resource_id": "resource-1"}],
+        }
+
+        migrated, summary = migrate_catalog_extraction_schema(manifest)
+
+        self.assertEqual(migrated["schema_version"], "stella.hvs_catalog.extraction.v3")
+        self.assertIn("external_catalog_sources", migrated)
+        self.assertNotIn("external_resources", migrated)
+        self.assertEqual(migrated["sources"][0]["internal_table_id"], "table-1")
+        self.assertNotIn("candidate_id", migrated["sources"][0])
+        self.assertEqual(migrated["tables"][0]["external_source_id"], "resource-1")
+        self.assertNotIn("resource_id", migrated["tables"][0])
+        self.assertEqual(migrated["external_catalog_sources"][0]["external_source_id"], "resource-1")
+        self.assertNotIn("resource_id", migrated["external_catalog_sources"][0])
+        self.assertEqual(migrated["runs"][0]["options"]["internal_table_id"], "table-1")
+        self.assertNotIn("candidate_id", migrated["runs"][0]["options"])
+        self.assertNotIn("resource_id", migrated["runs"][0]["options"])
+        self.assertEqual(summary["id_field_migrated_count"], 3)
 
     def test_inventory_finds_tex_tables_local_files_and_external_mentions(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -195,7 +237,7 @@ class CatalogReviewTest(unittest.TestCase):
             write_json_file(
                 paper_dir / "catalog_review.json",
                 {
-                    "schema_version": "stella.hvs_catalog.review.v1",
+                    "schema_version": "stella.hvs_catalog.review.v2",
                     "paper": {
                         "arxiv_id": "2603.00001",
                         "title": "A catalog of hypervelocity stars",
@@ -205,8 +247,8 @@ class CatalogReviewTest(unittest.TestCase):
                         "status": "reviewed",
                         "reviewed_at": "2026-04-24T12:00:00",
                     },
-                    "catalog_candidates": [{"confidence": 0.9}],
-                    "external_resources": [{"url": "https://vizier.example/catalog"}],
+                    "internal_tables": [{"confidence": 0.9}],
+                    "external_catalog_sources": [{"url": "https://vizier.example/catalog"}],
                     "rejected_candidates": [{"reason": "observing log"}],
                 },
             )
@@ -215,26 +257,28 @@ class CatalogReviewTest(unittest.TestCase):
             write_json_file(
                 needs_dir / "catalog_review.json",
                 {
-                    "schema_version": "stella.hvs_catalog.review.v1",
+                    "schema_version": "stella.hvs_catalog.review.v2",
                     "paper": {
                         "arxiv_id": "2603.00002",
                         "title": "A paper needing review",
                         "month": "2026-03",
                     },
                     "review": {"status": "needs_review"},
-                    "catalog_candidates": [],
-                    "external_resources": [],
+                    "internal_tables": [],
+                    "external_catalog_sources": [],
                     "rejected_candidates": [],
                 },
             )
 
             index = rebuild_catalog_index(literature_dir, workspace=workspace)
 
-            self.assertEqual(index["schema_version"], "stella.hvs_catalog.index.v1")
+            self.assertEqual(index["schema_version"], "stella.hvs_catalog.index.v2")
             self.assertEqual(index["summary"]["paper_count"], 2)
             self.assertEqual(index["summary"]["reviewed_count"], 1)
             self.assertEqual(index["summary"]["has_catalog_count"], 1)
             self.assertEqual(index["summary"]["has_catalog_source_count"], 1)
+            self.assertEqual(index["summary"]["internal_table_count"], 1)
+            self.assertEqual(index["summary"]["external_catalog_source_count"], 1)
             self.assertEqual(index["summary"]["needs_review_count"], 1)
             self.assertEqual(index["summary"]["extraction_not_started_count"], 1)
             self.assertEqual(index["summary"]["extraction_not_applicable_count"], 1)
@@ -263,7 +307,7 @@ class CatalogReviewTest(unittest.TestCase):
             write_json_file(
                 paper_dir / "catalog_review.json",
                 {
-                    "schema_version": "stella.hvs_catalog.review.v1",
+                    "schema_version": "stella.hvs_catalog.review.v2",
                     "paper": {
                         "arxiv_id": "2603.00001",
                         "title": "A partly extracted catalog",
@@ -271,15 +315,15 @@ class CatalogReviewTest(unittest.TestCase):
                     },
                     "source": {"source_available": True},
                     "review": {"status": "reviewed"},
-                    "catalog_candidates": [{"confidence": 0.8}],
-                    "external_resources": [],
+                    "internal_tables": [{"confidence": 0.8}],
+                    "external_catalog_sources": [],
                     "rejected_candidates": [],
                 },
             )
             write_json_file(
                 paper_dir / "catalog_extraction.json",
                 {
-                    "schema_version": "stella.hvs_catalog.extraction.v2",
+                    "schema_version": "stella.hvs_catalog.extraction.v3",
                     "generated_at": "2026-04-25T12:00:00",
                     "paper": {"arxiv_id": "2603.00001", "title": "A partly extracted catalog", "month": "2026-03"},
                     "runs": [{"status": "partial", "summary": {"success_count": 1, "failed_count": 1}}],
@@ -301,7 +345,7 @@ class CatalogReviewTest(unittest.TestCase):
                             "columns": [],
                         },
                     ],
-                    "external_resources": [
+                    "external_catalog_sources": [
                         {"id": "resource-1", "status": "success"},
                         {"id": "resource-2", "status": "failed"},
                     ],
@@ -311,7 +355,7 @@ class CatalogReviewTest(unittest.TestCase):
             write_json_file(
                 external_dir / "catalog_review.json",
                 {
-                    "schema_version": "stella.hvs_catalog.review.v1",
+                    "schema_version": "stella.hvs_catalog.review.v2",
                     "paper": {
                         "arxiv_id": "2603.00002",
                         "title": "External only catalog",
@@ -319,8 +363,8 @@ class CatalogReviewTest(unittest.TestCase):
                     },
                     "source": {"source_available": True},
                     "review": {"status": "reviewed"},
-                    "catalog_candidates": [],
-                    "external_resources": [{"id": "resource-1", "url": "https://example.test/catalog.csv"}],
+                    "internal_tables": [],
+                    "external_catalog_sources": [{"id": "resource-1", "url": "https://example.test/catalog.csv"}],
                     "rejected_candidates": [],
                 },
             )
@@ -328,7 +372,7 @@ class CatalogReviewTest(unittest.TestCase):
             write_json_file(
                 inconsistent_dir / "catalog_review.json",
                 {
-                    "schema_version": "stella.hvs_catalog.review.v1",
+                    "schema_version": "stella.hvs_catalog.review.v2",
                     "paper": {
                         "arxiv_id": "2603.00003",
                         "title": "Mislabelled source status",
@@ -336,8 +380,8 @@ class CatalogReviewTest(unittest.TestCase):
                     },
                     "source": {"source_available": True},
                     "review": {"status": "source_missing"},
-                    "catalog_candidates": [],
-                    "external_resources": [],
+                    "internal_tables": [],
+                    "external_catalog_sources": [],
                     "rejected_candidates": [],
                 },
             )
@@ -392,8 +436,8 @@ class CatalogReviewTest(unittest.TestCase):
                     {
                         "paper": {"arxiv_id": "2603.00001", "title": "Reviewed", "month": "2026-03"},
                         "review": {"status": "reviewed"},
-                        "catalog_candidates": [],
-                        "external_resources": [],
+                        "internal_tables": [],
+                        "external_catalog_sources": [],
                     }
                 )
                 + "\n",
@@ -440,8 +484,8 @@ class CatalogReviewTest(unittest.TestCase):
                     {
                         "paper": {"arxiv_id": "2603.00001", "title": "Reviewed", "month": "2026-03"},
                         "review": {"status": "reviewed"},
-                        "catalog_candidates": [{"confidence": 1.0}],
-                        "external_resources": [],
+                        "internal_tables": [{"confidence": 1.0}],
+                        "external_catalog_sources": [],
                     }
                 )
                 + "\n",

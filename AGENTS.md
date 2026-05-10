@@ -35,9 +35,11 @@ notes/literature_notes_index.json                  全局索引
 notes/literature_notes_index.md                    年度视图
 literature/<arxiv_id>/catalog_review.json   单篇 catalog 审阅事实源
 literature/<arxiv_id>/catalog_extraction.json   单篇 catalog 表格提取事实源
-literature/<arxiv_id>/catalog_sources/<candidate_id>/excerpt.tex   原始 LaTeX 表格摘录
-literature/<arxiv_id>/catalog_sources/<candidate_id>/latexml.html   LaTeXML 转换视图
-literature/<arxiv_id>/catalog_tables/<candidate_id>.csv   忠实表格 CSV
+literature/<arxiv_id>/catalog_sources/<internal_table_id>/excerpt.tex   原始 LaTeX 表格摘录
+literature/<arxiv_id>/catalog_sources/<internal_table_id>/latexml.html   LaTeXML 转换视图
+literature/<arxiv_id>/catalog_tables/<internal_table_id>.csv   忠实表格 CSV
+literature/<arxiv_id>/catalog_sources/<external_source_id>/download-001.*   外部 catalog 来源下载件
+literature/<arxiv_id>/catalog_tables/<external_source_id>.csv   外部 catalog 来源忠实 CSV
 literature/catalog_workflow_index.json      catalog 工作流全局索引
 literature/catalog_workflow_index.md        catalog 工作流阅读视图
 ```
@@ -130,8 +132,8 @@ conda run -n stella-env python scripts/build_catalog_index.py
 conda run -n stella-env python scripts/extract_catalog_tables.py --arxiv-id 2402.10714
 ```
 
-表格提取同时处理 `latex_table` 和 `external_resources`。LaTeX 转换顺序是
-LaTeXML、Pandoc、项目内 fallback parser；外部资源优先解析本地机器可读文件，
+表格提取同时处理 `internal_tables` 中的 `latex_table` 和 `external_catalog_sources`。LaTeX 转换顺序是
+LaTeXML、Pandoc、项目内 fallback parser；外部 catalog 来源优先解析本地机器可读文件，
 其次抓取明确 URL；明确 URL 的 HTML landing page 和没有 URL/local path 时的 ADS HTML
 都走 bounded Agent locator。`--agent-locator Off` 时，HTML/ADS 页面只记录停止原因，
 不下载页面里的链接。

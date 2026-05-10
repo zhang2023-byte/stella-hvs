@@ -23,15 +23,15 @@ literature/<arxiv_id>/arxiv.pdf
 literature/<arxiv_id>/arxiv_source*
 literature/<arxiv_id>/arxiv_source/...
 literature/<arxiv_id>/ads_abstract.html
-literature/<arxiv_id>/catalog_sources/<candidate_id>/excerpt.tex
-literature/<arxiv_id>/catalog_sources/<candidate_id>/latexml.html
-literature/<arxiv_id>/catalog_sources/<candidate_id>/latexml.stderr.txt
-literature/<arxiv_id>/catalog_sources/<candidate_id>/pandoc.html
-literature/<arxiv_id>/catalog_sources/<candidate_id>/pandoc.stderr.txt
-literature/<arxiv_id>/catalog_tables/<candidate_id>.csv
-literature/<arxiv_id>/catalog_sources/<resource_id>/download-001.csv
-literature/<arxiv_id>/catalog_sources/<resource_id>/landing.html
-literature/<arxiv_id>/catalog_tables/<resource_id>.csv
+literature/<arxiv_id>/catalog_sources/<internal_table_id>/excerpt.tex
+literature/<arxiv_id>/catalog_sources/<internal_table_id>/latexml.html
+literature/<arxiv_id>/catalog_sources/<internal_table_id>/latexml.stderr.txt
+literature/<arxiv_id>/catalog_sources/<internal_table_id>/pandoc.html
+literature/<arxiv_id>/catalog_sources/<internal_table_id>/pandoc.stderr.txt
+literature/<arxiv_id>/catalog_tables/<internal_table_id>.csv
+literature/<arxiv_id>/catalog_sources/<external_source_id>/download-001.csv
+literature/<arxiv_id>/catalog_sources/<external_source_id>/landing.html
+literature/<arxiv_id>/catalog_tables/<external_source_id>.csv
 literature/catalog_workflow_index.md        从 catalog_workflow_index.json 生成的 catalog 工作流视图
 notes/literature_notes_index.md                   从 literature_notes_index.json 生成的年度视图
 notes/YYYY/YYYY-MM/YYYY-MM.md    从月度 JSON 生成的月度笔记
@@ -139,12 +139,12 @@ logs/run_<timestamp>.log
 - `paper`：arXiv ID、标题、月份、月度 JSON 路径、abs/pdf 链接
 - `source`：论文目录、`audit.json`、源码目录、主 TeX、源码可用性
 - `review`：审阅状态、时间、reviewer、总体说明
-- `catalog_candidates`：被判定为高速星对象 catalog 的表格或资源
-- `external_resources`：外部托管或本地机器可读资源及评论；`local_path` 只用于
+- `internal_tables`：论文 LaTeX 内部、被判定为高速星对象 catalog 的表格
+- `external_catalog_sources`：外部托管或本地机器可读的 catalog 来源及评论；`local_path` 只用于
   可直接解析的本地机器可读表文件，TeX 证据路径应写入 `source_refs`
 - `rejected_candidates`：被排除或不确定的候选及原因
 
-本阶段只保存 LaTeX 段落、链接、路径、证据和解释；不把 LaTeX 转 CSV，不下载外部表格，也不记录表格列 schema。`external_resources[].local_path` 只表示本地机器可读表文件；如果外部资源只是由 TeX 行、表注或数据可用性段落证明，应把 TeX 路径和行号写入 `external_resources[].source_refs`。后续表格抽取应以 `source_refs.start_line` 和 `source_refs.end_line` 定位原始 TeX，并在 `catalog_sources/` 和 `catalog_tables/` 阶段写入精确列含义。
+本阶段只保存 LaTeX 段落、链接、路径、证据和解释；不把 LaTeX 转 CSV，不下载外部表格，也不记录表格列 schema。`external_catalog_sources[].local_path` 只表示本地机器可读表文件；如果外部 catalog 来源只是由 TeX 行、表注或数据可用性段落证明，应把 TeX 路径和行号写入 `external_catalog_sources[].source_refs`。后续表格抽取应以 `source_refs.start_line` 和 `source_refs.end_line` 定位原始 TeX，并在 `catalog_sources/` 和 `catalog_tables/` 阶段写入精确列含义。
 
 ## `catalog_extraction.json` 包含什么
 
@@ -154,9 +154,9 @@ logs/run_<timestamp>.log
 - `paper`：arXiv ID、标题、月份
 - `review`：来源 `catalog_review.json` 路径、schema 和 review 状态
 - `runs`：每次提取的时间、参数、成功失败统计和状态
-- `sources`：原始 TeX 路径、行号、摘录文件，或 external resource 的本地/下载来源、checksum、获取状态和错误
+- `sources`：原始 TeX 路径、行号、摘录文件，或 external catalog source 的本地/下载来源、checksum、获取状态和错误
 - `tables`：CSV 路径、caption/资源说明、label、行列数、解析状态、转换/解析工具尝试记录、warnings、列记录和使用说明
-- `external_resources`：外部资源定位、下载、解析日志，生成的 table outputs，错误和严格停止原因 `stopped_reason`；`resolver_attempts[]` 记录 CDS/VizieR、Zenodo、NADC/China-VO 和 ADS data-product/catalog record 等结构化 resolver 的候选选择和 artifacts；默认的 `Always` Agent locator 只在 provider resolver 未解析出机器可读下载项、或明确 URL 返回其它 HTML landing page 时运行，并记录 bounded agent 的页面候选选择、LLM 缺失/连接/格式错误、`agent_locator_context.json` 和 `agent_locator_response.json`
+- `external_catalog_sources`：外部资源定位、下载、解析日志，生成的 table outputs，错误和严格停止原因 `stopped_reason`；`resolver_attempts[]` 记录 CDS/VizieR、Zenodo、NADC/China-VO 和 ADS data-product/catalog record 等结构化 resolver 的候选选择和 artifacts；默认的 `Always` Agent locator 只在 provider resolver 未解析出机器可读下载项、或明确 URL 返回其它 HTML landing page 时运行，并记录 bounded agent 的页面候选选择、LLM 缺失/连接/格式错误、`agent_locator_context.json` 和 `agent_locator_response.json`
 
 CSV 使用 `col_001`、`col_002` 等稳定列名，尽量忠实保留论文表格数据。
 列的 `original_header`、`unit_text`、`physical_quantity`、`meaning`、
@@ -193,7 +193,7 @@ Agent 使用 `hvs-catalog-extraction` skill 后，需要结合表格 caption、f
 `literature/catalog_workflow_index.md` 重点展示：
 
 - 每篇已审阅或待复核论文的 review 状态和 extraction 状态
-- catalog source 数量，包括 LaTeX catalog candidates 和 external resources
+- catalog source 数量，包括 internal tables 和 external catalog sources
 - 表格、外部资源、语义补全进度
 - 指向单篇 `catalog_review.json` 和 `catalog_extraction.json` 的链接
 

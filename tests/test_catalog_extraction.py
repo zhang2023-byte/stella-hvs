@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import io
 import importlib.util
 import json
 import sys
@@ -298,8 +299,8 @@ class CatalogExtractionIntegrationTest(unittest.TestCase):
         workspace: Path,
         *,
         bad_table: bool = False,
-        external_resources: list[dict[str, object]] | None = None,
-        catalog_candidates: list[dict[str, object]] | None = None,
+        external_catalog_sources: list[dict[str, object]] | None = None,
+        internal_tables: list[dict[str, object]] | None = None,
         ads_html: str = "",
     ) -> tuple[Path, Path]:
         literature_dir = workspace / "literature"
@@ -330,8 +331,8 @@ HVS1 & 700 \\
         source_path = source_dir / "main.tex"
         source_path.write_text(tex, encoding="utf-8")
         line_count = len(tex.splitlines())
-        if catalog_candidates is None:
-            catalog_candidates = [
+        if internal_tables is None:
+            internal_tables = [
                 {
                     "id": "table-tab-hvs",
                     "kind": "latex_table",
@@ -346,8 +347,8 @@ HVS1 & 700 \\
                     ],
                 }
             ]
-        if external_resources is None:
-            external_resources = [
+        if external_catalog_sources is None:
+            external_catalog_sources = [
                 {
                     "id": "resource-cds",
                     "kind": "external_catalog_repository",
@@ -356,15 +357,15 @@ HVS1 & 700 \\
                 }
             ]
         review = {
-            "schema_version": "stella.hvs_catalog.review.v1",
+            "schema_version": "stella.hvs_catalog.review.v2",
             "paper": {
                 "arxiv_id": "2603.00001",
                 "title": "A catalog of hypervelocity stars",
                 "month": "2026-03",
             },
             "review": {"status": "reviewed"},
-            "catalog_candidates": catalog_candidates,
-            "external_resources": external_resources,
+            "internal_tables": internal_tables,
+            "external_catalog_sources": external_catalog_sources,
             "rejected_candidates": [],
         }
         (paper_dir / "catalog_review.json").write_text(json.dumps(review, indent=2) + "\n", encoding="utf-8")
@@ -394,13 +395,39 @@ HVS1 & 700 \\
             self.assertEqual(csv_rows(csv_path), [["col_001", "col_002"], ["HVS1", "700"]])
 
             manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-            self.assertEqual(manifest["schema_version"], "stella.hvs_catalog.extraction.v2")
+            self.assertEqual(manifest["schema_version"], "stella.hvs_catalog.extraction.v3")
             self.assertIn(manifest["tables"][0]["extraction_method"], {"latexml", "pandoc", "internal"})
             self.assertTrue(manifest["tables"][0]["conversion_attempts"])
             self.assertEqual(manifest["tables"][0]["columns"][0]["semantic_status"], "needs_agent_review")
             self.assertEqual(manifest["tables"][0]["usage"]["semantic_status"], "needs_agent_review")
-            self.assertEqual(manifest["external_resources"][0]["status"], "skipped")
-            self.assertEqual(manifest["external_resources"][0]["stopped_reason"], "network_disabled")
+            self.assertEqual(manifest["external_catalog_sources"][0]["status"], "skipped")
+            self.assertEqual(manifest["external_catalog_sources"][0]["stopped_reason"], "network_disabled")
+
+    def test_extract_catalog_tables_reads_legacy_review_fields_and_writes_new_manifest_fields(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature_dir, paper_dir = self.write_reviewed_paper(workspace)
+            review_path = paper_dir / "catalog_review.json"
+            review = json.loads(review_path.read_text(encoding="utf-8"))
+            review["schema_version"] = "stella.hvs_catalog.review.v1"
+            review["catalog_candidates"] = review.pop("internal_tables")
+            review["external_resources"] = review.pop("external_catalog_sources")
+            review_path.write_text(json.dumps(review, indent=2) + "\n", encoding="utf-8")
+
+            extract_catalog_tables(
+                literature_dir=literature_dir,
+                arxiv_id="2603.00001",
+                workspace=workspace,
+                fetch_external=False,
+            )
+
+            manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
+            self.assertEqual(manifest["schema_version"], "stella.hvs_catalog.extraction.v3")
+            self.assertIn("external_catalog_sources", manifest)
+            self.assertNotIn("external_resources", manifest)
+            self.assertEqual(manifest["sources"][0]["internal_table_id"], "table-tab-hvs")
+            self.assertNotIn("candidate_id", manifest["sources"][0])
+            self.assertEqual(manifest["external_catalog_sources"][0]["external_source_id"], "resource-cds")
 
     def test_failed_parse_is_recorded_without_crashing(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -471,13 +498,71 @@ HVS1 & 700 \\
             self.assertFalse((paper_dir / "catalog_sources").exists())
             self.assertFalse((paper_dir / "catalog_tables").exists())
 
+    def test_cli_accepts_new_internal_table_id_and_legacy_alias(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature_dir, paper_dir = self.write_reviewed_paper(workspace)
+
+            with patch.object(
+                sys,
+                "argv",
+                [
+                    "extract_catalog_tables.py",
+                    "--arxiv-id",
+                    "2603.00001",
+                    "--literature-dir",
+                    str(literature_dir),
+                    "--internal-table-id",
+                    "table-tab-hvs",
+                    "--fetch-external",
+                    "False",
+                    "--dry-run",
+                    "True",
+                ],
+            ):
+                with patch("builtins.print") as fake_print:
+                    self.assertEqual(extract_cli.main(), 0)
+
+            payload = json.loads(fake_print.call_args.args[0])
+            self.assertEqual(payload["summary"]["internal_table_count"], 1)
+            self.assertEqual(payload["summary"]["external_catalog_source_count"], 0)
+            self.assertFalse((paper_dir / "catalog_extraction.json").exists())
+
+            stderr = io.StringIO()
+            with patch.object(
+                sys,
+                "argv",
+                [
+                    "extract_catalog_tables.py",
+                    "--arxiv-id",
+                    "2603.00001",
+                    "--literature-dir",
+                    str(literature_dir),
+                    "--candidate-id",
+                    "table-tab-hvs",
+                    "--fetch-external",
+                    "False",
+                    "--dry-run",
+                    "True",
+                ],
+            ):
+                with patch("sys.stderr", stderr):
+                    with patch("builtins.print") as fake_print:
+                        self.assertEqual(extract_cli.main(), 0)
+
+            payload = json.loads(fake_print.call_args.args[0])
+            self.assertEqual(payload["summary"]["internal_table_count"], 1)
+            self.assertTrue(
+                any(call.args and "--candidate-id is deprecated" in call.args[0] for call in fake_print.call_args_list)
+            )
+
     def test_local_csv_and_tsv_resources_convert_to_generic_csv(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[
+                internal_tables=[],
+                external_catalog_sources=[
                     {
                         "id": "resource-local-csv",
                         "kind": "local_machine_readable_file",
@@ -511,8 +596,8 @@ HVS1 & 700 \\
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[
+                internal_tables=[],
+                external_catalog_sources=[
                     {
                         "id": "resource-local-mrt",
                         "kind": "local_machine_readable_file",
@@ -558,8 +643,8 @@ Byte-by-byte Description of file: table.dat
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[
+                internal_tables=[],
+                external_catalog_sources=[
                     {
                         "id": "resource-local-fits",
                         "kind": "local_machine_readable_file",
@@ -586,8 +671,8 @@ Byte-by-byte Description of file: table.dat
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[
+                internal_tables=[],
+                external_catalog_sources=[
                     {
                         "id": "resource-url-csv",
                         "kind": "external_catalog_repository",
@@ -608,15 +693,15 @@ Byte-by-byte Description of file: table.dat
             self.assertEqual(csv_rows(paper_dir / "catalog_tables" / "resource-url-csv.csv"), [["col_001", "col_002"], ["A", "700"]])
             self.assertTrue((paper_dir / "catalog_sources" / "resource-url-csv" / "download-001.csv").exists())
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
-            self.assertEqual(manifest["external_resources"][0]["download_attempts"][0]["status"], "success")
+            self.assertEqual(manifest["external_catalog_sources"][0]["download_attempts"][0]["status"], "success")
 
     def test_url_resource_ignores_tex_local_path_and_downloads_url(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[
+                internal_tables=[],
+                external_catalog_sources=[
                     {
                         "id": "resource-url-with-tex-evidence",
                         "kind": "external_url",
@@ -637,7 +722,7 @@ Byte-by-byte Description of file: table.dat
             fake_get.assert_called_once()
             self.assertEqual(csv_rows(paper_dir / "catalog_tables" / "resource-url-with-tex-evidence.csv"), [["col_001", "col_002"], ["A", "700"]])
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
-            resource = manifest["external_resources"][0]
+            resource = manifest["external_catalog_sources"][0]
             self.assertEqual(resource["status"], "success")
             self.assertEqual(resource["warnings"][0]["code"], "ignored_unsupported_local_path")
             self.assertEqual(resource["download_attempts"][0]["status"], "success")
@@ -648,8 +733,8 @@ Byte-by-byte Description of file: table.dat
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[
+                internal_tables=[],
+                external_catalog_sources=[
                     {
                         "id": "resource-ads-with-tex-evidence",
                         "kind": "external_url",
@@ -669,7 +754,7 @@ Byte-by-byte Description of file: table.dat
 
             fake_get.assert_not_called()
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
-            resource = manifest["external_resources"][0]
+            resource = manifest["external_catalog_sources"][0]
             self.assertEqual(resource["status"], "skipped")
             self.assertEqual(resource["stopped_reason"], "network_disabled")
             self.assertEqual(resource["warnings"][0]["code"], "ignored_unsupported_local_path")
@@ -680,8 +765,8 @@ Byte-by-byte Description of file: table.dat
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[
+                internal_tables=[],
+                external_catalog_sources=[
                     {
                         "id": "resource-stale",
                         "kind": "external_url",
@@ -693,7 +778,7 @@ Byte-by-byte Description of file: table.dat
             (paper_dir / "catalog_extraction.json").write_text(
                 json.dumps(
                     {
-                        "schema_version": "stella.hvs_catalog.extraction.v2",
+                        "schema_version": "stella.hvs_catalog.extraction.v3",
                         "runs": [],
                         "sources": [
                             {
@@ -706,7 +791,7 @@ Byte-by-byte Description of file: table.dat
                             }
                         ],
                         "tables": [],
-                        "external_resources": [{"id": "resource-stale", "status": "failed"}],
+                        "external_catalog_sources": [{"id": "resource-stale", "status": "failed"}],
                     },
                     indent=2,
                 )
@@ -723,15 +808,15 @@ Byte-by-byte Description of file: table.dat
 
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
             self.assertEqual(manifest["sources"], [])
-            self.assertEqual(manifest["external_resources"][0]["stopped_reason"], "network_disabled")
+            self.assertEqual(manifest["external_catalog_sources"][0]["stopped_reason"], "network_disabled")
 
     def test_machine_readable_local_path_still_preempts_url(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[
+                internal_tables=[],
+                external_catalog_sources=[
                     {
                         "id": "resource-local-with-url",
                         "kind": "local_machine_readable_file",
@@ -753,16 +838,16 @@ Byte-by-byte Description of file: table.dat
             fake_get.assert_not_called()
             self.assertEqual(csv_rows(paper_dir / "catalog_tables" / "resource-local-with-url.csv"), [["col_001", "col_002"], ["Local", "701"]])
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
-            self.assertEqual(manifest["external_resources"][0]["status"], "success")
-            self.assertEqual(manifest["external_resources"][0]["url"], "https://example.test/catalog.csv")
+            self.assertEqual(manifest["external_catalog_sources"][0]["status"], "success")
+            self.assertEqual(manifest["external_catalog_sources"][0]["url"], "https://example.test/catalog.csv")
 
     def test_private_url_is_blocked_before_request(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[
+                internal_tables=[],
+                external_catalog_sources=[
                     {
                         "id": "resource-private-url",
                         "kind": "external_catalog_repository",
@@ -781,7 +866,7 @@ Byte-by-byte Description of file: table.dat
 
             fake_get.assert_not_called()
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
-            resource = manifest["external_resources"][0]
+            resource = manifest["external_catalog_sources"][0]
             self.assertEqual(resource["status"], "failed")
             self.assertEqual(resource["stopped_reason"], "blocked_url")
 
@@ -790,8 +875,8 @@ Byte-by-byte Description of file: table.dat
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[
+                internal_tables=[],
+                external_catalog_sources=[
                     {
                         "id": "resource-too-large",
                         "kind": "external_catalog_repository",
@@ -813,7 +898,7 @@ Byte-by-byte Description of file: table.dat
                 )
 
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
-            resource = manifest["external_resources"][0]
+            resource = manifest["external_catalog_sources"][0]
             self.assertEqual(resource["status"], "failed")
             self.assertEqual(resource["stopped_reason"], "download_too_large")
             self.assertFalse((paper_dir / "catalog_tables" / "resource-too-large.csv").exists())
@@ -823,8 +908,8 @@ Byte-by-byte Description of file: table.dat
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[
+                internal_tables=[],
+                external_catalog_sources=[
                     {
                         "id": "resource-broken-stream",
                         "kind": "external_catalog_repository",
@@ -845,7 +930,7 @@ Byte-by-byte Description of file: table.dat
                 )
 
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
-            resource = manifest["external_resources"][0]
+            resource = manifest["external_catalog_sources"][0]
             self.assertEqual(resource["status"], "failed")
             self.assertEqual(resource["stopped_reason"], "download_error")
             self.assertIn("ChunkedEncodingError", resource["error"])
@@ -855,8 +940,8 @@ Byte-by-byte Description of file: table.dat
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[
+                internal_tables=[],
+                external_catalog_sources=[
                     {
                         "id": "resource-redirect",
                         "kind": "external_catalog_repository",
@@ -883,7 +968,7 @@ Byte-by-byte Description of file: table.dat
 
             fake_get.assert_called_once()
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
-            resource = manifest["external_resources"][0]
+            resource = manifest["external_catalog_sources"][0]
             self.assertEqual(resource["status"], "failed")
             self.assertEqual(resource["stopped_reason"], "blocked_url")
             self.assertIn("blocked redirect URL", resource["error"])
@@ -893,8 +978,8 @@ Byte-by-byte Description of file: table.dat
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[
+                internal_tables=[],
+                external_catalog_sources=[
                     {
                         "id": "resource-landing",
                         "kind": "external_catalog_repository",
@@ -918,7 +1003,7 @@ Byte-by-byte Description of file: table.dat
 
             self.assertEqual(fake_request.call_count, 1)
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
-            resource = manifest["external_resources"][0]
+            resource = manifest["external_catalog_sources"][0]
             self.assertEqual(resource["status"], "failed")
             self.assertEqual(resource["stopped_reason"], "agent_locator_disabled")
             self.assertEqual(resource["locator_attempts"][0]["method"], "agent_landing_page_locator")
@@ -930,8 +1015,8 @@ Byte-by-byte Description of file: table.dat
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[
+                internal_tables=[],
+                external_catalog_sources=[
                     {
                         "id": "resource-agent-always",
                         "kind": "external_catalog_repository",
@@ -959,7 +1044,7 @@ Byte-by-byte Description of file: table.dat
             self.assertEqual(fake_request.call_count, 2)
             self.assertEqual(csv_rows(paper_dir / "catalog_tables" / "resource-agent-always.csv"), [["col_001", "col_002"], ["A", "700"]])
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
-            locator_attempts = manifest["external_resources"][0]["locator_attempts"]
+            locator_attempts = manifest["external_catalog_sources"][0]["locator_attempts"]
             self.assertEqual([attempt["method"] for attempt in locator_attempts], ["agent_landing_page_locator"])
             self.assertEqual(locator_attempts[0]["candidate_count"], 1)
 
@@ -968,8 +1053,8 @@ Byte-by-byte Description of file: table.dat
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[
+                internal_tables=[],
+                external_catalog_sources=[
                     {
                         "id": "resource-agent",
                         "kind": "external_catalog_repository",
@@ -998,7 +1083,7 @@ Byte-by-byte Description of file: table.dat
             self.assertEqual(fake_request.call_count, 2)
             self.assertEqual(csv_rows(paper_dir / "catalog_tables" / "resource-agent.csv"), [["col_001", "col_002"], ["A", "700"]])
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
-            locator_attempts = manifest["external_resources"][0]["locator_attempts"]
+            locator_attempts = manifest["external_catalog_sources"][0]["locator_attempts"]
             self.assertEqual([attempt["method"] for attempt in locator_attempts], ["agent_landing_page_locator"])
             self.assertEqual(locator_attempts[0]["candidate_count"], 1)
             self.assertEqual(locator_attempts[0]["selected_count"], 1)
@@ -1010,8 +1095,8 @@ Byte-by-byte Description of file: table.dat
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[
+                internal_tables=[],
+                external_catalog_sources=[
                     {
                         "id": "resource-agent-invalid",
                         "kind": "external_catalog_repository",
@@ -1035,7 +1120,7 @@ Byte-by-byte Description of file: table.dat
 
             self.assertEqual(fake_request.call_count, 1)
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
-            resource = manifest["external_resources"][0]
+            resource = manifest["external_catalog_sources"][0]
             self.assertEqual(resource["status"], "failed")
             self.assertEqual(resource["stopped_reason"], "agent_invalid_candidate")
             self.assertFalse((paper_dir / "catalog_tables" / "resource-agent-invalid.csv").exists())
@@ -1045,8 +1130,8 @@ Byte-by-byte Description of file: table.dat
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[
+                internal_tables=[],
+                external_catalog_sources=[
                     {
                         "id": "resource-agent-missing-key",
                         "kind": "external_catalog_repository",
@@ -1074,7 +1159,7 @@ Byte-by-byte Description of file: table.dat
 
             self.assertEqual(fake_request.call_count, 1)
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
-            resource = manifest["external_resources"][0]
+            resource = manifest["external_catalog_sources"][0]
             self.assertEqual(resource["status"], "failed")
             self.assertEqual(resource["stopped_reason"], "missing_api_key")
             self.assertIn("no LLM API key", resource["error"])
@@ -1088,8 +1173,8 @@ Byte-by-byte Description of file: table.dat
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[
+                internal_tables=[],
+                external_catalog_sources=[
                     {
                         "id": "resource-agent-error",
                         "kind": "external_catalog_repository",
@@ -1112,7 +1197,7 @@ Byte-by-byte Description of file: table.dat
                 )
 
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
-            resource = manifest["external_resources"][0]
+            resource = manifest["external_catalog_sources"][0]
             self.assertEqual(resource["status"], "failed")
             self.assertEqual(resource["stopped_reason"], "agent_error")
             self.assertIn("connection refused", resource["error"])
@@ -1123,8 +1208,8 @@ Byte-by-byte Description of file: table.dat
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[
+                internal_tables=[],
+                external_catalog_sources=[
                     {
                         "id": "resource-cds-asu",
                         "kind": "external_catalog_repository",
@@ -1151,7 +1236,7 @@ Byte-by-byte Description of file: table.dat
 
             self.assertEqual(csv_rows(paper_dir / "catalog_tables" / "resource-cds-asu.csv"), [["col_001", "col_002"], ["A", "700"]])
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
-            resource = manifest["external_resources"][0]
+            resource = manifest["external_catalog_sources"][0]
             self.assertEqual(resource["status"], "success")
             self.assertEqual(resource["resolver_attempts"][0]["provider"], "cds_vizier")
             self.assertEqual(resource["locator_attempts"], [])
@@ -1161,8 +1246,8 @@ Byte-by-byte Description of file: table.dat
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[
+                internal_tables=[],
+                external_catalog_sources=[
                     {
                         "id": "resource-zenodo",
                         "kind": "external_catalog_repository",
@@ -1195,7 +1280,7 @@ Byte-by-byte Description of file: table.dat
 
             self.assertEqual(csv_rows(paper_dir / "catalog_tables" / "resource-zenodo.csv"), [["col_001", "col_002"], ["A", "700"]])
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
-            resource = manifest["external_resources"][0]
+            resource = manifest["external_catalog_sources"][0]
             self.assertEqual(resource["resolver_attempts"][0]["method"], "zenodo_record_api")
             self.assertEqual(resource["download_attempts"][0]["url"], "https://zenodo.org/records/12345/files/full_candidate_list.txt?download=1")
 
@@ -1204,8 +1289,8 @@ Byte-by-byte Description of file: table.dat
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[
+                internal_tables=[],
+                external_catalog_sources=[
                     {
                         "id": "resource-nadc",
                         "kind": "external_catalog_repository",
@@ -1233,7 +1318,7 @@ Byte-by-byte Description of file: table.dat
 
             self.assertEqual(csv_rows(paper_dir / "catalog_tables" / "resource-nadc.csv"), [["col_001", "col_002"], ["A", "700"]])
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
-            resource = manifest["external_resources"][0]
+            resource = manifest["external_catalog_sources"][0]
             self.assertEqual(resource["resolver_attempts"][0]["provider"], "nadc")
             self.assertEqual(resource["locator_attempts"], [])
 
@@ -1244,9 +1329,9 @@ Byte-by-byte Description of file: table.dat
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
+                internal_tables=[],
                 ads_html=ads_html,
-                external_resources=[
+                external_catalog_sources=[
                     {
                         "id": "resource-ads-cds",
                         "kind": "external_catalog_repository",
@@ -1274,7 +1359,7 @@ Byte-by-byte Description of file: table.dat
 
             self.assertEqual(csv_rows(paper_dir / "catalog_tables" / "resource-ads-cds.csv"), [["col_001", "col_002"], ["A", "700"]])
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
-            resource = manifest["external_resources"][0]
+            resource = manifest["external_catalog_sources"][0]
             self.assertEqual(resource["status"], "success")
             self.assertEqual([attempt["method"] for attempt in resource["resolver_attempts"][:3]], ["ads_entrypoint_resolver", "ads_catalog_record_resolver", "cds_vizier_resolver"])
             self.assertEqual(resource["locator_attempts"][0]["method"], "ads_cached_page")
@@ -1293,9 +1378,9 @@ Byte-by-byte Description of file: table.dat
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
+                internal_tables=[],
                 ads_html=ads_html,
-                external_resources=[
+                external_catalog_sources=[
                     {
                         "id": "resource-ads",
                         "kind": "external_catalog_repository",
@@ -1317,7 +1402,7 @@ Byte-by-byte Description of file: table.dat
 
             self.assertEqual(csv_rows(paper_dir / "catalog_tables" / "resource-ads.csv"), [["col_001", "col_002"], ["A", "700"]])
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
-            locator_attempts = manifest["external_resources"][0]["locator_attempts"]
+            locator_attempts = manifest["external_catalog_sources"][0]["locator_attempts"]
             self.assertEqual([attempt["method"] for attempt in locator_attempts], ["ads_cached_page", "agent_ads_page_locator"])
             self.assertEqual(locator_attempts[1]["selected_count"], 1)
             self.assertEqual(locator.contexts[0]["link_candidates"][0]["url"], "https://example.test/catalog.csv")
@@ -1336,9 +1421,9 @@ Byte-by-byte Description of file: table.dat
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
+                internal_tables=[],
                 ads_html=ads_html,
-                external_resources=[{"id": "resource-ads-empty", "kind": "external_catalog_repository"}],
+                external_catalog_sources=[{"id": "resource-ads-empty", "kind": "external_catalog_repository"}],
             )
 
             with patch("high_velocity_lit.catalog_extraction.requests.get") as fake_get:
@@ -1351,9 +1436,9 @@ Byte-by-byte Description of file: table.dat
 
             fake_get.assert_not_called()
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
-            self.assertEqual(manifest["external_resources"][0]["status"], "failed")
-            self.assertEqual(manifest["external_resources"][0]["stopped_reason"], "agent_locator_disabled")
-            self.assertEqual(manifest["external_resources"][0]["locator_attempts"][1]["method"], "agent_ads_page_locator")
+            self.assertEqual(manifest["external_catalog_sources"][0]["status"], "failed")
+            self.assertEqual(manifest["external_catalog_sources"][0]["stopped_reason"], "agent_locator_disabled")
+            self.assertEqual(manifest["external_catalog_sources"][0]["locator_attempts"][1]["method"], "agent_ads_page_locator")
             self.assertFalse((paper_dir / "catalog_tables" / "resource-ads-empty.csv").exists())
 
     def test_missing_external_locator_records_bounded_stop(self) -> None:
@@ -1361,8 +1446,8 @@ Byte-by-byte Description of file: table.dat
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[{"id": "resource-missing", "kind": "external_catalog_repository"}],
+                internal_tables=[],
+                external_catalog_sources=[{"id": "resource-missing", "kind": "external_catalog_repository"}],
             )
 
             extract_catalog_tables(
@@ -1373,14 +1458,14 @@ Byte-by-byte Description of file: table.dat
             )
 
             manifest = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
-            self.assertEqual(manifest["external_resources"][0]["status"], "skipped")
-            self.assertEqual(manifest["external_resources"][0]["stopped_reason"], "network_disabled")
+            self.assertEqual(manifest["external_catalog_sources"][0]["status"], "skipped")
+            self.assertEqual(manifest["external_catalog_sources"][0]["stopped_reason"], "network_disabled")
 
     def test_all_reviewed_parallel_jobs_preserve_result_order(self) -> None:
         def fake_summary() -> dict[str, int]:
             return {
-                "candidate_count": 1,
-                "resource_count": 0,
+                "internal_table_count": 1,
+                "external_catalog_source_count": 0,
                 "work_count": 1,
                 "table_count": 1,
                 "success_count": 1,
@@ -1421,8 +1506,8 @@ Byte-by-byte Description of file: table.dat
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[
+                internal_tables=[],
+                external_catalog_sources=[
                     {
                         "id": "resource-url-csv",
                         "kind": "external_catalog_repository",
@@ -1459,8 +1544,8 @@ Byte-by-byte Description of file: table.dat
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[
+                internal_tables=[],
+                external_catalog_sources=[
                     {
                         "id": "resource-local-csv",
                         "kind": "local_machine_readable_file",
@@ -1502,8 +1587,8 @@ Byte-by-byte Description of file: table.dat
             workspace = Path(tmp)
             literature_dir, paper_dir = self.write_reviewed_paper(
                 workspace,
-                catalog_candidates=[],
-                external_resources=[
+                internal_tables=[],
+                external_catalog_sources=[
                     {
                         "id": "resource-local-csv",
                         "kind": "local_machine_readable_file",

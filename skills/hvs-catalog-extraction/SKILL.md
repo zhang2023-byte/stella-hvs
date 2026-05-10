@@ -1,6 +1,6 @@
 ---
 name: hvs-catalog-extraction
-description: Extract reviewed high-velocity-star catalog tables in Stella after catalog_review.json exists. Use LaTeXML/Pandoc/project fallback tools for LaTeX tables and bounded local/URL/ADS handling for external resources, then manually review catalog_extraction.json with per-column physical meanings, usage notes, join keys, caveats, and provenance.
+description: Extract reviewed high-velocity-star catalog tables in Stella after catalog_review.json exists. Use LaTeXML/Pandoc/project fallback tools for internal LaTeX tables and bounded local/URL/ADS handling for external catalog sources, then manually review catalog_extraction.json with per-column physical meanings, usage notes, join keys, caveats, and provenance.
 ---
 
 # HVS Catalog Extraction
@@ -12,12 +12,12 @@ This is the extraction-and-meaning workflow. It may write:
 
 ```text
 literature/<arxiv_id>/catalog_extraction.json
-literature/<arxiv_id>/catalog_sources/<candidate_id>/excerpt.tex
-literature/<arxiv_id>/catalog_sources/<candidate_id>/latexml.html
-literature/<arxiv_id>/catalog_sources/<candidate_id>/pandoc.html
-literature/<arxiv_id>/catalog_sources/<resource_id>/download-001.*
-literature/<arxiv_id>/catalog_tables/<candidate_id>.csv
-literature/<arxiv_id>/catalog_tables/<resource_id>.csv
+literature/<arxiv_id>/catalog_sources/<internal_table_id>/excerpt.tex
+literature/<arxiv_id>/catalog_sources/<internal_table_id>/latexml.html
+literature/<arxiv_id>/catalog_sources/<internal_table_id>/pandoc.html
+literature/<arxiv_id>/catalog_sources/<external_source_id>/download-001.*
+literature/<arxiv_id>/catalog_tables/<internal_table_id>.csv
+literature/<arxiv_id>/catalog_tables/<external_source_id>.csv
 ```
 
 Do not edit generated CSV by hand. If table conversion is wrong, improve or rerun
@@ -26,8 +26,8 @@ the extraction command. Do edit `catalog_extraction.json` to fill semantic field
 ## Workflow
 
 1. Confirm prerequisites:
-   - `catalog_review.json` exists and has reviewed `catalog_candidates`.
-   - `external_resources` entries are ready for local machine-readable file
+   - `catalog_review.json` exists and has reviewed `internal_tables`.
+   - `external_catalog_sources` entries are ready for local machine-readable file
      parsing, explicit URL fetch, or bounded ADS Agent location. TeX evidence
      belongs in `source_refs`, not `local_path`.
    - `latexmlc` is available; if not, continue but note fallback behavior.
@@ -37,8 +37,8 @@ the extraction command. Do edit `catalog_extraction.json` to fill semantic field
    conda run -n stella-env python scripts/extract_catalog_tables.py --arxiv-id <arxiv_id>
    ```
 
-   Use `--candidate-id <id>` for one LaTeX table, `--resource-id <id>` for one
-   external resource, `--dry-run True` before risky bulk runs, and `--overwrite True`
+   Use `--internal-table-id <id>` for one LaTeX table, `--external-source-id <id>` for one
+   external catalog source, `--dry-run True` before risky bulk runs, and `--overwrite True`
    only when regenerating stale conversion artifacts.
    `--fetch-external Auto` enables network for one paper and disables it for
    `--all-reviewed`; local files are still parsed.
@@ -65,12 +65,12 @@ the extraction command. Do edit `catalog_extraction.json` to fill semantic field
    - `tables[].extraction_method`
    - `tables[].conversion_attempts`
    - `tables[].warnings`
-   - `external_resources[].resolver_attempts`
-   - `external_resources[].locator_attempts`
-   - `external_resources[].download_attempts`
+   - `external_catalog_sources[].resolver_attempts`
+   - `external_catalog_sources[].locator_attempts`
+   - `external_catalog_sources[].download_attempts`
    - `agent_locator_context.json` / `agent_locator_response.json` when an Agent
      locator attempt was used
-   - `external_resources[].stopped_reason`
+   - `external_catalog_sources[].stopped_reason`
    - row/column counts against the source table
 4. If conversion failed:
    - Read `conversion_attempts[].stderr_tail`.
@@ -122,9 +122,9 @@ Use the table itself, not just the column header.
 
 - Read `catalog_review.json` for `meaning`, `evidence`, `data_products`, and
   `source_refs`.
-- Read `catalog_sources/<candidate_id>/excerpt.tex`.
-- For external resources, read `external_resources[].meaning/evidence`,
-  `external_resources[].source_refs`, `catalog_sources/<resource_id>/download-*.{csv,txt,fits,vot,xml}`,
+- Read `catalog_sources/<internal_table_id>/excerpt.tex`.
+- For external catalog sources, read `external_catalog_sources[].meaning/evidence`,
+  `external_catalog_sources[].source_refs`, `catalog_sources/<external_source_id>/download-*.{csv,txt,fits,vot,xml}`,
   and `sources[].parse_attempts`.
 - Read several paragraphs before and after the source line range.
 - Search the TeX source for the table label, e.g. `rg "Tab_72dr3|ref\\{Tab_72dr3\\}"`.
@@ -159,7 +159,7 @@ and explain the ambiguity in `notes`.
 
 - This stage still preserves the paper's table structure. Do not map to a global
   Stella object schema unless the user explicitly asks for normalization.
-- External resources are handled only within strict boundaries: local file,
+- External catalog sources are handled only within strict boundaries: local file,
   explicit URL, deterministic known-provider resolvers, or bounded Agent locator
   fallback. ADS abstract HTML is an entrypoint only; allowed structured hops are
   limited to ADS catalog/data-product, CDS/VizieR, Zenodo, and NADC/China-VO. No
