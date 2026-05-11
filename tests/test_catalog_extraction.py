@@ -112,7 +112,7 @@ HVS2 & 710 \\
                             "label": "tab:data",
                         }
                     ],
-                    "data_units": [
+                    "columns": [
                         {"name": "Name", "meaning": "Object identifier."},
                         {"name": "velocity", "meaning": "Velocity value."},
                     ],

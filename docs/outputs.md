@@ -139,10 +139,10 @@ logs/run_<timestamp>.log
 - `paper`：arXiv ID、标题、月份、月度 JSON 路径、abs/pdf 链接
 - `source`：论文目录、`audit.json`、源码目录、主 TeX、源码可用性
 - `review`：数据资产审阅状态、时间、reviewer、总体说明
-- `internal_tables`：论文 LaTeX 内部结构化表格，包含全文语境下的作用和可见数据单元含义
+- `internal_tables`：论文 LaTeX 内部结构化表格，包含全文语境下的作用和可见 `columns[]` 列定义
 - `external_resources`：论文声明或引用的外部/本地资源，包含全文语境下的作用和论文可见的 declared data units
 
-本阶段只保存 LaTeX 段落、链接、路径、证据、数据单元说明和解释；不把 LaTeX 转 ECSV，不下载外部资源，不做高速星筛选。`external_resources[].local_path` 只表示已经归档的本地资源；远程资源的真实结构由 extraction 阶段下载后记录。
+本阶段只保存 LaTeX 段落、链接、路径、证据、内部表 `columns[]` 列说明，以及外部资源在论文中声明的结构；不把 LaTeX 转 ECSV，不下载外部资源，不做高速星筛选。`external_resources[].local_path` 只表示已经归档的本地资源；远程资源的真实结构由 extraction 阶段下载后记录。
 
 ## `catalog_extraction.json` 包含什么
 

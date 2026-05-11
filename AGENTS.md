@@ -107,7 +107,7 @@ conda run -n stella-env python scripts/annotate_catalog_data.py --on 2026-03
 
 做论文结构化数据资产审阅时，使用项目内 `hvs-catalog-review` skill。
 本阶段不再判断哪些资产是高速星 catalog，只梳理全文中的 `internal_tables`
-和 `external_resources`，并记录每个资产在全文语境下的作用和论文可见的数据单元含义。
+和 `external_resources`；内部表格用 `columns[]` 记录论文可见列含义，外部资源只记录论文声明的结构。
 Review 阶段不下载外部资源；远程资源的真实结构由 extraction 阶段记录。
 
 辅助候选清单：

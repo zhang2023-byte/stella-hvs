@@ -33,9 +33,10 @@ literature/<arxiv_id>/catalog_review.json
 4. Record all structured data assets visible in the paper:
    - `internal_tables`: LaTeX tables in the paper source.
    - `external_resources`: external or local resources mentioned by the paper.
-5. For every asset, record its full-paper role and data-unit meanings visible
-   from the paper text. For external resources, record only declared/expected
-   data units visible in the paper; do not claim the remote file was verified.
+5. For every internal table, record its full-paper role and visible column
+   meanings in `columns[]`. For external resources, record only
+   declared/expected data units visible in the paper; do not claim the remote
+   file was verified.
 6. Rebuild the workflow index:
 
    ```bash
@@ -101,7 +102,7 @@ Use `schema_version: "stella.article_data_assets.review.v1"`.
           "label": ""
         }
       ],
-      "data_units": [
+      "columns": [
         {
           "name": "",
           "meaning": "",

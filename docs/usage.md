@@ -205,8 +205,8 @@ literature/<arxiv_id>/catalog_review.json
 ```
 
 本阶段梳理论文已有结构化数据资产，不判断是否是高速星 catalog。输出只分为
-`internal_tables` 和 `external_resources`；内部表格需要记录全文语境下的作用和数据单元含义，
-外部资源只记录论文可见的 declared data units，不下载远程资源。
+`internal_tables` 和 `external_resources`；内部表格需要记录全文语境下的作用和 `columns[]`
+列含义，外部资源只记录论文可见的 declared data units，不下载远程资源。
 
 重建全局 catalog 工作流索引：
 

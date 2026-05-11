@@ -78,7 +78,7 @@ conda run -n stella-env python scripts/inventory_catalog_candidates.py \
 然后使用项目内 `hvs-catalog-review` skill 结合全文写出
 `literature/<arxiv_id>/catalog_review.json`。本阶段建立论文数据资产目录，
 只分 `internal_tables` 和 `external_resources`，不判断是否是高速星 catalog，
-不转换 ECSV、不解析 FITS、不下载外部资源。
+内部表格用 `internal_tables[].columns` 梳理列含义；不转换 ECSV、不解析 FITS、不下载外部资源。
 
 提取已审阅的内部表格和外部资源：
 
