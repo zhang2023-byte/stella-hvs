@@ -32,7 +32,7 @@ def main() -> int:
     print(
         "Built catalog workflow index: "
         f"{summary['paper_count']} papers, "
-        f"{summary['has_catalog_source_count']} with catalog sources, "
+        f"{summary['has_data_asset_count']} with data assets, "
         f"{summary['extraction_manifest_count']} extraction manifests, "
         f"{summary['extraction_success_count']} successful extractions, "
         f"{summary['extraction_partial_count']} partial extractions, "

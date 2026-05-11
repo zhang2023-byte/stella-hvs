@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Extract reviewed catalog tables into CSV plus provenance JSON."""
+"""Extract reviewed article data assets into ECSV/raw files plus provenance JSON."""
 
 from __future__ import annotations
 
@@ -94,20 +94,18 @@ def fetch_external_enabled(value: str, *, all_reviewed: bool) -> bool:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Extract reviewed high-velocity-star internal tables and external catalog sources to CSV."
+        description="Extract reviewed article data assets into ECSV tables and raw files."
     )
     selection = parser.add_mutually_exclusive_group(required=True)
-    selection.add_argument("--arxiv-id", help="Extract reviewed catalog sources for one arXiv ID.")
-    selection.add_argument("--all-reviewed", action="store_true", help="Extract all reviewed papers with internal tables or external catalog sources.")
+    selection.add_argument("--arxiv-id", help="Extract reviewed data assets for one arXiv ID.")
+    selection.add_argument("--all-reviewed", action="store_true", help="Extract all reviewed papers with internal tables or external resources.")
     parser.add_argument("--internal-table-id", default=None, help="Extract one internal_tables[].id. Requires --arxiv-id.")
-    parser.add_argument("--external-source-id", default=None, help="Extract one external_catalog_sources[].id. Requires --arxiv-id.")
-    parser.add_argument("--candidate-id", default=None, help=argparse.SUPPRESS)
-    parser.add_argument("--resource-id", default=None, help=argparse.SUPPRESS)
+    parser.add_argument("--external-resource-id", default=None, help="Extract one external_resources[].id. Requires --arxiv-id.")
     parser.add_argument("--literature-dir", type=Path, default=WORKSPACE / "literature")
-    parser.add_argument("--fetch-external", type=parse_fetch_external, default="Auto", metavar="Auto|True|False", help="Network policy for external catalog sources. Auto enables network for --arxiv-id and disables it for --all-reviewed.")
-    parser.add_argument("--max-external-files", type=int, default=5, help="Maximum downloaded external files per external catalog source. Default: 5.")
+    parser.add_argument("--fetch-external", type=parse_fetch_external, default="Auto", metavar="Auto|True|False", help="Network policy for external resources. Auto enables network for --arxiv-id and disables it for --all-reviewed.")
+    parser.add_argument("--max-external-files", type=int, default=5, help="Maximum downloaded files per external resource. Default: 5.")
     parser.add_argument("--max-external-bytes", type=int, default=MAX_EXTERNAL_BYTES, help="Maximum bytes per downloaded external file. Default: 52428800.")
-    parser.add_argument("--external-timeout", type=int, default=DEFAULT_EXTERNAL_TIMEOUT_SECONDS, help=f"HTTP and Agent locator timeout in seconds for external catalog sources. Default: {DEFAULT_EXTERNAL_TIMEOUT_SECONDS}.")
+    parser.add_argument("--external-timeout", type=int, default=DEFAULT_EXTERNAL_TIMEOUT_SECONDS, help=f"HTTP and Agent locator timeout in seconds for external resources. Default: {DEFAULT_EXTERNAL_TIMEOUT_SECONDS}.")
     parser.add_argument("--jobs", type=parse_jobs, default=1, metavar="Auto|N", help="Parallel paper workers for --all-reviewed. Default: 1.")
     parser.add_argument("--provider-resolver", type=parse_provider_resolver, default=PROVIDER_RESOLVER_ON, metavar="On|Off", help="Use deterministic provider resolvers for ADS/CDS/VizieR/Zenodo/NADC before Agent locator. Default: On.")
     parser.add_argument("--agent-locator", type=parse_agent_locator, default=AGENT_LOCATOR_ALWAYS, metavar="Off|Always", help="Use an LLM agent to choose bounded landing-page download candidates. Default: Always.")
@@ -117,27 +115,19 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--llm-thinking", default=env_value("LLM_THINKING"))
     parser.add_argument("--llm-reasoning-effort", default=env_value("LLM_REASONING_EFFORT"))
     parser.add_argument("--dry-run", type=parse_bool, default=False, metavar="True|False", help="Parse and report without writing files. Default: False.")
-    parser.add_argument("--overwrite", type=parse_bool, default=False, metavar="True|False", help="Rewrite existing source excerpts and CSV files. Default: False.")
+    parser.add_argument("--overwrite", type=parse_bool, default=False, metavar="True|False", help="Rewrite existing source excerpts, raw downloads, and ECSV files. Default: False.")
     return parser
 
 
 def main() -> int:
     args = build_parser().parse_args()
     literature_dir = args.literature_dir.expanduser()
-    if args.candidate_id:
-        print("--candidate-id is deprecated; use --internal-table-id", file=sys.stderr)
-    if args.resource_id:
-        print("--resource-id is deprecated; use --external-source-id", file=sys.stderr)
-    if args.candidate_id and args.internal_table_id:
-        raise SystemExit("--candidate-id and --internal-table-id are mutually exclusive")
-    if args.resource_id and args.external_source_id:
-        raise SystemExit("--resource-id and --external-source-id are mutually exclusive")
-    internal_table_id = args.internal_table_id or args.candidate_id
-    external_source_id = args.external_source_id or args.resource_id
-    if internal_table_id and external_source_id:
-        raise SystemExit("--internal-table-id and --external-source-id are mutually exclusive")
-    if (internal_table_id or external_source_id) and args.all_reviewed:
-        raise SystemExit("--internal-table-id and --external-source-id require --arxiv-id")
+    internal_table_id = args.internal_table_id
+    external_resource_id = args.external_resource_id
+    if internal_table_id and external_resource_id:
+        raise SystemExit("--internal-table-id and --external-resource-id are mutually exclusive")
+    if (internal_table_id or external_resource_id) and args.all_reviewed:
+        raise SystemExit("--internal-table-id and --external-resource-id require --arxiv-id")
     if not literature_dir.exists():
         raise SystemExit(f"literature directory does not exist: {literature_dir}")
     if args.max_external_files < 1:
@@ -185,7 +175,7 @@ def main() -> int:
                 arxiv_id=str(args.arxiv_id),
                 workspace=WORKSPACE,
                 internal_table_id=internal_table_id,
-                external_source_id=external_source_id,
+                external_resource_id=external_resource_id,
                 fetch_external=fetch_external,
                 max_external_files=args.max_external_files,
                 max_external_bytes=args.max_external_bytes,

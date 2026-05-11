@@ -8,8 +8,8 @@
 - 把标准结果写入 `notes/`
 - 给可能是数据型文献的论文加上 `catalog_assessment`
 - 给 `notes/` 中已判为数据相关的论文拉取本地资料归档到 `literature/`
-- 审阅已归档论文源码中的高速星对象 catalog，并生成 catalog 工作流索引
-- 将已审阅的 LaTeX catalog 表格提取为 CSV，并保留提取 provenance
+- 审阅已归档论文源码中的结构化数据资产，并生成数据资产工作流索引
+- 将已审阅的数据资产提取为 ECSV/raw files，并保留提取 provenance
 - 从 JSON 生成可读的 Markdown
 
 ## 环境准备
@@ -68,7 +68,7 @@ conda run -n stella-env python scripts/pull_literature_assets.py \
   --to 2026-04
 ```
 
-审阅单篇论文的高速星对象 catalog 候选：
+审阅单篇论文的结构化数据资产候选：
 
 ```bash
 conda run -n stella-env python scripts/inventory_catalog_candidates.py \
@@ -76,11 +76,11 @@ conda run -n stella-env python scripts/inventory_catalog_candidates.py \
 ```
 
 然后使用项目内 `hvs-catalog-review` skill 结合全文写出
-`literature/<arxiv_id>/catalog_review.json`。本阶段只做审阅和来源定位，
-不转换 CSV、不解析 FITS、不下载外部表格。
+`literature/<arxiv_id>/catalog_review.json`。本阶段建立论文数据资产目录，
+只分 `internal_tables` 和 `external_resources`，不判断是否是高速星 catalog，
+不转换 ECSV、不解析 FITS、不下载外部资源。
 
-提取已审阅的 LaTeX catalog 表格和外部机器可读 catalog，并在提取后由 Agent
-补充每列物理含义：
+提取已审阅的内部表格和外部资源：
 
 ```bash
 conda run -n stella-env python scripts/extract_catalog_tables.py \
@@ -88,24 +88,29 @@ conda run -n stella-env python scripts/extract_catalog_tables.py \
 ```
 
 提取阶段会写出 `literature/<arxiv_id>/catalog_extraction.json`、
-`catalog_sources/<id>/...` 和 `catalog_tables/<id>.csv`。LaTeX 表格优先使用
+`catalog_sources/<id>/...` 和 `catalog_tables/<id>.ecsv`。LaTeX 表格优先使用
 LaTeXML，然后是 Pandoc，最后回退到项目内 parser。外部资源会先解析本地
-机器可读文件，再按严格边界抓取明确 URL；默认 `--provider-resolver On`
+文件，再按严格边界抓取 review 中列出的明确 URL；默认 `--provider-resolver On`
 会优先使用 CDS/VizieR、Zenodo、NADC/China-VO 和 ADS data-product/catalog
 record 的结构化下载路径。明确 URL 返回其它 HTML landing page，或 provider
 resolver 找不到机器可读候选时，默认 `--agent-locator Always` 会让 LLM Agent
-只从当前页面已提取链接候选中选择下载项。ADS abstract 只作为入口页，结构化
+只从当前页面已提取链接候选中选择下载项。表格型资源输出 ECSV；ReadMe、HTML、
+JSON metadata 或其它非表格资源会作为 raw file 保存在 `catalog_sources/` 并记录到
+`catalog_extraction.json` 的 `files[]`。ADS abstract 只作为入口页，结构化
 resolver 只允许白名单二跳到 ADS catalog/data-product、CDS/VizieR、Zenodo 或 NADC。
 外部下载只允许公网 HTTP(S)，拒绝本机/私网/特殊地址，并受文件大小上限保护。
 如果 LLM 未配置、连接失败或返回无效结果，错误会记录到提取日志而不会中断整个流程；
 需要完全禁用时使用 `--agent-locator Off`。
-`external_catalog_sources[].local_path` 只表示可直接解析的本地机器可读表文件；TeX 证据路径
-应写入 `external_catalog_sources[].source_refs`。迁移旧字段和旧 review JSON 可运行
-`scripts/migrate_external_resource_source_refs.py`。
-语义补充使用项目内 `hvs-catalog-extraction` skill；CSV 保持论文/资源表格结构，
-不代表已经进入统一对象 schema。
+`catalog_extraction.json` 只保留生成当前提取资产的单个 `run`，不累积历史 runs。
+ECSV 保持论文/资源表格结构，不代表已经进入统一对象 schema；高速星对象识别由后续阶段完成。
 全量重跑时可以给 `--all-reviewed` 加 `--jobs Auto` 按论文并行；
 100 篇以上默认会尝试 12 个 jobs。你也可以直接指定 `--jobs N`。
+
+清理旧 catalog workflow 产物、保留原始论文归档：
+
+```bash
+conda run -n stella-env python scripts/cleanup_catalog_workflow_outputs.py --dry-run True
+```
 
 重建 catalog 工作流索引：
 
@@ -114,7 +119,7 @@ conda run -n stella-env python scripts/build_catalog_index.py
 ```
 
 该索引以 `catalog_review.json` 为入口，并在存在 `catalog_extraction.json` 时同时展示
-提取状态、表格/外部资源成功失败数量和语义补全进度。Review 状态和 extraction 状态分开
+提取状态、ECSV 表格和 raw files 成功失败数量。Review 状态和 extraction 状态分开
 展示，`partial` 不会跨阶段混用。
 
 从 JSON 重生成 Markdown：
@@ -139,10 +144,10 @@ conda run -n stella-env python scripts/render_lit_notes.py
 scripts/fetch_high_velocity_lit.py   月度文献抓取主入口
 scripts/annotate_catalog_data.py     给月度 JSON 补 catalog_assessment
 scripts/pull_literature_assets.py    拉取 data-related 文献的本地资料归档
-scripts/inventory_catalog_candidates.py   列出单篇论文的 catalog 审阅候选
-scripts/extract_catalog_tables.py    从 catalog_review.json 提取 LaTeX 表格为 CSV
-scripts/migrate_external_resource_source_refs.py   迁移 catalog source 字段和外部来源的 TeX 证据路径
-scripts/build_catalog_index.py       从 catalog_review.json 和 catalog_extraction.json 重建 catalog 工作流索引
+scripts/inventory_catalog_candidates.py   列出单篇论文的数据资产审阅候选
+scripts/extract_catalog_tables.py    从 catalog_review.json 提取数据资产为 ECSV/raw files
+scripts/cleanup_catalog_workflow_outputs.py   清理旧 catalog review/extraction 产物
+scripts/build_catalog_index.py       从 catalog_review.json 和 catalog_extraction.json 重建数据资产工作流索引
 scripts/render_lit_notes.py          从 JSON 重生成 Markdown
 docs/                                说明文档
 literature/                          本地文献资产归档（默认不纳入 Git）

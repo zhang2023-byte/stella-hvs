@@ -1,79 +1,77 @@
 ---
 name: hvs-catalog-review
-description: Review archived high-velocity-star papers in Stella to identify object-level internal catalog tables and external catalog sources from local TeX/source files, then write literature/<arxiv_id>/catalog_review.json. Use when asked to inspect catalog tables, source TeX, machine-readable files, or external catalog sources for a paper.
+description: Review archived Stella papers to build a complete article data-asset inventory: internal LaTeX tables and external resources, with paper-context roles and data-unit meanings. This stage does not decide whether assets are high-velocity-star catalogs and does not download external resources.
 ---
 
-# HVS Catalog Review
+# Article Data Asset Review
 
-Use this skill inside Stella after paper assets have been archived under `literature/<arxiv_id>/`.
+Use this skill after paper assets have been archived under `literature/<arxiv_id>/`.
 
-This is a review workflow, not a table-extraction workflow. Do not convert LaTeX to CSV, parse FITS, or download external tables in this stage. The output is a machine-readable judgment record: `literature/<arxiv_id>/catalog_review.json`.
+This is a data-asset review workflow, not an HVS catalog filtering workflow and
+not an extraction workflow. Do not convert LaTeX to ECSV, parse FITS, or download
+external resources in this stage. The output is:
+
+```text
+literature/<arxiv_id>/catalog_review.json
+```
 
 ## Workflow
 
-1. Inspect the paper archive:
+1. Inspect:
    - `literature/<arxiv_id>/audit.json`
    - `literature/<arxiv_id>/arxiv_source/`
-   - the related monthly JSON referenced by `audit.source_note_json`
-2. Run the local inventory helper:
+   - the monthly JSON referenced by `audit.source_note_json`
+2. Run the inventory helper:
 
    ```bash
    conda run -n stella-env python scripts/inventory_catalog_candidates.py --arxiv-id <arxiv_id>
    ```
 
-   Treat inventory output as a reading map only. It is not a decision.
-3. Read the main `.tex` file, relevant `\input`/`\include` files, table surroundings, abstract/conclusion, and any data-availability or acknowledgements text.
-4. Decide which candidates are true high-velocity-star object catalogs. Include only tables or resources that list, describe, or point to object-level stellar data: object names/IDs, coordinates, astrometry, radial velocities, spectra, abundances, orbit quantities, candidate flags, or follow-up measurements.
-5. Write `catalog_review.json` with included, external, rejected, and uncertain candidates. Keep evidence short but specific.
-6. Rebuild the global index:
+   Treat inventory output as a reading map only.
+3. Read the main `.tex`, relevant `\input`/`\include` files, table surroundings,
+   abstract/conclusion, appendix, acknowledgements, and data-availability text.
+4. Record all structured data assets visible in the paper:
+   - `internal_tables`: LaTeX tables in the paper source.
+   - `external_resources`: external or local resources mentioned by the paper.
+5. For every asset, record its full-paper role and data-unit meanings visible
+   from the paper text. For external resources, record only declared/expected
+   data units visible in the paper; do not claim the remote file was verified.
+6. Rebuild the workflow index:
 
    ```bash
    conda run -n stella-env python scripts/build_catalog_index.py
    ```
 
-After this review workflow is complete, table extraction is a separate follow-up step:
-
-```bash
-conda run -n stella-env python scripts/extract_catalog_tables.py --arxiv-id <arxiv_id>
-```
-
-Use the `hvs-catalog-extraction` skill for that follow-up. It writes
-`catalog_extraction.json`, `catalog_sources/`, and `catalog_tables/` for both
-LaTeX tables and bounded external catalog sources, then fills per-column meanings and
-table usage notes. Do not perform those writes while using this review skill.
-
 ## Review Boundaries
 
-Include:
+Include all structured data assets, not only high-velocity-star object catalogs:
 
-- New or compiled high-velocity, hypervelocity, runaway, escaping, unbound, high-speed, or ejected star candidate/object tables.
-- Single-object tables when they provide object-level measurements for a target high-velocity star.
-- External or local machine-readable resources that are explicitly the paper's object catalog or table data.
+- object/candidate tables
+- observation logs
+- sample summaries
+- model/fit parameter tables
+- follow-up measurement tables
+- data-availability resources
+- local or external machine-readable files
+- ReadMe or metadata resources referenced by the paper
 
-Reject:
-
-- General survey descriptions without a paper-specific object catalog.
-- Simulation-only tables, model grids, population summaries, observing logs, or figures without object-level catalog values.
-- Non-stellar high-velocity objects unless the paper clearly connects them to stellar object catalogs.
-
-If uncertain, keep the source out of `internal_tables` and `external_catalog_sources`, and put it in `rejected_candidates` with `decision: "uncertain"` and a comment explaining what would resolve it.
+If an inventory candidate is not a structured data asset, simply omit it. The
+review should not decide whether an asset is HVS data; later workflows handle
+HVS extraction and normalization.
 
 ## Output Schema
 
-Use `schema_version: "stella.hvs_catalog.review.v2"`.
+Use `schema_version: "stella.article_data_assets.review.v1"`.
 
 ```json
 {
-  "schema_version": "stella.hvs_catalog.review.v2",
+  "schema_version": "stella.article_data_assets.review.v1",
   "paper": {
     "arxiv_id": "2402.10714",
     "title": "",
     "month": "2024-02",
     "source_note_json": "notes/2024/2024-02/2024-02.json",
-    "links": {
-      "abs": "",
-      "pdf": ""
-    }
+    "links": {"abs": "", "pdf": ""}
   },
   "source": {
     "paper_dir": "literature/2402.10714",
@@ -92,9 +90,8 @@ Use `schema_version: "stella.hvs_catalog.review.v2"`.
     {
       "id": "table-1",
       "kind": "latex_table",
-      "catalog_role": "new_catalog",
-      "object_scope": "multiple_objects",
-      "data_products": ["source_ids", "coordinates", "astrometry"],
+      "asset_type": "object_measurement_table",
+      "role_in_paper": "",
       "source_refs": [
         {
           "path": "literature/2402.10714/arxiv_source/main.tex",
@@ -104,19 +101,26 @@ Use `schema_version: "stella.hvs_catalog.review.v2"`.
           "label": ""
         }
       ],
-      "latex_excerpt": "",
-      "meaning": "",
+      "data_units": [
+        {
+          "name": "",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "",
+          "confidence": 0.0
+        }
+      ],
       "evidence": "",
-      "confidence": 0.0,
       "comments": ""
     }
   ],
-  "external_catalog_sources": [
+  "external_resources": [
     {
       "id": "resource-1",
       "kind": "external_url",
       "url": "",
       "local_path": "",
+      "role_in_paper": "",
       "source_refs": [
         {
           "path": "",
@@ -125,38 +129,30 @@ Use `schema_version: "stella.hvs_catalog.review.v2"`.
           "context": ""
         }
       ],
-      "meaning": "",
+      "declared_data_units": [
+        {
+          "name": "",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "",
+          "confidence": 0.0
+        }
+      ],
       "evidence": "",
       "comments": ""
-    }
-  ],
-  "rejected_candidates": [
-    {
-      "id": "rejected-1",
-      "kind": "latex_table",
-      "source_ref": {
-        "path": "",
-        "start_line": 0,
-        "end_line": 0,
-        "caption": "",
-        "label": ""
-      },
-      "decision": "rejected",
-      "reason": ""
     }
   ]
 }
 ```
 
-Allowed `review.status` values: `reviewed`, `partial`, `needs_review`, `source_missing`.
+Allowed `review.status` values: `reviewed`, `partial`, `needs_review`,
+`source_missing`.
 
-Suggested `catalog_role` values: `new_catalog`, `compiled_catalog`, `followup_observations`, `uses_existing_catalog`, `unclear`.
+Suggested `asset_type` values: `object_measurement_table`, `observation_log`,
+`sample_summary`, `model_parameter_table`, `fit_result_table`,
+`external_machine_readable_table`, `readme_or_metadata`,
+`data_availability_resource`, `other_structured_data`.
 
-Suggested `object_scope` values: `single_object`, `multiple_objects`, `none`, `unclear`.
-
-For `external_catalog_sources`, use `local_path` only when it points to a local
-machine-readable table file (`.csv/.tsv/.txt/.dat/.tbl/.mrt/.ecsv/.fits/.fit/.fits.gz/.vot/.votable/.xml`).
-If the resource is evidenced by a TeX line, put the TeX path and line range in
-`source_refs`; do not put `.tex` files in `local_path`.
-
-Do not record table columns in `catalog_review.json`. Preserve accurate `source_refs.start_line` and `source_refs.end_line` so later table-extraction stages can return to the exact TeX span and write precise column schemas under `catalog_extraction.json`, `catalog_sources/`, and `catalog_tables/`.
+For `external_resources`, use `local_path` only when it points to an already
+archived local resource. Remote resources are downloaded only by
+`hvs-catalog-extraction`.

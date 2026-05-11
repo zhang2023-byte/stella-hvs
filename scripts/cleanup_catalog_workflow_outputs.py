@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Clean old catalog workflow outputs before rebuilding data asset manifests."""
+"""Remove old catalog workflow outputs while preserving archived paper assets."""
 
 from __future__ import annotations
 
@@ -27,7 +27,7 @@ def parse_bool(value: str) -> bool:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Remove old catalog review/extraction outputs while preserving archived paper assets."
+        description="Remove catalog_review.json, catalog_extraction.json, catalog_sources/, catalog_tables/, and catalog workflow indexes."
     )
     parser.add_argument("--literature-dir", type=Path, default=WORKSPACE / "literature")
     parser.add_argument("--dry-run", type=parse_bool, default=False, metavar="True|False", help="Report changes without removing files. Default: False.")
@@ -36,10 +36,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main() -> int:
     args = build_parser().parse_args()
-    literature_dir = args.literature_dir.expanduser()
-    if not literature_dir.exists():
-        raise SystemExit(f"literature directory does not exist: {literature_dir}")
-    payload = cleanup_catalog_workflow_outputs(literature_dir, dry_run=args.dry_run)
+    payload = cleanup_catalog_workflow_outputs(args.literature_dir.expanduser(), dry_run=args.dry_run)
     print(json.dumps(payload, ensure_ascii=False, indent=2))
     return 0
 

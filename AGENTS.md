@@ -10,8 +10,8 @@
 - 用标题做相关性初筛
 - 把标准结果写入 `notes/`
 - 给已有月度 JSON 加上 `catalog_assessment`
-- 审阅已归档论文源码中的高速星对象 catalog，并写入 `catalog_review.json`
-- 根据 `catalog_review.json` 提取论文中的 LaTeX catalog 表格为 CSV，并写入 `catalog_extraction.json`
+- 审阅已归档论文源码中的结构化数据资产，并写入 `catalog_review.json`
+- 根据 `catalog_review.json` 将内部 LaTeX 表格和外部资源忠实提取为 ECSV/raw files，并写入 `catalog_extraction.json`
 - 从 JSON 生成 Markdown
 
 ## 项目愿景
@@ -33,15 +33,15 @@ notes/YYYY/YYYY-MM/YYYY-MM.json   月度标准记录
 notes/YYYY/YYYY-MM/YYYY-MM.md     月度阅读笔记
 notes/literature_notes_index.json                  全局索引
 notes/literature_notes_index.md                    年度视图
-literature/<arxiv_id>/catalog_review.json   单篇 catalog 审阅事实源
-literature/<arxiv_id>/catalog_extraction.json   单篇 catalog 表格提取事实源
+literature/<arxiv_id>/catalog_review.json   单篇论文数据资产审阅事实源
+literature/<arxiv_id>/catalog_extraction.json   单篇论文数据资产提取事实源
 literature/<arxiv_id>/catalog_sources/<internal_table_id>/excerpt.tex   原始 LaTeX 表格摘录
 literature/<arxiv_id>/catalog_sources/<internal_table_id>/latexml.html   LaTeXML 转换视图
-literature/<arxiv_id>/catalog_tables/<internal_table_id>.csv   忠实表格 CSV
-literature/<arxiv_id>/catalog_sources/<external_source_id>/download-001.*   外部 catalog 来源下载件
-literature/<arxiv_id>/catalog_tables/<external_source_id>.csv   外部 catalog 来源忠实 CSV
-literature/catalog_workflow_index.json      catalog 工作流全局索引
-literature/catalog_workflow_index.md        catalog 工作流阅读视图
+literature/<arxiv_id>/catalog_tables/<internal_table_id>.ecsv   忠实表格 ECSV
+literature/<arxiv_id>/catalog_sources/<external_resource_id>/download-001.*   外部资源下载件
+literature/<arxiv_id>/catalog_tables/<external_resource_id>.ecsv   外部表格资源忠实 ECSV
+literature/catalog_workflow_index.json      数据资产工作流全局索引
+literature/catalog_workflow_index.md        数据资产工作流阅读视图
 ```
 
 不要手动改生成后的 Markdown。  
@@ -105,11 +105,10 @@ conda run -n stella-env python scripts/annotate_catalog_data.py --on 2026-03
 
 判断应结合 abstract；如果记录里已有旧的 brief 字段，也可以一起参考。完成后要刷新对应 Markdown，并重建索引。
 
-做高速星对象 catalog 审阅时，使用项目内 `hvs-catalog-review` skill。
-本阶段只判断并记录哪些 LaTeX 表格或外部资源是高速星对象 catalog，
-输出 `literature/<arxiv_id>/catalog_review.json`。不要声称已经提取出标准表格；
-LaTeX 转 CSV、下载外部表格、规范化 schema 应放到后续
-`catalog_sources/` 和 `catalog_tables/` 阶段。
+做论文结构化数据资产审阅时，使用项目内 `hvs-catalog-review` skill。
+本阶段不再判断哪些资产是高速星 catalog，只梳理全文中的 `internal_tables`
+和 `external_resources`，并记录每个资产在全文语境下的作用和论文可见的数据单元含义。
+Review 阶段不下载外部资源；远程资源的真实结构由 extraction 阶段记录。
 
 辅助候选清单：
 
@@ -117,7 +116,7 @@ LaTeX 转 CSV、下载外部表格、规范化 schema 应放到后续
 conda run -n stella-env python scripts/inventory_catalog_candidates.py --arxiv-id 2402.10714
 ```
 
-重建 catalog index：
+重建数据资产 workflow index：
 
 ```bash
 conda run -n stella-env python scripts/build_catalog_index.py
@@ -126,23 +125,17 @@ conda run -n stella-env python scripts/build_catalog_index.py
 不要手动改 `literature/catalog_workflow_index.json` 或 `literature/catalog_workflow_index.md`。
 如果输出有问题，应修改 `catalog_review.json` 或索引渲染逻辑，然后重新生成。
 
-提取已审阅 catalog 表格时，使用项目内 `hvs-catalog-extraction` skill：
+提取已审阅数据资产时，使用项目内 `hvs-catalog-extraction` skill：
 
 ```bash
 conda run -n stella-env python scripts/extract_catalog_tables.py --arxiv-id 2402.10714
 ```
 
-表格提取同时处理 `internal_tables` 中的 `latex_table` 和 `external_catalog_sources`。LaTeX 转换顺序是
-LaTeXML、Pandoc、项目内 fallback parser；外部 catalog 来源优先解析本地机器可读文件，
-其次抓取明确 URL；明确 URL 的 HTML landing page 和没有 URL/local path 时的 ADS HTML
-都走 bounded Agent locator。`--agent-locator Off` 时，HTML/ADS 页面只记录停止原因，
-不下载页面里的链接。
-把原始摘录、下载文件和转换/定位日志写到 `catalog_sources/`，把忠实 CSV 写到
-`catalog_tables/`，并用 `catalog_extraction.json` 记录来源、日志、成功失败、列头、
-列含义、source hash 和 external stop boundary。
-运行工具后，Agent 必须结合 caption、table footnote、正文引用和上下文手动补充
-每列 `physical_quantity`、`meaning`、`source_of_definition` 与表格 `usage`。
-CSV 不等于规范化对象库；不要在这一阶段强行统一 schema。外部网络抓取不得使用
+提取同时处理 `internal_tables` 中的 `latex_table` 和 `external_resources`。LaTeX 转换顺序是
+LaTeXML、Pandoc、项目内 fallback parser；表格型资产写出 ECSV，非表格资源
+如 ReadMe、HTML、JSON metadata 或无法表格化的下载件也要忠实保存为 raw files。
+`catalog_extraction.json` 只保留生成当前提取资产的单个 `run`，不累积历史 runs。
+Extraction 阶段不补科学语义、不做高速星筛选、不强行统一 schema。外部网络抓取不得使用
 搜索引擎、不得递归爬取、不得登录；只允许公网 HTTP(S)，拒绝 localhost、私网和特殊地址；
 单文件下载受 `--max-external-bytes` 限制；`--all-reviewed --fetch-external Auto` 默认不联网。
 全量重跑可用 `--jobs Auto` 按论文数自动并行；100 篇以上会尝试更高并发，
