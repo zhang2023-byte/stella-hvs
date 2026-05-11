@@ -206,7 +206,7 @@ literature/<arxiv_id>/catalog_review.json
 
 本阶段梳理论文已有结构化数据资产，不判断是否是高速星 catalog。输出只分为
 `internal_tables` 和 `external_resources`；内部表格需要记录全文语境下的作用和 `columns[]`
-列含义，外部资源只记录论文可见的 declared data units，不下载远程资源。
+列含义，外部资源只逐项记录论文中的整体描述、链接、路径、证据和备注，不分析远程资源内部结构，也不下载远程资源。
 
 重建全局 catalog 工作流索引：
 
@@ -222,8 +222,8 @@ literature/catalog_workflow_index.md
 ```
 
 索引以 `literature/*/catalog_review.json` 为入口；如果同目录存在
-`catalog_extraction.json`，会同时汇总当前提取状态、ECSV 表格成功/失败数量，以及 raw file
-保存成功/失败数量。`catalog_workflow_index.md` 中 review 状态和 extraction 状态分开显示。
+`catalog_extraction.json`，会同时汇总当前内部表格提取状态、ECSV 表格成功/失败数量，以及 excerpt
+文件保存成功/失败数量。`catalog_workflow_index.md` 中 review 状态和 extraction 状态分开显示。
 
 Review 状态含义：
 
@@ -237,10 +237,10 @@ Extraction 状态含义：
 - `success`：当前提取运行无表格或文件失败。
 - `partial`：当前提取至少产出一个表格或文件，但也有失败。
 - `failed`：当前提取或 manifest 读取失败。
-- `not_started`：review 已发现 data assets，但尚无 `catalog_extraction.json`。
-- `not_applicable`：review 未发现 data assets，无需提取。
+- `not_started`：review 已发现内部表格，但尚无 `catalog_extraction.json`。
+- `not_applicable`：review 未发现内部表格；即使只有外部资源，也无需提取。
 
-## 6. 提取已审阅数据资产
+## 6. 提取已审阅内部表格
 
 推荐先安装 LaTeXML：
 
@@ -248,10 +248,10 @@ Extraction 状态含义：
 brew install latexml
 ```
 
-提取脚本会按顺序尝试 LaTeXML、Pandoc 和项目内 fallback parser；同一次运行也会处理
-`catalog_review.json` 中记录的 `external_resources`。表格型资产输出 ECSV；非表格资源保存 raw artifact。
+提取脚本会按顺序尝试 LaTeXML、Pandoc 和项目内 fallback parser。只有
+`catalog_review.json` 中的 `internal_tables` 会进入提取阶段；`external_resources` 只保留在 review 中。
 
-给单篇论文提取所有已审阅的内部表格和外部资源：
+给单篇论文提取所有已审阅的内部表格：
 
 ```bash
 conda run -n stella-env python scripts/extract_catalog_tables.py \
@@ -266,15 +266,7 @@ conda run -n stella-env python scripts/extract_catalog_tables.py \
   --internal-table-id table-tab-72dr3
 ```
 
-只提取一个外部资源：
-
-```bash
-conda run -n stella-env python scripts/extract_catalog_tables.py \
-  --arxiv-id 2509.24010 \
-  --external-resource-id resource-local-final-catalog-fits
-```
-
-提取所有已审阅且有 internal table 或 external resource 的论文：
+提取所有已审阅且有 internal table 的论文：
 
 ```bash
 conda run -n stella-env python scripts/extract_catalog_tables.py \
@@ -285,44 +277,27 @@ conda run -n stella-env python scripts/extract_catalog_tables.py \
 
 ```text
 --arxiv-id ID              提取单篇论文
---all-reviewed             提取所有 reviewed 且有 internal table 或 external resource 的论文
+--all-reviewed             提取所有 reviewed 且有 internal table 的论文
 --internal-table-id ID     只提取单个 internal_tables[].id，需配合 --arxiv-id
---external-resource-id ID  只提取单个 external_resources[].id，需配合 --arxiv-id
---fetch-external Auto|True|False
-                           外部资源网络策略；Auto 下单篇联网、批量不联网
---max-external-files N     每个外部资源最多下载 N 个机器可读文件，默认 5
---max-external-bytes N     单个外部资源下载硬上限，默认 52428800
---external-timeout N       外部资源 HTTP 和 Agent locator 超时秒数，默认 60
 --jobs Auto|N              --all-reviewed 的并行论文 worker 数，默认 1
---provider-resolver On|Off
-                           已知来源结构化 resolver；默认 On，先解析 ADS/CDS/VizieR/Zenodo/NADC
---agent-locator Off|Always
-                           LLM Agent 页面定位；默认 Always，对 HTML landing page 始终调用 Agent
---llm-api-key KEY          Agent locator 使用的 OpenAI-compatible API key；也可用 LLM_API_KEY 等环境变量
---llm-base-url URL         Agent locator API base URL，默认 LLM_BASE_URL 或 https://api.openai.com/v1
---llm-model MODEL          Agent locator 模型，默认 LLM_MODEL 或 gpt-4o-mini
 --literature-dir PATH      文献归档根目录，默认 literature
 --dry-run True|False       只解析并报告，不写文件，默认 False
---overwrite True|False     覆盖已有 excerpt.tex、raw 下载件和 ECSV，默认 False
+--overwrite True|False     覆盖已有 excerpt.tex 和 ECSV，默认 False
 ```
 
 ### 说明
 
 - LaTeX 表格会写出 `catalog_sources/<internal_table_id>/excerpt.tex`、转换器 HTML/log artifacts 和 `catalog_tables/<internal_table_id>.ecsv`。
 - LaTeX 解析失败也会保留 `excerpt.tex`，便于复查失败上下文。
-- 外部资源会优先解析本地 `local_path`，其次抓取明确 URL。默认 `--provider-resolver On` 会在直接 URL 或 ADS 入口页上优先使用结构化 resolver：CDS/VizieR 通过 catalog id 尝试 ASU TSV/VOTable 和 ReadMe 数据文件，Zenodo 通过 records API 选择 files，NADC/China-VO 从资源页提取 `file_upload/download` 链接。没有 `url` 或可解析 `local_path` 时，会读取已有或可获取的 ADS abstract HTML 作为入口页。
+- 外部资源不会在 extraction 阶段解析、下载、定位、转换或写入下载件；如需参考，只看 `catalog_review.json` 中的资源描述和证据。
 - 清理旧 catalog 工作流产物可运行：
 
 ```bash
 conda run -n stella-env python scripts/cleanup_catalog_workflow_outputs.py --dry-run True
 ```
 
-- `external_resources[].resolver_attempts[]` 记录结构化 resolver 的 provider、输入 URL、候选数、选择链接、artifact 和停止原因。
-- `--agent-locator` 默认是 `Always`：明确 URL 返回非 provider HTML landing page，或结构化 resolver 没找到可解析下载项时，下载链接选择才交给 LLM Agent。Agent 只接收页面标题、可见文本摘录、外部资源 evidence 和页面中提取出的链接候选；网页正文、链接文字和文件名都被视为不可信数据，它只能返回候选 ID，不能发明 URL。脚本仍会校验链接、文件大小和解析/保存结果，并把 `agent_locator_context.json`、`agent_locator_response.json` 作为 provenance 写入 `catalog_sources/<external_resource_id>/`。
-- 外部抓取不会使用搜索引擎、不会递归爬取、不会登录；ADS 只允许一层白名单二跳到 ADS catalog/data-product、CDS/VizieR、Zenodo 或 NADC。所有 resolver 和 Agent 候选都只允许公网 HTTP(S)，拒绝 localhost、私网 IP、link-local、loopback、multicast、reserved 地址和无 host URL；遇到占位 URL、unsupported content、超时、超过文件数、超过大小上限或解析失败时，会在 JSON 中记录 `stopped_reason`。
-- 外部机器可读后缀统一支持 `.csv/.tsv/.txt/.dat/.tbl/.mrt/.ecsv/.fits/.fit/.fits.gz/.vot/.votable/.xml`。
-- 全量重跑可以用 `--jobs Auto` 按论文并行；Auto 会按论文数选择 1/2/4/8/12 个 worker。也可以直接指定 `--jobs N`。并行不会减少 API/网络总成本，只是减少等待时间；外部资源和 Agent locator 较多时收益最明显。DeepSeek API 并发限额是动态的，如果出现 429、timeout 或大量 `agent_error`，下次直接指定更小的 `--jobs N`。
-- 每篇论文会写出 `catalog_extraction.json`，记录单个当前 `run`、raw files、转换/下载/定位尝试结果、成功失败、ECSV 路径和观测到的列头/单位。
+- 全量重跑可以用 `--jobs Auto` 按论文并行；Auto 会按论文数选择 1/2/4/8/12 个 worker。也可以直接指定 `--jobs N`。
+- 每篇论文会写出 `catalog_extraction.json`，记录单个当前 `run`、excerpt 文件、转换尝试结果、成功失败、ECSV 路径和观测到的列头/单位；转换器 stdout/stderr 内容只保存在 artifact 文件中，JSON 里只保留路径。
 - ECSV 使用 `col_001`、`col_002` 这类稳定列名，尽量忠实保留论文表格，不表示已经完成统一对象 schema。
 
 ## 7. 时间写法

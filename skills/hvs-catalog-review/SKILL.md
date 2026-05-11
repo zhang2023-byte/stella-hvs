@@ -1,6 +1,6 @@
 ---
 name: hvs-catalog-review
-description: Review archived Stella papers to build a complete article data-asset inventory: internal LaTeX tables and external resources, with paper-context roles and data-unit meanings. This stage does not decide whether assets are high-velocity-star catalogs and does not download external resources.
+description: Review archived Stella papers to build an article data-asset inventory: internal LaTeX tables with columns, plus external resources described from the paper text. This stage does not decide whether assets are high-velocity-star catalogs and does not download external resources.
 ---
 
 # Article Data Asset Review
@@ -34,9 +34,9 @@ literature/<arxiv_id>/catalog_review.json
    - `internal_tables`: LaTeX tables in the paper source.
    - `external_resources`: external or local resources mentioned by the paper.
 5. For every internal table, record its full-paper role and visible column
-   meanings in `columns[]`. For external resources, record only
-   declared/expected data units visible in the paper; do not claim the remote
-   file was verified.
+   meanings in `columns[]`. For every external resource, record only a
+   per-resource description grounded in the paper text; do not infer or analyze
+   remote-file structure or schema.
 6. Rebuild the workflow index:
 
    ```bash
@@ -121,22 +121,13 @@ Use `schema_version: "stella.article_data_assets.review.v1"`.
       "kind": "external_url",
       "url": "",
       "local_path": "",
-      "role_in_paper": "",
+      "description": "",
       "source_refs": [
         {
           "path": "",
           "start_line": 0,
           "end_line": 0,
           "context": ""
-        }
-      ],
-      "declared_data_units": [
-        {
-          "name": "",
-          "meaning": "",
-          "unit_text": "",
-          "source_of_definition": "",
-          "confidence": 0.0
         }
       ],
       "evidence": "",
@@ -155,5 +146,5 @@ Suggested `asset_type` values: `object_measurement_table`, `observation_log`,
 `data_availability_resource`, `other_structured_data`.
 
 For `external_resources`, use `local_path` only when it points to an already
-archived local resource. Remote resources are downloaded only by
-`hvs-catalog-extraction`.
+archived local resource. Remote resources are not downloaded by this review
+workflow or by `hvs-catalog-extraction`.

@@ -142,13 +142,12 @@ class CatalogReviewTest(unittest.TestCase):
             write_json_file(
                 paper_dir / "catalog_extraction.json",
                 {
-                    "schema_version": "stella.article_data_assets.extraction.v1",
+                    "schema_version": "stella.article_data_assets.extraction.v2",
                     "generated_at": "2026-04-25T12:00:00",
                     "paper": {"arxiv_id": "2603.00001", "title": "Reviewed assets", "month": "2026-03"},
                     "run": {"status": "success", "summary": {"success_count": 1, "failed_count": 0}},
                     "tables": [{"id": "table-1", "status": "success", "ecsv_path": "literature/2603.00001/catalog_tables/table-1.ecsv"}],
                     "files": [{"id": "table-1", "status": "written", "excerpt_path": "literature/2603.00001/catalog_sources/table-1/excerpt.tex"}],
-                    "external_resources": [{"id": "resource-1", "status": "success"}],
                 },
             )
             needs_dir = literature_dir / "2603.00002"
@@ -162,18 +161,29 @@ class CatalogReviewTest(unittest.TestCase):
                     "external_resources": [],
                 },
             )
+            external_only_dir = literature_dir / "2603.00003"
+            write_json_file(
+                external_only_dir / "catalog_review.json",
+                {
+                    "schema_version": "stella.article_data_assets.review.v1",
+                    "paper": {"arxiv_id": "2603.00003", "title": "External only", "month": "2026-03"},
+                    "review": {"status": "reviewed", "reviewed_at": "2026-04-24T13:00:00"},
+                    "internal_tables": [],
+                    "external_resources": [{"id": "resource-2", "description": "External archive described by the paper."}],
+                },
+            )
 
             index = rebuild_catalog_index(literature_dir, workspace=workspace)
 
             self.assertEqual(index["schema_version"], "stella.article_data_assets.index.v1")
-            self.assertEqual(index["summary"]["paper_count"], 2)
-            self.assertEqual(index["summary"]["reviewed_count"], 1)
-            self.assertEqual(index["summary"]["has_data_asset_count"], 1)
+            self.assertEqual(index["summary"]["paper_count"], 3)
+            self.assertEqual(index["summary"]["reviewed_count"], 2)
+            self.assertEqual(index["summary"]["has_data_asset_count"], 2)
             self.assertEqual(index["summary"]["has_internal_table_count"], 1)
             self.assertEqual(index["summary"]["internal_table_count"], 1)
-            self.assertEqual(index["summary"]["external_resource_count"], 1)
+            self.assertEqual(index["summary"]["external_resource_count"], 2)
             self.assertEqual(index["summary"]["extraction_success_count"], 1)
-            self.assertEqual(index["summary"]["extraction_not_applicable_count"], 1)
+            self.assertEqual(index["summary"]["extraction_not_applicable_count"], 2)
             self.assertEqual(index["summary"]["table_success_count"], 1)
             self.assertEqual(index["summary"]["file_success_count"], 1)
 

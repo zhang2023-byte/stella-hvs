@@ -11,7 +11,7 @@
 - 把标准结果写入 `notes/`
 - 给已有月度 JSON 加上 `catalog_assessment`
 - 审阅已归档论文源码中的结构化数据资产，并写入 `catalog_review.json`
-- 根据 `catalog_review.json` 将内部 LaTeX 表格和外部资源忠实提取为 ECSV/raw files，并写入 `catalog_extraction.json`
+- 根据 `catalog_review.json` 将内部 LaTeX 表格忠实提取为 ECSV，并写入 `catalog_extraction.json`
 - 从 JSON 生成 Markdown
 
 ## 项目愿景
@@ -34,12 +34,10 @@ notes/YYYY/YYYY-MM/YYYY-MM.md     月度阅读笔记
 notes/literature_notes_index.json                  全局索引
 notes/literature_notes_index.md                    年度视图
 literature/<arxiv_id>/catalog_review.json   单篇论文数据资产审阅事实源
-literature/<arxiv_id>/catalog_extraction.json   单篇论文数据资产提取事实源
+literature/<arxiv_id>/catalog_extraction.json   单篇论文内部表格提取事实源
 literature/<arxiv_id>/catalog_sources/<internal_table_id>/excerpt.tex   原始 LaTeX 表格摘录
 literature/<arxiv_id>/catalog_sources/<internal_table_id>/latexml.html   LaTeXML 转换视图
 literature/<arxiv_id>/catalog_tables/<internal_table_id>.ecsv   忠实表格 ECSV
-literature/<arxiv_id>/catalog_sources/<external_resource_id>/download-001.*   外部资源下载件
-literature/<arxiv_id>/catalog_tables/<external_resource_id>.ecsv   外部表格资源忠实 ECSV
 literature/catalog_workflow_index.json      数据资产工作流全局索引
 literature/catalog_workflow_index.md        数据资产工作流阅读视图
 ```
@@ -107,8 +105,8 @@ conda run -n stella-env python scripts/annotate_catalog_data.py --on 2026-03
 
 做论文结构化数据资产审阅时，使用项目内 `hvs-catalog-review` skill。
 本阶段不再判断哪些资产是高速星 catalog，只梳理全文中的 `internal_tables`
-和 `external_resources`；内部表格用 `columns[]` 记录论文可见列含义，外部资源只记录论文声明的结构。
-Review 阶段不下载外部资源；远程资源的真实结构由 extraction 阶段记录。
+和 `external_resources`；内部表格用 `columns[]` 记录论文可见列含义，外部资源只记录论文中对每份资源的整体描述。
+Review 阶段不下载外部资源；extraction 阶段也不下载、解析或转换外部资源。
 
 辅助候选清单：
 
@@ -131,13 +129,10 @@ conda run -n stella-env python scripts/build_catalog_index.py
 conda run -n stella-env python scripts/extract_catalog_tables.py --arxiv-id 2402.10714
 ```
 
-提取同时处理 `internal_tables` 中的 `latex_table` 和 `external_resources`。LaTeX 转换顺序是
-LaTeXML、Pandoc、项目内 fallback parser；表格型资产写出 ECSV，非表格资源
-如 ReadMe、HTML、JSON metadata 或无法表格化的下载件也要忠实保存为 raw files。
-`catalog_extraction.json` 只保留生成当前提取资产的单个 `run`，不累积历史 runs。
-Extraction 阶段不补科学语义、不做高速星筛选、不强行统一 schema。外部网络抓取不得使用
-搜索引擎、不得递归爬取、不得登录；只允许公网 HTTP(S)，拒绝 localhost、私网和特殊地址；
-单文件下载受 `--max-external-bytes` 限制；`--all-reviewed --fetch-external Auto` 默认不联网。
+提取只处理 `internal_tables` 中的 `latex_table`。LaTeX 转换顺序是
+LaTeXML、Pandoc、项目内 fallback parser；表格型资产写出 ECSV。
+`catalog_extraction.json` 只保留生成当前内部表格提取资产的单个 `run`，不累积历史 runs。
+Extraction 阶段不补科学语义、不做高速星筛选、不强行统一 schema，也不处理外部资源。
 全量重跑可用 `--jobs Auto` 按论文数自动并行；100 篇以上会尝试更高并发，
 也可以直接指定 `--jobs N` 控制并发。
 

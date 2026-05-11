@@ -6,22 +6,15 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
-from unittest.mock import patch
 
 from astropy.io import ascii
-
-import requests
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from high_velocity_lit.catalog_extraction import (  # noqa: E402
-    AGENT_LOCATOR_ALWAYS,
-    DEFAULT_EXTERNAL_TIMEOUT_SECONDS,
-    MAX_EXTERNAL_BYTES,
-    PROVIDER_RESOLVER_OFF,
-    PROVIDER_RESOLVER_ON,
     auto_catalog_jobs,
+    conversion_attempt_record,
     extract_all_reviewed_catalog_tables,
     extract_catalog_tables,
     parse_latex_table_excerpt,
@@ -32,31 +25,6 @@ SPEC = importlib.util.spec_from_file_location("extract_catalog_tables", SCRIPT)
 assert SPEC is not None and SPEC.loader is not None
 extract_cli = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(extract_cli)
-
-
-class FakeResponse:
-    def __init__(
-        self,
-        content: bytes,
-        *,
-        url: str,
-        status_code: int = 200,
-        content_type: str = "text/csv",
-    ) -> None:
-        self.content = content
-        self.url = url
-        self.status_code = status_code
-        self.headers = {
-            "content-type": content_type,
-            "content-length": str(len(content)),
-        }
-
-    def iter_content(self, chunk_size: int = 1024 * 1024) -> object:
-        for index in range(0, len(self.content), chunk_size):
-            yield self.content[index : index + chunk_size]
-
-    def close(self) -> None:
-        return None
 
 
 def write_json_file(path: Path, payload: dict[str, object]) -> None:
@@ -125,22 +93,20 @@ HVS2 & 710 \\
 
 
 class CatalogExtractionTest(unittest.TestCase):
-    def test_cli_uses_new_external_resource_id(self) -> None:
+    def test_cli_exposes_internal_table_extraction_options(self) -> None:
         parser = extract_cli.build_parser()
-        args = parser.parse_args(["--arxiv-id", "2603.00001", "--external-resource-id", "resource-readme"])
+        args = parser.parse_args(["--arxiv-id", "2603.00001", "--internal-table-id", "table-data"])
 
-        self.assertEqual(args.external_resource_id, "resource-readme")
-        self.assertEqual(args.agent_locator, AGENT_LOCATOR_ALWAYS)
-        self.assertEqual(args.provider_resolver, PROVIDER_RESOLVER_ON)
-        self.assertEqual(args.max_external_bytes, MAX_EXTERNAL_BYTES)
-        self.assertEqual(args.external_timeout, DEFAULT_EXTERNAL_TIMEOUT_SECONDS)
+        self.assertEqual(args.internal_table_id, "table-data")
+        self.assertFalse(hasattr(args, "external_resource_id"))
+        self.assertFalse(hasattr(args, "fetch_external"))
+        self.assertFalse(hasattr(args, "agent_locator"))
 
-    def test_cli_accepts_provider_resolver_off_and_auto_jobs(self) -> None:
+    def test_cli_accepts_auto_jobs(self) -> None:
         parser = extract_cli.build_parser()
-        args = parser.parse_args(["--all-reviewed", "--jobs", "Auto", "--provider-resolver", "Off"])
+        args = parser.parse_args(["--all-reviewed", "--jobs", "Auto"])
 
         self.assertEqual(args.jobs, "Auto")
-        self.assertEqual(args.provider_resolver, PROVIDER_RESOLVER_OFF)
 
     def test_auto_catalog_jobs_scales_with_paper_count(self) -> None:
         self.assertEqual(auto_catalog_jobs(1), 1)
@@ -165,6 +131,26 @@ HVS1 & 700 \\
         self.assertNotIn("physical_quantity", parsed["columns"][0])
         self.assertEqual(parsed["data_rows"], [["HVS1", "700"]])
 
+    def test_conversion_attempt_records_artifact_paths_not_log_tails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            attempt = conversion_attempt_record(
+                method="latexml",
+                status="success",
+                command=["latexmlc"],
+                error="",
+                artifacts={
+                    "stdout": str(workspace / "literature/2603.00001/catalog_sources/table-data/latexml.stdout.txt"),
+                    "stderr": str(workspace / "literature/2603.00001/catalog_sources/table-data/latexml.stderr.txt"),
+                },
+                workspace=workspace,
+            )
+
+            self.assertEqual(attempt["artifacts"]["stdout"], "literature/2603.00001/catalog_sources/table-data/latexml.stdout.txt")
+            self.assertEqual(attempt["artifacts"]["stderr"], "literature/2603.00001/catalog_sources/table-data/latexml.stderr.txt")
+            self.assertNotIn("stdout_tail", attempt)
+            self.assertNotIn("stderr_tail", attempt)
+
     def test_extract_internal_latex_table_writes_ecsv_single_run_and_files(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
@@ -174,7 +160,6 @@ HVS1 & 700 \\
                 literature_dir=literature_dir,
                 arxiv_id="2603.00001",
                 workspace=workspace,
-                fetch_external=False,
             )
 
             manifest = result["manifest"]
@@ -186,96 +171,35 @@ HVS1 & 700 \\
             self.assertEqual(manifest["run"]["status"], "success")
             self.assertEqual(manifest["tables"][0]["ecsv_path"], "literature/2603.00001/catalog_tables/table-data.ecsv")
             self.assertEqual(manifest["files"][0]["excerpt_path"], "literature/2603.00001/catalog_sources/table-data/excerpt.tex")
+            self.assertNotIn("stdout_tail", manifest["tables"][0]["conversion_attempts"][0])
+            self.assertNotIn("stderr_tail", manifest["tables"][0]["conversion_attempts"][0])
 
             extract_catalog_tables(
                 literature_dir=literature_dir,
                 arxiv_id="2603.00001",
                 workspace=workspace,
                 internal_table_id="table-data",
-                fetch_external=False,
             )
             updated = json.loads((paper_dir / "catalog_extraction.json").read_text(encoding="utf-8"))
             self.assertIn("run", updated)
             self.assertNotIn("runs", updated)
             self.assertEqual(updated["run"]["options"]["internal_table_id"], "table-data")
-
-    def test_extract_external_csv_writes_raw_file_and_ecsv(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
-            workspace = Path(tmp)
-            literature_dir, paper_dir = write_review_fixture(
-                workspace,
-                external_resources=[
-                    {
-                        "id": "resource-csv",
-                        "kind": "external_url",
-                        "url": "https://example.test/catalog.csv",
-                        "role_in_paper": "Machine-readable table.",
-                        "declared_data_units": [{"name": "name"}, {"name": "vel"}],
-                    }
-                ],
-            )
-
-            with patch(
-                "high_velocity_lit.catalog_extraction.requests.get",
-                return_value=FakeResponse(b"name,vel\nA,700\n", url="https://example.test/catalog.csv"),
-            ):
-                result = extract_catalog_tables(
-                    literature_dir=literature_dir,
-                    arxiv_id="2603.00001",
-                    workspace=workspace,
-                    external_resource_id="resource-csv",
-                    fetch_external=True,
-                    provider_resolver=False,
-                )
-
-            manifest = result["manifest"]
-            self.assertEqual(manifest["run"]["status"], "success")
-            self.assertEqual(ecsv_rows(paper_dir / "catalog_tables" / "resource-csv.ecsv"), [["A", "700"]])
-            self.assertTrue((paper_dir / "catalog_sources" / "resource-csv" / "download-001.csv").exists())
-            self.assertEqual(manifest["external_resources"][0]["status"], "success")
-            self.assertEqual(manifest["external_resources"][0]["outputs"][0]["ecsv_path"], "literature/2603.00001/catalog_tables/resource-csv.ecsv")
-            self.assertEqual(manifest["files"][0]["raw_path"], "literature/2603.00001/catalog_sources/resource-csv/download-001.csv")
-
-    def test_extract_external_non_table_resource_saves_raw_without_table(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
-            workspace = Path(tmp)
-            literature_dir, paper_dir = write_review_fixture(
-                workspace,
-                external_resources=[
-                    {
-                        "id": "resource-readme",
-                        "kind": "external_url",
-                        "url": "https://example.test/README",
-                        "role_in_paper": "ReadMe metadata for a data product.",
-                    }
-                ],
-            )
-
-            with patch(
-                "high_velocity_lit.catalog_extraction.requests.get",
-                return_value=FakeResponse(b"Column description only\n", url="https://example.test/README", content_type="text/plain"),
-            ):
-                result = extract_catalog_tables(
-                    literature_dir=literature_dir,
-                    arxiv_id="2603.00001",
-                    workspace=workspace,
-                    external_resource_id="resource-readme",
-                    fetch_external=True,
-                    provider_resolver=False,
-                )
-
-            manifest = result["manifest"]
-            self.assertEqual(manifest["run"]["status"], "success")
-            self.assertEqual(manifest["tables"], [])
-            self.assertEqual(manifest["external_resources"][0]["status"], "success")
-            self.assertEqual(manifest["external_resources"][0]["stopped_reason"], "non_table_resource")
-            self.assertEqual(len(manifest["files"]), 1)
-            self.assertTrue((paper_dir / "catalog_sources" / "resource-readme" / "download-001.bin").exists())
+            self.assertNotIn("external_resources", updated)
 
     def test_all_reviewed_processes_reviewed_data_asset_papers(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             literature_dir, _ = write_review_fixture(workspace)
+            write_json_file(
+                literature_dir / "2603.00003" / "catalog_review.json",
+                {
+                    "schema_version": "stella.article_data_assets.review.v1",
+                    "paper": {"arxiv_id": "2603.00003", "title": "External only", "month": "2026-03"},
+                    "review": {"status": "reviewed"},
+                    "internal_tables": [],
+                    "external_resources": [{"id": "resource-readme", "description": "ReadMe described by the paper."}],
+                },
+            )
             write_json_file(
                 literature_dir / "2603.00002" / "catalog_review.json",
                 {
@@ -290,7 +214,6 @@ HVS1 & 700 \\
             result = extract_all_reviewed_catalog_tables(
                 literature_dir=literature_dir,
                 workspace=workspace,
-                fetch_external=False,
             )
 
             self.assertEqual(result["paper_count"], 1)

@@ -11,7 +11,7 @@ from typing import Any
 
 
 CATALOG_REVIEW_SCHEMA_VERSION = "stella.article_data_assets.review.v1"
-CATALOG_EXTRACTION_SCHEMA_VERSION = "stella.article_data_assets.extraction.v1"
+CATALOG_EXTRACTION_SCHEMA_VERSION = "stella.article_data_assets.extraction.v2"
 CATALOG_INVENTORY_SCHEMA_VERSION = "stella.article_data_assets.inventory.v1"
 CATALOG_INDEX_SCHEMA_VERSION = "stella.article_data_assets.index.v1"
 
@@ -414,7 +414,7 @@ def _review_item(path: Path, review: dict[str, Any], *, workspace: Path) -> dict
         "paper_dir": relative_path(path.parent, workspace=workspace),
         "review_json_path": relative_path(path, workspace=workspace),
     }
-    item.update(_extraction_item(path.parent, has_data_asset=has_data_asset, workspace=workspace))
+    item.update(_extraction_item(path.parent, has_extractable_table=bool(internal_tables), workspace=workspace))
     return item
 
 
@@ -425,10 +425,10 @@ def _run_status(manifest: dict[str, Any]) -> str:
     return str(run.get("status") or "")
 
 
-def _normalize_extraction_status(run_status: str, *, has_data_asset: bool) -> str:
+def _normalize_extraction_status(run_status: str, *, has_extractable_table: bool) -> str:
     if run_status in {"success", "partial", "failed"}:
         return run_status
-    if run_status == "skipped" and not has_data_asset:
+    if run_status == "skipped" and not has_extractable_table:
         return "not_applicable"
     if run_status == "skipped":
         return "not_started"
@@ -439,9 +439,9 @@ def _status_count(items: list[dict[str, Any]], statuses: set[str]) -> int:
     return sum(1 for item in items if str(item.get("status") or "") in statuses)
 
 
-def _extraction_item(paper_directory: Path, *, has_data_asset: bool, workspace: Path) -> dict[str, Any]:
+def _extraction_item(paper_directory: Path, *, has_extractable_table: bool, workspace: Path) -> dict[str, Any]:
     extraction_path = paper_directory / EXTRACTION_FILENAME
-    default_status = "not_started" if has_data_asset else "not_applicable"
+    default_status = "not_started" if has_extractable_table else "not_applicable"
     item: dict[str, Any] = {
         "extraction_status": default_status,
         "extraction_json_path": "",
@@ -468,7 +468,7 @@ def _extraction_item(paper_directory: Path, *, has_data_asset: bool, workspace: 
 
     run_status = _run_status(manifest)
     item["extraction_run_status"] = run_status
-    item["extraction_status"] = _normalize_extraction_status(run_status, has_data_asset=has_data_asset)
+    item["extraction_status"] = _normalize_extraction_status(run_status, has_extractable_table=has_extractable_table)
     tables = [table for table in (manifest.get("tables") or []) if isinstance(table, dict)]
     files = [file for file in (manifest.get("files") or []) if isinstance(file, dict)]
     item.update(
@@ -654,7 +654,7 @@ def render_catalog_index(record: dict[str, Any]) -> str:
             f"{summary.get('table_failed_count', 0)} failed"
         ),
         (
-            "- Files saved: "
+            "- Excerpt files: "
             f"{summary.get('file_success_count', 0)} success / "
             f"{summary.get('file_failed_count', 0)} failed"
         ),
@@ -673,11 +673,11 @@ def render_catalog_index(record: dict[str, Any]) -> str:
             "- Review `partial`: data asset review is incomplete or has unresolved coverage questions.",
             "- Review `needs_review`: data asset review has not been completed yet.",
             "- Review `source_missing`: data asset review could not be completed from source files; `(!)` means the review says source is missing but the source metadata says it is available.",
-            "- Extraction `success`: the current extraction run completed without table or file failures.",
-            "- Extraction `partial`: the current extraction run saved at least one table/file and also had failures.",
+            "- Extraction `success`: the current extraction run completed without table or excerpt-file failures.",
+            "- Extraction `partial`: the current extraction run saved at least one table/excerpt file and also had failures.",
             "- Extraction `failed`: the current extraction run or manifest failed.",
-            "- Extraction `not_started`: review found data assets, but no extraction manifest exists yet.",
-            "- Extraction `not_applicable`: review found no data assets, so extraction is not needed.",
+            "- Extraction `not_started`: review found internal tables, but no extraction manifest exists yet.",
+            "- Extraction `not_applicable`: review found no internal tables, so extraction is not needed.",
         ]
     )
 
