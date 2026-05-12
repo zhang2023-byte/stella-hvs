@@ -17,12 +17,12 @@ from typing import Any
 from bs4 import BeautifulSoup
 
 from .catalog_review import (
-    CATALOG_EXTRACTION_SCHEMA_VERSION,
     REVIEW_FILENAME,
     internal_tables_from_review,
     iter_catalog_review_paths,
     relative_path,
 )
+from .schema_specs import CATALOG_EXTRACTION_SCHEMA_VERSION
 
 EXTRACTION_FILENAME = "catalog_extraction.json"
 CATALOG_SOURCES_DIR = "catalog_sources"

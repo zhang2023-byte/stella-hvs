@@ -8,6 +8,7 @@ JSON 是标准输出。Markdown 是从 JSON 生成的阅读视图。
 literature/<arxiv_id>/    本地文献资产目录
 literature/<arxiv_id>/catalog_review.json   单篇论文结构化数据资产审阅事实源
 literature/<arxiv_id>/catalog_extraction.json   单篇论文内部表格提取事实源
+literature/<arxiv_id>/literature_hvs_candidates.json   单篇论文 HVS/unbound candidates 抽取事实源
 literature/catalog_workflow_index.json       从 catalog_review.json 和 catalog_extraction.json 重建的全局数据资产工作流索引
 notes/literature_notes_index.json                  从月度 JSON 重建的全局索引
 notes/YYYY/YYYY-MM/YYYY-MM.json   月度标准记录
@@ -153,6 +154,21 @@ logs/run_<timestamp>.log
 - `tables`：ECSV 路径、caption、label、行列数、解析状态、转换/解析工具尝试记录、warnings、观测到的列记录
 
 ECSV 使用 `col_001`、`col_002` 等稳定列名，尽量忠实保留论文表格数据。Extraction 不记录人工科学语义或规范化对象 schema；高速星对象识别和规范化由后续阶段完成。
+
+## `literature_hvs_candidates.json` 包含什么
+
+`literature_hvs_candidates.json` 是单篇论文的 HVS/unbound candidates 抽取事实源，输入来自论文原文、`catalog_review.json`、`catalog_extraction.json` 和已生成的 ECSV。
+
+- `paper`：arXiv ID、标题、月份、月度 JSON 路径和 abs/pdf 链接
+- `inputs`：本次抽取参考的 paper 目录、review/extraction JSON 和 ECSV 路径
+- `extraction`：候选抽取状态、时间、执行者和摘要
+- `method_chain`：论文级方法链，包括巡天输入、样本筛选、质量过滤、速度计算、束缚概率或逃逸判断等步骤
+- `candidates`：论文证据锚定的 HVS/unbound candidates；每个候选包含 identifiers、候选判断、观测 6D、派生运动学、束缚/非束缚概率和 `extra[]`
+- `candidate_groups_considered`：审阅过但未纳入的候选组、表格或对象集合，尤其用于 `no_candidates` 结果
+
+纳入候选的依据必须来自论文自身：论文明确把对象作为 HVS、unbound、escaping、hyper-runaway 或等价候选讨论、列出或评估。固定速度阈值只能作为 sanity check，不能作为唯一纳入理由。
+
+`core` 和 `extra[]` 中每个值都必须有逐值 provenance。ECSV 来源需要精确到文件路径、物理行号、机器列名、列头和原始单元格文本；原文来源需要精确到 TeX/文本文件路径和行号范围。
 
 ## 索引文件包含什么
 

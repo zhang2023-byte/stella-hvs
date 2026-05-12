@@ -12,6 +12,7 @@
 - 给已有月度 JSON 加上 `catalog_assessment`
 - 审阅已归档论文源码中的结构化数据资产，并写入 `catalog_review.json`
 - 根据 `catalog_review.json` 将内部 LaTeX 表格忠实提取为 ECSV，并写入 `catalog_extraction.json`
+- 根据原文、`catalog_review.json`、`catalog_extraction.json` 和 ECSV 提取论文级 HVS/unbound candidates，并写入 `literature_hvs_candidates.json`
 - 从 JSON 生成 Markdown
 
 ## 项目愿景
@@ -35,6 +36,7 @@ notes/literature_notes_index.json                  全局索引
 notes/literature_notes_index.md                    年度视图
 literature/<arxiv_id>/catalog_review.json   单篇论文数据资产审阅事实源
 literature/<arxiv_id>/catalog_extraction.json   单篇论文内部表格提取事实源
+literature/<arxiv_id>/literature_hvs_candidates.json   单篇论文 HVS/unbound candidates 抽取事实源
 literature/<arxiv_id>/catalog_sources/<internal_table_id>/excerpt.tex   原始 LaTeX 表格摘录
 literature/<arxiv_id>/catalog_sources/<internal_table_id>/latexml.html   LaTeXML 转换视图
 literature/<arxiv_id>/catalog_tables/<internal_table_id>.ecsv   忠实表格 ECSV
@@ -135,6 +137,20 @@ LaTeXML、Pandoc、项目内 fallback parser；表格型资产写出 ECSV。
 Extraction 阶段不补科学语义、不做高速星筛选、不强行统一 schema，也不处理外部资源。
 全量重跑可用 `--jobs Auto` 按论文数自动并行；100 篇以上会尝试更高并发，
 也可以直接指定 `--jobs N` 控制并发。
+
+提取论文级 HVS/unbound candidates 时，使用项目内 `hvs-candidates-extraction`
+skill。纳入对象必须有论文证据锚定：论文明确将其作为 HVS、unbound、escaping、
+hyper-runaway 或等价候选讨论、列出或评估。固定速度阈值只能辅助检查，不能作为
+唯一纳入依据。核心数值优先来自 `catalog_tables/*.ecsv`，并在
+`literature_hvs_candidates.json` 中精确记录到 ECSV 文件、物理行号、机器列名、
+列头和原始单元格文本；候选身份、方法链、字段定义和缺失说明由原文行号支撑。
+无候选论文也要写 `extraction.status=no_candidates` 的空结果文件。
+
+校验：
+
+```bash
+conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id 2402.10714
+```
 
 ## 工程规则
 

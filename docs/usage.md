@@ -300,7 +300,45 @@ conda run -n stella-env python scripts/cleanup_catalog_workflow_outputs.py --dry
 - 每篇论文会写出 `catalog_extraction.json`，记录单个当前 `run`、excerpt 文件、转换尝试结果、成功失败、ECSV 路径和观测到的列头/单位；转换器 stdout/stderr 内容只保存在 artifact 文件中，JSON 里只保留路径。
 - ECSV 使用 `col_001`、`col_002` 这类稳定列名，尽量忠实保留论文表格，不表示已经完成统一对象 schema。
 
-## 7. 时间写法
+## 7. 抽取论文级 HVS candidates
+
+完成 `catalog_review.json` 和 `catalog_extraction.json` 后，使用项目内
+`hvs-candidates-extraction` skill，结合论文原文、review/extraction 事实源和 ECSV，
+写出：
+
+```text
+literature/<arxiv_id>/literature_hvs_candidates.json
+```
+
+本阶段只抽取单篇论文内、被论文证据锚定为 HVS/unbound/escaping/hyper-runaway
+或等价候选的对象。固定速度阈值只能用于检查，不作为唯一纳入依据。数值事实优先来自
+`catalog_tables/*.ecsv`，并精确记录到文件行列；论文原文用于支撑候选身份、方法链、字段定义和缺失说明。
+
+完成后运行校验：
+
+```bash
+conda run -n stella-env python scripts/validate_hvs_candidates.py \
+  --arxiv-id 2402.10714
+```
+
+也可以直接校验一个指定文件：
+
+```bash
+conda run -n stella-env python scripts/validate_hvs_candidates.py \
+  --path literature/2402.10714/literature_hvs_candidates.json
+```
+
+### 说明
+
+- `literature_hvs_candidates.json` 使用 `schema_version: stella.literature_hvs_candidates.v1`。
+- 每篇论文都应有结果文件；没有符合边界的候选时，写 `extraction.status=no_candidates` 和空 `candidates[]`。
+- `method_chain[]` 是论文级方法链；每个候选用 `method_chain_refs` 引用相关步骤。
+- `core.observed_phase_space` 标准槽位是 RA、Dec、距离/视差、pmRA、pmDec、RV；论文给出的 Galactocentric 坐标、速度、逃逸速度比较和束缚/非束缚概率放在 derived/probabilities。
+- `extra[]` 保存光度、恒星参数、质量标志、邻近源检查、轨道或论文特有指标等非核心信息。
+- `core` 和 `extra[]` 的每个值都必须有 `source_refs`。ECSV 来源需要 `path`、`line`、`column`、`column_header`、`raw_value`；原文来源需要 `path`、`start_line`、`end_line`。
+- 校验脚本只检查 JSON 结构和 provenance 是否自洽，不替代 Agent 判断对象是否应纳入。
+
+## 8. 时间写法
 
 ```text
 --from 2026-03-15  表示从 2026-03-15 开始
@@ -315,7 +353,7 @@ conda run -n stella-env python scripts/cleanup_catalog_workflow_outputs.py --dry
 未来日期会自动截到今天。
 非法日期格式会直接报错。
 
-## 8. 额外说明
+## 9. 额外说明
 
 当 DeepXiv 返回限额错误时：
 

@@ -9,11 +9,12 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-
-CATALOG_REVIEW_SCHEMA_VERSION = "stella.article_data_assets.review.v1"
-CATALOG_EXTRACTION_SCHEMA_VERSION = "stella.article_data_assets.extraction.v2"
-CATALOG_INVENTORY_SCHEMA_VERSION = "stella.article_data_assets.inventory.v1"
-CATALOG_INDEX_SCHEMA_VERSION = "stella.article_data_assets.index.v1"
+from .schema_specs import (
+    CATALOG_EXTRACTION_SCHEMA_VERSION,
+    CATALOG_INDEX_SCHEMA_VERSION,
+    CATALOG_INVENTORY_SCHEMA_VERSION,
+    CATALOG_REVIEW_SCHEMA_VERSION,
+)
 
 REVIEW_FILENAME = "catalog_review.json"
 EXTRACTION_FILENAME = "catalog_extraction.json"
