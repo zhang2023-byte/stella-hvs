@@ -30,7 +30,7 @@ Read `references/schema.md` before writing the JSON. It defines the required
 ## Workflow
 
 1. Inspect inputs:
-   - `literature/<arxiv_id>/audit.json`
+   - `literature/<arxiv_id>/audit.json` (read `ads_metadata.ads_bibcode` for the `paper.bibcode` field)
    - `catalog_review.json`
    - `catalog_extraction.json`
    - relevant `catalog_tables/*.ecsv`

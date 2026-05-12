@@ -120,7 +120,7 @@ def valid_payload(workspace: Path, *, status: str = "candidates_found") -> dict[
     return {
         "schema_version": LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION,
         "generated_at": "2026-05-12T12:00:00",
-        "paper": {"arxiv_id": "2603.00001", "title": "HVS candidates", "month": "2026-03"},
+        "paper": {"arxiv_id": "2603.00001", "bibcode": "2026MNRAS.123..456H", "title": "HVS candidates", "month": "2026-03"},
         "inputs": {
             "catalog_review_path": "literature/2603.00001/catalog_review.json",
             "catalog_extraction_path": "literature/2603.00001/catalog_extraction.json",
@@ -200,6 +200,22 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
             self.assertTrue(any("does not match ECSV cell" in error for error in errors))
+
+    def test_missing_bibcode_passes(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            del payload["paper"]["bibcode"]  # type: ignore[index]
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+            self.assertEqual(errors, [])
+
+    def test_empty_bibcode_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            payload["paper"]["bibcode"] = ""  # type: ignore[index]
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+            self.assertTrue(any("$.paper.bibcode" in error for error in errors))
 
     def test_cli_reports_valid_file(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

@@ -279,6 +279,10 @@ def validate_hvs_candidates(payload: Any, *, workspace: Path = WORKSPACE) -> lis
         ctx.error("$.paper", "expected an object")
     elif not paper.get("arxiv_id"):
         ctx.error("$.paper.arxiv_id", "expected non-empty arXiv ID")
+    else:
+        bibcode = paper.get("bibcode")
+        if bibcode is not None and (not isinstance(bibcode, str) or not bibcode.strip()):
+            ctx.error("$.paper.bibcode", "expected non-empty string when present")
 
     inputs = root.get("inputs")
     if is_dict(inputs):

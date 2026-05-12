@@ -13,6 +13,7 @@ extracted from one literature source. It is not an object-level merged catalog.
   "generated_at": "YYYY-MM-DDTHH:MM:SS",
   "paper": {
     "arxiv_id": "2402.10714",
+    "bibcode": "2024A&A...681A..22M",
     "title": "",
     "month": "2024-02",
     "source_note_json": "notes/2024/2024-02/2024-02.json",
