@@ -328,6 +328,20 @@ conda run -n stella-env python scripts/validate_hvs_candidates.py \
   --path literature/2402.10714/literature_hvs_candidates.json
 ```
 
+校验通过后自动重建全局索引：
+
+```bash
+conda run -n stella-env python scripts/validate_hvs_candidates.py \
+  --arxiv-id 2402.10714 \
+  --rebuild-index
+```
+
+单独重建全局索引（不需要先校验）：
+
+```bash
+conda run -n stella-env python scripts/build_hvs_candidates_index.py
+```
+
 ### 说明
 
 - `literature_hvs_candidates.json` 使用 `schema_version: stella.literature_hvs_candidates.v1`。
@@ -337,6 +351,9 @@ conda run -n stella-env python scripts/validate_hvs_candidates.py \
 - `extra[]` 保存光度、恒星参数、质量标志、邻近源检查、轨道或论文特有指标等非核心信息。
 - `core` 和 `extra[]` 的每个值都必须有 `source_refs`。ECSV 来源需要 `path`、`line`、`column`、`column_header`、`raw_value`；原文来源需要 `path`、`start_line`、`end_line`。
 - 校验脚本只检查 JSON 结构和 provenance 是否自洽，不替代 Agent 判断对象是否应纳入。
+- 全局索引文件为 `literature/literature_hvs_index.json` 和 `literature/literature_hvs_index.md`，
+  由 `scripts/build_hvs_candidates_index.py` 自动扫描所有 `literature/<arxiv_id>/literature_hvs_candidates.json` 生成。
+  不要手动修改索引文件；如果输出有问题，应修改 candidates JSON 或索引渲染逻辑，然后重新生成。
 
 ## 8. 时间写法
 

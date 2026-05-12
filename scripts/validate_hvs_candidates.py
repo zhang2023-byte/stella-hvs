@@ -18,6 +18,7 @@ SRC = WORKSPACE / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
+from high_velocity_lit.hvs_candidates_index import write_hvs_candidates_index_outputs  # noqa: E402
 from high_velocity_lit.schema_specs import (  # noqa: E402
     LITERATURE_HVS_CANDIDATE_STATUSES,
     LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION,
@@ -360,6 +361,11 @@ def build_parser() -> argparse.ArgumentParser:
         default=WORKSPACE,
         help="Workspace root used to resolve relative provenance paths.",
     )
+    parser.add_argument(
+        "--rebuild-index",
+        action="store_true",
+        help="Rebuild the global HVS candidates index after successful validation.",
+    )
     return parser
 
 
@@ -388,6 +394,19 @@ def main() -> int:
         return 1
 
     print(f"OK: {path}")
+
+    if args.rebuild_index:
+        literature_dir = args.literature_dir.expanduser()
+        result = write_hvs_candidates_index_outputs(literature_dir, workspace=workspace)
+        summary = result["index_record"]["summary"]
+        print(
+            "Rebuilt HVS candidates index: "
+            f"{summary['paper_count']} papers, "
+            f"{summary['total_candidate_count']} total candidates."
+        )
+        print(result["index_json_path"])
+        print(result["index_markdown_path"])
+
     return 0
 
 

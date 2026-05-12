@@ -40,6 +40,9 @@ literature/<arxiv_id>/literature_hvs_candidates.json   单篇论文 HVS/unbound 
 literature/<arxiv_id>/catalog_sources/<internal_table_id>/excerpt.tex   原始 LaTeX 表格摘录
 literature/<arxiv_id>/catalog_sources/<internal_table_id>/latexml.html   LaTeXML 转换视图
 literature/<arxiv_id>/catalog_tables/<internal_table_id>.ecsv   忠实表格 ECSV
+literature/<arxiv_id>/literature_hvs_candidates.json   单篇论文 HVS/unbound candidates 抽取事实源
+literature/literature_hvs_index.json        HVS candidates 全局索引
+literature/literature_hvs_index.md          HVS candidates 阅读视图
 literature/catalog_workflow_index.json      数据资产工作流全局索引
 literature/catalog_workflow_index.md        数据资产工作流阅读视图
 ```
@@ -122,7 +125,14 @@ conda run -n stella-env python scripts/inventory_catalog_candidates.py --arxiv-i
 conda run -n stella-env python scripts/build_catalog_index.py
 ```
 
-不要手动改 `literature/catalog_workflow_index.json` 或 `literature/catalog_workflow_index.md`。
+重建 HVS candidates 全局索引：
+
+```bash
+conda run -n stella-env python scripts/build_hvs_candidates_index.py
+```
+
+不要手动改 `literature/catalog_workflow_index.json`、`literature/catalog_workflow_index.md`、
+`literature/literature_hvs_index.json` 或 `literature/literature_hvs_index.md`。
 如果输出有问题，应修改 `catalog_review.json` 或索引渲染逻辑，然后重新生成。
 
 提取已审阅数据资产时，使用项目内 `hvs-catalog-extraction` skill：
@@ -150,6 +160,12 @@ hyper-runaway 或等价候选讨论、列出或评估。固定速度阈值只能
 
 ```bash
 conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id 2402.10714
+```
+
+校验通过后自动重建索引：
+
+```bash
+conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id 2402.10714 --rebuild-index
 ```
 
 ## 工程规则
