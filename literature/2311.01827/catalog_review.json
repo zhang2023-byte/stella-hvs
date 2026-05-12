@@ -1,0 +1,952 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2311.01827",
+    "title": "Galactic runaway O and Be stars found using Gaia DR3",
+    "month": "2023-11",
+    "source_note_json": "notes/2023/2023-11/2023-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2311.01827",
+      "pdf": "https://arxiv.org/pdf/2311.01827"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2311.01827",
+    "audit_path": "literature/2311.01827/audit.json",
+    "source_dir": "literature/2311.01827/arxiv_source",
+    "tex_root": "literature/2311.01827/arxiv_source/main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-11T22:40:00",
+    "reviewer": "agent",
+    "summary": "The paper presents a 2D velocity-space search for runaway O and Be stars using GOSC and BeSS cross-matched with Gaia DR3. The main.tex contains 10 internal LaTeX tables: two object-measurement tables showing the top 10 runaways per catalog (full versions at CDS); two fit-result tables summarizing field-star and runaway-star velocity/spatial distribution parameters; a sample-summary table of runaway fractions by spectral type; a literature-comparison table; a quality-cuts table in the appendix; a Gaussian-fit parameters table for RSR velocities; and two simulation tables (input parameters and output results). The paper also references several external data sources (CDS, Gaia archive, BeSS database, SIMBAD)."
+  },
+  "internal_tables": [
+    {
+      "id": "Tab:FitsAfterClippingField",
+      "kind": "latex_table",
+      "asset_type": "fit_result_table",
+      "role_in_paper": "Summary of Gaussian-fit means and standard deviations for field-star velocity and spatial distributions, used to establish the baseline from which runaway stars are identified as outliers.",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 308,
+          "end_line": 333,
+          "caption": "Means and standard deviations of different distributions for the field stars after clipping.",
+          "label": "Tab:FitsAfterClippingField"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Catalog",
+          "meaning": "Catalog subset: GOSC-Gaia DR3, BeSS-Gaia DR3, or their d<2 kpc subsamples",
+          "unit_text": "---",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "Stars",
+          "meaning": "Total number of stars in the catalog subset before runaway classification",
+          "unit_text": "count",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "Field Stars",
+          "meaning": "Number of stars classified as field (non-runaway) stars after clipping",
+          "unit_text": "count",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_V_TAN^GF",
+          "meaning": "Mean of the Gaussian fit to the tangential velocity V_TAN distribution of field stars",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_V_TAN^GF",
+          "meaning": "Standard deviation of the Gaussian fit to the V_TAN distribution of field stars",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_W_RSR^GF",
+          "meaning": "Mean of the Gaussian fit to the W_RSR velocity distribution of field stars",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_W_RSR^GF",
+          "meaning": "Standard deviation of the Gaussian fit to the W_RSR distribution of field stars",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_Z",
+          "meaning": "Mean of the Gaussian fit to the vertical Galactic coordinate Z distribution of field stars",
+          "unit_text": "kpc",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_Z",
+          "meaning": "Standard deviation of the Gaussian fit to the Z distribution of field stars",
+          "unit_text": "kpc",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_b",
+          "meaning": "Mean of the Gaussian fit to the Galactic latitude b distribution of field stars",
+          "unit_text": "deg",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_b",
+          "meaning": "Standard deviation of the Gaussian fit to the Galactic latitude b distribution of field stars",
+          "unit_text": "deg",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table* environment in Sect. 3.1 (line 308) summarizing field-star distribution parameters for complete and d<2 kpc subsamples of both catalogs.",
+      "comments": "Values are obtained after 3-sigma clipping of the velocity distributions. The sigma_V_TAN^GF and sigma_W_RSR^GF values are critical thresholds for the runaway classification criterion in Eq. (2)."
+    },
+    {
+      "id": "Tab:FitsAfterClippingRun",
+      "kind": "latex_table",
+      "asset_type": "fit_result_table",
+      "role_in_paper": "Summary of means and standard deviations for the runaway-star velocity and spatial distributions (without Gaussian fits for velocities), characterizing the runaway population properties.",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 337,
+          "end_line": 362,
+          "caption": "Means and standard deviations of different distributions for the runaway stars after clipping.",
+          "label": "Tab:FitsAfterClippingRun"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Catalog",
+          "meaning": "Catalog subset: GOSC-Gaia DR3, BeSS-Gaia DR3, or their d<2 kpc subsamples",
+          "unit_text": "---",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "Stars",
+          "meaning": "Total number of stars in the catalog subset",
+          "unit_text": "count",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "Runaway Stars",
+          "meaning": "Number of stars classified as runaways after clipping",
+          "unit_text": "count",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_V_TAN",
+          "meaning": "Mean of the V_TAN velocity distribution of runaway stars",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_V_TAN",
+          "meaning": "Standard deviation of the V_TAN velocity distribution of runaway stars",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_W_RSR",
+          "meaning": "Mean of the W_RSR velocity distribution of runaway stars",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_W_RSR",
+          "meaning": "Standard deviation of the W_RSR velocity distribution of runaway stars",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_Z",
+          "meaning": "Mean of the vertical Galactic coordinate Z distribution of runaway stars",
+          "unit_text": "kpc",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_Z",
+          "meaning": "Standard deviation of the Z distribution of runaway stars",
+          "unit_text": "kpc",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_b",
+          "meaning": "Mean of the Galactic latitude b distribution of runaway stars",
+          "unit_text": "deg",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_b",
+          "meaning": "Standard deviation of the Galactic latitude b distribution of runaway stars",
+          "unit_text": "deg",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table* environment in Sect. 3.1 (line 337) summarizing runaway-star distribution parameters for complete and d<2 kpc subsamples.",
+      "comments": "Velocity distributions for runaways are not fitted with Gaussians; means and standard deviations are computed directly from the runaway subsample."
+    },
+    {
+      "id": "Tab:GOSC_Runaways",
+      "kind": "latex_table",
+      "asset_type": "object_measurement_table",
+      "role_in_paper": "Object-level data table showing the 10 GOSC-Gaia DR3 runaway stars with the highest E values (peculiar-velocity significance). The complete version with all 106 runaways and additional parameters is available at CDS.",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 427,
+          "end_line": 450,
+          "caption": "Data of the 10 GOSC-Gaia DR3 runaway stars with the higher values of E in decreasing order.",
+          "label": "Tab:GOSC_Runaways"
+        }
+      ],
+      "columns": [
+        {
+          "name": "GOSC Name",
+          "meaning": "Star identifier from the Galactic O-Star Catalog (GOSC)",
+          "unit_text": "---",
+          "source_of_definition": "GOSC",
+          "confidence": 1.0
+        },
+        {
+          "name": "Gaia DR3 id",
+          "meaning": "Gaia DR3 source_id of the star",
+          "unit_text": "---",
+          "source_of_definition": "Gaia DR3",
+          "confidence": 1.0
+        },
+        {
+          "name": "RA",
+          "meaning": "Right ascension in equatorial coordinates (J2000), expressed as hh mm ss.ss",
+          "unit_text": "h m s",
+          "source_of_definition": "Gaia DR3",
+          "confidence": 1.0
+        },
+        {
+          "name": "DEC",
+          "meaning": "Declination in equatorial coordinates (J2000), expressed as deg arcmin arcsec.arcsec",
+          "unit_text": "deg arcmin arcsec",
+          "source_of_definition": "Gaia DR3",
+          "confidence": 1.0
+        },
+        {
+          "name": "l",
+          "meaning": "Galactic longitude",
+          "unit_text": "deg",
+          "source_of_definition": "paper/Gaia DR3",
+          "confidence": 1.0
+        },
+        {
+          "name": "b",
+          "meaning": "Galactic latitude",
+          "unit_text": "deg",
+          "source_of_definition": "paper/Gaia DR3",
+          "confidence": 1.0
+        },
+        {
+          "name": "d",
+          "meaning": "Heliocentric distance derived from corrected parallax",
+          "unit_text": "kpc",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia DR3 G-band apparent magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "Gaia DR3",
+          "confidence": 1.0
+        },
+        {
+          "name": "S.T.",
+          "meaning": "Spectral type from GOSC",
+          "unit_text": "---",
+          "source_of_definition": "GOSC",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_TAN",
+          "meaning": "Tangential velocity component relative to the Galactic rotation curve, with uncertainty",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "W_RSR",
+          "meaning": "Vertical velocity component in the Radial-Supergalactic-Rotational frame, with uncertainty",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_PEC^2D",
+          "meaning": "2D peculiar velocity computed as sqrt(V_TAN^2 + W_RSR^2), with uncertainty",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "E",
+          "meaning": "Peculiar-velocity significance parameter: sqrt((V_TAN/sigma_V_TAN)^2 + (W_RSR/sigma_W_RSR)^2)",
+          "unit_text": "---",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "Run. Ref.",
+          "meaning": "Literature reference if the star was previously reported as runaway: (1) Ribo et al. 2002; (2) Maiz Apellaniz et al. 2018; (3) Kobulnicky et al. 2022",
+          "unit_text": "---",
+          "source_of_definition": "literature",
+          "confidence": 1.0
+        },
+        {
+          "name": "Comments",
+          "meaning": "Additional flags: f=fast rotator, b=binary hints, h=high-mass X-ray binary, g=gamma-ray binary",
+          "unit_text": "---",
+          "source_of_definition": "paper/literature",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Large table* environment in Sect. 3.1 (line 427) with 10 rows of runaway O stars; tablefoot states the complete version with 106 runaways is at CDS.",
+      "comments": "The paper shows only the top 10 runaways by E value. The full table (106 objects) with additional parameters and higher precision is archived at CDS."
+    },
+    {
+      "id": "Tab:BeSS_Runaways",
+      "kind": "latex_table",
+      "asset_type": "object_measurement_table",
+      "role_in_paper": "Object-level data table showing the 10 BeSS-Gaia DR3 runaway stars with the highest E values. The complete version with all 69 runaways and additional parameters is available at CDS.",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 454,
+          "end_line": 478,
+          "caption": "Data of the 10 BeSS-Gaia DR3 runaway stars with the higher values of E in decreasing order.",
+          "label": "Tab:BeSS_Runaways"
+        }
+      ],
+      "columns": [
+        {
+          "name": "BeSS Name",
+          "meaning": "Star identifier from the Be Star Spectra (BeSS) database",
+          "unit_text": "---",
+          "source_of_definition": "BeSS",
+          "confidence": 1.0
+        },
+        {
+          "name": "Gaia DR3 id",
+          "meaning": "Gaia DR3 source_id of the star",
+          "unit_text": "---",
+          "source_of_definition": "Gaia DR3",
+          "confidence": 1.0
+        },
+        {
+          "name": "RA",
+          "meaning": "Right ascension in equatorial coordinates (J2000), expressed as hh mm ss.ss",
+          "unit_text": "h m s",
+          "source_of_definition": "Gaia DR3",
+          "confidence": 1.0
+        },
+        {
+          "name": "DEC",
+          "meaning": "Declination in equatorial coordinates (J2000), expressed as deg arcmin arcsec.arcsec",
+          "unit_text": "deg arcmin arcsec",
+          "source_of_definition": "Gaia DR3",
+          "confidence": 1.0
+        },
+        {
+          "name": "l",
+          "meaning": "Galactic longitude",
+          "unit_text": "deg",
+          "source_of_definition": "paper/Gaia DR3",
+          "confidence": 1.0
+        },
+        {
+          "name": "b",
+          "meaning": "Galactic latitude",
+          "unit_text": "deg",
+          "source_of_definition": "paper/Gaia DR3",
+          "confidence": 1.0
+        },
+        {
+          "name": "d",
+          "meaning": "Heliocentric distance derived from corrected parallax",
+          "unit_text": "kpc",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia DR3 G-band apparent magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "Gaia DR3",
+          "confidence": 1.0
+        },
+        {
+          "name": "S.T.",
+          "meaning": "Spectral type from BeSS",
+          "unit_text": "---",
+          "source_of_definition": "BeSS",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_TAN",
+          "meaning": "Tangential velocity component relative to the Galactic rotation curve, with uncertainty",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "W_RSR",
+          "meaning": "Vertical velocity component in the Radial-Supergalactic-Rotational frame, with uncertainty",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_PEC^2D",
+          "meaning": "2D peculiar velocity computed as sqrt(V_TAN^2 + W_RSR^2), with uncertainty",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "E",
+          "meaning": "Peculiar-velocity significance parameter: sqrt((V_TAN/sigma_V_TAN)^2 + (W_RSR/sigma_W_RSR)^2)",
+          "unit_text": "---",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "Run. Ref.",
+          "meaning": "Literature reference if the star was previously reported as runaway: (1) Hoogerwerf et al. 2001; (2) Boubert et al. 2018",
+          "unit_text": "---",
+          "source_of_definition": "literature",
+          "confidence": 1.0
+        },
+        {
+          "name": "Comments",
+          "meaning": "Additional flags: f=fast rotator, b=binary hints, h=high-mass X-ray binary, g=gamma-ray binary",
+          "unit_text": "---",
+          "source_of_definition": "paper/literature",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Large table* environment in Sect. 3.1 (line 454) with 10 rows of runaway Be stars; tablefoot states the complete version with 69 runaways is at CDS.",
+      "comments": "The paper shows only the top 10 runaways by E value. The full table (69 objects) with additional parameters and higher precision is archived at CDS."
+    },
+    {
+      "id": "Tab:SpectralType",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Summary of the total number of stars and the number/percentage of runaway stars as a function of spectral-type bin, illustrating the declining runaway fraction from O to Be stars.",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 529,
+          "end_line": 552,
+          "caption": "Stars and runaway stars as a function of spectral type.",
+          "label": "Tab:SpectralType"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Spectral Type",
+          "meaning": "Spectral-type bin (O2-O7, O8-O9, B0e-B3e, B4e-B9e, or combined O8-B1e)",
+          "unit_text": "---",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "Stars",
+          "meaning": "Total number of stars in the spectral-type bin",
+          "unit_text": "count",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "Runaway Stars #",
+          "meaning": "Number of runaway stars in the spectral-type bin",
+          "unit_text": "count",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "Runaway Stars %",
+          "meaning": "Percentage of runaway stars within the spectral-type bin",
+          "unit_text": "%",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table environment in Sect. 3.2 (line 529) with aggregated counts and percentages across spectral-type bins.",
+      "comments": "Percentages are computed per spectral-type bin, not relative to the full catalog."
+    },
+    {
+      "id": "Tab:Publications",
+      "kind": "latex_table",
+      "asset_type": "other_structured_data",
+      "role_in_paper": "Comparison table summarizing the main characteristics of prior all-sky searches for runaways among young stars, contextualizing the present work against literature methods, thresholds, and reported runaway fractions.",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 556,
+          "end_line": 580,
+          "caption": "Main characteristics of works on all-sky searches of runaways among young stars discussed in Sec.\\ref{Sec:Comparison}.",
+          "label": "Tab:Publications"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Sample",
+          "meaning": "Description of the stellar sample and selection criteria used in each work",
+          "unit_text": "---",
+          "source_of_definition": "literature",
+          "confidence": 1.0
+        },
+        {
+          "name": "Method",
+          "meaning": "Velocity method employed: 2D proper motions, 2D velocities, 3D velocities, or 3D simulated velocities",
+          "unit_text": "---",
+          "source_of_definition": "literature",
+          "confidence": 1.0
+        },
+        {
+          "name": "Thresholds",
+          "meaning": "Velocity threshold used to classify runaways, if any",
+          "unit_text": "km s^-1",
+          "source_of_definition": "literature",
+          "confidence": 1.0
+        },
+        {
+          "name": "Runaways",
+          "meaning": "Reported runaway fraction or percentage in each work",
+          "unit_text": "%",
+          "source_of_definition": "literature",
+          "confidence": 1.0
+        },
+        {
+          "name": "References",
+          "meaning": "Bibliographic reference to the compared work",
+          "unit_text": "---",
+          "source_of_definition": "literature",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table* environment in Sect. 3.3 (line 556) comparing eight prior works plus this work.",
+      "comments": "Rows for 'This work' include both 2D and 3D simulated results for GOSC and BeSS samples."
+    },
+    {
+      "id": "Tab:Cuts",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Appendix table documenting the quality cuts applied to the GOSC-Gaia DR3 and BeSS-Gaia DR3 cross-matched samples, showing how many stars are rejected by each criterion and in total.",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 673,
+          "end_line": 697,
+          "caption": "Quality cuts applied to the 598 and 1808 stars obtained after the cross matches of GOSC and BeSS with Gaia DR3, respectively.",
+          "label": "Tab:Cuts"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Quality Cut",
+          "meaning": "Description of the astrometric/photometric quality criterion applied",
+          "unit_text": "---",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "GOSC Stars #",
+          "meaning": "Number of GOSC stars rejected by the quality cut",
+          "unit_text": "count",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "GOSC Stars %",
+          "meaning": "Percentage of the initial 598 GOSC cross-matches rejected by the cut",
+          "unit_text": "%",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "BeSS Stars #",
+          "meaning": "Number of BeSS stars rejected by the quality cut",
+          "unit_text": "count",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "BeSS Stars %",
+          "meaning": "Percentage of the initial 1808 BeSS cross-matches rejected by the cut",
+          "unit_text": "%",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table environment in Appendix A (line 673) listing seven individual quality cuts plus an 'All cuts' summary row.",
+      "comments": "The 'All cuts' row does not sum the individual rows because some stars fail multiple cuts. After all cuts, 423 GOSC and 1336 BeSS stars remain."
+    },
+    {
+      "id": "Tab:GuassianFits",
+      "kind": "latex_table",
+      "asset_type": "fit_result_table",
+      "role_in_paper": "Appendix table reporting the means and standard deviations of Gaussian fits to the U_RSR, V_RSR, and W_RSR velocity distributions for the full GOSC and BeSS samples, used to validate the velocity-frame assumptions.",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 738,
+          "end_line": 759,
+          "caption": "Means and standard deviations of the Gaussian fits applied to the RSR velocity distributions using a bin size of 2~km~s$^{-1}$.",
+          "label": "Tab:GuassianFits"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Catalog",
+          "meaning": "Catalog name: GOSC-Gaia DR3 or BeSS-Gaia DR3",
+          "unit_text": "---",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "Stars",
+          "meaning": "Total number of stars in the catalog",
+          "unit_text": "count",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_U_RSR^GF",
+          "meaning": "Mean of the Gaussian fit to the U_RSR velocity distribution",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_U_RSR^GF",
+          "meaning": "Standard deviation of the Gaussian fit to the U_RSR velocity distribution",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_V_RSR^GF",
+          "meaning": "Mean of the Gaussian fit to the V_RSR velocity distribution",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_V_RSR^GF",
+          "meaning": "Standard deviation of the Gaussian fit to the V_RSR velocity distribution",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_W_RSR^GF",
+          "meaning": "Mean of the Gaussian fit to the W_RSR velocity distribution",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_W_RSR^GF",
+          "meaning": "Standard deviation of the Gaussian fit to the W_RSR velocity distribution",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table* environment in Appendix B (line 738) with Gaussian-fit parameters for the three RSR velocity components.",
+      "comments": "The U_RSR and V_RSR dispersions are affected by the lack of observed radial velocities (theoretical RVs are used)."
+    },
+    {
+      "id": "Tab:Simulations_Input",
+      "kind": "latex_table",
+      "asset_type": "model_parameter_table",
+      "role_in_paper": "Appendix table listing the input parameters for the Monte Carlo simulations that estimate 3D runaway fractions from the 2D observational results.",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 845,
+          "end_line": 871,
+          "caption": "Input parameters for the simulations.",
+          "label": "Tab:Simulations_Input"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Catalog",
+          "meaning": "Catalog name: GOSC-Gaia DR3 or BeSS-Gaia DR3",
+          "unit_text": "---",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_V_LOS^GF",
+          "meaning": "Mean of the Gaussian fit to the simulated line-of-sight velocity distribution of field stars",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_V_TAN^GF",
+          "meaning": "Mean of the Gaussian fit to the simulated tangential velocity distribution of field stars",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_W_RSR^GF",
+          "meaning": "Mean of the Gaussian fit to the simulated W_RSR velocity distribution of field stars",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_V_LOS^GF",
+          "meaning": "Standard deviation of the Gaussian fit to the simulated line-of-sight velocity distribution of field stars",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_V_TAN^GF",
+          "meaning": "Standard deviation of the Gaussian fit to the simulated tangential velocity distribution of field stars",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_W_RSR^GF",
+          "meaning": "Standard deviation of the Gaussian fit to the simulated W_RSR velocity distribution of field stars",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_V_LOS,*",
+          "meaning": "Intrinsic standard deviation of the simulated line-of-sight velocity for individual stars",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_V_TAN,*",
+          "meaning": "Intrinsic standard deviation of the simulated tangential velocity for individual stars",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_W_RSR,*",
+          "meaning": "Intrinsic standard deviation of the simulated W_RSR velocity for individual stars",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table* environment in Appendix C (line 845) with nine simulation input parameters for both catalogs.",
+      "comments": "The sigma_* values represent the intrinsic velocity dispersions of individual stars, while sigma^GF values represent the fitted field-star distribution dispersions."
+    },
+    {
+      "id": "Tab:Simulations_Output",
+      "kind": "latex_table",
+      "asset_type": "model_parameter_table",
+      "role_in_paper": "Appendix table presenting the output results of the Monte Carlo simulations, comparing simulated 2D and 3D runaway counts, percentages, and velocity dispersions.",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 875,
+          "end_line": 904,
+          "caption": "Output results of the simulations.",
+          "label": "Tab:Simulations_Output"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Catalog",
+          "meaning": "Catalog name: GOSC-Gaia DR3 or BeSS-Gaia DR3",
+          "unit_text": "---",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "Number (2D)",
+          "meaning": "Number of simulated stars classified as runaways in 2D",
+          "unit_text": "count",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "Percentage (2D)",
+          "meaning": "Percentage of simulated stars classified as runaways in 2D",
+          "unit_text": "%",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_V_TAN (2D)",
+          "meaning": "Standard deviation of the simulated runaway V_TAN velocities in 2D",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_W_RSR (2D)",
+          "meaning": "Standard deviation of the simulated runaway W_RSR velocities in 2D",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "Number (3D)",
+          "meaning": "Number of simulated stars classified as runaways in 3D",
+          "unit_text": "count",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "Percentage (3D)",
+          "meaning": "Percentage of simulated stars classified as runaways in 3D",
+          "unit_text": "%",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_V_LOS (3D)",
+          "meaning": "Standard deviation of the simulated runaway line-of-sight velocities in 3D",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_V_TAN (3D)",
+          "meaning": "Standard deviation of the simulated runaway V_TAN velocities in 3D",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_W_RSR (3D)",
+          "meaning": "Standard deviation of the simulated runaway W_RSR velocities in 3D",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table* environment in Appendix C (line 875) with simulated runaway statistics for 2D and 3D cases.",
+      "comments": "The 3D percentages (30.0% for GOSC, 6.7% for BeSS) are higher than the 2D percentages because the additional V_LOS component allows detection of runaways with lower V_TAN and W_RSR velocities."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-cds",
+      "kind": "external_url",
+      "url": "https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/679/A109",
+      "local_path": "",
+      "description": "The complete versions of Tables Tab:GOSC_Runaways and Tab:BeSS_Runaways (all 106 GOSC and 69 BeSS runaway stars with additional parameters and higher precision) are archived at the CDS (Strasbourg Astronomical Data Center). Access is available via anonymous ftp to cdsarc.cds.unistra.fr (130.79.128.5) or through the VizieR web interface.",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 51,
+          "end_line": 51,
+          "context": "The complete versions of Tables~\\ref{Tab:GOSC_Runaways} and \\ref{Tab:BeSS_Runaways} are available at the CDS via anonymous ftp to \\href{https://cdsarc.cds.unistra.fr}{\\tt cdsarc.cds.unistra.fr} (\\href{ftp://130.79.128.5}{\\tt 130.79.128.5}) or via \\url{https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/vol/page}"
+        },
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 421,
+          "end_line": 421,
+          "context": "The complete versions of these tables, including all classified runaways with additional parameters and precision, are available at the CDS."
+        }
+      ],
+      "evidence": "Title footnote and Sect. 3.1 explicitly state that full runaway tables are available at CDS.",
+      "comments": "The paper lists the CDS URL with placeholder J/A+A/vol/page; the resolved URL for this A&A 679, A109 paper is https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/679/A109"
+    },
+    {
+      "id": "resource-gaia-archive",
+      "kind": "external_url",
+      "url": "https://gea.esac.esa.int/archive",
+      "local_path": "",
+      "description": "ESA Gaia Data Processing and Analysis Consortium (DPAC) archive, used as the primary astrometric and photometric data source. The GOSC and BeSS catalogs were cross-matched with Gaia DR3 using the Gaia cross-match tool within this archive.",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 144,
+          "end_line": 144,
+          "context": "We first cross-matched the GOSC catalog with Gaia DR3 using a radius of 1\\arcsec\\ within the Gaia cross match tool of the ESA Gaia archive\\footnote{\\href{https://gea.esac.esa.int/archive}{gea.esac.esa.int/archive}\\label{refnote}}."
+        }
+      ],
+      "evidence": "Sect. 2.1 describes the use of the Gaia archive cross-match tool for both GOSC and BeSS catalogs.",
+      "comments": ""
+    },
+    {
+      "id": "resource-bess",
+      "kind": "external_url",
+      "url": "http://basebe.obspm.fr",
+      "local_path": "",
+      "description": "The Be Star Spectra (BeSS) database, operated at LESIA, Observatoire de Meudon, France. Used as the input catalog for Be stars in this work.",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 647,
+          "end_line": 647,
+          "context": "This work has made use of the BeSS database, operated at LESIA, Observatoire de Meudon, France: \\url{http://basebe.obspm.fr}."
+        }
+      ],
+      "evidence": "Acknowledged in the acknowledgements section as a data source.",
+      "comments": ""
+    },
+    {
+      "id": "resource-gaia-mission",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "European Space Agency (ESA) Gaia mission homepage, providing information about the spacecraft, data releases, and documentation.",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 647,
+          "end_line": 647,
+          "context": "This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium})."
+        }
+      ],
+      "evidence": "Acknowledged in the acknowledgements section.",
+      "comments": ""
+    }
+  ]
+}

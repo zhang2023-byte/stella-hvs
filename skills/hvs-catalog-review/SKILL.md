@@ -60,6 +60,17 @@ If an inventory candidate is not a structured data asset, simply omit it. The
 review should not decide whether an asset is HVS data; later workflows handle
 HVS extraction and normalization.
 
+## Fidelity Rules
+
+- **Do not invent URLs.** Every value in `external_resources[].url` must be
+  copied verbatim from the paper source (tex, bib, or ancillary files). If the
+  paper mentions a resource but does not give a concrete URL, leave `url` as an
+  empty string. Never "fill in" a missing URL with what "ought to be" the
+  address (e.g. turning "available at the CDS" into `https://cds.u-strasbg.fr/`).
+- **Do not record generic database acknowledgements as external resources.**
+  A sentence like "This research has made use of the SIMBAD database" in the
+  Acknowledgements section is not a structured data asset; omit it.
+
 ## Output Schema
 
 Use `schema_version: "stella.article_data_assets.review.v1"`.
