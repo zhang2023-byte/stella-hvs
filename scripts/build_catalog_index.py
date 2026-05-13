@@ -17,7 +17,7 @@ from high_velocity_lit.catalog_review import write_catalog_index_outputs  # noqa
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Build literature/catalog_workflow_index.json and literature/catalog_workflow_index.md."
+        description="Build literature/literature_catalog_index.json and literature/literature_catalog_index.md."
     )
     parser.add_argument("--literature-dir", type=Path, default=WORKSPACE / "literature")
     return parser

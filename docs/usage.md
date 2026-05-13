@@ -217,13 +217,13 @@ conda run -n stella-env python scripts/build_catalog_index.py
 输出：
 
 ```text
-literature/catalog_workflow_index.json
-literature/catalog_workflow_index.md
+literature/literature_catalog_index.json
+literature/literature_catalog_index.md
 ```
 
 索引以 `literature/*/catalog_review.json` 为入口；如果同目录存在
 `catalog_extraction.json`，会同时汇总当前内部表格提取状态、ECSV 表格成功/失败数量，以及 excerpt
-文件保存成功/失败数量。`catalog_workflow_index.md` 中 review 状态和 extraction 状态分开显示。
+文件保存成功/失败数量。`literature_catalog_index.md` 中 review 状态和 extraction 状态分开显示。
 
 Review 状态含义：
 

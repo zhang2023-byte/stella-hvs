@@ -43,8 +43,8 @@ literature/<arxiv_id>/catalog_tables/<internal_table_id>.ecsv   忠实表格 ECS
 literature/<arxiv_id>/literature_hvs_candidates.json   单篇论文 HVS/unbound candidates 抽取事实源
 literature/literature_hvs_index.json        HVS candidates 全局索引
 literature/literature_hvs_index.md          HVS candidates 阅读视图
-literature/catalog_workflow_index.json      数据资产工作流全局索引
-literature/catalog_workflow_index.md        数据资产工作流阅读视图
+literature/literature_catalog_index.json      数据资产工作流全局索引
+literature/literature_catalog_index.md        数据资产工作流阅读视图
 ```
 
 不要手动改生成后的 Markdown。  
@@ -131,7 +131,7 @@ conda run -n stella-env python scripts/build_catalog_index.py
 conda run -n stella-env python scripts/build_hvs_candidates_index.py
 ```
 
-不要手动改 `literature/catalog_workflow_index.json`、`literature/catalog_workflow_index.md`、
+不要手动改 `literature/literature_catalog_index.json`、`literature/literature_catalog_index.md`、
 `literature/literature_hvs_index.json` 或 `literature/literature_hvs_index.md`。
 如果输出有问题，应修改 `catalog_review.json` 或索引渲染逻辑，然后重新生成。
 

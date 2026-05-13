@@ -224,8 +224,8 @@ class CatalogReviewTest(unittest.TestCase):
             for path in (
                 paper_dir / "catalog_review.json",
                 paper_dir / "catalog_extraction.json",
-                literature_dir / "catalog_workflow_index.json",
-                literature_dir / "catalog_workflow_index.md",
+                literature_dir / "literature_catalog_index.json",
+                literature_dir / "literature_catalog_index.md",
                 paper_dir / "audit.json",
                 paper_dir / "arxiv_source" / "main.tex",
             ):
@@ -293,8 +293,8 @@ class CatalogReviewTest(unittest.TestCase):
                     exit_code = index_cli.main()
 
             self.assertEqual(exit_code, 0)
-            self.assertTrue((literature_dir / "catalog_workflow_index.json").exists())
-            self.assertTrue((literature_dir / "catalog_workflow_index.md").exists())
+            self.assertTrue((literature_dir / "literature_catalog_index.json").exists())
+            self.assertTrue((literature_dir / "literature_catalog_index.md").exists())
 
 
 if __name__ == "__main__":

@@ -18,8 +18,8 @@ from .schema_specs import (
 
 REVIEW_FILENAME = "catalog_review.json"
 EXTRACTION_FILENAME = "catalog_extraction.json"
-INDEX_JSON_FILENAME = "catalog_workflow_index.json"
-INDEX_MARKDOWN_FILENAME = "catalog_workflow_index.md"
+INDEX_JSON_FILENAME = "literature_catalog_index.json"
+INDEX_MARKDOWN_FILENAME = "literature_catalog_index.md"
 INTERNAL_TABLES_FIELD = "internal_tables"
 EXTERNAL_RESOURCES_FIELD = "external_resources"
 
