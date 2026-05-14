@@ -1,6 +1,6 @@
 ---
 name: hvs-candidates-extraction
-description: Extract paper-level high-velocity-star and unbound-star candidates for Stella after catalog_review.json and catalog_extraction.json exist. Use when an agent needs to read archived paper sources, reviewed table inventories, and ECSV table extractions to write literature/{arxiv_id}/literature_hvs_candidates.json with per-value provenance and the paper's method chain.
+description: Extract paper-level Galactic-unbound HVS candidates for Stella after catalog_review.json and catalog_extraction.json exist. Use when an agent needs to read archived paper sources first, then reviewed table inventories and ECSV table extractions, to write literature/{arxiv_id}/literature_hvs_candidates.json with raw/value provenance, candidate origin, citations, and the paper's method chain.
 ---
 
 # HVS Candidate Extraction
@@ -18,14 +18,15 @@ The output is:
 literature/<arxiv_id>/literature_hvs_candidates.json
 ```
 
-This stage identifies and normalizes HVS/unbound candidates from one paper. It
-does not merge objects across papers and does not download or parse new external
+This stage identifies and normalizes paper-level candidates that the paper
+treats as possibly unbound from the Milky Way / Galactic potential. It does not
+merge objects across papers and does not download or parse new external
 resources.
 
 ## Reference
 
 Read `references/schema.md` before writing the JSON. It defines the required
-`stella.literature_hvs_candidates.v1` shape, provenance rules, and examples.
+`stella.literature_hvs_candidates.v2` shape, provenance rules, and examples.
 
 ## Workflow
 
@@ -37,20 +38,29 @@ Read `references/schema.md` before writing the JSON. It defines the required
    - relevant `catalog_sources/*/excerpt.tex`
    - paper source under `arxiv_source/`
    - the monthly JSON referenced by `audit.source_note_json`, if present
-2. Use `catalog_review.json` and `catalog_extraction.json` as a reading map.
-   They show which tables exist, how the paper describes them, and which ECSV
-   files preserve the table rows.
-3. Decide candidate inclusion by paper evidence, not by a standalone threshold.
-   Include only objects that the paper explicitly presents as HVS, unbound,
-   escaping, hyper-runaway, or equivalent candidates, or objects whose unbound
-   status is directly assessed by the paper.
-4. Prefer ECSV cells for numerical values. Use paper text and LaTeX source for
+2. Read the paper text first. Find the passages where the paper states which
+   objects are possibly unbound from the Milky Way / Galactic potential,
+   escaping the Galaxy, HVS candidates, or hyper-runaway candidates with
+   Galactic-unbound status.
+3. Only after the text establishes inclusion, use `catalog_review.json` and
+   `catalog_extraction.json` as a map to the relevant tables and ECSV rows.
+   These files never justify inclusion by themselves.
+4. Exclude ordinary runaways, cluster escapers, locally unbound Galactic-center
+   stars that the paper says remain Galaxy-bound, high-velocity halo stars, and
+   objects the paper concludes are bound to the Galaxy.
+5. Prefer ECSV cells for numerical values. Use paper text and LaTeX source for
    candidate rationale, method steps, field definitions, and values missing from
    ECSV.
-5. Merge rows for the same candidate inside the paper. Prefer stable identifiers
+6. Merge rows for the same candidate inside the paper. Prefer stable identifiers
    in this order: Gaia source ID, explicit object name, paper candidate number,
    and only then a table-row relation documented by the paper.
-6. Extract a paper-level `method_chain[]`:
+7. Classify `candidate_origin`:
+   - `introduced_by_this_paper` only when this paper first proposes the object
+     as a Galactic-unbound/HVS candidate.
+   - `cited_from_literature` when a previous work already proposed that status,
+     even if this paper reassesses it. Record the cite command and the matching
+     `.bib` or `.bbl` bibliography entry in `candidate_origin.citation`.
+8. Extract a paper-level `method_chain[]`:
    - input surveys or catalogs
    - cross-matching or sample construction
    - quality cuts and flags
@@ -58,10 +68,10 @@ Read `references/schema.md` before writing the JSON. It defines the required
    - Galactic potential or escape-speed assumptions
    - bound/unbound probability or candidate ranking
    - follow-up or manual validation
-7. For every candidate, fill standard `core` fields where the paper provides
+9. For every candidate, fill standard `core` fields where the paper provides
    them, put other useful values in `extra[]`, and reference relevant method
    steps with `method_chain_refs`.
-8. Validate:
+10. Validate:
 
    ```bash
    conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id <arxiv_id>
@@ -69,8 +79,11 @@ Read `references/schema.md` before writing the JSON. It defines the required
 
 ## Boundaries
 
-- Do not infer a candidate only because one velocity exceeds a generic cutoff.
+- Do not infer a candidate only because a table/caption/catalog review mentions
+  "high velocity", "candidate", or a velocity above a generic cutoff.
 - Do not make a bound/unbound decision that the paper does not make.
+- Do not include ordinary `runaway_candidate` objects unless the paper also
+  treats them as possibly unbound from the Galaxy.
 - Do not normalize units by recomputing values unless the paper explicitly gives
   the converted value. Preserve the paper value and unit text.
 - Do not silently drop missing 6D components; leave the field absent and mention
@@ -79,6 +92,18 @@ Read `references/schema.md` before writing the JSON. It defines the required
 - Do not force-add generated `literature/` files to Git unless the user asks.
 
 ## Provenance Rules
+
+Every quantity in `core` and `extra[]` must include both:
+
+- `raw_value`: the exact source cell or source text value after removing only
+  ECSV quote delimiters
+- `value`: the cleaned machine-readable value
+
+For mechanical uncertainty forms such as `x+/-e`, `x_-l^+u`, or
+`x^{+u}_{-l}`, keep the original string in `raw_value`, put only the central
+value in `value`, and put the uncertainty into `error` or
+`lower_error`/`upper_error`. Do not leave LaTeX commands, braces, `$`, `_`, `^`,
+or `+/-` in `value`, `error`, `lower_error`, or `upper_error`.
 
 Every value in `core` and `extra[]` must include `source_refs`.
 
@@ -95,8 +120,9 @@ For ECSV values, cite the exact cell:
 }
 ```
 
-Use the ECSV cell content as `raw_value` after removing ECSV quote delimiters;
-for example `"891 +/- 124"` in the file becomes `891 +/- 124`.
+Use the ECSV cell content as both the quantity `raw_value` and the ECSV
+reference `raw_value` after removing ECSV quote delimiters; for example
+`"891 +/- 124"` in the file becomes `891 +/- 124`.
 
 For paper text, cite the exact source lines:
 
@@ -111,8 +137,9 @@ For paper text, cite the exact source lines:
 ```
 
 If one ECSV cell contains `value +/- error`, split it into `value` and `error`
-fields only when the split is mechanical; both fields keep the same cell
-provenance and the original cell text stays in `raw_value`.
+fields when the split is mechanical; both fields keep the same cell provenance
+and the original cell text stays in quantity `raw_value` and reference
+`raw_value`.
 
 ## Empty Results
 
@@ -128,7 +155,7 @@ If the paper has no included candidates, still write
       "group_id": "table-1",
       "description": "Reviewed object table or candidate-like group.",
       "decision": "excluded",
-      "reason": "The paper does not present these objects as HVS/unbound candidates.",
+      "reason": "The paper does not present these objects as possibly unbound from the Galaxy.",
       "source_refs": [
         {
           "kind": "text",

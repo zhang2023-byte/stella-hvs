@@ -149,11 +149,18 @@ Extraction 阶段不补科学语义、不做高速星筛选、不强行统一 sc
 也可以直接指定 `--jobs N` 控制并发。
 
 提取论文级 HVS/unbound candidates 时，使用项目内 `hvs-candidates-extraction`
-skill。纳入对象必须有论文证据锚定：论文明确将其作为 HVS、unbound、escaping、
-hyper-runaway 或等价候选讨论、列出或评估。固定速度阈值只能辅助检查，不能作为
-唯一纳入依据。核心数值优先来自 `catalog_tables/*.ecsv`，并在
+skill。纳入对象必须有正文证据锚定：论文明确将其作为可能从银河系/Galactic
+potential 非束缚或逃逸的 HVS、unbound、escaping、hyper-runaway 或等价候选讨论、
+列出或评估。普通 runaway、星团逃逸、本地 GC 非束缚但文章说明整体仍银河系束缚的对象、
+以及文章已判定 bound 的对象不进入 `candidates[]`。固定速度阈值只能辅助检查，不能作为
+唯一纳入依据。抽取顺序必须由正文驱动：先读正文确定 candidate 身份、非束缚证据和
+`candidate_origin`，再用 `catalog_review.json`、`catalog_extraction.json` 与 ECSV
+提取具体数值。核心数值优先来自 `catalog_tables/*.ecsv`，并在
 `literature_hvs_candidates.json` 中精确记录到 ECSV 文件、物理行号、机器列名、
-列头和原始单元格文本；候选身份、方法链、字段定义和缺失说明由原文行号支撑。
+列头和原始单元格文本；参数记录要同时保留 `raw_value` 和清洗后的 `value`。
+`value`、`error`、`lower_error`、`upper_error` 不应保留 LaTeX 残余。候选身份、
+方法链、字段定义、引用来源和缺失说明由原文行号支撑；引用其它工作的 candidate
+还要记录正文 cite 行和 `.bib`/`.bbl` 条目。
 无候选论文也要写 `extraction.status=no_candidates` 的空结果文件。
 
 校验：

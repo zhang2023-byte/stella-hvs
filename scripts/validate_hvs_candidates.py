@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import shlex
 import sys
 from pathlib import Path
@@ -20,9 +21,14 @@ if str(SRC) not in sys.path:
 
 from high_velocity_lit.hvs_candidates_index import write_hvs_candidates_index_outputs  # noqa: E402
 from high_velocity_lit.schema_specs import (  # noqa: E402
+    LITERATURE_HVS_CANDIDATE_ASSESSMENT_STATUSES,
+    LITERATURE_HVS_CANDIDATE_ORIGIN_TYPES,
     LITERATURE_HVS_CANDIDATE_STATUSES,
     LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION,
 )
+
+
+LATEX_RESIDUE_RE = re.compile(r"(\\[A-Za-z]+|[{}$]|[\^_]|\+/-|\u00b1)")
 
 
 class ValidationContext:
@@ -195,6 +201,48 @@ def validate_source_refs(value: Any, location: str, ctx: ValidationContext) -> N
         validate_source_ref(ref, f"{location}[{index}]", ctx)
 
 
+def ref_path_suffix(ref: Any) -> str:
+    if not is_dict(ref):
+        return ""
+    path = ref.get("path")
+    if not isinstance(path, str):
+        return ""
+    return Path(path).suffix.lower()
+
+
+def is_ecsv_source_ref(ref: Any) -> bool:
+    if not is_dict(ref):
+        return False
+    path = ref.get("path")
+    kind = ref.get("kind")
+    return kind == "ecsv_cell" or (isinstance(path, str) and path.lower().endswith(".ecsv"))
+
+
+def is_paper_text_source_ref(ref: Any) -> bool:
+    if not is_dict(ref):
+        return False
+    if ref.get("kind") != "text":
+        return False
+    suffix = ref_path_suffix(ref)
+    return suffix not in {".ecsv", ".json", ".bib", ".bbl"}
+
+
+def has_paper_text_source_ref(value: Any) -> bool:
+    return is_list(value) and any(is_paper_text_source_ref(ref) for ref in value)
+
+
+def has_bibliography_source_ref(value: Any) -> bool:
+    return is_list(value) and any(ref_path_suffix(ref) in {".bib", ".bbl"} for ref in value)
+
+
+def validate_clean_machine_string(value: Any, location: str, ctx: ValidationContext) -> None:
+    if not isinstance(value, str):
+        ctx.error(location, "expected machine-readable string")
+        return
+    if LATEX_RESIDUE_RE.search(value):
+        ctx.error(location, "contains LaTeX residue; keep it in raw_value and store a cleaned machine value here")
+
+
 def iter_quantity_records(node: Any, location: str):
     if is_dict(node):
         if "value" in node:
@@ -213,10 +261,72 @@ def validate_quantity_records(node: Any, location: str, ctx: ValidationContext) 
     for record, record_location in iter_quantity_records(node, location):
         if not is_dict(record):
             continue
+        validate_clean_machine_string(record.get("value"), f"{record_location}.value", ctx)
+        raw_value = record.get("raw_value")
+        if not isinstance(raw_value, str):
+            ctx.error(f"{record_location}.raw_value", "quantity record with value must include raw_value")
+        for key in ("error", "lower_error", "upper_error"):
+            if key in record and record.get(key) not in (None, ""):
+                validate_clean_machine_string(record.get(key), f"{record_location}.{key}", ctx)
         if "source_refs" not in record:
             ctx.error(record_location, "quantity record with value must include source_refs")
             continue
         validate_source_refs(record["source_refs"], f"{record_location}.source_refs", ctx)
+        refs = record.get("source_refs")
+        if isinstance(raw_value, str) and isinstance(refs, list):
+            for ref_index, ref in enumerate(refs):
+                if is_ecsv_source_ref(ref):
+                    ref_raw_value = ref.get("raw_value") if is_dict(ref) else None
+                    if ref_raw_value != raw_value:
+                        ctx.error(
+                            f"{record_location}.source_refs[{ref_index}].raw_value",
+                            "ECSV source raw_value must match the quantity record raw_value",
+                        )
+
+
+def validate_candidate_origin(origin: Any, location: str, ctx: ValidationContext) -> str | None:
+    origin_obj = validate_required_mapping(origin, location, ctx)
+    if origin_obj is None:
+        return None
+
+    origin_type = origin_obj.get("origin_type")
+    if origin_type not in LITERATURE_HVS_CANDIDATE_ORIGIN_TYPES:
+        ctx.error(
+            f"{location}.origin_type",
+            f"expected one of {sorted(LITERATURE_HVS_CANDIDATE_ORIGIN_TYPES)}",
+        )
+    if not isinstance(origin_obj.get("paper_reassesses_unbound_status"), bool):
+        ctx.error(f"{location}.paper_reassesses_unbound_status", "expected boolean")
+
+    source_refs = origin_obj.get("source_refs")
+    validate_source_refs(source_refs, f"{location}.source_refs", ctx)
+    if not has_paper_text_source_ref(source_refs):
+        ctx.error(f"{location}.source_refs", "expected at least one paper text reference for origin evidence")
+
+    citation = origin_obj.get("citation")
+    if origin_type == "cited_from_literature":
+        citation_obj = validate_required_mapping(citation, f"{location}.citation", ctx)
+        if citation_obj is not None:
+            if not isinstance(citation_obj.get("bibkey"), str) or not citation_obj.get("bibkey"):
+                ctx.error(f"{location}.citation.bibkey", "expected non-empty bibkey for cited candidates")
+            citation_refs = citation_obj.get("source_refs")
+            validate_source_refs(citation_refs, f"{location}.citation.source_refs", ctx)
+            if not has_paper_text_source_ref(citation_refs):
+                ctx.error(
+                    f"{location}.citation.source_refs",
+                    "expected at least one paper text citation reference",
+                )
+            if not has_bibliography_source_ref(citation_refs):
+                ctx.error(
+                    f"{location}.citation.source_refs",
+                    "expected at least one .bib or .bbl bibliography entry reference",
+                )
+    elif citation is not None:
+        citation_obj = validate_required_mapping(citation, f"{location}.citation", ctx)
+        if citation_obj is not None and "source_refs" in citation_obj:
+            validate_source_refs(citation_obj["source_refs"], f"{location}.citation.source_refs", ctx)
+
+    return origin_type if isinstance(origin_type, str) else None
 
 
 def validate_candidate(candidate: Any, index: int, method_ids: set[str], ctx: ValidationContext) -> None:
@@ -225,7 +335,15 @@ def validate_candidate(candidate: Any, index: int, method_ids: set[str], ctx: Va
     if candidate_obj is None:
         return
 
-    for key in ("candidate_id", "identifiers", "candidate_assessment", "core", "extra"):
+    for key in (
+        "candidate_id",
+        "identifiers",
+        "candidate_assessment",
+        "candidate_origin",
+        "method_chain_refs",
+        "core",
+        "extra",
+    ):
         if key not in candidate_obj:
             ctx.error(f"{location}.{key}", "missing required field")
 
@@ -237,13 +355,31 @@ def validate_candidate(candidate: Any, index: int, method_ids: set[str], ctx: Va
     if is_dict(assessment):
         if not assessment.get("summary"):
             ctx.error(f"{location}.candidate_assessment.summary", "expected non-empty candidate rationale")
+        candidate_status = assessment.get("candidate_status")
+        if candidate_status not in LITERATURE_HVS_CANDIDATE_ASSESSMENT_STATUSES:
+            ctx.error(
+                f"{location}.candidate_assessment.candidate_status",
+                f"expected one of {sorted(LITERATURE_HVS_CANDIDATE_ASSESSMENT_STATUSES)}",
+            )
+        assessment_refs = assessment.get("source_refs")
         validate_source_refs(
-            assessment.get("source_refs"),
+            assessment_refs,
             f"{location}.candidate_assessment.source_refs",
             ctx,
         )
-    elif assessment is not None:
+        if not has_paper_text_source_ref(assessment_refs):
+            ctx.error(
+                f"{location}.candidate_assessment.source_refs",
+                "expected at least one paper text reference for Galactic-unbound candidate evidence",
+            )
+    else:
         ctx.error(f"{location}.candidate_assessment", "expected an object")
+
+    origin_type = validate_candidate_origin(
+        candidate_obj.get("candidate_origin"),
+        f"{location}.candidate_origin",
+        ctx,
+    )
 
     refs = candidate_obj.get("method_chain_refs", [])
     if refs is None:
@@ -251,19 +387,25 @@ def validate_candidate(candidate: Any, index: int, method_ids: set[str], ctx: Va
     if not is_list(refs):
         ctx.error(f"{location}.method_chain_refs", "expected a list")
     else:
+        if origin_type == "introduced_by_this_paper" and not refs:
+            ctx.error(
+                f"{location}.method_chain_refs",
+                "introduced_by_this_paper candidates must reference at least one method_chain step",
+            )
         for ref_index, ref in enumerate(refs):
             if ref not in method_ids:
                 ctx.error(f"{location}.method_chain_refs[{ref_index}]", f"unknown method_chain id {ref!r}")
 
     core = candidate_obj.get("core")
-    if core is not None:
+    if is_dict(core):
         validate_quantity_records(core, f"{location}.core", ctx)
+    else:
+        ctx.error(f"{location}.core", "expected an object")
 
     extra = candidate_obj.get("extra")
-    if extra is not None:
-        extra_list = validate_required_list(extra, f"{location}.extra", ctx)
-        if extra_list is not None:
-            validate_quantity_records(extra_list, f"{location}.extra", ctx)
+    extra_list = validate_required_list(extra, f"{location}.extra", ctx)
+    if extra_list is not None:
+        validate_quantity_records(extra_list, f"{location}.extra", ctx)
 
 
 def validate_hvs_candidates(payload: Any, *, workspace: Path = WORKSPACE) -> list[str]:

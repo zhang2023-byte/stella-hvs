@@ -9,7 +9,7 @@ CATALOG_REVIEW_SCHEMA_VERSION = "stella.article_data_assets.review.v1"
 CATALOG_EXTRACTION_SCHEMA_VERSION = "stella.article_data_assets.extraction.v2"
 CATALOG_INVENTORY_SCHEMA_VERSION = "stella.article_data_assets.inventory.v1"
 CATALOG_INDEX_SCHEMA_VERSION = "stella.article_data_assets.index.v1"
-LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION = "stella.literature_hvs_candidates.v1"
+LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION = "stella.literature_hvs_candidates.v2"
 LITERATURE_HVS_CANDIDATES_INDEX_SCHEMA_VERSION = "stella.literature_hvs_candidates.index.v1"
 
 CATALOG_REVIEW_STATUSES = ("reviewed", "partial", "needs_review", "source_missing")
@@ -22,6 +22,16 @@ LITERATURE_HVS_CANDIDATE_STATUSES = (
     "partial",
     "needs_review",
     "source_missing",
+)
+LITERATURE_HVS_CANDIDATE_ASSESSMENT_STATUSES = (
+    "hvs_candidate",
+    "unbound_candidate",
+    "hyper_runaway_candidate",
+    "escaping_galaxy_candidate",
+)
+LITERATURE_HVS_CANDIDATE_ORIGIN_TYPES = (
+    "introduced_by_this_paper",
+    "cited_from_literature",
 )
 
 
@@ -81,7 +91,11 @@ LITERATURE_HVS_CANDIDATES_SPEC = SchemaSpec(
         "candidates",
         "candidate_groups_considered",
     ),
-    status_values={"extraction.status": LITERATURE_HVS_CANDIDATE_STATUSES},
+    status_values={
+        "extraction.status": LITERATURE_HVS_CANDIDATE_STATUSES,
+        "candidate_assessment.candidate_status": LITERATURE_HVS_CANDIDATE_ASSESSMENT_STATUSES,
+        "candidate_origin.origin_type": LITERATURE_HVS_CANDIDATE_ORIGIN_TYPES,
+    },
 )
 
 SKILL_SCHEMA_SPECS = (

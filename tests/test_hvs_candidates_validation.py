@@ -49,8 +49,26 @@ def write_source(path: Path) -> None:
         "\n".join(
             [
                 r"\section{Selection}",
-                "We identify HVS1 as an unbound hypervelocity-star candidate.",
+                "We identify HVS1 for the first time as an unbound hypervelocity-star candidate.",
                 "The sample is selected from Gaia DR3 and filtered by quality cuts.",
+                r"HVS2 was reported as an unbound star by \citet{Smith2020}, and we reassess it here.",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+
+def write_bib(path: Path) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        "\n".join(
+            [
+                "@ARTICLE{Smith2020,",
+                "  author = {Smith, A. and Doe, B.},",
+                "  title = {An earlier unbound star candidate},",
+                "  year = {2020}",
+                "}",
             ]
         )
         + "\n",
@@ -62,6 +80,7 @@ def valid_payload(workspace: Path, *, status: str = "candidates_found") -> dict[
     paper_dir = workspace / "literature" / "2603.00001"
     ecsv_line = write_ecsv(paper_dir / "catalog_tables" / "table-hvs.ecsv")
     write_source(paper_dir / "arxiv_source" / "main.tex")
+    write_bib(paper_dir / "arxiv_source" / "refs.bib")
     write_json_file(paper_dir / "catalog_review.json", {"paper": {"arxiv_id": "2603.00001"}})
     write_json_file(paper_dir / "catalog_extraction.json", {"paper": {"arxiv_id": "2603.00001"}})
 
@@ -91,7 +110,13 @@ def valid_payload(workspace: Path, *, status: str = "candidates_found") -> dict[
                 },
                 "candidate_assessment": {
                     "summary": "The paper explicitly identifies HVS1 as an unbound HVS candidate.",
+                    "candidate_status": "unbound_candidate",
                     "confidence": "high",
+                    "source_refs": [text_ref],
+                },
+                "candidate_origin": {
+                    "origin_type": "introduced_by_this_paper",
+                    "paper_reassesses_unbound_status": True,
                     "source_refs": [text_ref],
                 },
                 "method_chain_refs": ["method-1"],
@@ -99,6 +124,7 @@ def valid_payload(workspace: Path, *, status: str = "candidates_found") -> dict[
                     "observed_phase_space": {},
                     "derived_kinematics": {
                         "galactocentric_tangential_velocity": {
+                            "raw_value": "701",
                             "value": "701",
                             "unit": "km/s",
                             "kind": "vtan_g",
@@ -110,6 +136,7 @@ def valid_payload(workspace: Path, *, status: str = "candidates_found") -> dict[
                 "extra": [
                     {
                         "name": "selection_note",
+                        "raw_value": "quality-filtered Gaia DR3 candidate",
                         "value": "quality-filtered Gaia DR3 candidate",
                         "source_refs": [text_ref],
                     }
@@ -145,11 +172,72 @@ def valid_payload(workspace: Path, *, status: str = "candidates_found") -> dict[
     }
 
 
+def cited_payload(workspace: Path) -> dict[str, object]:
+    payload = valid_payload(workspace)
+    candidate = payload["candidates"][0]  # type: ignore[index]
+    candidate["candidate_id"] = "2603.00001:candidate-002"
+    candidate["identifiers"]["primary"] = "HVS2"  # type: ignore[index]
+    candidate["candidate_assessment"]["summary"] = "The paper reassesses HVS2, previously reported as unbound."  # type: ignore[index]
+    candidate["candidate_assessment"]["source_refs"] = [  # type: ignore[index]
+        {
+            "kind": "text",
+            "path": "literature/2603.00001/arxiv_source/main.tex",
+            "start_line": 4,
+            "end_line": 4,
+            "context": "paper cites earlier unbound candidate literature",
+        }
+    ]
+    candidate["candidate_origin"] = {  # type: ignore[index]
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": True,
+        "source_refs": [
+            {
+                "kind": "text",
+                "path": "literature/2603.00001/arxiv_source/main.tex",
+                "start_line": 4,
+                "end_line": 4,
+                "context": "paper states the candidate was previously reported",
+            }
+        ],
+        "citation": {
+            "bibkey": "Smith2020",
+            "title": "An earlier unbound star candidate",
+            "year": "2020",
+            "authors": ["Smith, A.", "Doe, B."],
+            "source_refs": [
+                {
+                    "kind": "text",
+                    "path": "literature/2603.00001/arxiv_source/main.tex",
+                    "start_line": 4,
+                    "end_line": 4,
+                    "context": "paper cite command",
+                },
+                {
+                    "kind": "text",
+                    "path": "literature/2603.00001/arxiv_source/refs.bib",
+                    "start_line": 1,
+                    "end_line": 5,
+                    "context": "Smith2020 bibliography entry",
+                },
+            ],
+        },
+    }
+    candidate["method_chain_refs"] = []  # type: ignore[index]
+    return payload
+
+
 class HvsCandidatesValidationTest(unittest.TestCase):
     def test_valid_candidate_payload_passes(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             errors = validate_cli.validate_hvs_candidates(valid_payload(workspace), workspace=workspace)
+
+            self.assertEqual(errors, [])
+
+    def test_valid_cited_candidate_payload_passes(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            errors = validate_cli.validate_hvs_candidates(cited_payload(workspace), workspace=workspace)
 
             self.assertEqual(errors, [])
 
@@ -174,6 +262,18 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
             self.assertTrue(any("must include source_refs" in error for error in errors))
+
+    def test_missing_quantity_raw_value_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            velocity = candidate["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]  # type: ignore[index]
+            del velocity["raw_value"]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("must include raw_value" in error for error in errors))
 
     def test_bad_ecsv_header_line_fails(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -200,6 +300,84 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
             self.assertTrue(any("does not match ECSV cell" in error for error in errors))
+
+    def test_quantity_raw_value_must_match_ecsv_ref_raw_value(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            velocity = candidate["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]  # type: ignore[index]
+            velocity["raw_value"] = "702"
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("must match the quantity record raw_value" in error for error in errors))
+
+    def test_latex_residue_in_value_fails_but_raw_value_may_keep_it(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            velocity = candidate["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]  # type: ignore[index]
+            text_ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            velocity["source_refs"] = [text_ref]
+            velocity["raw_value"] = "701^{+2}_{-1}"
+            velocity["value"] = "701"
+            velocity["lower_error"] = "1"
+            velocity["upper_error"] = "2"
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+            self.assertEqual(errors, [])
+
+            velocity["value"] = "701^{+2}_{-1}"
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("contains LaTeX residue" in error for error in errors))
+
+    def test_runaway_candidate_status_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["candidate_assessment"]["candidate_status"] = "runaway_candidate"  # type: ignore[index]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("candidate_status" in error for error in errors))
+
+    def test_candidate_assessment_requires_paper_text_evidence(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            velocity = candidate["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]  # type: ignore[index]
+            candidate["candidate_assessment"]["source_refs"] = velocity["source_refs"]  # type: ignore[index]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("Galactic-unbound candidate evidence" in error for error in errors))
+
+    def test_cited_candidate_requires_citation_refs(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = cited_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            del candidate["candidate_origin"]["citation"]  # type: ignore[index]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("candidate_origin.citation" in error for error in errors))
+
+    def test_introduced_candidate_requires_method_chain_refs(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["method_chain_refs"] = []
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("must reference at least one method_chain" in error for error in errors))
 
     def test_missing_bibcode_passes(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

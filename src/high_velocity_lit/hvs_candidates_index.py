@@ -42,6 +42,21 @@ def _extract_candidate_statuses(candidates: list[dict[str, Any]]) -> dict[str, i
     return counts
 
 
+def _extract_candidate_origins(candidates: list[dict[str, Any]]) -> dict[str, int]:
+    """Count candidates by candidate_origin.origin_type."""
+    counts: dict[str, int] = {}
+    for candidate in candidates:
+        if not isinstance(candidate, dict):
+            continue
+        origin = candidate.get("candidate_origin")
+        if isinstance(origin, dict):
+            origin_type = str(origin.get("origin_type") or "unknown")
+        else:
+            origin_type = "unknown"
+        counts[origin_type] = counts.get(origin_type, 0) + 1
+    return counts
+
+
 def _extract_primary_identifiers(candidates: list[dict[str, Any]], max_count: int = 5) -> list[str]:
     """Extract primary identifiers from candidates."""
     identifiers: list[str] = []
@@ -76,6 +91,7 @@ def _hvs_paper_item(
     status = str(extraction.get("status") or "")
     candidate_count = len(candidates)
     candidate_statuses = _extract_candidate_statuses(candidates)
+    candidate_origins = _extract_candidate_origins(candidates)
     primary_identifiers = _extract_primary_identifiers(candidates)
 
     paper_dir = path.parent
@@ -90,6 +106,7 @@ def _hvs_paper_item(
         "extraction_status": status,
         "candidate_count": candidate_count,
         "candidate_statuses": candidate_statuses,
+        "candidate_origins": candidate_origins,
         "primary_identifiers": primary_identifiers,
         "paper_dir": relative_path(paper_dir, workspace=workspace),
         "candidates_json_path": relative_path(path, workspace=workspace),
@@ -117,6 +134,7 @@ def _empty_hvs_index_counts() -> dict[str, Any]:
         "source_missing_count": 0,
         "total_candidate_count": 0,
         "total_by_status": {},
+        "total_by_origin": {},
     }
 
 
@@ -139,6 +157,8 @@ def _add_hvs_index_counts(bucket: dict[str, Any], item: dict[str, Any]) -> None:
 
     for status_key, count in (item.get("candidate_statuses") or {}).items():
         bucket["total_by_status"][status_key] = bucket["total_by_status"].get(status_key, 0) + count
+    for origin_key, count in (item.get("candidate_origins") or {}).items():
+        bucket["total_by_origin"][origin_key] = bucket["total_by_origin"].get(origin_key, 0) + count
 
 
 def _catalog_sort_key(item: dict[str, Any]) -> tuple[str, ...]:
@@ -225,6 +245,15 @@ def _candidate_statuses_cell(statuses: dict[str, int]) -> str:
     return "; ".join(parts)
 
 
+def _candidate_origins_cell(origins: dict[str, int]) -> str:
+    if not origins:
+        return "-"
+    parts = []
+    for key in sorted(origins.keys()):
+        parts.append(f"{key}: {origins[key]}")
+    return "; ".join(parts)
+
+
 def _identifiers_cell(identifiers: list[str]) -> str:
     if not identifiers:
         return "-"
@@ -254,6 +283,10 @@ def render_hvs_candidates_index(record: dict[str, Any]) -> str:
     if total_by_status:
         status_parts = [f"{k}: {v}" for k, v in sorted(total_by_status.items())]
         lines.append(f"- By status: {', '.join(status_parts)}")
+    total_by_origin = summary.get("total_by_origin") or {}
+    if total_by_origin:
+        origin_parts = [f"{k}: {v}" for k, v in sorted(total_by_origin.items())]
+        lines.append(f"- By origin: {', '.join(origin_parts)}")
 
     skipped_count = summary.get("skipped_count", 0)
     if skipped_count:
@@ -275,9 +308,9 @@ def render_hvs_candidates_index(record: dict[str, Any]) -> str:
     if papers:
         lines.extend(["", "## Papers", ""])
         lines.append(
-            "| Paper | Month | Status | Candidates | Status breakdown | Sample identifiers | Candidates JSON |"
+            "| Paper | Month | Status | Candidates | Status breakdown | Origin breakdown | Sample identifiers | Candidates JSON |"
         )
-        lines.append("| --- | --- | --- | ---: | --- | --- | --- |")
+        lines.append("| --- | --- | --- | ---: | --- | --- | --- | --- |")
         for paper in papers:
             title = _markdown_cell(paper.get("title") or "Untitled")
             arxiv_id = str(paper.get("arxiv_id") or "")
@@ -287,6 +320,7 @@ def render_hvs_candidates_index(record: dict[str, Any]) -> str:
             lines.append(
                 f"| {label} | {paper.get('month') or ''} | {_status_badge(paper.get('extraction_status') or '')} | "
                 f"{paper.get('candidate_count', 0)} | {_candidate_statuses_cell(paper.get('candidate_statuses') or {})} | "
+                f"{_candidate_origins_cell(paper.get('candidate_origins') or {})} | "
                 f"{_identifiers_cell(paper.get('primary_identifiers') or [])} | {candidates_link} |"
             )
 

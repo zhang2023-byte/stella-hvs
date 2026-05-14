@@ -1,15 +1,16 @@
 # `literature_hvs_candidates.json` Schema
 
-Use `schema_version: "stella.literature_hvs_candidates.v1"`.
+Use `schema_version: "stella.literature_hvs_candidates.v2"`.
 
-The file is paper-level: one JSON file describes all HVS/unbound candidates
-extracted from one literature source. It is not an object-level merged catalog.
+The file is paper-level: one JSON file describes all candidates that the paper
+treats as possibly unbound from the Milky Way / Galactic potential. It is not an
+object-level merged catalog.
 
 ## Top Level
 
 ```json
 {
-  "schema_version": "stella.literature_hvs_candidates.v1",
+  "schema_version": "stella.literature_hvs_candidates.v2",
   "generated_at": "YYYY-MM-DDTHH:MM:SS",
   "paper": {
     "arxiv_id": "2402.10714",
@@ -46,10 +47,77 @@ Allowed `extraction.status` values:
 - `needs_review`
 - `source_missing`
 
+## Inclusion Boundary
+
+Candidate inclusion is driven by paper text, not by tables alone. Include only
+objects the paper itself treats as possibly unbound from the Milky Way /
+Galactic potential, escaping the Galaxy, HVS candidates, or hyper-runaway
+candidates with Galactic-unbound status.
+
+Do not include ordinary runaways, cluster escapers, high-velocity halo stars,
+objects listed only because they exceed a velocity cut, locally unbound
+Galactic-center objects that the paper says remain Galaxy-bound, or objects the
+paper concludes are bound to the Galaxy.
+
+`candidate_assessment.source_refs` must contain paper text lines supporting the
+Galactic-unbound candidate status. `catalog_review.json`, `catalog_extraction.json`,
+and ECSV files are table maps and value sources only; they cannot justify
+inclusion by themselves.
+
+Allowed `candidate_assessment.candidate_status` values:
+
+- `hvs_candidate`
+- `unbound_candidate`
+- `hyper_runaway_candidate`
+- `escaping_galaxy_candidate`
+
+## Candidate Origin
+
+Every candidate has `candidate_origin`.
+
+```json
+{
+  "origin_type": "introduced_by_this_paper",
+  "paper_reassesses_unbound_status": true,
+  "source_refs": []
+}
+```
+
+Allowed `candidate_origin.origin_type` values:
+
+- `introduced_by_this_paper`
+- `cited_from_literature`
+
+Use `introduced_by_this_paper` only when this paper first proposes the object as
+a Galactic-unbound/HVS candidate. If a previous work already proposed that
+status, use `cited_from_literature`, even when this paper reassesses the object.
+Set `paper_reassesses_unbound_status` to `true` when the paper performs its own
+unbound/orbit/velocity assessment.
+
+For cited candidates, `candidate_origin.citation` is required:
+
+```json
+{
+  "bibkey": "Erkal2019",
+  "title": "",
+  "year": "2019",
+  "authors": ["Erkal, D."],
+  "bibcode": "",
+  "doi": "",
+  "arxiv_id": "",
+  "source_refs": []
+}
+```
+
+`citation.source_refs` must include both the paper text cite line and the
+matching `.bib` or `.bbl` bibliography entry when those source files are
+available.
+
 ## Method Chain
 
-Write method steps once at the paper level. Candidate records refer to these
-steps through `method_chain_refs`.
+Write method steps once at the paper level. Introduced candidates must refer to
+at least one method step through `method_chain_refs`; cited candidates may leave
+`method_chain_refs` empty when this paper only compiles them from prior work.
 
 ```json
 {
@@ -92,9 +160,14 @@ Suggested `step_type` values: `survey_input`, `sample_construction`,
     ]
   },
   "candidate_assessment": {
-    "summary": "Why the paper treats this object as an HVS/unbound candidate.",
-    "candidate_status": "hvs_candidate",
+    "summary": "Why the paper treats this object as possibly unbound from the Galaxy.",
+    "candidate_status": "unbound_candidate",
     "confidence": "high",
+    "source_refs": []
+  },
+  "candidate_origin": {
+    "origin_type": "introduced_by_this_paper",
+    "paper_reassesses_unbound_status": true,
     "source_refs": []
   },
   "method_chain_refs": ["method-1", "method-2"],
@@ -106,11 +179,6 @@ Suggested `step_type` values: `survey_input`, `sample_construction`,
   "extra": []
 }
 ```
-
-Suggested `candidate_status` values: `hvs_candidate`, `unbound_candidate`,
-`hyper_runaway_candidate`, `escaping_candidate`, `rejected_by_paper`,
-`ambiguous`. Use `rejected_by_paper` only inside
-`candidate_groups_considered[]` unless the user asks for rejected objects.
 
 ## Core Fields
 
@@ -152,29 +220,35 @@ Each quantity record follows this shape:
 
 ```json
 {
-  "value": "703",
-  "error": "",
+  "raw_value": "891 +/- 124",
+  "value": "891",
+  "error": "124",
   "lower_error": "",
   "upper_error": "",
   "unit": "km/s",
-  "kind": "vtan_g",
-  "description": "Galactocentric tangential velocity",
+  "kind": "vtan",
+  "description": "Heliocentric tangential velocity",
   "source_refs": []
 }
 ```
 
-Store numeric values as strings to preserve the source precision. Use `error`
-for symmetric errors and `lower_error` / `upper_error` for asymmetric errors.
+`raw_value` preserves the source value exactly, after removing only ECSV quote
+delimiters. `value`, `error`, `lower_error`, and `upper_error` are cleaned
+machine-readable strings and must not contain LaTeX commands, braces, `$`, `_`,
+`^`, `+/-`, or plus-minus symbols. Store numeric values as strings to preserve
+source precision. Use `error` for symmetric errors and `lower_error` /
+`upper_error` for asymmetric errors.
 
 ## Extra Fields
 
-Use `extra[]` for useful non-core values such as photometry, stellar
-parameters, object quality flags, neighbor checks, orbital traceback values,
-sample membership labels, or paper-specific ranking metrics.
+Use `extra[]` for useful non-core values such as photometry, stellar parameters,
+object quality flags, neighbor checks, orbital traceback values, sample
+membership labels, or paper-specific ranking metrics.
 
 ```json
 {
   "name": "ruwe",
+  "raw_value": "4.02",
   "value": "4.02",
   "unit": "",
   "kind": "Gaia DR3 quality",
@@ -200,6 +274,12 @@ ECSV cell reference:
 }
 ```
 
+For ECSV values, the quantity `raw_value`, the source reference `raw_value`, and
+the parsed ECSV cell text must match exactly. Validation requires ECSV
+references to use the machine column name (`col_001`, `col_002`, ...) and the
+physical file line number. Use `nl -ba <file>` when checking line numbers
+manually.
+
 Paper text reference:
 
 ```json
@@ -212,11 +292,8 @@ Paper text reference:
 }
 ```
 
-Validation requires ECSV references to use the machine column name (`col_001`,
-`col_002`, ...) and the physical file line number. Use the parsed cell content
-as `raw_value`, without ECSV quote delimiters, so a file cell like
-`"891 +/- 124"` is recorded as `891 +/- 124`. Use `nl -ba <file>` when checking
-line numbers manually.
+Bibliography references use the same line-range shape and point to `.bib` or
+`.bbl` files.
 
 ## Candidate Groups Considered
 
@@ -228,7 +305,7 @@ Use this list to document reviewed tables or object groups, especially in
   "group_id": "table-1",
   "description": "Observation log table",
   "decision": "excluded",
-  "reason": "Contains spectra exposure metadata, not HVS candidate objects.",
+  "reason": "Contains spectra exposure metadata, not Galactic-unbound HVS candidate objects.",
   "source_refs": []
 }
 ```

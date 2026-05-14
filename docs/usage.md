@@ -310,9 +310,14 @@ conda run -n stella-env python scripts/cleanup_catalog_workflow_outputs.py --dry
 literature/<arxiv_id>/literature_hvs_candidates.json
 ```
 
-本阶段只抽取单篇论文内、被论文证据锚定为 HVS/unbound/escaping/hyper-runaway
-或等价候选的对象。固定速度阈值只能用于检查，不作为唯一纳入依据。数值事实优先来自
-`catalog_tables/*.ecsv`，并精确记录到文件行列；论文原文用于支撑候选身份、方法链、字段定义和缺失说明。
+本阶段只抽取单篇论文内、被正文证据锚定为可能从银河系/Galactic potential
+非束缚或逃逸的 HVS/unbound/escaping/hyper-runaway candidates。普通 runaway、
+星团逃逸、本地 GC 非束缚但文章说明整体仍受银河系束缚的对象、以及文章已判定 bound
+的对象不进入 `candidates[]`。固定速度阈值只能用于检查，不作为唯一纳入依据。
+
+抽取顺序必须是正文驱动：先读论文正文确定 candidate 身份、银河系非束缚证据和
+`candidate_origin`，再用 `catalog_review.json`、`catalog_extraction.json` 和
+`catalog_tables/*.ecsv` 定位具体数值。review/extraction JSON 只是表格地图，不能作为纳入依据。
 
 完成后运行校验：
 
@@ -344,12 +349,18 @@ conda run -n stella-env python scripts/build_hvs_candidates_index.py
 
 ### 说明
 
-- `literature_hvs_candidates.json` 使用 `schema_version: stella.literature_hvs_candidates.v1`。
+- `literature_hvs_candidates.json` 使用 `schema_version: stella.literature_hvs_candidates.v2`。
 - 每篇论文都应有结果文件；没有符合边界的候选时，写 `extraction.status=no_candidates` 和空 `candidates[]`。
 - `method_chain[]` 是论文级方法链；每个候选用 `method_chain_refs` 引用相关步骤。
+- `candidate_origin.origin_type` 区分 `introduced_by_this_paper` 和 `cited_from_literature`。
+  “首次给出”指本文首次把对象作为可能 Galactic-unbound/HVS candidate 提出；已知对象即使本文重新分析，也标为 `cited_from_literature`，并用 `paper_reassesses_unbound_status=true` 表示本文重新评估。
+  cited candidates 必须在 `candidate_origin.citation.source_refs` 中同时给出正文 cite 行和 `.bib`/`.bbl` 条目。
 - `core.observed_phase_space` 标准槽位是 RA、Dec、距离/视差、pmRA、pmDec、RV；论文给出的 Galactocentric 坐标、速度、逃逸速度比较和束缚/非束缚概率放在 derived/probabilities。
 - `extra[]` 保存光度、恒星参数、质量标志、邻近源检查、轨道或论文特有指标等非核心信息。
-- `core` 和 `extra[]` 的每个值都必须有 `source_refs`。ECSV 来源需要 `path`、`line`、`column`、`column_header`、`raw_value`；原文来源需要 `path`、`start_line`、`end_line`。
+- `core` 和 `extra[]` 的每个参数记录都必须同时有 `raw_value`、清洗后的 `value` 和 `source_refs`。
+  ECSV 来源需要 `path`、`line`、`column`、`column_header`、`raw_value`，且参数级 `raw_value`、source ref `raw_value` 和真实 ECSV cell 必须一致。
+  `value`、`error`、`lower_error`、`upper_error` 不能保留 LaTeX 命令、花括号、`$`、`_`、`^` 或 `+/-`；机械误差表达应拆到 error 字段。
+  原文来源需要 `path`、`start_line`、`end_line`。
 - 校验脚本只检查 JSON 结构和 provenance 是否自洽，不替代 Agent 判断对象是否应纳入。
 - 全局索引文件为 `literature/literature_hvs_index.json` 和 `literature/literature_hvs_index.md`，
   由 `scripts/build_hvs_candidates_index.py` 自动扫描所有 `literature/<arxiv_id>/literature_hvs_candidates.json` 生成。
