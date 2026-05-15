@@ -132,7 +132,7 @@ logs/run_<timestamp>.log
 
 ## `catalog_review.json` 包含什么
 
-`catalog_review.json` 是 Agent 结合全文审阅后的结构化数据资产目录，不表示已经完成表格抽取，也不判断这些资产是否是高速星 catalog。
+`catalog_review.json` 是 Agent 结合全文审阅后的结构化数据资产目录，不表示已经完成表格抽取，也不判断这些资产是否是高速星 catalog。文件结构由 Pydantic schema 和 `scripts/init_catalog_review.py` 生成，Agent 只补全论文语义字段。
 
 - `paper`：arXiv ID、标题、月份、月度 JSON 路径、abs/pdf 链接
 - `source`：论文目录、`audit.json`、源码目录、主 TeX、源码可用性
@@ -141,6 +141,7 @@ logs/run_<timestamp>.log
 - `external_resources`：论文声明或引用的外部/本地资源，逐项保存论文中的整体描述、链接、路径、证据和备注
 
 本阶段只保存 LaTeX 段落、链接、路径、证据、内部表 `columns[]` 列说明，以及外部资源在论文中的描述；不把 LaTeX 转 ECSV，不下载外部资源，不分析远程资源内部结构，不做高速星筛选。`external_resources[].local_path` 只表示已经归档的本地资源。
+完成后应使用 `scripts/validate_catalog_review.py --require-complete` 校验结构、枚举、路径、source line refs 和是否仍是未填空模板。
 
 ## `catalog_extraction.json` 包含什么
 
@@ -154,12 +155,14 @@ logs/run_<timestamp>.log
 - `tables`：ECSV 路径、caption、label、行列数、解析状态、转换/解析工具尝试记录、warnings、观测到的列记录
 
 ECSV 使用 `col_001`、`col_002` 等稳定列名，尽量忠实保留论文表格数据。Extraction 不记录人工科学语义或规范化对象 schema；高速星对象识别和规范化由后续阶段完成。
+该文件由 `scripts/extract_catalog_tables.py` 生成并在写出前通过 Pydantic schema 校验；Agent 不应手工填改。最终检查可加 `scripts/validate_catalog_extraction.py --require-reviewed`，防止从 `needs_review` 的审阅模板继续下游流程。
 
 ## `literature_hvs_candidates.json` 包含什么
 
 `literature_hvs_candidates.json` 是单篇论文中可能从银河系/Galactic potential
 非束缚或逃逸的 HVS/unbound candidates 抽取事实源。抽取由论文正文驱动；
 `catalog_review.json`、`catalog_extraction.json` 和已生成的 ECSV 只用于定位表格和数值。
+文件 skeleton 由 `scripts/init_hvs_candidates.py` 从 Pydantic schema 生成，Agent 只补全候选、方法链、数值和 provenance。
 
 - `paper`：arXiv ID、bibcode（来自 ADS，优先用 `audit.json` 的 `ads_metadata.ads_bibcode`）、标题、月份、月度 JSON 路径和 abs/pdf 链接
 - `inputs`：本次抽取参考的 paper 目录、review/extraction JSON 和 ECSV 路径

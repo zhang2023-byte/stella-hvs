@@ -152,12 +152,27 @@ def valid_payload(workspace: Path, *, status: str = "candidates_found") -> dict[
     return {
         "schema_version": LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION,
         "generated_at": "2026-05-12T12:00:00",
-        "paper": {"arxiv_id": "2603.00001", "bibcode": "2026MNRAS.123..456H", "title": "HVS candidates", "month": "2026-03"},
+        "paper": {
+            "arxiv_id": "2603.00001",
+            "bibcode": "2026MNRAS.123..456H",
+            "title": "HVS candidates",
+            "month": "2026-03",
+            "source_note_json": "notes/2026/2026-03/2026-03.json",
+            "links": {"abs": "https://arxiv.org/abs/2603.00001", "pdf": "https://arxiv.org/pdf/2603.00001"},
+        },
         "inputs": {
+            "paper_dir": "literature/2603.00001",
+            "audit_path": "literature/2603.00001/audit.json",
             "catalog_review_path": "literature/2603.00001/catalog_review.json",
             "catalog_extraction_path": "literature/2603.00001/catalog_extraction.json",
+            "ecsv_paths": ["literature/2603.00001/catalog_tables/table-hvs.ecsv"],
         },
-        "extraction": {"status": status, "extractor": "agent"},
+        "extraction": {
+            "status": status,
+            "extracted_at": "2026-05-12T12:00:00",
+            "extractor": "agent",
+            "summary": "Fixture extraction.",
+        },
         "method_chain": [
             {
                 "id": "method-1",
@@ -170,7 +185,9 @@ def valid_payload(workspace: Path, *, status: str = "candidates_found") -> dict[
         "candidate_groups_considered": [
             {
                 "group_id": "main-candidates",
-                "decision": "included",
+                "description": "Main candidate group considered by the paper.",
+                "decision": "excluded" if status == "no_candidates" else "included",
+                "reason": "Fixture group for validator coverage.",
                 "source_refs": [text_ref],
             }
         ],
@@ -532,6 +549,37 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             self.assertEqual(report.errors, [])
             self.assertTrue(any("bound-status phrase" in warning for warning in report.warnings))
+
+    def test_unbound_phrase_does_not_trigger_bound_warning(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["candidate_assessment"][  # type: ignore[index]
+                "summary"
+            ] = "The paper says HVS1 is unbound to the Galaxy."
+
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
+
+            self.assertEqual(report.errors, [])
+            self.assertFalse(any("bound-status phrase" in warning for warning in report.warnings))
+
+    def test_require_complete_rejects_needs_review_skeleton(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace, status="no_candidates")
+            payload["extraction"]["status"] = "needs_review"  # type: ignore[index]
+            payload["extraction"]["summary"] = ""  # type: ignore[index]
+            payload["candidates"] = []
+            payload["candidate_groups_considered"] = []
+
+            errors = validate_cli.validate_hvs_candidates(
+                payload,
+                workspace=workspace,
+                require_complete=True,
+            )
+
+            self.assertTrue(any("$.extraction.status" in error for error in errors))
 
     def test_cli_warning_only_exits_zero_and_prints_warning(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

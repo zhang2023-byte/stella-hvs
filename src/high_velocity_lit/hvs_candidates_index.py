@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from high_velocity_lit.catalog_review import relative_path, write_json, read_json
+from high_velocity_lit.schema_models import LiteratureHvsCandidatesRecord
 
 
 HVS_CANDIDATES_INDEX_SCHEMA_VERSION = "stella.literature_hvs_candidates.index.v1"
@@ -183,6 +184,11 @@ def rebuild_hvs_candidates_index(
         try:
             payload = read_json(path)
         except (OSError, json.JSONDecodeError) as exc:
+            skipped.append({"path": relative_path(path, workspace=workspace), "error": f"{type(exc).__name__}: {exc}"})
+            continue
+        try:
+            LiteratureHvsCandidatesRecord.model_validate(payload)
+        except Exception as exc:
             skipped.append({"path": relative_path(path, workspace=workspace), "error": f"{type(exc).__name__}: {exc}"})
             continue
         papers.append(_hvs_paper_item(path, payload, workspace=workspace))

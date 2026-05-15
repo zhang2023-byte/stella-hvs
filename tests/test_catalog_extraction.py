@@ -26,6 +26,12 @@ assert SPEC is not None and SPEC.loader is not None
 extract_cli = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(extract_cli)
 
+VALIDATE_SCRIPT = ROOT / "scripts" / "validate_catalog_extraction.py"
+VALIDATE_SPEC = importlib.util.spec_from_file_location("validate_catalog_extraction", VALIDATE_SCRIPT)
+assert VALIDATE_SPEC is not None and VALIDATE_SPEC.loader is not None
+validate_cli = importlib.util.module_from_spec(VALIDATE_SPEC)
+VALIDATE_SPEC.loader.exec_module(validate_cli)
+
 
 def write_json_file(path: Path, payload: dict[str, object]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -173,6 +179,15 @@ HVS1 & 700 \\
             self.assertEqual(manifest["files"][0]["excerpt_path"], "literature/2603.00001/catalog_sources/table-data/excerpt.tex")
             self.assertNotIn("stdout_tail", manifest["tables"][0]["conversion_attempts"][0])
             self.assertNotIn("stderr_tail", manifest["tables"][0]["conversion_attempts"][0])
+            self.assertEqual(validate_cli.validate_catalog_extraction(manifest, workspace=workspace), [])
+            self.assertEqual(
+                validate_cli.validate_catalog_extraction(
+                    manifest,
+                    workspace=workspace,
+                    require_reviewed=True,
+                ),
+                [],
+            )
 
             extract_catalog_tables(
                 literature_dir=literature_dir,

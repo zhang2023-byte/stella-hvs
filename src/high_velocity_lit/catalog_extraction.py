@@ -23,6 +23,7 @@ from .catalog_review import (
     relative_path,
 )
 from .schema_specs import CATALOG_EXTRACTION_SCHEMA_VERSION
+from .schema_models import CatalogExtractionRecord
 
 EXTRACTION_FILENAME = "catalog_extraction.json"
 CATALOG_SOURCES_DIR = "catalog_sources"
@@ -1054,6 +1055,11 @@ def extract_catalog_tables(
                     "internal_table_id": internal_table_id_value,
                     "kind": str(internal_table.get("kind") or ""),
                     "status": "deferred",
+                    "source_ref": {},
+                    "source_path": "",
+                    "excerpt_path": "",
+                    "sha256": "",
+                    "line_count": 0,
                     "error": "only latex_table internal_tables are extracted",
                 }
             )
@@ -1062,8 +1068,19 @@ def extract_catalog_tables(
                     "id": internal_table_id_value,
                     "internal_table_id": internal_table_id_value,
                     "status": "deferred",
+                    "ecsv_path": "",
+                    "caption": "",
+                    "label": "",
+                    "row_count": 0,
+                    "column_count": 0,
+                    "environment": "",
+                    "header_rows": [],
                     "error": "only latex_table internal_tables are extracted",
                     "columns": [],
+                    "warnings": [],
+                    "extraction_method": "",
+                    "conversion_attempts": [],
+                    "source_sha256": "",
                 }
             )
             continue
@@ -1124,6 +1141,7 @@ def extract_catalog_tables(
         "files": files,
         "tables": tables,
     }
+    CatalogExtractionRecord.model_validate(manifest)
     result = {
         "dry_run": dry_run,
         "arxiv_id": arxiv_id,

@@ -9,9 +9,15 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from high_velocity_lit.schema_specs import SKILL_SCHEMA_SPECS  # noqa: E402
+from high_velocity_lit.schema_docs import generated_schema_docs  # noqa: E402
 
 
 class SkillSchemaDocsTest(unittest.TestCase):
+    def test_skill_schema_docs_are_generated_from_code(self) -> None:
+        for relative_path, content in generated_schema_docs().items():
+            with self.subTest(path=relative_path):
+                self.assertEqual((ROOT / relative_path).read_text(encoding="utf-8"), content)
+
     def test_skill_schema_docs_match_code_schema_specs(self) -> None:
         for spec in SKILL_SCHEMA_SPECS:
             with self.subTest(schema=spec.version):

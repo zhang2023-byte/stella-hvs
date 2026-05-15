@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Any
 
 from astropy.io import ascii
+from pydantic import ValidationError
 
 
 WORKSPACE = Path(__file__).resolve().parents[1]
@@ -26,6 +27,7 @@ from high_velocity_lit.schema_specs import (  # noqa: E402
     LITERATURE_HVS_CANDIDATE_STATUSES,
     LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION,
 )
+from high_velocity_lit.schema_models import LiteratureHvsCandidatesRecord  # noqa: E402
 
 
 LATEX_RESIDUE_RE = re.compile(r"(\\[A-Za-z]+|[{}$]|[\^_]|\+/-|\u00b1)")
@@ -41,7 +43,7 @@ NO_CANDIDATE_REVIEW_RE = re.compile(
     re.IGNORECASE,
 )
 CANDIDATE_BOUND_CONFLICT_RE = re.compile(
-    r"(bound\s+to\s+the\s+Galaxy|currently\s+bound|bound\s+trajectory|"
+    r"(\bbound\s+to\s+the\s+Galaxy|\bcurrently\s+bound|\bbound\s+trajectory|"
     r"remains?\s+Galaxy[- ]bound)",
     re.IGNORECASE,
 )
@@ -662,11 +664,31 @@ def warn_if_no_candidate_group_needs_review(group: dict[str, Any], location: str
             return
 
 
-def validate_hvs_candidates_report(payload: Any, *, workspace: Path = WORKSPACE) -> ValidationReport:
+def validate_completion_state(root: dict[str, Any], status: str | None, ctx: ValidationContext) -> None:
+    extraction = root.get("extraction")
+    if status == "needs_review":
+        ctx.error("$.extraction.status", "expected a completed status, not 'needs_review'")
+    if is_dict(extraction) and status != "source_missing" and not str(extraction.get("summary") or "").strip():
+        ctx.error("$.extraction.summary", "expected a non-empty completion summary")
+
+
+def validate_hvs_candidates_report(
+    payload: Any,
+    *,
+    workspace: Path = WORKSPACE,
+    require_complete: bool = False,
+) -> ValidationReport:
     ctx = ValidationContext(workspace=workspace)
     root = validate_required_mapping(payload, "$", ctx)
     if root is None:
         return ValidationReport(errors=ctx.errors, warnings=ctx.warnings)
+    try:
+        LiteratureHvsCandidatesRecord.model_validate(payload)
+    except ValidationError as exc:
+        for error in exc.errors():
+            path = ".".join(str(part) for part in error["loc"])
+            location = f"$.{path}" if path else "$"
+            ctx.error(location, error["msg"])
 
     if root.get("schema_version") != LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION:
         ctx.error("$.schema_version", f"expected {LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION!r}")
@@ -732,11 +754,23 @@ def validate_hvs_candidates_report(payload: Any, *, workspace: Path = WORKSPACE)
 
     validate_candidate_groups_considered(root.get("candidate_groups_considered"), status, ctx)
 
+    if require_complete:
+        validate_completion_state(root, status, ctx)
+
     return ValidationReport(errors=ctx.errors, warnings=ctx.warnings)
 
 
-def validate_hvs_candidates(payload: Any, *, workspace: Path = WORKSPACE) -> list[str]:
-    return validate_hvs_candidates_report(payload, workspace=workspace).errors
+def validate_hvs_candidates(
+    payload: Any,
+    *,
+    workspace: Path = WORKSPACE,
+    require_complete: bool = False,
+) -> list[str]:
+    return validate_hvs_candidates_report(
+        payload,
+        workspace=workspace,
+        require_complete=require_complete,
+    ).errors
 
 
 def load_json(path: Path) -> Any:
@@ -761,6 +795,11 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Rebuild the global HVS candidates index after successful validation.",
     )
+    parser.add_argument(
+        "--require-complete",
+        action="store_true",
+        help="Fail if the file is still an unfilled needs_review skeleton.",
+    )
     return parser
 
 
@@ -782,7 +821,11 @@ def main() -> int:
         print(f"invalid JSON: {exc}", file=sys.stderr)
         return 1
 
-    report = validate_hvs_candidates_report(payload, workspace=workspace)
+    report = validate_hvs_candidates_report(
+        payload,
+        workspace=workspace,
+        require_complete=args.require_complete,
+    )
     for warning in report.warnings:
         print(f"WARNING: {warning}", file=sys.stderr)
     if report.errors:

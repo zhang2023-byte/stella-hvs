@@ -14,8 +14,9 @@ conda env update -f environment.yml --prune
 conda activate stella-env
 ```
 
-这个环境现在也包含本地资料归档流程需要的 HTML 解析、网络请求，以及外部
-catalog 表格解析依赖；FITS、VOTable 和 CDS/MRT ASCII 通过 `astropy` 读取。
+这个环境现在也包含本地资料归档流程需要的 HTML 解析、网络请求、Pydantic
+schema 校验，以及外部 catalog 表格解析依赖；FITS、VOTable 和 CDS/MRT ASCII
+通过 `astropy` 读取。
 
 ## 可选外部工具
 

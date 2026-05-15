@@ -190,15 +190,16 @@ conda run -n stella-env python scripts/pull_literature_assets.py \
 
 ## 5. 审阅论文结构化数据资产
 
-对已经拉取到 `literature/<arxiv_id>/` 的论文，先生成候选清单：
+对已经拉取到 `literature/<arxiv_id>/` 的论文，先生成标准审阅模板：
 
 ```bash
-conda run -n stella-env python scripts/inventory_catalog_candidates.py \
+conda run -n stella-env python scripts/init_catalog_review.py \
   --arxiv-id 2402.10714
 ```
 
-然后使用项目内 `hvs-catalog-review` skill 结合全文审阅候选表格和资源，
-写出：
+`init_catalog_review.py` 会调用候选清单逻辑，按 Pydantic schema 生成固定字段的
+`catalog_review.json` skeleton。然后使用项目内 `hvs-catalog-review` skill 结合全文
+审阅候选表格和资源，只填语义空位：
 
 ```text
 literature/<arxiv_id>/catalog_review.json
@@ -207,6 +208,14 @@ literature/<arxiv_id>/catalog_review.json
 本阶段梳理论文已有结构化数据资产，不判断是否是高速星 catalog。输出只分为
 `internal_tables` 和 `external_resources`；内部表格需要记录全文语境下的作用和 `columns[]`
 列含义，外部资源只逐项记录论文中的整体描述、链接、路径、证据和备注，不分析远程资源内部结构，也不下载远程资源。
+
+审阅完成后运行严格结构和 source ref 校验：
+
+```bash
+conda run -n stella-env python scripts/validate_catalog_review.py \
+  --arxiv-id 2402.10714 \
+  --require-complete
+```
 
 重建全局 catalog 工作流索引：
 
@@ -299,12 +308,25 @@ conda run -n stella-env python scripts/cleanup_catalog_workflow_outputs.py --dry
 - 全量重跑可以用 `--jobs Auto` 按论文并行；Auto 会按论文数选择 1/2/4/8/12 个 worker。也可以直接指定 `--jobs N`。
 - 每篇论文会写出 `catalog_extraction.json`，记录单个当前 `run`、excerpt 文件、转换尝试结果、成功失败、ECSV 路径和观测到的列头/单位；转换器 stdout/stderr 内容只保存在 artifact 文件中，JSON 里只保留路径。
 - ECSV 使用 `col_001`、`col_002` 这类稳定列名，尽量忠实保留论文表格，不表示已经完成统一对象 schema。
+- `catalog_extraction.json` 写出前会按 Pydantic schema 校验；也可以单独运行：
+
+```bash
+conda run -n stella-env python scripts/validate_catalog_extraction.py \
+  --arxiv-id 2402.10714 \
+  --require-reviewed
+```
 
 ## 7. 抽取论文级 HVS candidates
 
 完成 `catalog_review.json` 和 `catalog_extraction.json` 后，使用项目内
-`hvs-candidates-extraction` skill，结合论文原文、review/extraction 事实源和 ECSV，
-写出：
+`hvs-candidates-extraction` skill。先生成固定字段模板：
+
+```bash
+conda run -n stella-env python scripts/init_hvs_candidates.py \
+  --arxiv-id 2402.10714
+```
+
+然后结合论文原文、review/extraction 事实源和 ECSV 填写：
 
 ```text
 literature/<arxiv_id>/literature_hvs_candidates.json
@@ -323,14 +345,16 @@ literature/<arxiv_id>/literature_hvs_candidates.json
 
 ```bash
 conda run -n stella-env python scripts/validate_hvs_candidates.py \
-  --arxiv-id 2402.10714
+  --arxiv-id 2402.10714 \
+  --require-complete
 ```
 
 也可以直接校验一个指定文件：
 
 ```bash
 conda run -n stella-env python scripts/validate_hvs_candidates.py \
-  --path literature/2402.10714/literature_hvs_candidates.json
+  --path literature/2402.10714/literature_hvs_candidates.json \
+  --require-complete
 ```
 
 校验通过后自动重建全局索引：
@@ -338,6 +362,7 @@ conda run -n stella-env python scripts/validate_hvs_candidates.py \
 ```bash
 conda run -n stella-env python scripts/validate_hvs_candidates.py \
   --arxiv-id 2402.10714 \
+  --require-complete \
   --rebuild-index
 ```
 
@@ -350,6 +375,7 @@ conda run -n stella-env python scripts/build_hvs_candidates_index.py
 ### 说明
 
 - `literature_hvs_candidates.json` 使用 `schema_version: stella.literature_hvs_candidates.v2`。
+- 模板、validator 和 skill schema 参考文档来自同一套 Pydantic models；不要手工新增模板之外的字段。
 - 每篇论文都应有结果文件；没有符合边界的候选时，写 `extraction.status=no_candidates` 和空 `candidates[]`。
 - `method_chain[]` 是论文级方法链；每个候选用 `method_chain_refs` 引用相关步骤。
 - `candidate_origin.origin_type` 区分 `introduced_by_this_paper` 和 `cited_from_literature`。
@@ -362,6 +388,11 @@ conda run -n stella-env python scripts/build_hvs_candidates_index.py
   `value`、`error`、`lower_error`、`upper_error` 不能保留 LaTeX 命令、花括号、`$`、`_`、`^` 或 `+/-`；机械误差表达应拆到 error 字段。
   原文来源需要 `path`、`start_line`、`end_line`。
 - 校验脚本只检查 JSON 结构和 provenance 是否自洽，不替代 Agent 判断对象是否应纳入。
+- 修改 schema 字段时，先改 Pydantic models，再运行：
+
+```bash
+conda run -n stella-env python scripts/generate_schema_docs.py
+```
 - 全局索引文件为 `literature/literature_hvs_index.json` 和 `literature/literature_hvs_index.md`，
   由 `scripts/build_hvs_candidates_index.py` 自动扫描所有 `literature/<arxiv_id>/literature_hvs_candidates.json` 生成。
   不要手动修改索引文件；如果输出有问题，应修改 candidates JSON 或索引渲染逻辑，然后重新生成。
