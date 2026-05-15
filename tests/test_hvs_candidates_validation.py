@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import io
 import json
 import sys
 import tempfile
@@ -52,6 +53,10 @@ def write_source(path: Path) -> None:
                 "We identify HVS1 for the first time as an unbound hypervelocity-star candidate.",
                 "The sample is selected from Gaia DR3 and filtered by quality cuts.",
                 r"HVS2 was reported as an unbound star by \citet{Smith2020}, and we reassess it here.",
+                "",
+                "% generated source header",
+                "Follow-up observations are needed to determine the HVS status of objects with positive energies.",
+                "The paper notes that the object is currently bound to the Galaxy.",
             ]
         )
         + "\n",
@@ -275,6 +280,104 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             self.assertTrue(any("must include raw_value" in error for error in errors))
 
+    def test_missing_primary_identifier_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            del candidate["identifiers"]["primary"]  # type: ignore[index]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("identifiers.primary" in error for error in errors))
+
+    def test_no_candidates_requires_groups_considered(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace, status="no_candidates")
+            del payload["candidate_groups_considered"]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("$.candidate_groups_considered" in error for error in errors))
+
+            payload = valid_payload(workspace, status="no_candidates")
+            payload["candidate_groups_considered"] = []
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("must be non-empty" in error for error in errors))
+
+    def test_core_requires_schema_groups_only(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["core"]["position"] = {}  # type: ignore[index]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("unexpected core group" in error for error in errors))
+
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            del candidate["core"]["probabilities"]  # type: ignore[index]
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any(".core.probabilities" in error for error in errors))
+
+    def test_raw_value_uncertainty_requires_machine_error_fields(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            velocity = candidate["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]  # type: ignore[index]
+            text_ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            velocity["source_refs"] = [text_ref]
+            velocity["raw_value"] = "701+/-12"
+            velocity["value"] = "701"
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("symmetric raw_value must include error" in error for error in errors))
+
+            velocity["error"] = "12"
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+            self.assertEqual(errors, [])
+
+            velocity["raw_value"] = "701^{+12}_{-9}"
+            del velocity["error"]
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("lower_error" in error for error in errors))
+            self.assertTrue(any("upper_error" in error for error in errors))
+
+            velocity["lower_error"] = "9"
+            velocity["upper_error"] = "12"
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+            self.assertEqual(errors, [])
+
+    def test_text_ref_blank_or_comment_line_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            ref["start_line"] = 5
+            ref["end_line"] = 5
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("blank or comment lines" in error for error in errors))
+
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            ref["start_line"] = 6
+            ref["end_line"] = 6
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("blank or comment lines" in error for error in errors))
+
     def test_bad_ecsv_header_line_fails(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
@@ -394,6 +497,76 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             payload["paper"]["bibcode"] = ""  # type: ignore[index]
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
             self.assertTrue(any("$.paper.bibcode" in error for error in errors))
+
+    def test_no_candidates_strong_candidate_phrase_warns_without_error(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace, status="no_candidates")
+            group = payload["candidate_groups_considered"][0]  # type: ignore[index]
+            group["decision"] = "excluded"
+            group["source_refs"] = [  # type: ignore[index]
+                {
+                    "kind": "text",
+                    "path": "literature/2603.00001/arxiv_source/main.tex",
+                    "start_line": 7,
+                    "end_line": 7,
+                    "context": "HVS status positive energies",
+                }
+            ]
+
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
+
+            self.assertEqual(report.errors, [])
+            self.assertTrue(any("candidate-like phrase" in warning for warning in report.warnings))
+
+    def test_candidate_bound_phrase_warns_without_error(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["candidate_assessment"][  # type: ignore[index]
+                "summary"
+            ] = "The paper says HVS1 is currently bound to the Galaxy."
+
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
+
+            self.assertEqual(report.errors, [])
+            self.assertTrue(any("bound-status phrase" in warning for warning in report.warnings))
+
+    def test_cli_warning_only_exits_zero_and_prints_warning(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            path = workspace / "literature" / "2603.00001" / "literature_hvs_candidates.json"
+            payload = valid_payload(workspace, status="no_candidates")
+            group = payload["candidate_groups_considered"][0]  # type: ignore[index]
+            group["source_refs"] = [  # type: ignore[index]
+                {
+                    "kind": "text",
+                    "path": "literature/2603.00001/arxiv_source/main.tex",
+                    "start_line": 7,
+                    "end_line": 7,
+                    "context": "HVS status positive energies",
+                }
+            ]
+            write_json_file(path, payload)
+
+            with patch.object(
+                sys,
+                "argv",
+                [
+                    "validate_hvs_candidates.py",
+                    "--path",
+                    str(path),
+                    "--workspace",
+                    str(workspace),
+                ],
+            ):
+                with patch("sys.stderr", new_callable=io.StringIO) as stderr:
+                    with patch("sys.stdout", new_callable=io.StringIO):
+                        exit_code = validate_cli.main()
+
+            self.assertEqual(exit_code, 0)
+            self.assertIn("WARNING:", stderr.getvalue())
 
     def test_cli_reports_valid_file(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

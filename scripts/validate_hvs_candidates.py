@@ -29,17 +29,73 @@ from high_velocity_lit.schema_specs import (  # noqa: E402
 
 
 LATEX_RESIDUE_RE = re.compile(r"(\\[A-Za-z]+|[{}$]|[\^_]|\+/-|\u00b1)")
+SYMMETRIC_UNCERTAINTY_RE = re.compile(r"(\+/-|\u00b1|\\pm)")
+ASYMMETRIC_UNCERTAINTY_RE = re.compile(
+    r"(\^\s*\{?\s*\+[^}_\s]+\}?\s*_\s*\{?\s*-[^}\s]+|"
+    r"_\s*\{?\s*-[^}^\s]+\}?\s*\^\s*\{?\s*\+[^}\s]+)"
+)
+CORE_GROUPS = ("observed_phase_space", "derived_kinematics", "probabilities")
+NO_CANDIDATE_REVIEW_RE = re.compile(
+    r"(classif\w+(?:\s+\w+){0,3}\s+as\s+HVSs?|HVS\s+status|"
+    r"gravitationally\s+unbound|positive\s+(?:total\s+)?energ(?:y|ies))",
+    re.IGNORECASE,
+)
+CANDIDATE_BOUND_CONFLICT_RE = re.compile(
+    r"(bound\s+to\s+the\s+Galaxy|currently\s+bound|bound\s+trajectory|"
+    r"remains?\s+Galaxy[- ]bound)",
+    re.IGNORECASE,
+)
+WEAK_MATCH_STOPWORDS = {
+    "and",
+    "are",
+    "caption",
+    "context",
+    "data",
+    "description",
+    "field",
+    "fields",
+    "for",
+    "from",
+    "line",
+    "lines",
+    "object",
+    "objects",
+    "paper",
+    "reference",
+    "references",
+    "section",
+    "source",
+    "table",
+    "text",
+    "that",
+    "the",
+    "this",
+    "value",
+    "values",
+    "were",
+    "with",
+}
+
+
+class ValidationReport:
+    def __init__(self, *, errors: list[str], warnings: list[str]) -> None:
+        self.errors = errors
+        self.warnings = warnings
 
 
 class ValidationContext:
     def __init__(self, workspace: Path) -> None:
         self.workspace = workspace
         self.errors: list[str] = []
+        self.warnings: list[str] = []
         self.ecsv_columns: dict[Path, list[str]] = {}
         self.file_lines: dict[Path, list[str]] = {}
 
     def error(self, location: str, message: str) -> None:
         self.errors.append(f"{location}: {message}")
+
+    def warn(self, location: str, message: str) -> None:
+        self.warnings.append(f"{location}: {message}")
 
     def resolve_path(self, value: Any, location: str) -> Path | None:
         if not isinstance(value, str) or not value:
@@ -188,6 +244,19 @@ def validate_text_ref(ref: dict[str, Any], path: Path, location: str, ctx: Valid
         return
     if start_line < 1 or end_line < start_line or end_line > len(lines):
         ctx.error(f"{location}.line_range", f"invalid line range {start_line}..{end_line} for {len(lines)} lines")
+        return
+
+    selected_lines = lines[start_line - 1 : end_line]
+    if not any(is_substantive_text_line(line) for line in selected_lines):
+        ctx.error(f"{location}.line_range", "text reference points only at blank or comment lines")
+        return
+
+    warn_if_weak_text_match(
+        selected_lines,
+        f"{location}.context",
+        [ref.get("context")],
+        ctx,
+    )
 
 
 def validate_source_refs(value: Any, location: str, ctx: ValidationContext) -> None:
@@ -243,6 +312,94 @@ def validate_clean_machine_string(value: Any, location: str, ctx: ValidationCont
         ctx.error(location, "contains LaTeX residue; keep it in raw_value and store a cleaned machine value here")
 
 
+def is_substantive_text_line(line: str) -> bool:
+    stripped = line.strip()
+    return bool(stripped) and not stripped.startswith(("%", "#"))
+
+
+def has_non_empty_value(record: dict[str, Any], key: str) -> bool:
+    value = record.get(key)
+    return value not in (None, "")
+
+
+def weak_match_terms(value: Any) -> set[str]:
+    if not isinstance(value, str):
+        return set()
+    normalized = re.sub(r"\\[A-Za-z]+", " ", value.lower())
+    terms = set()
+    for token in re.findall(r"[a-z0-9]+(?:\.[0-9]+)?", normalized):
+        if token in WEAK_MATCH_STOPWORDS:
+            continue
+        if len(token) < 3 and not any(char.isdigit() for char in token):
+            continue
+        terms.add(token)
+    return terms
+
+
+def warn_if_weak_text_match(
+    lines: list[str],
+    location: str,
+    needle_values: list[Any],
+    ctx: ValidationContext,
+) -> None:
+    needle_terms: set[str] = set()
+    for value in needle_values:
+        needle_terms.update(weak_match_terms(value))
+    if not needle_terms:
+        return
+
+    text = "\n".join(lines)
+    text_terms = weak_match_terms(text)
+    text_lower = text.lower()
+    if any(term in text_terms or term in text_lower for term in needle_terms):
+        return
+    ctx.warn(location, "source reference context/value has no weak lexical overlap with referenced text")
+
+
+def text_for_source_ref(ref: Any, ctx: ValidationContext) -> str:
+    if not is_dict(ref) or is_ecsv_source_ref(ref):
+        return ""
+    path_value = ref.get("path")
+    if not isinstance(path_value, str) or not path_value:
+        return ""
+    path = Path(path_value)
+    if not path.is_absolute():
+        path = ctx.workspace / path
+    lines = ctx.file_lines.get(path)
+    if lines is None:
+        if not path.exists() or not path.is_file():
+            return ""
+        try:
+            lines = path.read_text(encoding="utf-8").splitlines()
+        except UnicodeDecodeError:
+            return ""
+        ctx.file_lines[path] = lines
+
+    start_line = ref.get("start_line")
+    end_line = ref.get("end_line")
+    if not isinstance(start_line, int) or not isinstance(end_line, int):
+        return ""
+    if start_line < 1 or end_line < start_line or end_line > len(lines):
+        return ""
+    return "\n".join(lines[start_line - 1 : end_line])
+
+
+def texts_for_source_refs(refs: Any, ctx: ValidationContext) -> list[str]:
+    if not is_list(refs):
+        return []
+    return [text for ref in refs if (text := text_for_source_ref(ref, ctx))]
+
+
+def validate_uncertainty_fields(record: dict[str, Any], raw_value: str, location: str, ctx: ValidationContext) -> None:
+    if ASYMMETRIC_UNCERTAINTY_RE.search(raw_value):
+        if not has_non_empty_value(record, "lower_error"):
+            ctx.error(f"{location}.lower_error", "asymmetric raw_value must include lower_error")
+        if not has_non_empty_value(record, "upper_error"):
+            ctx.error(f"{location}.upper_error", "asymmetric raw_value must include upper_error")
+    elif SYMMETRIC_UNCERTAINTY_RE.search(raw_value) and not has_non_empty_value(record, "error"):
+        ctx.error(f"{location}.error", "symmetric raw_value must include error")
+
+
 def iter_quantity_records(node: Any, location: str):
     if is_dict(node):
         if "value" in node:
@@ -265,6 +422,8 @@ def validate_quantity_records(node: Any, location: str, ctx: ValidationContext) 
         raw_value = record.get("raw_value")
         if not isinstance(raw_value, str):
             ctx.error(f"{record_location}.raw_value", "quantity record with value must include raw_value")
+        else:
+            validate_uncertainty_fields(record, raw_value, record_location, ctx)
         for key in ("error", "lower_error", "upper_error"):
             if key in record and record.get(key) not in (None, ""):
                 validate_clean_machine_string(record.get(key), f"{record_location}.{key}", ctx)
@@ -281,6 +440,15 @@ def validate_quantity_records(node: Any, location: str, ctx: ValidationContext) 
                         ctx.error(
                             f"{record_location}.source_refs[{ref_index}].raw_value",
                             "ECSV source raw_value must match the quantity record raw_value",
+                        )
+                else:
+                    ref_text = text_for_source_ref(ref, ctx)
+                    if ref_text:
+                        warn_if_weak_text_match(
+                            ref_text.splitlines(),
+                            f"{record_location}.source_refs[{ref_index}]",
+                            [ref.get("context") if is_dict(ref) else None, raw_value, record.get("value")],
+                            ctx,
                         )
 
 
@@ -351,6 +519,12 @@ def validate_candidate(candidate: Any, index: int, method_ids: set[str], ctx: Va
     if not isinstance(candidate_id, str) or not candidate_id:
         ctx.error(f"{location}.candidate_id", "expected non-empty string")
 
+    identifiers = candidate_obj.get("identifiers")
+    if not is_dict(identifiers):
+        ctx.error(f"{location}.identifiers", "expected an object")
+    elif not isinstance(identifiers.get("primary"), str) or not identifiers.get("primary").strip():
+        ctx.error(f"{location}.identifiers.primary", "expected non-empty primary identifier")
+
     assessment = candidate_obj.get("candidate_assessment")
     if is_dict(assessment):
         if not assessment.get("summary"):
@@ -380,6 +554,7 @@ def validate_candidate(candidate: Any, index: int, method_ids: set[str], ctx: Va
         f"{location}.candidate_origin",
         ctx,
     )
+    warn_if_candidate_bound_conflict(candidate_obj, location, ctx)
 
     refs = candidate_obj.get("method_chain_refs", [])
     if refs is None:
@@ -398,7 +573,7 @@ def validate_candidate(candidate: Any, index: int, method_ids: set[str], ctx: Va
 
     core = candidate_obj.get("core")
     if is_dict(core):
-        validate_quantity_records(core, f"{location}.core", ctx)
+        validate_core(core, f"{location}.core", ctx)
     else:
         ctx.error(f"{location}.core", "expected an object")
 
@@ -408,11 +583,90 @@ def validate_candidate(candidate: Any, index: int, method_ids: set[str], ctx: Va
         validate_quantity_records(extra_list, f"{location}.extra", ctx)
 
 
-def validate_hvs_candidates(payload: Any, *, workspace: Path = WORKSPACE) -> list[str]:
+def validate_core(core: dict[str, Any], location: str, ctx: ValidationContext) -> None:
+    allowed = set(CORE_GROUPS)
+    unexpected = sorted(set(core) - allowed)
+    for key in unexpected:
+        ctx.error(f"{location}.{key}", f"unexpected core group; expected only {list(CORE_GROUPS)}")
+    for group in CORE_GROUPS:
+        value = core.get(group)
+        if not is_dict(value):
+            ctx.error(f"{location}.{group}", "expected core schema group object")
+    validate_quantity_records(core, location, ctx)
+
+
+def warn_if_candidate_bound_conflict(candidate_obj: dict[str, Any], location: str, ctx: ValidationContext) -> None:
+    texts: list[str] = []
+    assessment = candidate_obj.get("candidate_assessment")
+    if is_dict(assessment):
+        summary = assessment.get("summary")
+        if isinstance(summary, str):
+            texts.append(summary)
+        texts.extend(texts_for_source_refs(assessment.get("source_refs"), ctx))
+
+    origin = candidate_obj.get("candidate_origin")
+    if is_dict(origin):
+        texts.extend(texts_for_source_refs(origin.get("source_refs"), ctx))
+
+    for text in texts:
+        match = CANDIDATE_BOUND_CONFLICT_RE.search(text)
+        if match:
+            ctx.warn(
+                location,
+                f"candidate evidence contains bound-status phrase {match.group(0)!r}; review inclusion boundary",
+            )
+            return
+
+
+def validate_candidate_groups_considered(groups_value: Any, status: str | None, ctx: ValidationContext) -> None:
+    if groups_value is None:
+        if status == "no_candidates":
+            ctx.error("$.candidate_groups_considered", "required when extraction.status is no_candidates")
+        return
+
+    groups = validate_required_list(groups_value, "$.candidate_groups_considered", ctx)
+    if groups is None:
+        return
+    if status == "no_candidates" and not groups:
+        ctx.error("$.candidate_groups_considered", "must be non-empty when extraction.status is no_candidates")
+        return
+
+    for index, group in enumerate(groups):
+        location = f"$.candidate_groups_considered[{index}]"
+        if not is_dict(group):
+            ctx.error(location, "expected an object")
+            continue
+        if status == "no_candidates" and "source_refs" not in group:
+            ctx.error(f"{location}.source_refs", "required when extraction.status is no_candidates")
+            continue
+        if "source_refs" in group:
+            validate_source_refs(group["source_refs"], f"{location}.source_refs", ctx)
+        warn_if_no_candidate_group_needs_review(group, location, ctx)
+
+
+def warn_if_no_candidate_group_needs_review(group: dict[str, Any], location: str, ctx: ValidationContext) -> None:
+    texts: list[str] = []
+    for key in ("description", "reason", "decision"):
+        value = group.get(key)
+        if isinstance(value, str):
+            texts.append(value)
+    texts.extend(texts_for_source_refs(group.get("source_refs"), ctx))
+
+    for text in texts:
+        match = NO_CANDIDATE_REVIEW_RE.search(text)
+        if match:
+            ctx.warn(
+                location,
+                f"no_candidates group contains candidate-like phrase {match.group(0)!r}; review extraction.status",
+            )
+            return
+
+
+def validate_hvs_candidates_report(payload: Any, *, workspace: Path = WORKSPACE) -> ValidationReport:
     ctx = ValidationContext(workspace=workspace)
     root = validate_required_mapping(payload, "$", ctx)
     if root is None:
-        return ctx.errors
+        return ValidationReport(errors=ctx.errors, warnings=ctx.warnings)
 
     if root.get("schema_version") != LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION:
         ctx.error("$.schema_version", f"expected {LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION!r}")
@@ -476,14 +730,13 @@ def validate_hvs_candidates(payload: Any, *, workspace: Path = WORKSPACE) -> lis
         for index, candidate in enumerate(candidates):
             validate_candidate(candidate, index, method_ids, ctx)
 
-    if "candidate_groups_considered" in root:
-        groups = validate_required_list(root["candidate_groups_considered"], "$.candidate_groups_considered", ctx)
-        if groups is not None:
-            for index, group in enumerate(groups):
-                if is_dict(group) and "source_refs" in group:
-                    validate_source_refs(group["source_refs"], f"$.candidate_groups_considered[{index}].source_refs", ctx)
+    validate_candidate_groups_considered(root.get("candidate_groups_considered"), status, ctx)
 
-    return ctx.errors
+    return ValidationReport(errors=ctx.errors, warnings=ctx.warnings)
+
+
+def validate_hvs_candidates(payload: Any, *, workspace: Path = WORKSPACE) -> list[str]:
+    return validate_hvs_candidates_report(payload, workspace=workspace).errors
 
 
 def load_json(path: Path) -> Any:
@@ -529,9 +782,11 @@ def main() -> int:
         print(f"invalid JSON: {exc}", file=sys.stderr)
         return 1
 
-    errors = validate_hvs_candidates(payload, workspace=workspace)
-    if errors:
-        for error in errors:
+    report = validate_hvs_candidates_report(payload, workspace=workspace)
+    for warning in report.warnings:
+        print(f"WARNING: {warning}", file=sys.stderr)
+    if report.errors:
+        for error in report.errors:
             print(error, file=sys.stderr)
         return 1
 

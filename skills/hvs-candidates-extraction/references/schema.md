@@ -59,6 +59,11 @@ objects listed only because they exceed a velocity cut, locally unbound
 Galactic-center objects that the paper says remain Galaxy-bound, or objects the
 paper concludes are bound to the Galaxy.
 
+Validation emits non-blocking warnings, not errors, when an included candidate's
+summary or evidence lines contain phrases such as "bound to the Galaxy",
+"currently bound", "bound trajectory", or "remains Galaxy-bound". Treat these
+warnings as prompts to re-check the inclusion boundary.
+
 `candidate_assessment.source_refs` must contain paper text lines supporting the
 Galactic-unbound candidate status. `catalog_review.json`, `catalog_extraction.json`,
 and ECSV files are table maps and value sources only; they cannot justify
@@ -145,6 +150,10 @@ Suggested `step_type` values: `survey_input`, `sample_construction`,
 
 ## Candidate Record
 
+`identifiers.primary` is required and must be the best display identifier for
+the candidate within this paper, such as a Gaia DR3 source ID, explicit object
+name, or paper candidate label.
+
 ```json
 {
   "candidate_id": "2402.10714:candidate-001",
@@ -181,6 +190,11 @@ Suggested `step_type` values: `survey_input`, `sample_construction`,
 ```
 
 ## Core Fields
+
+`core` must contain exactly these schema groups at the top level:
+`observed_phase_space`, `derived_kinematics`, and `probabilities`. Keep
+paper-specific fields in `extra[]` rather than adding new top-level `core`
+groups.
 
 Use these names when available. Omit unavailable fields rather than inventing
 values.
@@ -233,11 +247,15 @@ Each quantity record follows this shape:
 ```
 
 `raw_value` preserves the source value exactly, after removing only ECSV quote
-delimiters. `value`, `error`, `lower_error`, and `upper_error` are cleaned
-machine-readable strings and must not contain LaTeX commands, braces, `$`, `_`,
-`^`, `+/-`, or plus-minus symbols. Store numeric values as strings to preserve
-source precision. Use `error` for symmetric errors and `lower_error` /
-`upper_error` for asymmetric errors.
+delimiters. Do not strip footnote text, table-note markers, LaTeX fragments, or
+other source residue from `raw_value` just to make the machine fields clean.
+`value`, `error`, `lower_error`, and `upper_error` are cleaned machine-readable
+strings and must not contain LaTeX commands, braces, `$`, `_`, `^`, `+/-`, or
+plus-minus symbols. Store numeric values as strings to preserve source
+precision. Use `error` for symmetric errors and `lower_error` / `upper_error`
+for asymmetric errors. Mechanical uncertainty forms such as `x+/-e`, `x \pm e`,
+`x^{+u}_{-l}`, and `x_{-l}^{+u}` are validator-enforced: symmetric forms require
+`error`, and asymmetric forms require both `lower_error` and `upper_error`.
 
 ## Extra Fields
 
@@ -295,10 +313,21 @@ Paper text reference:
 Bibliography references use the same line-range shape and point to `.bib` or
 `.bbl` files.
 
+Text references must point to substantive source lines, not empty lines or
+comment-only header lines. Validation may emit a non-blocking warning when a
+text reference's `context` or a text-sourced quantity's `raw_value` / `value`
+has no weak lexical overlap with the referenced lines.
+
 ## Candidate Groups Considered
 
 Use this list to document reviewed tables or object groups, especially in
 `no_candidates` outputs.
+
+For `extraction.status: "no_candidates"`, this list is required, must be
+non-empty, and each group must include non-empty `source_refs`. Validation emits
+non-blocking warnings when excluded groups or their evidence lines contain
+strong candidate-like phrases such as "classify as HVSs", "HVS status",
+"gravitationally unbound", or "positive energies".
 
 ```json
 {

@@ -54,6 +54,7 @@ Read `references/schema.md` before writing the JSON. It defines the required
 6. Merge rows for the same candidate inside the paper. Prefer stable identifiers
    in this order: Gaia source ID, explicit object name, paper candidate number,
    and only then a table-row relation documented by the paper.
+   Store the chosen display identifier in `identifiers.primary`.
 7. Classify `candidate_origin`:
    - `introduced_by_this_paper` only when this paper first proposes the object
      as a Galactic-unbound/HVS candidate.
@@ -77,6 +78,9 @@ Read `references/schema.md` before writing the JSON. It defines the required
    conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id <arxiv_id>
    ```
 
+   Validation errors block the result. Validation warnings are non-blocking
+   review prompts for possible boundary or provenance issues.
+
 ## Boundaries
 
 - Do not infer a candidate only because a table/caption/catalog review mentions
@@ -99,6 +103,10 @@ Every quantity in `core` and `extra[]` must include both:
   ECSV quote delimiters
 - `value`: the cleaned machine-readable value
 
+Do not strip footnotes, table-note markers, LaTeX fragments, or other residue
+from `raw_value` solely to make the machine fields clean. Clean only `value`,
+`error`, `lower_error`, and `upper_error`.
+
 For mechanical uncertainty forms such as `x+/-e`, `x_-l^+u`, or
 `x^{+u}_{-l}`, keep the original string in `raw_value`, put only the central
 value in `value`, and put the uncertainty into `error` or
@@ -106,6 +114,10 @@ value in `value`, and put the uncertainty into `error` or
 or `+/-` in `value`, `error`, `lower_error`, or `upper_error`.
 
 Every value in `core` and `extra[]` must include `source_refs`.
+
+`core` must use the three schema groups `observed_phase_space`,
+`derived_kinematics`, and `probabilities` at the top level. Put paper-specific
+values outside those groups into `extra[]`.
 
 For ECSV values, cite the exact cell:
 
@@ -141,6 +153,10 @@ fields when the split is mechanical; both fields keep the same cell provenance
 and the original cell text stays in quantity `raw_value` and reference
 `raw_value`.
 
+Text `source_refs` must point to substantive paper/source lines, not blank lines
+or comment-only headers. Keep `context` specific enough that a reader can see
+why the referenced lines support the field.
+
 ## Empty Results
 
 If the paper has no included candidates, still write
@@ -172,3 +188,9 @@ If the paper has no included candidates, still write
 
 Use `candidate_groups_considered[]` to record the tables or object groups that
 were reviewed and why they were excluded.
+
+For `status: "no_candidates"`, `candidate_groups_considered[]` is required,
+must be non-empty, and each group must include source references. If validation
+prints a warning about phrases such as "HVS status", "gravitationally unbound",
+or "positive energies", re-check whether the paper actually contains low-
+confidence candidates instead of a true empty result.
