@@ -20,7 +20,7 @@ def write_json(path: Path, payload: dict[str, object]) -> None:
 
 def candidate_payload() -> dict[str, object]:
     return {
-        "schema_version": "stella.literature_hvs_candidates.v2",
+        "schema_version": "stella.literature_hvs_candidates.v4",
         "generated_at": "2026-05-12T12:00:00",
         "paper": {
             "arxiv_id": "2603.00001",
@@ -59,7 +59,6 @@ def candidate_payload() -> dict[str, object]:
                     "paper_reassesses_unbound_status": True,
                     "source_refs": [],
                 },
-                "method_chain_refs": [],
                 "core": {"observed_phase_space": {}, "derived_kinematics": {}, "probabilities": {}},
                 "extra": [],
             },
@@ -77,7 +76,6 @@ def candidate_payload() -> dict[str, object]:
                     "paper_reassesses_unbound_status": True,
                     "source_refs": [],
                 },
-                "method_chain_refs": [],
                 "core": {"observed_phase_space": {}, "derived_kinematics": {}, "probabilities": {}},
                 "extra": [],
             },

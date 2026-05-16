@@ -259,8 +259,28 @@ SourceRef = TextSourceRef | EcsvCellSourceRef
 
 
 class MethodStep(StrictModel):
-    id: str
-    step_type: str
+    id: str = Field(pattern=r"^step-\d{2}$")
+    depends_on: list[str]
+    step_type: Literal[
+        "input_catalog",
+        "sample_selection",
+        "cross_match",
+        "quality_filter",
+        "astrometric_calibration",
+        "distance_estimation",
+        "radial_velocity_measurement",
+        "stellar_parameter_inference",
+        "photometric_or_sed_modeling",
+        "velocity_calculation",
+        "galactic_potential_model",
+        "escape_or_bound_assessment",
+        "orbit_integration",
+        "origin_assessment",
+        "candidate_classification",
+        "follow_up_validation",
+        "reported_value_adoption",
+        "other",
+    ]
     summary: str
     inputs: list[str] = Field(default_factory=list)
     outputs: list[str] = Field(default_factory=list)
@@ -328,6 +348,7 @@ class QuantityRecord(StrictModel):
     kind: str = ""
     description: str = ""
     source_refs: list[SourceRef]
+    method_refs: list[str]
 
 
 class ObservedPhaseSpace(StrictModel):
@@ -376,7 +397,6 @@ class CandidateRecord(StrictModel):
     identifiers: CandidateIdentifiers
     candidate_assessment: CandidateAssessment
     candidate_origin: CandidateOrigin
-    method_chain_refs: list[str]
     core: CandidateCore
     extra: list[ExtraQuantityRecord]
 
@@ -390,7 +410,7 @@ class CandidateGroupConsidered(StrictModel):
 
 
 class LiteratureHvsCandidatesRecord(StrictModel):
-    schema_version: Literal["stella.literature_hvs_candidates.v2"]
+    schema_version: Literal["stella.literature_hvs_candidates.v4"]
     generated_at: str
     paper: HvsPaper
     inputs: HvsInputs

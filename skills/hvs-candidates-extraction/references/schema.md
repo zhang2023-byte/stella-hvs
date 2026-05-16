@@ -4,7 +4,7 @@
 
 `literature_hvs_candidates.json` is the Agent-filled paper-level HVS/unbound candidate fact source. Generate a skeleton from code, then fill candidate semantics and provenance.
 
-Use `schema_version: "stella.literature_hvs_candidates.v2"`.
+Use `schema_version: "stella.literature_hvs_candidates.v4"`.
 
 ## Required Top-Level Fields
 
@@ -21,7 +21,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v2"`.
 
 ```json
 {
-  "schema_version": "stella.literature_hvs_candidates.v2",
+  "schema_version": "stella.literature_hvs_candidates.v4",
   "generated_at": "",
   "paper": {},
   "inputs": {},
@@ -34,27 +34,47 @@ Use `schema_version: "stella.literature_hvs_candidates.v2"`.
 
 ## Enum Values
 
+- `astrometric_calibration`
+- `candidate_classification`
 - `candidates_found`
 - `cited_from_literature`
+- `cross_match`
+- `distance_estimation`
 - `ecsv_cell`
+- `escape_or_bound_assessment`
 - `escaping_galaxy_candidate`
+- `follow_up_validation`
+- `galactic_potential_model`
 - `hvs_candidate`
 - `hyper_runaway_candidate`
+- `input_catalog`
 - `introduced_by_this_paper`
 - `needs_review`
 - `no_candidates`
+- `orbit_integration`
+- `origin_assessment`
+- `other`
 - `partial`
+- `photometric_or_sed_modeling`
+- `quality_filter`
+- `radial_velocity_measurement`
+- `reported_value_adoption`
+- `sample_selection`
 - `source_missing`
-- `stella.literature_hvs_candidates.v2`
+- `stella.literature_hvs_candidates.v4`
+- `stellar_parameter_inference`
 - `text`
 - `unbound_candidate`
+- `velocity_calculation`
 
 ## Workflow Notes
 
 - Generate a skeleton with `scripts/init_hvs_candidates.py --arxiv-id <arxiv_id>` after review and extraction exist.
 - Candidate inclusion is driven by paper text, not by tables alone.
 - Use `scripts/validate_hvs_candidates.py --require-complete` for final Agent-filled output; plain validation only checks structural skeleton validity.
-- Every quantity must preserve `raw_value`, cleaned `value`, and source references.
+- Every quantity must preserve `raw_value`, cleaned `value`, source references, and exactly one direct-producer `method_refs` entry when complete.
+- `method_chain[]` uses local `step-XX` ids, canonical `step_type` values, and `depends_on[]` to encode upstream method lineage.
+- Full quantity provenance is the direct `method_refs` step plus recursive `depends_on[]` ancestors; candidates do not carry paper-level `method_chain_refs`.
 - The standard `core` groups are `observed_phase_space`, `derived_kinematics`, and `probabilities`; paper-specific fields go in `extra[]`.
 
 ## JSON Schema
@@ -367,13 +387,6 @@ Use `schema_version: "stella.literature_hvs_candidates.v2"`.
         "candidate_origin": {
           "$ref": "#/$defs/CandidateOrigin"
         },
-        "method_chain_refs": {
-          "items": {
-            "type": "string"
-          },
-          "title": "Method Chain Refs",
-          "type": "array"
-        },
         "core": {
           "$ref": "#/$defs/CandidateCore"
         },
@@ -390,7 +403,6 @@ Use `schema_version: "stella.literature_hvs_candidates.v2"`.
         "identifiers",
         "candidate_assessment",
         "candidate_origin",
-        "method_chain_refs",
         "core",
         "extra"
       ],
@@ -631,6 +643,13 @@ Use `schema_version: "stella.literature_hvs_candidates.v2"`.
           "title": "Source Refs",
           "type": "array"
         },
+        "method_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Method Refs",
+          "type": "array"
+        },
         "name": {
           "title": "Name",
           "type": "string"
@@ -640,6 +659,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v2"`.
         "raw_value",
         "value",
         "source_refs",
+        "method_refs",
         "name"
       ],
       "title": "ExtraQuantityRecord",
@@ -784,10 +804,38 @@ Use `schema_version: "stella.literature_hvs_candidates.v2"`.
       "additionalProperties": false,
       "properties": {
         "id": {
+          "pattern": "^step-\\d{2}$",
           "title": "Id",
           "type": "string"
         },
+        "depends_on": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Depends On",
+          "type": "array"
+        },
         "step_type": {
+          "enum": [
+            "input_catalog",
+            "sample_selection",
+            "cross_match",
+            "quality_filter",
+            "astrometric_calibration",
+            "distance_estimation",
+            "radial_velocity_measurement",
+            "stellar_parameter_inference",
+            "photometric_or_sed_modeling",
+            "velocity_calculation",
+            "galactic_potential_model",
+            "escape_or_bound_assessment",
+            "orbit_integration",
+            "origin_assessment",
+            "candidate_classification",
+            "follow_up_validation",
+            "reported_value_adoption",
+            "other"
+          ],
           "title": "Step Type",
           "type": "string"
         },
@@ -826,6 +874,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v2"`.
       },
       "required": [
         "id",
+        "depends_on",
         "step_type",
         "summary"
       ],
@@ -1010,12 +1059,20 @@ Use `schema_version: "stella.literature_hvs_candidates.v2"`.
           },
           "title": "Source Refs",
           "type": "array"
+        },
+        "method_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Method Refs",
+          "type": "array"
         }
       },
       "required": [
         "raw_value",
         "value",
-        "source_refs"
+        "source_refs",
+        "method_refs"
       ],
       "title": "QuantityRecord",
       "type": "object"
@@ -1059,7 +1116,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v2"`.
   "additionalProperties": false,
   "properties": {
     "schema_version": {
-      "const": "stella.literature_hvs_candidates.v2",
+      "const": "stella.literature_hvs_candidates.v4",
       "title": "Schema Version",
       "type": "string"
     },

@@ -374,20 +374,24 @@ conda run -n stella-env python scripts/build_hvs_candidates_index.py
 
 ### 说明
 
-- `literature_hvs_candidates.json` 使用 `schema_version: stella.literature_hvs_candidates.v2`。
+- `literature_hvs_candidates.json` 使用 `schema_version: stella.literature_hvs_candidates.v4`。
 - 模板、validator 和 skill schema 参考文档来自同一套 Pydantic models；不要手工新增模板之外的字段。
 - 每篇论文都应有结果文件；没有符合边界的候选时，写 `extraction.status=no_candidates` 和空 `candidates[]`。
-- `method_chain[]` 是论文级方法链；每个候选用 `method_chain_refs` 引用相关步骤。
+- `method_chain[]` 是论文级原子方法 DAG，ID 使用 `step-01`、`step-02` 等本文内局部顺序号，`step_type` 使用受控词表，`depends_on[]` 只列直接上游 step。
+- `core` 和 `extra[]` 的每个参数记录用字段级 `method_refs` 引用恰好一个直接生成该值的 `method_chain` step；完整 lineage 由该 step 递归展开 `depends_on[]` 得到，候选层级不再使用 `method_chain_refs`。
 - `candidate_origin.origin_type` 区分 `introduced_by_this_paper` 和 `cited_from_literature`。
   “首次给出”指本文首次把对象作为可能 Galactic-unbound/HVS candidate 提出；已知对象即使本文重新分析，也标为 `cited_from_literature`，并用 `paper_reassesses_unbound_status=true` 表示本文重新评估。
   cited candidates 必须在 `candidate_origin.citation.source_refs` 中同时给出正文 cite 行和 `.bib`/`.bbl` 条目。
 - `core.observed_phase_space` 标准槽位是 RA、Dec、距离/视差、pmRA、pmDec、RV；论文给出的 Galactocentric 坐标、速度、逃逸速度比较和束缚/非束缚概率放在 derived/probabilities。
 - `extra[]` 保存光度、恒星参数、质量标志、邻近源检查、轨道或论文特有指标等非核心信息。
-- `core` 和 `extra[]` 的每个参数记录都必须同时有 `raw_value`、清洗后的 `value` 和 `source_refs`。
+- `core` 和 `extra[]` 的每个参数记录都必须同时有 `raw_value`、清洗后的 `value`、`source_refs` 和 `method_refs`。
   ECSV 来源需要 `path`、`line`、`column`、`column_header`、`raw_value`，且参数级 `raw_value`、source ref `raw_value` 和真实 ECSV cell 必须一致。
   `value`、`error`、`lower_error`、`upper_error` 不能保留 LaTeX 命令、花括号、`$`、`_`、`^` 或 `+/-`；机械误差表达应拆到 error 字段。
   原文来源需要 `path`、`start_line`、`end_line`。
 - 校验脚本只检查 JSON 结构和 provenance 是否自洽，不替代 Agent 判断对象是否应纳入。
+- direct-producer `method_refs` 的固定规则：位置/视差/自行/星表光度直接引用 `input_catalog` 或 `astrometric_calibration`；RV 引用 `radial_velocity_measurement` 或直接星表 `input_catalog`；距离引用 `distance_estimation`；速度和 Galactocentric 坐标引用 `velocity_calculation`；逃逸速度、束缚概率和 escape margin 引用 `escape_or_bound_assessment`；轨道量引用 `orbit_integration`；起源量引用 `origin_assessment`；恒星参数引用 `stellar_parameter_inference` 或 `photometric_or_sed_modeling`；只报告无方法的值引用 `reported_value_adoption`。
+
+旧版本 `literature_hvs_candidates.json` 不再作为长期兼容目标；需要补录或重做时，按当前 v4 schema 和 `hvs-candidates-extraction` skill 重新审阅生成。
 - 修改 schema 字段时，先改 Pydantic models，再运行：
 
 ```bash

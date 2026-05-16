@@ -9,7 +9,7 @@ CATALOG_REVIEW_SCHEMA_VERSION = "stella.article_data_assets.review.v1"
 CATALOG_EXTRACTION_SCHEMA_VERSION = "stella.article_data_assets.extraction.v2"
 CATALOG_INVENTORY_SCHEMA_VERSION = "stella.article_data_assets.inventory.v1"
 CATALOG_INDEX_SCHEMA_VERSION = "stella.article_data_assets.index.v1"
-LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION = "stella.literature_hvs_candidates.v2"
+LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION = "stella.literature_hvs_candidates.v4"
 LITERATURE_HVS_CANDIDATES_INDEX_SCHEMA_VERSION = "stella.literature_hvs_candidates.index.v1"
 
 CATALOG_REVIEW_STATUSES = ("reviewed", "partial", "needs_review", "source_missing")
@@ -32,6 +32,26 @@ LITERATURE_HVS_CANDIDATE_ASSESSMENT_STATUSES = (
 LITERATURE_HVS_CANDIDATE_ORIGIN_TYPES = (
     "introduced_by_this_paper",
     "cited_from_literature",
+)
+LITERATURE_HVS_METHOD_STEP_TYPES = (
+    "input_catalog",
+    "sample_selection",
+    "cross_match",
+    "quality_filter",
+    "astrometric_calibration",
+    "distance_estimation",
+    "radial_velocity_measurement",
+    "stellar_parameter_inference",
+    "photometric_or_sed_modeling",
+    "velocity_calculation",
+    "galactic_potential_model",
+    "escape_or_bound_assessment",
+    "orbit_integration",
+    "origin_assessment",
+    "candidate_classification",
+    "follow_up_validation",
+    "reported_value_adoption",
+    "other",
 )
 
 
@@ -95,6 +115,7 @@ LITERATURE_HVS_CANDIDATES_SPEC = SchemaSpec(
         "extraction.status": LITERATURE_HVS_CANDIDATE_STATUSES,
         "candidate_assessment.candidate_status": LITERATURE_HVS_CANDIDATE_ASSESSMENT_STATUSES,
         "candidate_origin.origin_type": LITERATURE_HVS_CANDIDATE_ORIGIN_TYPES,
+        "method_chain.step_type": LITERATURE_HVS_METHOD_STEP_TYPES,
     },
 )
 

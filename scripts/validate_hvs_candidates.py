@@ -8,6 +8,7 @@ import json
 import re
 import shlex
 import sys
+from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
@@ -21,11 +22,21 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from high_velocity_lit.hvs_candidates_index import write_hvs_candidates_index_outputs  # noqa: E402
+from high_velocity_lit.hvs_method_provenance import (  # noqa: E402
+    REPORTED_VALUE_STEP_TYPE,
+    allowed_direct_step_types,
+    categories_have_compatible_direct_types,
+    classify_quantity_record,
+    coarse_step_warnings,
+    lineage_for_step,
+    required_lineage_step_type_groups,
+)
 from high_velocity_lit.schema_specs import (  # noqa: E402
     LITERATURE_HVS_CANDIDATE_ASSESSMENT_STATUSES,
     LITERATURE_HVS_CANDIDATE_ORIGIN_TYPES,
     LITERATURE_HVS_CANDIDATE_STATUSES,
     LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION,
+    LITERATURE_HVS_METHOD_STEP_TYPES,
 )
 from high_velocity_lit.schema_models import LiteratureHvsCandidatesRecord  # noqa: E402
 
@@ -37,6 +48,7 @@ ASYMMETRIC_UNCERTAINTY_RE = re.compile(
     r"_\s*\{?\s*-[^}^\s]+\}?\s*\^\s*\{?\s*\+[^}\s]+)"
 )
 CORE_GROUPS = ("observed_phase_space", "derived_kinematics", "probabilities")
+METHOD_STEP_ID_RE = re.compile(r"^step-\d{2}$")
 NO_CANDIDATE_REVIEW_RE = re.compile(
     r"(classif\w+(?:\s+\w+){0,3}\s+as\s+HVSs?|HVS\s+status|"
     r"gravitationally\s+unbound|positive\s+(?:total\s+)?energ(?:y|ies))",
@@ -416,11 +428,105 @@ def iter_quantity_records(node: Any, location: str):
             yield from iter_quantity_records(item, f"{location}[{index}]")
 
 
-def validate_quantity_records(node: Any, location: str, ctx: ValidationContext) -> None:
+def validate_method_refs(
+    record: dict[str, Any],
+    location: str,
+    method_ids: set[str],
+    method_step_types: dict[str, str],
+    method_dependencies: dict[str, list[str]],
+    direct_step_categories: dict[str, set[str]],
+    ctx: ValidationContext,
+    *,
+    require_complete: bool,
+) -> None:
+    if "method_refs" not in record:
+        ctx.error(f"{location}.method_refs", "quantity record with value must include method_refs")
+        return
+
+    method_refs = record.get("method_refs")
+    if not is_list(method_refs):
+        ctx.error(f"{location}.method_refs", "expected a list")
+        return
+    if require_complete and len(method_refs) != 1:
+        ctx.error(f"{location}.method_refs", "must reference exactly one direct method_chain step when complete")
+    for ref_index, ref in enumerate(method_refs):
+        if not isinstance(ref, str) or not ref:
+            ctx.error(f"{location}.method_refs[{ref_index}]", "expected non-empty method_chain id")
+            continue
+        if ref not in method_ids:
+            ctx.error(f"{location}.method_refs[{ref_index}]", f"unknown method_chain id {ref!r}")
+            continue
+        validate_direct_method_ref(
+            record,
+            location,
+            ref,
+            method_step_types,
+            method_dependencies,
+            direct_step_categories,
+            ctx,
+        )
+
+
+def validate_direct_method_ref(
+    record: dict[str, Any],
+    location: str,
+    method_ref: str,
+    method_step_types: dict[str, str],
+    method_dependencies: dict[str, list[str]],
+    direct_step_categories: dict[str, set[str]],
+    ctx: ValidationContext,
+) -> None:
+    category = classify_quantity_record(location, record)
+    if category is None:
+        return
+    direct_step_categories[method_ref].add(category)
+
+    step_type = method_step_types.get(method_ref)
+    allowed_step_types = allowed_direct_step_types(category)
+    if step_type not in allowed_step_types:
+        ctx.error(
+            f"{location}.method_refs",
+            f"direct producer {method_ref!r} has step_type {step_type!r}; expected one of {sorted(allowed_step_types)}",
+        )
+        return
+    if step_type == REPORTED_VALUE_STEP_TYPE:
+        return
+
+    lineage = lineage_for_step(method_ref, method_dependencies)
+    lineage_types = {method_step_types.get(step_id) for step_id in lineage}
+    for required_group in required_lineage_step_type_groups(category):
+        if not lineage_types.intersection(required_group):
+            ctx.error(
+                f"{location}.method_refs",
+                f"lineage for {method_ref!r} must include a step_type in {sorted(required_group)}",
+            )
+
+
+def validate_quantity_records(
+    node: Any,
+    location: str,
+    ctx: ValidationContext,
+    method_ids: set[str],
+    method_step_types: dict[str, str],
+    method_dependencies: dict[str, list[str]],
+    direct_step_categories: dict[str, set[str]],
+    *,
+    require_complete: bool,
+) -> None:
     for record, record_location in iter_quantity_records(node, location):
         if not is_dict(record):
             continue
         validate_clean_machine_string(record.get("value"), f"{record_location}.value", ctx)
+        validate_method_refs(
+            record,
+            record_location,
+            method_ids,
+            method_step_types,
+            method_dependencies,
+            direct_step_categories,
+            ctx,
+            require_complete=require_complete,
+        )
         raw_value = record.get("raw_value")
         if not isinstance(raw_value, str):
             ctx.error(f"{record_location}.raw_value", "quantity record with value must include raw_value")
@@ -499,7 +605,17 @@ def validate_candidate_origin(origin: Any, location: str, ctx: ValidationContext
     return origin_type if isinstance(origin_type, str) else None
 
 
-def validate_candidate(candidate: Any, index: int, method_ids: set[str], ctx: ValidationContext) -> None:
+def validate_candidate(
+    candidate: Any,
+    index: int,
+    method_ids: set[str],
+    method_step_types: dict[str, str],
+    method_dependencies: dict[str, list[str]],
+    direct_step_categories: dict[str, set[str]],
+    ctx: ValidationContext,
+    *,
+    require_complete: bool,
+) -> None:
     location = f"candidates[{index}]"
     candidate_obj = validate_required_mapping(candidate, location, ctx)
     if candidate_obj is None:
@@ -510,12 +626,13 @@ def validate_candidate(candidate: Any, index: int, method_ids: set[str], ctx: Va
         "identifiers",
         "candidate_assessment",
         "candidate_origin",
-        "method_chain_refs",
         "core",
         "extra",
     ):
         if key not in candidate_obj:
             ctx.error(f"{location}.{key}", "missing required field")
+    if "method_chain_refs" in candidate_obj:
+        ctx.error(f"{location}.method_chain_refs", "candidate-level method_chain_refs is removed in v4; use quantity method_refs")
 
     candidate_id = candidate_obj.get("candidate_id")
     if not isinstance(candidate_id, str) or not candidate_id:
@@ -558,34 +675,47 @@ def validate_candidate(candidate: Any, index: int, method_ids: set[str], ctx: Va
     )
     warn_if_candidate_bound_conflict(candidate_obj, location, ctx)
 
-    refs = candidate_obj.get("method_chain_refs", [])
-    if refs is None:
-        refs = []
-    if not is_list(refs):
-        ctx.error(f"{location}.method_chain_refs", "expected a list")
-    else:
-        if origin_type == "introduced_by_this_paper" and not refs:
-            ctx.error(
-                f"{location}.method_chain_refs",
-                "introduced_by_this_paper candidates must reference at least one method_chain step",
-            )
-        for ref_index, ref in enumerate(refs):
-            if ref not in method_ids:
-                ctx.error(f"{location}.method_chain_refs[{ref_index}]", f"unknown method_chain id {ref!r}")
-
     core = candidate_obj.get("core")
     if is_dict(core):
-        validate_core(core, f"{location}.core", ctx)
+        validate_core(
+            core,
+            f"{location}.core",
+            ctx,
+            method_ids,
+            method_step_types,
+            method_dependencies,
+            direct_step_categories,
+            require_complete=require_complete,
+        )
     else:
         ctx.error(f"{location}.core", "expected an object")
 
     extra = candidate_obj.get("extra")
     extra_list = validate_required_list(extra, f"{location}.extra", ctx)
     if extra_list is not None:
-        validate_quantity_records(extra_list, f"{location}.extra", ctx)
+        validate_quantity_records(
+            extra_list,
+            f"{location}.extra",
+            ctx,
+            method_ids,
+            method_step_types,
+            method_dependencies,
+            direct_step_categories,
+            require_complete=require_complete,
+        )
 
 
-def validate_core(core: dict[str, Any], location: str, ctx: ValidationContext) -> None:
+def validate_core(
+    core: dict[str, Any],
+    location: str,
+    ctx: ValidationContext,
+    method_ids: set[str],
+    method_step_types: dict[str, str],
+    method_dependencies: dict[str, list[str]],
+    direct_step_categories: dict[str, set[str]],
+    *,
+    require_complete: bool,
+) -> None:
     allowed = set(CORE_GROUPS)
     unexpected = sorted(set(core) - allowed)
     for key in unexpected:
@@ -594,7 +724,16 @@ def validate_core(core: dict[str, Any], location: str, ctx: ValidationContext) -
         value = core.get(group)
         if not is_dict(value):
             ctx.error(f"{location}.{group}", "expected core schema group object")
-    validate_quantity_records(core, location, ctx)
+    validate_quantity_records(
+        core,
+        location,
+        ctx,
+        method_ids,
+        method_step_types,
+        method_dependencies,
+        direct_step_categories,
+        require_complete=require_complete,
+    )
 
 
 def warn_if_candidate_bound_conflict(candidate_obj: dict[str, Any], location: str, ctx: ValidationContext) -> None:
@@ -672,6 +811,134 @@ def validate_completion_state(root: dict[str, Any], status: str | None, ctx: Val
         ctx.error("$.extraction.summary", "expected a non-empty completion summary")
 
 
+def validate_method_chain(
+    method_chain: Any,
+    ctx: ValidationContext,
+) -> tuple[set[str], dict[str, str], dict[str, list[str]]]:
+    method_ids: set[str] = set()
+    method_step_types: dict[str, str] = {}
+    method_dependencies: dict[str, list[str]] = {}
+    previous_method_number = 0
+
+    if not is_list(method_chain):
+        ctx.error("$.method_chain", "expected a list")
+        return method_ids, method_step_types, method_dependencies
+
+    for index, step in enumerate(method_chain):
+        if not is_dict(step):
+            ctx.error(f"$.method_chain[{index}]", "expected an object")
+            continue
+        step_id = step.get("id")
+        if not isinstance(step_id, str) or not step_id:
+            ctx.error(f"$.method_chain[{index}].id", "expected non-empty string")
+            continue
+        if not METHOD_STEP_ID_RE.match(step_id):
+            ctx.error(f"$.method_chain[{index}].id", "expected step-XX format")
+        else:
+            step_number = int(step_id.split("-")[1])
+            if step_number <= previous_method_number:
+                ctx.error(f"$.method_chain[{index}].id", "method_chain ids must be in ascending numeric order")
+            previous_method_number = step_number
+        if step_id in method_ids:
+            ctx.error(f"$.method_chain[{index}].id", f"duplicate method_chain id {step_id!r}")
+        method_ids.add(step_id)
+
+        step_type = step.get("step_type")
+        if step_type not in LITERATURE_HVS_METHOD_STEP_TYPES:
+            ctx.error(
+                f"$.method_chain[{index}].step_type",
+                f"expected one of {sorted(LITERATURE_HVS_METHOD_STEP_TYPES)}",
+            )
+        elif isinstance(step_type, str):
+            method_step_types[step_id] = step_type
+
+        if "depends_on" not in step:
+            ctx.error(f"$.method_chain[{index}].depends_on", "missing required field")
+            depends_on: Any = []
+        else:
+            depends_on = step.get("depends_on")
+        method_dependencies[step_id] = validate_method_step_dependencies(
+            depends_on,
+            f"$.method_chain[{index}].depends_on",
+            step_id,
+            method_ids,
+            ctx,
+        )
+
+        if "source_refs" in step:
+            validate_source_refs(step["source_refs"], f"$.method_chain[{index}].source_refs", ctx)
+        for warning in coarse_step_warnings(step):
+            ctx.warn(f"$.method_chain[{index}]", warning)
+
+    validate_method_dependency_cycles(method_dependencies, ctx)
+    return method_ids, method_step_types, method_dependencies
+
+
+def validate_method_step_dependencies(
+    depends_on: Any,
+    location: str,
+    step_id: str,
+    prior_method_ids: set[str],
+    ctx: ValidationContext,
+) -> list[str]:
+    if not is_list(depends_on):
+        ctx.error(location, "expected a list")
+        return []
+    valid_dependencies: list[str] = []
+    seen: set[str] = set()
+    for index, dependency in enumerate(depends_on):
+        dependency_location = f"{location}[{index}]"
+        if not isinstance(dependency, str) or not dependency:
+            ctx.error(dependency_location, "expected non-empty method_chain id")
+            continue
+        if dependency == step_id:
+            ctx.error(dependency_location, "method step cannot depend on itself")
+            continue
+        if dependency in seen:
+            ctx.error(dependency_location, f"duplicate dependency {dependency!r}")
+            continue
+        seen.add(dependency)
+        if dependency not in prior_method_ids:
+            ctx.error(dependency_location, f"dependency {dependency!r} must reference an earlier method_chain step")
+            continue
+        valid_dependencies.append(dependency)
+    return valid_dependencies
+
+
+def validate_method_dependency_cycles(method_dependencies: dict[str, list[str]], ctx: ValidationContext) -> None:
+    visiting: set[str] = set()
+    visited: set[str] = set()
+
+    def visit(step_id: str, chain: list[str]) -> None:
+        if step_id in visited:
+            return
+        if step_id in visiting:
+            ctx.error("$.method_chain", f"method dependency cycle detected: {' -> '.join(chain + [step_id])}")
+            return
+        visiting.add(step_id)
+        for dependency in method_dependencies.get(step_id, []):
+            visit(dependency, chain + [step_id])
+        visiting.remove(step_id)
+        visited.add(step_id)
+
+    for step_id in method_dependencies:
+        visit(step_id, [])
+
+
+def validate_direct_step_category_compatibility(
+    direct_step_categories: dict[str, set[str]],
+    ctx: ValidationContext,
+) -> None:
+    for step_id, categories in sorted(direct_step_categories.items()):
+        if categories_have_compatible_direct_types(categories):
+            continue
+        ctx.error(
+            "$.candidates",
+            f"method step {step_id!r} is used as direct producer for incompatible quantity categories "
+            f"{sorted(categories)}; split this method step",
+        )
+
+
 def validate_hvs_candidates_report(
     payload: Any,
     *,
@@ -722,24 +989,8 @@ def validate_hvs_candidates_report(
         if status not in LITERATURE_HVS_CANDIDATE_STATUSES:
             ctx.error("$.extraction.status", f"expected one of {sorted(LITERATURE_HVS_CANDIDATE_STATUSES)}")
 
-    method_chain = root.get("method_chain")
-    method_ids: set[str] = set()
-    if not is_list(method_chain):
-        ctx.error("$.method_chain", "expected a list")
-    else:
-        for index, step in enumerate(method_chain):
-            if not is_dict(step):
-                ctx.error(f"$.method_chain[{index}]", "expected an object")
-                continue
-            step_id = step.get("id")
-            if not isinstance(step_id, str) or not step_id:
-                ctx.error(f"$.method_chain[{index}].id", "expected non-empty string")
-                continue
-            if step_id in method_ids:
-                ctx.error(f"$.method_chain[{index}].id", f"duplicate method_chain id {step_id!r}")
-            method_ids.add(step_id)
-            if "source_refs" in step:
-                validate_source_refs(step["source_refs"], f"$.method_chain[{index}].source_refs", ctx)
+    method_ids, method_step_types, method_dependencies = validate_method_chain(root.get("method_chain"), ctx)
+    direct_step_categories: dict[str, set[str]] = defaultdict(set)
 
     candidates = root.get("candidates")
     if not is_list(candidates):
@@ -750,7 +1001,17 @@ def validate_hvs_candidates_report(
         if status == "candidates_found" and not candidates:
             ctx.error("$.candidates", "must contain at least one candidate when extraction.status is candidates_found")
         for index, candidate in enumerate(candidates):
-            validate_candidate(candidate, index, method_ids, ctx)
+            validate_candidate(
+                candidate,
+                index,
+                method_ids,
+                method_step_types,
+                method_dependencies,
+                direct_step_categories,
+                ctx,
+                require_complete=require_complete,
+            )
+        validate_direct_step_category_compatibility(direct_step_categories, ctx)
 
     validate_candidate_groups_considered(root.get("candidate_groups_considered"), status, ctx)
 

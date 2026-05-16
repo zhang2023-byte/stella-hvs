@@ -124,7 +124,6 @@ def valid_payload(workspace: Path, *, status: str = "candidates_found") -> dict[
                     "paper_reassesses_unbound_status": True,
                     "source_refs": [text_ref],
                 },
-                "method_chain_refs": ["method-1"],
                 "core": {
                     "observed_phase_space": {},
                     "derived_kinematics": {
@@ -134,6 +133,7 @@ def valid_payload(workspace: Path, *, status: str = "candidates_found") -> dict[
                             "unit": "km/s",
                             "kind": "vtan_g",
                             "source_refs": [cell_ref],
+                            "method_refs": ["step-02"],
                         }
                     },
                     "probabilities": {},
@@ -144,6 +144,7 @@ def valid_payload(workspace: Path, *, status: str = "candidates_found") -> dict[
                         "raw_value": "quality-filtered Gaia DR3 candidate",
                         "value": "quality-filtered Gaia DR3 candidate",
                         "source_refs": [text_ref],
+                        "method_refs": ["step-03"],
                     }
                 ],
             }
@@ -175,8 +176,23 @@ def valid_payload(workspace: Path, *, status: str = "candidates_found") -> dict[
         },
         "method_chain": [
             {
-                "id": "method-1",
-                "step_type": "selection",
+                "id": "step-01",
+                "depends_on": [],
+                "step_type": "input_catalog",
+                "summary": "Gaia DR3 input catalog for candidate astrometry.",
+                "source_refs": [text_ref],
+            },
+            {
+                "id": "step-02",
+                "depends_on": ["step-01"],
+                "step_type": "velocity_calculation",
+                "summary": "Tangential velocity calculation from Gaia DR3 input catalog values.",
+                "source_refs": [text_ref],
+            },
+            {
+                "id": "step-03",
+                "depends_on": ["step-02"],
+                "step_type": "sample_selection",
                 "summary": "Gaia DR3 candidates are filtered by quality cuts.",
                 "source_refs": [text_ref],
             }
@@ -244,7 +260,6 @@ def cited_payload(workspace: Path) -> dict[str, object]:
             ],
         },
     }
-    candidate["method_chain_refs"] = []  # type: ignore[index]
     return payload
 
 
@@ -488,16 +503,167 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             self.assertTrue(any("candidate_origin.citation" in error for error in errors))
 
-    def test_introduced_candidate_requires_method_chain_refs(self) -> None:
+    def test_candidate_level_method_chain_refs_fails(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
             candidate = payload["candidates"][0]  # type: ignore[index]
-            candidate["method_chain_refs"] = []
+            candidate["method_chain_refs"] = ["step-01"]
 
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
-            self.assertTrue(any("must reference at least one method_chain" in error for error in errors))
+            self.assertTrue(any("candidate-level method_chain_refs is removed" in error for error in errors))
+
+    def test_bad_method_step_id_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            method = payload["method_chain"][0]  # type: ignore[index]
+            method["id"] = "method-1"
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("expected step-XX format" in error for error in errors))
+
+    def test_bad_method_step_type_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            method = payload["method_chain"][0]  # type: ignore[index]
+            method["step_type"] = "selection"
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("method_chain[0].step_type" in error for error in errors))
+
+    def test_unknown_quantity_method_ref_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            velocity = candidate["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]  # type: ignore[index]
+            velocity["method_refs"] = ["step-99"]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("unknown method_chain id 'step-99'" in error for error in errors))
+
+    def test_missing_quantity_method_refs_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            velocity = candidate["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]  # type: ignore[index]
+            del velocity["method_refs"]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("must include method_refs" in error for error in errors))
+
+    def test_require_complete_rejects_empty_quantity_method_refs(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            velocity = candidate["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]  # type: ignore[index]
+            velocity["method_refs"] = []
+
+            errors = validate_cli.validate_hvs_candidates(
+                payload,
+                workspace=workspace,
+                require_complete=True,
+            )
+
+            self.assertTrue(any("must reference exactly one direct method_chain step when complete" in error for error in errors))
+
+    def test_require_complete_rejects_multiple_direct_quantity_method_refs(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            velocity = candidate["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]  # type: ignore[index]
+            velocity["method_refs"] = ["step-01", "step-02"]
+
+            errors = validate_cli.validate_hvs_candidates(
+                payload,
+                workspace=workspace,
+                require_complete=True,
+            )
+
+            self.assertTrue(any("exactly one direct method_chain step" in error for error in errors))
+
+    def test_method_dependency_must_reference_earlier_step(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            method = payload["method_chain"][0]  # type: ignore[index]
+            method["depends_on"] = ["step-02"]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("must reference an earlier method_chain step" in error for error in errors))
+
+    def test_method_dependency_field_is_required(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            method = payload["method_chain"][0]  # type: ignore[index]
+            del method["depends_on"]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("depends_on" in error for error in errors))
+
+    def test_method_dependency_duplicate_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            method = payload["method_chain"][2]  # type: ignore[index]
+            method["depends_on"] = ["step-01", "step-01"]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("duplicate dependency" in error for error in errors))
+
+    def test_direct_producer_type_mismatch_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            velocity = candidate["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]  # type: ignore[index]
+            velocity["method_refs"] = ["step-01"]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("direct producer" in error and "velocity_calculation" in error for error in errors))
+
+    def test_velocity_lineage_requires_input_step(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            method = payload["method_chain"][1]  # type: ignore[index]
+            method["depends_on"] = []
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("lineage for 'step-02'" in error for error in errors))
+
+    def test_same_step_direct_categories_force_atomic_split(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["core"]["observed_phase_space"]["distance"] = {  # type: ignore[index]
+                "raw_value": "12.0",
+                "value": "12.0",
+                "unit": "kpc",
+                "source_refs": candidate["candidate_assessment"]["source_refs"],  # type: ignore[index]
+                "method_refs": ["step-02"],
+            }
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("incompatible quantity categories" in error for error in errors))
 
     def test_missing_bibcode_passes(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
