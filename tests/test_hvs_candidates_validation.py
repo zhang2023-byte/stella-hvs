@@ -469,6 +469,124 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             self.assertTrue(any("contains LaTeX residue" in error for error in errors))
 
+    def test_core_numeric_machine_fields_warn_without_error(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            text_ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            core = candidate["core"]  # type: ignore[index]
+            core["derived_kinematics"]["total_velocity"] = {  # type: ignore[index]
+                "raw_value": "ranging from 742 to 895 km/s",
+                "value": "742-895",
+                "unit": "km s^-1",
+                "source_refs": [text_ref],
+                "method_refs": ["step-02"],
+            }
+            core["observed_phase_space"]["radial_velocity"] = {  # type: ignore[index]
+                "raw_value": "vrmlos-318.6+/-0.60tnoted",
+                "value": "vrmlos-318.6",
+                "error": "0.60tnoted",
+                "unit": "km s^-1",
+                "source_refs": [text_ref],
+                "method_refs": ["step-01"],
+            }
+            core["observed_phase_space"]["ra"] = {  # type: ignore[index]
+                "raw_value": "17h39m53.68s",
+                "value": "17h39m53.68s",
+                "unit": "hms",
+                "source_refs": [text_ref],
+                "method_refs": ["step-01"],
+            }
+            core["observed_phase_space"]["dec"] = {  # type: ignore[index]
+                "raw_value": "-27d42m35.30s",
+                "value": "-27d42m35.30s",
+                "unit": "dms",
+                "source_refs": [text_ref],
+                "method_refs": ["step-01"],
+            }
+
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
+
+            self.assertEqual(report.errors, [])
+            numeric_warnings = [warning for warning in report.warnings if "single plain numeric" in warning]
+            self.assertTrue(any(".core.derived_kinematics.total_velocity.value" in warning for warning in numeric_warnings))
+            self.assertTrue(any(".core.observed_phase_space.radial_velocity.value" in warning for warning in numeric_warnings))
+            self.assertTrue(any(".core.observed_phase_space.radial_velocity.error" in warning for warning in numeric_warnings))
+            self.assertFalse(any(".core.observed_phase_space.ra.value" in warning for warning in numeric_warnings))
+            self.assertFalse(any(".core.observed_phase_space.dec.value" in warning for warning in numeric_warnings))
+
+    def test_quantitative_extra_numeric_fields_warn_without_textual_false_positives(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            text_ref = payload["candidates"][0]["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            payload["method_chain"].append(  # type: ignore[index]
+                {
+                    "id": "step-04",
+                    "depends_on": [],
+                    "step_type": "reported_value_adoption",
+                    "summary": "Reported orbital lower limit adopted from the paper.",
+                    "source_refs": [text_ref],
+                }
+            )
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["extra"].extend(  # type: ignore[index]
+                [
+                    {
+                        "name": "absolute_magnitude_G",
+                        "raw_value": "M_G=2.01+/-0.60tnoted",
+                        "value": "2.01",
+                        "error": "0.60tnoted",
+                        "unit": "mag",
+                        "kind": "absolute_magnitude",
+                        "source_refs": [text_ref],
+                        "method_refs": ["step-01"],
+                    },
+                    {
+                        "name": "eccentricity",
+                        "raw_value": "greater than 0.98",
+                        "value": ">0.98",
+                        "unit": "",
+                        "description": "orbital eccentricity lower limit",
+                        "source_refs": [text_ref],
+                        "method_refs": ["step-04"],
+                    },
+                    {
+                        "name": "lamost_designation",
+                        "raw_value": "J161649.39-030624.9",
+                        "value": "J161649.39-030624.9",
+                        "source_refs": [text_ref],
+                        "method_refs": ["step-03"],
+                    },
+                ]
+            )
+
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
+
+            self.assertEqual(report.errors, [])
+            numeric_warnings = [warning for warning in report.warnings if "single plain numeric" in warning]
+            self.assertTrue(any(".extra[1].error" in warning for warning in numeric_warnings))
+            self.assertTrue(any(".extra[2].value" in warning for warning in numeric_warnings))
+            self.assertFalse(any(".extra[3].value" in warning for warning in numeric_warnings))
+
+    def test_numeric_machine_fields_accept_signed_and_scientific_values(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            velocity = candidate["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]  # type: ignore[index]
+            text_ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            velocity["source_refs"] = [text_ref]
+            velocity["raw_value"] = "+3.00+/-1.3e5"
+            velocity["value"] = "+3.00"
+            velocity["error"] = "1.3e5"
+
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
+
+            self.assertEqual(report.errors, [])
+            self.assertFalse(any("single plain numeric" in warning for warning in report.warnings))
+
     def test_runaway_candidate_status_fails(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)

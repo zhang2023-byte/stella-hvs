@@ -427,6 +427,7 @@ conda run -n stella-env python scripts/build_hvs_candidates_index.py
 - `core` 和 `extra[]` 的每个参数记录都必须同时有 `raw_value`、清洗后的 `value`、`source_refs` 和 `method_refs`。
   ECSV 来源需要 `path`、`line`、`column`、`column_header`、`raw_value`，且参数级 `raw_value`、source ref `raw_value` 和真实 ECSV cell 必须一致。
   `value`、`error`、`lower_error`、`upper_error` 不能保留 LaTeX 命令、花括号、`$`、`_`、`^` 或 `+/-`；机械误差表达应拆到 error 字段。
+  数值型 core 字段和定量 `extra[]` 的这些机器字段还应是单个纯数字；范围、上下限、单位、脚注和说明性文本保留在 `raw_value`/`description`。RA/Dec 当前可暂用 hms/dms 六十进制表示。
   原文来源需要 `path`、`start_line`、`end_line`。
 - 校验脚本只检查 JSON 结构和 provenance 是否自洽，不替代 Agent 判断对象是否应纳入。
 - direct-producer `method_refs` 的固定规则：位置/视差/自行/星表光度直接引用 `input_catalog` 或 `astrometric_calibration`；RV 引用 `radial_velocity_measurement` 或直接星表 `input_catalog`；距离引用 `distance_estimation`；速度和 Galactocentric 坐标引用 `velocity_calculation`；逃逸速度、束缚概率和 escape margin 引用 `escape_or_bound_assessment`；轨道量引用 `orbit_integration`；起源量引用 `origin_assessment`；恒星参数引用 `stellar_parameter_inference` 或 `photometric_or_sed_modeling`；只报告无方法的值引用 `reported_value_adoption`。

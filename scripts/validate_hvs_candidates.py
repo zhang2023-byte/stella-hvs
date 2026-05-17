@@ -42,12 +42,15 @@ from high_velocity_lit.schema_models import LiteratureHvsCandidatesRecord  # noq
 
 
 LATEX_RESIDUE_RE = re.compile(r"(\\[A-Za-z]+|[{}$]|[\^_]|\+/-|\u00b1)")
+MACHINE_NUMBER_RE = re.compile(r"^[+-]?(?:(?:\d+(?:\.\d*)?)|(?:\.\d+))(?:[eE][+-]?\d+)?$")
 SYMMETRIC_UNCERTAINTY_RE = re.compile(r"(\+/-|\u00b1|\\pm)")
 ASYMMETRIC_UNCERTAINTY_RE = re.compile(
     r"(\^\s*\{?\s*\+[^}_\s]+\}?\s*_\s*\{?\s*-[^}\s]+|"
     r"_\s*\{?\s*-[^}^\s]+\}?\s*\^\s*\{?\s*\+[^}\s]+)"
 )
 CORE_GROUPS = ("observed_phase_space", "derived_kinematics", "probabilities")
+CORE_OBSERVED_NUMERIC_FIELDS = {"distance", "parallax", "proper_motion_ra", "proper_motion_dec", "radial_velocity"}
+MACHINE_NUMERIC_FIELDS = ("value", "error", "lower_error", "upper_error")
 METHOD_STEP_ID_RE = re.compile(r"^step-\d{2}$")
 NO_CANDIDATE_REVIEW_RE = re.compile(
     r"(classif\w+(?:\s+\w+){0,3}\s+as\s+HVSs?|HVS\s+status|"
@@ -57,6 +60,14 @@ NO_CANDIDATE_REVIEW_RE = re.compile(
 CANDIDATE_BOUND_CONFLICT_RE = re.compile(
     r"(\bbound\s+to\s+the\s+Galaxy|\bcurrently\s+bound|\bbound\s+trajectory|"
     r"remains?\s+Galaxy[- ]bound)",
+    re.IGNORECASE,
+)
+QUANTITATIVE_EXTRA_RE = re.compile(
+    r"(velocity|speed|distance|parallax|proper[_ -]?motion|radial[_ -]?velocity|"
+    r"escape|energy|eccentricity|mass|age|magnitude|luminosity|temperature|teff|"
+    r"log[_ -]?g|metallicity|\[?fe/h\]?|probability|ratio|angular[_ -]?momentum|"
+    r"\blz\b|transit|count|period|time[_ -]?of[_ -]?flight|flight[_ -]?time|"
+    r"ruwe|gof|chi|signal[_ -]?to[_ -]?noise|\bs/?n\b|snr)",
     re.IGNORECASE,
 )
 WEAK_MATCH_STOPWORDS = {
@@ -326,6 +337,49 @@ def validate_clean_machine_string(value: Any, location: str, ctx: ValidationCont
         ctx.error(location, "contains LaTeX residue; keep it in raw_value and store a cleaned machine value here")
 
 
+def field_name_from_location(location: str) -> str:
+    normalized = re.sub(r"\[\d+\]", "", location)
+    return normalized.rsplit(".", 1)[-1]
+
+
+def quantity_requires_numeric_machine_fields(record: dict[str, Any], location: str) -> bool:
+    field_name = field_name_from_location(location)
+    if ".core.derived_kinematics." in location or ".core.probabilities." in location:
+        return True
+    if ".core.observed_phase_space." in location:
+        return field_name in CORE_OBSERVED_NUMERIC_FIELDS
+    if ".extra[" not in location:
+        return False
+
+    unit = record.get("unit")
+    if isinstance(unit, str) and unit.strip():
+        return True
+    searchable = " ".join(
+        value
+        for key in ("name", "kind", "description")
+        if isinstance((value := record.get(key)), str)
+    )
+    return bool(QUANTITATIVE_EXTRA_RE.search(searchable))
+
+
+def warn_if_non_numeric_machine_fields(record: dict[str, Any], location: str, ctx: ValidationContext) -> None:
+    if not quantity_requires_numeric_machine_fields(record, location):
+        return
+    for key in MACHINE_NUMERIC_FIELDS:
+        value = record.get(key)
+        if value in (None, ""):
+            continue
+        if not isinstance(value, str):
+            continue
+        if MACHINE_NUMBER_RE.fullmatch(value.strip()):
+            continue
+        ctx.warn(
+            f"{location}.{key}",
+            "expected a single plain numeric machine value; keep ranges, limits, units, notes, and "
+            "LaTeX residue in raw_value/description or a future structured range field",
+        )
+
+
 def is_substantive_text_line(line: str) -> bool:
     stripped = line.strip()
     return bool(stripped) and not stripped.startswith(("%", "#"))
@@ -535,6 +589,7 @@ def validate_quantity_records(
         for key in ("error", "lower_error", "upper_error"):
             if key in record and record.get(key) not in (None, ""):
                 validate_clean_machine_string(record.get(key), f"{record_location}.{key}", ctx)
+        warn_if_non_numeric_machine_fields(record, record_location, ctx)
         if "source_refs" not in record:
             ctx.error(record_location, "quantity record with value must include source_refs")
             continue

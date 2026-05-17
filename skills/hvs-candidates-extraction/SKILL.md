@@ -146,6 +146,15 @@ value in `value`, and put the uncertainty into `error` or
 `lower_error`/`upper_error`. Do not leave LaTeX commands, braces, `$`, `_`, `^`,
 or `+/-` in `value`, `error`, `lower_error`, or `upper_error`.
 
+For numeric core fields and quantitative `extra[]` records, `value`, `error`,
+`lower_error`, and `upper_error` should each be a single plain number such as
+`742`, `-12.3`, `+3.00`, or `1.3e5`. Do not put ranges, lower/upper-limit
+operators, units, footnote markers, or prose in these machine fields. Keep
+ranges and limits in `raw_value` and explain them in `description` unless a
+future schema provides structured range fields. RA/Dec may remain in hms/dms
+sexagesimal notation until the schema explicitly migrates them to decimal
+degrees.
+
 Every value in `core` and `extra[]` must include `source_refs`.
 Every value must also include direct-producer `method_refs`. Use these direct
 producer rules:

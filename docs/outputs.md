@@ -187,7 +187,9 @@ cite 行和 `.bib`/`.bbl` 条目。
 provenance 和字段级 direct-producer `method_refs`。
 `raw_value` 保持和 ECSV cell 或原文值一致以保证可追溯；`value`、`error`、
 `lower_error`、`upper_error` 用于机器读取，不能保留 LaTeX 命令、花括号、`$`、`_`、`^`
-或 `+/-`。ECSV 来源需要精确到文件路径、物理行号、机器列名、列头和原始单元格文本；
+或 `+/-`。数值型 core 字段和定量 `extra[]` 的这些机器字段还应是单个纯数字；
+范围、上下限、单位、脚注和说明性文本保留在 `raw_value`/`description`。RA/Dec 当前可暂用
+hms/dms 六十进制表示。ECSV 来源需要精确到文件路径、物理行号、机器列名、列头和原始单元格文本；
 原文来源需要精确到 TeX/文本文件路径和行号范围。`method_refs` 引用同一文件内
 直接生成该值的 `method_chain[]` `step-XX` ID；完整方法 lineage 由该 step 的
 `depends_on[]` 递归展开得到。
