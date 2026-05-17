@@ -191,7 +191,8 @@ conda run -n stella-env python scripts/pull_literature_assets.py \
 
 ## 5. 修复 ADS metadata 和本文献 bibcode
 
-如果已有归档中 `audit.json` 缺少 `ads_metadata.ads_bibcode`，可以扫描全部已归档论文并重试 ADS API：
+如果已有归档中缺少 `ads_metadata.json`，或 `audit.json` 缺少
+`ads_metadata.local_path`，可以扫描全部已归档论文并重试 ADS API：
 
 ```bash
 conda run -n stella-env python scripts/repair_ads_metadata.py
@@ -218,7 +219,8 @@ conda run -n stella-env python scripts/repair_ads_metadata.py \
   --force True
 ```
 
-脚本会更新 `audit.json` 的 `ads_api` 和 `ads_metadata`，并在存在
+脚本会更新 `audit.json` 的 `ads_api` 和 `ads_metadata`，其中
+`ads_metadata` 只记录完整 ADS API metadata JSON 的 `local_path`。脚本在存在
 `literature_hvs_candidates.json` 时只补 `paper.bibcode`。它不会修改
 `candidate_origin.citation.bibcode`，因为这些字段属于候选引用自其它文献的记录。
 脚本会读取 `.env` 中的 `ADS_API_TOKEN` 或 `ADS_TOKEN`，用 ADS API 按

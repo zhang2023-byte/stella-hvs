@@ -55,8 +55,12 @@ def write_archive_fixture(workspace: Path) -> Path:
             "month": "2026-03",
             "source_note_json": "notes/2026/2026-03/2026-03.json",
             "arxiv_source": {"extract_dir": "arxiv_source", "extracted": True},
-            "ads_metadata": {"ads_bibcode": "2026MNRAS.123..456S"},
+            "ads_metadata": {"local_path": "literature/2603.00001/ads_metadata.json"},
         },
+    )
+    write_json(
+        paper_dir / "ads_metadata.json",
+        {"response": {"docs": [{"bibcode": "2026MNRAS.123..456S"}]}},
     )
     (source_dir / "main.tex").write_text(
         "\n".join(

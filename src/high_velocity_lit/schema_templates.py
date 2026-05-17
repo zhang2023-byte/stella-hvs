@@ -38,6 +38,40 @@ def read_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def _resolve_workspace_path(value: str, *, workspace: Path, fallback_dir: Path | None = None) -> Path:
+    path = Path(value)
+    if path.is_absolute():
+        return path
+    workspace_path = workspace / path
+    if workspace_path.exists() or len(path.parts) > 1:
+        return workspace_path
+    return (fallback_dir or workspace) / path
+
+
+def _ads_bibcode_from_payload(payload: dict[str, Any]) -> str:
+    docs = ((payload.get("response") or {}).get("docs") or []) if isinstance(payload, dict) else []
+    if not docs or not isinstance(docs[0], dict):
+        return ""
+    return str(docs[0].get("bibcode") or "").strip()
+
+
+def _paper_bibcode_from_audit(audit: dict[str, Any], *, workspace: Path, paper_dir: Path) -> str:
+    metadata = audit.get("ads_metadata")
+    if isinstance(metadata, dict):
+        legacy_bibcode = str(metadata.get("ads_bibcode") or "").strip()
+        if legacy_bibcode:
+            return legacy_bibcode
+        local_path = str(metadata.get("local_path") or "").strip()
+        if local_path:
+            path = _resolve_workspace_path(local_path, workspace=workspace, fallback_dir=paper_dir)
+            if path.exists():
+                try:
+                    return _ads_bibcode_from_payload(read_json(path))
+                except Exception:
+                    return ""
+    return ""
+
+
 def safe_slug(value: str, *, fallback: str) -> str:
     cleaned = re.sub(r"[^A-Za-z0-9._-]+", "-", value.strip()).strip("-")
     return cleaned or fallback
@@ -241,7 +275,7 @@ def build_hvs_candidates_template(
         generated_at=now,
         paper=HvsPaper(
             arxiv_id=arxiv_id,
-            bibcode=str((audit.get("ads_metadata") or {}).get("ads_bibcode") or "") or None,
+            bibcode=_paper_bibcode_from_audit(audit, workspace=workspace, paper_dir=paper_dir) or None,
             title=str(month_paper.get("title") or audit.get("title") or ""),
             month=str(audit.get("month") or month_paper.get("month") or ""),
             source_note_json=str(audit.get("source_note_json") or ""),

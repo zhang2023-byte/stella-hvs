@@ -26,16 +26,54 @@ def write_json(path: Path, payload: dict[str, Any]) -> None:
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
-def audit_bibcode(audit: dict[str, Any]) -> str:
-    metadata = audit.get("ads_metadata")
-    if not isinstance(metadata, dict):
+def ads_bibcode_from_payload(payload: dict[str, Any]) -> str:
+    docs = ((payload.get("response") or {}).get("docs") or []) if isinstance(payload, dict) else []
+    if not docs or not isinstance(docs[0], dict):
         return ""
-    return str(metadata.get("ads_bibcode") or "").strip()
+    return str(docs[0].get("bibcode") or "").strip()
 
 
-def ads_page_ok(audit: dict[str, Any]) -> bool:
-    ads_abstract = audit.get("ads_abstract")
-    return isinstance(ads_abstract, dict) and bool(ads_abstract.get("success"))
+def resolve_audit_path(local_path: str, *, paper_dir: Path) -> Path:
+    path = Path(local_path)
+    if path.is_absolute():
+        return path
+    workspace = paper_dir.parent.parent
+    workspace_path = workspace / path
+    if workspace_path.exists() or len(path.parts) > 1:
+        return workspace_path
+    return paper_dir / path
+
+
+def ads_metadata_payload_path(audit: dict[str, Any], *, paper_dir: Path) -> Path | None:
+    metadata = audit.get("ads_metadata")
+    if isinstance(metadata, dict):
+        local_path = str(metadata.get("local_path") or "").strip()
+        if local_path:
+            return resolve_audit_path(local_path, paper_dir=paper_dir)
+    ads_api = audit.get("ads_api")
+    if isinstance(ads_api, dict):
+        local_path = str(ads_api.get("local_path") or "").strip()
+        if local_path:
+            return resolve_audit_path(local_path, paper_dir=paper_dir)
+    default_path = paper_dir / "ads_metadata.json"
+    if default_path.exists():
+        return default_path
+    return None
+
+
+def audit_bibcode(audit: dict[str, Any], *, paper_dir: Path) -> str:
+    metadata = audit.get("ads_metadata")
+    if isinstance(metadata, dict):
+        legacy_bibcode = str(metadata.get("ads_bibcode") or "").strip()
+        if legacy_bibcode:
+            return legacy_bibcode
+    payload_path = ads_metadata_payload_path(audit, paper_dir=paper_dir)
+    if payload_path is None or not payload_path.exists():
+        return ""
+    try:
+        return ads_bibcode_from_payload(read_json(payload_path))
+    except Exception:
+        return ""
 
 
 def ads_api_ok(audit: dict[str, Any]) -> bool:
@@ -44,15 +82,9 @@ def ads_api_ok(audit: dict[str, Any]) -> bool:
 
 
 def ads_api_payload_ok(audit: dict[str, Any], *, paper_dir: Path) -> bool:
-    ads_api = audit.get("ads_api")
-    if not isinstance(ads_api, dict):
+    path = ads_metadata_payload_path(audit, paper_dir=paper_dir)
+    if path is None:
         return False
-    local_path = str(ads_api.get("local_path") or "").strip()
-    if not local_path:
-        return False
-    path = Path(local_path)
-    if not path.is_absolute():
-        path = paper_dir.parent.parent / path
     return path.exists() and path.stat().st_size > 0
 
 
@@ -135,7 +167,7 @@ def repair_one_ads_metadata(
     if hvs_path.exists():
         result["hvs_candidates_path"] = str(hvs_path)
 
-    known_bibcode = audit_bibcode(audit)
+    known_bibcode = audit_bibcode(audit, paper_dir=paper_dir)
     ads_retry_needed = (
         force
         or (not ads_api_ok(audit))
@@ -149,7 +181,7 @@ def repair_one_ads_metadata(
         result["errors"].append(f"failed to inspect {HVS_CANDIDATES_FILENAME}: {type(exc).__name__}: {exc}")
     result["ads_retry_needed"] = ads_retry_needed
     result["hvs_update_needed"] = hvs_update_needed
-    result["ads_success"] = ads_page_ok(audit)
+    result["ads_success"] = False
     result["ads_api_success"] = ads_api_ok(audit)
     result["ads_bibcode"] = known_bibcode
 
@@ -170,22 +202,22 @@ def repair_one_ads_metadata(
             timeout=timeout,
         )
         if ads_api_payload:
-            ads_api_result["local_path"] = write_ads_api_payload(
+            ads_metadata_path = write_ads_api_payload(
                 paper_dir,
                 payload=ads_api_payload,
                 workspace=paper_dir.parent.parent,
             )
-        merged_metadata: dict[str, Any] = {}
-        existing_metadata = audit.get("ads_metadata")
-        if isinstance(existing_metadata, dict):
-            merged_metadata.update(existing_metadata)
-        merged_metadata.update(parsed_metadata)
+            ads_api_result["local_path"] = ads_metadata_path
+            audit["ads_metadata"] = {"local_path": ads_metadata_path}
+        else:
+            audit["ads_metadata"] = {}
         audit["ads_api"] = ads_api_result
-        audit["ads_metadata"] = merged_metadata
+        audit.pop("ads_abstract", None)
+        (paper_dir / "ads_abstract.html").unlink(missing_ok=True)
         write_json(audit_path, audit)
         result["audit_updated"] = True
         result["ads_api_success"] = bool(ads_api_result.get("success"))
-        known_bibcode = str(merged_metadata.get("ads_bibcode") or "").strip()
+        known_bibcode = str(parsed_metadata.get("ads_bibcode") or "").strip()
         result["ads_bibcode"] = known_bibcode
         if not ads_api_result.get("success"):
             result["errors"].append(f"ADS API failed: {ads_api_result.get('error') or 'unknown error'}")

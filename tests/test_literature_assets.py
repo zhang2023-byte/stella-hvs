@@ -296,10 +296,11 @@ class LiteratureAssetsTest(unittest.TestCase):
             self.assertEqual(audit["arxiv_source"]["source_unavailable_reason"], "")
             self.assertEqual(audit["arxiv_source"]["extract_dir"], "arxiv_source")
             self.assertNotIn("ads_resources", audit)
-            self.assertFalse(audit["ads_abstract"]["success"])
-            self.assertIn("skipped", audit["ads_abstract"]["error"])
+            self.assertNotIn("ads_abstract", audit)
             self.assertTrue(audit["ads_api"]["success"])
-            self.assertEqual(audit["ads_metadata"]["ads_bibcode"], "2020A&A...123..456A")
+            self.assertEqual(audit["ads_metadata"]["local_path"], "literature/2603.00001/ads_metadata.json")
+            ads_payload = json.loads((folder / "ads_metadata.json").read_text(encoding="utf-8"))
+            self.assertEqual(ads_payload["response"]["docs"][0]["bibcode"], "2020A&A...123..456A")
             self.assertTrue(result["arxiv_source_extracted"])
 
     def test_archive_paper_marks_source_unavailable_when_arxiv_serves_pdf(self) -> None:
@@ -446,10 +447,11 @@ class LiteratureAssetsTest(unittest.TestCase):
             )
 
             audit = json.loads((literature_dir / "2603.00003" / "audit.json").read_text(encoding="utf-8"))
-            self.assertFalse(audit["ads_abstract"]["success"])
+            self.assertNotIn("ads_abstract", audit)
             self.assertTrue(audit["ads_api"]["success"])
-            self.assertEqual(audit["ads_metadata"]["ads_bibcode"], "2026A&A...123..456A")
-            self.assertEqual(audit["ads_metadata"]["ads_bibcode_source"], "ads_api")
+            self.assertEqual(audit["ads_metadata"]["local_path"], "literature/2603.00003/ads_metadata.json")
+            ads_payload = json.loads((literature_dir / "2603.00003" / "ads_metadata.json").read_text(encoding="utf-8"))
+            self.assertEqual(ads_payload["response"]["docs"][0]["bibcode"], "2026A&A...123..456A")
             self.assertTrue(result["ads_bibcode"])
 
     def test_extract_source_archive_rejects_unsafe_zip_path(self) -> None:

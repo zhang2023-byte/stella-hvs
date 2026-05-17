@@ -158,8 +158,8 @@ class AdsRepairTest(unittest.TestCase):
             audit = json.loads((paper_dir / "audit.json").read_text(encoding="utf-8"))
             self.assertTrue(audit["ads_api"]["success"])
             self.assertEqual(audit["ads_api"]["local_path"], "literature/2603.00001/ads_metadata.json")
-            self.assertEqual(audit["ads_metadata"]["ads_bibcode"], "2026MNRAS.123..456H")
-            self.assertEqual(audit["ads_metadata"]["ads_bibcode_source"], "ads_api")
+            self.assertEqual(audit["ads_metadata"], {"local_path": "literature/2603.00001/ads_metadata.json"})
+            self.assertNotIn("ads_abstract", audit)
             self.assertTrue((paper_dir / "ads_metadata.json").exists())
             hvs = json.loads((paper_dir / "literature_hvs_candidates.json").read_text(encoding="utf-8"))
             self.assertEqual(hvs["paper"]["bibcode"], "2026MNRAS.123..456H")
@@ -193,7 +193,7 @@ class AdsRepairTest(unittest.TestCase):
 
             self.assertEqual(session.calls, ["https://api.adsabs.harvard.edu/v1/search/query"])
             self.assertEqual(payload["summary"]["fixed_count"], 1)
-            self.assertNotIn("2026ApJ...999..001F", (paper_dir / "ads_abstract.html").read_text(encoding="utf-8"))
+            self.assertFalse((paper_dir / "ads_abstract.html").exists())
 
     def test_dry_run_reports_without_writing_or_fetching(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -214,7 +214,7 @@ class AdsRepairTest(unittest.TestCase):
             self.assertEqual(session.calls, [])
             self.assertEqual(json.loads((paper_dir / "audit.json").read_text(encoding="utf-8")), audit_payload)
 
-    def test_api_failure_is_reported_without_clearing_existing_metadata(self) -> None:
+    def test_api_failure_is_reported_and_compacts_legacy_ads_metadata(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             literature_dir = Path(tmp) / "literature"
             paper_dir = literature_dir / "2603.00005"
@@ -232,7 +232,8 @@ class AdsRepairTest(unittest.TestCase):
 
             self.assertEqual(payload["summary"]["failed_count"], 1)
             audit = json.loads((paper_dir / "audit.json").read_text(encoding="utf-8"))
-            self.assertEqual(audit["ads_metadata"]["citation_title"], "Existing title")
+            self.assertEqual(audit["ads_metadata"], {})
+            self.assertNotIn("ads_abstract", audit)
             self.assertFalse(audit["ads_api"]["success"])
             self.assertIn("missing fake response", audit["ads_api"]["error"])
 
@@ -310,7 +311,7 @@ class AdsRepairTest(unittest.TestCase):
             self.assertEqual(payload["summary"]["fixed_count"], 1)
             self.assertEqual(payload["summary"]["ads_retry_needed_count"], 1)
             audit = json.loads((paper_dir / "audit.json").read_text(encoding="utf-8"))
-            self.assertEqual(audit["ads_metadata"]["ads_bibcode"], "2026NEW......002A")
+            self.assertEqual(audit["ads_metadata"], {"local_path": "literature/2603.00008/ads_metadata.json"})
             metadata_payload = json.loads((paper_dir / "ads_metadata.json").read_text(encoding="utf-8"))
             self.assertEqual(metadata_payload["response"]["docs"][0]["bibcode"], "2026NEW......002A")
 
@@ -356,8 +357,7 @@ class AdsRepairTest(unittest.TestCase):
             self.assertEqual(payload["summary"]["ads_api_success_count"], 1)
             audit = json.loads((paper_dir / "audit.json").read_text(encoding="utf-8"))
             self.assertTrue(audit["ads_api"]["success"])
-            self.assertEqual(audit["ads_metadata"]["ads_bibcode"], "2026MNRAS.123..456A")
-            self.assertEqual(audit["ads_metadata"]["ads_bibcode_source"], "ads_api")
+            self.assertEqual(audit["ads_metadata"], {"local_path": "literature/2603.00007/ads_metadata.json"})
             hvs = json.loads((paper_dir / "literature_hvs_candidates.json").read_text(encoding="utf-8"))
             self.assertEqual(hvs["paper"]["bibcode"], "2026MNRAS.123..456A")
 

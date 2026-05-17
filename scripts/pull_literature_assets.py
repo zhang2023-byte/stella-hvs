@@ -248,7 +248,6 @@ def main() -> int:
         "arxiv_pdf_success": sum(1 for item in results if item.get("arxiv_pdf") is True),
         "arxiv_source_success": sum(1 for item in results if item.get("arxiv_source") is True),
         "arxiv_source_extracted_success": sum(1 for item in results if item.get("arxiv_source_extracted") is True),
-        "ads_abstract_success": sum(1 for item in results if item.get("ads_abstract") is True),
         "ads_bibcode_success": sum(1 for item in results if item.get("ads_bibcode") is True),
     }
     payload = {

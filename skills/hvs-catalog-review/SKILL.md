@@ -21,7 +21,8 @@ literature/<arxiv_id>/catalog_review.json
    - `literature/<arxiv_id>/audit.json`
    - `literature/<arxiv_id>/arxiv_source/`
    - the monthly JSON referenced by `audit.source_note_json`
-   If `audit.json` shows a failed ADS API lookup, missing `ads_metadata.ads_bibcode`,
+   If `audit.json` shows a failed ADS API lookup, missing `ads_metadata.local_path`,
+   an unreadable `ads_metadata.json`, missing ADS bibcode in that metadata JSON,
    missing PDF/source assets, or another archival problem, explicitly report
    the affected paper and failure reason to the user. Do not silently proceed
    as if the archive is complete. For ADS/bibcode repair, suggest:
@@ -29,7 +30,7 @@ literature/<arxiv_id>/catalog_review.json
    ```bash
    conda run -n stella-env python scripts/repair_ads_metadata.py --arxiv-id <arxiv_id>
    ```
-   ADS API metadata is the ADS source for `ads_metadata.ads_bibcode`. If ADS API
+   ADS API metadata JSON is the ADS source for the paper bibcode. If ADS API
    repair fails, report that failure and leave ADS-derived fields empty; do not
    construct arXiv-form bibcodes or crawl ADS pages.
 2. Generate the schema-backed review template:

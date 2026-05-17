@@ -32,7 +32,6 @@ REDIRECT_STATUS_CODES = {301, 302, 303, 307, 308}
 ASSET_FILENAMES = {
     "arxiv_abs": "arxiv_abs.html",
     "arxiv_pdf": "arxiv.pdf",
-    "ads_abstract": "ads_abstract.html",
     "ads_metadata": "ads_metadata.json",
 }
 ADS_API_FIELDS = (
@@ -573,22 +572,21 @@ def archive_paper(
         output_path=temp_abs_path,
         timeout=timeout,
     )
-    ads_url = f"{ADS_BASE_URL}/abs/arXiv:{arxiv_id}/abstract"
-    ads_result = basic_asset_result(url=ads_url)
-    ads_result["error"] = "skipped; ADS metadata is retrieved via ADS API"
-    ads_result["skipped_existing"] = True
     ads_api_result, ads_metadata, ads_api_payload = fetch_ads_api_metadata(
         session,
         arxiv_id=arxiv_id,
         token=ads_token,
         timeout=timeout,
     )
+    ads_metadata_audit: dict[str, Any] = {}
     if ads_api_payload:
-        ads_api_result["local_path"] = write_ads_api_payload(
+        ads_metadata_path = write_ads_api_payload(
             folder,
             payload=ads_api_payload,
             workspace=workspace,
         )
+        ads_api_result["local_path"] = ads_metadata_path
+        ads_metadata_audit["local_path"] = ads_metadata_path
 
     arxiv_abs_path = folder / ASSET_FILENAMES["arxiv_abs"]
     if temp_abs_path.exists():
@@ -632,12 +630,11 @@ def archive_paper(
         "source_note_json": relative_path(selected.note_json_path, workspace=workspace),
         "folder_name": folder_name,
         "run_at": run_at,
-        "ads_metadata": ads_metadata,
+        "ads_metadata": ads_metadata_audit,
         "ads_api": ads_api_result,
         "arxiv_abs": arxiv_abs_result,
         "arxiv_pdf": arxiv_pdf_result,
         "arxiv_source": arxiv_source_result,
-        "ads_abstract": ads_result,
     }
     audit_path = folder / "audit.json"
     audit_path.write_text(json.dumps(audit, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -649,6 +646,5 @@ def archive_paper(
         "arxiv_pdf": arxiv_pdf_result["success"],
         "arxiv_source": arxiv_source_result["success"],
         "arxiv_source_extracted": arxiv_source_result["extracted"],
-        "ads_abstract": ads_result["success"],
         "ads_bibcode": bool(ads_metadata.get("ads_bibcode")),
     }

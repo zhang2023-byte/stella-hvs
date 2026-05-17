@@ -39,14 +39,15 @@ hand-edit it.
 ## Workflow
 
 1. Inspect inputs:
-   - `literature/<arxiv_id>/audit.json` (read `ads_metadata.ads_bibcode` for the `paper.bibcode` field)
+   - `literature/<arxiv_id>/audit.json` (read `ads_metadata.local_path`, then read that ADS metadata JSON for the `paper.bibcode` field)
    - `catalog_review.json`
    - `catalog_extraction.json`
    - relevant `catalog_tables/*.ecsv`
    - relevant `catalog_sources/*/excerpt.tex`
    - paper source under `arxiv_source/`
    - the monthly JSON referenced by `audit.source_note_json`, if present
-   If ADS API metadata was not fetched, `ads_metadata.ads_bibcode` is missing, or any
+   If ADS API metadata was not fetched, `ads_metadata.local_path` is missing,
+   the referenced ADS metadata JSON has no bibcode, or any
    required archive asset is unavailable, explicitly tell the user which paper
    is affected and why before continuing. Do not silently leave `paper.bibcode`
    empty. For ADS/bibcode repair, run:
