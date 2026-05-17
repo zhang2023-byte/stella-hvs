@@ -69,6 +69,22 @@ conda run -n stella-env python scripts/pull_literature_assets.py \
   --to 2026-04
 ```
 
+修复已归档论文的 ADS metadata 和本文献级 HVS candidates bibcode：
+
+```bash
+conda run -n stella-env python scripts/repair_ads_metadata.py
+```
+
+需要覆盖刷新全部 ADS API metadata JSON 时：
+
+```bash
+conda run -n stella-env python scripts/repair_ads_metadata.py --force True
+```
+
+脚本会读取 `.env` 中的 `ADS_API_TOKEN`，用 ADS API 按 arXiv ID 查询本文献
+bibcode，并把完整 ADS API 响应保存为 `ads_metadata.json`。不再爬取 ADS 页面 HTML。
+API 失败或查不到时保持字段为空并报告原因，不构造 arXiv 形式 bibcode。
+
 初始化单篇论文的结构化数据资产审阅模板：
 
 ```bash
@@ -179,6 +195,7 @@ conda run -n stella-env python scripts/render_lit_notes.py
 scripts/fetch_high_velocity_lit.py   月度文献抓取主入口
 scripts/annotate_catalog_data.py     给月度 JSON 补 catalog_assessment
 scripts/pull_literature_assets.py    拉取 data-related 文献的本地资料归档
+scripts/repair_ads_metadata.py       用 ADS API 补本文献级 bibcode
 scripts/inventory_catalog_candidates.py   列出单篇论文的数据资产审阅候选
 scripts/init_catalog_review.py       从代码 schema 生成 catalog_review.json 模板
 scripts/extract_catalog_tables.py    从 catalog_review.json 提取内部 LaTeX 表格为 ECSV

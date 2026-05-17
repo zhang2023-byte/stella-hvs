@@ -171,6 +171,7 @@ conda run -n stella-env python scripts/pull_literature_assets.py \
 --notes-dir PATH            notes 根目录，默认 notes
 --literature-dir PATH       资料归档根目录，默认 literature
 --timeout N                 单次网络请求超时秒数，默认 60
+--ads-token TOKEN           覆盖 ADS_API_TOKEN / ADS_TOKEN
 --dry-run True|False        只解析选择结果，不实际下载，默认 False
 ```
 
@@ -183,12 +184,49 @@ conda run -n stella-env python scripts/pull_literature_assets.py \
   - arXiv PDF
   - arXiv source（如果响应看起来真的是源码包）
   - 解压后的 `arxiv_source/` 目录
-  - NASA ADS 页面 HTML
+  - NASA ADS API metadata JSON（用于补本文献 ADS bibcode）
 - 每篇论文都会生成 `audit.json`，记录各类资产的成功/失败状态
 - 资料下载只允许公网 HTTP(S)，拒绝本机/私网/特殊地址；PDF/source 下载会流式读取并按大小上限停止
 - source 解压会拒绝绝对路径、`..` 和任何写出解压目录的 archive member
 
-## 5. 审阅论文结构化数据资产
+## 5. 修复 ADS metadata 和本文献 bibcode
+
+如果已有归档中 `audit.json` 缺少 `ads_metadata.ads_bibcode`，可以扫描全部已归档论文并重试 ADS API：
+
+```bash
+conda run -n stella-env python scripts/repair_ads_metadata.py
+```
+
+只检查不写文件：
+
+```bash
+conda run -n stella-env python scripts/repair_ads_metadata.py \
+  --dry-run True
+```
+
+只修复指定论文：
+
+```bash
+conda run -n stella-env python scripts/repair_ads_metadata.py \
+  --arxiv-id 2402.10714,2507.07558
+```
+
+强制刷新所有已归档论文的 ADS API metadata JSON：
+
+```bash
+conda run -n stella-env python scripts/repair_ads_metadata.py \
+  --force True
+```
+
+脚本会更新 `audit.json` 的 `ads_api` 和 `ads_metadata`，并在存在
+`literature_hvs_candidates.json` 时只补 `paper.bibcode`。它不会修改
+`candidate_origin.citation.bibcode`，因为这些字段属于候选引用自其它文献的记录。
+脚本会读取 `.env` 中的 `ADS_API_TOKEN` 或 `ADS_TOKEN`，用 ADS API 按
+`identifier:<arxiv_id>` 查询本文献 metadata，并把完整响应保存到
+`literature/<arxiv_id>/ads_metadata.json`。ADS API 缺 token、请求失败或查不到结果时，
+对应 bibcode 字段保持为空，并在命令输出中报告失败原因。脚本不会构造 arXiv 形式 bibcode。
+
+## 6. 审阅论文结构化数据资产
 
 对已经拉取到 `literature/<arxiv_id>/` 的论文，先生成标准审阅模板：
 
@@ -249,7 +287,7 @@ Extraction 状态含义：
 - `not_started`：review 已发现内部表格，但尚无 `catalog_extraction.json`。
 - `not_applicable`：review 未发现内部表格；即使只有外部资源，也无需提取。
 
-## 6. 提取已审阅内部表格
+## 7. 提取已审阅内部表格
 
 推荐先安装 LaTeXML：
 
@@ -316,7 +354,7 @@ conda run -n stella-env python scripts/validate_catalog_extraction.py \
   --require-reviewed
 ```
 
-## 7. 抽取论文级 HVS candidates
+## 8. 抽取论文级 HVS candidates
 
 完成 `catalog_review.json` 和 `catalog_extraction.json` 后，使用项目内
 `hvs-candidates-extraction` skill。先生成固定字段模板：
@@ -401,7 +439,7 @@ conda run -n stella-env python scripts/generate_schema_docs.py
   由 `scripts/build_hvs_candidates_index.py` 自动扫描所有 `literature/<arxiv_id>/literature_hvs_candidates.json` 生成。
   不要手动修改索引文件；如果输出有问题，应修改 candidates JSON 或索引渲染逻辑，然后重新生成。
 
-## 8. 时间写法
+## 9. 时间写法
 
 ```text
 --from 2026-03-15  表示从 2026-03-15 开始
@@ -416,7 +454,7 @@ conda run -n stella-env python scripts/generate_schema_docs.py
 未来日期会自动截到今天。
 非法日期格式会直接报错。
 
-## 9. 额外说明
+## 10. 额外说明
 
 当 DeepXiv 返回限额错误时：
 

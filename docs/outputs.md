@@ -23,7 +23,7 @@ literature/<arxiv_id>/arxiv_abs.html
 literature/<arxiv_id>/arxiv.pdf
 literature/<arxiv_id>/arxiv_source*
 literature/<arxiv_id>/arxiv_source/...
-literature/<arxiv_id>/ads_abstract.html
+literature/<arxiv_id>/ads_metadata.json
 literature/<arxiv_id>/catalog_sources/<internal_table_id>/excerpt.tex
 literature/<arxiv_id>/catalog_sources/<internal_table_id>/latexml.html
 literature/<arxiv_id>/catalog_sources/<internal_table_id>/latexml.stderr.txt
@@ -102,6 +102,7 @@ logs/run_<timestamp>.log
 - `folder_name`
 - `run_at`
 - `ads_metadata`
+- `ads_api`
 - `arxiv_abs`
 - `arxiv_pdf`
 - `arxiv_source`

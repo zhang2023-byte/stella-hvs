@@ -43,11 +43,13 @@ class FakeResponse:
         status_code: int = 200,
         content: bytes = b"",
         headers: dict[str, str] | None = None,
+        json_payload: dict[str, object] | None = None,
     ) -> None:
         self.url = url
         self.status_code = status_code
         self.content = content
         self.headers = headers or {}
+        self.json_payload = json_payload
         self.text = content.decode("utf-8", errors="replace")
         self.ok = status_code < 400
 
@@ -65,6 +67,11 @@ class FakeResponse:
             response.url = self.url
             response.headers.update(self.headers)
             raise requests.HTTPError(f"{self.status_code} error", response=response)
+
+    def json(self) -> dict[str, object]:
+        if self.json_payload is not None:
+            return self.json_payload
+        return json.loads(self.content.decode("utf-8"))
 
 
 class StreamingFakeResponse(FakeResponse):
@@ -96,8 +103,9 @@ class FakeSession:
         allow_redirects: bool = True,
         headers: dict[str, str] | None = None,
         stream: bool = False,
+        params: dict[str, str] | None = None,
     ) -> FakeResponse:
-        del timeout, allow_redirects, headers, stream
+        del timeout, allow_redirects, headers, stream, params
         if url not in self.responses:
             raise requests.RequestException(f"missing fake response for {url}")
         return self.responses[url]
@@ -226,10 +234,22 @@ class LiteratureAssetsTest(unittest.TestCase):
                 content=arxiv_html.encode("utf-8"),
                 headers={"content-type": "text/html; charset=utf-8"},
             ),
-            "https://ui.adsabs.harvard.edu/abs/arXiv:2603.00001": FakeResponse(
-                url="https://ui.adsabs.harvard.edu/abs/arXiv:2603.00001/abstract",
-                content=ads_html.encode("utf-8"),
-                headers={"content-type": "text/html; charset=utf-8"},
+            "https://api.adsabs.harvard.edu/v1/search/query": FakeResponse(
+                url="https://api.adsabs.harvard.edu/v1/search/query",
+                headers={"content-type": "application/json"},
+                json_payload={
+                    "response": {
+                        "docs": [
+                            {
+                                "bibcode": "2020A&A...123..456A",
+                                "title": ["All-sky proper motion catalog for runaway stars"],
+                                "identifier": ["arXiv:2603.00001"],
+                                "author": ["Antoja, A."],
+                                "year": "2020",
+                            }
+                        ]
+                    }
+                },
             ),
             "https://arxiv.org/pdf/2603.00001": FakeResponse(
                 url="https://arxiv.org/pdf/2603.00001",
@@ -256,6 +276,7 @@ class LiteratureAssetsTest(unittest.TestCase):
                 workspace=workspace,
                 literature_dir=literature_dir,
                 session=FakeSession(responses),
+                ads_token="secret",
             )
 
             folder = literature_dir / "2603.00001"
@@ -263,7 +284,8 @@ class LiteratureAssetsTest(unittest.TestCase):
             self.assertTrue((folder / "arxiv.pdf").exists())
             self.assertTrue((folder / "arxiv_source.tar.gz").exists())
             self.assertTrue((folder / "arxiv_source" / "main.tex").exists())
-            self.assertTrue((folder / "ads_abstract.html").exists())
+            self.assertFalse((folder / "ads_abstract.html").exists())
+            self.assertTrue((folder / "ads_metadata.json").exists())
             audit = json.loads((folder / "audit.json").read_text(encoding="utf-8"))
             self.assertEqual(audit["folder_name"], "2603.00001")
             self.assertNotIn("cite_key", audit)
@@ -274,6 +296,10 @@ class LiteratureAssetsTest(unittest.TestCase):
             self.assertEqual(audit["arxiv_source"]["source_unavailable_reason"], "")
             self.assertEqual(audit["arxiv_source"]["extract_dir"], "arxiv_source")
             self.assertNotIn("ads_resources", audit)
+            self.assertFalse(audit["ads_abstract"]["success"])
+            self.assertIn("skipped", audit["ads_abstract"]["error"])
+            self.assertTrue(audit["ads_api"]["success"])
+            self.assertEqual(audit["ads_metadata"]["ads_bibcode"], "2020A&A...123..456A")
             self.assertTrue(result["arxiv_source_extracted"])
 
     def test_archive_paper_marks_source_unavailable_when_arxiv_serves_pdf(self) -> None:
@@ -347,6 +373,84 @@ class LiteratureAssetsTest(unittest.TestCase):
                 "arXiv served PDF content instead of a source archive",
             )
             self.assertFalse((literature_dir / "2401.10635" / "arxiv_source").exists())
+
+    def test_archive_paper_uses_ads_api_when_ads_page_has_no_bibcode(self) -> None:
+        arxiv_html = """
+        <html><body><a href="https://ui.adsabs.harvard.edu/abs/arXiv:2603.00003">NASA ADS</a></body></html>
+        """
+        pdf_bytes = b"%PDF-1.7 fake"
+        api_url = "https://api.adsabs.harvard.edu/v1/search/query"
+        responses = {
+            "https://arxiv.org/abs/2603.00003": FakeResponse(
+                url="https://arxiv.org/abs/2603.00003",
+                content=arxiv_html.encode("utf-8"),
+                headers={"content-type": "text/html; charset=utf-8"},
+            ),
+            "https://ui.adsabs.harvard.edu/abs/arXiv:2603.00003": FakeResponse(
+                url="https://ui.adsabs.harvard.edu/abs/arXiv:2603.00003/abstract",
+                status_code=202,
+                content=b"",
+                headers={"content-type": "text/html; charset=UTF-8"},
+            ),
+            api_url: FakeResponse(
+                url=api_url,
+                headers={"content-type": "application/json"},
+                json_payload={
+                    "response": {
+                        "docs": [
+                            {
+                                "bibcode": "2026A&A...123..456A",
+                                "title": ["API archive title"],
+                                "identifier": ["arXiv:2603.00003"],
+                                "author": ["Antoja, A."],
+                                "year": "2026",
+                            }
+                        ]
+                    }
+                },
+            ),
+            "https://arxiv.org/pdf/2603.00003": FakeResponse(
+                url="https://arxiv.org/pdf/2603.00003",
+                content=pdf_bytes,
+                headers={"content-type": "application/pdf"},
+            ),
+            "https://arxiv.org/e-print/2603.00003": FakeResponse(
+                url="https://arxiv.org/e-print/2603.00003",
+                content=fake_tar_gz_bytes(),
+                headers={"content-type": "application/gzip"},
+            ),
+        }
+        selected = SelectedPaper(
+            month="2026-03",
+            note_json_path=Path("/workspace/notes/2026/2026-03/2026-03.json"),
+            paper={
+                "arxiv_id": "2603.00003",
+                "title": "API fallback archive",
+                "links": {
+                    "abs": "https://arxiv.org/abs/2603.00003",
+                    "pdf": "https://arxiv.org/pdf/2603.00003",
+                },
+                "catalog_assessment": {"has_observational_catalog": True},
+            },
+        )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature_dir = workspace / "literature"
+            result = archive_paper(
+                selected,
+                workspace=workspace,
+                literature_dir=literature_dir,
+                session=FakeSession(responses),
+                ads_token="secret",
+            )
+
+            audit = json.loads((literature_dir / "2603.00003" / "audit.json").read_text(encoding="utf-8"))
+            self.assertFalse(audit["ads_abstract"]["success"])
+            self.assertTrue(audit["ads_api"]["success"])
+            self.assertEqual(audit["ads_metadata"]["ads_bibcode"], "2026A&A...123..456A")
+            self.assertEqual(audit["ads_metadata"]["ads_bibcode_source"], "ads_api")
+            self.assertTrue(result["ads_bibcode"])
 
     def test_extract_source_archive_rejects_unsafe_zip_path(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

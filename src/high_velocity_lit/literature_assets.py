@@ -24,6 +24,7 @@ from .records import has_observational_catalog, paper_url, pdf_url
 
 ASSET_AUDIT_SCHEMA_VERSION = "stella.literature.assets_audit.v2"
 ADS_BASE_URL = "https://ui.adsabs.harvard.edu"
+ADS_API_SEARCH_URL = "https://api.adsabs.harvard.edu/v1/search/query"
 DEFAULT_TIMEOUT = 60
 DEFAULT_USER_AGENT = "stella-literature-assets/1.0"
 MAX_ASSET_BYTES = 100 * 1024 * 1024
@@ -32,7 +33,29 @@ ASSET_FILENAMES = {
     "arxiv_abs": "arxiv_abs.html",
     "arxiv_pdf": "arxiv.pdf",
     "ads_abstract": "ads_abstract.html",
+    "ads_metadata": "ads_metadata.json",
 }
+ADS_API_FIELDS = (
+    "bibcode",
+    "title",
+    "identifier",
+    "doi",
+    "author",
+    "first_author",
+    "aff",
+    "pub",
+    "pubdate",
+    "year",
+    "volume",
+    "page",
+    "doctype",
+    "abstract",
+    "keyword",
+    "arxiv_class",
+    "citation_count",
+    "data",
+    "property",
+)
 
 
 @dataclass(frozen=True)
@@ -85,6 +108,90 @@ def parse_ads_metadata(html: str) -> dict[str, str]:
     if export_link is not None and export_link.get("href"):
         metadata["ads_export_citation_url"] = urljoin(ADS_BASE_URL, str(export_link["href"]))
     return metadata
+
+
+def fetch_ads_api_metadata(
+    session: requests.Session,
+    *,
+    arxiv_id: str,
+    token: str,
+    timeout: int,
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+    result = {
+        "url": ADS_API_SEARCH_URL,
+        "success": False,
+        "status_code": None,
+        "content_type": "",
+        "final_url": "",
+        "error": "",
+        "query": f"identifier:{arxiv_id}",
+        "fields": list(ADS_API_FIELDS),
+        "bibcode": "",
+        "local_path": None,
+        "skipped_missing_token": False,
+    }
+    if not token:
+        result["error"] = "ADS API token not configured"
+        result["skipped_missing_token"] = True
+        return result, {}, {}
+    try:
+        response = session.get(
+            ADS_API_SEARCH_URL,
+            params={
+                "q": f"identifier:{arxiv_id}",
+                "fl": ",".join(ADS_API_FIELDS),
+                "rows": "1",
+            },
+            timeout=timeout,
+            headers={"Authorization": f"Bearer {token}"},
+        )
+        result["status_code"] = response.status_code
+        result["content_type"] = response.headers.get("content-type", "")
+        result["final_url"] = str(response.url)
+        response.raise_for_status()
+        payload = response.json()
+    except requests.RequestException as exc:
+        response = getattr(exc, "response", None)
+        if response is not None:
+            result["status_code"] = response.status_code
+            result["content_type"] = response.headers.get("content-type", "")
+            result["final_url"] = str(response.url)
+        result["error"] = f"{type(exc).__name__}: {exc}"
+        return result, {}, {}
+    except ValueError as exc:
+        result["error"] = f"invalid JSON response: {exc}"
+        return result, {}, {}
+
+    docs = ((payload.get("response") or {}).get("docs") or []) if isinstance(payload, dict) else []
+    if not docs or not isinstance(docs[0], dict):
+        result["error"] = "ADS API returned no matching document"
+        return result, {}, payload if isinstance(payload, dict) else {}
+    doc = docs[0]
+    bibcode = str(doc.get("bibcode") or "").strip()
+    if not bibcode:
+        result["error"] = "ADS API document did not include bibcode"
+        return result, {}, payload if isinstance(payload, dict) else {}
+    result["success"] = True
+    result["bibcode"] = bibcode
+    metadata: dict[str, Any] = {
+        "ads_bibcode": bibcode,
+        "ads_bibcode_source": "ads_api",
+    }
+    for key in ADS_API_FIELDS:
+        if key in doc:
+            metadata[f"ads_api_{key}"] = doc[key]
+    return result, metadata, payload if isinstance(payload, dict) else {}
+
+
+def write_ads_api_payload(
+    output_dir: Path,
+    *,
+    payload: dict[str, Any],
+    workspace: Path,
+) -> str:
+    path = output_dir / ASSET_FILENAMES["ads_metadata"]
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return relative_path(path, workspace=workspace)
 
 
 def find_arxiv_ads_url(arxiv_html: str, *, arxiv_id: str) -> str:
@@ -211,9 +318,10 @@ def fetch_text_asset(
     output_path: Path,
     timeout: int,
     max_bytes: int = MAX_ASSET_BYTES,
+    force: bool = False,
 ) -> tuple[dict[str, Any], str]:
     result = basic_asset_result(url=url)
-    if output_path.exists() and output_path.stat().st_size > 0:
+    if not force and output_path.exists() and output_path.stat().st_size > 0:
         result["success"] = True
         result["local_path"] = output_path.name
         result["skipped_existing"] = True
@@ -235,6 +343,9 @@ def fetch_text_asset(
             result["error"] = f"download exceeds {max_bytes} bytes"
             return result, ""
         result["size_bytes"] = len(content)
+        if not content:
+            result["error"] = "empty response body"
+            return result, ""
         text = content.decode("utf-8", errors="replace")
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(text, encoding="utf-8")
@@ -444,6 +555,7 @@ def archive_paper(
     literature_dir: Path,
     session: requests.Session,
     timeout: int = DEFAULT_TIMEOUT,
+    ads_token: str = "",
 ) -> dict[str, Any]:
     paper = selected.paper
     arxiv_id = str(paper.get("arxiv_id") or "").strip()
@@ -461,29 +573,27 @@ def archive_paper(
         output_path=temp_abs_path,
         timeout=timeout,
     )
-    ads_url = find_arxiv_ads_url(arxiv_html, arxiv_id=arxiv_id)
-    temp_ads_path = folder / ASSET_FILENAMES["ads_abstract"]
-    ads_result, ads_html = fetch_text_asset(
+    ads_url = f"{ADS_BASE_URL}/abs/arXiv:{arxiv_id}/abstract"
+    ads_result = basic_asset_result(url=ads_url)
+    ads_result["error"] = "skipped; ADS metadata is retrieved via ADS API"
+    ads_result["skipped_existing"] = True
+    ads_api_result, ads_metadata, ads_api_payload = fetch_ads_api_metadata(
         session,
-        url=ads_url,
-        output_path=temp_ads_path,
+        arxiv_id=arxiv_id,
+        token=ads_token,
         timeout=timeout,
     )
-    ads_metadata = parse_ads_metadata(ads_html) if ads_html else {}
+    if ads_api_payload:
+        ads_api_result["local_path"] = write_ads_api_payload(
+            folder,
+            payload=ads_api_payload,
+            workspace=workspace,
+        )
 
     arxiv_abs_path = folder / ASSET_FILENAMES["arxiv_abs"]
     if temp_abs_path.exists():
         arxiv_abs_result["local_path"] = arxiv_abs_path.name
         arxiv_abs_result["success"] = bool(arxiv_html) or bool(arxiv_abs_result.get("skipped_existing"))
-    else:
-        arxiv_abs_result = basic_asset_result(url=abs_url)
-
-    ads_abs_path = folder / ASSET_FILENAMES["ads_abstract"]
-    if temp_ads_path.exists():
-        ads_result["local_path"] = ads_abs_path.name
-        ads_result["success"] = bool(ads_html) or bool(ads_result.get("skipped_existing"))
-    else:
-        ads_result = basic_asset_result(url=ads_url)
 
     arxiv_pdf_result = fetch_binary_asset(
         session,
@@ -523,6 +633,7 @@ def archive_paper(
         "folder_name": folder_name,
         "run_at": run_at,
         "ads_metadata": ads_metadata,
+        "ads_api": ads_api_result,
         "arxiv_abs": arxiv_abs_result,
         "arxiv_pdf": arxiv_pdf_result,
         "arxiv_source": arxiv_source_result,
@@ -539,4 +650,5 @@ def archive_paper(
         "arxiv_source": arxiv_source_result["success"],
         "arxiv_source_extracted": arxiv_source_result["extracted"],
         "ads_abstract": ads_result["success"],
+        "ads_bibcode": bool(ads_metadata.get("ads_bibcode")),
     }

@@ -49,12 +49,14 @@ cp env.example .env
 
 ```env
 DEEPXIV_TOKEN=
+ADS_API_TOKEN=
 ```
 
 可选。只有在这些步骤中才需要：
 
 - 标题没有明显证据的论文做 LLM 复核
 - `catalog_assessment`
+- 归档或修复 ADS metadata/bibcode
 
 ```env
 LLM_API_KEY=

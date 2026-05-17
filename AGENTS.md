@@ -109,6 +109,19 @@ conda run -n stella-env python scripts/annotate_catalog_data.py --on 2026-03
 判断应结合 abstract；如果记录里已有旧的 brief 字段，也可以一起参考。完成后要刷新对应 Markdown，并重建索引。
 
 做论文结构化数据资产审阅时，使用项目内 `hvs-catalog-review` skill。
+开始审阅或抽取前必须检查 `literature/<arxiv_id>/audit.json`。如果 ADS API metadata、
+arXiv source、PDF 或其它归档资产没有成功获取，必须向用户说明具体论文和失败原因；
+不要静默推进并让下游字段长期留空。ADS API metadata 或本文献级 bibcode 缺失时，优先运行：
+
+```bash
+conda run -n stella-env python scripts/repair_ads_metadata.py --arxiv-id 2402.10714
+```
+
+该脚本只补 `audit.json` 和 `literature_hvs_candidates.json` 的 `paper.bibcode`；
+不要用它修改候选引用自其它文献的 `candidate_origin.citation.bibcode`。ADS API
+是本文献 bibcode 的 ADS 事实源；API 失败时字段必须保持为空并向用户报告；不要构造
+arXiv 形式的 bibcode 或用非 ADS 来源替代。不要再爬取 ADS 页面 HTML。
+
 本阶段不再判断哪些资产是高速星 catalog，只梳理全文中的 `internal_tables`
 和 `external_resources`；内部表格用 `columns[]` 记录论文可见列含义，外部资源只记录论文中对每份资源的整体描述。
 Review 阶段不下载外部资源；extraction 阶段也不下载、解析或转换外部资源。

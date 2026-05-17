@@ -46,6 +46,20 @@ hand-edit it.
    - relevant `catalog_sources/*/excerpt.tex`
    - paper source under `arxiv_source/`
    - the monthly JSON referenced by `audit.source_note_json`, if present
+   If ADS API metadata was not fetched, `ads_metadata.ads_bibcode` is missing, or any
+   required archive asset is unavailable, explicitly tell the user which paper
+   is affected and why before continuing. Do not silently leave `paper.bibcode`
+   empty. For ADS/bibcode repair, run:
+
+   ```bash
+   conda run -n stella-env python scripts/repair_ads_metadata.py --arxiv-id <arxiv_id>
+   ```
+
+   This repair fills only this paper's `paper.bibcode`; it must not be used to
+   alter `candidate_origin.citation.bibcode` for candidates cited from other
+   literature. ADS API metadata is the ADS source for this paper's bibcode. If
+   ADS API repair fails, leave `paper.bibcode` empty and report the problem; do
+   not construct an arXiv-form bibcode, substitute a non-ADS source, or crawl ADS pages.
 2. Read the paper text first. Find the passages where the paper states which
    objects are possibly unbound from the Milky Way / Galactic potential,
    escaping the Galaxy, HVS candidates, or hyper-runaway candidates with

@@ -24,6 +24,7 @@ from high_velocity_lit.literature_assets import (  # noqa: E402
     archive_paper,
     load_data_related_papers,
 )
+from high_velocity_lit.env import env_value, load_env_files  # noqa: E402
 from high_velocity_lit.note_paths import resolve_month_json_path  # noqa: E402
 
 
@@ -130,6 +131,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--notes-dir", type=Path, default=WORKSPACE / "notes")
     parser.add_argument("--literature-dir", type=Path, default=WORKSPACE / "literature")
     parser.add_argument("--timeout", type=int, default=DEFAULT_TIMEOUT)
+    parser.add_argument("--ads-token", default=None, help="ADS API token. Defaults to ADS_API_TOKEN or ADS_TOKEN from env files.")
     parser.add_argument("--dry-run", type=parse_bool, default=False, metavar="True|False", help="Resolve targets without downloading files. Default: False.")
     return parser
 
@@ -163,12 +165,14 @@ def main() -> int:
     args = build_parser().parse_args()
     if args.timeout < 1:
         raise SystemExit("--timeout must be at least 1")
+    load_env_files(WORKSPACE)
     if args.arxiv_id and (args.on or args.from_value or args.to_value):
         raise SystemExit("--arxiv-id cannot be combined with --on or --from/--to")
 
     notes_dir = args.notes_dir.expanduser()
     literature_dir = args.literature_dir.expanduser()
     all_selected = load_data_related_papers(notes_dir)
+    ads_token = args.ads_token if args.ads_token is not None else env_value("ADS_API_TOKEN", "ADS_TOKEN")
     chosen_ids: list[str] = []
     skipped: list[dict[str, str]] = []
 
@@ -222,6 +226,7 @@ def main() -> int:
                     literature_dir=literature_dir,
                     session=session,
                     timeout=args.timeout,
+                    ads_token=ads_token,
                 )
             )
     else:
@@ -244,6 +249,7 @@ def main() -> int:
         "arxiv_source_success": sum(1 for item in results if item.get("arxiv_source") is True),
         "arxiv_source_extracted_success": sum(1 for item in results if item.get("arxiv_source_extracted") is True),
         "ads_abstract_success": sum(1 for item in results if item.get("ads_abstract") is True),
+        "ads_bibcode_success": sum(1 for item in results if item.get("ads_bibcode") is True),
     }
     payload = {
         "dry_run": args.dry_run,
