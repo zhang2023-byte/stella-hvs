@@ -123,6 +123,58 @@ class CatalogReviewTest(unittest.TestCase):
             )
             self.assertEqual(inventory["external_resource_mentions"][0]["url"], "https://vizier.cds.unistra.fr/example")
 
+    def test_inventory_ignores_tables_inside_latex_line_comments(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature_dir = workspace / "literature"
+            paper_dir = literature_dir / "2603.00001"
+            source_dir = paper_dir / "arxiv_source"
+            source_dir.mkdir(parents=True)
+            write_json_file(
+                paper_dir / "audit.json",
+                {
+                    "arxiv_id": "2603.00001",
+                    "title": "Commented table fixture",
+                    "month": "2026-03",
+                    "arxiv_source": {"extract_dir": "arxiv_source", "extracted": True},
+                },
+            )
+            (source_dir / "main.tex").write_text(
+                r"""
+\documentclass{article}
+\begin{document}
+% \begin{table}
+% \caption{Superseded table}
+% \label{tab:old}
+% \begin{tabular}{cc}
+% Name & velocity \\
+% A & 700 \\
+% \end{tabular}
+% \end{table}
+\begin{table}%[htbp]
+\caption{Active table}
+\label{tab:active}
+\begin{tabular}{cc}
+Name & velocity \\
+B & 710 \\
+\end{tabular}
+\end{table}
+\end{document}
+""".strip()
+                + "\n",
+                encoding="utf-8",
+            )
+
+            inventory = build_catalog_candidate_inventory(
+                literature_dir=literature_dir,
+                arxiv_id="2603.00001",
+                workspace=workspace,
+            )
+
+            self.assertEqual(len(inventory["table_candidates"]), 1)
+            self.assertEqual(inventory["table_candidates"][0]["label"], "tab:active")
+            self.assertEqual(inventory["table_candidates"][0]["caption"], "Active table")
+
     def test_rebuild_catalog_index_summarizes_data_asset_review_and_extraction(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)

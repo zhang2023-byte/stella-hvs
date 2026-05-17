@@ -176,6 +176,27 @@ def _line_number_for_offset(text: str, offset: int) -> int:
     return text.count("\n", 0, offset) + 1
 
 
+def _latex_comment_start(line: str) -> int:
+    index = 0
+    while index < len(line):
+        if line[index] == "%":
+            backslashes = 0
+            cursor = index - 1
+            while cursor >= 0 and line[cursor] == "\\":
+                backslashes += 1
+                cursor -= 1
+            if backslashes % 2 == 0:
+                return index
+        index += 1
+    return -1
+
+
+def _offset_in_latex_comment(text: str, offset: int) -> bool:
+    line_start = text.rfind("\n", 0, offset) + 1
+    prefix = text[line_start:offset]
+    return _latex_comment_start(prefix) != -1
+
+
 def extract_table_candidates(tex_path: Path, *, source_dir: Path, workspace: Path) -> list[dict[str, Any]]:
     text = _read_text(tex_path)
     candidates: list[dict[str, Any]] = []
@@ -186,6 +207,8 @@ def extract_table_candidates(tex_path: Path, *, source_dir: Path, workspace: Pat
             break
         env = match.group(1)
         search_from = match.end()
+        if _offset_in_latex_comment(text, match.start()):
+            continue
         if env not in TABLE_ENVIRONMENTS:
             continue
         end_match = re.search(END_ENV_TEMPLATE % re.escape(env), text[match.end() :])
