@@ -13,6 +13,7 @@
 - 审阅已归档论文源码中的结构化数据资产，并写入 `catalog_review.json`
 - 根据 `catalog_review.json` 将内部 LaTeX 表格忠实提取为 ECSV，并写入 `catalog_extraction.json`
 - 根据原文、`catalog_review.json`、`catalog_extraction.json` 和 ECSV 提取论文级 HVS/unbound candidates，并写入 `literature_hvs_candidates.json`
+- 将论文级 HVS candidates 合并成对象级 `catalog/` JSON
 - 从 JSON 生成 Markdown
 
 ## 项目愿景
@@ -43,6 +44,9 @@ literature/<arxiv_id>/catalog_tables/<internal_table_id>.ecsv   忠实表格 ECS
 literature/<arxiv_id>/literature_hvs_candidates.json   单篇论文 HVS/unbound candidates 抽取事实源
 literature/literature_hvs_index.json        HVS candidates 全局索引
 literature/literature_hvs_index.md          HVS candidates 阅读视图
+catalog/<object_id>.json                    对象级 HVS candidate 合并结果
+catalog/hvs_candidates_index.json           对象级 HVS candidates 全局索引
+catalog/hvs_candidates_index.md             对象级 HVS candidates 阅读视图
 literature/literature_catalog_index.json      数据资产工作流全局索引
 literature/literature_catalog_index.md        数据资产工作流阅读视图
 ```
@@ -51,7 +55,7 @@ literature/literature_catalog_index.md        数据资产工作流阅读视图
 如果输出有问题，应修改 JSON 构建逻辑或 Markdown 渲染逻辑，然后重新生成。
 
 Git 只保存生成这些数据的工具链、说明文档、测试和 skill。`notes/`、
-`literature/`、`logs/` 下的 JSON、Markdown、PDF、源码包、HTML 等数据产物默认
+`literature/`、`catalog/`、`logs/` 下的 JSON、Markdown、PDF、源码包、HTML 等数据产物默认
 遵守 `.gitignore`，不要为了保存工作而 `git add -f` 强制纳入版本控制，除非用户
 明确要求这样做。
 
@@ -146,7 +150,7 @@ conda run -n stella-env python scripts/build_hvs_candidates_index.py
 
 不要手动改 `literature/literature_catalog_index.json`、`literature/literature_catalog_index.md`、
 `literature/literature_hvs_index.json` 或 `literature/literature_hvs_index.md`。
-如果输出有问题，应修改 `catalog_review.json` 或索引渲染逻辑，然后重新生成。
+如果输出有问题，应修改对应事实源 JSON 或索引渲染逻辑，然后重新生成。
 
 提取已审阅数据资产时，使用项目内 `hvs-catalog-extraction` skill：
 
@@ -195,6 +199,25 @@ conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id 240
 ```bash
 conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id 2402.10714 --rebuild-index
 ```
+
+合并对象级 HVS candidates 时，使用项目内 `hvs-candidates-merge` skill。
+从头重构：
+
+```bash
+conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py rebuild --literature-dir literature --catalog-dir catalog
+```
+
+把新论文级候选并入已有 catalog：
+
+```bash
+conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py update --arxiv-id 2604.21646 --literature-dir literature --catalog-dir catalog
+```
+
+合并规则：优先用相同非空 `gaia_source_id`；任一方缺 Gaia source ID 时用 RA/Dec，
+天球距离 `<5 arcsec` 视为同一对象。两方 Gaia source ID 不同但坐标 `<5 arcsec`
+时不合并并写 warning；两方 Gaia source ID 相同但坐标不近时仍合并并写 warning。
+不要手工修改 `catalog/` 生成物；如果 warning 暴露源数据错误，应修正对应
+`literature_hvs_candidates.json` 后重新运行 merge。
 
 ## 工程规则
 

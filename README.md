@@ -11,6 +11,7 @@
 - 审阅已归档论文源码中的结构化数据资产，并生成数据资产工作流索引
 - 将已审阅的内部 LaTeX 表格提取为 ECSV，并保留提取 provenance
 - 从论文原文和 ECSV 中抽取论文级 HVS/unbound candidates，并保留逐值 provenance
+- 将论文级 HVS candidates 合并为对象级 `catalog/` JSON，并保留来源映射
 - 从 JSON 生成可读的 Markdown
 
 ## 环境准备
@@ -166,6 +167,28 @@ conda run -n stella-env python scripts/validate_hvs_candidates.py \
 
 校验脚本只检查 JSON 结构和 provenance 行列是否自洽，不替代 Agent 做科学判断。
 
+合并对象级 HVS candidates catalog 时，使用项目内
+`hvs-candidates-merge` skill。从头重构：
+
+```bash
+conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py rebuild \
+  --literature-dir literature \
+  --catalog-dir catalog
+```
+
+只把新论文级候选并入已有 `catalog/`：
+
+```bash
+conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py update \
+  --arxiv-id 2604.21646 \
+  --literature-dir literature \
+  --catalog-dir catalog
+```
+
+合并使用 Gaia source ID 作为强匹配；如果任一方缺 Gaia source ID，则用 RA/Dec
+在天球上 `<5 arcsec` 匹配。不同 Gaia ID 但坐标很近、或同 Gaia ID 但坐标不近时会写入
+warning，需要查看 `catalog/hvs_candidates_index.md`。
+
 清理旧 catalog workflow 产物、保留原始论文归档：
 
 ```bash
@@ -212,6 +235,7 @@ scripts/validate_catalog_review.py    校验 catalog_review.json 的结构和 so
 scripts/validate_catalog_extraction.py 校验 catalog_extraction.json 的结构和提取产物
 scripts/init_hvs_candidates.py        从代码 schema 生成 literature_hvs_candidates.json 模板
 scripts/validate_hvs_candidates.py    校验 literature_hvs_candidates.json 的结构和 provenance
+scripts/merge_hvs_candidate_catalog.py 合并对象级 HVS candidates catalog
 scripts/generate_schema_docs.py       从 Pydantic schema 生成 skill schema 参考文档
 scripts/cleanup_catalog_workflow_outputs.py   清理旧 catalog review/extraction 产物
 scripts/build_catalog_index.py       从 catalog_review.json 和 catalog_extraction.json 重建数据资产工作流索引
@@ -219,6 +243,7 @@ scripts/render_lit_notes.py          从 JSON 重生成 Markdown
 docs/                                说明文档
 literature/                          本地文献资产归档（默认不纳入 Git）
 notes/                               月度标题分类 JSON、月度 JSON、月度 Markdown、年度索引
+catalog/                             对象级 HVS candidates catalog（生成产物）
 src/high_velocity_lit/               核心实现
 tests/                               测试
 ```

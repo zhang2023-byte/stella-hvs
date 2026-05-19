@@ -10,6 +10,8 @@ literature/<arxiv_id>/catalog_review.json   单篇论文结构化数据资产审
 literature/<arxiv_id>/catalog_extraction.json   单篇论文内部表格提取事实源
 literature/<arxiv_id>/literature_hvs_candidates.json   单篇论文 HVS/unbound candidates 抽取事实源
 literature/literature_catalog_index.json       从 catalog_review.json 和 catalog_extraction.json 重建的全局数据资产工作流索引
+catalog/<object_id>.json                       对象级 HVS candidate 合并结果
+catalog/hvs_candidates_index.json              对象级 HVS candidate catalog 索引
 notes/literature_notes_index.json                  从月度 JSON 重建的全局索引
 notes/YYYY/YYYY-MM/YYYY-MM.json   月度标准记录
 notes/YYYY/YYYY-MM/YYYY-MM.title-triage.json   月度标题初筛与复核记录
@@ -31,6 +33,7 @@ literature/<arxiv_id>/catalog_sources/<internal_table_id>/pandoc.html
 literature/<arxiv_id>/catalog_sources/<internal_table_id>/pandoc.stderr.txt
 literature/<arxiv_id>/catalog_tables/<internal_table_id>.ecsv
 literature/literature_catalog_index.md        从 literature_catalog_index.json 生成的数据资产工作流视图
+catalog/hvs_candidates_index.md               从 catalog/hvs_candidates_index.json 生成的对象级 HVS catalog 视图
 notes/literature_notes_index.md                   从 literature_notes_index.json 生成的年度视图
 notes/YYYY/YYYY-MM/YYYY-MM.md    从月度 JSON 生成的月度笔记
 ```
@@ -53,6 +56,7 @@ logs/run_<timestamp>.log
 
 `logs/` 不纳入 Git。
 `literature/` 默认也不纳入 Git。
+`catalog/` 是从论文级 JSON 生成的对象级 catalog，默认也不纳入 Git。
 
 ## 月度 JSON 包含什么
 
@@ -204,6 +208,35 @@ ECSV 来源需要精确到文件路径、物理行号、机器列名、列头和
 直接生成该值的 `method_chain[]` `step-XX` ID；完整方法 lineage 由该 step 的
 `depends_on[]` 递归展开得到。
 
+## 对象级 `catalog/` 包含什么
+
+`catalog/` 是从所有论文级 `literature_hvs_candidates.json` 合并得到的对象级
+HVS candidates catalog。它由 `scripts/merge_hvs_candidate_catalog.py` 生成，不应手工修改。
+
+每个 `catalog/<object_id>.json` 使用 `schema_version:
+stella.hvs_candidate_catalog.object.v1`，包含：
+
+- `object_id`：文件名用的稳定对象 ID，优先来自 Gaia source ID 的 safe slug；没有 Gaia 时来自最早来源的 `paper_candidate_id`
+- `canonical_identifier`：对象级首选标识及其 `source` 短编号
+- `sources[]`：每个论文级候选来源，包含 `source`、原始 `paper` 字段、源 JSON 路径、`record_id`、`paper_candidate_id` 和 `gaia_source_id`
+- `method_chain[]`：按 `source` 分组的论文级方法链；保留本来源局部 `step-XX`，去掉 `source_refs`
+- `candidates[]`：按 `source` 分组的精简候选记录，只保留 `identifiers` 和精简 `core`
+- `merge.warnings[]`：Gaia/坐标匹配冲突、坐标解析失败等需要人工复查的问题
+
+对象级 `candidates[].core` 只保留每个 quantity 的 `value`、非空误差字段、`unit`
+和 `method_refs`。它不保留 `raw_value`、`source_refs`、坐标 frame/epoch 或说明字段；
+完整 provenance 仍以论文级 `literature_hvs_candidates.json` 为事实源。
+
+合并规则：
+
+- Gaia source ID 相同：合并。
+- 任一方缺 Gaia source ID：RA/Dec 天球距离 `<5 arcsec` 时合并。
+- 两方都有不同 Gaia source ID：不合并；如果 RA/Dec `<5 arcsec`，写 warning。
+- 两方 Gaia source ID 相同但 RA/Dec 不满足 `<5 arcsec`：仍按 Gaia 合并，并写 warning。
+
+`catalog/hvs_candidates_index.json` 汇总对象数量、来源数量、warning、skipped 输入和每个对象的链接。
+`catalog/hvs_candidates_index.md` 是从该 JSON 生成的阅读视图。
+
 ## 索引文件包含什么
 
 `notes/literature_notes_index.json` 保存：
@@ -242,6 +275,18 @@ ECSV 来源需要精确到文件路径、物理行号、机器列名、列头和
 - extraction `failed`：当前提取或 manifest 读取失败。
 - extraction `not_started`：review 已发现内部表格，但尚无 `catalog_extraction.json`。
 - extraction `not_applicable`：review 未发现内部表格；即使只有外部资源，也无需进入 extraction。
+
+`catalog/hvs_candidates_index.json` 保存：
+
+- 对象级 HVS candidate 总数、来源总数和 warning 数量
+- 每个对象的 canonical identifier、对象 JSON 路径、来源数、Gaia source IDs 和 paper candidate IDs
+- 合并 warning 与 skipped 输入文件
+
+`catalog/hvs_candidates_index.md` 重点展示：
+
+- 每个对象的 JSON 链接和来源数量
+- 对象级 Gaia/paper identifiers
+- 需要人工复查的合并 warning
 
 ## 主要日志事件
 

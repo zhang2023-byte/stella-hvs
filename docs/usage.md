@@ -449,7 +449,65 @@ conda run -n stella-env python scripts/generate_schema_docs.py
   由 `scripts/build_hvs_candidates_index.py` 自动扫描所有 `literature/<arxiv_id>/literature_hvs_candidates.json` 生成。
   不要手动修改索引文件；如果输出有问题，应修改 candidates JSON 或索引渲染逻辑，然后重新生成。
 
-## 9. 时间写法
+## 9. 合并对象级 HVS candidates catalog
+
+完成若干论文级 `literature_hvs_candidates.json` 后，使用项目内
+`hvs-candidates-merge` skill 生成对象级 catalog：
+
+```text
+catalog/<object_id>.json
+catalog/hvs_candidates_index.json
+catalog/hvs_candidates_index.md
+```
+
+从头重构全部对象级 catalog：
+
+```bash
+conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py rebuild \
+  --literature-dir literature \
+  --catalog-dir catalog
+```
+
+只把一篇新论文级候选并入已有 `catalog/`：
+
+```bash
+conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py update \
+  --arxiv-id 2604.21646 \
+  --literature-dir literature \
+  --catalog-dir catalog
+```
+
+也可以直接指定文件：
+
+```bash
+conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py update \
+  --path literature/2604.21646/literature_hvs_candidates.json \
+  --literature-dir literature \
+  --catalog-dir catalog
+```
+
+两个模式都支持 `--dry-run True`，只打印将写入或删除的生成文件，不修改 `catalog/`。
+
+### 合并和审核原则
+
+- 输入文件先按当前 `LiteratureHvsCandidatesRecord` schema 校验；无效文件进入 index 的 `skipped[]`，不参与合并。
+- Gaia source ID 是强匹配键；相同非空 `gaia_source_id` 会合并。
+- 如果任一方没有 Gaia source ID，则用 RA/Dec 计算天球距离，严格 `<5 arcsec` 才合并。
+- 两方都有不同 Gaia source ID 时不合并；如果坐标 `<5 arcsec`，写入 warning。
+- 两方 Gaia source ID 相同但坐标不满足 `<5 arcsec` 时仍合并，并写入 warning。
+- 对象级 JSON 中 `sources[]` 保存短编号、原 `paper` 字段、源 JSON 路径和论文级候选 ID。
+- `method_chain[]` 和 `candidates[]` 按 `source` 分组，不保留 `source_refs`；完整 provenance 仍回到论文级 JSON 查看。
+- 不要手工修改 `catalog/`。如果 warning 暴露出错误，应修正对应 `literature_hvs_candidates.json` 后重新运行 merge。
+
+运行后先看命令 summary，再查看：
+
+```text
+catalog/hvs_candidates_index.md
+```
+
+重点检查 `Warnings`、对象数量、来源数量，以及每个对象链接到的 JSON。
+
+## 10. 时间写法
 
 ```text
 --from 2026-03-15  表示从 2026-03-15 开始
@@ -464,7 +522,7 @@ conda run -n stella-env python scripts/generate_schema_docs.py
 未来日期会自动截到今天。
 非法日期格式会直接报错。
 
-## 10. 额外说明
+## 11. 额外说明
 
 当 DeepXiv 返回限额错误时：
 
