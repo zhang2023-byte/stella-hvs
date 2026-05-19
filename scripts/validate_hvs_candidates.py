@@ -51,6 +51,17 @@ ASYMMETRIC_UNCERTAINTY_RE = re.compile(
 CORE_GROUPS = ("observed_phase_space", "derived_kinematics", "probabilities")
 CORE_OBSERVED_NUMERIC_FIELDS = {"distance", "parallax", "proper_motion_ra", "proper_motion_dec", "radial_velocity"}
 MACHINE_NUMERIC_FIELDS = ("value", "error", "lower_error", "upper_error")
+COORDINATE_FIELDS = {"ra", "dec"}
+COORDINATE_FORMATS = {"decimal_degrees", "sexagesimal_hms", "sexagesimal_dms", "sexagesimal_colon"}
+COORDINATE_CONTEXT_KEYS = {"reference_frame", "epoch"}
+COORDINATE_CONTEXT_RE = re.compile(r"\b(?:ICRS|FK[45]|J\d{4}(?:\.\d+)?|epoch|equinox)\b", re.IGNORECASE)
+COORDINATE_DECIMAL_UNITS = {"deg", "degree", "degrees"}
+COORDINATE_HOURANGLE_UNITS = {"hourangle"}
+SEXAGESIMAL_HMS_RE = re.compile(r"^[+-]?\d{1,2}h\d{1,2}m\d{1,2}(?:\.\d+)?s?$")
+SEXAGESIMAL_DMS_RE = re.compile(r"^[+-]?\d{1,3}(?:d|°)\d{1,2}(?:m|')\d{1,2}(?:\.\d+)?(?:s|\")?$")
+SEXAGESIMAL_COLON_RE = re.compile(r"^[+-]?\d{1,3}:\d{1,2}:\d{1,2}(?:\.\d+)?$")
+EPOCH_KIND_VALUES = {"reference_epoch", "equinox", "ambiguous", "not_reported"}
+UNKNOWN_CONTEXT_VALUES = {"", "unknown"}
 METHOD_STEP_ID_RE = re.compile(r"^step-\d{2}$")
 GAIA_SOURCE_ID_RE = re.compile(r"^Gaia (?:DR[0-9]+|EDR[0-9]+) [0-9]+$")
 NO_CANDIDATE_REVIEW_RE = re.compile(
@@ -223,6 +234,7 @@ def validate_ecsv_cell_ref(ref: dict[str, Any], path: Path, location: str, ctx: 
     column = ref.get("column")
     raw_value = ref.get("raw_value")
     column_header = ref.get("column_header")
+    component_raw_value = ref.get("component_raw_value")
 
     if not isinstance(line, int):
         ctx.error(f"{location}.line", "expected integer ECSV file line number")
@@ -262,6 +274,14 @@ def validate_ecsv_cell_ref(ref: dict[str, Any], path: Path, location: str, ctx: 
             f"{location}.raw_value",
             f"raw value {raw_value!r} does not match ECSV cell {tokens[column_index]!r}",
         )
+    if "component_raw_value" in ref:
+        if not isinstance(component_raw_value, str) or not component_raw_value.strip():
+            ctx.error(f"{location}.component_raw_value", "expected non-empty component text when present")
+        elif isinstance(raw_value, str) and component_raw_value not in raw_value:
+            ctx.error(
+                f"{location}.component_raw_value",
+                f"component value {component_raw_value!r} is not present in ECSV cell {raw_value!r}",
+            )
 
 
 def validate_text_ref(ref: dict[str, Any], path: Path, location: str, ctx: ValidationContext) -> None:
@@ -484,7 +504,7 @@ def iter_quantity_records(node: Any, location: str):
             yield node, location
             return
         for key, value in node.items():
-            if key == "source_refs":
+            if key == "source_refs" or key in COORDINATE_CONTEXT_KEYS:
                 continue
             yield from iter_quantity_records(value, f"{location}.{key}")
     elif is_list(node):
@@ -566,6 +586,179 @@ def validate_direct_method_ref(
             )
 
 
+def validate_coordinate_context(
+    value: Any,
+    location: str,
+    ctx: ValidationContext,
+    *,
+    context_kind: str,
+) -> None:
+    obj = validate_required_mapping(value, location, ctx)
+    if obj is None:
+        return
+
+    context_value = obj.get("value")
+    if not isinstance(context_value, str) or not context_value.strip():
+        ctx.error(f"{location}.value", "expected non-empty coordinate context value or 'unknown'")
+    normalized_value = context_value.strip().lower() if isinstance(context_value, str) else ""
+
+    if context_kind == "epoch":
+        epoch_kind = obj.get("epoch_kind")
+        if epoch_kind not in EPOCH_KIND_VALUES:
+            ctx.error(f"{location}.epoch_kind", f"expected one of {sorted(EPOCH_KIND_VALUES)}")
+
+    for key in (
+        "raw_value",
+        "source_catalog",
+        "data_release",
+        "inference_basis",
+        "reference_entry_id",
+        "confidence",
+        "description",
+    ):
+        if key in obj and not isinstance(obj.get(key), str):
+            ctx.error(f"{location}.{key}", "expected string")
+
+    refs = obj.get("source_refs")
+    if refs in (None, []):
+        ctx.warn(f"{location}.source_refs", "coordinate context has no source reference; review provenance")
+    else:
+        validate_source_refs(refs, f"{location}.source_refs", ctx)
+
+    inference_basis = str(obj.get("inference_basis") or "").strip().lower()
+    if normalized_value in UNKNOWN_CONTEXT_VALUES or inference_basis in {"not_in_reference", "not_reported"}:
+        ctx.warn(
+            location,
+            "coordinate context is unknown or not covered by coordinate_frames.md; keep value unknown until reviewed",
+        )
+
+
+def _sexagesimal_parts(value: str) -> tuple[float, float, float] | None:
+    match = re.fullmatch(r"([+-]?\d{1,3})[:hd°](\d{1,2})[:m'](\d{1,2}(?:\.\d+)?)(?:s|\")?", value)
+    if not match:
+        return None
+    return float(match.group(1)), float(match.group(2)), float(match.group(3))
+
+
+def validate_coordinate_range(value: str, location: str, ctx: ValidationContext, *, field_name: str) -> None:
+    try:
+        numeric = float(value)
+    except ValueError:
+        ctx.error(location, "decimal coordinate value must be a plain number")
+        return
+    if field_name == "ra" and not (0.0 <= numeric < 360.0):
+        ctx.error(location, "RA in decimal degrees must be in [0, 360)")
+    if field_name == "dec" and not (-90.0 <= numeric <= 90.0):
+        ctx.error(location, "Dec in decimal degrees must be in [-90, 90]")
+
+
+def validate_coordinate_sexagesimal_range(
+    value: str,
+    location: str,
+    ctx: ValidationContext,
+    *,
+    field_name: str,
+) -> None:
+    parts = _sexagesimal_parts(value)
+    if parts is None:
+        return
+    major, minutes, seconds = parts
+    if not (0 <= minutes < 60) or not (0 <= seconds < 60):
+        ctx.error(location, "sexagesimal coordinate minutes and seconds must be in [0, 60)")
+        return
+    if field_name == "ra" and not (0 <= major < 24):
+        ctx.error(location, "RA sexagesimal hour component must be in [0, 24)")
+    if field_name == "dec" and not (-90 <= major <= 90):
+        ctx.error(location, "Dec sexagesimal degree component must be in [-90, 90]")
+
+
+def validate_coordinate_record(record: Any, location: str, field_name: str, ctx: ValidationContext) -> None:
+    obj = validate_required_mapping(record, location, ctx)
+    if obj is None:
+        return
+
+    for key in ("coordinate_format", "reference_frame", "epoch"):
+        if key not in obj:
+            ctx.error(f"{location}.{key}", "missing required coordinate field")
+
+    coordinate_format = obj.get("coordinate_format")
+    if coordinate_format not in COORDINATE_FORMATS:
+        ctx.error(f"{location}.coordinate_format", f"expected one of {sorted(COORDINATE_FORMATS)}")
+
+    unit = obj.get("unit")
+    if not isinstance(unit, str) or not unit.strip():
+        ctx.error(f"{location}.unit", "coordinate unit is required")
+    else:
+        unit_text = unit.strip().lower()
+        if coordinate_format == "decimal_degrees" and unit_text not in COORDINATE_DECIMAL_UNITS:
+            ctx.error(f"{location}.unit", "decimal coordinate unit must be deg/degree/degrees")
+        elif coordinate_format == "sexagesimal_hms" and (field_name != "ra" or unit_text not in COORDINATE_HOURANGLE_UNITS):
+            ctx.error(f"{location}.unit", "sexagesimal_hms is only valid for RA with unit hourangle")
+        elif coordinate_format == "sexagesimal_dms" and (field_name != "dec" or unit_text not in COORDINATE_DECIMAL_UNITS):
+            ctx.error(f"{location}.unit", "sexagesimal_dms is only valid for Dec with angular degree units")
+        elif coordinate_format == "sexagesimal_colon":
+            expected_units = COORDINATE_HOURANGLE_UNITS if field_name == "ra" else COORDINATE_DECIMAL_UNITS
+            if unit_text not in expected_units:
+                ctx.error(f"{location}.unit", f"sexagesimal_colon {field_name.upper()} unit must be one of {sorted(expected_units)}")
+
+    for key in ("value", "raw_value"):
+        field_value = obj.get(key)
+        if not isinstance(field_value, str):
+            continue
+        if "," in field_value or "(" in field_value or ")" in field_value:
+            ctx.error(f"{location}.{key}", "RA/Dec must contain only this coordinate component, not a tuple or prose")
+
+    for key in ("value", "raw_value", "unit", "description"):
+        field_value = obj.get(key)
+        if isinstance(field_value, str) and COORDINATE_CONTEXT_RE.search(field_value):
+            ctx.error(f"{location}.{key}", "coordinate frame or epoch belongs in reference_frame/epoch, not in RA/Dec fields")
+
+    coordinate_value = obj.get("value")
+    if isinstance(coordinate_value, str) and isinstance(coordinate_format, str):
+        stripped_value = coordinate_value.strip()
+        if coordinate_format == "decimal_degrees":
+            if MACHINE_NUMBER_RE.fullmatch(stripped_value):
+                validate_coordinate_range(stripped_value, f"{location}.value", ctx, field_name=field_name)
+            else:
+                ctx.error(f"{location}.value", "decimal_degrees coordinate value must be a plain number")
+        elif coordinate_format == "sexagesimal_hms":
+            if not SEXAGESIMAL_HMS_RE.fullmatch(stripped_value):
+                ctx.error(f"{location}.value", "sexagesimal_hms coordinate value must look like 17h39m53.68s")
+            validate_coordinate_sexagesimal_range(stripped_value, f"{location}.value", ctx, field_name=field_name)
+        elif coordinate_format == "sexagesimal_dms":
+            if not SEXAGESIMAL_DMS_RE.fullmatch(stripped_value):
+                ctx.error(f"{location}.value", "sexagesimal_dms coordinate value must look like -27d42m35.30s")
+            validate_coordinate_sexagesimal_range(stripped_value, f"{location}.value", ctx, field_name=field_name)
+        elif coordinate_format == "sexagesimal_colon":
+            if not SEXAGESIMAL_COLON_RE.fullmatch(stripped_value):
+                ctx.error(f"{location}.value", "sexagesimal_colon coordinate value must look like 16:37:12.214")
+            validate_coordinate_sexagesimal_range(stripped_value, f"{location}.value", ctx, field_name=field_name)
+
+    validate_coordinate_context(
+        obj.get("reference_frame"),
+        f"{location}.reference_frame",
+        ctx,
+        context_kind="reference_frame",
+    )
+    validate_coordinate_context(
+        obj.get("epoch"),
+        f"{location}.epoch",
+        ctx,
+        context_kind="epoch",
+    )
+
+
+def validate_coordinate_records(core: dict[str, Any], location: str, ctx: ValidationContext) -> None:
+    observed = core.get("observed_phase_space")
+    if not is_dict(observed):
+        return
+    for field_name in sorted(COORDINATE_FIELDS):
+        record = observed.get(field_name)
+        if record is None:
+            continue
+        validate_coordinate_record(record, f"{location}.observed_phase_space.{field_name}", field_name, ctx)
+
+
 def validate_quantity_records(
     node: Any,
     location: str,
@@ -608,11 +801,15 @@ def validate_quantity_records(
         if isinstance(raw_value, str) and isinstance(refs, list):
             for ref_index, ref in enumerate(refs):
                 if is_ecsv_source_ref(ref):
-                    ref_raw_value = ref.get("raw_value") if is_dict(ref) else None
+                    if not is_dict(ref):
+                        ref_raw_value = None
+                    else:
+                        component_raw_value = ref.get("component_raw_value")
+                        ref_raw_value = component_raw_value if isinstance(component_raw_value, str) and component_raw_value else ref.get("raw_value")
                     if ref_raw_value != raw_value:
                         ctx.error(
-                            f"{record_location}.source_refs[{ref_index}].raw_value",
-                            "ECSV source raw_value must match the quantity record raw_value",
+                            f"{record_location}.source_refs[{ref_index}]",
+                            "ECSV source raw_value or component_raw_value must match the quantity record raw_value",
                         )
                 else:
                     ref_text = text_for_source_ref(ref, ctx)
@@ -715,7 +912,7 @@ def validate_candidate_identifiers(
 
     for key in LEGACY_IDENTIFIER_FIELDS:
         if key in ids_obj:
-            ctx.error(f"{location}.{key}", "legacy v4 identifier field is removed in v5; convert the file to v5 identifiers")
+            ctx.error(f"{location}.{key}", "legacy v4 identifier field is removed in v6; convert the file to v6 identifiers")
 
     for key in ("record_id", "paper_candidate_id", "gaia_source_id", "all"):
         if key not in ids_obj:
@@ -825,7 +1022,7 @@ def validate_candidate(
         ctx.error(f"{location}.method_chain_refs", "candidate-level method_chain_refs is removed; use quantity method_refs")
     for key in LEGACY_CANDIDATE_FIELDS:
         if key in candidate_obj:
-            ctx.error(f"{location}.{key}", "legacy v4 candidate field is removed in v5; convert the file to v5 identifiers")
+            ctx.error(f"{location}.{key}", "legacy v4 candidate field is removed in v6; convert the file to v6 identifiers")
 
     identifiers = candidate_obj.get("identifiers")
     validate_candidate_identifiers(
@@ -919,6 +1116,7 @@ def validate_core(
         value = core.get(group)
         if not is_dict(value):
             ctx.error(f"{location}.{group}", "expected core schema group object")
+    validate_coordinate_records(core, location, ctx)
     validate_quantity_records(
         core,
         location,

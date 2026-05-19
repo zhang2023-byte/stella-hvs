@@ -4,7 +4,7 @@
 
 `literature_hvs_candidates.json` is the Agent-filled paper-level HVS/unbound candidate fact source. Generate a skeleton from code, then fill candidate semantics and provenance.
 
-Use `schema_version: "stella.literature_hvs_candidates.v5"`.
+Use `schema_version: "stella.literature_hvs_candidates.v6"`.
 
 ## Required Top-Level Fields
 
@@ -21,7 +21,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v5"`.
 
 ```json
 {
-  "schema_version": "stella.literature_hvs_candidates.v5",
+  "schema_version": "stella.literature_hvs_candidates.v6",
   "generated_at": "",
   "paper": {},
   "inputs": {},
@@ -34,13 +34,16 @@ Use `schema_version: "stella.literature_hvs_candidates.v5"`.
 
 ## Enum Values
 
+- `ambiguous`
 - `astrometric_calibration`
 - `candidate_classification`
 - `candidates_found`
 - `cited_from_literature`
 - `cross_match`
+- `decimal_degrees`
 - `distance_estimation`
 - `ecsv_cell`
+- `equinox`
 - `escape_or_bound_assessment`
 - `escaping_galaxy_candidate`
 - `follow_up_validation`
@@ -51,6 +54,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v5"`.
 - `introduced_by_this_paper`
 - `needs_review`
 - `no_candidates`
+- `not_reported`
 - `orbit_integration`
 - `origin_assessment`
 - `other`
@@ -58,10 +62,14 @@ Use `schema_version: "stella.literature_hvs_candidates.v5"`.
 - `photometric_or_sed_modeling`
 - `quality_filter`
 - `radial_velocity_measurement`
+- `reference_epoch`
 - `reported_value_adoption`
 - `sample_selection`
+- `sexagesimal_colon`
+- `sexagesimal_dms`
+- `sexagesimal_hms`
 - `source_missing`
-- `stella.literature_hvs_candidates.v5`
+- `stella.literature_hvs_candidates.v6`
 - `stellar_parameter_inference`
 - `text`
 - `unbound_candidate`
@@ -75,6 +83,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v5"`.
 - Every quantity must preserve `raw_value`, cleaned `value`, source references, and exactly one direct-producer `method_refs` entry when complete.
 - Candidate identifiers live under `identifiers`: `record_id` is the internal `<arxiv_id>:cand-001` record key, `paper_candidate_id` is the paper display name, `gaia_source_id` is the strict Gaia machine id or empty string, and `all[]` stores paper-visible names with source refs.
 - For numeric core fields and quantitative `extra[]` records, `value`, `error`, `lower_error`, and `upper_error` should be single plain numbers; ranges, limits, units, notes, and LaTeX residue stay in `raw_value`/`description`.
+- RA/Dec are coordinate records: keep each coordinate component in `raw_value`/`value`, put frame and epoch context in the nested `reference_frame` and `epoch` objects, and use `component_raw_value` when one ECSV cell contains both components.
 - `method_chain[]` uses local `step-XX` ids, canonical `step_type` values, and `depends_on[]` to encode upstream method lineage.
 - Full quantity provenance is the direct `method_refs` step plus recursive `depends_on[]` ancestors; candidates do not carry paper-level `method_chain_refs`.
 - The standard `core` groups are `observed_phase_space`, `derived_kinematics`, and `probabilities`; paper-specific fields go in `extra[]`.
@@ -369,6 +378,234 @@ Use `schema_version: "stella.literature_hvs_candidates.v5"`.
       "title": "CandidateRecord",
       "type": "object"
     },
+    "CoordinateEpoch": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "title": "Value",
+          "type": "string"
+        },
+        "epoch_kind": {
+          "enum": [
+            "reference_epoch",
+            "equinox",
+            "ambiguous",
+            "not_reported"
+          ],
+          "title": "Epoch Kind",
+          "type": "string"
+        },
+        "raw_value": {
+          "default": "",
+          "title": "Raw Value",
+          "type": "string"
+        },
+        "source_catalog": {
+          "default": "",
+          "title": "Source Catalog",
+          "type": "string"
+        },
+        "data_release": {
+          "default": "",
+          "title": "Data Release",
+          "type": "string"
+        },
+        "inference_basis": {
+          "default": "",
+          "title": "Inference Basis",
+          "type": "string"
+        },
+        "reference_entry_id": {
+          "default": "",
+          "title": "Reference Entry Id",
+          "type": "string"
+        },
+        "confidence": {
+          "default": "",
+          "title": "Confidence",
+          "type": "string"
+        },
+        "source_refs": {
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/TextSourceRef"
+              },
+              {
+                "$ref": "#/$defs/EcsvCellSourceRef"
+              }
+            ]
+          },
+          "title": "Source Refs",
+          "type": "array"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "epoch_kind"
+      ],
+      "title": "CoordinateEpoch",
+      "type": "object"
+    },
+    "CoordinateQuantityRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "raw_value": {
+          "title": "Raw Value",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        },
+        "error": {
+          "default": "",
+          "title": "Error",
+          "type": "string"
+        },
+        "lower_error": {
+          "default": "",
+          "title": "Lower Error",
+          "type": "string"
+        },
+        "upper_error": {
+          "default": "",
+          "title": "Upper Error",
+          "type": "string"
+        },
+        "unit": {
+          "default": "",
+          "title": "Unit",
+          "type": "string"
+        },
+        "kind": {
+          "default": "",
+          "title": "Kind",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        },
+        "source_refs": {
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/TextSourceRef"
+              },
+              {
+                "$ref": "#/$defs/EcsvCellSourceRef"
+              }
+            ]
+          },
+          "title": "Source Refs",
+          "type": "array"
+        },
+        "method_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Method Refs",
+          "type": "array"
+        },
+        "coordinate_format": {
+          "enum": [
+            "decimal_degrees",
+            "sexagesimal_hms",
+            "sexagesimal_dms",
+            "sexagesimal_colon"
+          ],
+          "title": "Coordinate Format",
+          "type": "string"
+        },
+        "reference_frame": {
+          "$ref": "#/$defs/CoordinateReferenceFrame"
+        },
+        "epoch": {
+          "$ref": "#/$defs/CoordinateEpoch"
+        }
+      },
+      "required": [
+        "raw_value",
+        "value",
+        "source_refs",
+        "method_refs",
+        "coordinate_format",
+        "reference_frame",
+        "epoch"
+      ],
+      "title": "CoordinateQuantityRecord",
+      "type": "object"
+    },
+    "CoordinateReferenceFrame": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "title": "Value",
+          "type": "string"
+        },
+        "raw_value": {
+          "default": "",
+          "title": "Raw Value",
+          "type": "string"
+        },
+        "source_catalog": {
+          "default": "",
+          "title": "Source Catalog",
+          "type": "string"
+        },
+        "data_release": {
+          "default": "",
+          "title": "Data Release",
+          "type": "string"
+        },
+        "inference_basis": {
+          "default": "",
+          "title": "Inference Basis",
+          "type": "string"
+        },
+        "reference_entry_id": {
+          "default": "",
+          "title": "Reference Entry Id",
+          "type": "string"
+        },
+        "confidence": {
+          "default": "",
+          "title": "Confidence",
+          "type": "string"
+        },
+        "source_refs": {
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/TextSourceRef"
+              },
+              {
+                "$ref": "#/$defs/EcsvCellSourceRef"
+              }
+            ]
+          },
+          "title": "Source Refs",
+          "type": "array"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "title": "CoordinateReferenceFrame",
+      "type": "object"
+    },
     "DerivedKinematics": {
       "additionalProperties": false,
       "properties": {
@@ -534,6 +771,11 @@ Use `schema_version: "stella.literature_hvs_candidates.v5"`.
         },
         "raw_value": {
           "title": "Raw Value",
+          "type": "string"
+        },
+        "component_raw_value": {
+          "default": "",
+          "title": "Component Raw Value",
           "type": "string"
         }
       },
@@ -875,7 +1117,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v5"`.
         "ra": {
           "anyOf": [
             {
-              "$ref": "#/$defs/QuantityRecord"
+              "$ref": "#/$defs/CoordinateQuantityRecord"
             },
             {
               "type": "null"
@@ -886,7 +1128,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v5"`.
         "dec": {
           "anyOf": [
             {
-              "$ref": "#/$defs/QuantityRecord"
+              "$ref": "#/$defs/CoordinateQuantityRecord"
             },
             {
               "type": "null"
@@ -1104,7 +1346,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v5"`.
   "additionalProperties": false,
   "properties": {
     "schema_version": {
-      "const": "stella.literature_hvs_candidates.v5",
+      "const": "stella.literature_hvs_candidates.v6",
       "title": "Schema Version",
       "type": "string"
     },

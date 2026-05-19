@@ -9,7 +9,7 @@ CATALOG_REVIEW_SCHEMA_VERSION = "stella.article_data_assets.review.v1"
 CATALOG_EXTRACTION_SCHEMA_VERSION = "stella.article_data_assets.extraction.v2"
 CATALOG_INVENTORY_SCHEMA_VERSION = "stella.article_data_assets.inventory.v1"
 CATALOG_INDEX_SCHEMA_VERSION = "stella.article_data_assets.index.v1"
-LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION = "stella.literature_hvs_candidates.v5"
+LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION = "stella.literature_hvs_candidates.v6"
 LITERATURE_HVS_CANDIDATES_INDEX_SCHEMA_VERSION = "stella.literature_hvs_candidates.index.v2"
 
 CATALOG_REVIEW_STATUSES = ("reviewed", "partial", "needs_review", "source_missing")

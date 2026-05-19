@@ -253,6 +253,7 @@ class EcsvCellSourceRef(StrictModel):
     column: str
     column_header: str
     raw_value: str
+    component_raw_value: str = ""
 
 
 SourceRef = TextSourceRef | EcsvCellSourceRef
@@ -349,9 +350,45 @@ class QuantityRecord(StrictModel):
     method_refs: list[str]
 
 
+class CoordinateReferenceFrame(StrictModel):
+    value: str
+    raw_value: str = ""
+    source_catalog: str = ""
+    data_release: str = ""
+    inference_basis: str = ""
+    reference_entry_id: str = ""
+    confidence: str = ""
+    source_refs: list[SourceRef] = Field(default_factory=list)
+    description: str = ""
+
+
+class CoordinateEpoch(StrictModel):
+    value: str
+    epoch_kind: Literal["reference_epoch", "equinox", "ambiguous", "not_reported"]
+    raw_value: str = ""
+    source_catalog: str = ""
+    data_release: str = ""
+    inference_basis: str = ""
+    reference_entry_id: str = ""
+    confidence: str = ""
+    source_refs: list[SourceRef] = Field(default_factory=list)
+    description: str = ""
+
+
+class CoordinateQuantityRecord(QuantityRecord):
+    coordinate_format: Literal[
+        "decimal_degrees",
+        "sexagesimal_hms",
+        "sexagesimal_dms",
+        "sexagesimal_colon",
+    ]
+    reference_frame: CoordinateReferenceFrame
+    epoch: CoordinateEpoch
+
+
 class ObservedPhaseSpace(StrictModel):
-    ra: QuantityRecord | None = None
-    dec: QuantityRecord | None = None
+    ra: CoordinateQuantityRecord | None = None
+    dec: CoordinateQuantityRecord | None = None
     distance: QuantityRecord | None = None
     parallax: QuantityRecord | None = None
     proper_motion_ra: QuantityRecord | None = None
@@ -407,7 +444,7 @@ class CandidateGroupConsidered(StrictModel):
 
 
 class LiteratureHvsCandidatesRecord(StrictModel):
-    schema_version: Literal["stella.literature_hvs_candidates.v5"]
+    schema_version: Literal["stella.literature_hvs_candidates.v6"]
     generated_at: str
     paper: HvsPaper
     inputs: HvsInputs

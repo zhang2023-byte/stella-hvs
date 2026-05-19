@@ -81,6 +81,57 @@ def write_bib(path: Path) -> None:
     )
 
 
+def coordinate_reference_frame(text_ref: dict[str, object], *, value: str = "ICRS") -> dict[str, object]:
+    return {
+        "value": value,
+        "raw_value": "Gaia DR3",
+        "source_catalog": "Gaia",
+        "data_release": "DR3",
+        "inference_basis": "survey_reference",
+        "reference_entry_id": "gaia-dr3",
+        "confidence": "high",
+        "source_refs": [text_ref],
+        "description": "Coordinate frame inferred from Gaia DR3 input catalog.",
+    }
+
+
+def coordinate_epoch(text_ref: dict[str, object], *, value: str = "J2016.0") -> dict[str, object]:
+    return {
+        "value": value,
+        "epoch_kind": "reference_epoch",
+        "raw_value": "Gaia DR3",
+        "source_catalog": "Gaia",
+        "data_release": "DR3",
+        "inference_basis": "survey_reference",
+        "reference_entry_id": "gaia-dr3",
+        "confidence": "high",
+        "source_refs": [text_ref],
+        "description": "Reference epoch inferred from Gaia DR3 input catalog.",
+    }
+
+
+def coordinate_record(
+    text_ref: dict[str, object],
+    *,
+    raw_value: str,
+    value: str,
+    unit: str,
+    coordinate_format: str,
+    method_ref: str = "step-01",
+    source_refs: list[dict[str, object]] | None = None,
+) -> dict[str, object]:
+    return {
+        "raw_value": raw_value,
+        "value": value,
+        "unit": unit,
+        "coordinate_format": coordinate_format,
+        "source_refs": source_refs or [text_ref],
+        "method_refs": [method_ref],
+        "reference_frame": coordinate_reference_frame(text_ref),
+        "epoch": coordinate_epoch(text_ref),
+    }
+
+
 def valid_payload(workspace: Path, *, status: str = "candidates_found") -> dict[str, object]:
     paper_dir = workspace / "literature" / "2603.00001"
     ecsv_line = write_ecsv(paper_dir / "catalog_tables" / "table-hvs.ecsv")
@@ -662,20 +713,20 @@ class HvsCandidatesValidationTest(unittest.TestCase):
                 "source_refs": [text_ref],
                 "method_refs": ["step-01"],
             }
-            core["observed_phase_space"]["ra"] = {  # type: ignore[index]
-                "raw_value": "17h39m53.68s",
-                "value": "17h39m53.68s",
-                "unit": "hms",
-                "source_refs": [text_ref],
-                "method_refs": ["step-01"],
-            }
-            core["observed_phase_space"]["dec"] = {  # type: ignore[index]
-                "raw_value": "-27d42m35.30s",
-                "value": "-27d42m35.30s",
-                "unit": "dms",
-                "source_refs": [text_ref],
-                "method_refs": ["step-01"],
-            }
+            core["observed_phase_space"]["ra"] = coordinate_record(  # type: ignore[index]
+                text_ref,
+                raw_value="17h39m53.68s",
+                value="17h39m53.68s",
+                unit="hourangle",
+                coordinate_format="sexagesimal_hms",
+            )
+            core["observed_phase_space"]["dec"] = coordinate_record(  # type: ignore[index]
+                text_ref,
+                raw_value="-27d42m35.30s",
+                value="-27d42m35.30s",
+                unit="deg",
+                coordinate_format="sexagesimal_dms",
+            )
 
             report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
 
@@ -686,6 +737,131 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             self.assertTrue(any(".core.observed_phase_space.radial_velocity.error" in warning for warning in numeric_warnings))
             self.assertFalse(any(".core.observed_phase_space.ra.value" in warning for warning in numeric_warnings))
             self.assertFalse(any(".core.observed_phase_space.dec.value" in warning for warning in numeric_warnings))
+
+    def test_coordinate_context_fields_validate(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            text_ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            observed = candidate["core"]["observed_phase_space"]  # type: ignore[index]
+            observed["ra"] = coordinate_record(  # type: ignore[index]
+                text_ref,
+                raw_value="155.62617",
+                value="155.62617",
+                unit="deg",
+                coordinate_format="decimal_degrees",
+            )
+            observed["dec"] = coordinate_record(  # type: ignore[index]
+                text_ref,
+                raw_value="-34.23891",
+                value="-34.23891",
+                unit="deg",
+                coordinate_format="decimal_degrees",
+            )
+
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace, require_complete=True)
+
+            self.assertEqual(report.errors, [])
+
+    def test_coordinate_fields_reject_epoch_or_frame_mixed_into_ra_dec(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            text_ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            observed = candidate["core"]["observed_phase_space"]  # type: ignore[index]
+            observed["ra"] = coordinate_record(  # type: ignore[index]
+                text_ref,
+                raw_value="09:34:09.21",
+                value="09:34:09.21",
+                unit="J2000.0",
+                coordinate_format="sexagesimal_colon",
+            )
+            observed["dec"] = coordinate_record(  # type: ignore[index]
+                text_ref,
+                raw_value="(244.205784,-3.106973)",
+                value="(244.205784,-3.106973)",
+                unit="deg",
+                coordinate_format="decimal_degrees",
+            )
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any(".core.observed_phase_space.ra.unit" in error for error in errors))
+            self.assertTrue(any(".core.observed_phase_space.dec.value" in error for error in errors))
+            self.assertTrue(any(".core.observed_phase_space.dec.raw_value" in error for error in errors))
+
+    def test_coordinate_ecsv_component_raw_value_allows_compound_cell(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            text_ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            paper_dir = workspace / "literature" / "2603.00001"
+            coordinate_table = paper_dir / "catalog_tables" / "table-coordinates.ecsv"
+            coordinate_text = "\n".join(
+                [
+                    "# %ECSV 1.0",
+                    "# ---",
+                    "# datatype:",
+                    "# - {name: col_001, datatype: string, description: Name}",
+                    "# - {name: col_002, datatype: string, description: 'Position (ICRS, Epoch J2016.0)'}",
+                    "# schema: astropy-2.0",
+                    "col_001 col_002",
+                    "HVS1 \"(244.205784,-3.106973)\"",
+                ]
+            )
+            coordinate_table.write_text(coordinate_text + "\n", encoding="utf-8")
+            line = coordinate_text.splitlines().index('HVS1 "(244.205784,-3.106973)"') + 1
+            cell_ref = {
+                "kind": "ecsv_cell",
+                "path": "literature/2603.00001/catalog_tables/table-coordinates.ecsv",
+                "line": line,
+                "column": "col_002",
+                "column_header": "Position (ICRS, Epoch J2016.0)",
+                "raw_value": "(244.205784,-3.106973)",
+                "component_raw_value": "244.205784",
+            }
+            observed = candidate["core"]["observed_phase_space"]  # type: ignore[index]
+            observed["ra"] = coordinate_record(  # type: ignore[index]
+                text_ref,
+                raw_value="244.205784",
+                value="244.205784",
+                unit="deg",
+                coordinate_format="decimal_degrees",
+                source_refs=[cell_ref],
+            )
+
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace, require_complete=True)
+
+            self.assertEqual(report.errors, [])
+
+    def test_unknown_coordinate_context_warns_without_error(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            text_ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            observed = candidate["core"]["observed_phase_space"]  # type: ignore[index]
+            ra = coordinate_record(
+                text_ref,
+                raw_value="155.62617",
+                value="155.62617",
+                unit="deg",
+                coordinate_format="decimal_degrees",
+            )
+            ra["reference_frame"]["value"] = "unknown"  # type: ignore[index]
+            ra["reference_frame"]["inference_basis"] = "not_in_reference"  # type: ignore[index]
+            ra["epoch"]["value"] = "unknown"  # type: ignore[index]
+            ra["epoch"]["epoch_kind"] = "not_reported"  # type: ignore[index]
+            ra["epoch"]["inference_basis"] = "not_reported"  # type: ignore[index]
+            observed["ra"] = ra  # type: ignore[index]
+
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace, require_complete=True)
+
+            self.assertEqual(report.errors, [])
+            self.assertTrue(any("coordinate context is unknown" in warning for warning in report.warnings))
 
     def test_quantitative_extra_numeric_fields_warn_without_textual_false_positives(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
