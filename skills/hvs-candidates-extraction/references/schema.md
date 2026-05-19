@@ -4,7 +4,7 @@
 
 `literature_hvs_candidates.json` is the Agent-filled paper-level HVS/unbound candidate fact source. Generate a skeleton from code, then fill candidate semantics and provenance.
 
-Use `schema_version: "stella.literature_hvs_candidates.v4"`.
+Use `schema_version: "stella.literature_hvs_candidates.v5"`.
 
 ## Required Top-Level Fields
 
@@ -21,7 +21,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v4"`.
 
 ```json
 {
-  "schema_version": "stella.literature_hvs_candidates.v4",
+  "schema_version": "stella.literature_hvs_candidates.v5",
   "generated_at": "",
   "paper": {},
   "inputs": {},
@@ -61,7 +61,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v4"`.
 - `reported_value_adoption`
 - `sample_selection`
 - `source_missing`
-- `stella.literature_hvs_candidates.v4`
+- `stella.literature_hvs_candidates.v5`
 - `stellar_parameter_inference`
 - `text`
 - `unbound_candidate`
@@ -73,6 +73,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v4"`.
 - Candidate inclusion is driven by paper text, not by tables alone.
 - Use `scripts/validate_hvs_candidates.py --require-complete` for final Agent-filled output; plain validation only checks structural skeleton validity.
 - Every quantity must preserve `raw_value`, cleaned `value`, source references, and exactly one direct-producer `method_refs` entry when complete.
+- Candidate identifiers live under `identifiers`: `record_id` is the internal `<arxiv_id>:cand-001` record key, `paper_candidate_id` is the paper display name, `gaia_source_id` is the strict Gaia machine id or empty string, and `all[]` stores paper-visible names with source refs.
 - For numeric core fields and quantitative `extra[]` records, `value`, `error`, `lower_error`, and `upper_error` should be single plain numbers; ranges, limits, units, notes, and LaTeX residue stay in `raw_value`/`description`.
 - `method_chain[]` uses local `step-XX` ids, canonical `step_type` values, and `depends_on[]` to encode upstream method lineage.
 - Full quantity provenance is the direct `method_refs` step plus recursive `depends_on[]` ancestors; candidates do not carry paper-level `method_chain_refs`.
@@ -83,34 +84,6 @@ Use `schema_version: "stella.literature_hvs_candidates.v4"`.
 ```json
 {
   "$defs": {
-    "AliasRecord": {
-      "additionalProperties": false,
-      "properties": {
-        "value": {
-          "title": "Value",
-          "type": "string"
-        },
-        "source_refs": {
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextSourceRef"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellSourceRef"
-              }
-            ]
-          },
-          "title": "Source Refs",
-          "type": "array"
-        }
-      },
-      "required": [
-        "value"
-      ],
-      "title": "AliasRecord",
-      "type": "object"
-    },
     "CandidateAssessment": {
       "additionalProperties": false,
       "properties": {
@@ -285,40 +258,31 @@ Use `schema_version: "stella.literature_hvs_candidates.v4"`.
     "CandidateIdentifiers": {
       "additionalProperties": false,
       "properties": {
-        "primary": {
-          "title": "Primary",
+        "record_id": {
+          "title": "Record Id",
           "type": "string"
         },
-        "paper_id": {
+        "paper_candidate_id": {
+          "title": "Paper Candidate Id",
+          "type": "string"
+        },
+        "gaia_source_id": {
           "default": "",
-          "title": "Paper Id",
+          "title": "Gaia Source Id",
           "type": "string"
         },
-        "gaia_dr2_source_id": {
-          "default": "",
-          "title": "Gaia Dr2 Source Id",
-          "type": "string"
-        },
-        "gaia_edr3_source_id": {
-          "default": "",
-          "title": "Gaia Edr3 Source Id",
-          "type": "string"
-        },
-        "gaia_dr3_source_id": {
-          "default": "",
-          "title": "Gaia Dr3 Source Id",
-          "type": "string"
-        },
-        "aliases": {
+        "all": {
           "items": {
-            "$ref": "#/$defs/AliasRecord"
+            "$ref": "#/$defs/IdentifierRecord"
           },
-          "title": "Aliases",
+          "title": "All",
           "type": "array"
         }
       },
       "required": [
-        "primary"
+        "record_id",
+        "paper_candidate_id",
+        "all"
       ],
       "title": "CandidateIdentifiers",
       "type": "object"
@@ -375,10 +339,6 @@ Use `schema_version: "stella.literature_hvs_candidates.v4"`.
     "CandidateRecord": {
       "additionalProperties": false,
       "properties": {
-        "candidate_id": {
-          "title": "Candidate Id",
-          "type": "string"
-        },
         "identifiers": {
           "$ref": "#/$defs/CandidateIdentifiers"
         },
@@ -400,7 +360,6 @@ Use `schema_version: "stella.literature_hvs_candidates.v4"`.
         }
       },
       "required": [
-        "candidate_id",
         "identifiers",
         "candidate_assessment",
         "candidate_origin",
@@ -784,6 +743,34 @@ Use `schema_version: "stella.literature_hvs_candidates.v4"`.
       "title": "HvsPaper",
       "type": "object"
     },
+    "IdentifierRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "title": "Value",
+          "type": "string"
+        },
+        "source_refs": {
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/TextSourceRef"
+              },
+              {
+                "$ref": "#/$defs/EcsvCellSourceRef"
+              }
+            ]
+          },
+          "title": "Source Refs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "title": "IdentifierRecord",
+      "type": "object"
+    },
     "LinkSet": {
       "additionalProperties": false,
       "properties": {
@@ -1117,7 +1104,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v4"`.
   "additionalProperties": false,
   "properties": {
     "schema_version": {
-      "const": "stella.literature_hvs_candidates.v4",
+      "const": "stella.literature_hvs_candidates.v5",
       "title": "Schema Version",
       "type": "string"
     },

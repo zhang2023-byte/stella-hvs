@@ -137,7 +137,7 @@ conda run -n stella-env python scripts/init_hvs_candidates.py \
 
 然后由 Agent 补全
 `literature/<arxiv_id>/literature_hvs_candidates.json`。本阶段使用
-`stella.literature_hvs_candidates.v4`，以正文证据为纳入边界：只纳入文章认为可能从
+`stella.literature_hvs_candidates.v5`，以正文证据为纳入边界：只纳入文章认为可能从
 银河系/Galactic potential 非束缚或逃逸的对象。普通 runaway、星团逃逸、本地 GC
 非束缚但文章说明整体仍银河系束缚的对象、以及文章已判定 bound 的对象不进入
 `candidates[]`。
@@ -145,7 +145,11 @@ conda run -n stella-env python scripts/init_hvs_candidates.py \
 抽取顺序应先读正文确定 candidate 身份、非束缚证据和 `candidate_origin`，再用
 `catalog_review.json`、`catalog_extraction.json` 与 ECSV 提取数值。`core`/`extra[]`
 的参数要同时保留 `raw_value`、清洗后的 `value`、逐值 `source_refs` 和字段级
-direct-producer `method_refs`。`method_chain[]` 使用本文内局部 `step-01`、`step-02`
+direct-producer `method_refs`。候选标识统一写在 `identifiers` 下：
+`record_id` 是 Stella 内部 `<arxiv_id>:cand-001` 记录号，`paper_candidate_id`
+是论文内首选展示名，`gaia_source_id` 是空字符串或严格 `Gaia DR3/EDR3/DR2 ...`
+机器标识，`all[]` 收录论文中出现过的所有名称和编号并逐项给出 `source_refs`。
+`method_chain[]` 使用本文内局部 `step-01`、`step-02`
 ID、受控 `step_type` 和 `depends_on[]` 记录上游依赖；引用其它工作的 candidate
 需要记录正文 cite 行以及 `.bib`/`.bbl` 条目。
 

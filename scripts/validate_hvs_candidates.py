@@ -52,6 +52,7 @@ CORE_GROUPS = ("observed_phase_space", "derived_kinematics", "probabilities")
 CORE_OBSERVED_NUMERIC_FIELDS = {"distance", "parallax", "proper_motion_ra", "proper_motion_dec", "radial_velocity"}
 MACHINE_NUMERIC_FIELDS = ("value", "error", "lower_error", "upper_error")
 METHOD_STEP_ID_RE = re.compile(r"^step-\d{2}$")
+GAIA_SOURCE_ID_RE = re.compile(r"^Gaia (?:DR[0-9]+|EDR[0-9]+) [0-9]+$")
 NO_CANDIDATE_REVIEW_RE = re.compile(
     r"(classif\w+(?:\s+\w+){0,3}\s+as\s+HVSs?|HVS\s+status|"
     r"gravitationally\s+unbound|positive\s+(?:total\s+)?energ(?:y|ies))",
@@ -61,6 +62,15 @@ CANDIDATE_BOUND_CONFLICT_RE = re.compile(
     r"(\bbound\s+to\s+the\s+Galaxy|\bcurrently\s+bound|\bbound\s+trajectory|"
     r"remains?\s+Galaxy[- ]bound)",
     re.IGNORECASE,
+)
+LEGACY_CANDIDATE_FIELDS = ("candidate_id",)
+LEGACY_IDENTIFIER_FIELDS = (
+    "primary",
+    "paper_id",
+    "gaia_dr2_source_id",
+    "gaia_edr3_source_id",
+    "gaia_dr3_source_id",
+    "aliases",
 )
 QUANTITATIVE_EXTRA_RE = re.compile(
     r"(velocity|speed|distance|parallax|proper[_ -]?motion|radial[_ -]?velocity|"
@@ -660,9 +670,135 @@ def validate_candidate_origin(origin: Any, location: str, ctx: ValidationContext
     return origin_type if isinstance(origin_type, str) else None
 
 
+def validate_identifier_record(
+    record: Any,
+    location: str,
+    ctx: ValidationContext,
+    *,
+    require_complete: bool,
+) -> str | None:
+    record_obj = validate_required_mapping(record, location, ctx)
+    if record_obj is None:
+        return None
+
+    value = record_obj.get("value")
+    if not isinstance(value, str) or not value.strip():
+        ctx.error(f"{location}.value", "expected non-empty identifier value")
+        normalized_value = None
+    else:
+        normalized_value = value.strip()
+
+    source_refs = record_obj.get("source_refs")
+    if source_refs in (None, []):
+        if require_complete:
+            ctx.error(f"{location}.source_refs", "expected at least one source reference when complete")
+    else:
+        validate_source_refs(source_refs, f"{location}.source_refs", ctx)
+
+    return normalized_value
+
+
+def validate_candidate_identifiers(
+    identifiers: Any,
+    location: str,
+    paper_arxiv_id: str,
+    seen_record_ids: set[str],
+    seen_paper_candidate_ids: set[str],
+    seen_gaia_source_ids: set[str],
+    ctx: ValidationContext,
+    *,
+    require_complete: bool,
+) -> None:
+    ids_obj = validate_required_mapping(identifiers, location, ctx)
+    if ids_obj is None:
+        return
+
+    for key in LEGACY_IDENTIFIER_FIELDS:
+        if key in ids_obj:
+            ctx.error(f"{location}.{key}", "legacy v4 identifier field is removed in v5; convert the file to v5 identifiers")
+
+    for key in ("record_id", "paper_candidate_id", "gaia_source_id", "all"):
+        if key not in ids_obj:
+            ctx.error(f"{location}.{key}", "missing required field")
+
+    record_id = ids_obj.get("record_id")
+    expected_record_re = re.compile(rf"^{re.escape(paper_arxiv_id)}:cand-[0-9]{{3}}$")
+    if not isinstance(record_id, str) or not record_id.strip():
+        ctx.error(f"{location}.record_id", "expected non-empty record id")
+        record_id_text = ""
+    else:
+        record_id_text = record_id.strip()
+        if not expected_record_re.fullmatch(record_id_text):
+            ctx.error(f"{location}.record_id", f"expected {paper_arxiv_id}:cand-XXX format")
+        if record_id_text in seen_record_ids:
+            ctx.error(f"{location}.record_id", f"duplicate record_id {record_id_text!r}")
+        seen_record_ids.add(record_id_text)
+
+    paper_candidate_id = ids_obj.get("paper_candidate_id")
+    if not isinstance(paper_candidate_id, str) or not paper_candidate_id.strip():
+        ctx.error(f"{location}.paper_candidate_id", "expected non-empty paper candidate identifier")
+        paper_candidate_id_text = ""
+    else:
+        paper_candidate_id_text = paper_candidate_id.strip()
+        if paper_candidate_id_text in seen_paper_candidate_ids:
+            ctx.error(f"{location}.paper_candidate_id", f"duplicate paper_candidate_id {paper_candidate_id_text!r}")
+        seen_paper_candidate_ids.add(paper_candidate_id_text)
+
+    gaia_source_id = ids_obj.get("gaia_source_id")
+    if not isinstance(gaia_source_id, str):
+        ctx.error(f"{location}.gaia_source_id", "expected string")
+        gaia_source_id_text = ""
+    else:
+        gaia_source_id_text = gaia_source_id.strip()
+        if gaia_source_id_text and not GAIA_SOURCE_ID_RE.fullmatch(gaia_source_id_text):
+            ctx.error(
+                f"{location}.gaia_source_id",
+                "expected empty string or strict Gaia source id like 'Gaia DR3 123456789'",
+            )
+        if gaia_source_id_text:
+            if gaia_source_id_text in seen_gaia_source_ids:
+                ctx.error(f"{location}.gaia_source_id", f"duplicate gaia_source_id {gaia_source_id_text!r}")
+            seen_gaia_source_ids.add(gaia_source_id_text)
+
+    all_value = ids_obj.get("all")
+    all_list = validate_required_list(all_value, f"{location}.all", ctx)
+    if all_list is None:
+        return
+    if not all_list:
+        ctx.error(f"{location}.all", "must be non-empty")
+        return
+
+    all_identifiers: set[str] = set()
+    for index, record in enumerate(all_list):
+        value = validate_identifier_record(
+            record,
+            f"{location}.all[{index}]",
+            ctx,
+            require_complete=require_complete,
+        )
+        if value is None:
+            continue
+        if value in all_identifiers:
+            ctx.error(f"{location}.all[{index}].value", f"duplicate identifier value {value!r}")
+        all_identifiers.add(value)
+        if record_id_text and value == record_id_text:
+            ctx.error(f"{location}.all[{index}].value", "record_id is internal and must not appear in identifiers.all")
+
+    if paper_candidate_id_text and paper_candidate_id_text not in all_identifiers:
+        ctx.error(f"{location}.paper_candidate_id", "must also appear in identifiers.all[].value")
+    if gaia_source_id_text and gaia_source_id_text not in all_identifiers:
+        ctx.error(f"{location}.gaia_source_id", "must also appear in identifiers.all[].value")
+    if not gaia_source_id_text and any(GAIA_SOURCE_ID_RE.fullmatch(value) for value in all_identifiers):
+        ctx.error(f"{location}.gaia_source_id", "must be set when identifiers.all contains a strict Gaia source id")
+
+
 def validate_candidate(
     candidate: Any,
     index: int,
+    paper_arxiv_id: str,
+    seen_record_ids: set[str],
+    seen_paper_candidate_ids: set[str],
+    seen_gaia_source_ids: set[str],
     method_ids: set[str],
     method_step_types: dict[str, str],
     method_dependencies: dict[str, list[str]],
@@ -677,7 +813,6 @@ def validate_candidate(
         return
 
     for key in (
-        "candidate_id",
         "identifiers",
         "candidate_assessment",
         "candidate_origin",
@@ -687,17 +822,22 @@ def validate_candidate(
         if key not in candidate_obj:
             ctx.error(f"{location}.{key}", "missing required field")
     if "method_chain_refs" in candidate_obj:
-        ctx.error(f"{location}.method_chain_refs", "candidate-level method_chain_refs is removed in v4; use quantity method_refs")
-
-    candidate_id = candidate_obj.get("candidate_id")
-    if not isinstance(candidate_id, str) or not candidate_id:
-        ctx.error(f"{location}.candidate_id", "expected non-empty string")
+        ctx.error(f"{location}.method_chain_refs", "candidate-level method_chain_refs is removed; use quantity method_refs")
+    for key in LEGACY_CANDIDATE_FIELDS:
+        if key in candidate_obj:
+            ctx.error(f"{location}.{key}", "legacy v4 candidate field is removed in v5; convert the file to v5 identifiers")
 
     identifiers = candidate_obj.get("identifiers")
-    if not is_dict(identifiers):
-        ctx.error(f"{location}.identifiers", "expected an object")
-    elif not isinstance(identifiers.get("primary"), str) or not identifiers.get("primary").strip():
-        ctx.error(f"{location}.identifiers.primary", "expected non-empty primary identifier")
+    validate_candidate_identifiers(
+        identifiers,
+        f"{location}.identifiers",
+        paper_arxiv_id,
+        seen_record_ids,
+        seen_paper_candidate_ids,
+        seen_gaia_source_ids,
+        ctx,
+        require_complete=require_complete,
+    )
 
     assessment = candidate_obj.get("candidate_assessment")
     if is_dict(assessment):
@@ -1016,11 +1156,13 @@ def validate_hvs_candidates_report(
         ctx.error("$.schema_version", f"expected {LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION!r}")
 
     paper = root.get("paper")
+    paper_arxiv_id = ""
     if not is_dict(paper):
         ctx.error("$.paper", "expected an object")
     elif not paper.get("arxiv_id"):
         ctx.error("$.paper.arxiv_id", "expected non-empty arXiv ID")
     else:
+        paper_arxiv_id = str(paper.get("arxiv_id") or "").strip()
         bibcode = paper.get("bibcode")
         if bibcode is not None and (not isinstance(bibcode, str) or not bibcode.strip()):
             ctx.error("$.paper.bibcode", "expected non-empty string when present")
@@ -1046,6 +1188,9 @@ def validate_hvs_candidates_report(
 
     method_ids, method_step_types, method_dependencies = validate_method_chain(root.get("method_chain"), ctx)
     direct_step_categories: dict[str, set[str]] = defaultdict(set)
+    seen_record_ids: set[str] = set()
+    seen_paper_candidate_ids: set[str] = set()
+    seen_gaia_source_ids: set[str] = set()
 
     candidates = root.get("candidates")
     if not is_list(candidates):
@@ -1059,6 +1204,10 @@ def validate_hvs_candidates_report(
             validate_candidate(
                 candidate,
                 index,
+                paper_arxiv_id,
+                seen_record_ids,
+                seen_paper_candidate_ids,
+                seen_gaia_source_ids,
                 method_ids,
                 method_step_types,
                 method_dependencies,

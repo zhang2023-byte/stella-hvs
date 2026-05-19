@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from high_velocity_lit.hvs_candidates_index import rebuild_hvs_candidates_index, render_hvs_candidates_index  # noqa: E402
+from high_velocity_lit.schema_specs import LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION  # noqa: E402
 
 
 def write_json(path: Path, payload: dict[str, object]) -> None:
@@ -20,7 +21,7 @@ def write_json(path: Path, payload: dict[str, object]) -> None:
 
 def candidate_payload() -> dict[str, object]:
     return {
-        "schema_version": "stella.literature_hvs_candidates.v4",
+        "schema_version": LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION,
         "generated_at": "2026-05-12T12:00:00",
         "paper": {
             "arxiv_id": "2603.00001",
@@ -46,8 +47,12 @@ def candidate_payload() -> dict[str, object]:
         "method_chain": [],
         "candidates": [
             {
-                "candidate_id": "2603.00001:candidate-001",
-                "identifiers": {"primary": "HVS1", "aliases": []},
+                "identifiers": {
+                    "record_id": "2603.00001:cand-001",
+                    "paper_candidate_id": "HVS1",
+                    "gaia_source_id": "Gaia DR3 123456789",
+                    "all": [{"value": "HVS1", "source_refs": []}, {"value": "Gaia DR3 123456789", "source_refs": []}],
+                },
                 "candidate_assessment": {
                     "summary": "Fixture candidate.",
                     "candidate_status": "unbound_candidate",
@@ -63,8 +68,12 @@ def candidate_payload() -> dict[str, object]:
                 "extra": [],
             },
             {
-                "candidate_id": "2603.00001:candidate-002",
-                "identifiers": {"primary": "HVS2", "aliases": []},
+                "identifiers": {
+                    "record_id": "2603.00001:cand-002",
+                    "paper_candidate_id": "HVS2",
+                    "gaia_source_id": "",
+                    "all": [{"value": "HVS2", "source_refs": []}],
+                },
                 "candidate_assessment": {
                     "summary": "Fixture candidate.",
                     "candidate_status": "hvs_candidate",
@@ -105,9 +114,13 @@ class HvsCandidatesIndexTest(unittest.TestCase):
                 paper["candidate_origins"],
                 {"introduced_by_this_paper": 1, "cited_from_literature": 1},
             )
+            self.assertEqual(paper["sample_paper_candidate_ids"], ["HVS1", "HVS2"])
+            self.assertEqual(paper["sample_gaia_source_ids"], ["Gaia DR3 123456789"])
 
             markdown = render_hvs_candidates_index(index)
             self.assertIn("Origin breakdown", markdown)
+            self.assertIn("Sample paper candidate IDs", markdown)
+            self.assertIn("Sample Gaia source IDs", markdown)
             self.assertIn("introduced_by_this_paper: 1", markdown)
             self.assertIn("cited_from_literature: 1", markdown)
 

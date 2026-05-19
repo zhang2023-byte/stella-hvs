@@ -147,6 +147,7 @@ def generated_schema_docs() -> dict[Path, str]:
                 "Candidate inclusion is driven by paper text, not by tables alone.",
                 "Use `scripts/validate_hvs_candidates.py --require-complete` for final Agent-filled output; plain validation only checks structural skeleton validity.",
                 "Every quantity must preserve `raw_value`, cleaned `value`, source references, and exactly one direct-producer `method_refs` entry when complete.",
+                "Candidate identifiers live under `identifiers`: `record_id` is the internal `<arxiv_id>:cand-001` record key, `paper_candidate_id` is the paper display name, `gaia_source_id` is the strict Gaia machine id or empty string, and `all[]` stores paper-visible names with source refs.",
                 "For numeric core fields and quantitative `extra[]` records, `value`, `error`, `lower_error`, and `upper_error` should be single plain numbers; ranges, limits, units, notes, and LaTeX residue stay in `raw_value`/`description`.",
                 "`method_chain[]` uses local `step-XX` ids, canonical `step_type` values, and `depends_on[]` to encode upstream method lineage.",
                 "Full quantity provenance is the direct `method_refs` step plus recursive `depends_on[]` ancestors; candidates do not carry paper-level `method_chain_refs`.",

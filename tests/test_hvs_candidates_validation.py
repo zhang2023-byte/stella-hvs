@@ -108,10 +108,14 @@ def valid_payload(workspace: Path, *, status: str = "candidates_found") -> dict[
     if status != "no_candidates":
         candidates.append(
             {
-                "candidate_id": "2603.00001:candidate-001",
                 "identifiers": {
-                    "primary": "HVS1",
-                    "aliases": [{"value": "HVS1", "source_refs": [text_ref]}],
+                    "record_id": "2603.00001:cand-001",
+                    "paper_candidate_id": "HVS1",
+                    "gaia_source_id": "Gaia DR3 123456789",
+                    "all": [
+                        {"value": "HVS1", "source_refs": [text_ref]},
+                        {"value": "Gaia DR3 123456789", "source_refs": [text_ref]},
+                    ],
                 },
                 "candidate_assessment": {
                     "summary": "The paper explicitly identifies HVS1 as an unbound HVS candidate.",
@@ -213,8 +217,37 @@ def valid_payload(workspace: Path, *, status: str = "candidates_found") -> dict[
 def cited_payload(workspace: Path) -> dict[str, object]:
     payload = valid_payload(workspace)
     candidate = payload["candidates"][0]  # type: ignore[index]
-    candidate["candidate_id"] = "2603.00001:candidate-002"
-    candidate["identifiers"]["primary"] = "HVS2"  # type: ignore[index]
+    candidate["identifiers"] = {  # type: ignore[index]
+        "record_id": "2603.00001:cand-002",
+        "paper_candidate_id": "HVS2",
+        "gaia_source_id": "Gaia DR3 987654321",
+        "all": [
+            {
+                "value": "HVS2",
+                "source_refs": [
+                    {
+                        "kind": "text",
+                        "path": "literature/2603.00001/arxiv_source/main.tex",
+                        "start_line": 4,
+                        "end_line": 4,
+                        "context": "paper cites earlier unbound candidate literature",
+                    }
+                ],
+            },
+            {
+                "value": "Gaia DR3 987654321",
+                "source_refs": [
+                    {
+                        "kind": "text",
+                        "path": "literature/2603.00001/arxiv_source/main.tex",
+                        "start_line": 4,
+                        "end_line": 4,
+                        "context": "paper cites earlier unbound candidate literature",
+                    }
+                ],
+            },
+        ],
+    }
     candidate["candidate_assessment"]["summary"] = "The paper reassesses HVS2, previously reported as unbound."  # type: ignore[index]
     candidate["candidate_assessment"]["source_refs"] = [  # type: ignore[index]
         {
@@ -312,16 +345,154 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             self.assertTrue(any("must include raw_value" in error for error in errors))
 
-    def test_missing_primary_identifier_fails(self) -> None:
+    def test_missing_record_id_fails(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
             candidate = payload["candidates"][0]  # type: ignore[index]
-            del candidate["identifiers"]["primary"]  # type: ignore[index]
+            del candidate["identifiers"]["record_id"]  # type: ignore[index]
 
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
-            self.assertTrue(any("identifiers.primary" in error for error in errors))
+            self.assertTrue(any("identifiers.record_id" in error for error in errors))
+
+    def test_record_id_format_must_match_paper_arxiv_id(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["identifiers"]["record_id"] = "2603.00002:cand-001"  # type: ignore[index]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("expected 2603.00001:cand-XXX format" in error for error in errors))
+
+    def test_duplicate_record_id_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            duplicate = json.loads(json.dumps(candidate))
+            duplicate["identifiers"]["paper_candidate_id"] = "HVS2"
+            duplicate["identifiers"]["gaia_source_id"] = "Gaia DR3 987654321"
+            duplicate["identifiers"]["all"] = [
+                {"value": "HVS2", "source_refs": candidate["candidate_assessment"]["source_refs"]},
+                {"value": "Gaia DR3 987654321", "source_refs": candidate["candidate_assessment"]["source_refs"]},
+            ]
+            payload["candidates"].append(duplicate)  # type: ignore[index]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("duplicate record_id" in error for error in errors))
+
+    def test_missing_paper_candidate_id_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            del candidate["identifiers"]["paper_candidate_id"]  # type: ignore[index]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("identifiers.paper_candidate_id" in error for error in errors))
+
+    def test_paper_candidate_id_must_be_in_all(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["identifiers"]["paper_candidate_id"] = "HVS-missing"  # type: ignore[index]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("must also appear in identifiers.all" in error for error in errors))
+
+    def test_bad_gaia_source_id_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["identifiers"]["gaia_source_id"] = "123456789"  # type: ignore[index]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("strict Gaia source id" in error for error in errors))
+
+    def test_gaia_source_id_must_be_in_all(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["identifiers"]["gaia_source_id"] = "Gaia DR3 987654321"  # type: ignore[index]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("identifiers.gaia_source_id" in error and "identifiers.all" in error for error in errors))
+
+    def test_duplicate_gaia_source_id_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            duplicate = json.loads(json.dumps(candidate))
+            duplicate["identifiers"]["record_id"] = "2603.00001:cand-002"
+            duplicate["identifiers"]["paper_candidate_id"] = "HVS2"
+            duplicate["identifiers"]["all"][0]["value"] = "HVS2"
+            payload["candidates"].append(duplicate)  # type: ignore[index]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("duplicate gaia_source_id" in error for error in errors))
+
+    def test_identifiers_all_validation_fails_for_empty_duplicate_or_record_id(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["identifiers"]["all"] = []  # type: ignore[index]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+            self.assertTrue(any("identifiers.all" in error and "must be non-empty" in error for error in errors))
+
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["identifiers"]["all"].append(candidate["identifiers"]["all"][0])  # type: ignore[index]
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+            self.assertTrue(any("duplicate identifier value" in error for error in errors))
+
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["identifiers"]["all"].append(  # type: ignore[index]
+                {"value": "2603.00001:cand-001", "source_refs": candidate["candidate_assessment"]["source_refs"]}  # type: ignore[index]
+            )
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+            self.assertTrue(any("must not appear in identifiers.all" in error for error in errors))
+
+    def test_require_complete_rejects_identifier_without_source_refs(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["identifiers"]["all"][0]["source_refs"] = []  # type: ignore[index]
+
+            base_errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+            self.assertEqual(base_errors, [])
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace, require_complete=True)
+            self.assertTrue(any("identifiers.all[0].source_refs" in error for error in errors))
+
+    def test_legacy_v4_identifier_fields_fail(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["candidate_id"] = "2603.00001:candidate-001"
+            candidate["identifiers"]["primary"] = "HVS1"  # type: ignore[index]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("candidate_id" in error and "legacy v4" in error for error in errors))
+            self.assertTrue(any("identifiers.primary" in error and "legacy v4" in error for error in errors))
 
     def test_no_candidates_requires_groups_considered(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

@@ -9,9 +9,10 @@ from typing import Any
 
 from high_velocity_lit.catalog_review import relative_path, write_json, read_json
 from high_velocity_lit.schema_models import LiteratureHvsCandidatesRecord
+from high_velocity_lit.schema_specs import LITERATURE_HVS_CANDIDATES_INDEX_SCHEMA_VERSION
 
 
-HVS_CANDIDATES_INDEX_SCHEMA_VERSION = "stella.literature_hvs_candidates.index.v1"
+HVS_CANDIDATES_INDEX_SCHEMA_VERSION = LITERATURE_HVS_CANDIDATES_INDEX_SCHEMA_VERSION
 HVS_CANDIDATES_FILENAME = "literature_hvs_candidates.json"
 INDEX_JSON_FILENAME = "literature_hvs_index.json"
 INDEX_MARKDOWN_FILENAME = "literature_hvs_index.md"
@@ -58,20 +59,20 @@ def _extract_candidate_origins(candidates: list[dict[str, Any]]) -> dict[str, in
     return counts
 
 
-def _extract_primary_identifiers(candidates: list[dict[str, Any]], max_count: int = 5) -> list[str]:
-    """Extract primary identifiers from candidates."""
-    identifiers: list[str] = []
+def _extract_sample_identifier_values(candidates: list[dict[str, Any]], key: str, max_count: int = 5) -> list[str]:
+    """Extract sample identifier values from candidates."""
+    values: list[str] = []
     for candidate in candidates:
         if not isinstance(candidate, dict):
             continue
         ids = candidate.get("identifiers")
         if isinstance(ids, dict):
-            primary = str(ids.get("primary") or "").strip()
-            if primary:
-                identifiers.append(primary)
-        if len(identifiers) >= max_count:
+            value = str(ids.get(key) or "").strip()
+            if value:
+                values.append(value)
+        if len(values) >= max_count:
             break
-    return identifiers
+    return values
 
 
 def _hvs_paper_item(
@@ -93,7 +94,8 @@ def _hvs_paper_item(
     candidate_count = len(candidates)
     candidate_statuses = _extract_candidate_statuses(candidates)
     candidate_origins = _extract_candidate_origins(candidates)
-    primary_identifiers = _extract_primary_identifiers(candidates)
+    sample_paper_candidate_ids = _extract_sample_identifier_values(candidates, "paper_candidate_id")
+    sample_gaia_source_ids = _extract_sample_identifier_values(candidates, "gaia_source_id")
 
     paper_dir = path.parent
     review_path = paper_dir / "catalog_review.json"
@@ -108,7 +110,8 @@ def _hvs_paper_item(
         "candidate_count": candidate_count,
         "candidate_statuses": candidate_statuses,
         "candidate_origins": candidate_origins,
-        "primary_identifiers": primary_identifiers,
+        "sample_paper_candidate_ids": sample_paper_candidate_ids,
+        "sample_gaia_source_ids": sample_gaia_source_ids,
         "paper_dir": relative_path(paper_dir, workspace=workspace),
         "candidates_json_path": relative_path(path, workspace=workspace),
     }
@@ -314,9 +317,9 @@ def render_hvs_candidates_index(record: dict[str, Any]) -> str:
     if papers:
         lines.extend(["", "## Papers", ""])
         lines.append(
-            "| Paper | Month | Status | Candidates | Status breakdown | Origin breakdown | Sample identifiers | Candidates JSON |"
+            "| Paper | Month | Status | Candidates | Status breakdown | Origin breakdown | Sample paper candidate IDs | Sample Gaia source IDs | Candidates JSON |"
         )
-        lines.append("| --- | --- | --- | ---: | --- | --- | --- | --- |")
+        lines.append("| --- | --- | --- | ---: | --- | --- | --- | --- | --- |")
         for paper in papers:
             title = _markdown_cell(paper.get("title") or "Untitled")
             arxiv_id = str(paper.get("arxiv_id") or "")
@@ -327,7 +330,8 @@ def render_hvs_candidates_index(record: dict[str, Any]) -> str:
                 f"| {label} | {paper.get('month') or ''} | {_status_badge(paper.get('extraction_status') or '')} | "
                 f"{paper.get('candidate_count', 0)} | {_candidate_statuses_cell(paper.get('candidate_statuses') or {})} | "
                 f"{_candidate_origins_cell(paper.get('candidate_origins') or {})} | "
-                f"{_identifiers_cell(paper.get('primary_identifiers') or [])} | {candidates_link} |"
+                f"{_identifiers_cell(paper.get('sample_paper_candidate_ids') or [])} | "
+                f"{_identifiers_cell(paper.get('sample_gaia_source_ids') or [])} | {candidates_link} |"
             )
 
     if years:

@@ -287,24 +287,22 @@ class MethodStep(StrictModel):
     source_refs: list[SourceRef] = Field(default_factory=list)
 
 
-class AliasRecord(StrictModel):
+class IdentifierRecord(StrictModel):
     value: str
     source_refs: list[SourceRef] = Field(default_factory=list)
 
 
 class CandidateIdentifiers(StrictModel):
-    primary: str
-    paper_id: str = ""
-    gaia_dr2_source_id: str = ""
-    gaia_edr3_source_id: str = ""
-    gaia_dr3_source_id: str = ""
-    aliases: list[AliasRecord] = Field(default_factory=list)
+    record_id: str
+    paper_candidate_id: str
+    gaia_source_id: str = ""
+    all: list[IdentifierRecord]
 
-    @field_validator("primary")
+    @field_validator("record_id", "paper_candidate_id")
     @classmethod
-    def primary_required(cls, value: str) -> str:
+    def identifier_required(cls, value: str) -> str:
         if not value.strip():
-            raise ValueError("primary identifier is required")
+            raise ValueError("identifier value is required")
         return value
 
 
@@ -393,7 +391,6 @@ class ExtraQuantityRecord(QuantityRecord):
 
 
 class CandidateRecord(StrictModel):
-    candidate_id: str
     identifiers: CandidateIdentifiers
     candidate_assessment: CandidateAssessment
     candidate_origin: CandidateOrigin
@@ -410,7 +407,7 @@ class CandidateGroupConsidered(StrictModel):
 
 
 class LiteratureHvsCandidatesRecord(StrictModel):
-    schema_version: Literal["stella.literature_hvs_candidates.v4"]
+    schema_version: Literal["stella.literature_hvs_candidates.v5"]
     generated_at: str
     paper: HvsPaper
     inputs: HvsInputs
