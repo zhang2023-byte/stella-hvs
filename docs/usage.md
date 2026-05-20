@@ -1,15 +1,15 @@
-# 使用方法
+# Usage
 
-## 1. 抓取文献
+## 1. Fetch Literature
 
-基础运行：
+Basic run:
 
 ```bash
 conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
   --from 2026-03
 ```
 
-只给一个月：
+One month only:
 
 ```bash
 conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
@@ -17,69 +17,65 @@ conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
   --to 2026-03
 ```
 
-### 常用参数
+### Common Arguments
 
 ```text
---source deepxiv|arxiv       搜索后端，默认 deepxiv；DeepXiv 异常时自动 fallback 到 arXiv
---from DATE                  开始时间，可写 YYYY-MM-DD、YYYY-MM、YYYY
---to DATE                    结束时间，默认今天
---llm-review True|False      是否让 LLM 复核“标题没有明显证据”的论文，默认 False
---max-results N              每个 arXiv query 或 DeepXiv query/category 的返回上限，默认 20
+--source deepxiv|arxiv       Search backend, default deepxiv; DeepXiv failures fall back to arXiv
+--from DATE                  Start date, accepts YYYY-MM-DD, YYYY-MM, or YYYY
+--to DATE                    End date, default today
+--llm-review True|False      Whether the LLM reviews no-clear-title-evidence papers, default False
+--max-results N              Result limit per arXiv query or DeepXiv query/category, default 20
 --deepxiv-llm-review-max-candidates N
-                             DeepXiv 模式下送入 LLM 复核的 no-clear-title-evidence 候选上限，默认 20
---categories A,B,C           arXiv 分类，默认 astro-ph.GA,astro-ph.SR,astro-ph.IM
---min-score X                DeepXiv 分数下限，默认关闭
---progress True|False        是否显示进度条，默认 True
---token TOKEN                覆盖 DEEPXIV_TOKEN
---notes-dir PATH             输出目录，默认 notes
---logs-dir PATH              日志目录，默认 logs
+                             Max no-clear-title-evidence candidates sent to the LLM in DeepXiv mode, default 20
+--categories A,B,C           arXiv categories, default astro-ph.GA,astro-ph.SR,astro-ph.IM
+--min-score X                DeepXiv score floor, disabled by default
+--progress True|False        Show progress bars, default True
+--token TOKEN                Override DEEPXIV_TOKEN
+--notes-dir PATH             Output directory, default notes
+--logs-dir PATH              Log directory, default logs
 ```
 
-### 默认值
+### Defaults
 
 ```text
---to                今天
+--to                today
 --source            deepxiv
 --llm-review        False
 --max-results       20
 --categories        astro-ph.GA,astro-ph.SR,astro-ph.IM
---min-score         关闭
+--min-score         disabled
 --search-mode       hybrid
 --progress          True
 --sleep             0.2
---llm-base-url      默认 https://api.openai.com/v1
---llm-model         默认 gpt-4o-mini
+--llm-base-url      https://api.openai.com/v1 by default
+--llm-model         gpt-4o-mini by default
 --llm-batch-size    25
 --deepxiv-llm-review-max-candidates 20
 --notes-dir         notes
 --logs-dir          logs
 ```
 
-### 说明
+### Notes
 
-- 运行开始时，脚本会打印最终参数
-- 密钥不会明文打印
-- 去重后会先做规则标题初筛，并写出 `YYYY-MM.title-triage.json`
-- `--llm-review True` 时，只复核“标题没有明显证据”的论文
-- `--source deepxiv --llm-review True` 时，会先按 DeepXiv score 对
-  `no-clear-title-evidence` 候选降序排序，只把前
-  `--deepxiv-llm-review-max-candidates` 篇交给 LLM；其余候选仍保留在
-  `title-triage.json`，并标记为 `review.status=skipped`
-- 最终月度 note 只收录规则直判相关论文，以及被 LLM 复核确认相关的论文
-- `fetch_high_velocity_lit.py` 不再调用 `DeepXiv brief`
-- 默认候选检索走 `DeepXiv`；DeepXiv 出现额度耗尽、token/API 错误或其它检索异常时，本次运行后续检索自动 fallback 到 `arXiv API`
-- arXiv 候选检索会把多个 `--categories` 合并为 OR 条件推入查询，例如
-  `(cat:astro-ph.GA OR cat:astro-ph.SR OR cat:astro-ph.IM)`；DeepXiv 候选检索则按分类分别查询后去重合并
+- The script prints the effective parameters at startup.
+- Secrets are not printed in clear text.
+- After deduplication, the script runs rule-based title triage and writes `YYYY-MM.title-triage.json`.
+- With `--llm-review True`, only no-clear-title-evidence papers are reviewed by the LLM.
+- With `--source deepxiv --llm-review True`, `no-clear-title-evidence` candidates are sorted by DeepXiv score and only the top `--deepxiv-llm-review-max-candidates` are sent to the LLM. The rest stay in `title-triage.json` with `review.status=skipped`.
+- The final monthly note includes rule-related papers and papers confirmed relevant by LLM review.
+- `fetch_high_velocity_lit.py` no longer calls `DeepXiv brief`.
+- Candidate search uses `DeepXiv` by default. If DeepXiv hits quota limits, token/API failures, or other search errors, the remaining searches in that run automatically fall back to the `arXiv API`.
+- arXiv candidate search pushes multiple `--categories` into the query as an OR expression, for example `(cat:astro-ph.GA OR cat:astro-ph.SR OR cat:astro-ph.IM)`. DeepXiv searches categories separately and deduplicates the merged results.
 
-## 2. 补数据相关判断
+## 2. Add Data-Related Assessments
 
-给一个月补 `catalog_assessment`：
+Add `catalog_assessment` to one month:
 
 ```bash
 conda run -n stella-env python scripts/annotate_catalog_data.py --on 2026-03
 ```
 
-给一个范围补：
+Add assessments for a range:
 
 ```bash
 conda run -n stella-env python scripts/annotate_catalog_data.py \
@@ -87,59 +83,59 @@ conda run -n stella-env python scripts/annotate_catalog_data.py \
   --to 2025-06
 ```
 
-给多个不连续月份补：
+Add assessments for non-contiguous months:
 
 ```bash
 conda run -n stella-env python scripts/annotate_catalog_data.py \
   --on 2025-01,2025-03,2026-02
 ```
 
-### 常用参数
+### Common Arguments
 
 ```text
---on MONTH[,MONTH...]       一个或多个 YYYY-MM
---from DATE                 开始月份或日期
---to DATE                   结束月份或日期
---notes-dir PATH            notes 根目录，默认 notes
---llm-api-key KEY           覆盖 LLM_API_KEY
---llm-base-url URL          覆盖 LLM_BASE_URL
---llm-model MODEL           覆盖 LLM_MODEL
---llm-batch-size N          LLM 批大小，默认 25
---render True|False         是否刷新 Markdown 和索引，默认 True
---dry-run True|False        只显示将要修改什么
+--on MONTH[,MONTH...]       One or more YYYY-MM months
+--from DATE                 Start month or date
+--to DATE                   End month or date
+--notes-dir PATH            Notes root, default notes
+--llm-api-key KEY           Override LLM_API_KEY
+--llm-base-url URL          Override LLM_BASE_URL
+--llm-model MODEL           Override LLM_MODEL
+--llm-batch-size N          LLM batch size, default 25
+--render True|False         Refresh Markdown and indexes, default True
+--dry-run True|False        Show intended changes only
 ```
 
-### 说明
+### Notes
 
-- `catalog_assessment` 会先通过本地 `deepxiv` CLI 获取 `DeepXiv brief`
-- 同时会读取 Introduction 的最后一段，以及各个 section 的标题和第一段
-- LLM 综合使用 `title + abstract + DeepXiv brief + 引言末段 + 各 section 标题与首段 + categories`
-- 只有 `catalog_assessment_context.deepxiv_brief` 会写回月度 JSON；section 摘录只在本次判断中使用
-- 重新运行 `annotate_catalog_data.py` 时会重算已有 `catalog_assessment`
+- `catalog_assessment` first obtains a `DeepXiv brief` through the local `deepxiv` CLI.
+- It also reads the final paragraph of the introduction plus each section title and first paragraph.
+- The LLM receives `title + abstract + DeepXiv brief + final introduction paragraph + section titles and first paragraphs + categories`.
+- Only `catalog_assessment_context.deepxiv_brief` is written back to monthly JSON; section excerpts are temporary context for the current judgment.
+- Rerunning `annotate_catalog_data.py` recomputes existing `catalog_assessment` values.
 
-## 3. 重生成 Markdown
+## 3. Regenerate Markdown
 
-重生成全部月度 Markdown：
+Regenerate all monthly Markdown:
 
 ```bash
 conda run -n stella-env python scripts/render_lit_notes.py
 ```
 
-只重生成一个月：
+Regenerate one month:
 
 ```bash
 conda run -n stella-env python scripts/render_lit_notes.py --month 2026-03
 ```
 
-重建年度索引：
+Rebuild the yearly index:
 
 ```bash
 conda run -n stella-env python scripts/render_lit_notes.py --index-only
 ```
 
-## 4. 拉取本地文献资料
+## 4. Pull Local Literature Assets
 
-给一个范围内、已经被判定为 data-related 的论文拉取本地资料：
+Pull local assets for data-related papers in a range:
 
 ```bash
 conda run -n stella-env python scripts/pull_literature_assets.py \
@@ -147,109 +143,92 @@ conda run -n stella-env python scripts/pull_literature_assets.py \
   --to 2026-04
 ```
 
-只拉取某几个月：
+Pull only selected months:
 
 ```bash
 conda run -n stella-env python scripts/pull_literature_assets.py \
   --on 2025-07,2025-11
 ```
 
-只拉取指定论文：
+Pull only selected papers:
 
 ```bash
 conda run -n stella-env python scripts/pull_literature_assets.py \
   --arxiv-id 2402.10714,2507.07558
 ```
 
-### 常用参数
+### Common Arguments
 
 ```text
---on MONTH[,MONTH...]       一个或多个 YYYY-MM
---from DATE                 开始月份或日期
---to DATE                   结束月份或日期
---arxiv-id ID[,ID...]       指定 arXiv ID
---notes-dir PATH            notes 根目录，默认 notes
---literature-dir PATH       资料归档根目录，默认 literature
---timeout N                 单次网络请求超时秒数，默认 60
---ads-token TOKEN           覆盖 ADS_API_TOKEN / ADS_TOKEN
---dry-run True|False        只解析选择结果，不实际下载，默认 False
+--on MONTH[,MONTH...]       One or more YYYY-MM months
+--from DATE                 Start month or date
+--to DATE                   End month or date
+--arxiv-id ID[,ID...]       Specific arXiv IDs
+--notes-dir PATH            Notes root, default notes
+--literature-dir PATH       Literature archive root, default literature
+--timeout N                 Per-request timeout in seconds, default 60
+--ads-token TOKEN           Override ADS_API_TOKEN / ADS_TOKEN
+--dry-run True|False        Parse the selection without downloading, default False
 ```
 
-### 说明
+### Notes
 
-- 只会处理 `notes/` 中 `catalog_assessment.has_observational_catalog == true` 的论文
-- 每篇论文会写到 `literature/<arxiv_id>/`
-- 默认尝试保存：
-  - arXiv 页面 HTML
-  - arXiv PDF
-  - arXiv source（如果响应看起来真的是源码包）
-  - 解压后的 `arxiv_source/` 目录
-  - NASA ADS API metadata JSON（用于补本文献 ADS bibcode）
-- 每篇论文都会生成 `audit.json`，记录各类资产的成功/失败状态
-- 资料下载只允许公网 HTTP(S)，拒绝本机/私网/特殊地址；PDF/source 下载会流式读取并按大小上限停止
-- source 解压会拒绝绝对路径、`..` 和任何写出解压目录的 archive member
+- Only papers in `notes/` with `catalog_assessment.has_observational_catalog == true` are processed.
+- Each paper is written to `literature/<arxiv_id>/`.
+- By default, the workflow tries to save the arXiv abs page HTML, arXiv PDF, arXiv source when the response looks like a source package, extracted `arxiv_source/`, and NASA ADS API metadata JSON for paper-level ADS bibcodes.
+- Each paper gets an `audit.json` with success/failure status for every asset.
+- Downloads allow only public HTTP(S), reject localhost/private/special addresses, and stream PDF/source downloads with size limits.
+- Source extraction rejects absolute paths, `..`, and archive members that would write outside the extraction directory.
 
-## 5. 修复 ADS metadata 和本文献 bibcode
+## 5. Repair ADS Metadata and Paper-Level Bibcodes
 
-如果已有归档中缺少 `ads_metadata.json`，或 `audit.json` 缺少
-`ads_metadata.local_path`，可以扫描全部已归档论文并重试 ADS API：
+If an archive lacks `ads_metadata.json`, or `audit.json` lacks `ads_metadata.local_path`, scan all archived papers and retry the ADS API:
 
 ```bash
 conda run -n stella-env python scripts/repair_ads_metadata.py
 ```
 
-只检查不写文件：
+Check only, without writing files:
 
 ```bash
 conda run -n stella-env python scripts/repair_ads_metadata.py \
   --dry-run True
 ```
 
-只修复指定论文：
+Repair selected papers:
 
 ```bash
 conda run -n stella-env python scripts/repair_ads_metadata.py \
   --arxiv-id 2402.10714,2507.07558
 ```
 
-强制刷新所有已归档论文的 ADS API metadata JSON：
+Force-refresh ADS API metadata JSON for all archived papers:
 
 ```bash
 conda run -n stella-env python scripts/repair_ads_metadata.py \
   --force True
 ```
 
-脚本会更新 `audit.json` 的 `ads_api` 和 `ads_metadata`，其中
-`ads_metadata` 只记录完整 ADS API metadata JSON 的 `local_path`。脚本在存在
-`literature_hvs_candidates.json` 时只补 `paper.bibcode`。它不会修改
-`candidate_origin.citation.bibcode`，因为这些字段属于候选引用自其它文献的记录。
-脚本会读取 `.env` 中的 `ADS_API_TOKEN` 或 `ADS_TOKEN`，用 ADS API 按
-`identifier:<arxiv_id>` 查询本文献 metadata，并把完整响应保存到
-`literature/<arxiv_id>/ads_metadata.json`。ADS API 缺 token、请求失败或查不到结果时，
-对应 bibcode 字段保持为空，并在命令输出中报告失败原因。脚本不会构造 arXiv 形式 bibcode。
+The script updates `audit.json` `ads_api` and `ads_metadata`. `ads_metadata` records only the `local_path` of the complete ADS API metadata JSON. If `literature_hvs_candidates.json` exists, the script only fills `paper.bibcode`. It does not modify `candidate_origin.citation.bibcode`, because those fields describe candidates cited from other literature. The script reads `ADS_API_TOKEN` or `ADS_TOKEN` from `.env`, queries ADS with `identifier:<arxiv_id>`, and saves the full response to `literature/<arxiv_id>/ads_metadata.json`. If the token is missing, the request fails, or no result is found, the relevant bibcode remains empty and the command reports the reason. The script does not construct arXiv-style bibcodes.
 
-## 6. 审阅论文结构化数据资产
+## 6. Review Structured Data Assets
 
-对已经拉取到 `literature/<arxiv_id>/` 的论文，先生成标准审阅模板：
+For a paper already archived under `literature/<arxiv_id>/`, first generate the standard review template:
 
 ```bash
 conda run -n stella-env python scripts/init_catalog_review.py \
   --arxiv-id 2402.10714
 ```
 
-`init_catalog_review.py` 会调用候选清单逻辑，按 Pydantic schema 生成固定字段的
-`catalog_review.json` skeleton。然后使用项目内 `hvs-catalog-review` skill 结合全文
-审阅候选表格和资源，只填语义空位：
+`init_catalog_review.py` uses the inventory logic and Pydantic schema to generate a fixed-field `catalog_review.json` skeleton. Then use the in-repository `hvs-catalog-review` skill with the full paper text to fill only paper-semantic fields:
 
 ```text
 literature/<arxiv_id>/catalog_review.json
 ```
 
-本阶段梳理论文已有结构化数据资产，不判断是否是高速星 catalog。输出只分为
-`internal_tables` 和 `external_resources`；内部表格需要记录全文语境下的作用和 `columns[]`
-列含义，外部资源只逐项记录论文中的整体描述、链接、路径、证据和备注，不分析远程资源内部结构，也不下载远程资源。
+This stage inventories structured data assets already present in the paper. It does not decide whether an asset is an HVS catalog. Output is split into `internal_tables` and `external_resources`; internal tables need paper-context roles and `columns[]` meanings, while external resources keep only overall descriptions, links, paths, evidence, and notes from the paper. Remote resource internals are not analyzed and remote resources are not downloaded.
 
-审阅完成后运行严格结构和 source ref 校验：
+Validate structure and source refs after review:
 
 ```bash
 conda run -n stella-env python scripts/validate_catalog_review.py \
@@ -257,57 +236,54 @@ conda run -n stella-env python scripts/validate_catalog_review.py \
   --require-complete
 ```
 
-重建全局 catalog 工作流索引：
+Rebuild the global catalog workflow index:
 
 ```bash
 conda run -n stella-env python scripts/build_catalog_index.py
 ```
 
-输出：
+Outputs:
 
 ```text
 literature/literature_catalog_index.json
 literature/literature_catalog_index.md
 ```
 
-索引以 `literature/*/catalog_review.json` 为入口；如果同目录存在
-`catalog_extraction.json`，会同时汇总当前内部表格提取状态、ECSV 表格成功/失败数量，以及 excerpt
-文件保存成功/失败数量。`literature_catalog_index.md` 中 review 状态和 extraction 状态分开显示。
+The index uses `literature/*/catalog_review.json` as its entry point. If `catalog_extraction.json` exists in the same directory, it also summarizes current internal table extraction status, ECSV table success/failure counts, and excerpt-file success/failure counts. `literature_catalog_index.md` displays review and extraction status separately.
 
-Review 状态含义：
+Review status:
 
-- `reviewed`：数据资产审阅已在可用论文/源码上下文中完成。
-- `partial`：数据资产审阅不完整，或候选覆盖还有未决问题。
-- `needs_review`：尚未完成数据资产审阅。
-- `source_missing`：无法基于源码完成审阅；如果源码元数据同时显示可用，索引会用 `(!)` 标出不一致。
+- `reviewed`: data asset review is complete in the available paper/source context.
+- `partial`: data asset review is incomplete or candidate coverage has unresolved issues.
+- `needs_review`: data asset review is not complete.
+- `source_missing`: source-based review is impossible; if source metadata simultaneously says source is available, the index marks the inconsistency with `(!)`.
 
-Extraction 状态含义：
+Extraction status:
 
-- `success`：当前提取运行无表格或文件失败。
-- `partial`：当前提取至少产出一个表格或文件，但也有失败。
-- `failed`：当前提取或 manifest 读取失败。
-- `not_started`：review 已发现内部表格，但尚无 `catalog_extraction.json`。
-- `not_applicable`：review 未发现内部表格；即使只有外部资源，也无需提取。
+- `success`: the current extraction run has no table or file failures.
+- `partial`: the current extraction produced at least one table or file but also has failures.
+- `failed`: the current extraction or manifest read failed.
+- `not_started`: review found internal tables but there is no `catalog_extraction.json`.
+- `not_applicable`: review found no internal tables; extraction is unnecessary even if external resources exist.
 
-## 7. 提取已审阅内部表格
+## 7. Extract Reviewed Internal Tables
 
-推荐先安装 LaTeXML：
+Install LaTeXML when possible:
 
 ```bash
 brew install latexml
 ```
 
-提取脚本会按顺序尝试 LaTeXML、Pandoc 和项目内 fallback parser。只有
-`catalog_review.json` 中的 `internal_tables` 会进入提取阶段；`external_resources` 只保留在 review 中。
+The extraction script tries LaTeXML, Pandoc, and then the in-project fallback parser. Only `internal_tables` from `catalog_review.json` enter extraction. `external_resources` remain in the review record.
 
-给单篇论文提取所有已审阅的内部表格：
+Extract all reviewed internal tables for one paper:
 
 ```bash
 conda run -n stella-env python scripts/extract_catalog_tables.py \
   --arxiv-id 2402.10714
 ```
 
-只提取一个候选表格：
+Extract one candidate table:
 
 ```bash
 conda run -n stella-env python scripts/extract_catalog_tables.py \
@@ -315,40 +291,40 @@ conda run -n stella-env python scripts/extract_catalog_tables.py \
   --internal-table-id table-tab-72dr3
 ```
 
-提取所有已审阅且有 internal table 的论文：
+Extract all reviewed papers that have internal tables:
 
 ```bash
 conda run -n stella-env python scripts/extract_catalog_tables.py \
   --all-reviewed
 ```
 
-### 常用参数
+### Common Arguments
 
 ```text
---arxiv-id ID              提取单篇论文
---all-reviewed             提取所有 reviewed 且有 internal table 的论文
---internal-table-id ID     只提取单个 internal_tables[].id，需配合 --arxiv-id
---jobs Auto|N              --all-reviewed 的并行论文 worker 数，默认 1
---literature-dir PATH      文献归档根目录，默认 literature
---dry-run True|False       只解析并报告，不写文件，默认 False
---overwrite True|False     覆盖已有 excerpt.tex 和 ECSV，默认 False
+--arxiv-id ID              Extract one paper
+--all-reviewed             Extract all reviewed papers with internal tables
+--internal-table-id ID     Extract only one internal_tables[].id; requires --arxiv-id
+--jobs Auto|N              Parallel paper worker count for --all-reviewed, default 1
+--literature-dir PATH      Literature archive root, default literature
+--dry-run True|False       Parse and report without writing, default False
+--overwrite True|False     Overwrite existing excerpt.tex and ECSV, default False
 ```
 
-### 说明
+### Notes
 
-- LaTeX 表格会写出 `catalog_sources/<internal_table_id>/excerpt.tex`、转换器 HTML/log artifacts 和 `catalog_tables/<internal_table_id>.ecsv`。
-- LaTeX 解析失败也会保留 `excerpt.tex`，便于复查失败上下文。
-- 外部资源不会在 extraction 阶段解析、下载、定位、转换或写入下载件；如需参考，只看 `catalog_review.json` 中的资源描述和证据。
-- 清理旧 catalog 工作流产物可运行：
+- LaTeX tables write `catalog_sources/<internal_table_id>/excerpt.tex`, converter HTML/log artifacts, and `catalog_tables/<internal_table_id>.ecsv`.
+- Failed LaTeX parsing still preserves `excerpt.tex` for later review.
+- External resources are not parsed, downloaded, located, converted, or written during extraction. If needed, use only the resource descriptions and evidence in `catalog_review.json`.
+- Clean old catalog workflow products with:
 
 ```bash
 conda run -n stella-env python scripts/cleanup_catalog_workflow_outputs.py --dry-run True
 ```
 
-- 全量重跑可以用 `--jobs Auto` 按论文并行；Auto 会按论文数选择 1/2/4/8/12 个 worker。也可以直接指定 `--jobs N`。
-- 每篇论文会写出 `catalog_extraction.json`，记录单个当前 `run`、excerpt 文件、转换尝试结果、成功失败、ECSV 路径和观测到的列头/单位；转换器 stdout/stderr 内容只保存在 artifact 文件中，JSON 里只保留路径。
-- ECSV 使用 `col_001`、`col_002` 这类稳定列名，尽量忠实保留论文表格，不表示已经完成统一对象 schema。
-- `catalog_extraction.json` 写出前会按 Pydantic schema 校验；也可以单独运行：
+- Full reruns can use `--jobs Auto`, which chooses 1/2/4/8/12 workers by paper count. `--jobs N` can also be specified directly.
+- Each paper writes `catalog_extraction.json` with the single current `run`, excerpt files, conversion attempts, success/failure state, ECSV paths, and observed headers/units. Converter stdout/stderr stays in artifact files; JSON stores only paths.
+- ECSV uses stable names such as `col_001` and `col_002`, preserving the paper table as faithfully as possible. This does not mean a unified object schema is complete.
+- `catalog_extraction.json` is validated with Pydantic before writing; standalone validation is:
 
 ```bash
 conda run -n stella-env python scripts/validate_catalog_extraction.py \
@@ -356,32 +332,26 @@ conda run -n stella-env python scripts/validate_catalog_extraction.py \
   --require-reviewed
 ```
 
-## 8. 抽取论文级 HVS candidates
+## 8. Extract Paper-Level HVS Candidates
 
-完成 `catalog_review.json` 和 `catalog_extraction.json` 后，使用项目内
-`hvs-candidates-extraction` skill。先生成固定字段模板：
+After `catalog_review.json` and `catalog_extraction.json` are complete, use the in-repository `hvs-candidates-extraction` skill. First generate the fixed-field template:
 
 ```bash
 conda run -n stella-env python scripts/init_hvs_candidates.py \
   --arxiv-id 2402.10714
 ```
 
-然后结合论文原文、review/extraction 事实源和 ECSV 填写：
+Then fill it from the paper text, review/extraction sources, and ECSV:
 
 ```text
 literature/<arxiv_id>/literature_hvs_candidates.json
 ```
 
-本阶段只抽取单篇论文内、被正文证据锚定为可能从银河系/Galactic potential
-非束缚或逃逸的 HVS/unbound/escaping/hyper-runaway candidates。普通 runaway、
-星团逃逸、本地 GC 非束缚但文章说明整体仍受银河系束缚的对象、以及文章已判定 bound
-的对象不进入 `candidates[]`。固定速度阈值只能用于检查，不作为唯一纳入依据。
+This stage extracts only objects in a single paper that are anchored by text evidence as possible HVS/unbound/escaping/hyper-runaway candidates from the Milky Way/Galactic potential. Ordinary runaways, cluster escapers, local-GC-unbound objects still described as Galactic-bound, and objects already judged bound by the paper do not enter `candidates[]`. Fixed velocity thresholds are only checks, not standalone inclusion criteria.
 
-抽取顺序必须是正文驱动：先读论文正文确定 candidate 身份、银河系非束缚证据和
-`candidate_origin`，再用 `catalog_review.json`、`catalog_extraction.json` 和
-`catalog_tables/*.ecsv` 定位具体数值。review/extraction JSON 只是表格地图，不能作为纳入依据。
+Extraction must be text-driven: first read the paper text to determine candidate identity, Galactic-unbound evidence, and `candidate_origin`; then use `catalog_review.json`, `catalog_extraction.json`, and `catalog_tables/*.ecsv` to locate values. Review/extraction JSON is a table map, not inclusion evidence.
 
-完成后运行校验：
+Validate after completion:
 
 ```bash
 conda run -n stella-env python scripts/validate_hvs_candidates.py \
@@ -389,7 +359,7 @@ conda run -n stella-env python scripts/validate_hvs_candidates.py \
   --require-complete
 ```
 
-也可以直接校验一个指定文件：
+Validate a specific file directly:
 
 ```bash
 conda run -n stella-env python scripts/validate_hvs_candidates.py \
@@ -397,7 +367,7 @@ conda run -n stella-env python scripts/validate_hvs_candidates.py \
   --require-complete
 ```
 
-校验通过后自动重建全局索引：
+Validate and rebuild the global index:
 
 ```bash
 conda run -n stella-env python scripts/validate_hvs_candidates.py \
@@ -406,53 +376,43 @@ conda run -n stella-env python scripts/validate_hvs_candidates.py \
   --rebuild-index
 ```
 
-单独重建全局索引（不需要先校验）：
+Rebuild the global index without validation:
 
 ```bash
 conda run -n stella-env python scripts/build_hvs_candidates_index.py
 ```
 
-### 说明
+### Notes
 
-- `literature_hvs_candidates.json` 使用 `schema_version: stella.literature_hvs_candidates.v6`。
-- 模板、validator 和 skill schema 参考文档来自同一套 Pydantic models；不要手工新增模板之外的字段。
-- 每篇论文都应有结果文件；没有符合边界的候选时，写 `extraction.status=no_candidates` 和空 `candidates[]`。
-- 候选标识统一写在 `identifiers` 下：`record_id` 是 Stella 内部 `<arxiv_id>:cand-001`
-  记录号，`paper_candidate_id` 是论文内首选展示名，`gaia_source_id` 是空字符串或严格
-  `Gaia DR3/EDR3/DR2 ...` 机器标识，`all[]` 收录论文中出现过的所有名称、编号和 Gaia
-  source ID 并逐项保存 `source_refs`。`record_id` 不进入 `all[]`。
-- `method_chain[]` 是论文级原子方法 DAG，ID 使用 `step-01`、`step-02` 等本文内局部顺序号，`step_type` 使用受控词表，`depends_on[]` 只列直接上游 step。
-- `core` 和 `extra[]` 的每个参数记录用字段级 `method_refs` 引用恰好一个直接生成该值的 `method_chain` step；完整 lineage 由该 step 递归展开 `depends_on[]` 得到，候选层级不再使用 `method_chain_refs`。
-- `candidate_origin.origin_type` 区分 `introduced_by_this_paper` 和 `cited_from_literature`。
-  “首次给出”指本文首次把对象作为可能 Galactic-unbound/HVS candidate 提出；已知对象即使本文重新分析，也标为 `cited_from_literature`，并用 `paper_reassesses_unbound_status=true` 表示本文重新评估。
-  cited candidates 必须在 `candidate_origin.citation.source_refs` 中同时给出正文 cite 行和 `.bib`/`.bbl` 条目。
-- `core.observed_phase_space` 标准槽位是 RA、Dec、距离/视差、pmRA、pmDec、RV；论文给出的 Galactocentric 坐标、速度、逃逸速度比较和束缚/非束缚概率放在 derived/probabilities。
-  RA/Dec 使用坐标专用记录，`raw_value` 和 `value` 只保存单个坐标分量；坐标进制写入 `coordinate_format`，坐标单位只写 `deg`、`hourangle` 等真实单位，frame 和 epoch 分别写入该 RA/Dec 内部的 `reference_frame` 与 `epoch` 对象。
-  如果正文、表头和 `hvs-candidates-extraction/references/coordinate_frames.md` 都不能确定 frame/epoch，写 `unknown` 和 `not_in_reference`/`not_reported`，validator 只给 warning。
-- `extra[]` 保存光度、恒星参数、质量标志、邻近源检查、轨道或论文特有指标等非核心信息。
-- `core` 和 `extra[]` 的每个参数记录都必须同时有 `raw_value`、清洗后的 `value`、`source_refs` 和 `method_refs`。
-  ECSV 来源需要 `path`、`line`、`column`、`column_header`、`raw_value`，且参数级 `raw_value`、source ref `raw_value` 和真实 ECSV cell 必须一致。
-  如果一个 ECSV cell 同时包含 RA 和 Dec，source ref 的 `raw_value` 保留完整 cell，参数级 `raw_value` 只写本字段分量，并用 `component_raw_value` 连接两者。
-  `value`、`error`、`lower_error`、`upper_error` 不能保留 LaTeX 命令、花括号、`$`、`_`、`^` 或 `+/-`；机械误差表达应拆到 error 字段。
-  数值型 core 字段和定量 `extra[]` 的这些机器字段还应是单个纯数字；范围、上下限、单位、脚注和说明性文本保留在 `raw_value`/`description`。RA/Dec 可保留原文十进制度或六十进制表示，但不能把 `J2000.0`、`J2016`、`ICRS` 等上下文写进 `value`、`raw_value`、`unit` 或 `description`。
-  原文来源需要 `path`、`start_line`、`end_line`。
-- 校验脚本只检查 JSON 结构和 provenance 是否自洽，不替代 Agent 判断对象是否应纳入。
-- direct-producer `method_refs` 的固定规则：位置/视差/自行/星表光度直接引用 `input_catalog` 或 `astrometric_calibration`；RV 引用 `radial_velocity_measurement` 或直接星表 `input_catalog`；距离引用 `distance_estimation`；速度和 Galactocentric 坐标引用 `velocity_calculation`；逃逸速度、束缚概率和 escape margin 引用 `escape_or_bound_assessment`；轨道量引用 `orbit_integration`；起源量引用 `origin_assessment`；恒星参数引用 `stellar_parameter_inference` 或 `photometric_or_sed_modeling`；只报告无方法的值引用 `reported_value_adoption`。
+- `literature_hvs_candidates.json` uses `schema_version: stella.literature_hvs_candidates.v6`.
+- Templates, validators, and skill schema references come from the same Pydantic models. Do not add fields outside the template manually.
+- Every paper should have a result file. If no candidate meets the boundary, write `extraction.status=no_candidates` and empty `candidates[]`.
+- Candidate identifiers live under `identifiers`: `record_id` is the Stella internal `<arxiv_id>:cand-001` ID, `paper_candidate_id` is the paper's preferred display name, `gaia_source_id` is empty or a strict `Gaia DR3/EDR3/DR2 ...` machine identifier, and `all[]` contains every name, number, and Gaia source ID appearing in the paper with `source_refs`. `record_id` does not enter `all[]`.
+- `method_chain[]` is a paper-level atomic method DAG. IDs use local `step-01`, `step-02` order, `step_type` uses the controlled vocabulary, and `depends_on[]` lists only direct upstream steps.
+- Every `core` and `extra[]` parameter references exactly one direct-producing `method_chain` step through field-level `method_refs`; full lineage is recovered recursively through `depends_on[]`. Candidate-level `method_chain_refs` is no longer used.
+- `candidate_origin.origin_type` distinguishes `introduced_by_this_paper` from `cited_from_literature`. "Introduced" means the paper first presents the object as a possible Galactic-unbound/HVS candidate. Known objects reanalyzed by the paper are `cited_from_literature`, with `paper_reassesses_unbound_status=true` when the paper reassesses status. Cited candidates must give both text citation lines and `.bib`/`.bbl` entries in `candidate_origin.citation.source_refs`.
+- `core.observed_phase_space` standard slots are RA, Dec, distance/parallax, pmRA, pmDec, and RV. Galactocentric coordinates, velocities, escape-speed comparisons, and bound/unbound probabilities go under derived/probabilities.
+- RA/Dec use coordinate-specific records: `raw_value` and `value` store only one coordinate component; `coordinate_format` stores the notation; coordinate unit stores only real units such as `deg` or `hourangle`; frame and epoch live inside the RA/Dec `reference_frame` and `epoch` objects. If paper text, table header, and `hvs-candidates-extraction/references/coordinate_frames.md` cannot determine frame/epoch, write `unknown` and `not_in_reference`/`not_reported`; the validator only warns.
+- `extra[]` stores photometry, stellar parameters, quality flags, neighboring-source checks, orbit quantities, and paper-specific metrics outside the core.
+- Every `core` and `extra[]` parameter must include `raw_value`, cleaned `value`, `source_refs`, and `method_refs`. ECSV sources need `path`, `line`, `column`, `column_header`, and `raw_value`, and the parameter `raw_value`, source ref `raw_value`, and real ECSV cell must agree. If one ECSV cell contains both RA and Dec, source ref `raw_value` keeps the full cell, quantity-level `raw_value` keeps only the current component, and `component_raw_value` connects them.
+- `value`, `error`, `lower_error`, and `upper_error` cannot keep LaTeX commands, braces, `$`, `_`, `^`, or `+/-`; mechanical uncertainty expressions should be split into error fields. Numeric core fields and quantitative `extra[]` machine fields should be single plain numbers. Ranges, limits, units, footnotes, and explanatory text stay in `raw_value` or `description`. RA/Dec may keep original decimal-degree or sexagesimal values, but must not mix `J2000.0`, `J2016`, `ICRS`, or similar context into `value`, `raw_value`, `unit`, or `description`.
+- Text sources need `path`, `start_line`, and `end_line`.
+- The validator checks JSON structure and provenance consistency; it does not replace the agent's scientific judgment.
+- Fixed direct-producer `method_refs` conventions: position/parallax/proper motion/catalog photometry reference `input_catalog` or `astrometric_calibration`; RV references `radial_velocity_measurement` or direct catalog `input_catalog`; distance references `distance_estimation`; velocity and Galactocentric coordinates reference `velocity_calculation`; escape speed, bound probability, and escape margin reference `escape_or_bound_assessment`; orbit quantities reference `orbit_integration`; origin quantities reference `origin_assessment`; stellar parameters reference `stellar_parameter_inference` or `photometric_or_sed_modeling`; values reported without method detail reference `reported_value_adoption`.
 
-旧版本 `literature_hvs_candidates.json` 不再作为长期兼容目标；需要补录或重做时，按当前 v6 schema 和 `hvs-candidates-extraction` skill 重新审阅生成。
-- 修改 schema 字段时，先改 Pydantic models，再运行：
+Older `literature_hvs_candidates.json` versions are no longer a long-term compatibility target. When backfilling or redoing work, regenerate under the current v6 schema and `hvs-candidates-extraction` skill.
+
+When schema fields change, update Pydantic models first, then run:
 
 ```bash
 conda run -n stella-env python scripts/generate_schema_docs.py
 ```
-- 全局索引文件为 `literature/literature_hvs_index.json` 和 `literature/literature_hvs_index.md`，
-  由 `scripts/build_hvs_candidates_index.py` 自动扫描所有 `literature/<arxiv_id>/literature_hvs_candidates.json` 生成。
-  不要手动修改索引文件；如果输出有问题，应修改 candidates JSON 或索引渲染逻辑，然后重新生成。
 
-## 9. 合并对象级 HVS candidates catalog
+Global index files are `literature/literature_hvs_index.json` and `literature/literature_hvs_index.md`, generated by scanning all `literature/<arxiv_id>/literature_hvs_candidates.json` files with `scripts/build_hvs_candidates_index.py`. Do not edit index files manually; if output is wrong, fix candidates JSON or index rendering logic and regenerate.
 
-完成若干论文级 `literature_hvs_candidates.json` 后，使用项目内
-`hvs-candidates-merge` skill 生成对象级 catalog：
+## 9. Merge Object-Level HVS Candidate Catalog
+
+After paper-level `literature_hvs_candidates.json` files are complete, use the in-repository `hvs-candidates-merge` skill to generate the object catalog:
 
 ```text
 catalog/<object_id>.json
@@ -460,7 +420,7 @@ catalog/hvs_candidates_index.json
 catalog/hvs_candidates_index.md
 ```
 
-从头重构全部对象级 catalog：
+Rebuild the full object-level catalog:
 
 ```bash
 conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py rebuild \
@@ -468,7 +428,7 @@ conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py rebuild \
   --catalog-dir catalog
 ```
 
-只把一篇新论文级候选并入已有 `catalog/`：
+Merge one new paper-level candidate into an existing `catalog/`:
 
 ```bash
 conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py update \
@@ -477,7 +437,7 @@ conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py update \
   --catalog-dir catalog
 ```
 
-也可以直接指定文件：
+Or specify a file directly:
 
 ```bash
 conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py update \
@@ -486,52 +446,83 @@ conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py update \
   --catalog-dir catalog
 ```
 
-两个模式都支持 `--dry-run True`，只打印将写入或删除的生成文件，不修改 `catalog/`。
+Both modes support `--dry-run True`, which prints generated writes/deletes without modifying `catalog/`.
 
-### 合并和审核原则
+### Merge and Review Principles
 
-- 输入文件先按当前 `LiteratureHvsCandidatesRecord` schema 校验；无效文件进入 index 的 `skipped[]`，不参与合并。
-- Gaia source ID 是强匹配键；相同非空 `gaia_source_id` 会合并。
-- 如果任一方没有 Gaia source ID，则用 RA/Dec 计算天球距离，严格 `<5 arcsec` 才合并。
-- 两方都有不同 Gaia source ID 时不合并；如果坐标 `<5 arcsec`，写入 warning。
-- 两方 Gaia source ID 相同但坐标不满足 `<5 arcsec` 时仍合并，并写入 warning。
-- 对象级 JSON 中 `sources[]` 保存短编号、原 `paper` 字段、源 JSON 路径和论文级候选 ID。
-- `method_chain[]` 和 `candidates[]` 按 `source` 分组，不保留 `source_refs`；完整 provenance 仍回到论文级 JSON 查看。
-- 不要手工修改 `catalog/`。如果 warning 暴露出错误，应修正对应 `literature_hvs_candidates.json` 后重新运行 merge。
+- Inputs are validated against the current `LiteratureHvsCandidatesRecord` schema first. Invalid files enter index `skipped[]` and do not participate in merging.
+- Gaia source ID is the strong match key; identical non-empty `gaia_source_id` values merge.
+- If either side lacks a Gaia source ID, RA/Dec angular separation must be strictly `<5 arcsec` to merge.
+- If both sides have different Gaia source IDs, do not merge; if coordinates are `<5 arcsec`, write a warning.
+- If both sides have the same Gaia source ID but coordinates are not `<5 arcsec`, still merge and write a warning.
+- Object-level JSON `sources[]` stores short source IDs, original `paper` fields, source JSON paths, and paper-level candidate IDs.
+- `method_chain[]` and `candidates[]` are grouped by `source` and do not keep `source_refs`; full provenance still lives in the paper-level JSON.
+- Do not manually modify `catalog/`. If warnings expose errors, fix the corresponding `literature_hvs_candidates.json` and rerun the merge.
 
-运行后先看命令 summary，再查看：
+After running, inspect the command summary and then:
 
 ```text
 catalog/hvs_candidates_index.md
 ```
 
-重点检查 `Warnings`、对象数量、来源数量，以及每个对象链接到的 JSON。
+Focus on `Warnings`, object count, source count, and each object's JSON link.
 
-## 10. 时间写法
+## 10. Build HVS Catalog HTML Pages
 
-```text
---from 2026-03-15  表示从 2026-03-15 开始
---from 2026-03     表示从 2026-03-01 开始
---from 2026        表示从 2026-01-01 开始
---to 2026-03-15    表示到 2026-03-15 结束
---to 2026-03       表示到 2026-03-31 结束
---to 2026          表示到 2026-12-31 结束
---to none          表示到今天
+After object-level `catalog/` exists, build the HTML demo:
+
+```bash
+conda run -n stella-env python scripts/build_hvs_catalog_html.py \
+  --catalog-dir catalog \
+  --html-dir html
 ```
 
-未来日期会自动截到今天。
-非法日期格式会直接报错。
+Outputs:
 
-## 11. 额外说明
+```text
+html/live/index.html              Entry page that reads catalog/ live
+html/live/assets/...              Local CSS, JS, and visual assets shared by live/static
+html/static/index.html            Single-file demo with the current catalog/ snapshot embedded
+```
 
-当 DeepXiv 返回限额错误时：
+The live version needs an HTTP server started from the repository root, for example:
 
-- 已完成的月份仍会保存
-- 脚本会写出 `logs/partial_<run_id>.json`
-- 同时把结果追加到 `logs/runs.jsonl`
-- 然后打印恢复命令并退出
+```bash
+python -m http.server 8765 --bind 127.0.0.1
+```
 
-默认搜索词：
+Then open:
+
+```text
+http://127.0.0.1:8765/html/live/
+```
+
+The static version does not read JSON live. It is a build-time `catalog/` snapshot and can be opened directly as `html/static/index.html` or copied to static hosting for demos. The source of truth remains `catalog/*.json`; the web page is only a display layer.
+
+## 11. Date Syntax
+
+```text
+--from 2026-03-15  starts from 2026-03-15
+--from 2026-03     starts from 2026-03-01
+--from 2026        starts from 2026-01-01
+--to 2026-03-15    ends at 2026-03-15
+--to 2026-03       ends at 2026-03-31
+--to 2026          ends at 2026-12-31
+--to none          ends today
+```
+
+Future dates are automatically clipped to today. Invalid date formats fail immediately.
+
+## 12. Additional Notes
+
+When DeepXiv returns a quota error:
+
+- Completed months are still saved.
+- The script writes `logs/partial_<run_id>.json`.
+- It appends the result to `logs/runs.jsonl`.
+- It prints the resume command and exits.
+
+Default search terms:
 
 ```text
 hypervelocity stars

@@ -1,12 +1,12 @@
-# 标题分类
+# Title Triage
 
-默认流程是先用规则做标题初筛，再按需用 LLM 复核“标题没有明显证据”的论文。
+The default workflow first applies rule-based title triage, then optionally asks an LLM to review papers whose titles have no clear evidence.
 
-## 规则直判相关
+## Rule-Related
 
-命中明确高速星标题规则的论文会被归入 `rule-related`，直接进入最终月度 note。
+Papers that match explicit high-velocity-star title rules are assigned to `rule-related` and enter the final monthly note directly.
 
-常见标题词：
+Common title terms:
 
 ```text
 hypervelocity star
@@ -23,19 +23,19 @@ walkaway star
 hypervelocity/high-velocity star surveys, searches, candidates, catalogues
 ```
 
-## 标题没有明显证据
+## No Clear Title Evidence
 
-凡是没有命中明确高速星标题规则的标题，都会被归入 `no-clear-title-evidence`。
+Any title that does not match an explicit high-velocity-star rule is assigned to `no-clear-title-evidence`.
 
-这里故意不再单独区分 `rejected`。也就是说，哪怕标题看起来更像泛工具、泛方法或泛天文论文，只要没有命中“直接相关”规则，也先放进这一桶。
+The workflow intentionally no longer keeps a separate `rejected` title bucket. Even if a title looks more like a generic tool, method, or astronomy paper, it goes into this bucket unless it directly matches the relevance rules.
 
-这类论文不会直接进入最终月度 note，但会被保存到月度标题分类文件：
+These papers do not enter the final monthly note directly, but they are saved in the monthly title triage file:
 
 ```text
 notes/YYYY/YYYY-MM/YYYY-MM.title-triage.json
 ```
 
-常见例子包括：
+Common examples include:
 
 ```text
 Stellar Escape from Globular Clusters
@@ -47,7 +47,7 @@ Gaia Early Data Release 3 summary papers
 Joint inference from parallax and proper motions
 ```
 
-## 用 LLM 复核“标题没有明显证据”的论文
+## LLM Review for No-Clear-Title-Evidence Papers
 
 ```bash
 conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
@@ -55,9 +55,9 @@ conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
   --llm-review True
 ```
 
-这个模式下：
+In this mode:
 
-- `rule-related` 直接进入最终月度 note
-- `no-clear-title-evidence` 会送给 LLM 复核
-- 被 LLM 确认相关的论文会进入最终月度 note
-- 被 LLM 否决或未返回结果的论文不会进入最终月度 note
+- `rule-related` papers enter the final monthly note directly.
+- `no-clear-title-evidence` papers are sent to the LLM for review.
+- Papers confirmed relevant by the LLM enter the final monthly note.
+- Papers rejected by the LLM, or papers without a returned review result, do not enter the final monthly note.

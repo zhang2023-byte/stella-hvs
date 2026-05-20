@@ -1,53 +1,48 @@
-# Stella 愿景与路线
+# Stella Vision and Roadmap
 
-这个文件记录项目的长期目标和后续实施方向。
+This file records the project's long-term goals and implementation direction.
 
-Stella 的目标，不只是收集文献，而是逐步建设一个面向高速星研究的、
-可追溯、可复现、可持续更新的对象级数据与知识系统。
+Stella is not only a literature collection tool. Its goal is to gradually build a traceable, reproducible, and continuously updated object-level data and knowledge system for high-velocity-star research.
 
-设计上应始终坚持这些原则：
+The design should consistently follow these principles:
 
-- 以恒星对象为基本单元，而不是只停留在论文条目层面
-- 所有关键结果都要保留来源和处理过程
-- 先产出机器可读结构，再考虑阅读视图或网站展示
-- 工作流应能逐步扩展，从文献整理走向数据整合、物理验证和数据库维护
+- Treat stellar objects as the basic unit, not only paper entries.
+- Preserve sources and processing history for every key result.
+- Produce machine-readable structures before building reading views or websites.
+- Let the workflow expand from literature organization toward data integration, physical validation, and database maintenance.
 
-## 核心能力
+## Core Capabilities
 
-1. 文献获取能力  
-   准确定位高速星相关文献，识别其中的方法、数据集和关键对象。  
-   数据源以 ADS 为主，arXiv / DeepXiv 为辅助。  
-   输出应尽量整理成机器可读的 Markdown、CSV 或结构化 JSON，并保留 provenance。
+1. Literature acquisition
 
-2. 数据补充能力  
-   根据论文中的恒星 ID、坐标等信息，继续从 Astroquery、CDS、望远镜官网或其它可追溯来源补充数据。  
-   目标不是只抄论文表格，而是形成以恒星对象为单位的 catalog。  
-   这个 catalog 可以逐步集成不同层级的数据，比如 6D 相空间、恒星参数、光谱和其它派生信息。
+   Accurately locate high-velocity-star literature and identify its methods, datasets, and key objects. ADS should be the primary source, with arXiv and DeepXiv as supporting sources. Outputs should be organized as machine-readable Markdown, CSV, or structured JSON whenever possible, with provenance preserved.
 
-3. 物理验证能力  
-   对收集到的恒星对象执行可复现的物理验证流程。  
-   对高速星来说，重点包括速度转换、轨道积分和溯源分析。  
-   这一步应优先考虑 `Skill + CLI` 形式的高层工作流，而不是简单把整个 Python 包直接包成 CLI。  
-   同一个对象最好支持多来源数据、多模型的交叉验证，并完整保存验证过程。
+2. Data enrichment
 
-4. 数据库维护能力  
-   让 AI 能持续增量地更新对象数据库，并同步到网站。  
-   网站只是展示层，核心仍是结构化数据库、来源记录和验证结果。  
-   在 demo 阶段，可以考虑 `GitHub + Vercel + Supabase` 这一类前后端方案。
+   Use stellar IDs, coordinates, and related information from papers to enrich objects from Astroquery, CDS, observatory sites, or other traceable sources. The goal is not merely to copy paper tables, but to build a star-object-level catalog. This catalog can gradually integrate data at different levels, including 6D phase space, stellar parameters, spectra, and derived quantities.
 
-## 后续扩展方向
+3. Physical validation
 
-5. 工作流迭代能力  
-   在文献获取时，不只抽取恒星数据，也抽取数据处理方法。  
-   AI 需要能从方法中总结流程，再逐步改进已有工作流。
+   Run reproducible physical validation workflows for collected stellar objects. For high-velocity stars, priorities include velocity transformations, orbit integration, and origin tracing. This layer should prefer high-level `Skill + CLI` workflows over simply wrapping the entire Python package as a CLI. The same object should support cross-validation across multiple data sources and models, with the validation process fully preserved.
 
-6. 知识问答能力  
-   从文献中整理高速星相关知识，包括基本概念和实际操作方法。  
-   目标是帮助后续新进入这个方向的研究者更快上手。
+4. Database maintenance
 
-7. 科研能力  
-   在数据库、方法和验证流程逐步成熟后，进一步支持假设生成、实验验证、流程改进和文章撰写。
+   Enable AI-assisted incremental updates to the object database and synchronize those updates to the website. The website is only the display layer; the core remains the structured database, source records, and validation results. During the demo stage, a stack such as `GitHub + Vercel + Supabase` can be considered.
 
-## 实现顺序
+## Future Extensions
 
-先把前四项核心能力打稳，再逐步补第五到第七项。
+5. Workflow iteration
+
+   During literature acquisition, extract not only stellar data but also data-processing methods. AI should be able to summarize workflows from methods and gradually improve existing workflows.
+
+6. Knowledge Q&A
+
+   Organize high-velocity-star knowledge from the literature, including basic concepts and practical procedures. The goal is to help new researchers enter the field faster.
+
+7. Scientific research support
+
+   After the database, methods, and validation workflows mature, further support hypothesis generation, experiment validation, workflow improvement, and paper writing.
+
+## Implementation Order
+
+Stabilize the first four core capabilities before gradually adding items five through seven.

@@ -1,26 +1,26 @@
-# 输出说明
+# Outputs
 
-JSON 是标准输出。Markdown 是从 JSON 生成的阅读视图。
+JSON is the canonical output. Markdown is a reading view generated from JSON.
 
-## 标准数据
+## Canonical Data
 
 ```text
-literature/<arxiv_id>/    本地文献资产目录
-literature/<arxiv_id>/catalog_review.json   单篇论文结构化数据资产审阅事实源
-literature/<arxiv_id>/catalog_extraction.json   单篇论文内部表格提取事实源
-literature/<arxiv_id>/literature_hvs_candidates.json   单篇论文 HVS/unbound candidates 抽取事实源
-literature/literature_catalog_index.json       从 catalog_review.json 和 catalog_extraction.json 重建的全局数据资产工作流索引
-catalog/<object_id>.json                       对象级 HVS candidate 合并结果
-catalog/hvs_candidates_index.json              对象级 HVS candidate catalog 索引
-notes/literature_notes_index.json                  从月度 JSON 重建的全局索引
-notes/YYYY/YYYY-MM/YYYY-MM.json   月度标准记录
-notes/YYYY/YYYY-MM/YYYY-MM.title-triage.json   月度标题初筛与复核记录
+literature/<arxiv_id>/    Local literature asset directory
+literature/<arxiv_id>/catalog_review.json   Paper-level structured data asset review source of truth
+literature/<arxiv_id>/catalog_extraction.json   Paper-level internal table extraction source of truth
+literature/<arxiv_id>/literature_hvs_candidates.json   Paper-level HVS/unbound candidate extraction source of truth
+literature/literature_catalog_index.json       Global data asset workflow index rebuilt from catalog_review.json and catalog_extraction.json
+catalog/<object_id>.json                       Object-level HVS candidate merge result
+catalog/hvs_candidates_index.json              Object-level HVS candidate catalog index
+notes/literature_notes_index.json              Global index rebuilt from monthly JSON
+notes/YYYY/YYYY-MM/YYYY-MM.json                Monthly normalized records
+notes/YYYY/YYYY-MM/YYYY-MM.title-triage.json   Monthly title triage and review records
 ```
 
-## 生成文件
+## Generated Files
 
 ```text
-literature/<arxiv_id>/audit.json   单篇文献资产拉取审计记录
+literature/<arxiv_id>/audit.json   Per-paper asset fetch audit record
 literature/<arxiv_id>/arxiv_abs.html
 literature/<arxiv_id>/arxiv.pdf
 literature/<arxiv_id>/arxiv_source*
@@ -32,20 +32,22 @@ literature/<arxiv_id>/catalog_sources/<internal_table_id>/latexml.stderr.txt
 literature/<arxiv_id>/catalog_sources/<internal_table_id>/pandoc.html
 literature/<arxiv_id>/catalog_sources/<internal_table_id>/pandoc.stderr.txt
 literature/<arxiv_id>/catalog_tables/<internal_table_id>.ecsv
-literature/literature_catalog_index.md        从 literature_catalog_index.json 生成的数据资产工作流视图
-catalog/hvs_candidates_index.md               从 catalog/hvs_candidates_index.json 生成的对象级 HVS catalog 视图
-notes/literature_notes_index.md                   从 literature_notes_index.json 生成的年度视图
-notes/YYYY/YYYY-MM/YYYY-MM.md    从月度 JSON 生成的月度笔记
+literature/literature_catalog_index.md        Data asset workflow view generated from literature_catalog_index.json
+catalog/hvs_candidates_index.md               Object-level HVS catalog view generated from catalog/hvs_candidates_index.json
+html/live/index.html                          Object-level HVS catalog display page that reads catalog/ live
+html/static/index.html                        Single-file HTML demo with the current catalog/ snapshot embedded
+notes/literature_notes_index.md               Yearly view generated from literature_notes_index.json
+notes/YYYY/YYYY-MM/YYYY-MM.md                 Monthly note generated from monthly JSON
 ```
 
-表格提取阶段使用：
+Table extraction uses:
 
 ```text
-literature/<arxiv_id>/catalog_sources/   原始 LaTeX excerpt 和转换 artifacts；stdout/stderr 存文件，extraction JSON 只记录路径
-literature/<arxiv_id>/catalog_tables/    忠实 ECSV 表格
+literature/<arxiv_id>/catalog_sources/   Original LaTeX excerpts and conversion artifacts; stdout/stderr are stored as files, and extraction JSON records only paths
+literature/<arxiv_id>/catalog_tables/    Faithful ECSV tables
 ```
 
-## 本地日志
+## Local Logs
 
 ```text
 logs/arxiv_metadata_<timestamp>.json
@@ -54,38 +56,44 @@ logs/runs.jsonl
 logs/run_<timestamp>.log
 ```
 
-`logs/` 不纳入 Git。
-`literature/` 默认也不纳入 Git。
-`catalog/` 是从论文级 JSON 生成的对象级 catalog，默认也不纳入 Git。
+`logs/` is not committed to Git. `literature/` is also ignored by default. `catalog/` is an object-level catalog generated from paper-level JSON and is ignored by default as well.
 
-## 月度 JSON 包含什么
+## Monthly JSON
 
-- 时间范围和 `run_id`
-- 实际使用的搜索参数
-- 每个 query / category 的搜索日志
-- 月份过滤统计
-- arXiv metadata 回填统计
-- 最终判定和高速星相关、并写入月度 note 的论文列表
-- 匹配到的 query 和 category
-- 搜索返回的摘要
-- 可选的 `catalog_assessment`
-- 可选的 `catalog_assessment_context.deepxiv_brief`
+Monthly JSON includes:
 
-## 标题分类 JSON 包含什么
+- Time range and `run_id`.
+- Effective search parameters.
+- Search logs for each query/category.
+- Month filtering statistics.
+- arXiv metadata backfill statistics.
+- Final high-velocity-star relevance decisions and papers written to the monthly note.
+- Matched query and category.
+- Abstract returned by search.
+- Optional `catalog_assessment`.
+- Optional `catalog_assessment_context.deepxiv_brief`.
 
-- 规则直判相关的论文：`rule_related_papers`
-- 标题没有明显证据的论文：`no_clear_title_evidence_papers`
-- 若开启 `--llm-review True`，后者会额外包含 `review`
-- 月度搜索日志与筛选统计
+## Title Triage JSON
 
-## 月度 Markdown 怎么组织
+Title triage JSON includes:
 
-- 只列最终收录进月度 note 的论文
-- 不再展示 direct / weak 分层
-- 顶部保留规则初筛、LLM 复核和最终收录数量统计
-- 如果有 `catalog_assessment`，会显示在对应论文旁边
+- Rule-related papers: `rule_related_papers`.
+- Papers with no clear title evidence: `no_clear_title_evidence_papers`.
+- When `--llm-review True` is enabled, the latter also includes `review`.
+- Monthly search logs and filtering statistics.
 
-## `catalog_assessment_context` 包含什么
+## Monthly Markdown
+
+Monthly Markdown is organized as follows:
+
+- It lists only papers finally included in the monthly note.
+- It no longer displays direct/weak relevance tiers.
+- The header keeps counts for rule triage, LLM review, and final inclusion.
+- If `catalog_assessment` exists, it is displayed next to the corresponding paper.
+
+## `catalog_assessment_context`
+
+`catalog_assessment_context` includes:
 
 - `deepxiv_brief.source`
 - `deepxiv_brief.fetched`
@@ -95,9 +103,11 @@ logs/run_<timestamp>.log
 - `deepxiv_brief.citations`
 - `deepxiv_brief.fetched_at`
 
-这里不会持久化 section 摘录。Introduction 末段和各 section 首段只在 `catalog_assessment` 运行时作为临时上下文使用。
+Section excerpts are not persisted here. The final introduction paragraph and first paragraphs of sections are only temporary context during `catalog_assessment`.
 
-## `literature/` 审计记录包含什么
+## `literature/` Audit Records
+
+Each audit record includes:
 
 - `arxiv_id`
 - `title`
@@ -105,13 +115,13 @@ logs/run_<timestamp>.log
 - `source_note_json`
 - `folder_name`
 - `run_at`
-- `ads_metadata`：只记录完整 ADS API metadata JSON 的 `local_path`
+- `ads_metadata`: only the `local_path` for the full ADS API metadata JSON
 - `ads_api`
 - `arxiv_abs`
 - `arxiv_pdf`
 - `arxiv_source`
 
-其中每个资产状态都会记录：
+Each asset status records:
 
 - `url`
 - `success`
@@ -122,10 +132,9 @@ logs/run_<timestamp>.log
 - `size_bytes`
 - `error`
 
-资产下载只允许公网 HTTP(S)，并流式读取到大小上限；被安全边界或大小上限拦截时，
-对应错误会写入资产记录。源码包解压会拒绝绝对路径、`..` 和目录外写入。
+Asset downloads only allow public HTTP(S) and stream up to size limits. If a safety boundary or size limit blocks a download, the asset record stores the corresponding error. Source archive extraction rejects absolute paths, `..`, and writes outside the extraction directory.
 
-`arxiv_source` 还会额外记录：
+`arxiv_source` additionally records:
 
 - `extracted`
 - `extract_dir`
@@ -134,161 +143,136 @@ logs/run_<timestamp>.log
 - `source_unavailable_on_arxiv`
 - `source_unavailable_reason`
 
-## `catalog_review.json` 包含什么
+## `catalog_review.json`
 
-`catalog_review.json` 是 Agent 结合全文审阅后的结构化数据资产目录，不表示已经完成表格抽取，也不判断这些资产是否是高速星 catalog。文件结构由 Pydantic schema 和 `scripts/init_catalog_review.py` 生成，Agent 只补全论文语义字段。
+`catalog_review.json` is the structured data asset inventory produced by an agent after reviewing the paper text. It does not mean table extraction is complete, and it does not decide whether the assets are high-velocity-star catalogs. The file structure is generated from Pydantic schemas and `scripts/init_catalog_review.py`; agents only fill paper-semantic fields.
 
-- `paper`：arXiv ID、标题、月份、月度 JSON 路径、abs/pdf 链接
-- `source`：论文目录、`audit.json`、源码目录、主 TeX、源码可用性
-- `review`：数据资产审阅状态、时间、reviewer、总体说明
-- `internal_tables`：论文 LaTeX 内部结构化表格，包含全文语境下的作用和可见 `columns[]` 列定义
-- `external_resources`：论文声明或引用的外部/本地资源，逐项保存论文中的整体描述、链接、路径、证据和备注
+- `paper`: arXiv ID, title, month, monthly JSON path, abs/pdf links.
+- `source`: paper directory, `audit.json`, source directory, main TeX, source availability.
+- `review`: data asset review status, time, reviewer, and summary.
+- `internal_tables`: structured LaTeX tables inside the paper, including their role in context and visible `columns[]` definitions.
+- `external_resources`: external or local resources declared or cited by the paper, with paper descriptions, links, paths, evidence, and notes.
 
-本阶段只保存 LaTeX 段落、链接、路径、证据、内部表 `columns[]` 列说明，以及外部资源在论文中的描述；不把 LaTeX 转 ECSV，不下载外部资源，不分析远程资源内部结构，不做高速星筛选。`external_resources[].local_path` 只表示已经归档的本地资源。
-完成后应使用 `scripts/validate_catalog_review.py --require-complete` 校验结构、枚举、路径、source line refs 和是否仍是未填空模板。
+This stage stores only LaTeX snippets, links, paths, evidence, internal-table `columns[]` descriptions, and external-resource descriptions from the paper. It does not convert LaTeX to ECSV, download external resources, analyze remote resource internals, or perform HVS filtering. `external_resources[].local_path` only means an already archived local resource. After completion, run `scripts/validate_catalog_review.py --require-complete` to validate structure, enums, paths, source line refs, and remaining template blanks.
 
-## `catalog_extraction.json` 包含什么
+## `catalog_extraction.json`
 
-`catalog_extraction.json` 是内部 LaTeX 表格保全和转换阶段的事实源，输入来自
-`catalog_review.json` 中列出的 `internal_tables`。
+`catalog_extraction.json` is the source of truth for preserving and converting internal LaTeX tables. Its input is the `internal_tables` list from `catalog_review.json`.
 
-- `paper`：arXiv ID、标题、月份
-- `review`：来源 `catalog_review.json` 路径、schema 和 review 状态
-- `run`：生成当前提取内部表格的单次运行参数、成功失败统计和状态；不会累积历史 runs
-- `files`：原始 TeX excerpt、checksum、保存状态和错误
-- `tables`：ECSV 路径、caption、label、行列数、解析状态、转换/解析工具尝试记录、warnings、观测到的列记录
+- `paper`: arXiv ID, title, month.
+- `review`: source `catalog_review.json` path, schema, and review status.
+- `run`: one current extraction run with parameters, success/failure statistics, and status; run history is not accumulated.
+- `files`: original TeX excerpts, checksums, save status, and errors.
+- `tables`: ECSV paths, captions, labels, row/column counts, parse status, converter/parser attempts, warnings, and observed column records.
 
-ECSV 使用 `col_001`、`col_002` 等稳定列名，尽量忠实保留论文表格数据。Extraction 不记录人工科学语义或规范化对象 schema；高速星对象识别和规范化由后续阶段完成。
-该文件由 `scripts/extract_catalog_tables.py` 生成并在写出前通过 Pydantic schema 校验；Agent 不应手工填改。最终检查可加 `scripts/validate_catalog_extraction.py --require-reviewed`，防止从 `needs_review` 的审阅模板继续下游流程。
+ECSV uses stable names such as `col_001` and `col_002` and preserves paper table data as faithfully as possible. Extraction does not record manual scientific semantics or a normalized object schema; HVS object recognition and normalization happen later. The file is generated by `scripts/extract_catalog_tables.py` and validated with Pydantic before writing. Final checks can include `scripts/validate_catalog_extraction.py --require-reviewed` to prevent downstream processing from a `needs_review` template.
 
-## `literature_hvs_candidates.json` 包含什么
+## `literature_hvs_candidates.json`
 
-`literature_hvs_candidates.json` 是单篇论文中可能从银河系/Galactic potential
-非束缚或逃逸的 HVS/unbound candidates 抽取事实源。抽取由论文正文驱动；
-`catalog_review.json`、`catalog_extraction.json` 和已生成的 ECSV 只用于定位表格和数值。
-文件 skeleton 由 `scripts/init_hvs_candidates.py` 从 Pydantic schema 生成，Agent 只补全候选、方法链、数值和 provenance。
+`literature_hvs_candidates.json` is the source of truth for HVS/unbound candidates in one paper that may be unbound from the Milky Way/Galactic potential or escaping from it. Extraction is driven by the paper text. `catalog_review.json`, `catalog_extraction.json`, and generated ECSV files are only used to locate tables and quantities. The skeleton is generated from Pydantic schemas by `scripts/init_hvs_candidates.py`; agents fill candidates, method chains, quantities, and provenance.
 
-- `paper`：arXiv ID、bibcode（来自 `audit.json` 指向的 `ads_metadata.json`）、标题、月份、月度 JSON 路径和 abs/pdf 链接
-- `inputs`：本次抽取参考的 paper 目录、review/extraction JSON 和 ECSV 路径
-- `extraction`：候选抽取状态、时间、执行者和摘要
-- `method_chain`：论文级原子方法 DAG，包括巡天输入、样本筛选、质量过滤、距离估计、RV 测量、速度计算、势模型、轨道积分、束缚概率或逃逸判断等步骤；ID 使用 `step-01`、`step-02` 等本文内局部顺序号，`step_type` 使用受控词表，`depends_on[]` 只列直接上游 step
-- `candidates`：正文证据锚定的 Galactic-unbound HVS/unbound candidates；每个候选包含 `identifiers`、候选判断、`candidate_origin`、观测 6D、派生运动学、束缚/非束缚概率和 `extra[]`
-- `candidate_groups_considered`：审阅过但未纳入的候选组、表格或对象集合，尤其用于 `no_candidates` 结果
+- `paper`: arXiv ID, bibcode from `ads_metadata.json` referenced by `audit.json`, title, month, monthly JSON path, abs/pdf links.
+- `inputs`: paper directory, review/extraction JSON, and ECSV paths used for this extraction.
+- `extraction`: candidate extraction status, time, actor, and summary.
+- `method_chain`: paper-level atomic method DAG, including survey inputs, sample selection, quality filtering, distance estimation, RV measurement, velocity calculation, potential model, orbit integration, bound probability, or escape assessment. IDs use local `step-01`, `step-02` order, `step_type` uses the controlled vocabulary, and `depends_on[]` lists only direct upstream steps.
+- `candidates`: text-evidence-anchored Galactic-unbound HVS/unbound candidates. Each candidate includes `identifiers`, candidate assessment, `candidate_origin`, observed 6D phase space, derived kinematics, bound/unbound probabilities, and `extra[]`.
+- `candidate_groups_considered`: reviewed but excluded candidate groups, tables, or object sets, especially for `no_candidates` results.
 
-候选标识统一放在 `identifiers` 下：`record_id` 是 Stella 生成的内部记录号，格式为
-`<arxiv_id>:cand-001`，不进入 `identifiers.all[]`；`paper_candidate_id` 是论文内
-首选展示名；`gaia_source_id` 是空字符串或严格 `Gaia DR3/EDR3/DR2 ...` 形式的机器
-匹配标识；`all[]` 收录论文中实际出现过的所有名称、编号和 Gaia source ID，并逐项保存
-`source_refs`。`paper_candidate_id` 和非空 `gaia_source_id` 必须同时出现在 `all[]`。
+Candidate identifiers are standardized under `identifiers`: `record_id` is the Stella internal ID in the form `<arxiv_id>:cand-001` and does not enter `identifiers.all[]`; `paper_candidate_id` is the paper's preferred display name; `gaia_source_id` is empty or a strict `Gaia DR3/EDR3/DR2 ...` machine-match identifier; `all[]` records all names, numbers, and Gaia source IDs that actually appear in the paper, each with `source_refs`. Non-empty `paper_candidate_id` and `gaia_source_id` must also appear in `all[]`.
 
-纳入候选的依据必须来自论文自身正文：论文明确把对象作为可能从银河系/Galactic
-potential 非束缚或逃逸的 HVS、unbound、escaping、hyper-runaway 或等价候选讨论、
-列出或评估。普通 runaway、星团逃逸、本地 GC 非束缚但文章说明整体仍银河系束缚的对象、
-以及文章已判定 bound 的对象不进入 `candidates[]`。固定速度阈值只能作为 sanity check，
-不能作为唯一纳入理由。
+Candidate inclusion must come from the paper text itself: the paper must explicitly discuss, list, or evaluate the object as a possible HVS, unbound, escaping, hyper-runaway, or equivalent candidate from the Milky Way/Galactic potential. Ordinary runaways, cluster escapers, local-GC-unbound objects described as still bound to the Galaxy, and objects already judged bound by the paper do not enter `candidates[]`. A fixed velocity threshold can only be a sanity check, not the sole inclusion reason.
 
-`candidate_origin.origin_type` 区分 `introduced_by_this_paper` 和
-`cited_from_literature`。“首次给出”指本文首次把对象作为可能 Galactic-unbound/HVS
-candidate 提出；已知对象即使本文重新分析，也标为 `cited_from_literature`，并用
-`paper_reassesses_unbound_status=true` 表示本文重新评估。cited candidates 必须给出正文
-cite 行和 `.bib`/`.bbl` 条目。
+`candidate_origin.origin_type` distinguishes `introduced_by_this_paper` from `cited_from_literature`. "Introduced" means this paper first presents the object as a possible Galactic-unbound/HVS candidate. Known objects that are reanalyzed by the paper are marked `cited_from_literature`, with `paper_reassesses_unbound_status=true` when the paper reassesses the status. Cited candidates must include text citation lines and `.bib`/`.bbl` entries.
 
-`core` 和 `extra[]` 中每个参数都必须有 `raw_value`、清洗后的 `value`、逐值 source
-provenance 和字段级 direct-producer `method_refs`。
-`raw_value` 保持和 ECSV cell 或原文值一致以保证可追溯；`value`、`error`、
-`lower_error`、`upper_error` 用于机器读取，不能保留 LaTeX 命令、花括号、`$`、`_`、`^`
-或 `+/-`。数值型 core 字段和定量 `extra[]` 的这些机器字段还应是单个纯数字；
-范围、上下限、单位、脚注和说明性文本保留在 `raw_value`/`description`。RA/Dec 可保留
-原文十进制度或六十进制表示，但必须用 `coordinate_format` 标注进制，并把 frame/epoch
-分别写入该 RA/Dec 内部的 `reference_frame` 与 `epoch` 对象；`unit` 只写真实坐标单位。
-ECSV 来源需要精确到文件路径、物理行号、机器列名、列头和原始单元格文本；
-如果一个 cell 同时包含 RA 和 Dec，source ref 的 `raw_value` 保留完整 cell，参数级
-`raw_value` 只写当前分量，并用 `component_raw_value` 连接两者。
-原文来源需要精确到 TeX/文本文件路径和行号范围。`method_refs` 引用同一文件内
-直接生成该值的 `method_chain[]` `step-XX` ID；完整方法 lineage 由该 step 的
-`depends_on[]` 递归展开得到。
+Every `core` and `extra[]` quantity must include `raw_value`, cleaned `value`, per-value source provenance, and field-level direct-producer `method_refs`. `raw_value` must stay consistent with the ECSV cell or source-text value for traceability. `value`, `error`, `lower_error`, and `upper_error` are machine-readable and cannot keep LaTeX commands, braces, `$`, `_`, `^`, or `+/-`. Numeric core fields and quantitative `extra[]` machine fields should be single plain numbers; ranges, limits, units, footnotes, and explanatory text stay in `raw_value` or `description`.
 
-## 对象级 `catalog/` 包含什么
+RA/Dec may preserve decimal-degree or sexagesimal values from the paper, but `coordinate_format` must state the notation. Frame and epoch belong in the internal `reference_frame` and `epoch` objects under the RA/Dec record, and `unit` stores only the real coordinate unit. ECSV references need exact file path, physical line number, machine column name, column header, and raw cell text. If one cell contains both RA and Dec, the source ref `raw_value` keeps the full cell, the quantity-level `raw_value` keeps only the current component, and `component_raw_value` connects them. Text sources need exact TeX/text paths and line ranges. `method_refs` reference the direct `method_chain[]` `step-XX` ID in the same file; full lineage is recovered recursively from `depends_on[]`.
 
-`catalog/` 是从所有论文级 `literature_hvs_candidates.json` 合并得到的对象级
-HVS candidates catalog。它由 `scripts/merge_hvs_candidate_catalog.py` 生成，不应手工修改。
+## Object-Level `catalog/`
 
-每个 `catalog/<object_id>.json` 使用 `schema_version:
-stella.hvs_candidate_catalog.object.v1`，包含：
+`catalog/` is the object-level HVS candidates catalog merged from all paper-level `literature_hvs_candidates.json` files. It is generated by `scripts/merge_hvs_candidate_catalog.py` and should not be manually modified.
 
-- `object_id`：文件名用的稳定对象 ID，优先来自 Gaia source ID 的 safe slug；没有 Gaia 时来自最早来源的 `paper_candidate_id`
-- `canonical_identifier`：对象级首选标识及其 `source` 短编号
-- `sources[]`：每个论文级候选来源，包含 `source`、原始 `paper` 字段、源 JSON 路径、`record_id`、`paper_candidate_id` 和 `gaia_source_id`
-- `method_chain[]`：按 `source` 分组的论文级方法链；保留本来源局部 `step-XX`，去掉 `source_refs`
-- `candidates[]`：按 `source` 分组的精简候选记录，只保留 `identifiers` 和精简 `core`
-- `merge.warnings[]`：Gaia/坐标匹配冲突、坐标解析失败等需要人工复查的问题
+Each `catalog/<object_id>.json` uses `schema_version: stella.hvs_candidate_catalog.object.v1` and contains:
 
-对象级 `candidates[].core` 只保留每个 quantity 的 `value`、非空误差字段、`unit`
-和 `method_refs`。它不保留 `raw_value`、`source_refs`、坐标 frame/epoch 或说明字段；
-完整 provenance 仍以论文级 `literature_hvs_candidates.json` 为事实源。
+- `object_id`: stable object ID used as the filename, preferably from a safe Gaia source ID slug; otherwise from the earliest source's `paper_candidate_id`.
+- `canonical_identifier`: object-level preferred identifier and its source short ID.
+- `sources[]`: each paper-level candidate source, including `source`, original `paper` field, source JSON path, `record_id`, `paper_candidate_id`, and `gaia_source_id`.
+- `method_chain[]`: source-grouped paper-level method chains, preserving local `step-XX` IDs and removing `source_refs`.
+- `candidates[]`: source-grouped compact candidate records, keeping only `identifiers` and compact `core`.
+- `merge.warnings[]`: Gaia/coordinate conflicts, coordinate parse failures, and other issues needing review.
 
-合并规则：
+Object-level `candidates[].core` keeps only each quantity's `value`, non-empty uncertainty fields, `unit`, and `method_refs`. It does not keep `raw_value`, `source_refs`, coordinate frame/epoch, or description fields. Full provenance remains in the paper-level `literature_hvs_candidates.json`.
 
-- Gaia source ID 相同：合并。
-- 任一方缺 Gaia source ID：RA/Dec 天球距离 `<5 arcsec` 时合并。
-- 两方都有不同 Gaia source ID：不合并；如果 RA/Dec `<5 arcsec`，写 warning。
-- 两方 Gaia source ID 相同但 RA/Dec 不满足 `<5 arcsec`：仍按 Gaia 合并，并写 warning。
+Merge rules:
 
-`catalog/hvs_candidates_index.json` 汇总对象数量、来源数量、warning、skipped 输入和每个对象的链接。
-`catalog/hvs_candidates_index.md` 是从该 JSON 生成的阅读视图。
+- Same Gaia source ID: merge.
+- Either side lacks a Gaia source ID: merge only when RA/Dec angular separation is `<5 arcsec`.
+- Both sides have different Gaia source IDs: do not merge; write a warning if RA/Dec is `<5 arcsec`.
+- Same Gaia source ID but RA/Dec is not within `<5 arcsec`: still merge by Gaia and write a warning.
 
-## 索引文件包含什么
+`catalog/hvs_candidates_index.json` summarizes object count, source count, warnings, skipped inputs, and each object link. `catalog/hvs_candidates_index.md` is the generated reading view.
 
-`notes/literature_notes_index.json` 保存：
+## `html/` Display Pages
 
-- 按年份汇总的统计
-- 全部论文的扁平 `papers` 列表
+`html/` is the web display layer for the object-level HVS catalog, generated by `scripts/build_hvs_catalog_html.py`. The source of truth remains `catalog/*.json`.
 
-`notes/literature_notes_index.md` 重点展示：
+- `html/live/`: under a local HTTP server, reads `catalog/hvs_candidates_index.json` and each `catalog/<object_id>.json` live. Refreshing the page reflects catalog updates.
+- `html/static/index.html`: a single-file snapshot with catalog data, CSS, JS, and local visual assets embedded at build time. It has no CDN or remote image dependency and is suitable for quick demos.
 
-- 每年文献数量
-- 最近文献
-- 被 `catalog_assessment` 判为数据相关的文献
+The home page shows Stella's vision, object-level statistics, and the HVS object index. The index lists identifier, bibcode, RA, Dec, plx, pmRA, pmDec, RV, total velocity, unbound probability, and the detail entry. Multi-source objects are shown as source-specific rows so values from different papers are not overwritten. Detail pages show source cards, method chain DAGs, candidate core fields, and the full object-level JSON. Clicking a quantity highlights its direct `method_refs`, recursive upstream steps, and dependency edges.
 
-`literature/literature_catalog_index.json` 保存：
+## Index Files
 
-- 已有 `catalog_review.json` 的论文汇总
-- review 状态、状态说明、internal table 数量、external resource 数量
-- 是否已有 `catalog_extraction.json`、当前内部表格 extraction 状态、表格和 excerpt 文件成功/失败数量
-- 按年份聚合的 review / data asset / extraction 统计
+`notes/literature_notes_index.json` stores:
 
-`literature/literature_catalog_index.md` 重点展示：
+- Statistics grouped by year.
+- A flat `papers` list of all papers.
 
-- 每篇已审阅或待复核论文的 review 状态和 extraction 状态
-- data asset 数量，包括 internal tables 和 external resources
-- 内部表格和 excerpt 文件提取进度
-- 指向单篇 `catalog_review.json` 和 `catalog_extraction.json` 的链接
+`notes/literature_notes_index.md` emphasizes:
 
-`literature_catalog_index` 中 review 状态和 extraction 状态是两条独立状态轴：
+- Paper counts by year.
+- Recent papers.
+- Papers judged data-related by `catalog_assessment`.
 
-- review `reviewed`：数据资产审阅已在可用论文/源码上下文中完成。
-- review `partial`：数据资产审阅不完整，或候选覆盖还有未决问题。
-- review `needs_review`：尚未完成数据资产审阅。
-- review `source_missing`：无法基于源码完成审阅；如果源码元数据同时显示可用，Markdown 中会用 `(!)` 标出不一致。
-- extraction `success`：当前提取运行无表格或文件失败。
-- extraction `partial`：当前提取至少产出一个表格或文件，但也有失败。
-- extraction `failed`：当前提取或 manifest 读取失败。
-- extraction `not_started`：review 已发现内部表格，但尚无 `catalog_extraction.json`。
-- extraction `not_applicable`：review 未发现内部表格；即使只有外部资源，也无需进入 extraction。
+`literature/literature_catalog_index.json` stores:
 
-`catalog/hvs_candidates_index.json` 保存：
+- A summary of papers with `catalog_review.json`.
+- Review status, status notes, internal table count, and external resource count.
+- Whether `catalog_extraction.json` exists, current internal-table extraction status, and table/excerpt success/failure counts.
+- Yearly review, data asset, and extraction statistics.
 
-- 对象级 HVS candidate 总数、来源总数和 warning 数量
-- 每个对象的 canonical identifier、对象 JSON 路径、来源数、Gaia source IDs 和 paper candidate IDs
-- 合并 warning 与 skipped 输入文件
+`literature/literature_catalog_index.md` emphasizes:
 
-`catalog/hvs_candidates_index.md` 重点展示：
+- Review and extraction status for each reviewed or pending paper.
+- Data asset counts, including internal tables and external resources.
+- Internal table and excerpt extraction progress.
+- Links to per-paper `catalog_review.json` and `catalog_extraction.json`.
 
-- 每个对象的 JSON 链接和来源数量
-- 对象级 Gaia/paper identifiers
-- 需要人工复查的合并 warning
+`literature_catalog_index` keeps review status and extraction status as independent axes:
 
-## 主要日志事件
+- review `reviewed`: data asset review is complete in the available paper/source context.
+- review `partial`: data asset review is incomplete, or candidate coverage has unresolved issues.
+- review `needs_review`: data asset review is not complete.
+- review `source_missing`: source-based review is impossible; if source metadata also says source is available, Markdown marks the inconsistency with `(!)`.
+- extraction `success`: the current extraction run has no table or file failures.
+- extraction `partial`: the current extraction produced at least one table or file but also has failures.
+- extraction `failed`: the current extraction or manifest read failed.
+- extraction `not_started`: review found internal tables but there is no `catalog_extraction.json`.
+- extraction `not_applicable`: review found no internal tables; extraction is not needed even if external resources exist.
+
+`catalog/hvs_candidates_index.json` stores:
+
+- Total object-level HVS candidates, total sources, and warning count.
+- Each object's canonical identifier, object JSON path, source count, Gaia source IDs, and paper candidate IDs.
+- Merge warnings and skipped input files.
+
+`catalog/hvs_candidates_index.md` emphasizes:
+
+- Each object's JSON link and source count.
+- Object-level Gaia/paper identifiers.
+- Merge warnings that need manual review.
+
+## Main Log Events
 
 ```text
 start

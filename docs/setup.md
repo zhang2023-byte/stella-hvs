@@ -1,62 +1,54 @@
-# 环境准备
+# Environment Setup
 
-## 创建环境
+## Create the Environment
 
 ```bash
 conda env create -f environment.yml
 conda activate stella-env
 ```
 
-如果环境已存在，但依赖有变化：
+If the environment already exists but dependencies changed:
 
 ```bash
 conda env update -f environment.yml --prune
 conda activate stella-env
 ```
 
-这个环境现在也包含本地资料归档流程需要的 HTML 解析、网络请求、Pydantic
-schema 校验，以及外部 catalog 表格解析依赖；FITS、VOTable 和 CDS/MRT ASCII
-通过 `astropy` 读取。
+The environment includes dependencies for local literature archiving, HTML parsing, network requests, Pydantic schema validation, and external catalog table parsing. FITS, VOTable, and CDS/MRT ASCII are read through `astropy`.
 
-## 可选外部工具
+## Optional External Tools
 
-表格提取流程优先使用 LaTeXML，把论文 LaTeX 表格转换为 HTML 后再生成 ECSV。
-macOS 推荐安装：
+The table extraction workflow prefers LaTeXML to convert paper LaTeX tables to HTML before producing ECSV. On macOS:
 
 ```bash
 brew install latexml
 ```
 
-确认工具可用：
+Check that it is available:
 
 ```bash
 which latexmlc
 latexmlc --VERSION
 ```
 
-如果没有 LaTeXML，`scripts/extract_catalog_tables.py` 会尝试 Pandoc；
-如果 Pandoc 也不可用，则回退到项目内的轻量 LaTeX parser，但复杂表格保真度会下降。
+If LaTeXML is unavailable, `scripts/extract_catalog_tables.py` tries Pandoc. If Pandoc is also unavailable, it falls back to the in-project lightweight LaTeX parser, but complex tables may lose fidelity.
 
-## 配置 `.env`
+## Configure `.env`
 
-项目密钥写在 `.env` 中，这个文件不会进入 Git：
+Project secrets live in `.env`; this file is not committed to Git:
 
 ```bash
 cp env.example .env
 ```
 
-如果你要使用 `--source deepxiv`，或运行带 DeepXiv 增强阅读的 `catalog_assessment`，建议填写：
+If you use `--source deepxiv`, or run DeepXiv-enhanced `catalog_assessment`, set:
 
 ```env
 DEEPXIV_TOKEN=
 ADS_API_TOKEN=
 ```
 
-可选。只有在这些步骤中才需要：
-
-- 标题没有明显证据的论文做 LLM 复核
-- `catalog_assessment`
-- 归档或修复 ADS metadata/bibcode
+The following variables are optional and are only needed for LLM review of `no-clear-title-evidence` papers, `catalog_assessment`, and ADS metadata/bibcode archival or repair:
 
 ```env
 LLM_API_KEY=
@@ -66,11 +58,10 @@ LLM_THINKING=
 LLM_REASONING_EFFORT=
 ```
 
-主要 Python CLI 共用同一个 `.env` loader，会按下面顺序读取环境变量：
+The main Python CLIs share one `.env` loader and read environment variables in this order:
 
 - `~/.env`
-- 项目根目录 `.env`
-- 当前工作目录 `.env`
+- Project-root `.env`
+- Current working directory `.env`
 
-不要把密钥写进 `environment.yml`。
-`environment.yml` 只放可复现的依赖。
+Do not put secrets in `environment.yml`. `environment.yml` should contain only reproducible dependencies.
