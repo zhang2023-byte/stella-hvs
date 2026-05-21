@@ -864,6 +864,23 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             self.assertEqual(report.errors, [])
             self.assertTrue(any("coordinate context is unknown" in warning for warning in report.warnings))
 
+    def test_grouped_warning_lines_compacts_repeated_candidate_warnings(self) -> None:
+        warnings = [
+            "candidates[4].core.observed_phase_space.ra.reference_frame: coordinate context is unknown",
+            "candidates[5].core.observed_phase_space.ra.reference_frame: coordinate context is unknown",
+            "candidates[7].core.observed_phase_space.ra.reference_frame: coordinate context is unknown",
+            "$.candidate_groups_considered[0]: no_candidates group contains candidate-like phrase",
+        ]
+
+        grouped = validate_cli.grouped_warning_lines(warnings)
+
+        self.assertEqual(
+            grouped[0],
+            "candidates[4-5,7].core.observed_phase_space.ra.reference_frame: "
+            "3 occurrences: coordinate context is unknown",
+        )
+        self.assertEqual(grouped[1], warnings[3])
+
     def test_quantitative_extra_numeric_fields_warn_without_textual_false_positives(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)

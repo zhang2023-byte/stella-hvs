@@ -185,6 +185,64 @@ class ValidationContext:
         return columns
 
 
+CANDIDATE_LOCATION_RE = re.compile(r"candidates\[(\d+)\]")
+
+
+def compact_integer_ranges(values: list[int]) -> str:
+    if not values:
+        return ""
+    ranges: list[str] = []
+    start = previous = values[0]
+    for value in values[1:]:
+        if value == previous + 1:
+            previous = value
+            continue
+        ranges.append(str(start) if start == previous else f"{start}-{previous}")
+        start = previous = value
+    ranges.append(str(start) if start == previous else f"{start}-{previous}")
+    return ",".join(ranges)
+
+
+def grouped_warning_lines(warnings: list[str]) -> list[str]:
+    groups: dict[tuple[str, str], dict[str, Any]] = {}
+    ordered_keys: list[tuple[str, str]] = []
+    for warning in warnings:
+        location, separator, message = warning.partition(": ")
+        if not separator:
+            location = warning
+            message = ""
+        candidate_indexes = [int(match.group(1)) for match in CANDIDATE_LOCATION_RE.finditer(location)]
+        normalized_location = CANDIDATE_LOCATION_RE.sub("candidates[]", location)
+        key = (normalized_location, message)
+        if key not in groups:
+            groups[key] = {
+                "location": location,
+                "message": message,
+                "candidate_indexes": [],
+                "count": 0,
+            }
+            ordered_keys.append(key)
+        groups[key]["count"] += 1
+        groups[key]["candidate_indexes"].extend(candidate_indexes)
+
+    lines: list[str] = []
+    for key in ordered_keys:
+        group = groups[key]
+        count = int(group["count"])
+        location = str(group["location"])
+        message = str(group["message"])
+        if count == 1:
+            lines.append(f"{location}: {message}" if message else location)
+            continue
+        indexes = sorted(set(group["candidate_indexes"]))
+        if indexes:
+            compact_indexes = compact_integer_ranges(indexes)
+            location = CANDIDATE_LOCATION_RE.sub(f"candidates[{compact_indexes}]", location, count=1)
+        prefix = f"{location}: " if message else f"{location} "
+        lines.append(f"{prefix}{count} occurrences: {message}" if message else f"{location}: {count} occurrences")
+    return lines
+
+
 def is_dict(value: Any) -> bool:
     return isinstance(value, dict)
 
@@ -1491,6 +1549,11 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Fail if the file is still an unfilled needs_review skeleton.",
     )
+    parser.add_argument(
+        "--verbose-warnings",
+        action="store_true",
+        help="Print every warning instead of grouping repeated candidate warnings.",
+    )
     return parser
 
 
@@ -1517,7 +1580,8 @@ def main() -> int:
         workspace=workspace,
         require_complete=args.require_complete,
     )
-    for warning in report.warnings:
+    warning_lines = report.warnings if args.verbose_warnings else grouped_warning_lines(report.warnings)
+    for warning in warning_lines:
         print(f"WARNING: {warning}", file=sys.stderr)
     if report.errors:
         for error in report.errors:

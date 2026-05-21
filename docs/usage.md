@@ -363,6 +363,9 @@ conda run -n stella-env python scripts/validate_hvs_candidates.py \
   --require-complete
 ```
 
+Repeated warnings across many candidates are grouped by default in CLI output.
+Use `--verbose-warnings` when you need the original per-field warning list.
+
 Validate a specific file directly:
 
 ```bash

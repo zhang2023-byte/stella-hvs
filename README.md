@@ -68,6 +68,9 @@ conda run -n stella-env python scripts/build_hvs_catalog_html.py --catalog-dir c
 conda run -n stella-env python scripts/render_lit_notes.py
 ```
 
+`validate_hvs_candidates.py` groups repeated candidate warnings by default; add
+`--verbose-warnings` to print every warning.
+
 See [docs/usage.md](docs/usage.md) for full CLI options and failure behavior.
 
 ## Source of Truth

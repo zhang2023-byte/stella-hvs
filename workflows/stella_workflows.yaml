@@ -102,7 +102,7 @@
       "id": "hvs_candidate_extraction",
       "human_intents": ["extract HVS candidates", "check paper for unbound candidates", "fill literature_hvs_candidates"],
       "required_inputs": ["arxiv_id"],
-      "optional_inputs": ["rebuild_index"],
+      "optional_inputs": ["rebuild_index", "verbose_warnings"],
       "clarify_if_missing": ["arxiv_id", "create_missing_review_or_extraction_inputs"],
       "agent_prompt_template": "Use hvs-candidates-extraction for ARXIV_ID=<arxiv_id>. Confirm audit.json, ADS metadata, catalog_review.json, catalog_extraction.json, and relevant ECSV files exist. Read paper text first to establish inclusion and candidate_origin. Use tables only after text evidence justifies inclusion. Write literature_hvs_candidates.json with source_refs and method_refs, or status=no_candidates with empty candidates. Validate with --require-complete and rebuild the HVS candidates index when requested.",
       "prerequisite_checks": ["Read audit.json and ADS metadata.", "Read catalog_review.json and catalog_extraction.json.", "Read hvs-candidates-extraction skill, schema reference, and coordinate frame reference."],
