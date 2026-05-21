@@ -1,4 +1,4 @@
 version: 1
 display_name: HVS Catalog Extraction
-short_description: Extract reviewed HVS catalog tables and fill column meanings.
-default_prompt: Use $hvs-catalog-extraction to extract catalog tables for one Stella paper and fill catalog_extraction.json with per-column meanings.
+short_description: Preserve reviewed internal LaTeX tables and convert them to ECSV.
+default_prompt: Use $hvs-catalog-extraction to preserve reviewed internal LaTeX table excerpts, convert them to ECSV, and write catalog_extraction.json for one Stella paper.

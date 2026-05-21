@@ -22,6 +22,20 @@ use_cases: ["literature-search", "paper-analysis", "knowledge-synthesis", "resea
 
 ---
 
+## Stella Preflight
+
+When this skill is used inside the Stella repository, `AGENTS.md` and
+`workflows/stella_workflows.yaml` take priority over this general CLI guide.
+For vague Stella requests, match the workflow manifest first and use this skill
+only when the matched workflow needs DeepXiv CLI context.
+
+Do not run commands that make real DeepXiv, arXiv, PMC, public-network, or LLM
+agent calls unless the user has explicitly allowed that scope. `deepxiv agent`
+queries count as LLM calls. If permission is missing, ask for it or report what
+can be done from existing local files.
+
+---
+
 ## 🎯 Command Selection Guide
 
 **I want to...** → **Use this command**
@@ -259,3 +273,8 @@ deepxiv paper invalid_id
 deepxiv search "topic"
 # Error: RateLimitError: Daily limit reached
 ```
+**Solution**:
+- Preserve any completed outputs from the current Stella workflow.
+- Report the quota failure and the command that can resume the work later.
+- Use existing local JSON, archived paper assets, or arXiv fallback only when the
+  matched Stella workflow allows it.

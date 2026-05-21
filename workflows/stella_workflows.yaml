@@ -16,7 +16,7 @@
       "risk_level": "network",
       "network_policy": "Requires explicit permission for real new DeepXiv/arXiv fetching.",
       "generated_files_policy": "Do not manually edit generated Markdown or force-add notes outputs.",
-      "referenced_paths": ["scripts/fetch_high_velocity_lit.py", "scripts/render_lit_notes.py", "docs/usage.md", "docs/title-triage.md"]
+      "referenced_paths": ["scripts/fetch_high_velocity_lit.py", "scripts/render_lit_notes.py", "skills/deepxiv-cli/SKILL.md", "docs/usage.md", "docs/title-triage.md"]
     },
     {
       "id": "catalog_assessment",
@@ -32,7 +32,7 @@
       "risk_level": "network_llm",
       "network_policy": "Requires explicit permission for DeepXiv/LLM calls.",
       "generated_files_policy": "Monthly JSON is source data; Markdown and indexes are generated from it.",
-      "referenced_paths": ["scripts/annotate_catalog_data.py", "scripts/render_lit_notes.py", "docs/usage.md", "docs/outputs.md"]
+      "referenced_paths": ["scripts/annotate_catalog_data.py", "scripts/render_lit_notes.py", "skills/deepxiv-cli/SKILL.md", "docs/usage.md", "docs/outputs.md"]
     },
     {
       "id": "literature_asset_archive",
