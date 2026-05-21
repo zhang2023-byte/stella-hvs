@@ -410,6 +410,33 @@ def warn_if_non_numeric_machine_fields(record: dict[str, Any], location: str, ct
         )
 
 
+def validate_core_probability_record(record: dict[str, Any], location: str, ctx: ValidationContext) -> None:
+    if ".core.probabilities." not in location:
+        return
+
+    value = record.get("value")
+    if not isinstance(value, str) or not MACHINE_NUMBER_RE.fullmatch(value.strip()):
+        ctx.error(f"{location}.value", "core probability value must be a plain 0-1 fraction")
+        return
+
+    numeric = float(value)
+    if not (0.0 <= numeric <= 1.0):
+        ctx.error(
+            f"{location}.value",
+            "core probability value must be a 0-1 fraction; keep percent text in raw_value",
+        )
+
+    unit = record.get("unit", "")
+    if isinstance(unit, str):
+        if unit.strip():
+            ctx.error(
+                f"{location}.unit",
+                "core probability unit must be empty because value is a 0-1 fraction; keep '%' only in raw_value/source_refs",
+            )
+    else:
+        ctx.error(f"{location}.unit", "core probability unit must be an empty string")
+
+
 def is_substantive_text_line(line: str) -> bool:
     stripped = line.strip()
     return bool(stripped) and not stripped.startswith(("%", "#"))
@@ -793,6 +820,7 @@ def validate_quantity_records(
             if key in record and record.get(key) not in (None, ""):
                 validate_clean_machine_string(record.get(key), f"{record_location}.{key}", ctx)
         warn_if_non_numeric_machine_fields(record, record_location, ctx)
+        validate_core_probability_record(record, record_location, ctx)
         if "source_refs" not in record:
             ctx.error(record_location, "quantity record with value must include source_refs")
             continue

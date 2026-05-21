@@ -19,6 +19,7 @@ SPEC.loader.exec_module(validate_cli)
 sys.path.insert(0, str(ROOT / "src"))
 
 from high_velocity_lit.schema_specs import LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION  # noqa: E402
+from high_velocity_lit.hvs_method_provenance import coarse_step_warnings  # noqa: E402
 
 
 def write_json_file(path: Path, payload: dict[str, object]) -> None:
@@ -934,6 +935,50 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             self.assertEqual(report.errors, [])
             self.assertFalse(any("single plain numeric" in warning for warning in report.warnings))
 
+    def test_core_probability_value_must_be_unitless_fraction(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            text_ref = payload["candidates"][0]["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            payload["method_chain"].extend(  # type: ignore[index]
+                [
+                    {
+                        "id": "step-04",
+                        "depends_on": ["step-02"],
+                        "step_type": "galactic_potential_model",
+                        "summary": "Milky Way potential used for escape probability assessment.",
+                        "source_refs": [text_ref],
+                    },
+                    {
+                        "id": "step-05",
+                        "depends_on": ["step-04"],
+                        "step_type": "escape_or_bound_assessment",
+                        "summary": "Fraction of orbit realisations that are unbound.",
+                        "source_refs": [text_ref],
+                    },
+                ]
+            )
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            probabilities = candidate["core"]["probabilities"]  # type: ignore[index]
+            probabilities["unbound_probability"] = {
+                "raw_value": "17",
+                "value": "0.17",
+                "unit": "",
+                "kind": "unbound probability",
+                "source_refs": [text_ref],
+                "method_refs": ["step-05"],
+            }
+
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace, require_complete=True)
+            self.assertEqual(report.errors, [])
+
+            probabilities["unbound_probability"]["value"] = "17"  # type: ignore[index]
+            probabilities["unbound_probability"]["unit"] = "%"  # type: ignore[index]
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("core.probabilities.unbound_probability.value" in error for error in errors))
+            self.assertTrue(any("core.probabilities.unbound_probability.unit" in error for error in errors))
+
     def test_runaway_candidate_status_fails(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
@@ -1089,6 +1134,102 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
             self.assertTrue(any("duplicate dependency" in error for error in errors))
+
+    def test_velocity_step_with_distance_input_does_not_warn_as_coarse(self) -> None:
+        step = {
+            "id": "step-02",
+            "depends_on": ["step-01"],
+            "step_type": "velocity_calculation",
+            "summary": "Computation of Galactocentric velocities from astrometry, distances, and radial velocities.",
+            "inputs": ["proper motions", "distances", "radial velocities"],
+            "outputs": ["Galactocentric velocities"],
+        }
+
+        self.assertEqual(coarse_step_warnings(step), [])
+
+    def test_distance_step_with_velocity_output_warns_as_coarse(self) -> None:
+        step = {
+            "id": "step-03",
+            "depends_on": ["step-01"],
+            "step_type": "distance_estimation",
+            "summary": "Computed distances using Bailer-Jones photogeometric distances.",
+            "inputs": ["Gaia parallaxes"],
+            "outputs": ["Galactocentric positions and velocities"],
+        }
+
+        self.assertTrue(any("distance and velocity" in warning for warning in coarse_step_warnings(step)))
+
+    def test_observed_astrometry_does_not_trigger_follow_up_warning(self) -> None:
+        step = {
+            "id": "step-04",
+            "depends_on": ["step-01"],
+            "step_type": "velocity_calculation",
+            "summary": "Conversion of observed astrometry and spectroscopic radial velocity to Galactocentric velocity components.",
+            "inputs": ["Distance", "Proper motions", "Radial velocity"],
+            "outputs": ["Galactocentric velocity components"],
+        }
+
+        self.assertEqual(coarse_step_warnings(step), [])
+
+    def test_high_velocity_object_name_does_not_trigger_velocity_warning(self) -> None:
+        step = {
+            "id": "step-01",
+            "depends_on": [],
+            "step_type": "distance_estimation",
+            "summary": "Distances estimated from Gaia DR3 parallaxes.",
+            "inputs": ["Gaia DR3 parallax"],
+            "outputs": ["Bayesian distance estimates for high-velocity stars"],
+        }
+
+        self.assertEqual(coarse_step_warnings(step), [])
+
+    def test_follow_up_radial_velocity_measurement_warns_as_coarse(self) -> None:
+        step = {
+            "id": "step-05",
+            "depends_on": ["step-04"],
+            "step_type": "follow_up_validation",
+            "summary": "Spectroscopic follow-up observations measured radial velocities for HVS candidates.",
+            "inputs": ["Candidate list"],
+            "outputs": ["196 spectroscopic radial velocity measurements"],
+        }
+
+        self.assertTrue(any("radial_velocity and follow_up" in warning for warning in coarse_step_warnings(step)))
+
+    def test_radial_velocity_measurement_from_follow_up_does_not_warn_as_coarse(self) -> None:
+        step = {
+            "id": "step-02",
+            "depends_on": ["step-01"],
+            "step_type": "radial_velocity_measurement",
+            "summary": "Follow-up spectroscopy measured radial velocities from spectra.",
+            "inputs": ["Spectra"],
+            "outputs": ["Ground-based radial velocities"],
+        }
+
+        self.assertEqual(coarse_step_warnings(step), [])
+
+    def test_published_does_not_trigger_bound_assessment_warning(self) -> None:
+        step = {
+            "id": "step-06",
+            "depends_on": ["step-01"],
+            "step_type": "follow_up_validation",
+            "summary": "Binaries identified from RV variability and spectroscopic orbits.",
+            "inputs": ["RV time series"],
+            "outputs": ["Binary flags", "44 spectroscopic orbits total, 1 published"],
+        }
+
+        self.assertFalse(any("orbit and bound_assessment" in warning for warning in coarse_step_warnings(step)))
+
+    def test_bound_assessment_can_reference_orbit_realisations(self) -> None:
+        step = {
+            "id": "step-09",
+            "depends_on": ["step-08"],
+            "step_type": "escape_or_bound_assessment",
+            "summary": "Assessment of dynamical status from Monte Carlo orbit realisations.",
+            "inputs": ["Orbit integration results"],
+            "outputs": ["17% of simulated orbits are unbound over 10 Gyr"],
+        }
+
+        self.assertEqual(coarse_step_warnings(step), [])
 
     def test_direct_producer_type_mismatch_fails(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

@@ -83,6 +83,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v6"`.
 - Every quantity must preserve `raw_value`, cleaned `value`, source references, and exactly one direct-producer `method_refs` entry when complete.
 - Candidate identifiers live under `identifiers`: `record_id` is the internal `<arxiv_id>:cand-001` record key, `paper_candidate_id` is the paper display name, `gaia_source_id` is the strict Gaia machine id or empty string, and `all[]` stores paper-visible names with source refs.
 - For numeric core fields and quantitative `extra[]` records, `value`, `error`, `lower_error`, and `upper_error` should be single plain numbers; ranges, limits, units, notes, and LaTeX residue stay in `raw_value`/`description`.
+- Core probability fields normalize `value` to a unitless 0-1 fraction and leave `unit` empty; paper percent values remain in `raw_value` and source refs.
 - RA/Dec are coordinate records: keep each coordinate component in `raw_value`/`value`, put frame and epoch context in the nested `reference_frame` and `epoch` objects, and use `component_raw_value` when one ECSV cell contains both components.
 - `method_chain[]` uses local `step-XX` ids, canonical `step_type` values, and `depends_on[]` to encode upstream method lineage.
 - Full quantity provenance is the direct `method_refs` step plus recursive `depends_on[]` ancestors; candidates do not carry paper-level `method_chain_refs`.

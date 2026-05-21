@@ -86,17 +86,31 @@ CLASSIFICATION_RE = re.compile(r"(classification|candidate[_ -]?status|ranking|s
 
 COARSE_SIGNAL_PATTERNS: dict[str, re.Pattern[str]] = {
     "distance": re.compile(r"(distance|photogeometric|bailer|parallax)", re.IGNORECASE),
-    "velocity": re.compile(r"(velocity|galactocentric|tangential|v[_ -]?(tot|gc|rf|tan))", re.IGNORECASE),
+    "velocity": re.compile(
+        r"((?<!high[- ])(?<!hyper)velocit(?:y|ies)|galactocentric|tangential|v[_ -]?(tot|gc|rf|tan))",
+        re.IGNORECASE,
+    ),
     "orbit": re.compile(r"(orbit|integrat|trajectory|eccentricity|pericentre|apocentre)", re.IGNORECASE),
-    "bound_assessment": re.compile(r"(escape|bound|unbound|positive energy|p[_ -]?ub)", re.IGNORECASE),
+    "bound_assessment": re.compile(r"(escape|bound|unbound|positive energy|\bp[_ -]?ub\b)", re.IGNORECASE),
     "radial_velocity": re.compile(r"(radial velocity|\brv\b)", re.IGNORECASE),
-    "follow_up": re.compile(r"(follow[- ]?up|validation|observ)", re.IGNORECASE),
+    "follow_up": re.compile(r"(follow[- ]?up|validation|observations?)", re.IGNORECASE),
 }
 COARSE_SIGNAL_COMBINATIONS = (
     ("distance", "velocity"),
+    ("velocity", "orbit"),
     ("orbit", "bound_assessment"),
     ("radial_velocity", "follow_up"),
 )
+STEP_TYPE_COARSE_SIGNALS: dict[str, frozenset[str]] = {
+    "distance_estimation": frozenset({"distance"}),
+    "radial_velocity_measurement": frozenset({"radial_velocity"}),
+    "velocity_calculation": frozenset({"velocity"}),
+    "galactic_potential_model": frozenset(),
+    "escape_or_bound_assessment": frozenset({"bound_assessment"}),
+    "orbit_integration": frozenset({"orbit"}),
+    "origin_assessment": frozenset({"origin"}),
+    "follow_up_validation": frozenset({"follow_up"}),
+}
 
 
 def classify_quantity_record(location: str, record: dict[str, Any]) -> str | None:
@@ -176,8 +190,7 @@ def lineage_for_step(step_id: str, dependencies: dict[str, list[str]]) -> list[s
 
 def coarse_step_warnings(step: dict[str, Any]) -> list[str]:
     """Return warnings for method steps that appear to mix atomic actions."""
-    text = _method_step_search_text(step)
-    signals = {name for name, pattern in COARSE_SIGNAL_PATTERNS.items() if pattern.search(text)}
+    signals = _method_step_action_signals(step)
     warnings: list[str] = []
     for first, second in COARSE_SIGNAL_COMBINATIONS:
         if first in signals and second in signals:
@@ -216,14 +229,105 @@ def _searchable_quantity_text(field_name: str, record: dict[str, Any]) -> str:
     return " ".join(values)
 
 
-def _method_step_search_text(step: dict[str, Any]) -> str:
-    values: list[str] = []
-    for key in ("step_type", "summary"):
-        value = step.get(key)
-        if isinstance(value, str):
-            values.append(value)
-    for key in ("inputs", "outputs"):
-        value = step.get(key)
-        if isinstance(value, list):
-            values.extend(str(item) for item in value)
-    return " ".join(values)
+def _method_step_action_signals(step: dict[str, Any]) -> set[str]:
+    """Return coarse signals for actions a method step appears to perform.
+
+    Inputs are deliberately excluded: velocity and orbit calculations naturally
+    consume distances, radial velocities, and phase-space vectors without
+    directly producing those upstream quantities.
+    """
+    signals: set[str] = set()
+    step_type = step.get("step_type")
+    if isinstance(step_type, str):
+        signals.update(STEP_TYPE_COARSE_SIGNALS.get(step_type, ()))
+
+    output_text = _method_step_list_text(step, "outputs")
+    for name, pattern in COARSE_SIGNAL_PATTERNS.items():
+        if pattern.search(output_text):
+            signals.add(name)
+
+    summary = step.get("summary")
+    if isinstance(summary, str):
+        signals.update(_method_step_summary_action_signals(summary))
+
+    return _suppress_compatible_method_signals(step, signals)
+
+
+def _method_step_summary_action_signals(summary: str) -> set[str]:
+    lowered = summary.lower()
+    if re.search(r"\b(no|not|without)\b[^.]{0,80}\b(bound|unbound|escape)\b", lowered):
+        lowered = COARSE_SIGNAL_PATTERNS["bound_assessment"].sub(" ", lowered)
+
+    signals: set[str] = set()
+    if re.search(r"\b(estimating|estimated|derive[ds]?|comput(?:e|ed|ing))\b[^.]{0,80}\bdistances?\b", lowered):
+        signals.add("distance")
+    if re.search(r"\b(comput(?:e|ed|ing)|calculat(?:e|ed|ing)|conversion|converted)\b[^.]{0,100}\b(velocity|velocities|v[_ -]?(tot|gc|rf|tan)|galactocentric)\b", lowered):
+        signals.add("velocity")
+    orbit_summary = re.sub(r"\bused for orbit integration\b", " ", lowered)
+    if re.search(
+        r"\b(integrat(?:e|ed|ing)|traceback)\b|"
+        r"\b(comput(?:e|ed|ing)|calculat(?:e|ed|ing))\b[^.]{0,80}\b(orbit|trajectory)\b|"
+        r"\borbit integration using\b",
+        orbit_summary,
+    ):
+        signals.add("orbit")
+    if re.search(r"\b(assess(?:ed|ing)?|classif(?:y|ied|ication)|compar(?:e|ed|ing))\b[^.]{0,120}\b(escape|bound|unbound|positive energy|p[_ -]?ub)\b", lowered):
+        signals.add("bound_assessment")
+    if re.search(r"\b(measur(?:e|ed|ing|ement)|determin(?:e|ed|ing))\b[^.]{0,80}\b(radial velocity|rv)\b", lowered):
+        signals.add("radial_velocity")
+    if COARSE_SIGNAL_PATTERNS["follow_up"].search(lowered):
+        signals.add("follow_up")
+    return signals
+
+
+def _suppress_compatible_method_signals(step: dict[str, Any], signals: set[str]) -> set[str]:
+    step_type = step.get("step_type")
+    if not isinstance(step_type, str):
+        return signals
+
+    suppressed = set(signals)
+    if step_type == "input_catalog":
+        return STEP_TYPE_COARSE_SIGNALS.get(step_type, frozenset()).intersection(suppressed)
+    if step_type == "radial_velocity_measurement" and "radial_velocity" in suppressed:
+        suppressed.discard("follow_up")
+    if step_type == "velocity_calculation" and "velocity" in suppressed:
+        if not _method_step_outputs_signal(step, "distance"):
+            suppressed.discard("distance")
+        if not _method_step_outputs_signal(step, "radial_velocity"):
+            suppressed.discard("radial_velocity")
+        if "orbit" in suppressed and not _method_step_outputs_signal(step, "orbit"):
+            suppressed.discard("orbit")
+    if step_type == "orbit_integration" and "orbit" in suppressed:
+        suppressed.discard("velocity")
+        if not _method_step_outputs_signal(step, "distance"):
+            suppressed.discard("distance")
+        if not _method_step_outputs_signal(step, "bound_assessment"):
+            suppressed.discard("bound_assessment")
+    if step_type == "escape_or_bound_assessment" and "bound_assessment" in suppressed:
+        suppressed.discard("orbit")
+        if not _method_step_outputs_signal(step, "distance"):
+            suppressed.discard("distance")
+        if not _method_step_outputs_signal(step, "radial_velocity"):
+            suppressed.discard("radial_velocity")
+        suppressed.discard("velocity")
+    if step_type == "origin_assessment":
+        suppressed.discard("velocity")
+        suppressed.discard("orbit")
+    if step_type == "galactic_potential_model":
+        suppressed.discard("orbit")
+        if not _method_step_outputs_signal(step, "bound_assessment"):
+            suppressed.discard("bound_assessment")
+    return suppressed
+
+
+def _method_step_outputs_signal(step: dict[str, Any], signal: str) -> bool:
+    pattern = COARSE_SIGNAL_PATTERNS[signal]
+    return bool(pattern.search(_method_step_list_text(step, "outputs")))
+
+
+def _method_step_list_text(step: dict[str, Any], key: str) -> str:
+    value = step.get(key)
+    if isinstance(value, list):
+        return " ".join(str(item) for item in value)
+    return ""
+

@@ -175,6 +175,14 @@ operators, units, footnote markers, or prose in these machine fields. Keep
 ranges and limits in `raw_value` and explain them in `description` unless a
 future schema provides structured range fields.
 
+For `core.probabilities.bound_probability`,
+`core.probabilities.unbound_probability`, and
+`core.probabilities.classification_probability`, normalize `value` to a
+unitless 0-1 fraction and leave `unit` empty. Preserve the paper-visible text in
+`raw_value` and source refs. For example, if the paper table reports `99.995`
+with unit `%`, store `raw_value: "99.995"`, `value: "0.99995"`, and
+`unit: ""`.
+
 RA/Dec are coordinate records. Preserve the source coordinate representation
 without recomputing units, but make the representation explicit:
 
