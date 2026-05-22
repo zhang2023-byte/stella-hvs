@@ -17,6 +17,31 @@ executing a vague request:
 5. Use `docs/human-workflows.md` for examples of human-facing requests and
    `docs/agent-workflows.md` for the readable workflow reference.
 
+## Subagent Orchestration
+
+For multi-paper `catalog_review` or `hvs_candidate_extraction` requests, route
+to `catalog_review_batch` or `hvs_candidate_extraction_batch` instead of running
+the single-paper workflow repeatedly in one context.
+
+Batch workflows use one fresh subagent per paper. The parent Stella agent only
+resolves the paper queue, dispatches workers, monitors status, records failures,
+and rebuilds the relevant global index after workers finish. The parent must not
+read multiple papers deeply or make cross-paper scientific judgments in its own
+context.
+
+Each worker handles exactly one `arxiv_id`, reads and writes only that paper's
+source JSON under `literature/<arxiv_id>/`, runs the single-paper validator, and
+returns `arxiv_id`, `status`, `outputs`, `validator_result`, `warnings`,
+`blockers`, and `next_action`. Do not reuse a worker for a second paper.
+
+Batch concurrency is adaptive. Use any concurrency limit exposed by the current
+agent tool; otherwise probe by starting workers until the tool reports a
+concurrency, quota, or rate-limit error, then continue at the discovered cap.
+When a worker finishes, close or clear it before dispatching the next queued
+paper. Do not hard-code platform-specific concurrency defaults. If the current
+agent platform cannot create subagents, report that limitation rather than
+silently processing many papers in one shared context.
+
 ## Skill Loading Protocol
 
 Do not preload all files under `skills/`. For each user request, first match
@@ -110,12 +135,18 @@ is ignored by default. Do not force-add it unless the user explicitly asks.
 - `catalog_review` inventories internal tables and paper-described external
   resources only. It does not decide HVS relevance and does not download
   external resources.
+- `catalog_review_batch` dispatches one fresh `catalog_review` worker per paper,
+  monitors the queue, and rebuilds the catalog workflow index after workers
+  finish.
 - `catalog_table_extraction` processes only reviewed internal LaTeX tables. It
   does not add scientific semantics, normalize object schemas, perform HVS
   filtering, or process external resources.
 - `hvs_candidate_extraction` is text-driven: paper text must explicitly discuss
   an object as a possible Galactic-unbound/HVS/escaping/hyper-runaway candidate
   before tables are used for quantities.
+- `hvs_candidate_extraction_batch` dispatches one fresh
+  `hvs_candidate_extraction` worker per paper, monitors the queue, and rebuilds
+  the HVS candidates index after workers finish when requested.
 - `object_catalog_merge` is generated from paper-level candidate JSON. Fix source
   paper-level records and rerun merge when warnings expose data errors.
 

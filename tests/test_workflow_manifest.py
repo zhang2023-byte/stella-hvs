@@ -31,6 +31,7 @@ class WorkflowManifestTest(unittest.TestCase):
         cls.manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
         cls.workflows = cls.manifest["workflows"]
         cls.workflow_ids = {workflow["id"] for workflow in cls.workflows}
+        cls.workflow_by_id = {workflow["id"]: workflow for workflow in cls.workflows}
 
     def test_manifest_is_parseable_and_workflow_ids_are_unique(self) -> None:
         self.assertEqual(self.manifest["version"], 1)
@@ -58,13 +59,42 @@ class WorkflowManifestTest(unittest.TestCase):
             "literature_asset_archive",
             "ads_metadata_repair",
             "catalog_review",
+            "catalog_review_batch",
             "catalog_table_extraction",
             "hvs_candidate_extraction",
+            "hvs_candidate_extraction_batch",
             "object_catalog_merge",
             "hvs_catalog_html_build",
             "index_or_markdown_regeneration",
         }
         self.assertEqual(self.workflow_ids, expected)
+
+    def test_batch_workflows_declare_subagent_orchestration_contract(self) -> None:
+        expected_workers = {
+            "catalog_review_batch": "catalog_review",
+            "hvs_candidate_extraction_batch": "hvs_candidate_extraction",
+        }
+        required_status_fields = {
+            "arxiv_id",
+            "status",
+            "outputs",
+            "validator_result",
+            "warnings",
+            "blockers",
+            "next_action",
+        }
+        for workflow_id, worker_workflow in expected_workers.items():
+            with self.subTest(workflow=workflow_id):
+                workflow = self.workflow_by_id[workflow_id]
+                orchestration = workflow.get("orchestration")
+                self.assertIsInstance(orchestration, dict)
+                self.assertEqual(orchestration["unit"], "arxiv_id")
+                self.assertEqual(orchestration["worker_workflow"], worker_workflow)
+                self.assertIn(worker_workflow, self.workflow_ids)
+                self.assertEqual(orchestration["worker_reuse_policy"], "never")
+                self.assertEqual(orchestration["concurrency_strategy"], "adaptive_probe")
+                self.assertEqual(orchestration["parent_role"], "dispatch_monitor_summarize")
+                self.assertEqual(set(orchestration["worker_status_fields"]), required_status_fields)
 
     def test_command_script_references_exist(self) -> None:
         for workflow in self.workflows:

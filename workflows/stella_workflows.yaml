@@ -72,7 +72,7 @@
       "required_inputs": ["arxiv_id"],
       "optional_inputs": ["require_complete"],
       "clarify_if_missing": ["arxiv_id", "continue_if_archive_assets_missing"],
-      "agent_prompt_template": "Use hvs-catalog-review for ARXIV_ID=<arxiv_id>. Inspect audit.json and archived source assets first. Generate the schema-backed catalog_review.json template if needed. Inventory internal LaTeX tables and paper-described external resources only. Do not decide HVS relevance and do not download external resources. Validate with --require-complete and rebuild the catalog workflow index.",
+      "agent_prompt_template": "Use hvs-catalog-review for one ARXIV_ID=<arxiv_id>. If the target contains multiple papers, route to catalog_review_batch instead. Inspect audit.json and archived source assets first. Generate the schema-backed catalog_review.json template if needed. Inventory internal LaTeX tables and paper-described external resources only. Do not decide HVS relevance and do not download external resources. In worker mode, read and write only this paper's directory and return the worker status contract. Validate with --require-complete and rebuild the catalog workflow index only when not running under a batch parent.",
       "prerequisite_checks": ["Read literature/<arxiv_id>/audit.json.", "Confirm arXiv source/PDF/ADS metadata status.", "Read hvs-catalog-review skill and schema reference."],
       "commands": ["conda run -n stella-env python scripts/init_catalog_review.py --arxiv-id <arxiv_id>", "conda run -n stella-env python scripts/validate_catalog_review.py --arxiv-id <arxiv_id> --require-complete", "conda run -n stella-env python scripts/build_catalog_index.py"],
       "outputs": ["literature/<arxiv_id>/catalog_review.json", "literature/literature_catalog_index.json", "literature/literature_catalog_index.md"],
@@ -81,6 +81,31 @@
       "network_policy": "No new external resource downloads in this workflow.",
       "generated_files_policy": "catalog_review.json is paper-level source data; generated indexes must be rebuilt, not hand-edited.",
       "referenced_paths": ["scripts/init_catalog_review.py", "scripts/validate_catalog_review.py", "scripts/build_catalog_index.py", "skills/hvs-catalog-review/SKILL.md", "docs/outputs.md"]
+    },
+    {
+      "id": "catalog_review_batch",
+      "human_intents": ["batch review paper data assets", "review multiple paper data assets", "inspect catalog tables for multiple papers", "fill catalog_review for multiple papers"],
+      "required_inputs": ["arxiv_ids"],
+      "optional_inputs": ["max_parallel", "require_complete"],
+      "clarify_if_missing": ["arxiv_ids", "continue_if_archive_assets_missing"],
+      "agent_prompt_template": "Run catalog_review_batch for ARXIV_IDS=<arxiv_ids>. The parent agent must dispatch one fresh subagent per arXiv ID using the catalog_review worker workflow. Do not process multiple papers in the parent context and do not reuse a worker for more than one paper. Use adaptive_probe concurrency: use any tool-exposed concurrency limit when available; otherwise gradually start workers until a concurrency, quota, or rate-limit error reveals the current cap. When a worker finishes, close or clear it before dispatching the next queued paper. Track completed, blocked, failed, and partial worker statuses, then rebuild the catalog workflow index once after all workers finish.",
+      "prerequisite_checks": ["Resolve the target arXiv ID list before dispatch.", "Confirm subagent capability is available; if unavailable, report the limitation instead of processing multiple papers in one context.", "Confirm archive-asset failure policy for the batch."],
+      "commands": ["Dispatch one fresh subagent per <arxiv_id> with the catalog_review workflow prompt.", "conda run -n stella-env python scripts/build_catalog_index.py"],
+      "outputs": ["literature/<arxiv_id>/catalog_review.json", "literature/literature_catalog_index.json", "literature/literature_catalog_index.md"],
+      "validators": ["conda run -n stella-env python scripts/validate_catalog_review.py --arxiv-id <arxiv_id> --require-complete", "Review all worker status records before rebuilding the catalog workflow index."],
+      "risk_level": "generated_data",
+      "network_policy": "No new external resource downloads in this workflow.",
+      "generated_files_policy": "catalog_review.json is per-paper source data; generated indexes are rebuilt once by the parent after workers complete.",
+      "orchestration": {
+        "unit": "arxiv_id",
+        "worker_workflow": "catalog_review",
+        "worker_reuse_policy": "never",
+        "concurrency_strategy": "adaptive_probe",
+        "parent_role": "dispatch_monitor_summarize",
+        "worker_status_fields": ["arxiv_id", "status", "outputs", "validator_result", "warnings", "blockers", "next_action"],
+        "worker_status_values": ["completed", "blocked", "failed", "partial"]
+      },
+      "referenced_paths": ["scripts/build_catalog_index.py", "skills/hvs-catalog-review/SKILL.md", "docs/outputs.md"]
     },
     {
       "id": "catalog_table_extraction",
@@ -104,7 +129,7 @@
       "required_inputs": ["arxiv_id"],
       "optional_inputs": ["rebuild_index", "verbose_warnings"],
       "clarify_if_missing": ["arxiv_id", "create_missing_review_or_extraction_inputs"],
-      "agent_prompt_template": "Use hvs-candidates-extraction for ARXIV_ID=<arxiv_id>. Confirm audit.json, ADS metadata, catalog_review.json, catalog_extraction.json, and relevant ECSV files exist. Read paper text first to establish inclusion and candidate_origin. Use tables only after text evidence justifies inclusion. Write literature_hvs_candidates.json with source_refs and method_refs, or status=no_candidates with empty candidates. Validate with --require-complete and rebuild the HVS candidates index when requested.",
+      "agent_prompt_template": "Use hvs-candidates-extraction for one ARXIV_ID=<arxiv_id>. If the target contains multiple papers, route to hvs_candidate_extraction_batch instead. Confirm audit.json, ADS metadata, catalog_review.json, catalog_extraction.json, and relevant ECSV files exist. Read paper text first to establish inclusion and candidate_origin. Use tables only after text evidence justifies inclusion. Write literature_hvs_candidates.json with source_refs and method_refs, or status=no_candidates with empty candidates. In worker mode, read and write only this paper's directory and return the worker status contract. Validate with --require-complete and rebuild the HVS candidates index only when requested and not running under a batch parent.",
       "prerequisite_checks": ["Read audit.json and ADS metadata.", "Read catalog_review.json and catalog_extraction.json.", "Read hvs-candidates-extraction skill, schema reference, and coordinate frame reference."],
       "commands": ["conda run -n stella-env python scripts/init_hvs_candidates.py --arxiv-id <arxiv_id>", "conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id <arxiv_id> --require-complete", "conda run -n stella-env python scripts/build_hvs_candidates_index.py"],
       "outputs": ["literature/<arxiv_id>/literature_hvs_candidates.json", "literature/literature_hvs_index.json", "literature/literature_hvs_index.md"],
@@ -113,6 +138,31 @@
       "network_policy": "No new external downloads; use archived paper sources and generated ECSV.",
       "generated_files_policy": "Paper-level candidate JSON is source data; global indexes are generated.",
       "referenced_paths": ["scripts/init_hvs_candidates.py", "scripts/validate_hvs_candidates.py", "scripts/build_hvs_candidates_index.py", "skills/hvs-candidates-extraction/SKILL.md", "docs/outputs.md"]
+    },
+    {
+      "id": "hvs_candidate_extraction_batch",
+      "human_intents": ["batch extract HVS candidates", "extract HVS candidates for multiple papers", "check multiple papers for unbound candidates", "fill literature_hvs_candidates for multiple papers"],
+      "required_inputs": ["arxiv_ids"],
+      "optional_inputs": ["max_parallel", "rebuild_index", "verbose_warnings"],
+      "clarify_if_missing": ["arxiv_ids", "create_missing_review_or_extraction_inputs"],
+      "agent_prompt_template": "Run hvs_candidate_extraction_batch for ARXIV_IDS=<arxiv_ids>. The parent agent must dispatch one fresh subagent per arXiv ID using the hvs_candidate_extraction worker workflow. Do not process multiple papers in the parent context and do not reuse a worker for more than one paper. Use adaptive_probe concurrency: use any tool-exposed concurrency limit when available; otherwise gradually start workers until a concurrency, quota, or rate-limit error reveals the current cap. When a worker finishes, close or clear it before dispatching the next queued paper. Track completed, blocked, failed, and partial worker statuses, then rebuild the HVS candidates index once after all workers finish when requested.",
+      "prerequisite_checks": ["Resolve the target arXiv ID list before dispatch.", "Confirm subagent capability is available; if unavailable, report the limitation instead of processing multiple papers in one context.", "Confirm each paper has required review and extraction inputs or clarify whether to create them first."],
+      "commands": ["Dispatch one fresh subagent per <arxiv_id> with the hvs_candidate_extraction workflow prompt.", "conda run -n stella-env python scripts/build_hvs_candidates_index.py"],
+      "outputs": ["literature/<arxiv_id>/literature_hvs_candidates.json", "literature/literature_hvs_index.json", "literature/literature_hvs_index.md"],
+      "validators": ["conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id <arxiv_id> --require-complete", "Review all worker status records before rebuilding the HVS candidates index."],
+      "risk_level": "scientific_judgment",
+      "network_policy": "No new external downloads; workers use archived paper sources and generated ECSV.",
+      "generated_files_policy": "Paper-level candidate JSON is per-paper source data; global indexes are rebuilt once by the parent after workers complete.",
+      "orchestration": {
+        "unit": "arxiv_id",
+        "worker_workflow": "hvs_candidate_extraction",
+        "worker_reuse_policy": "never",
+        "concurrency_strategy": "adaptive_probe",
+        "parent_role": "dispatch_monitor_summarize",
+        "worker_status_fields": ["arxiv_id", "status", "outputs", "validator_result", "warnings", "blockers", "next_action"],
+        "worker_status_values": ["completed", "blocked", "failed", "partial"]
+      },
+      "referenced_paths": ["scripts/build_hvs_candidates_index.py", "skills/hvs-candidates-extraction/SKILL.md", "docs/outputs.md"]
     },
     {
       "id": "object_catalog_merge",

@@ -134,6 +134,32 @@ Precise agent prompt:
 Use the hvs-catalog-review skill for ARXIV_ID=<id>. First inspect audit.json and archived source assets. Generate or refresh the schema-backed catalog_review.json template. Inventory internal LaTeX tables and paper-described external resources only; do not decide HVS relevance and do not download external resources. Validate with --require-complete and rebuild the catalog workflow index.
 ```
 
+## Catalog Review Batch
+
+Recommended human request:
+
+```text
+Review structured data assets for 2402.10714, 2603.00001, and 2604.21646.
+```
+
+Common vague request:
+
+```text
+Review all archived data papers.
+```
+
+Clarify when missing:
+
+- The explicit arXiv ID list or the source from which to derive it.
+- Whether to continue for papers whose audit.json reports missing source, PDF,
+  or ADS metadata.
+
+Precise agent prompt:
+
+```text
+Run catalog_review_batch for ARXIV_IDS=<id list>. The parent agent should resolve the queue, dispatch one fresh subagent per arXiv ID using the single-paper catalog_review workflow, never reuse a worker for a second paper, and avoid reading multiple papers deeply in the parent context. Use adaptive concurrency based on the current agent tool's exposed limit or runtime probe; if worker creation hits a concurrency, quota, or rate-limit error, keep the discovered cap and continue as workers finish. Each worker returns arxiv_id, status, outputs, validator_result, warnings, blockers, and next_action. After all workers complete, rebuild the catalog workflow index once.
+```
+
 ## Catalog Table Extraction
 
 Recommended human request:
@@ -182,6 +208,31 @@ Precise agent prompt:
 
 ```text
 Run hvs_candidate_extraction for ARXIV_ID=<id>, using the hvs-candidates-extraction skill. Confirm audit.json, ADS metadata, catalog_review.json, catalog_extraction.json, and relevant ECSV files exist. Read paper text first to establish candidate inclusion and candidate_origin. Use tables only after text evidence justifies inclusion. Write literature_hvs_candidates.json with source_refs and method_refs, or status=no_candidates with empty candidates. Validate with --require-complete and rebuild the HVS candidates index when requested.
+```
+
+## HVS Candidate Extraction Batch
+
+Recommended human request:
+
+```text
+Extract HVS candidates for 2402.10714, 2603.00001, and 2604.21646.
+```
+
+Common vague request:
+
+```text
+Check all reviewed papers for HVS candidates.
+```
+
+Clarify when missing:
+
+- The explicit arXiv ID list or the source from which to derive it.
+- Whether missing catalog reviews or table extractions should be created first.
+
+Precise agent prompt:
+
+```text
+Run hvs_candidate_extraction_batch for ARXIV_IDS=<id list>. The parent agent should resolve the queue, dispatch one fresh subagent per arXiv ID using the single-paper hvs_candidate_extraction workflow, never reuse a worker for a second paper, and avoid reading multiple papers deeply in the parent context. Use adaptive concurrency based on the current agent tool's exposed limit or runtime probe; if worker creation hits a concurrency, quota, or rate-limit error, keep the discovered cap and continue as workers finish. Each worker returns arxiv_id, status, outputs, validator_result, warnings, blockers, and next_action. After all workers complete, rebuild the HVS candidates index once when requested.
 ```
 
 ## Object Catalog Merge
