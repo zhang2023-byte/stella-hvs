@@ -74,7 +74,7 @@ def source_summary(record: dict[str, Any], source: dict[str, Any]) -> dict[str, 
     core = candidate.get("core") if isinstance(candidate.get("core"), dict) else {}
     observed = core.get("observed_phase_space") if isinstance(core.get("observed_phase_space"), dict) else {}
     derived = core.get("derived_kinematics") if isinstance(core.get("derived_kinematics"), dict) else {}
-    probabilities = core.get("probabilities") if isinstance(core.get("probabilities"), dict) else {}
+    bound_assessment = core.get("bound_assessment") if isinstance(core.get("bound_assessment"), dict) else {}
     paper = source.get("paper") if isinstance(source.get("paper"), dict) else {}
     return {
         "source": source_id,
@@ -85,7 +85,7 @@ def source_summary(record: dict[str, Any], source: dict[str, Any]) -> dict[str, 
         "bibcode": str(paper.get("bibcode") or ""),
         "phase_space": {field: quantity_text(observed.get(field)) for field in OBSERVED_FIELDS},
         "total_velocity": quantity_text(derived.get("total_velocity")),
-        "unbound_probability": quantity_text(probabilities.get("unbound_probability")),
+        "unbound_probability": quantity_text(bound_assessment.get("unbound_probability")),
     }
 
 

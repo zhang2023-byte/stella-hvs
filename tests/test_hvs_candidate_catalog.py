@@ -80,10 +80,13 @@ def candidate(
             "gaia_source_id": gaia_source_id,
             "all": [{"value": paper_candidate_id, "source_refs": []}],
         },
-        "candidate_assessment": {
+        "inclusion_assessment": {
             "summary": "Fixture candidate.",
-            "candidate_status": "unbound_candidate",
-            "confidence": "high",
+            "paper_labels": ["hvs_candidate", "unbound_star"],
+            "galactic_bound_claim": "unbound",
+            "inclusion_basis": "explicit_unbound_text",
+            "extraction_confidence": "high",
+            "confidence_reason": "Fixture extraction has direct candidate evidence.",
             "source_refs": [],
         },
         "candidate_origin": {
@@ -94,8 +97,15 @@ def candidate(
         "core": {
             "observed_phase_space": observed,
             "derived_kinematics": {"total_velocity": quantity("700")},
-            "probabilities": {"unbound_probability": quantity("0.8", unit="", method_ref="step-03")},
+            "bound_assessment": {"unbound_probability": quantity("0.8", unit="", method_ref="step-03")},
         },
+        "photometry": [],
+        "spectroscopy": [],
+        "stellar_parameters": {"other": []},
+        "abundances": [],
+        "quality_flags": [],
+        "orbit": {"other": []},
+        "astrophysical_origin": {"hypothesis_metrics": [], "other": []},
         "extra": [],
     }
 

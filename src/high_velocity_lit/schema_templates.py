@@ -11,6 +11,7 @@ from typing import Any
 from .catalog_extraction import parse_latex_table_excerpt
 from .catalog_review import build_catalog_candidate_inventory, relative_path
 from .schema_models import (
+    BoundAssessment,
     CatalogReviewRecord,
     CandidateCore,
     DerivedKinematics,
@@ -23,7 +24,6 @@ from .schema_models import (
     LinkSet,
     LiteratureHvsCandidatesRecord,
     ObservedPhaseSpace,
-    Probabilities,
     ReviewColumn,
     ReviewMeta,
     ReviewPaper,
@@ -308,6 +308,6 @@ def empty_candidate_core() -> dict[str, Any]:
         CandidateCore(
             observed_phase_space=ObservedPhaseSpace(),
             derived_kinematics=DerivedKinematics(),
-            probabilities=Probabilities(),
+            bound_assessment=BoundAssessment(),
         )
     )

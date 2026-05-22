@@ -116,7 +116,7 @@ def object_record() -> dict[str, object]:
                     "derived_kinematics": {
                         "total_velocity": quantity("740", method_ref="step-02", lower_error="-20", upper_error="+30")
                     },
-                    "probabilities": {"unbound_probability": quantity("0.82", unit="", method_ref="step-03")},
+                    "bound_assessment": {"unbound_probability": quantity("0.82", unit="", method_ref="step-03")},
                 },
             },
             {
@@ -133,7 +133,7 @@ def object_record() -> dict[str, object]:
                         "parallax": quantity("0.12", unit="mas", method_ref="step-01"),
                     },
                     "derived_kinematics": {"total_velocity": quantity("690", method_ref="step-02")},
-                    "probabilities": {},
+                    "bound_assessment": {},
                 },
             },
         ],

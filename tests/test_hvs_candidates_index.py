@@ -53,10 +53,13 @@ def candidate_payload() -> dict[str, object]:
                     "gaia_source_id": "Gaia DR3 123456789",
                     "all": [{"value": "HVS1", "source_refs": []}, {"value": "Gaia DR3 123456789", "source_refs": []}],
                 },
-                "candidate_assessment": {
+                "inclusion_assessment": {
                     "summary": "Fixture candidate.",
-                    "candidate_status": "unbound_candidate",
-                    "confidence": "high",
+                    "paper_labels": ["unbound_star"],
+                    "galactic_bound_claim": "unbound",
+                    "inclusion_basis": "explicit_unbound_text",
+                    "extraction_confidence": "high",
+                    "confidence_reason": "Fixture candidate evidence.",
                     "source_refs": [],
                 },
                 "candidate_origin": {
@@ -64,7 +67,14 @@ def candidate_payload() -> dict[str, object]:
                     "paper_reassesses_unbound_status": True,
                     "source_refs": [],
                 },
-                "core": {"observed_phase_space": {}, "derived_kinematics": {}, "probabilities": {}},
+                "core": {"observed_phase_space": {}, "derived_kinematics": {}, "bound_assessment": {}},
+                "photometry": [],
+                "spectroscopy": [],
+                "stellar_parameters": {"other": []},
+                "abundances": [],
+                "quality_flags": [],
+                "orbit": {"other": []},
+                "astrophysical_origin": {"hypothesis_metrics": [], "other": []},
                 "extra": [],
             },
             {
@@ -74,10 +84,13 @@ def candidate_payload() -> dict[str, object]:
                     "gaia_source_id": "",
                     "all": [{"value": "HVS2", "source_refs": []}],
                 },
-                "candidate_assessment": {
+                "inclusion_assessment": {
                     "summary": "Fixture candidate.",
-                    "candidate_status": "hvs_candidate",
-                    "confidence": "high",
+                    "paper_labels": ["hvs_candidate"],
+                    "galactic_bound_claim": "possibly_unbound",
+                    "inclusion_basis": "cited_prior_candidate_reassessed",
+                    "extraction_confidence": "high",
+                    "confidence_reason": "Fixture candidate evidence.",
                     "source_refs": [],
                 },
                 "candidate_origin": {
@@ -85,7 +98,14 @@ def candidate_payload() -> dict[str, object]:
                     "paper_reassesses_unbound_status": True,
                     "source_refs": [],
                 },
-                "core": {"observed_phase_space": {}, "derived_kinematics": {}, "probabilities": {}},
+                "core": {"observed_phase_space": {}, "derived_kinematics": {}, "bound_assessment": {}},
+                "photometry": [],
+                "spectroscopy": [],
+                "stellar_parameters": {"other": []},
+                "abundances": [],
+                "quality_flags": [],
+                "orbit": {"other": []},
+                "astrophysical_origin": {"hypothesis_metrics": [], "other": []},
                 "extra": [],
             },
         ],
@@ -114,10 +134,18 @@ class HvsCandidatesIndexTest(unittest.TestCase):
                 paper["candidate_origins"],
                 {"introduced_by_this_paper": 1, "cited_from_literature": 1},
             )
+            self.assertEqual(paper["paper_labels"], {"unbound_star": 1, "hvs_candidate": 1})
+            self.assertEqual(paper["galactic_bound_claims"], {"unbound": 1, "possibly_unbound": 1})
+            self.assertEqual(
+                paper["inclusion_bases"],
+                {"explicit_unbound_text": 1, "cited_prior_candidate_reassessed": 1},
+            )
             self.assertEqual(paper["sample_paper_candidate_ids"], ["HVS1", "HVS2"])
             self.assertEqual(paper["sample_gaia_source_ids"], ["Gaia DR3 123456789"])
 
             markdown = render_hvs_candidates_index(index)
+            self.assertIn("Paper labels", markdown)
+            self.assertIn("Bound claims", markdown)
             self.assertIn("Origin breakdown", markdown)
             self.assertIn("Sample paper candidate IDs", markdown)
             self.assertIn("Sample Gaia source IDs", markdown)

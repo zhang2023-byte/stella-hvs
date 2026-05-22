@@ -171,10 +171,13 @@ def valid_payload(workspace: Path, *, status: str = "candidates_found") -> dict[
                         {"value": "Gaia DR3 123456789", "source_refs": [text_ref]},
                     ],
                 },
-                "candidate_assessment": {
+                "inclusion_assessment": {
                     "summary": "The paper explicitly identifies HVS1 as an unbound HVS candidate.",
-                    "candidate_status": "unbound_candidate",
-                    "confidence": "high",
+                    "paper_labels": ["hvs_candidate", "unbound_star"],
+                    "galactic_bound_claim": "unbound",
+                    "inclusion_basis": "explicit_unbound_text",
+                    "extraction_confidence": "high",
+                    "confidence_reason": "The source sentence explicitly names HVS1 as an unbound candidate.",
                     "source_refs": [text_ref],
                 },
                 "candidate_origin": {
@@ -194,17 +197,16 @@ def valid_payload(workspace: Path, *, status: str = "candidates_found") -> dict[
                             "method_refs": ["step-02"],
                         }
                     },
-                    "probabilities": {},
+                    "bound_assessment": {},
                 },
-                "extra": [
-                    {
-                        "name": "selection_note",
-                        "raw_value": "quality-filtered Gaia DR3 candidate",
-                        "value": "quality-filtered Gaia DR3 candidate",
-                        "source_refs": [text_ref],
-                        "method_refs": ["step-03"],
-                    }
-                ],
+                "photometry": [],
+                "spectroscopy": [],
+                "stellar_parameters": {"other": []},
+                "abundances": [],
+                "quality_flags": [],
+                "orbit": {"other": []},
+                "astrophysical_origin": {"hypothesis_metrics": [], "other": []},
+                "extra": [],
             }
         )
 
@@ -302,8 +304,9 @@ def cited_payload(workspace: Path) -> dict[str, object]:
             },
         ],
     }
-    candidate["candidate_assessment"]["summary"] = "The paper reassesses HVS2, previously reported as unbound."  # type: ignore[index]
-    candidate["candidate_assessment"]["source_refs"] = [  # type: ignore[index]
+    candidate["inclusion_assessment"]["summary"] = "The paper reassesses HVS2, previously reported as unbound."  # type: ignore[index]
+    candidate["inclusion_assessment"]["inclusion_basis"] = "cited_prior_candidate_reassessed"  # type: ignore[index]
+    candidate["inclusion_assessment"]["source_refs"] = [  # type: ignore[index]
         {
             "kind": "text",
             "path": "literature/2603.00001/arxiv_source/main.tex",
@@ -326,10 +329,10 @@ def cited_payload(workspace: Path) -> dict[str, object]:
         ],
         "citation": {
             "bibkey": "Smith2020",
-            "title": "An earlier unbound star candidate",
-            "year": "2020",
             "authors": ["Smith, A.", "Doe, B."],
-            "source_refs": [
+            "year": "2020",
+            "title": "An earlier unbound star candidate",
+            "citation_context_refs": [
                 {
                     "kind": "text",
                     "path": "literature/2603.00001/arxiv_source/main.tex",
@@ -337,6 +340,8 @@ def cited_payload(workspace: Path) -> dict[str, object]:
                     "end_line": 4,
                     "context": "paper cite command",
                 },
+            ],
+            "bibliography_refs": [
                 {
                     "kind": "text",
                     "path": "literature/2603.00001/arxiv_source/refs.bib",
@@ -358,12 +363,46 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             self.assertEqual(errors, [])
 
+    def test_v6_schema_version_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            payload["schema_version"] = "stella.literature_hvs_candidates.v6"
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("stella.literature_hvs_candidates.v7" in error for error in errors))
+
     def test_valid_cited_candidate_payload_passes(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             errors = validate_cli.validate_hvs_candidates(cited_payload(workspace), workspace=workspace)
 
             self.assertEqual(errors, [])
+
+    def test_citation_fields_must_be_supported_by_bibliography_refs(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = cited_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["candidate_origin"]["citation"]["title"] = "Fabricated title not in the bibliography"  # type: ignore[index]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("citation.title" in error and "bibliography" in error for error in errors))
+
+    def test_structured_citation_fields_require_bibliography_refs(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["candidate_origin"]["citation"] = {  # type: ignore[index]
+                "title": "Agent-added citation title without bibliography support",
+            }
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("citation.bibliography_refs" in error for error in errors))
 
     def test_no_candidates_payload_passes_with_empty_candidates(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -430,8 +469,8 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             duplicate["identifiers"]["paper_candidate_id"] = "HVS2"
             duplicate["identifiers"]["gaia_source_id"] = "Gaia DR3 987654321"
             duplicate["identifiers"]["all"] = [
-                {"value": "HVS2", "source_refs": candidate["candidate_assessment"]["source_refs"]},
-                {"value": "Gaia DR3 987654321", "source_refs": candidate["candidate_assessment"]["source_refs"]},
+                {"value": "HVS2", "source_refs": candidate["inclusion_assessment"]["source_refs"]},
+                {"value": "Gaia DR3 987654321", "source_refs": candidate["inclusion_assessment"]["source_refs"]},
             ]
             payload["candidates"].append(duplicate)  # type: ignore[index]
 
@@ -517,7 +556,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             payload = valid_payload(workspace)
             candidate = payload["candidates"][0]  # type: ignore[index]
             candidate["identifiers"]["all"].append(  # type: ignore[index]
-                {"value": "2603.00001:cand-001", "source_refs": candidate["candidate_assessment"]["source_refs"]}  # type: ignore[index]
+                {"value": "2603.00001:cand-001", "source_refs": candidate["inclusion_assessment"]["source_refs"]}  # type: ignore[index]
             )
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
             self.assertTrue(any("must not appear in identifiers.all" in error for error in errors))
@@ -545,8 +584,8 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
-            self.assertTrue(any("candidate_id" in error and "legacy v4" in error for error in errors))
-            self.assertTrue(any("identifiers.primary" in error and "legacy v4" in error for error in errors))
+            self.assertTrue(any("candidate_id" in error and "legacy" in error for error in errors))
+            self.assertTrue(any("identifiers.primary" in error and "legacy" in error for error in errors))
 
     def test_no_candidates_requires_groups_considered(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -577,10 +616,10 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             payload = valid_payload(workspace)
             candidate = payload["candidates"][0]  # type: ignore[index]
-            del candidate["core"]["probabilities"]  # type: ignore[index]
+            del candidate["core"]["bound_assessment"]  # type: ignore[index]
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
-            self.assertTrue(any(".core.probabilities" in error for error in errors))
+            self.assertTrue(any(".core.bound_assessment" in error for error in errors))
 
     def test_raw_value_uncertainty_requires_machine_error_fields(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -588,7 +627,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             payload = valid_payload(workspace)
             candidate = payload["candidates"][0]  # type: ignore[index]
             velocity = candidate["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]  # type: ignore[index]
-            text_ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            text_ref = candidate["inclusion_assessment"]["source_refs"][0]  # type: ignore[index]
             velocity["source_refs"] = [text_ref]
             velocity["raw_value"] = "701+/-12"
             velocity["value"] = "701"
@@ -618,7 +657,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             workspace = Path(tmp)
             payload = valid_payload(workspace)
             candidate = payload["candidates"][0]  # type: ignore[index]
-            ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            ref = candidate["inclusion_assessment"]["source_refs"][0]  # type: ignore[index]
             ref["start_line"] = 5
             ref["end_line"] = 5
 
@@ -628,7 +667,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             payload = valid_payload(workspace)
             candidate = payload["candidates"][0]  # type: ignore[index]
-            ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            ref = candidate["inclusion_assessment"]["source_refs"][0]  # type: ignore[index]
             ref["start_line"] = 6
             ref["end_line"] = 6
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
@@ -637,7 +676,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             payload = valid_payload(workspace)
             candidate = payload["candidates"][0]  # type: ignore[index]
-            ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            ref = candidate["inclusion_assessment"]["source_refs"][0]  # type: ignore[index]
             ref["start_line"] = 1
             ref["end_line"] = 1
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
@@ -646,7 +685,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             payload = valid_payload(workspace)
             candidate = payload["candidates"][0]  # type: ignore[index]
-            ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            ref = candidate["inclusion_assessment"]["source_refs"][0]  # type: ignore[index]
             ref["start_line"] = 9
             ref["end_line"] = 10
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
@@ -725,7 +764,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             payload = valid_payload(workspace)
             candidate = payload["candidates"][0]  # type: ignore[index]
             velocity = candidate["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]  # type: ignore[index]
-            text_ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            text_ref = candidate["inclusion_assessment"]["source_refs"][0]  # type: ignore[index]
             velocity["source_refs"] = [text_ref]
             velocity["raw_value"] = "701^{+2}_{-1}"
             velocity["value"] = "701"
@@ -745,7 +784,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             workspace = Path(tmp)
             payload = valid_payload(workspace)
             candidate = payload["candidates"][0]  # type: ignore[index]
-            text_ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            text_ref = candidate["inclusion_assessment"]["source_refs"][0]  # type: ignore[index]
             core = candidate["core"]  # type: ignore[index]
             core["derived_kinematics"]["total_velocity"] = {  # type: ignore[index]
                 "raw_value": "ranging from 742 to 895 km/s",
@@ -790,7 +829,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             workspace = Path(tmp)
             payload = valid_payload(workspace)
             candidate = payload["candidates"][0]  # type: ignore[index]
-            text_ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            text_ref = candidate["inclusion_assessment"]["source_refs"][0]  # type: ignore[index]
             observed = candidate["core"]["observed_phase_space"]  # type: ignore[index]
             observed["ra"] = coordinate_record(  # type: ignore[index]
                 text_ref,
@@ -816,7 +855,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             workspace = Path(tmp)
             payload = valid_payload(workspace)
             candidate = payload["candidates"][0]  # type: ignore[index]
-            text_ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            text_ref = candidate["inclusion_assessment"]["source_refs"][0]  # type: ignore[index]
             observed = candidate["core"]["observed_phase_space"]  # type: ignore[index]
             observed["ra"] = coordinate_record(  # type: ignore[index]
                 text_ref,
@@ -844,7 +883,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             workspace = Path(tmp)
             payload = valid_payload(workspace)
             candidate = payload["candidates"][0]  # type: ignore[index]
-            text_ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            text_ref = candidate["inclusion_assessment"]["source_refs"][0]  # type: ignore[index]
             paper_dir = workspace / "literature" / "2603.00001"
             coordinate_table = paper_dir / "catalog_tables" / "table-coordinates.ecsv"
             coordinate_text = "\n".join(
@@ -889,7 +928,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             workspace = Path(tmp)
             payload = valid_payload(workspace)
             candidate = payload["candidates"][0]  # type: ignore[index]
-            text_ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            text_ref = candidate["inclusion_assessment"]["source_refs"][0]  # type: ignore[index]
             observed = candidate["core"]["observed_phase_space"]  # type: ignore[index]
             ra = coordinate_record(
                 text_ref,
@@ -915,7 +954,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             workspace = Path(tmp)
             payload = valid_payload(workspace)
             candidate = payload["candidates"][0]  # type: ignore[index]
-            text_ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            text_ref = candidate["inclusion_assessment"]["source_refs"][0]  # type: ignore[index]
             observed = candidate["core"]["observed_phase_space"]  # type: ignore[index]
             ra = coordinate_record(
                 text_ref,
@@ -952,11 +991,11 @@ class HvsCandidatesValidationTest(unittest.TestCase):
         )
         self.assertEqual(grouped[1], warnings[3])
 
-    def test_quantitative_extra_numeric_fields_fail_without_textual_false_positives(self) -> None:
+    def test_typed_quantitative_numeric_fields_fail_without_textual_false_positives(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
-            text_ref = payload["candidates"][0]["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            text_ref = payload["candidates"][0]["inclusion_assessment"]["source_refs"][0]  # type: ignore[index]
             payload["method_chain"].append(  # type: ignore[index]
                 {
                     "id": "step-04",
@@ -967,49 +1006,176 @@ class HvsCandidatesValidationTest(unittest.TestCase):
                 }
             )
             candidate = payload["candidates"][0]  # type: ignore[index]
-            candidate["extra"].extend(  # type: ignore[index]
-                [
-                    {
-                        "name": "absolute_magnitude_G",
-                        "raw_value": "M_G=2.01+/-0.60tnoted",
-                        "value": "2.01",
-                        "error": "0.60tnoted",
-                        "unit": "mag",
-                        "kind": "absolute_magnitude",
-                        "source_refs": [text_ref],
-                        "method_refs": ["step-01"],
-                    },
-                    {
-                        "name": "eccentricity",
-                        "raw_value": "greater than 0.98",
-                        "value": ">0.98",
-                        "unit": "",
-                        "description": "orbital eccentricity lower limit",
-                        "source_refs": [text_ref],
-                        "method_refs": ["step-04"],
-                    },
-                    {
-                        "name": "lamost_designation",
-                        "raw_value": "J161649.39-030624.9",
-                        "value": "J161649.39-030624.9",
-                        "source_refs": [text_ref],
-                        "method_refs": ["step-03"],
-                    },
-                ]
+            candidate["photometry"].append(  # type: ignore[index]
+                {
+                    "measurement_type": "absolute_magnitude",
+                    "band": "G",
+                    "raw_value": "M_G=2.01+/-0.60tnoted",
+                    "value": "2.01",
+                    "error": "0.60tnoted",
+                    "unit": "mag",
+                    "kind": "absolute_magnitude",
+                    "source_refs": [text_ref],
+                    "method_refs": ["step-01"],
+                }
+            )
+            candidate["orbit"]["eccentricity"] = {  # type: ignore[index]
+                "raw_value": "greater than 0.98",
+                "value": ">0.98",
+                "unit": "",
+                "description": "orbital eccentricity lower limit",
+                "source_refs": [text_ref],
+                "method_refs": ["step-04"],
+            }
+            candidate["extra"].append(  # type: ignore[index]
+                {
+                    "name": "lamost_designation",
+                    "raw_value": "J161649.39-030624.9",
+                    "value": "J161649.39-030624.9",
+                    "source_refs": [text_ref],
+                    "method_refs": ["step-03"],
+                }
             )
 
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
-            self.assertTrue(any(".extra[1].error" in error for error in errors))
-            self.assertTrue(any(".extra[2].value" in error for error in errors))
-            self.assertFalse(any(".extra[3].value" in error for error in errors))
+            self.assertTrue(any(".photometry[0].error" in error for error in errors))
+            self.assertTrue(any(".orbit.eccentricity.value" in error for error in errors))
+            self.assertFalse(any(".extra[1].value" in error for error in errors))
 
-            candidate["extra"][1]["error"] = ""  # type: ignore[index]
-            candidate["extra"][1]["raw_value"] = "M_G=2.01"  # type: ignore[index]
-            candidate["extra"][2]["value"] = ""  # type: ignore[index]
+            candidate["photometry"][0]["error"] = ""  # type: ignore[index]
+            candidate["photometry"][0]["raw_value"] = "M_G=2.01"  # type: ignore[index]
+            candidate["orbit"]["eccentricity"]["value"] = ""  # type: ignore[index]
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
             self.assertFalse(any("single plain numeric" in error for error in errors))
+
+    def test_standard_quantity_in_extra_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            text_ref = payload["candidates"][0]["inclusion_assessment"]["source_refs"][0]  # type: ignore[index]
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["extra"].append(  # type: ignore[index]
+                {
+                    "name": "P_esc",
+                    "raw_value": "99.9",
+                    "value": "99.9",
+                    "unit": "%",
+                    "description": "escape probability",
+                    "source_refs": [text_ref],
+                    "method_refs": ["step-03"],
+                }
+            )
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("typed v7 group" in error for error in errors))
+
+    def test_origin_probability_metrics_pass_in_astrophysical_origin(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            text_ref = payload["candidates"][0]["inclusion_assessment"]["source_refs"][0]  # type: ignore[index]
+            payload["method_chain"].append(  # type: ignore[index]
+                {
+                    "id": "step-04",
+                    "depends_on": [],
+                    "step_type": "reported_value_adoption",
+                    "summary": "Reported origin probability metric adopted from the paper.",
+                    "source_refs": [text_ref],
+                }
+            )
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["astrophysical_origin"]["hypothesis_metrics"].extend(  # type: ignore[index]
+                [
+                    {
+                        "hypothesis": "Milky Way",
+                        "metric_type": "p_value",
+                        "raw_value": "0.72",
+                        "value": "0.72",
+                        "unit": "",
+                        "description": "p-value for Galactic Center origin hypothesis",
+                        "source_refs": [text_ref],
+                        "method_refs": ["step-04"],
+                    },
+                    {
+                        "hypothesis": "LMC",
+                        "metric_type": "likelihood_ratio",
+                        "raw_value": "-0.49",
+                        "value": "-0.49",
+                        "unit": "",
+                        "description": "log likelihood ratio comparing LMC and Milky Way origins",
+                        "source_refs": [text_ref],
+                        "method_refs": ["step-04"],
+                    },
+                ]
+            )
+
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace, require_complete=True)
+
+            self.assertEqual(report.errors, [])
+
+    def test_standard_typed_records_pass_complete_validation(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            text_ref = payload["candidates"][0]["inclusion_assessment"]["source_refs"][0]  # type: ignore[index]
+            payload["method_chain"].append(  # type: ignore[index]
+                {
+                    "id": "step-04",
+                    "depends_on": [],
+                    "step_type": "reported_value_adoption",
+                    "summary": "Reported stellar and spectroscopic values adopted from the paper.",
+                    "source_refs": [text_ref],
+                }
+            )
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["photometry"].append(  # type: ignore[index]
+                {
+                    "measurement_type": "magnitude",
+                    "band": "G",
+                    "system": "Gaia",
+                    "raw_value": "17.2",
+                    "value": "17.2",
+                    "unit": "mag",
+                    "source_refs": [text_ref],
+                    "method_refs": ["step-01"],
+                }
+            )
+            candidate["spectroscopy"].append(  # type: ignore[index]
+                {
+                    "measurement_type": "spectral_type",
+                    "spectral_type": "B",
+                    "raw_value": "B",
+                    "value": "B",
+                    "source_refs": [text_ref],
+                    "method_refs": ["step-04"],
+                }
+            )
+            candidate["stellar_parameters"]["teff"] = {  # type: ignore[index]
+                "raw_value": "12000",
+                "value": "12000",
+                "unit": "K",
+                "source_refs": [text_ref],
+                "method_refs": ["step-04"],
+            }
+            candidate["abundances"].append(  # type: ignore[index]
+                {
+                    "element": "Fe",
+                    "abundance_scale": "dex",
+                    "reference_element": "H",
+                    "raw_value": "-0.5",
+                    "value": "-0.5",
+                    "unit": "dex",
+                    "source_refs": [text_ref],
+                    "method_refs": ["step-04"],
+                }
+            )
+
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace, require_complete=True)
+
+            self.assertEqual(report.errors, [])
 
     def test_numeric_machine_fields_accept_signed_and_scientific_values(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -1017,7 +1183,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             payload = valid_payload(workspace)
             candidate = payload["candidates"][0]  # type: ignore[index]
             velocity = candidate["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]  # type: ignore[index]
-            text_ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            text_ref = candidate["inclusion_assessment"]["source_refs"][0]  # type: ignore[index]
             velocity["source_refs"] = [text_ref]
             velocity["raw_value"] = "+3.00+/-1.3e5"
             velocity["value"] = "+3.00"
@@ -1032,7 +1198,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
-            text_ref = payload["candidates"][0]["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            text_ref = payload["candidates"][0]["inclusion_assessment"]["source_refs"][0]  # type: ignore[index]
             payload["method_chain"].extend(  # type: ignore[index]
                 [
                     {
@@ -1052,8 +1218,8 @@ class HvsCandidatesValidationTest(unittest.TestCase):
                 ]
             )
             candidate = payload["candidates"][0]  # type: ignore[index]
-            probabilities = candidate["core"]["probabilities"]  # type: ignore[index]
-            probabilities["unbound_probability"] = {
+            bound_assessment = candidate["core"]["bound_assessment"]  # type: ignore[index]
+            bound_assessment["unbound_probability"] = {
                 "raw_value": "17",
                 "value": "0.17",
                 "unit": "",
@@ -1065,31 +1231,42 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace, require_complete=True)
             self.assertEqual(report.errors, [])
 
-            probabilities["unbound_probability"]["value"] = "17"  # type: ignore[index]
-            probabilities["unbound_probability"]["unit"] = "%"  # type: ignore[index]
+            bound_assessment["unbound_probability"]["value"] = "17"  # type: ignore[index]
+            bound_assessment["unbound_probability"]["unit"] = "%"  # type: ignore[index]
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
-            self.assertTrue(any("core.probabilities.unbound_probability.value" in error for error in errors))
-            self.assertTrue(any("core.probabilities.unbound_probability.unit" in error for error in errors))
+            self.assertTrue(any("core.bound_assessment.unbound_probability.value" in error for error in errors))
+            self.assertTrue(any("core.bound_assessment.unbound_probability.unit" in error for error in errors))
 
-    def test_runaway_candidate_status_fails(self) -> None:
+    def test_legacy_candidate_status_fails(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
             candidate = payload["candidates"][0]  # type: ignore[index]
-            candidate["candidate_assessment"]["candidate_status"] = "runaway_candidate"  # type: ignore[index]
+            candidate["inclusion_assessment"]["candidate_status"] = "runaway_candidate"  # type: ignore[index]
 
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
             self.assertTrue(any("candidate_status" in error for error in errors))
 
-    def test_candidate_assessment_requires_paper_text_evidence(self) -> None:
+    def test_invalid_extraction_confidence_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["inclusion_assessment"]["extraction_confidence"] = "candidate"  # type: ignore[index]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("extraction_confidence" in error for error in errors))
+
+    def test_inclusion_assessment_requires_paper_text_evidence(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
             candidate = payload["candidates"][0]  # type: ignore[index]
             velocity = candidate["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]  # type: ignore[index]
-            candidate["candidate_assessment"]["source_refs"] = velocity["source_refs"]  # type: ignore[index]
+            candidate["inclusion_assessment"]["source_refs"] = velocity["source_refs"]  # type: ignore[index]
 
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
@@ -1356,7 +1533,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
                 "raw_value": "12.0",
                 "value": "12.0",
                 "unit": "kpc",
-                "source_refs": candidate["candidate_assessment"]["source_refs"],  # type: ignore[index]
+                "source_refs": candidate["inclusion_assessment"]["source_refs"],  # type: ignore[index]
                 "method_refs": ["step-02"],
             }
 
@@ -1449,7 +1626,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             workspace = Path(tmp)
             payload = valid_payload(workspace)
             candidate = payload["candidates"][0]  # type: ignore[index]
-            candidate["candidate_assessment"]["source_refs"] = [  # type: ignore[index]
+            candidate["inclusion_assessment"]["source_refs"] = [  # type: ignore[index]
                 {
                     "kind": "text",
                     "path": "literature/2603.00001/arxiv_source/refs.bib",
@@ -1468,33 +1645,32 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             errors = validate_cli.validate_hvs_candidates(cited, workspace=workspace)
             self.assertEqual(errors, [])
 
-    def test_candidate_bound_phrase_warns_without_error(self) -> None:
+    def test_candidate_bound_phrase_fails(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
             candidate = payload["candidates"][0]  # type: ignore[index]
-            candidate["candidate_assessment"][  # type: ignore[index]
+            candidate["inclusion_assessment"][  # type: ignore[index]
                 "summary"
             ] = "The paper says HVS1 is currently bound to the Galaxy."
 
             report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
 
-            self.assertEqual(report.errors, [])
-            self.assertTrue(any("bound-status phrase" in warning for warning in report.warnings))
+            self.assertTrue(any("bound-status phrase" in error for error in report.errors))
 
     def test_unbound_phrase_does_not_trigger_bound_warning(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
             candidate = payload["candidates"][0]  # type: ignore[index]
-            candidate["candidate_assessment"][  # type: ignore[index]
+            candidate["inclusion_assessment"][  # type: ignore[index]
                 "summary"
             ] = "The paper says HVS1 is unbound to the Galaxy."
 
             report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
 
             self.assertEqual(report.errors, [])
-            self.assertFalse(any("bound-status phrase" in warning for warning in report.warnings))
+            self.assertFalse(any("bound-status phrase" in error for error in report.errors))
 
     def test_require_complete_rejects_needs_review_skeleton(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

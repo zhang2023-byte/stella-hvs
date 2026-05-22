@@ -307,27 +307,48 @@ class CandidateIdentifiers(StrictModel):
         return value
 
 
-class CandidateAssessment(StrictModel):
+class InclusionAssessment(StrictModel):
     summary: str
-    candidate_status: Literal[
-        "hvs_candidate",
-        "unbound_candidate",
-        "hyper_runaway_candidate",
-        "escaping_galaxy_candidate",
+    paper_labels: list[
+        Literal[
+            "hvs_candidate",
+            "hyper_runaway_candidate",
+            "escaping_star",
+            "unbound_star",
+            "high_velocity_star",
+            "runaway_candidate",
+            "candidate_group_member",
+            "other",
+        ]
     ]
-    confidence: str
+    galactic_bound_claim: Literal[
+        "unbound",
+        "likely_unbound",
+        "possibly_unbound",
+        "escaping",
+        "not_reported",
+    ]
+    inclusion_basis: Literal[
+        "explicit_candidate_text",
+        "explicit_unbound_text",
+        "cited_prior_candidate_reassessed",
+        "candidate_table_with_text_anchor",
+    ]
+    extraction_confidence: Literal["high", "medium", "low"]
+    confidence_reason: str
     source_refs: list[SourceRef]
 
 
 class CandidateCitation(StrictModel):
     bibkey: str
-    title: str = ""
-    year: str = ""
     authors: list[str] = Field(default_factory=list)
-    bibcode: str = ""
+    year: str = ""
+    title: str = ""
     doi: str = ""
+    bibcode: str = ""
     arxiv_id: str = ""
-    source_refs: list[SourceRef]
+    citation_context_refs: list[SourceRef]
+    bibliography_refs: list[SourceRef]
 
 
 class CandidateOrigin(StrictModel):
@@ -348,6 +369,100 @@ class QuantityRecord(StrictModel):
     description: str = ""
     source_refs: list[SourceRef]
     method_refs: list[str]
+
+
+class NamedQuantityRecord(QuantityRecord):
+    name: str
+
+
+class ExtraQuantityRecord(NamedQuantityRecord):
+    pass
+
+
+class PhotometryRecord(QuantityRecord):
+    measurement_type: Literal[
+        "magnitude",
+        "absolute_magnitude",
+        "color",
+        "flux",
+        "flux_density",
+        "extinction",
+        "reddening",
+        "other",
+    ]
+    band: str = ""
+    system: str = ""
+    survey: str = ""
+
+
+class SpectroscopyRecord(QuantityRecord):
+    measurement_type: Literal[
+        "spectral_type",
+        "radial_velocity_follow_up",
+        "line_measurement",
+        "signal_to_noise",
+        "classification",
+        "other",
+    ]
+    spectral_type: str = ""
+    line: str = ""
+    instrument: str = ""
+    survey: str = ""
+
+
+class AbundanceRecord(QuantityRecord):
+    element: str
+    abundance_scale: str = ""
+    reference_element: str = ""
+
+
+class QualityFlagRecord(NamedQuantityRecord):
+    pass
+
+
+class StellarParameters(StrictModel):
+    teff: QuantityRecord | None = None
+    log_g: QuantityRecord | None = None
+    metallicity: QuantityRecord | None = None
+    mass: QuantityRecord | None = None
+    radius: QuantityRecord | None = None
+    age: QuantityRecord | None = None
+    luminosity: QuantityRecord | None = None
+    spectral_type: QuantityRecord | None = None
+    other: list[NamedQuantityRecord] = Field(default_factory=list)
+
+
+class OrbitRecord(StrictModel):
+    eccentricity: QuantityRecord | None = None
+    pericenter: QuantityRecord | None = None
+    apocenter: QuantityRecord | None = None
+    zmax: QuantityRecord | None = None
+    flight_time: QuantityRecord | None = None
+    disk_crossing_radius: QuantityRecord | None = None
+    angular_momentum: QuantityRecord | None = None
+    other: list[NamedQuantityRecord] = Field(default_factory=list)
+
+
+class HypothesisMetricRecord(QuantityRecord):
+    hypothesis: str
+    metric_type: Literal[
+        "probability",
+        "p_value",
+        "likelihood",
+        "likelihood_ratio",
+        "score",
+        "classification",
+        "other",
+    ]
+
+
+class AstrophysicalOrigin(StrictModel):
+    origin_site: QuantityRecord | None = None
+    origin_classification: QuantityRecord | None = None
+    ejection_velocity: QuantityRecord | None = None
+    travel_time: QuantityRecord | None = None
+    hypothesis_metrics: list[HypothesisMetricRecord] = Field(default_factory=list)
+    other: list[NamedQuantityRecord] = Field(default_factory=list)
 
 
 class CoordinateReferenceFrame(StrictModel):
@@ -407,31 +522,35 @@ class DerivedKinematics(StrictModel):
     galactocentric_tangential_velocity: QuantityRecord | None = None
     total_velocity: QuantityRecord | None = None
     galactic_rest_frame_velocity: QuantityRecord | None = None
+
+
+class BoundAssessment(StrictModel):
     escape_velocity: QuantityRecord | None = None
     escape_velocity_ratio: QuantityRecord | None = None
-
-
-class Probabilities(StrictModel):
+    escape_margin: QuantityRecord | None = None
     bound_probability: QuantityRecord | None = None
     unbound_probability: QuantityRecord | None = None
-    classification_probability: QuantityRecord | None = None
+    bound_status_metric: QuantityRecord | None = None
 
 
 class CandidateCore(StrictModel):
     observed_phase_space: ObservedPhaseSpace
     derived_kinematics: DerivedKinematics
-    probabilities: Probabilities
-
-
-class ExtraQuantityRecord(QuantityRecord):
-    name: str
+    bound_assessment: BoundAssessment
 
 
 class CandidateRecord(StrictModel):
     identifiers: CandidateIdentifiers
-    candidate_assessment: CandidateAssessment
+    inclusion_assessment: InclusionAssessment
     candidate_origin: CandidateOrigin
     core: CandidateCore
+    photometry: list[PhotometryRecord]
+    spectroscopy: list[SpectroscopyRecord]
+    stellar_parameters: StellarParameters
+    abundances: list[AbundanceRecord]
+    quality_flags: list[QualityFlagRecord]
+    orbit: OrbitRecord
+    astrophysical_origin: AstrophysicalOrigin
     extra: list[ExtraQuantityRecord]
 
 
@@ -444,7 +563,7 @@ class CandidateGroupConsidered(StrictModel):
 
 
 class LiteratureHvsCandidatesRecord(StrictModel):
-    schema_version: Literal["stella.literature_hvs_candidates.v6"]
+    schema_version: Literal["stella.literature_hvs_candidates.v7"]
     generated_at: str
     paper: HvsPaper
     inputs: HvsInputs

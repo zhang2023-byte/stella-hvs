@@ -49,9 +49,6 @@ CORE_OBSERVED_CATALOG_FIELDS = {
 }
 CORE_OBSERVED_DISTANCE_FIELDS = {"distance"}
 CORE_OBSERVED_RADIAL_VELOCITY_FIELDS = {"radial_velocity"}
-CORE_DERIVED_BOUND_FIELDS = {"escape_velocity", "escape_velocity_ratio"}
-CORE_PROBABILITY_BOUND_FIELDS = {"bound_probability", "unbound_probability"}
-CORE_PROBABILITY_CLASSIFICATION_FIELDS = {"classification_probability"}
 
 QUALITY_RE = re.compile(
     r"(ruwe|parallax[_ -]?over[_ -]?error|visibility[_ -]?period|significance|"
@@ -124,14 +121,24 @@ def classify_quantity_record(location: str, record: dict[str, Any]) -> str | Non
         if field_name in CORE_OBSERVED_RADIAL_VELOCITY_FIELDS:
             return "radial_velocity"
     if ".core.derived_kinematics." in location:
-        if field_name in CORE_DERIVED_BOUND_FIELDS:
-            return "bound_assessment"
         return "velocity"
-    if ".core.probabilities." in location:
-        if field_name in CORE_PROBABILITY_BOUND_FIELDS:
-            return "bound_assessment"
-        if field_name in CORE_PROBABILITY_CLASSIFICATION_FIELDS:
-            return "candidate_classification"
+    if ".core.bound_assessment." in location:
+        return "bound_assessment"
+    if ".photometry[" in location:
+        return "photometric"
+    if ".spectroscopy[" in location:
+        searchable = _searchable_quantity_text(field_name, record)
+        if RADIAL_VELOCITY_RE.search(searchable):
+            return "radial_velocity"
+        return "stellar_parameter"
+    if ".stellar_parameters." in location or ".abundances[" in location:
+        return "stellar_parameter"
+    if ".quality_flags[" in location:
+        return "quality"
+    if ".orbit." in location:
+        return "orbit"
+    if ".astrophysical_origin." in location:
+        return "origin"
 
     searchable = _searchable_quantity_text(field_name, record)
     if BOUND_RE.search(searchable):
@@ -330,4 +337,3 @@ def _method_step_list_text(step: dict[str, Any], key: str) -> str:
     if isinstance(value, list):
         return " ".join(str(item) for item in value)
     return ""
-

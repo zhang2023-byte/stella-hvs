@@ -140,7 +140,7 @@ def simplify_core(core: Any) -> dict[str, Any]:
     """Keep only object-catalog quantity fields requested by the merge workflow."""
     source_core = core if isinstance(core, dict) else {}
     simplified: dict[str, Any] = {}
-    for group_name in ("observed_phase_space", "derived_kinematics", "probabilities"):
+    for group_name in ("observed_phase_space", "derived_kinematics", "bound_assessment"):
         group = source_core.get(group_name)
         output_group: dict[str, Any] = {}
         if isinstance(group, dict):

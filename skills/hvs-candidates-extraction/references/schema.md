@@ -4,7 +4,7 @@
 
 `literature_hvs_candidates.json` is the Agent-filled paper-level HVS/unbound candidate fact source. Generate a skeleton from code, then fill candidate semantics and provenance.
 
-Use `schema_version: "stella.literature_hvs_candidates.v6"`.
+Use `schema_version: "stella.literature_hvs_candidates.v7"`.
 
 ## Required Top-Level Fields
 
@@ -21,7 +21,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v6"`.
 
 ```json
 {
-  "schema_version": "stella.literature_hvs_candidates.v6",
+  "schema_version": "stella.literature_hvs_candidates.v7",
   "generated_at": "",
   "paper": {},
   "inputs": {},
@@ -34,45 +34,76 @@ Use `schema_version: "stella.literature_hvs_candidates.v6"`.
 
 ## Enum Values
 
+- `absolute_magnitude`
 - `ambiguous`
 - `astrometric_calibration`
 - `candidate_classification`
+- `candidate_group_member`
+- `candidate_table_with_text_anchor`
 - `candidates_found`
 - `cited_from_literature`
+- `cited_prior_candidate_reassessed`
+- `classification`
+- `color`
 - `cross_match`
 - `decimal_degrees`
 - `distance_estimation`
 - `ecsv_cell`
 - `equinox`
 - `escape_or_bound_assessment`
-- `escaping_galaxy_candidate`
+- `escaping`
+- `escaping_star`
+- `explicit_candidate_text`
+- `explicit_unbound_text`
+- `extinction`
+- `flux`
+- `flux_density`
 - `follow_up_validation`
 - `galactic_potential_model`
+- `high`
+- `high_velocity_star`
 - `hvs_candidate`
 - `hyper_runaway_candidate`
 - `input_catalog`
 - `introduced_by_this_paper`
+- `likelihood`
+- `likelihood_ratio`
+- `likely_unbound`
+- `line_measurement`
+- `low`
+- `magnitude`
+- `medium`
 - `needs_review`
 - `no_candidates`
 - `not_reported`
 - `orbit_integration`
 - `origin_assessment`
 - `other`
+- `p_value`
 - `partial`
 - `photometric_or_sed_modeling`
+- `possibly_unbound`
+- `probability`
 - `quality_filter`
+- `radial_velocity_follow_up`
 - `radial_velocity_measurement`
+- `reddening`
 - `reference_epoch`
 - `reported_value_adoption`
+- `runaway_candidate`
 - `sample_selection`
+- `score`
 - `sexagesimal_colon`
 - `sexagesimal_dms`
 - `sexagesimal_hms`
+- `signal_to_noise`
 - `source_missing`
-- `stella.literature_hvs_candidates.v6`
+- `spectral_type`
+- `stella.literature_hvs_candidates.v7`
 - `stellar_parameter_inference`
 - `text`
-- `unbound_candidate`
+- `unbound`
+- `unbound_star`
 - `velocity_calculation`
 
 ## Workflow Notes
@@ -82,37 +113,57 @@ Use `schema_version: "stella.literature_hvs_candidates.v6"`.
 - Use `scripts/validate_hvs_candidates.py --require-complete` for final Agent-filled output; plain validation only checks structural skeleton validity.
 - Every quantity must preserve `raw_value`, cleaned `value`, source references, and exactly one direct-producer `method_refs` entry when complete.
 - Candidate identifiers live under `identifiers`: `record_id` is the internal `<arxiv_id>:cand-001` record key, `paper_candidate_id` is the paper display name, `gaia_source_id` is the strict Gaia machine id or empty string, and `all[]` stores paper-visible names with source refs.
-- For numeric core fields and quantitative `extra[]` records, `value`, `error`, `lower_error`, and `upper_error` should be single plain numbers; ranges, limits, units, notes, and LaTeX residue stay in `raw_value`/`description`.
-- Core probability fields normalize `value` to a unitless 0-1 fraction and leave `unit` empty; paper percent values remain in `raw_value` and source refs.
+- For numeric core fields and quantitative typed records, `value`, `error`, `lower_error`, and `upper_error` should be single plain numbers; ranges, limits, units, notes, and LaTeX residue stay in `raw_value`/`description`.
+- `core.bound_assessment.bound_probability` and `unbound_probability` normalize `value` to a unitless 0-1 fraction and leave `unit` empty; paper percent values remain in `raw_value` and source refs.
 - RA/Dec are coordinate records: keep each coordinate component in `raw_value`/`value`, put frame and epoch context in the nested `reference_frame` and `epoch` objects, and use `component_raw_value` when one ECSV cell contains both components.
 - `method_chain[]` uses local `step-XX` ids, canonical `step_type` values, and `depends_on[]` to encode upstream method lineage.
 - Full quantity provenance is the direct `method_refs` step plus recursive `depends_on[]` ancestors; candidates do not carry paper-level `method_chain_refs`.
-- The standard `core` groups are `observed_phase_space`, `derived_kinematics`, and `probabilities`; paper-specific fields go in `extra[]`.
+- The standard `core` groups are `observed_phase_space`, `derived_kinematics`, and `bound_assessment`; photometry, spectroscopy, stellar parameters, abundances, quality flags, orbit values, and origin metrics use typed v7 groups before `extra[]`.
 
 ## JSON Schema
 
 ```json
 {
   "$defs": {
-    "CandidateAssessment": {
+    "AbundanceRecord": {
       "additionalProperties": false,
       "properties": {
-        "summary": {
-          "title": "Summary",
+        "raw_value": {
+          "title": "Raw Value",
           "type": "string"
         },
-        "candidate_status": {
-          "enum": [
-            "hvs_candidate",
-            "unbound_candidate",
-            "hyper_runaway_candidate",
-            "escaping_galaxy_candidate"
-          ],
-          "title": "Candidate Status",
+        "value": {
+          "title": "Value",
           "type": "string"
         },
-        "confidence": {
-          "title": "Confidence",
+        "error": {
+          "default": "",
+          "title": "Error",
+          "type": "string"
+        },
+        "lower_error": {
+          "default": "",
+          "title": "Lower Error",
+          "type": "string"
+        },
+        "upper_error": {
+          "default": "",
+          "title": "Upper Error",
+          "type": "string"
+        },
+        "unit": {
+          "default": "",
+          "title": "Unit",
+          "type": "string"
+        },
+        "kind": {
+          "default": "",
+          "title": "Kind",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
           "type": "string"
         },
         "source_refs": {
@@ -128,15 +179,175 @@ Use `schema_version: "stella.literature_hvs_candidates.v6"`.
           },
           "title": "Source Refs",
           "type": "array"
+        },
+        "method_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Method Refs",
+          "type": "array"
+        },
+        "element": {
+          "title": "Element",
+          "type": "string"
+        },
+        "abundance_scale": {
+          "default": "",
+          "title": "Abundance Scale",
+          "type": "string"
+        },
+        "reference_element": {
+          "default": "",
+          "title": "Reference Element",
+          "type": "string"
         }
       },
       "required": [
-        "summary",
-        "candidate_status",
-        "confidence",
-        "source_refs"
+        "raw_value",
+        "value",
+        "source_refs",
+        "method_refs",
+        "element"
       ],
-      "title": "CandidateAssessment",
+      "title": "AbundanceRecord",
+      "type": "object"
+    },
+    "AstrophysicalOrigin": {
+      "additionalProperties": false,
+      "properties": {
+        "origin_site": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityRecord"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "origin_classification": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityRecord"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "ejection_velocity": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityRecord"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "travel_time": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityRecord"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "hypothesis_metrics": {
+          "items": {
+            "$ref": "#/$defs/HypothesisMetricRecord"
+          },
+          "title": "Hypothesis Metrics",
+          "type": "array"
+        },
+        "other": {
+          "items": {
+            "$ref": "#/$defs/NamedQuantityRecord"
+          },
+          "title": "Other",
+          "type": "array"
+        }
+      },
+      "title": "AstrophysicalOrigin",
+      "type": "object"
+    },
+    "BoundAssessment": {
+      "additionalProperties": false,
+      "properties": {
+        "escape_velocity": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityRecord"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "escape_velocity_ratio": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityRecord"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "escape_margin": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityRecord"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "bound_probability": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityRecord"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "unbound_probability": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityRecord"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "bound_status_metric": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityRecord"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "BoundAssessment",
       "type": "object"
     },
     "CandidateCitation": {
@@ -146,16 +357,6 @@ Use `schema_version: "stella.literature_hvs_candidates.v6"`.
           "title": "Bibkey",
           "type": "string"
         },
-        "title": {
-          "default": "",
-          "title": "Title",
-          "type": "string"
-        },
-        "year": {
-          "default": "",
-          "title": "Year",
-          "type": "string"
-        },
         "authors": {
           "items": {
             "type": "string"
@@ -163,9 +364,14 @@ Use `schema_version: "stella.literature_hvs_candidates.v6"`.
           "title": "Authors",
           "type": "array"
         },
-        "bibcode": {
+        "year": {
           "default": "",
-          "title": "Bibcode",
+          "title": "Year",
+          "type": "string"
+        },
+        "title": {
+          "default": "",
+          "title": "Title",
           "type": "string"
         },
         "doi": {
@@ -173,12 +379,17 @@ Use `schema_version: "stella.literature_hvs_candidates.v6"`.
           "title": "Doi",
           "type": "string"
         },
+        "bibcode": {
+          "default": "",
+          "title": "Bibcode",
+          "type": "string"
+        },
         "arxiv_id": {
           "default": "",
           "title": "Arxiv Id",
           "type": "string"
         },
-        "source_refs": {
+        "citation_context_refs": {
           "items": {
             "anyOf": [
               {
@@ -189,13 +400,28 @@ Use `schema_version: "stella.literature_hvs_candidates.v6"`.
               }
             ]
           },
-          "title": "Source Refs",
+          "title": "Citation Context Refs",
+          "type": "array"
+        },
+        "bibliography_refs": {
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/TextSourceRef"
+              },
+              {
+                "$ref": "#/$defs/EcsvCellSourceRef"
+              }
+            ]
+          },
+          "title": "Bibliography Refs",
           "type": "array"
         }
       },
       "required": [
         "bibkey",
-        "source_refs"
+        "citation_context_refs",
+        "bibliography_refs"
       ],
       "title": "CandidateCitation",
       "type": "object"
@@ -209,14 +435,14 @@ Use `schema_version: "stella.literature_hvs_candidates.v6"`.
         "derived_kinematics": {
           "$ref": "#/$defs/DerivedKinematics"
         },
-        "probabilities": {
-          "$ref": "#/$defs/Probabilities"
+        "bound_assessment": {
+          "$ref": "#/$defs/BoundAssessment"
         }
       },
       "required": [
         "observed_phase_space",
         "derived_kinematics",
-        "probabilities"
+        "bound_assessment"
       ],
       "title": "CandidateCore",
       "type": "object"
@@ -352,14 +578,51 @@ Use `schema_version: "stella.literature_hvs_candidates.v6"`.
         "identifiers": {
           "$ref": "#/$defs/CandidateIdentifiers"
         },
-        "candidate_assessment": {
-          "$ref": "#/$defs/CandidateAssessment"
+        "inclusion_assessment": {
+          "$ref": "#/$defs/InclusionAssessment"
         },
         "candidate_origin": {
           "$ref": "#/$defs/CandidateOrigin"
         },
         "core": {
           "$ref": "#/$defs/CandidateCore"
+        },
+        "photometry": {
+          "items": {
+            "$ref": "#/$defs/PhotometryRecord"
+          },
+          "title": "Photometry",
+          "type": "array"
+        },
+        "spectroscopy": {
+          "items": {
+            "$ref": "#/$defs/SpectroscopyRecord"
+          },
+          "title": "Spectroscopy",
+          "type": "array"
+        },
+        "stellar_parameters": {
+          "$ref": "#/$defs/StellarParameters"
+        },
+        "abundances": {
+          "items": {
+            "$ref": "#/$defs/AbundanceRecord"
+          },
+          "title": "Abundances",
+          "type": "array"
+        },
+        "quality_flags": {
+          "items": {
+            "$ref": "#/$defs/QualityFlagRecord"
+          },
+          "title": "Quality Flags",
+          "type": "array"
+        },
+        "orbit": {
+          "$ref": "#/$defs/OrbitRecord"
+        },
+        "astrophysical_origin": {
+          "$ref": "#/$defs/AstrophysicalOrigin"
         },
         "extra": {
           "items": {
@@ -371,9 +634,16 @@ Use `schema_version: "stella.literature_hvs_candidates.v6"`.
       },
       "required": [
         "identifiers",
-        "candidate_assessment",
+        "inclusion_assessment",
         "candidate_origin",
         "core",
+        "photometry",
+        "spectroscopy",
+        "stellar_parameters",
+        "abundances",
+        "quality_flags",
+        "orbit",
+        "astrophysical_origin",
         "extra"
       ],
       "title": "CandidateRecord",
@@ -719,28 +989,6 @@ Use `schema_version: "stella.literature_hvs_candidates.v6"`.
             }
           ],
           "default": null
-        },
-        "escape_velocity": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "escape_velocity_ratio": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
         }
       },
       "title": "DerivedKinematics",
@@ -986,6 +1234,97 @@ Use `schema_version: "stella.literature_hvs_candidates.v6"`.
       "title": "HvsPaper",
       "type": "object"
     },
+    "HypothesisMetricRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "raw_value": {
+          "title": "Raw Value",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        },
+        "error": {
+          "default": "",
+          "title": "Error",
+          "type": "string"
+        },
+        "lower_error": {
+          "default": "",
+          "title": "Lower Error",
+          "type": "string"
+        },
+        "upper_error": {
+          "default": "",
+          "title": "Upper Error",
+          "type": "string"
+        },
+        "unit": {
+          "default": "",
+          "title": "Unit",
+          "type": "string"
+        },
+        "kind": {
+          "default": "",
+          "title": "Kind",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        },
+        "source_refs": {
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/TextSourceRef"
+              },
+              {
+                "$ref": "#/$defs/EcsvCellSourceRef"
+              }
+            ]
+          },
+          "title": "Source Refs",
+          "type": "array"
+        },
+        "method_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Method Refs",
+          "type": "array"
+        },
+        "hypothesis": {
+          "title": "Hypothesis",
+          "type": "string"
+        },
+        "metric_type": {
+          "enum": [
+            "probability",
+            "p_value",
+            "likelihood",
+            "likelihood_ratio",
+            "score",
+            "classification",
+            "other"
+          ],
+          "title": "Metric Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "raw_value",
+        "value",
+        "source_refs",
+        "method_refs",
+        "hypothesis",
+        "metric_type"
+      ],
+      "title": "HypothesisMetricRecord",
+      "type": "object"
+    },
     "IdentifierRecord": {
       "additionalProperties": false,
       "properties": {
@@ -1012,6 +1351,91 @@ Use `schema_version: "stella.literature_hvs_candidates.v6"`.
         "value"
       ],
       "title": "IdentifierRecord",
+      "type": "object"
+    },
+    "InclusionAssessment": {
+      "additionalProperties": false,
+      "properties": {
+        "summary": {
+          "title": "Summary",
+          "type": "string"
+        },
+        "paper_labels": {
+          "items": {
+            "enum": [
+              "hvs_candidate",
+              "hyper_runaway_candidate",
+              "escaping_star",
+              "unbound_star",
+              "high_velocity_star",
+              "runaway_candidate",
+              "candidate_group_member",
+              "other"
+            ],
+            "type": "string"
+          },
+          "title": "Paper Labels",
+          "type": "array"
+        },
+        "galactic_bound_claim": {
+          "enum": [
+            "unbound",
+            "likely_unbound",
+            "possibly_unbound",
+            "escaping",
+            "not_reported"
+          ],
+          "title": "Galactic Bound Claim",
+          "type": "string"
+        },
+        "inclusion_basis": {
+          "enum": [
+            "explicit_candidate_text",
+            "explicit_unbound_text",
+            "cited_prior_candidate_reassessed",
+            "candidate_table_with_text_anchor"
+          ],
+          "title": "Inclusion Basis",
+          "type": "string"
+        },
+        "extraction_confidence": {
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Extraction Confidence",
+          "type": "string"
+        },
+        "confidence_reason": {
+          "title": "Confidence Reason",
+          "type": "string"
+        },
+        "source_refs": {
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/TextSourceRef"
+              },
+              {
+                "$ref": "#/$defs/EcsvCellSourceRef"
+              }
+            ]
+          },
+          "title": "Source Refs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "summary",
+        "paper_labels",
+        "galactic_bound_claim",
+        "inclusion_basis",
+        "extraction_confidence",
+        "confidence_reason",
+        "source_refs"
+      ],
+      "title": "InclusionAssessment",
       "type": "object"
     },
     "LinkSet": {
@@ -1112,6 +1536,83 @@ Use `schema_version: "stella.literature_hvs_candidates.v6"`.
       "title": "MethodStep",
       "type": "object"
     },
+    "NamedQuantityRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "raw_value": {
+          "title": "Raw Value",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        },
+        "error": {
+          "default": "",
+          "title": "Error",
+          "type": "string"
+        },
+        "lower_error": {
+          "default": "",
+          "title": "Lower Error",
+          "type": "string"
+        },
+        "upper_error": {
+          "default": "",
+          "title": "Upper Error",
+          "type": "string"
+        },
+        "unit": {
+          "default": "",
+          "title": "Unit",
+          "type": "string"
+        },
+        "kind": {
+          "default": "",
+          "title": "Kind",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        },
+        "source_refs": {
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/TextSourceRef"
+              },
+              {
+                "$ref": "#/$defs/EcsvCellSourceRef"
+              }
+            ]
+          },
+          "title": "Source Refs",
+          "type": "array"
+        },
+        "method_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Method Refs",
+          "type": "array"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "raw_value",
+        "value",
+        "source_refs",
+        "method_refs",
+        "name"
+      ],
+      "title": "NamedQuantityRecord",
+      "type": "object"
+    },
     "ObservedPhaseSpace": {
       "additionalProperties": false,
       "properties": {
@@ -1196,10 +1697,10 @@ Use `schema_version: "stella.literature_hvs_candidates.v6"`.
       "title": "ObservedPhaseSpace",
       "type": "object"
     },
-    "Probabilities": {
+    "OrbitRecord": {
       "additionalProperties": false,
       "properties": {
-        "bound_probability": {
+        "eccentricity": {
           "anyOf": [
             {
               "$ref": "#/$defs/QuantityRecord"
@@ -1210,7 +1711,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v6"`.
           ],
           "default": null
         },
-        "unbound_probability": {
+        "pericenter": {
           "anyOf": [
             {
               "$ref": "#/$defs/QuantityRecord"
@@ -1221,7 +1722,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v6"`.
           ],
           "default": null
         },
-        "classification_probability": {
+        "apocenter": {
           "anyOf": [
             {
               "$ref": "#/$defs/QuantityRecord"
@@ -1231,9 +1732,239 @@ Use `schema_version: "stella.literature_hvs_candidates.v6"`.
             }
           ],
           "default": null
+        },
+        "zmax": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityRecord"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "flight_time": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityRecord"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "disk_crossing_radius": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityRecord"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "angular_momentum": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityRecord"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "other": {
+          "items": {
+            "$ref": "#/$defs/NamedQuantityRecord"
+          },
+          "title": "Other",
+          "type": "array"
         }
       },
-      "title": "Probabilities",
+      "title": "OrbitRecord",
+      "type": "object"
+    },
+    "PhotometryRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "raw_value": {
+          "title": "Raw Value",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        },
+        "error": {
+          "default": "",
+          "title": "Error",
+          "type": "string"
+        },
+        "lower_error": {
+          "default": "",
+          "title": "Lower Error",
+          "type": "string"
+        },
+        "upper_error": {
+          "default": "",
+          "title": "Upper Error",
+          "type": "string"
+        },
+        "unit": {
+          "default": "",
+          "title": "Unit",
+          "type": "string"
+        },
+        "kind": {
+          "default": "",
+          "title": "Kind",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        },
+        "source_refs": {
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/TextSourceRef"
+              },
+              {
+                "$ref": "#/$defs/EcsvCellSourceRef"
+              }
+            ]
+          },
+          "title": "Source Refs",
+          "type": "array"
+        },
+        "method_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Method Refs",
+          "type": "array"
+        },
+        "measurement_type": {
+          "enum": [
+            "magnitude",
+            "absolute_magnitude",
+            "color",
+            "flux",
+            "flux_density",
+            "extinction",
+            "reddening",
+            "other"
+          ],
+          "title": "Measurement Type",
+          "type": "string"
+        },
+        "band": {
+          "default": "",
+          "title": "Band",
+          "type": "string"
+        },
+        "system": {
+          "default": "",
+          "title": "System",
+          "type": "string"
+        },
+        "survey": {
+          "default": "",
+          "title": "Survey",
+          "type": "string"
+        }
+      },
+      "required": [
+        "raw_value",
+        "value",
+        "source_refs",
+        "method_refs",
+        "measurement_type"
+      ],
+      "title": "PhotometryRecord",
+      "type": "object"
+    },
+    "QualityFlagRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "raw_value": {
+          "title": "Raw Value",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        },
+        "error": {
+          "default": "",
+          "title": "Error",
+          "type": "string"
+        },
+        "lower_error": {
+          "default": "",
+          "title": "Lower Error",
+          "type": "string"
+        },
+        "upper_error": {
+          "default": "",
+          "title": "Upper Error",
+          "type": "string"
+        },
+        "unit": {
+          "default": "",
+          "title": "Unit",
+          "type": "string"
+        },
+        "kind": {
+          "default": "",
+          "title": "Kind",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        },
+        "source_refs": {
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/TextSourceRef"
+              },
+              {
+                "$ref": "#/$defs/EcsvCellSourceRef"
+              }
+            ]
+          },
+          "title": "Source Refs",
+          "type": "array"
+        },
+        "method_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Method Refs",
+          "type": "array"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "raw_value",
+        "value",
+        "source_refs",
+        "method_refs",
+        "name"
+      ],
+      "title": "QualityFlagRecord",
       "type": "object"
     },
     "QuantityRecord": {
@@ -1308,6 +2039,213 @@ Use `schema_version: "stella.literature_hvs_candidates.v6"`.
       "title": "QuantityRecord",
       "type": "object"
     },
+    "SpectroscopyRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "raw_value": {
+          "title": "Raw Value",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        },
+        "error": {
+          "default": "",
+          "title": "Error",
+          "type": "string"
+        },
+        "lower_error": {
+          "default": "",
+          "title": "Lower Error",
+          "type": "string"
+        },
+        "upper_error": {
+          "default": "",
+          "title": "Upper Error",
+          "type": "string"
+        },
+        "unit": {
+          "default": "",
+          "title": "Unit",
+          "type": "string"
+        },
+        "kind": {
+          "default": "",
+          "title": "Kind",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        },
+        "source_refs": {
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/TextSourceRef"
+              },
+              {
+                "$ref": "#/$defs/EcsvCellSourceRef"
+              }
+            ]
+          },
+          "title": "Source Refs",
+          "type": "array"
+        },
+        "method_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Method Refs",
+          "type": "array"
+        },
+        "measurement_type": {
+          "enum": [
+            "spectral_type",
+            "radial_velocity_follow_up",
+            "line_measurement",
+            "signal_to_noise",
+            "classification",
+            "other"
+          ],
+          "title": "Measurement Type",
+          "type": "string"
+        },
+        "spectral_type": {
+          "default": "",
+          "title": "Spectral Type",
+          "type": "string"
+        },
+        "line": {
+          "default": "",
+          "title": "Line",
+          "type": "string"
+        },
+        "instrument": {
+          "default": "",
+          "title": "Instrument",
+          "type": "string"
+        },
+        "survey": {
+          "default": "",
+          "title": "Survey",
+          "type": "string"
+        }
+      },
+      "required": [
+        "raw_value",
+        "value",
+        "source_refs",
+        "method_refs",
+        "measurement_type"
+      ],
+      "title": "SpectroscopyRecord",
+      "type": "object"
+    },
+    "StellarParameters": {
+      "additionalProperties": false,
+      "properties": {
+        "teff": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityRecord"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "log_g": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityRecord"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "metallicity": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityRecord"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "mass": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityRecord"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "radius": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityRecord"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "age": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityRecord"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "luminosity": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityRecord"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "spectral_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityRecord"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "other": {
+          "items": {
+            "$ref": "#/$defs/NamedQuantityRecord"
+          },
+          "title": "Other",
+          "type": "array"
+        }
+      },
+      "title": "StellarParameters",
+      "type": "object"
+    },
     "TextSourceRef": {
       "additionalProperties": false,
       "properties": {
@@ -1347,7 +2285,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v6"`.
   "additionalProperties": false,
   "properties": {
     "schema_version": {
-      "const": "stella.literature_hvs_candidates.v6",
+      "const": "stella.literature_hvs_candidates.v7",
       "title": "Schema Version",
       "type": "string"
     },

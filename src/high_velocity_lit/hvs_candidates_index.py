@@ -29,18 +29,35 @@ def iter_hvs_candidates_paths(literature_dir: Path) -> list[Path]:
     )
 
 
-def _extract_candidate_statuses(candidates: list[dict[str, Any]]) -> dict[str, int]:
-    """Count candidates by candidate_status."""
+def _extract_paper_labels(candidates: list[dict[str, Any]]) -> dict[str, int]:
+    """Count candidates by non-exclusive paper label."""
     counts: dict[str, int] = {}
     for candidate in candidates:
         if not isinstance(candidate, dict):
             continue
-        assessment = candidate.get("candidate_assessment")
-        if isinstance(assessment, dict):
-            status = str(assessment.get("candidate_status") or "unknown")
+        assessment = candidate.get("inclusion_assessment")
+        labels = assessment.get("paper_labels") if isinstance(assessment, dict) else None
+        if isinstance(labels, list) and labels:
+            for label in labels:
+                label_text = str(label or "unknown")
+                counts[label_text] = counts.get(label_text, 0) + 1
         else:
-            status = "unknown"
-        counts[status] = counts.get(status, 0) + 1
+            counts["unknown"] = counts.get("unknown", 0) + 1
+    return counts
+
+
+def _extract_inclusion_assessment_counts(candidates: list[dict[str, Any]], key: str) -> dict[str, int]:
+    """Count candidates by one inclusion_assessment scalar key."""
+    counts: dict[str, int] = {}
+    for candidate in candidates:
+        if not isinstance(candidate, dict):
+            continue
+        assessment = candidate.get("inclusion_assessment")
+        if isinstance(assessment, dict):
+            value = str(assessment.get(key) or "unknown")
+        else:
+            value = "unknown"
+        counts[value] = counts.get(value, 0) + 1
     return counts
 
 
@@ -51,10 +68,7 @@ def _extract_candidate_origins(candidates: list[dict[str, Any]]) -> dict[str, in
         if not isinstance(candidate, dict):
             continue
         origin = candidate.get("candidate_origin")
-        if isinstance(origin, dict):
-            origin_type = str(origin.get("origin_type") or "unknown")
-        else:
-            origin_type = "unknown"
+        origin_type = str(origin.get("origin_type") or "unknown") if isinstance(origin, dict) else "unknown"
         counts[origin_type] = counts.get(origin_type, 0) + 1
     return counts
 
@@ -92,7 +106,9 @@ def _hvs_paper_item(
     year = month.split("-")[0] if month else "unknown"
     status = str(extraction.get("status") or "")
     candidate_count = len(candidates)
-    candidate_statuses = _extract_candidate_statuses(candidates)
+    paper_labels = _extract_paper_labels(candidates)
+    galactic_bound_claims = _extract_inclusion_assessment_counts(candidates, "galactic_bound_claim")
+    inclusion_bases = _extract_inclusion_assessment_counts(candidates, "inclusion_basis")
     candidate_origins = _extract_candidate_origins(candidates)
     sample_paper_candidate_ids = _extract_sample_identifier_values(candidates, "paper_candidate_id")
     sample_gaia_source_ids = _extract_sample_identifier_values(candidates, "gaia_source_id")
@@ -108,7 +124,9 @@ def _hvs_paper_item(
         "year": year,
         "extraction_status": status,
         "candidate_count": candidate_count,
-        "candidate_statuses": candidate_statuses,
+        "paper_labels": paper_labels,
+        "galactic_bound_claims": galactic_bound_claims,
+        "inclusion_bases": inclusion_bases,
         "candidate_origins": candidate_origins,
         "sample_paper_candidate_ids": sample_paper_candidate_ids,
         "sample_gaia_source_ids": sample_gaia_source_ids,
@@ -137,7 +155,9 @@ def _empty_hvs_index_counts() -> dict[str, Any]:
         "needs_review_count": 0,
         "source_missing_count": 0,
         "total_candidate_count": 0,
-        "total_by_status": {},
+        "total_by_paper_label": {},
+        "total_by_galactic_bound_claim": {},
+        "total_by_inclusion_basis": {},
         "total_by_origin": {},
     }
 
@@ -159,8 +179,14 @@ def _add_hvs_index_counts(bucket: dict[str, Any], item: dict[str, Any]) -> None:
     candidate_count = item.get("candidate_count") or 0
     bucket["total_candidate_count"] += candidate_count
 
-    for status_key, count in (item.get("candidate_statuses") or {}).items():
-        bucket["total_by_status"][status_key] = bucket["total_by_status"].get(status_key, 0) + count
+    for label, count in (item.get("paper_labels") or {}).items():
+        bucket["total_by_paper_label"][label] = bucket["total_by_paper_label"].get(label, 0) + count
+    for claim, count in (item.get("galactic_bound_claims") or {}).items():
+        bucket["total_by_galactic_bound_claim"][claim] = (
+            bucket["total_by_galactic_bound_claim"].get(claim, 0) + count
+        )
+    for basis, count in (item.get("inclusion_bases") or {}).items():
+        bucket["total_by_inclusion_basis"][basis] = bucket["total_by_inclusion_basis"].get(basis, 0) + count
     for origin_key, count in (item.get("candidate_origins") or {}).items():
         bucket["total_by_origin"][origin_key] = bucket["total_by_origin"].get(origin_key, 0) + count
 
@@ -245,21 +271,12 @@ def _status_badge(status: str) -> str:
     return badges.get(status, status)
 
 
-def _candidate_statuses_cell(statuses: dict[str, int]) -> str:
-    if not statuses:
+def _counts_cell(counts: dict[str, int]) -> str:
+    if not counts:
         return "-"
     parts = []
-    for key in sorted(statuses.keys()):
-        parts.append(f"{key}: {statuses[key]}")
-    return "; ".join(parts)
-
-
-def _candidate_origins_cell(origins: dict[str, int]) -> str:
-    if not origins:
-        return "-"
-    parts = []
-    for key in sorted(origins.keys()):
-        parts.append(f"{key}: {origins[key]}")
+    for key in sorted(counts.keys()):
+        parts.append(f"{key}: {counts[key]}")
     return "; ".join(parts)
 
 
@@ -288,10 +305,18 @@ def render_hvs_candidates_index(record: dict[str, Any]) -> str:
         f"- Total candidates: {summary.get('total_candidate_count', 0)}",
     ]
 
-    total_by_status = summary.get("total_by_status") or {}
-    if total_by_status:
-        status_parts = [f"{k}: {v}" for k, v in sorted(total_by_status.items())]
-        lines.append(f"- By status: {', '.join(status_parts)}")
+    total_by_label = summary.get("total_by_paper_label") or {}
+    if total_by_label:
+        label_parts = [f"{k}: {v}" for k, v in sorted(total_by_label.items())]
+        lines.append(f"- By paper label: {', '.join(label_parts)}")
+    total_by_bound_claim = summary.get("total_by_galactic_bound_claim") or {}
+    if total_by_bound_claim:
+        claim_parts = [f"{k}: {v}" for k, v in sorted(total_by_bound_claim.items())]
+        lines.append(f"- By Galactic bound claim: {', '.join(claim_parts)}")
+    total_by_basis = summary.get("total_by_inclusion_basis") or {}
+    if total_by_basis:
+        basis_parts = [f"{k}: {v}" for k, v in sorted(total_by_basis.items())]
+        lines.append(f"- By inclusion basis: {', '.join(basis_parts)}")
     total_by_origin = summary.get("total_by_origin") or {}
     if total_by_origin:
         origin_parts = [f"{k}: {v}" for k, v in sorted(total_by_origin.items())]
@@ -317,9 +342,9 @@ def render_hvs_candidates_index(record: dict[str, Any]) -> str:
     if papers:
         lines.extend(["", "## Papers", ""])
         lines.append(
-            "| Paper | Month | Status | Candidates | Status breakdown | Origin breakdown | Sample paper candidate IDs | Sample Gaia source IDs | Candidates JSON |"
+            "| Paper | Month | Status | Candidates | Paper labels | Bound claims | Inclusion bases | Origin breakdown | Sample paper candidate IDs | Sample Gaia source IDs | Candidates JSON |"
         )
-        lines.append("| --- | --- | --- | ---: | --- | --- | --- | --- | --- |")
+        lines.append("| --- | --- | --- | ---: | --- | --- | --- | --- | --- | --- | --- |")
         for paper in papers:
             title = _markdown_cell(paper.get("title") or "Untitled")
             arxiv_id = str(paper.get("arxiv_id") or "")
@@ -328,8 +353,10 @@ def render_hvs_candidates_index(record: dict[str, Any]) -> str:
             candidates_link = f"[JSON]({candidates_path})" if candidates_path else ""
             lines.append(
                 f"| {label} | {paper.get('month') or ''} | {_status_badge(paper.get('extraction_status') or '')} | "
-                f"{paper.get('candidate_count', 0)} | {_candidate_statuses_cell(paper.get('candidate_statuses') or {})} | "
-                f"{_candidate_origins_cell(paper.get('candidate_origins') or {})} | "
+                f"{paper.get('candidate_count', 0)} | {_counts_cell(paper.get('paper_labels') or {})} | "
+                f"{_counts_cell(paper.get('galactic_bound_claims') or {})} | "
+                f"{_counts_cell(paper.get('inclusion_bases') or {})} | "
+                f"{_counts_cell(paper.get('candidate_origins') or {})} | "
                 f"{_identifiers_cell(paper.get('sample_paper_candidate_ids') or [])} | "
                 f"{_identifiers_cell(paper.get('sample_gaia_source_ids') or [])} | {candidates_link} |"
             )

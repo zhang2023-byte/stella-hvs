@@ -32,11 +32,14 @@ from high_velocity_lit.hvs_method_provenance import (  # noqa: E402
     required_lineage_step_type_groups,
 )
 from high_velocity_lit.schema_specs import (  # noqa: E402
-    LITERATURE_HVS_CANDIDATE_ASSESSMENT_STATUSES,
+    LITERATURE_HVS_EXTRACTION_CONFIDENCE,
+    LITERATURE_HVS_EXTRACTION_STATUSES,
+    LITERATURE_HVS_GALACTIC_BOUND_CLAIMS,
+    LITERATURE_HVS_INCLUSION_BASES,
     LITERATURE_HVS_CANDIDATE_ORIGIN_TYPES,
-    LITERATURE_HVS_CANDIDATE_STATUSES,
     LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION,
     LITERATURE_HVS_METHOD_STEP_TYPES,
+    LITERATURE_HVS_PAPER_LABELS,
 )
 from high_velocity_lit.schema_models import LiteratureHvsCandidatesRecord  # noqa: E402
 
@@ -56,7 +59,7 @@ ASYMMETRIC_UNCERTAINTY_RE = re.compile(
     r"(\^\s*\{?\s*\+[^}_\s]+\}?\s*_\s*\{?\s*-[^}\s]+|"
     r"_\s*\{?\s*-[^}^\s]+\}?\s*\^\s*\{?\s*\+[^}\s]+)"
 )
-CORE_GROUPS = ("observed_phase_space", "derived_kinematics", "probabilities")
+CORE_GROUPS = ("observed_phase_space", "derived_kinematics", "bound_assessment")
 CORE_OBSERVED_NUMERIC_FIELDS = {"distance", "parallax", "proper_motion_ra", "proper_motion_dec", "radial_velocity"}
 MACHINE_NUMERIC_FIELDS = ("value", "error", "lower_error", "upper_error")
 COORDINATE_FIELDS = {"ra", "dec"}
@@ -104,6 +107,13 @@ QUANTITATIVE_EXTRA_RE = re.compile(
     r"log[_ -]?g|metallicity|\[?fe/h\]?|probability|ratio|angular[_ -]?momentum|"
     r"\blz\b|transit|count|period|time[_ -]?of[_ -]?flight|flight[_ -]?time|"
     r"ruwe|gof|chi|signal[_ -]?to[_ -]?noise|\bs/?n\b|snr)",
+    re.IGNORECASE,
+)
+STANDARD_EXTRA_RE = re.compile(
+    r"(probab|p[_ -]?(?:esc|ub|unbound|bound|mw|lmc)|likelihood|photometr|magnitude|colour|color|"
+    r"spectr|abundance|\[?[a-z]{1,2}/h\]?|orbit|eccentricity|pericentre|pericenter|"
+    r"apocentre|apocenter|origin|ejection|flight[_ -]?time|disk[_ -]?cross|"
+    r"ruwe|quality|flag|teff|log[_ -]?g|metallicity|mass|luminosity)",
     re.IGNORECASE,
 )
 WEAK_MATCH_STOPWORDS = {
@@ -455,6 +465,123 @@ def has_bibliography_source_ref(value: Any) -> bool:
     return is_list(value) and any(ref_path_suffix(ref) in {".bib", ".bbl"} for ref in value)
 
 
+def all_refs_have_suffix(value: Any, suffixes: set[str]) -> bool:
+    return is_list(value) and all(is_dict(ref) and ref_path_suffix(ref) in suffixes for ref in value)
+
+
+def bibliography_text_for_refs(refs: Any, ctx: ValidationContext) -> str:
+    if not is_list(refs):
+        return ""
+    return "\n".join(text_for_source_ref(ref, ctx) for ref in refs if is_dict(ref) and ref_path_suffix(ref) in {".bib", ".bbl"})
+
+
+def compact_bibliography_text(value: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "", value.lower())
+
+
+def bibkey_supported_by_bibliography(bibkey: str, bibliography_text: str) -> bool:
+    escaped = re.escape(bibkey)
+    return bool(
+        re.search(rf"@\w+\s*\{{\s*{escaped}\s*,", bibliography_text)
+        or re.search(rf"\\bibitem(?:\[[^\]]*\])?\s*\{{\s*{escaped}\s*\}}", bibliography_text)
+    )
+
+
+def bibliography_field_supported(value: str, bibliography_text: str) -> bool:
+    terms = weak_match_terms(value)
+    if terms:
+        bibliography_terms = weak_match_terms(bibliography_text)
+        return terms.issubset(bibliography_terms)
+    compact_value = compact_bibliography_text(value)
+    if not compact_value:
+        return True
+    return compact_value in compact_bibliography_text(bibliography_text)
+
+
+def citation_has_structured_fields(citation_obj: dict[str, Any]) -> bool:
+    for field in ("bibkey", "year", "title", "doi", "bibcode", "arxiv_id"):
+        value = citation_obj.get(field)
+        if isinstance(value, str) and value.strip():
+            return True
+    authors = citation_obj.get("authors")
+    return is_list(authors) and any(isinstance(author, str) and author.strip() for author in authors)
+
+
+def validate_citation_bibliography_fields(citation_obj: dict[str, Any], location: str, ctx: ValidationContext) -> None:
+    bibliography_refs = citation_obj.get("bibliography_refs")
+    bibliography_text = bibliography_text_for_refs(bibliography_refs, ctx)
+    if citation_has_structured_fields(citation_obj) and not bibliography_text.strip():
+        ctx.error(
+            f"{location}.bibliography_refs",
+            "structured citation fields require readable .bib or .bbl bibliography source refs",
+        )
+        return
+
+    bibkey = citation_obj.get("bibkey")
+    if isinstance(bibkey, str) and bibkey.strip() and bibliography_text:
+        if not bibkey_supported_by_bibliography(bibkey.strip(), bibliography_text):
+            ctx.error(f"{location}.bibkey", "bibkey must match a .bib or .bbl bibliography entry key")
+
+    authors = citation_obj.get("authors")
+    if is_list(authors) and bibliography_text:
+        for author_index, author in enumerate(authors):
+            if not isinstance(author, str) or not author.strip():
+                ctx.error(f"{location}.authors[{author_index}]", "expected non-empty author string")
+                continue
+            if not bibliography_field_supported(author, bibliography_text):
+                ctx.error(
+                    f"{location}.authors[{author_index}]",
+                    "citation author must be supported by bibliography source refs",
+                )
+
+    for field in ("year", "title", "doi", "bibcode", "arxiv_id"):
+        value = citation_obj.get(field)
+        if value in (None, ""):
+            continue
+        if not isinstance(value, str):
+            ctx.error(f"{location}.{field}", "expected string")
+            continue
+        if bibliography_text and not bibliography_field_supported(value, bibliography_text):
+            ctx.error(f"{location}.{field}", "citation field must be supported by bibliography source refs")
+
+
+def validate_citation_refs_and_fields(
+    citation_obj: dict[str, Any],
+    location: str,
+    ctx: ValidationContext,
+    *,
+    require_context_refs: bool,
+    require_bibliography_refs: bool,
+) -> None:
+    if "source_refs" in citation_obj:
+        ctx.error(f"{location}.source_refs", "legacy citation.source_refs is removed in v7")
+
+    context_refs = citation_obj.get("citation_context_refs")
+    bibliography_refs = citation_obj.get("bibliography_refs")
+
+    if context_refs is not None or require_context_refs:
+        validate_source_refs(context_refs, f"{location}.citation_context_refs", ctx)
+        if not has_paper_text_source_ref(context_refs):
+            ctx.error(
+                f"{location}.citation_context_refs",
+                "expected at least one paper text citation reference",
+            )
+
+    if bibliography_refs is not None or require_bibliography_refs or citation_has_structured_fields(citation_obj):
+        validate_source_refs(bibliography_refs, f"{location}.bibliography_refs", ctx)
+        if not has_bibliography_source_ref(bibliography_refs):
+            ctx.error(
+                f"{location}.bibliography_refs",
+                "expected at least one .bib or .bbl bibliography entry reference",
+            )
+        elif not all_refs_have_suffix(bibliography_refs, {".bib", ".bbl"}):
+            ctx.error(
+                f"{location}.bibliography_refs",
+                "bibliography_refs may only contain .bib or .bbl entries",
+            )
+        validate_citation_bibliography_fields(citation_obj, location, ctx)
+
+
 def validate_clean_machine_string(value: Any, location: str, ctx: ValidationContext) -> None:
     if not isinstance(value, str):
         ctx.error(location, "expected machine-readable string")
@@ -470,10 +597,18 @@ def field_name_from_location(location: str) -> str:
 
 def quantity_requires_numeric_machine_fields(record: dict[str, Any], location: str) -> bool:
     field_name = field_name_from_location(location)
-    if ".core.derived_kinematics." in location or ".core.probabilities." in location:
+    if ".core.derived_kinematics." in location or ".core.bound_assessment." in location:
         return True
     if ".core.observed_phase_space." in location:
         return field_name in CORE_OBSERVED_NUMERIC_FIELDS
+    if ".photometry[" in location or ".abundances[" in location or ".orbit." in location:
+        return True
+    if ".stellar_parameters." in location:
+        return field_name != "spectral_type"
+    if ".astrophysical_origin.hypothesis_metrics[" in location:
+        return record.get("metric_type") != "classification"
+    if ".astrophysical_origin." in location:
+        return field_name not in {"origin_site", "origin_classification"}
     if ".extra[" not in location:
         return False
 
@@ -507,19 +642,22 @@ def warn_if_non_numeric_machine_fields(record: dict[str, Any], location: str, ct
 
 
 def validate_core_probability_record(record: dict[str, Any], location: str, ctx: ValidationContext) -> None:
-    if ".core.probabilities." not in location:
+    if not (
+        ".core.bound_assessment.bound_probability" in location
+        or ".core.bound_assessment.unbound_probability" in location
+    ):
         return
 
     value = record.get("value")
     if not isinstance(value, str) or not MACHINE_NUMBER_RE.fullmatch(value.strip()):
-        ctx.error(f"{location}.value", "core probability value must be a plain 0-1 fraction")
+        ctx.error(f"{location}.value", "bound/unbound probability value must be a plain 0-1 fraction")
         return
 
     numeric = float(value)
     if not (0.0 <= numeric <= 1.0):
         ctx.error(
             f"{location}.value",
-            "core probability value must be a 0-1 fraction; keep percent text in raw_value",
+            "bound/unbound probability value must be a 0-1 fraction; keep percent text in raw_value",
         )
 
     unit = record.get("unit", "")
@@ -527,10 +665,10 @@ def validate_core_probability_record(record: dict[str, Any], location: str, ctx:
         if unit.strip():
             ctx.error(
                 f"{location}.unit",
-                "core probability unit must be empty because value is a 0-1 fraction; keep '%' only in raw_value/source_refs",
+                "bound/unbound probability unit must be empty because value is a 0-1 fraction; keep '%' only in raw_value/source_refs",
             )
     else:
-        ctx.error(f"{location}.unit", "core probability unit must be an empty string")
+        ctx.error(f"{location}.unit", "bound/unbound probability unit must be an empty string")
 
 
 def is_substantive_text_line(line: str) -> bool:
@@ -994,22 +1132,23 @@ def validate_candidate_origin(origin: Any, location: str, ctx: ValidationContext
         if citation_obj is not None:
             if not isinstance(citation_obj.get("bibkey"), str) or not citation_obj.get("bibkey"):
                 ctx.error(f"{location}.citation.bibkey", "expected non-empty bibkey for cited candidates")
-            citation_refs = citation_obj.get("source_refs")
-            validate_source_refs(citation_refs, f"{location}.citation.source_refs", ctx)
-            if not has_paper_text_source_ref(citation_refs):
-                ctx.error(
-                    f"{location}.citation.source_refs",
-                    "expected at least one paper text citation reference",
-                )
-            if not has_bibliography_source_ref(citation_refs):
-                ctx.error(
-                    f"{location}.citation.source_refs",
-                    "expected at least one .bib or .bbl bibliography entry reference",
-                )
+            validate_citation_refs_and_fields(
+                citation_obj,
+                f"{location}.citation",
+                ctx,
+                require_context_refs=True,
+                require_bibliography_refs=True,
+            )
     elif citation is not None:
         citation_obj = validate_required_mapping(citation, f"{location}.citation", ctx)
-        if citation_obj is not None and "source_refs" in citation_obj:
-            validate_source_refs(citation_obj["source_refs"], f"{location}.citation.source_refs", ctx)
+        if citation_obj is not None:
+            validate_citation_refs_and_fields(
+                citation_obj,
+                f"{location}.citation",
+                ctx,
+                require_context_refs=False,
+                require_bibliography_refs=False,
+            )
 
     return origin_type if isinstance(origin_type, str) else None
 
@@ -1059,7 +1198,7 @@ def validate_candidate_identifiers(
 
     for key in LEGACY_IDENTIFIER_FIELDS:
         if key in ids_obj:
-            ctx.error(f"{location}.{key}", "legacy v4 identifier field is removed in v6; convert the file to v6 identifiers")
+            ctx.error(f"{location}.{key}", "legacy identifier field is removed in v7; convert the file to v7 identifiers")
 
     for key in ("record_id", "paper_candidate_id", "gaia_source_id", "all"):
         if key not in ids_obj:
@@ -1136,6 +1275,75 @@ def validate_candidate_identifiers(
         ctx.error(f"{location}.gaia_source_id", "must be set when identifiers.all contains a strict Gaia source id")
 
 
+def validate_inclusion_assessment(assessment: Any, location: str, ctx: ValidationContext) -> None:
+    assessment_obj = validate_required_mapping(assessment, location, ctx)
+    if assessment_obj is None:
+        return
+
+    if not assessment_obj.get("summary"):
+        ctx.error(f"{location}.summary", "expected non-empty candidate rationale")
+
+    paper_labels = assessment_obj.get("paper_labels")
+    label_list = validate_required_list(paper_labels, f"{location}.paper_labels", ctx)
+    if label_list is not None:
+        if not label_list:
+            ctx.error(f"{location}.paper_labels", "expected at least one paper label")
+        seen_labels: set[str] = set()
+        for label_index, label in enumerate(label_list):
+            if label not in LITERATURE_HVS_PAPER_LABELS:
+                ctx.error(
+                    f"{location}.paper_labels[{label_index}]",
+                    f"expected one of {sorted(LITERATURE_HVS_PAPER_LABELS)}",
+                )
+            elif label in seen_labels:
+                ctx.error(f"{location}.paper_labels[{label_index}]", f"duplicate paper label {label!r}")
+            seen_labels.add(str(label))
+
+    galactic_bound_claim = assessment_obj.get("galactic_bound_claim")
+    if galactic_bound_claim not in LITERATURE_HVS_GALACTIC_BOUND_CLAIMS:
+        ctx.error(
+            f"{location}.galactic_bound_claim",
+            f"expected one of {sorted(LITERATURE_HVS_GALACTIC_BOUND_CLAIMS)}",
+        )
+
+    inclusion_basis = assessment_obj.get("inclusion_basis")
+    if inclusion_basis not in LITERATURE_HVS_INCLUSION_BASES:
+        ctx.error(f"{location}.inclusion_basis", f"expected one of {sorted(LITERATURE_HVS_INCLUSION_BASES)}")
+
+    extraction_confidence = assessment_obj.get("extraction_confidence")
+    if extraction_confidence not in LITERATURE_HVS_EXTRACTION_CONFIDENCE:
+        ctx.error(
+            f"{location}.extraction_confidence",
+            f"expected one of {sorted(LITERATURE_HVS_EXTRACTION_CONFIDENCE)}",
+        )
+    if not str(assessment_obj.get("confidence_reason") or "").strip():
+        ctx.error(f"{location}.confidence_reason", "expected non-empty extraction confidence rationale")
+
+    assessment_refs = assessment_obj.get("source_refs")
+    validate_source_refs(assessment_refs, f"{location}.source_refs", ctx)
+    validate_paper_text_evidence(
+        assessment_refs,
+        f"{location}.source_refs",
+        ctx,
+        "expected at least one paper text reference for Galactic-unbound candidate evidence",
+    )
+
+
+def validate_extra_records(extra_list: list[Any], location: str, ctx: ValidationContext) -> None:
+    for index, record in enumerate(extra_list):
+        if not is_dict(record):
+            continue
+        searchable = " ".join(
+            str(record.get(key) or "")
+            for key in ("name", "kind", "description", "unit", "raw_value")
+        )
+        if STANDARD_EXTRA_RE.search(searchable):
+            ctx.error(
+                f"{location}[{index}]",
+                "standard HVS candidate quantity belongs in a typed v7 group, not extra[]",
+            )
+
+
 def validate_candidate(
     candidate: Any,
     index: int,
@@ -1158,18 +1366,27 @@ def validate_candidate(
 
     for key in (
         "identifiers",
-        "candidate_assessment",
+        "inclusion_assessment",
         "candidate_origin",
         "core",
+        "photometry",
+        "spectroscopy",
+        "stellar_parameters",
+        "abundances",
+        "quality_flags",
+        "orbit",
+        "astrophysical_origin",
         "extra",
     ):
         if key not in candidate_obj:
             ctx.error(f"{location}.{key}", "missing required field")
+    if "candidate_assessment" in candidate_obj:
+        ctx.error(f"{location}.candidate_assessment", "candidate_assessment is removed in v7; use inclusion_assessment")
     if "method_chain_refs" in candidate_obj:
         ctx.error(f"{location}.method_chain_refs", "candidate-level method_chain_refs is removed; use quantity method_refs")
     for key in LEGACY_CANDIDATE_FIELDS:
         if key in candidate_obj:
-            ctx.error(f"{location}.{key}", "legacy v4 candidate field is removed in v6; convert the file to v6 identifiers")
+            ctx.error(f"{location}.{key}", "legacy candidate field is removed in v7; convert the file to v7 identifiers")
 
     identifiers = candidate_obj.get("identifiers")
     validate_candidate_identifiers(
@@ -1183,32 +1400,9 @@ def validate_candidate(
         require_complete=require_complete,
     )
 
-    assessment = candidate_obj.get("candidate_assessment")
-    if is_dict(assessment):
-        if not assessment.get("summary"):
-            ctx.error(f"{location}.candidate_assessment.summary", "expected non-empty candidate rationale")
-        candidate_status = assessment.get("candidate_status")
-        if candidate_status not in LITERATURE_HVS_CANDIDATE_ASSESSMENT_STATUSES:
-            ctx.error(
-                f"{location}.candidate_assessment.candidate_status",
-                f"expected one of {sorted(LITERATURE_HVS_CANDIDATE_ASSESSMENT_STATUSES)}",
-            )
-        assessment_refs = assessment.get("source_refs")
-        validate_source_refs(
-            assessment_refs,
-            f"{location}.candidate_assessment.source_refs",
-            ctx,
-        )
-        validate_paper_text_evidence(
-            assessment_refs,
-            f"{location}.candidate_assessment.source_refs",
-            ctx,
-            "expected at least one paper text reference for Galactic-unbound candidate evidence",
-        )
-    else:
-        ctx.error(f"{location}.candidate_assessment", "expected an object")
+    validate_inclusion_assessment(candidate_obj.get("inclusion_assessment"), f"{location}.inclusion_assessment", ctx)
 
-    origin_type = validate_candidate_origin(
+    validate_candidate_origin(
         candidate_obj.get("candidate_origin"),
         f"{location}.candidate_origin",
         ctx,
@@ -1230,12 +1424,16 @@ def validate_candidate(
     else:
         ctx.error(f"{location}.core", "expected an object")
 
-    extra = candidate_obj.get("extra")
-    extra_list = validate_required_list(extra, f"{location}.extra", ctx)
-    if extra_list is not None:
+    for key in ("photometry", "spectroscopy", "abundances", "quality_flags", "extra"):
+        value = candidate_obj.get(key)
+        value_list = validate_required_list(value, f"{location}.{key}", ctx)
+        if value_list is None:
+            continue
+        if key == "extra":
+            validate_extra_records(value_list, f"{location}.extra", ctx)
         validate_quantity_records(
-            extra_list,
-            f"{location}.extra",
+            value_list,
+            f"{location}.{key}",
             ctx,
             method_ids,
             method_step_types,
@@ -1243,6 +1441,22 @@ def validate_candidate(
             direct_step_categories,
             require_complete=require_complete,
         )
+
+    for key in ("stellar_parameters", "orbit", "astrophysical_origin"):
+        value = candidate_obj.get(key)
+        if is_dict(value):
+            validate_quantity_records(
+                value,
+                f"{location}.{key}",
+                ctx,
+                method_ids,
+                method_step_types,
+                method_dependencies,
+                direct_step_categories,
+                require_complete=require_complete,
+            )
+        else:
+            ctx.error(f"{location}.{key}", "expected an object")
 
 
 def validate_core(
@@ -1279,7 +1493,7 @@ def validate_core(
 
 def warn_if_candidate_bound_conflict(candidate_obj: dict[str, Any], location: str, ctx: ValidationContext) -> None:
     texts: list[str] = []
-    assessment = candidate_obj.get("candidate_assessment")
+    assessment = candidate_obj.get("inclusion_assessment")
     if is_dict(assessment):
         summary = assessment.get("summary")
         if isinstance(summary, str):
@@ -1293,9 +1507,9 @@ def warn_if_candidate_bound_conflict(candidate_obj: dict[str, Any], location: st
     for text in texts:
         match = CANDIDATE_BOUND_CONFLICT_RE.search(text)
         if match:
-            ctx.warn(
+            ctx.error(
                 location,
-                f"candidate evidence contains bound-status phrase {match.group(0)!r}; review inclusion boundary",
+                f"candidate evidence contains bound-status phrase {match.group(0)!r}; move Galaxy-bound objects to candidate_groups_considered",
             )
             return
 
@@ -1535,8 +1749,8 @@ def validate_hvs_candidates_report(
         ctx.error("$.extraction", "expected an object")
     else:
         status = extraction.get("status")
-        if status not in LITERATURE_HVS_CANDIDATE_STATUSES:
-            ctx.error("$.extraction.status", f"expected one of {sorted(LITERATURE_HVS_CANDIDATE_STATUSES)}")
+        if status not in LITERATURE_HVS_EXTRACTION_STATUSES:
+            ctx.error("$.extraction.status", f"expected one of {sorted(LITERATURE_HVS_EXTRACTION_STATUSES)}")
 
     method_ids, method_step_types, method_dependencies = validate_method_chain(root.get("method_chain"), ctx)
     direct_step_categories: dict[str, set[str]] = defaultdict(set)

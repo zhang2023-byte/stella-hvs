@@ -9,25 +9,47 @@ CATALOG_REVIEW_SCHEMA_VERSION = "stella.article_data_assets.review.v1"
 CATALOG_EXTRACTION_SCHEMA_VERSION = "stella.article_data_assets.extraction.v2"
 CATALOG_INVENTORY_SCHEMA_VERSION = "stella.article_data_assets.inventory.v1"
 CATALOG_INDEX_SCHEMA_VERSION = "stella.article_data_assets.index.v1"
-LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION = "stella.literature_hvs_candidates.v6"
-LITERATURE_HVS_CANDIDATES_INDEX_SCHEMA_VERSION = "stella.literature_hvs_candidates.index.v2"
+LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION = "stella.literature_hvs_candidates.v7"
+LITERATURE_HVS_CANDIDATES_INDEX_SCHEMA_VERSION = "stella.literature_hvs_candidates.index.v3"
 
 CATALOG_REVIEW_STATUSES = ("reviewed", "partial", "needs_review", "source_missing")
 CATALOG_EXTRACTION_RUN_STATUSES = ("success", "partial", "failed", "skipped")
 CATALOG_EXTRACTION_FILE_STATUSES = ("written", "skipped_existing", "would_write", "failed", "deferred")
 CATALOG_EXTRACTION_TABLE_STATUSES = ("success", "would_write", "skipped_existing", "failed", "deferred")
-LITERATURE_HVS_CANDIDATE_STATUSES = (
+LITERATURE_HVS_EXTRACTION_STATUSES = (
     "candidates_found",
     "no_candidates",
     "partial",
     "needs_review",
     "source_missing",
 )
-LITERATURE_HVS_CANDIDATE_ASSESSMENT_STATUSES = (
+LITERATURE_HVS_PAPER_LABELS = (
     "hvs_candidate",
-    "unbound_candidate",
     "hyper_runaway_candidate",
-    "escaping_galaxy_candidate",
+    "escaping_star",
+    "unbound_star",
+    "high_velocity_star",
+    "runaway_candidate",
+    "candidate_group_member",
+    "other",
+)
+LITERATURE_HVS_GALACTIC_BOUND_CLAIMS = (
+    "unbound",
+    "likely_unbound",
+    "possibly_unbound",
+    "escaping",
+    "not_reported",
+)
+LITERATURE_HVS_INCLUSION_BASES = (
+    "explicit_candidate_text",
+    "explicit_unbound_text",
+    "cited_prior_candidate_reassessed",
+    "candidate_table_with_text_anchor",
+)
+LITERATURE_HVS_EXTRACTION_CONFIDENCE = (
+    "high",
+    "medium",
+    "low",
 )
 LITERATURE_HVS_CANDIDATE_ORIGIN_TYPES = (
     "introduced_by_this_paper",
@@ -112,8 +134,11 @@ LITERATURE_HVS_CANDIDATES_SPEC = SchemaSpec(
         "candidate_groups_considered",
     ),
     status_values={
-        "extraction.status": LITERATURE_HVS_CANDIDATE_STATUSES,
-        "candidate_assessment.candidate_status": LITERATURE_HVS_CANDIDATE_ASSESSMENT_STATUSES,
+        "extraction.status": LITERATURE_HVS_EXTRACTION_STATUSES,
+        "inclusion_assessment.paper_labels": LITERATURE_HVS_PAPER_LABELS,
+        "inclusion_assessment.galactic_bound_claim": LITERATURE_HVS_GALACTIC_BOUND_CLAIMS,
+        "inclusion_assessment.inclusion_basis": LITERATURE_HVS_INCLUSION_BASES,
+        "inclusion_assessment.extraction_confidence": LITERATURE_HVS_EXTRACTION_CONFIDENCE,
         "candidate_origin.origin_type": LITERATURE_HVS_CANDIDATE_ORIGIN_TYPES,
         "method_chain.step_type": LITERATURE_HVS_METHOD_STEP_TYPES,
     },
