@@ -43,6 +43,14 @@ from high_velocity_lit.schema_models import LiteratureHvsCandidatesRecord  # noq
 
 LATEX_RESIDUE_RE = re.compile(r"(\\[A-Za-z]+|[{}$]|[\^_]|\+/-|\u00b1)")
 MACHINE_NUMBER_RE = re.compile(r"^[+-]?(?:(?:\d+(?:\.\d*)?)|(?:\.\d+))(?:[eE][+-]?\d+)?$")
+PAGE_MARKER_RE = re.compile(r"^---\s*Page\s+\d+\s*---$", re.IGNORECASE)
+LATEX_STRUCTURE_ONLY_RE = re.compile(
+    r"^\\(?:"
+    r"section|subsection|subsubsection|paragraph|chapter|part|"
+    r"begin|end|maketitle|keywords|label|bibliography|bibliographystyle"
+    r")\*?(?:\[[^\]]*\])?(?:\{[^{}]*\})?\s*$"
+)
+LATEX_PREAMBLE_ASSIGNMENT_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*\s*=\s*[^,]+,?\s*$")
 SYMMETRIC_UNCERTAINTY_RE = re.compile(r"(\+/-|\u00b1|\\pm)")
 ASYMMETRIC_UNCERTAINTY_RE = re.compile(
     r"(\^\s*\{?\s*\+[^}_\s]+\}?\s*_\s*\{?\s*-[^}\s]+|"
@@ -67,6 +75,13 @@ GAIA_SOURCE_ID_RE = re.compile(r"^Gaia (?:DR[0-9]+|EDR[0-9]+) [0-9]+$")
 NO_CANDIDATE_REVIEW_RE = re.compile(
     r"(classif\w+(?:\s+\w+){0,3}\s+as\s+HVSs?|HVS\s+status|"
     r"gravitationally\s+unbound|positive\s+(?:total\s+)?energ(?:y|ies))",
+    re.IGNORECASE,
+)
+NO_CANDIDATE_NEGATION_RE = re.compile(
+    r"(\b(?:does|do|did)\s+not\b|\bnot\b|\bno\b|\bwithout\b)"
+    r".{0,120}\b(?:HVS|hypervelocity|unbound|escaping|positive\s+(?:total\s+)?energ(?:y|ies))\b|"
+    r"\b(?:HVS|hypervelocity|unbound|escaping|positive\s+(?:total\s+)?energ(?:y|ies))\b"
+    r".{0,120}(\b(?:does|do|did)\s+not\b|\bnot\b|\bno\b|\bwithout\b)",
     re.IGNORECASE,
 )
 CANDIDATE_BOUND_CONFLICT_RE = re.compile(
@@ -275,8 +290,15 @@ def validate_source_ref(ref: Any, location: str, ctx: ValidationContext) -> None
         return
 
     kind = ref.get("kind", "")
-    if kind == "ecsv_cell" or str(path).endswith(".ecsv"):
+    suffix = path.suffix.lower()
+    if kind == "ecsv_cell":
+        if suffix != ".ecsv":
+            ctx.error(f"{location}.path", "ecsv_cell source references must point to .ecsv files")
+            return
         validate_ecsv_cell_ref(ref, path, location, ctx)
+        return
+    if suffix == ".ecsv":
+        ctx.error(f"{location}.kind", "ECSV paths must use kind 'ecsv_cell'")
         return
 
     validate_text_ref(ref, path, location, ctx)
@@ -383,6 +405,22 @@ def validate_source_refs(value: Any, location: str, ctx: ValidationContext) -> N
         validate_source_ref(ref, f"{location}[{index}]", ctx)
 
 
+def validate_paper_text_evidence(value: Any, location: str, ctx: ValidationContext, message: str) -> None:
+    if not has_paper_text_source_ref(value):
+        ctx.error(location, message)
+    if not is_list(value):
+        return
+    for index, ref in enumerate(value):
+        if not is_dict(ref):
+            continue
+        suffix = ref_path_suffix(ref)
+        if suffix in {".json", ".bib", ".bbl", ".ecsv"}:
+            ctx.error(
+                f"{location}[{index}].path",
+                "scientific evidence source_refs must cite paper text, not metadata, bibliography, or ECSV-only sources",
+            )
+
+
 def ref_path_suffix(ref: Any) -> str:
     if not is_dict(ref):
         return ""
@@ -461,7 +499,7 @@ def warn_if_non_numeric_machine_fields(record: dict[str, Any], location: str, ct
             continue
         if MACHINE_NUMBER_RE.fullmatch(value.strip()):
             continue
-        ctx.warn(
+        ctx.error(
             f"{location}.{key}",
             "expected a single plain numeric machine value; keep ranges, limits, units, notes, and "
             "LaTeX residue in raw_value/description or a future structured range field",
@@ -497,7 +535,17 @@ def validate_core_probability_record(record: dict[str, Any], location: str, ctx:
 
 def is_substantive_text_line(line: str) -> bool:
     stripped = line.strip()
-    return bool(stripped) and not stripped.startswith(("%", "#"))
+    if not stripped or stripped.startswith(("%", "#")):
+        return False
+    if stripped in {"{", "}"}:
+        return False
+    if PAGE_MARKER_RE.fullmatch(stripped):
+        return False
+    if LATEX_STRUCTURE_ONLY_RE.fullmatch(stripped):
+        return False
+    if LATEX_PREAMBLE_ASSIGNMENT_RE.fullmatch(stripped):
+        return False
+    return True
 
 
 def has_non_empty_value(record: dict[str, Any], key: str) -> bool:
@@ -705,13 +753,22 @@ def validate_coordinate_context(
             ctx.error(f"{location}.{key}", "expected string")
 
     refs = obj.get("source_refs")
+    has_refs = is_list(refs) and bool(refs)
     if refs in (None, []):
         ctx.warn(f"{location}.source_refs", "coordinate context has no source reference; review provenance")
     else:
         validate_source_refs(refs, f"{location}.source_refs", ctx)
 
     inference_basis = str(obj.get("inference_basis") or "").strip().lower()
-    if normalized_value in UNKNOWN_CONTEXT_VALUES or inference_basis in {"not_in_reference", "not_reported"}:
+    is_documented_unknown = (
+        normalized_value in UNKNOWN_CONTEXT_VALUES
+        and inference_basis in {"not_in_reference", "not_reported"}
+        and has_refs
+    )
+    if (
+        (normalized_value in UNKNOWN_CONTEXT_VALUES or inference_basis in {"not_in_reference", "not_reported"})
+        and not is_documented_unknown
+    ):
         ctx.warn(
             location,
             "coordinate context is unknown or not covered by coordinate_frames.md; keep value unknown until reviewed",
@@ -924,8 +981,12 @@ def validate_candidate_origin(origin: Any, location: str, ctx: ValidationContext
 
     source_refs = origin_obj.get("source_refs")
     validate_source_refs(source_refs, f"{location}.source_refs", ctx)
-    if not has_paper_text_source_ref(source_refs):
-        ctx.error(f"{location}.source_refs", "expected at least one paper text reference for origin evidence")
+    validate_paper_text_evidence(
+        source_refs,
+        f"{location}.source_refs",
+        ctx,
+        "expected at least one paper text reference for origin evidence",
+    )
 
     citation = origin_obj.get("citation")
     if origin_type == "cited_from_literature":
@@ -1138,11 +1199,12 @@ def validate_candidate(
             f"{location}.candidate_assessment.source_refs",
             ctx,
         )
-        if not has_paper_text_source_ref(assessment_refs):
-            ctx.error(
-                f"{location}.candidate_assessment.source_refs",
-                "expected at least one paper text reference for Galactic-unbound candidate evidence",
-            )
+        validate_paper_text_evidence(
+            assessment_refs,
+            f"{location}.candidate_assessment.source_refs",
+            ctx,
+            "expected at least one paper text reference for Galactic-unbound candidate evidence",
+        )
     else:
         ctx.error(f"{location}.candidate_assessment", "expected an object")
 
@@ -1261,6 +1323,12 @@ def validate_candidate_groups_considered(groups_value: Any, status: str | None, 
             continue
         if "source_refs" in group:
             validate_source_refs(group["source_refs"], f"{location}.source_refs", ctx)
+            validate_paper_text_evidence(
+                group["source_refs"],
+                f"{location}.source_refs",
+                ctx,
+                "expected at least one paper text reference for candidate group evidence",
+            )
         warn_if_no_candidate_group_needs_review(group, location, ctx)
 
 
@@ -1274,7 +1342,7 @@ def warn_if_no_candidate_group_needs_review(group: dict[str, Any], location: str
 
     for text in texts:
         match = NO_CANDIDATE_REVIEW_RE.search(text)
-        if match:
+        if match and not NO_CANDIDATE_NEGATION_RE.search(text):
             ctx.warn(
                 location,
                 f"no_candidates group contains candidate-like phrase {match.group(0)!r}; review extraction.status",

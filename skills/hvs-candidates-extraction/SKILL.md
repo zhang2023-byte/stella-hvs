@@ -173,7 +173,9 @@ For numeric core fields and quantitative `extra[]` records, `value`, `error`,
 `742`, `-12.3`, `+3.00`, or `1.3e5`. Do not put ranges, lower/upper-limit
 operators, units, footnote markers, or prose in these machine fields. Keep
 ranges and limits in `raw_value` and explain them in `description` unless a
-future schema provides structured range fields.
+future schema provides structured range fields. If a field reports only a range
+or limit and has no single machine value, leave `value` empty rather than
+copying the range or limit into it.
 
 For `core.probabilities.bound_probability`,
 `core.probabilities.unbound_probability`, and
@@ -200,6 +202,11 @@ If one ECSV cell contains both components, such as `(244.205784,-3.106973)`,
 store only the component in the quantity `raw_value` and `value`. Keep the full
 cell in the ECSV source ref `raw_value`, and put the component text in
 `component_raw_value`.
+
+When RA/Dec frame or epoch is genuinely unknown, set `value: "unknown"`, include
+paper-visible source refs, and set `inference_basis` to `not_reported` or
+`not_in_reference`. The validator treats this as documented uncertainty, not a
+problem to fix by guessing.
 
 Every value in `core` and `extra[]` must include `source_refs`.
 Every value must also include direct-producer `method_refs`. Use these direct
@@ -259,8 +266,16 @@ and the original cell text stays in quantity `raw_value` and reference
 `raw_value`.
 
 Text `source_refs` must point to substantive paper/source lines, not blank lines
-or comment-only headers. Keep `context` specific enough that a reader can see
-why the referenced lines support the field.
+or comment-only headers. Page markers, isolated LaTeX structure lines, and
+preamble settings are not substantive evidence. Keep `context` specific enough
+that a reader can see why the referenced lines support the field.
+
+Use paper text for scientific evidence. `candidate_assessment.source_refs`,
+`candidate_origin.source_refs`, and `candidate_groups_considered[].source_refs`
+must not rely on metadata JSON, ECSV cells, or bibliography files as the
+scientific evidence. `.bib`/`.bbl` references are used only inside
+`candidate_origin.citation.source_refs`, together with the paper text citation
+line.
 
 ## Empty Results
 

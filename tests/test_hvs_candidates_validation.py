@@ -58,6 +58,8 @@ def write_source(path: Path) -> None:
                 "% generated source header",
                 "Follow-up observations are needed to determine the HVS status of objects with positive energies.",
                 "The paper notes that the object is currently bound to the Galaxy.",
+                "--- Page 1 ---",
+                "colorlinks=true,",
             ]
         )
         + "\n",
@@ -611,7 +613,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
             self.assertEqual(errors, [])
 
-    def test_text_ref_blank_or_comment_line_fails(self) -> None:
+    def test_text_ref_non_substantive_line_fails(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
@@ -632,6 +634,52 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
             self.assertTrue(any("blank or comment lines" in error for error in errors))
+
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            ref["start_line"] = 1
+            ref["end_line"] = 1
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("blank or comment lines" in error for error in errors))
+
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            ref["start_line"] = 9
+            ref["end_line"] = 10
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("blank or comment lines" in error for error in errors))
+
+    def test_ecsv_kind_and_path_must_match(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            velocity = candidate["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]  # type: ignore[index]
+            velocity["source_refs"][0]["kind"] = "text"  # type: ignore[index]
+            velocity["source_refs"][0]["start_line"] = 8  # type: ignore[index]
+            velocity["source_refs"][0]["end_line"] = 8  # type: ignore[index]
+            velocity["source_refs"][0]["context"] = "invalid text reference to an ECSV file"  # type: ignore[index]
+            del velocity["source_refs"][0]["line"]  # type: ignore[index]
+            del velocity["source_refs"][0]["column"]  # type: ignore[index]
+            del velocity["source_refs"][0]["column_header"]  # type: ignore[index]
+            del velocity["source_refs"][0]["raw_value"]  # type: ignore[index]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("ECSV paths must use kind 'ecsv_cell'" in error for error in errors))
+
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            velocity = candidate["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]  # type: ignore[index]
+            velocity["source_refs"][0]["path"] = "literature/2603.00001/arxiv_source/main.tex"  # type: ignore[index]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("ecsv_cell source references must point to .ecsv files" in error for error in errors))
 
     def test_bad_ecsv_header_line_fails(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -692,7 +740,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             self.assertTrue(any("contains LaTeX residue" in error for error in errors))
 
-    def test_core_numeric_machine_fields_warn_without_error(self) -> None:
+    def test_core_numeric_machine_fields_fail_for_non_numeric_values(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
@@ -729,15 +777,13 @@ class HvsCandidatesValidationTest(unittest.TestCase):
                 coordinate_format="sexagesimal_dms",
             )
 
-            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
-            self.assertEqual(report.errors, [])
-            numeric_warnings = [warning for warning in report.warnings if "single plain numeric" in warning]
-            self.assertTrue(any(".core.derived_kinematics.total_velocity.value" in warning for warning in numeric_warnings))
-            self.assertTrue(any(".core.observed_phase_space.radial_velocity.value" in warning for warning in numeric_warnings))
-            self.assertTrue(any(".core.observed_phase_space.radial_velocity.error" in warning for warning in numeric_warnings))
-            self.assertFalse(any(".core.observed_phase_space.ra.value" in warning for warning in numeric_warnings))
-            self.assertFalse(any(".core.observed_phase_space.dec.value" in warning for warning in numeric_warnings))
+            self.assertTrue(any(".core.derived_kinematics.total_velocity.value" in error for error in errors))
+            self.assertTrue(any(".core.observed_phase_space.radial_velocity.value" in error for error in errors))
+            self.assertTrue(any(".core.observed_phase_space.radial_velocity.error" in error for error in errors))
+            self.assertFalse(any(".core.observed_phase_space.ra.value" in error for error in errors))
+            self.assertFalse(any(".core.observed_phase_space.dec.value" in error for error in errors))
 
     def test_coordinate_context_fields_validate(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -838,7 +884,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             self.assertEqual(report.errors, [])
 
-    def test_unknown_coordinate_context_warns_without_error(self) -> None:
+    def test_documented_unknown_coordinate_context_does_not_warn(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
@@ -862,6 +908,31 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace, require_complete=True)
 
             self.assertEqual(report.errors, [])
+            self.assertFalse(any("coordinate context is unknown" in warning for warning in report.warnings))
+
+    def test_unknown_coordinate_context_without_source_refs_still_warns(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            text_ref = candidate["candidate_assessment"]["source_refs"][0]  # type: ignore[index]
+            observed = candidate["core"]["observed_phase_space"]  # type: ignore[index]
+            ra = coordinate_record(
+                text_ref,
+                raw_value="155.62617",
+                value="155.62617",
+                unit="deg",
+                coordinate_format="decimal_degrees",
+            )
+            ra["reference_frame"]["value"] = "unknown"  # type: ignore[index]
+            ra["reference_frame"]["source_refs"] = []  # type: ignore[index]
+            ra["reference_frame"]["inference_basis"] = "not_reported"  # type: ignore[index]
+            observed["ra"] = ra  # type: ignore[index]
+
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace, require_complete=True)
+
+            self.assertEqual(report.errors, [])
+            self.assertTrue(any("coordinate context has no source reference" in warning for warning in report.warnings))
             self.assertTrue(any("coordinate context is unknown" in warning for warning in report.warnings))
 
     def test_grouped_warning_lines_compacts_repeated_candidate_warnings(self) -> None:
@@ -881,7 +952,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
         )
         self.assertEqual(grouped[1], warnings[3])
 
-    def test_quantitative_extra_numeric_fields_warn_without_textual_false_positives(self) -> None:
+    def test_quantitative_extra_numeric_fields_fail_without_textual_false_positives(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
@@ -927,13 +998,18 @@ class HvsCandidatesValidationTest(unittest.TestCase):
                 ]
             )
 
-            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
-            self.assertEqual(report.errors, [])
-            numeric_warnings = [warning for warning in report.warnings if "single plain numeric" in warning]
-            self.assertTrue(any(".extra[1].error" in warning for warning in numeric_warnings))
-            self.assertTrue(any(".extra[2].value" in warning for warning in numeric_warnings))
-            self.assertFalse(any(".extra[3].value" in warning for warning in numeric_warnings))
+            self.assertTrue(any(".extra[1].error" in error for error in errors))
+            self.assertTrue(any(".extra[2].value" in error for error in errors))
+            self.assertFalse(any(".extra[3].value" in error for error in errors))
+
+            candidate["extra"][1]["error"] = ""  # type: ignore[index]
+            candidate["extra"][1]["raw_value"] = "M_G=2.01"  # type: ignore[index]
+            candidate["extra"][2]["value"] = ""  # type: ignore[index]
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertFalse(any("single plain numeric" in error for error in errors))
 
     def test_numeric_machine_fields_accept_signed_and_scientific_values(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -1324,6 +1400,73 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             self.assertEqual(report.errors, [])
             self.assertTrue(any("candidate-like phrase" in warning for warning in report.warnings))
+
+    def test_no_candidates_negated_candidate_phrase_does_not_warn(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace, status="no_candidates")
+            group = payload["candidate_groups_considered"][0]  # type: ignore[index]
+            group["reason"] = "The paper does not present these objects as HVS or unbound candidates."
+            group["source_refs"] = [  # type: ignore[index]
+                {
+                    "kind": "text",
+                    "path": "literature/2603.00001/arxiv_source/main.tex",
+                    "start_line": 3,
+                    "end_line": 3,
+                    "context": "sample selection text without HVS classification",
+                }
+            ]
+
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
+
+            self.assertEqual(report.errors, [])
+            self.assertFalse(any("candidate-like phrase" in warning for warning in report.warnings))
+
+    def test_no_candidates_requires_paper_text_not_metadata(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace, status="no_candidates")
+            audit_path = workspace / "literature" / "2603.00001" / "audit.json"
+            write_json_file(audit_path, {"title": "Metadata-only title"})
+            group = payload["candidate_groups_considered"][0]  # type: ignore[index]
+            group["source_refs"] = [  # type: ignore[index]
+                {
+                    "kind": "text",
+                    "path": "literature/2603.00001/audit.json",
+                    "start_line": 1,
+                    "end_line": 1,
+                    "context": "metadata-only source",
+                }
+            ]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("candidate group evidence" in error for error in errors))
+            self.assertTrue(any("must cite paper text" in error for error in errors))
+
+    def test_bibliography_refs_are_only_allowed_for_citation_evidence(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["candidate_assessment"]["source_refs"] = [  # type: ignore[index]
+                {
+                    "kind": "text",
+                    "path": "literature/2603.00001/arxiv_source/refs.bib",
+                    "start_line": 1,
+                    "end_line": 4,
+                    "context": "bibliography entry",
+                }
+            ]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("Galactic-unbound candidate evidence" in error for error in errors))
+            self.assertTrue(any("must cite paper text" in error for error in errors))
+
+            cited = cited_payload(workspace)
+            errors = validate_cli.validate_hvs_candidates(cited, workspace=workspace)
+            self.assertEqual(errors, [])
 
     def test_candidate_bound_phrase_warns_without_error(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
