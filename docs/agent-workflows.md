@@ -96,3 +96,14 @@ files are generated views or generated products. If generated output is wrong,
 fix the source JSON or renderer and regenerate. Do not force-add generated
 `notes/`, `literature/`, `catalog/`, `html/`, or `logs/` outputs unless the user
 explicitly asks for that.
+
+## Temporary Artifacts
+
+Agents may create temporary helper scripts, scratch files, probes, and one-off
+analysis outputs only when needed for the active task. Prefer `/tmp` or an
+ignored workspace scratch location over source-controlled paths.
+
+Before reporting workflow completion, delete temporary files created during the
+task unless the user explicitly asks to keep them, or the file has been promoted
+into maintained repository code with appropriate tests and documentation. Do not
+delete canonical project scripts under `scripts/`.

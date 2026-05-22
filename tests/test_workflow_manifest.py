@@ -35,6 +35,8 @@ class WorkflowManifestTest(unittest.TestCase):
 
     def test_manifest_is_parseable_and_workflow_ids_are_unique(self) -> None:
         self.assertEqual(self.manifest["version"], 1)
+        self.assertIn("temporary_artifacts_policy", self.manifest)
+        self.assertIn("Temporary helper scripts", self.manifest["temporary_artifacts_policy"])
         ids = [workflow["id"] for workflow in self.workflows]
         self.assertEqual(len(ids), len(set(ids)))
 

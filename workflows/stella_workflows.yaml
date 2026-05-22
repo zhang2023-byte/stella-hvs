@@ -1,6 +1,7 @@
 {
   "version": 1,
   "clarification_policy": "Ask only for missing details that change results, trigger real network/API calls, or risk modifying the wrong generated data. Use documented defaults for low-risk optional inputs and report assumptions.",
+  "temporary_artifacts_policy": "Temporary helper scripts, scratch files, probes, and one-off analysis outputs created during workflow execution must be removed before the agent reports completion, unless explicitly kept by the user or promoted into maintained project code with appropriate tests and documentation. Prefer /tmp or ignored scratch locations for temporary files, and do not delete canonical project scripts under scripts/.",
   "workflows": [
     {
       "id": "monthly_literature_fetch",

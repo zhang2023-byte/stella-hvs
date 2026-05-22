@@ -193,6 +193,14 @@ conda run -n stella-env python scripts/build_hvs_candidates_index.py
 
 - Test environment: `conda run -n stella-env python -m unittest discover tests`
 - Do not restore unrelated changes and do not revert user changes.
+- Agents may create temporary helper scripts, scratch files, probes, and
+  one-off analysis outputs only when needed for the active task. Prefer writing
+  them outside source-controlled paths, such as `/tmp`, or in an ignored
+  workspace scratch location.
+- Before finishing a workflow, delete temporary helper scripts and scratch files
+  created during the task unless the user explicitly asks to keep them, or the
+  file has been promoted into maintained repository code with appropriate tests
+  and documentation. Do not delete canonical project scripts under `scripts/`.
 - If output structure changes, update schemas/renderers, `docs/outputs.md`, and
   relevant tests.
 - If CLI arguments or defaults change, update scripts, `docs/usage.md`,
