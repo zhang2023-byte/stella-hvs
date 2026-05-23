@@ -97,11 +97,11 @@ literature/01_literature_catalog_index.json
 literature/01_literature_catalog_index.md
 literature/02_literature_hvs_index.json
 literature/02_literature_hvs_index.md
-catalog/<object_id>.json
+catalog/candidates/<object_id>.json
 catalog/03_hvs_candidates_index.json
 catalog/03_hvs_candidates_index.md
-html/live/
-html/static/index.html
+catalog/html/live/
+catalog/html/static/index.html
 ```
 
 Do not manually edit generated Markdown, index files, generated `catalog/`
@@ -109,7 +109,7 @@ files, or generated HTML. If output is wrong, fix source JSON or rendering logic
 and regenerate.
 
 Git should store toolchain, documentation, tests, workflow manifests, and skills.
-Generated data under `notes/`, `literature/`, `catalog/`, `html/`, and `logs/`
+Generated data under `notes/`, `literature/`, `catalog/`, and `logs/`
 is ignored by default. Do not force-add it unless the user explicitly asks.
 
 ## Network and API Rules
@@ -183,7 +183,7 @@ conda run -n stella-env python scripts/validate_catalog_extraction.py --arxiv-id
 conda run -n stella-env python scripts/init_hvs_candidates.py --arxiv-id 2402.10714
 conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id 2402.10714 --require-complete
 conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py rebuild --literature-dir literature --catalog-dir catalog
-conda run -n stella-env python scripts/build_hvs_catalog_html.py --catalog-dir catalog --html-dir html
+conda run -n stella-env python scripts/build_hvs_catalog_html.py --catalog-dir catalog --html-dir catalog/html
 conda run -n stella-env python scripts/render_lit_notes.py
 conda run -n stella-env python scripts/build_catalog_index.py
 conda run -n stella-env python scripts/build_hvs_candidates_index.py

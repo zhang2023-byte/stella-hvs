@@ -11,11 +11,13 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from high_velocity_lit.hvs_catalog_site import (  # noqa: E402
+    CANDIDATES_DIRNAME,
     build_index_row,
     build_static_html,
     has_external_html_dependencies,
     load_catalog_snapshot,
     method_lineage,
+    render_live_index_html,
 )
 
 
@@ -160,7 +162,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
                     "objects": [{"object_id": "Gaia_DR3_123"}],
                 },
             )
-            write_json(catalog / "Gaia_DR3_123.json", object_record())
+            write_json(catalog / CANDIDATES_DIRNAME / "Gaia_DR3_123.json", object_record())
 
             snapshot = load_catalog_snapshot(catalog)
 
@@ -191,13 +193,18 @@ class HvsCatalogSiteTest(unittest.TestCase):
         self.assertEqual(lineage["ancestors"], ["step-01", "step-02"])
         self.assertEqual(lineage["edges"], ["step-01->step-02", "step-02->step-03"])
 
+    def test_live_html_points_at_catalog_root(self) -> None:
+        html = render_live_index_html(catalog_root="../..")
+
+        self.assertIn('data-catalog-root="../.."', html)
+
     def test_static_html_is_self_contained(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             catalog = root / "catalog"
             assets = root / "assets"
             write_json(catalog / "03_hvs_candidates_index.json", {"summary": {"object_count": 1}, "objects": []})
-            write_json(catalog / "Gaia_DR3_123.json", object_record())
+            write_json(catalog / CANDIDATES_DIRNAME / "Gaia_DR3_123.json", object_record())
             assets.mkdir()
             css_path = assets / "stella.css"
             js_path = assets / "catalog-viewer.js"

@@ -22,6 +22,7 @@ INDEX_SCHEMA_VERSION = "stella.hvs_candidate_catalog.index.v2"
 READABLE_OBJECT_SCHEMA_VERSIONS = {OBJECT_SCHEMA_VERSION, "stella.hvs_candidate_catalog.object.v1"}
 INDEX_JSON_FILENAME = "03_hvs_candidates_index.json"
 INDEX_MARKDOWN_FILENAME = "03_hvs_candidates_index.md"
+CANDIDATES_DIRNAME = "candidates"
 LEGACY_INDEX_JSON_FILENAMES = ("hvs_candidates_index.json",)
 LEGACY_INDEX_MARKDOWN_FILENAMES = ("hvs_candidates_index.md",)
 MATCH_RADIUS_ARCSEC = 5.0
@@ -582,6 +583,7 @@ def build_catalog_index(
 ) -> dict[str, Any]:
     objects: list[dict[str, Any]] = []
     warnings: list[dict[str, Any]] = []
+    candidates_dir = catalog_dir / CANDIDATES_DIRNAME
     for record in object_records:
         sources = record.get("sources") if isinstance(record.get("sources"), list) else []
         source_items = [item for item in sources if isinstance(item, dict)]
@@ -598,7 +600,7 @@ def build_catalog_index(
             {
                 "object_id": object_id,
                 "canonical_identifier": record.get("canonical_identifier") or {},
-                "object_json_path": relative_path(catalog_dir / f"{object_id}.json", workspace=workspace),
+                "object_json_path": relative_path(candidates_dir / f"{object_id}.json", workspace=workspace),
                 "source_count": len(source_items),
                 "gaia_source_ids": gaia_source_ids,
                 "paper_candidate_ids": paper_candidate_ids,
@@ -697,7 +699,9 @@ def _object_json_paths(catalog_dir: Path) -> list[Path]:
     if not catalog_dir.exists():
         return []
     paths: list[Path] = []
-    for path in sorted(catalog_dir.glob("*.json")):
+    candidate_paths = list((catalog_dir / CANDIDATES_DIRNAME).glob("*.json"))
+    legacy_paths = list(catalog_dir.glob("*.json"))
+    for path in sorted([*candidate_paths, *legacy_paths]):
         if path.name == INDEX_JSON_FILENAME or path.name in LEGACY_INDEX_JSON_FILENAMES:
             continue
         try:
@@ -771,7 +775,8 @@ def load_catalog_contributions(
 
 
 def _record_paths(object_records: list[dict[str, Any]], catalog_dir: Path) -> list[Path]:
-    return [catalog_dir / f"{record.get('object_id')}.json" for record in object_records]
+    candidates_dir = catalog_dir / CANDIDATES_DIRNAME
+    return [candidates_dir / f"{record.get('object_id')}.json" for record in object_records]
 
 
 def _write_catalog_records(
@@ -799,10 +804,11 @@ def _write_catalog_records(
         }
 
     catalog_dir.mkdir(parents=True, exist_ok=True)
+    (catalog_dir / CANDIDATES_DIRNAME).mkdir(parents=True, exist_ok=True)
     for path in stale_paths:
         path.unlink(missing_ok=True)
     for record in object_records:
-        write_json(catalog_dir / f"{record.get('object_id')}.json", record)
+        write_json(catalog_dir / CANDIDATES_DIRNAME / f"{record.get('object_id')}.json", record)
     write_json(json_path, index_record)
     markdown_path.write_text(render_hvs_candidate_catalog_index(index_record), encoding="utf-8")
     for filename in LEGACY_INDEX_JSON_FILENAMES + LEGACY_INDEX_MARKDOWN_FILENAMES:

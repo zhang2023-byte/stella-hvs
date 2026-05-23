@@ -430,7 +430,7 @@ Global index files are `literature/02_literature_hvs_index.json` and `literature
 After paper-level `literature_hvs_candidates.json` files are complete, use the in-repository `hvs-candidates-merge` skill to generate the object catalog:
 
 ```text
-catalog/<object_id>.json
+catalog/candidates/<object_id>.json
 catalog/03_hvs_candidates_index.json
 catalog/03_hvs_candidates_index.md
 ```
@@ -493,15 +493,15 @@ After object-level `catalog/` exists, build the HTML demo:
 ```bash
 conda run -n stella-env python scripts/build_hvs_catalog_html.py \
   --catalog-dir catalog \
-  --html-dir html
+  --html-dir catalog/html
 ```
 
 Outputs:
 
 ```text
-html/live/index.html              Entry page that reads catalog/ live
-html/live/assets/...              Local CSS, JS, and visual assets shared by live/static
-html/static/index.html            Single-file demo with the current catalog/ snapshot embedded
+catalog/html/live/index.html              Entry page that reads catalog/ live
+catalog/html/live/assets/...              Local CSS, JS, and visual assets shared by live/static
+catalog/html/static/index.html            Single-file demo with the current catalog/ snapshot embedded
 ```
 
 The live version needs an HTTP server started from the repository root, for example:
@@ -513,10 +513,10 @@ python -m http.server 8765 --bind 127.0.0.1
 Then open:
 
 ```text
-http://127.0.0.1:8765/html/live/
+http://127.0.0.1:8765/catalog/html/live/
 ```
 
-The static version does not read JSON live. It is a build-time `catalog/` snapshot and can be opened directly as `html/static/index.html` or copied to static hosting for demos. The source of truth remains `catalog/*.json`; the web page is only a display layer.
+The static version does not read JSON live. It is a build-time `catalog/` snapshot and can be opened directly as `catalog/html/static/index.html` or copied to static hosting for demos. The source of truth remains `catalog/candidates/*.json`; the web page is only a display layer.
 
 ## 11. Date Syntax
 

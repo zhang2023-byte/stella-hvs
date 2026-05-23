@@ -12,6 +12,7 @@ from typing import Any
 OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v2"
 READABLE_OBJECT_SCHEMA_VERSIONS = {OBJECT_SCHEMA_VERSION, "stella.hvs_candidate_catalog.object.v1"}
 INDEX_JSON_FILENAME = "03_hvs_candidates_index.json"
+CANDIDATES_DIRNAME = "candidates"
 LEGACY_INDEX_JSON_FILENAMES = ("hvs_candidates_index.json",)
 
 OBSERVED_FIELDS = (
@@ -166,7 +167,9 @@ def load_catalog_snapshot(catalog_dir: Path) -> dict[str, Any]:
     index_record = read_json(index_path) if index_path.exists() else {}
 
     records: list[dict[str, Any]] = []
-    for path in sorted(catalog_dir.glob("*.json")):
+    candidate_paths = list((catalog_dir / CANDIDATES_DIRNAME).glob("*.json"))
+    legacy_paths = list(catalog_dir.glob("*.json"))
+    for path in sorted([*candidate_paths, *legacy_paths]):
         if path.name == INDEX_JSON_FILENAME or path.name in LEGACY_INDEX_JSON_FILENAMES:
             continue
         payload = read_json(path)
@@ -220,7 +223,7 @@ def inline_css(css_path: Path, *, hero_path: Path | None = None) -> str:
     return css
 
 
-def render_live_index_html() -> str:
+def render_live_index_html(*, catalog_root: str = "../..") -> str:
     return """<!doctype html>
 <html lang="en">
 <head>
@@ -229,12 +232,12 @@ def render_live_index_html() -> str:
   <title>Stella HVS Catalog</title>
   <link rel="stylesheet" href="assets/stella.css">
 </head>
-<body data-catalog-root="../../catalog">
+<body data-catalog-root="{catalog_root}">
   <div id="app" class="app-shell" aria-live="polite"></div>
   <script src="assets/catalog-viewer.js"></script>
 </body>
 </html>
-"""
+""".format(catalog_root=catalog_root)
 
 
 def render_static_index_html(snapshot: dict[str, Any], *, css: str, js: str) -> str:

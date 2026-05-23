@@ -30,8 +30,8 @@ workflow detail.
 | `catalog_table_extraction` | Convert reviewed internal LaTeX tables to ECSV | `catalog_extraction.json`, ECSV | generated data |
 | `hvs_candidate_extraction` | Extract paper-level HVS/unbound candidates | `literature_hvs_candidates.json` | scientific judgment |
 | `hvs_candidate_extraction_batch` | Dispatch isolated per-paper HVS extraction | many `literature_hvs_candidates.json` files + index | scientific judgment |
-| `object_catalog_merge` | Merge paper-level candidates into object catalog | `catalog/*.json` | generated data |
-| `hvs_catalog_html_build` | Build local HTML display pages | `html/live`, `html/static` | generated view |
+| `object_catalog_merge` | Merge paper-level candidates into object catalog | `catalog/candidates/*.json` | generated data |
+| `hvs_catalog_html_build` | Build local HTML display pages | `catalog/html/live`, `catalog/html/static` | generated view |
 | `index_or_markdown_regeneration` | Rebuild generated indexes/Markdown | generated indexes/views | generated view |
 
 ## Subagent Orchestration
@@ -94,7 +94,7 @@ and expand it before execution.
 JSON is the source of truth. Markdown, HTML, indexes, and object-level catalog
 files are generated views or generated products. If generated output is wrong,
 fix the source JSON or renderer and regenerate. Do not force-add generated
-`notes/`, `literature/`, `catalog/`, `html/`, or `logs/` outputs unless the user
+`notes/`, `literature/`, `catalog/`, or `logs/` outputs unless the user
 explicitly asks for that.
 
 ## Temporary Artifacts

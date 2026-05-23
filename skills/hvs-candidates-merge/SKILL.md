@@ -14,7 +14,7 @@ literature/<arxiv_id>/literature_hvs_candidates.json
 The object-level outputs live in:
 
 ```text
-catalog/<object_id>.json
+catalog/candidates/<object_id>.json
 catalog/03_hvs_candidates_index.json
 catalog/03_hvs_candidates_index.md
 ```

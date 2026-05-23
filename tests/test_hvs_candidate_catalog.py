@@ -19,6 +19,7 @@ merge_cli = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(merge_cli)
 
 from high_velocity_lit.hvs_candidate_catalog import (  # noqa: E402
+    CANDIDATES_DIRNAME,
     INDEX_JSON_FILENAME,
     INDEX_MARKDOWN_FILENAME,
     OBJECT_SCHEMA_VERSION,
@@ -217,11 +218,16 @@ class HvsCandidateCatalogTest(unittest.TestCase):
             self.assertEqual(result["index_record"]["summary"]["object_count"], 1)
             record = result["object_records"][0]
             self.assertEqual(record["object_id"], "Gaia_DR3_123")
+            self.assertEqual(
+                result["index_record"]["objects"][0]["object_json_path"],
+                "catalog/candidates/Gaia_DR3_123.json",
+            )
             self.assertEqual(len(record["sources"]), 2)
             self.assertNotIn("source_refs", json.dumps(record))
             first_quantity = record["candidates"][0]["core"]["derived_kinematics"]["total_velocity"]
             self.assertEqual(first_quantity, {"value": "700", "unit": "km s^-1", "method_refs": ["step-02"]})
-            self.assertTrue((catalog / "Gaia_DR3_123.json").exists())
+            self.assertTrue((catalog / CANDIDATES_DIRNAME / "Gaia_DR3_123.json").exists())
+            self.assertFalse((catalog / "Gaia_DR3_123.json").exists())
             self.assertTrue((catalog / INDEX_JSON_FILENAME).exists())
             self.assertTrue((catalog / INDEX_MARKDOWN_FILENAME).exists())
 
@@ -500,7 +506,8 @@ class HvsCandidateCatalogTest(unittest.TestCase):
             self.assertEqual(result["object_records"][0]["object_id"], "Gaia_DR3_123")
             self.assertEqual(len(result["object_records"][0]["sources"]), 2)
             self.assertFalse((catalog / "Gaia_EDR3_123.json").exists())
-            self.assertTrue((catalog / "Gaia_DR3_123.json").exists())
+            self.assertTrue((catalog / CANDIDATES_DIRNAME / "Gaia_DR3_123.json").exists())
+            self.assertFalse((catalog / "Gaia_DR3_123.json").exists())
 
     def test_strong_slug_collision_suffixes_all_colliding_objects(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -570,6 +577,7 @@ class HvsCandidateCatalogTest(unittest.TestCase):
             record = result["object_records"][0]
             self.assertEqual(record["object_id"], "J17515416-2801387")
             self.assertEqual(record["canonical_identifier"]["kind"], "coordinate")
+            self.assertFalse((catalog / CANDIDATES_DIRNAME / "1.json").exists())
             self.assertFalse((catalog / "1.json").exists())
 
     def test_weak_paper_id_without_coordinate_uses_record_id_slug(self) -> None:

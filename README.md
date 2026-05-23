@@ -65,7 +65,7 @@ conda run -n stella-env python scripts/init_hvs_candidates.py --arxiv-id 2402.10
 conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id 2402.10714 --require-complete
 conda run -n stella-env python scripts/validate_hvs_candidates.py --all --require-complete
 conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py rebuild --literature-dir literature --catalog-dir catalog --fail-on-skipped
-conda run -n stella-env python scripts/build_hvs_catalog_html.py --catalog-dir catalog --html-dir html
+conda run -n stella-env python scripts/build_hvs_catalog_html.py --catalog-dir catalog --html-dir catalog/html
 conda run -n stella-env python scripts/render_lit_notes.py
 ```
 
@@ -88,12 +88,12 @@ notes/YYYY/YYYY-MM/YYYY-MM.title-triage.json
 literature/<arxiv_id>/catalog_review.json
 literature/<arxiv_id>/catalog_extraction.json
 literature/<arxiv_id>/literature_hvs_candidates.json
-catalog/<object_id>.json
-html/live/
-html/static/index.html
+catalog/candidates/<object_id>.json
+catalog/html/live/
+catalog/html/static/index.html
 ```
 
-Generated data under `notes/`, `literature/`, `catalog/`, `html/`, and `logs/`
+Generated data under `notes/`, `literature/`, `catalog/`, and `logs/`
 is ignored by Git by default. Do not force-add it unless that is explicitly
 requested.
 
@@ -129,6 +129,6 @@ tests/                                Tests
 notes/                                Generated monthly records and views
 literature/                           Generated local literature archive
 catalog/                              Generated object-level HVS catalog
-html/                                 Generated local HTML display layer
+catalog/html/                         Generated local HTML display layer
 logs/                                 Local run logs
 ```

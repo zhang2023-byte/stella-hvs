@@ -281,7 +281,7 @@ Clarify when missing:
 Precise agent prompt:
 
 ```text
-Run hvs_catalog_html_build using catalog/ as source and html/ as output. Build live and static pages from generated object-level catalog JSON. Do not treat HTML as source of truth. Verify that expected html/live and html/static outputs exist.
+Run hvs_catalog_html_build using catalog/ as source and catalog/html/ as output. Build live and static pages from generated object-level catalog JSON. Do not treat HTML as source of truth. Verify that expected catalog/html/live and catalog/html/static outputs exist.
 ```
 
 ## Index or Markdown Regeneration
