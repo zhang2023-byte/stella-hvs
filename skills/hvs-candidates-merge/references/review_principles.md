@@ -3,12 +3,15 @@
 ## Matching Policy
 
 - Gaia source ID is the strongest match key. Candidates with the same non-empty
-  normalized `gaia_source_id` are merged into the same object.
+  normalized `gaia_source_id` are merged into the same object. `Gaia EDR3`
+  and `Gaia DR3` records with the same numeric source ID share a DR3-family
+  match key; `Gaia DR2` remains a separate family.
 - If one side or both sides have no Gaia source ID, compare RA/Dec with
   `astropy.coordinates.SkyCoord`. A separation strictly `< 5 arcsec` means the
   candidates are treated as the same object.
-- If two records have different non-empty Gaia source IDs, do not merge them
-  even when their RA/Dec are closer than 5 arcsec. Emit and review a warning.
+- If two records have different non-empty normalized Gaia source IDs, do not
+  merge them even when their RA/Dec are closer than 5 arcsec. Emit and review
+  a warning.
 - If two records have the same Gaia source ID but their RA/Dec separation is
   not `< 5 arcsec`, merge them by Gaia ID but emit and review a warning.
 - If an object group ends up with more than one non-empty Gaia source ID through
@@ -40,7 +43,7 @@ For `coordinate_parse_failed`:
 ## Output Audit Checklist
 
 - Every object file has `schema_version:
-  stella.hvs_candidate_catalog.object.v1`.
+  stella.hvs_candidate_catalog.object.v2`.
 - `sources[]` entries trace back to a source paper through:
   `source`, `paper`, `source_json_path`, `record_id`,
   `paper_candidate_id`, and `gaia_source_id`.
@@ -51,9 +54,10 @@ For `coordinate_parse_failed`:
 - `method_chain` and `candidates.core` do not contain `source_refs`.
 - Quantity records in object-level `core` only keep `value`, non-empty error
   fields, `unit`, and `method_refs`.
-- File names prefer Gaia source ID slugs. Objects without Gaia source IDs use
-  the earliest source's `paper_candidate_id`, ordered by `paper.month`, arXiv
-  ID, and `record_id`.
+- File names prefer normalized Gaia release-family slugs. Objects without Gaia
+  source IDs use strong paper candidate IDs, then coordinate slugs, then stable
+  source record slugs. Strong paper ID slugs preserve ASCII `+` and `-`; weak
+  paper IDs such as bare numbers are not used directly as filenames.
 
 ## Generated Output Boundary
 

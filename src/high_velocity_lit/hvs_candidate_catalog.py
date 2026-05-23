@@ -17,14 +17,26 @@ from high_velocity_lit.hvs_candidates_index import HVS_CANDIDATES_FILENAME, iter
 from high_velocity_lit.schema_models import LiteratureHvsCandidatesRecord
 
 
-OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v1"
-INDEX_SCHEMA_VERSION = "stella.hvs_candidate_catalog.index.v1"
+OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v2"
+INDEX_SCHEMA_VERSION = "stella.hvs_candidate_catalog.index.v2"
+READABLE_OBJECT_SCHEMA_VERSIONS = {OBJECT_SCHEMA_VERSION, "stella.hvs_candidate_catalog.object.v1"}
 INDEX_JSON_FILENAME = "hvs_candidates_index.json"
 INDEX_MARKDOWN_FILENAME = "hvs_candidates_index.md"
 MATCH_RADIUS_ARCSEC = 5.0
 
 GAIA_SOURCE_ID_RE = re.compile(r"^Gaia\s+((?:E)?DR\d+)\s+(\d+)$", re.IGNORECASE)
-UNSAFE_SLUG_RE = re.compile(r"[^A-Za-z0-9]+")
+UNSAFE_SLUG_RE = re.compile(r"[^A-Za-z0-9+-]+")
+WEAK_IDENTIFIER_VALUES = {
+    "candidate",
+    "cand",
+    "hvs",
+    "hv",
+    "id",
+    "object",
+    "source",
+    "star",
+    "target",
+}
 
 
 @dataclass(frozen=True)
@@ -76,21 +88,64 @@ class UnionFind:
             self.parent[right_root] = left_root
 
 
+@dataclass(frozen=True)
+class GaiaSourceId:
+    release: str
+    source_id: str
+    raw: str
+
+    @property
+    def release_family(self) -> str:
+        if self.release in {"DR3", "EDR3"}:
+            return "DR3"
+        return self.release
+
+    @property
+    def match_key(self) -> str:
+        return f"gaia {self.release_family} {self.source_id}"
+
+    @property
+    def object_value(self) -> str:
+        return f"Gaia {self.release_family} {self.source_id}"
+
+
+def parse_gaia_source_id(value: Any) -> GaiaSourceId | None:
+    text = " ".join(str(value or "").strip().split())
+    if not text:
+        return None
+    match = GAIA_SOURCE_ID_RE.match(text)
+    if not match:
+        return None
+    return GaiaSourceId(release=match.group(1).upper(), source_id=match.group(2), raw=text)
+
+
 def normalize_gaia_source_id(value: Any) -> str:
     """Return a stable Gaia source id key for matching."""
     text = " ".join(str(value or "").strip().split())
     if not text:
         return ""
-    match = GAIA_SOURCE_ID_RE.match(text)
-    if not match:
+    parsed = parse_gaia_source_id(text)
+    if parsed is None:
         return text.casefold()
-    return f"gaia {match.group(1).upper()} {match.group(2)}"
+    return parsed.match_key
 
 
 def safe_slug(value: Any) -> str:
     """Return a filesystem-safe slug while preserving readable ASCII tokens."""
     slug = UNSAFE_SLUG_RE.sub("_", str(value or "").strip()).strip("_")
     return slug or "candidate"
+
+
+def _is_weak_identifier(value: Any) -> bool:
+    text = " ".join(str(value or "").strip().split())
+    if not text:
+        return True
+    if text.isdigit():
+        return True
+    compact = re.sub(r"[^A-Za-z0-9]+", "", text).casefold()
+    if len(compact) == 1 and compact.isalpha():
+        return True
+    return compact in WEAK_IDENTIFIER_VALUES
 
 
 def _source_sort_key(contribution: Contribution) -> tuple[str, str, str, str]:
@@ -189,6 +244,14 @@ def parse_candidate_coordinate(core: Any) -> tuple[SkyCoord | None, str]:
         return SkyCoord(ra=ra_value, dec=dec_value, unit=(ra_unit, u.deg), frame="icrs"), ""
     except Exception as exc:  # pragma: no cover - astropy exception types vary.
         return None, f"{type(exc).__name__}: {exc}"
+
+
+def _coordinate_identifier(coordinate: SkyCoord | None) -> str:
+    if coordinate is None:
+        return ""
+    ra = coordinate.ra.to_string(unit=u.hourangle, sep="", precision=2, pad=True)
+    dec = coordinate.dec.to_string(unit=u.deg, sep="", precision=1, alwayssign=True, pad=True)
+    return f"J{ra.replace('.', '')}{dec.replace('.', '')}"
 
 
 def _load_paper_payload(path: Path, *, workspace: Path) -> tuple[dict[str, Any] | None, dict[str, str] | None]:
@@ -358,34 +421,74 @@ def merge_contributions(contributions: list[Contribution]) -> list[CatalogObject
     return objects
 
 
-def _canonical_for_object(obj: CatalogObject) -> tuple[str, str, Contribution]:
+def _gaia_canonical_sort_key(contribution: Contribution) -> tuple[int, tuple[str, str, str, str]]:
+    parsed = parse_gaia_source_id(contribution.gaia_source_id)
+    if parsed is None:
+        release_priority = 3
+    elif parsed.release == "DR3":
+        release_priority = 0
+    elif parsed.release == "EDR3":
+        release_priority = 1
+    else:
+        release_priority = 2
+    return (release_priority, _source_sort_key(contribution))
+
+
+def _canonical_gaia_contribution(obj: CatalogObject) -> Contribution | None:
     ordered = sorted(obj.contributions, key=_source_sort_key)
     gaia_contributions = [item for item in ordered if item.gaia_source_id.strip()]
     if gaia_contributions:
-        contribution = gaia_contributions[0]
-        return "gaia_source_id", contribution.gaia_source_id, contribution
+        return sorted(gaia_contributions, key=_gaia_canonical_sort_key)[0]
+    return None
+
+
+def _canonical_for_object(obj: CatalogObject) -> tuple[str, str, Contribution]:
+    ordered = sorted(obj.contributions, key=_source_sort_key)
+    gaia_contribution = _canonical_gaia_contribution(obj)
+    if gaia_contribution is not None:
+        return "gaia_source_id", gaia_contribution.gaia_source_id, gaia_contribution
+    for contribution in ordered:
+        if not _is_weak_identifier(contribution.paper_candidate_id):
+            return "paper_candidate_id", contribution.paper_candidate_id, contribution
+    for contribution in ordered:
+        coordinate_id = _coordinate_identifier(contribution.coordinate)
+        if coordinate_id:
+            return "coordinate", coordinate_id, contribution
     contribution = ordered[0]
-    return "paper_candidate_id", contribution.paper_candidate_id or contribution.record_id, contribution
+    return "record_id", contribution.record_id, contribution
+
+
+def _object_id_base_for_object(obj: CatalogObject) -> str:
+    gaia_contribution = _canonical_gaia_contribution(obj)
+    if gaia_contribution is not None:
+        parsed = parse_gaia_source_id(gaia_contribution.gaia_source_id)
+        gaia_value = parsed.object_value if parsed is not None else gaia_contribution.gaia_source_id
+        return safe_slug(gaia_value)
+
+    canonical_kind, canonical_value, _ = _canonical_for_object(obj)
+    if canonical_kind == "coordinate":
+        return canonical_value
+    if canonical_kind == "record_id":
+        return f"src_{safe_slug(canonical_value)}"
+    return safe_slug(canonical_value)
 
 
 def _assign_object_ids(objects: list[CatalogObject]) -> list[tuple[CatalogObject, str]]:
-    bases = [safe_slug(_canonical_for_object(obj)[1]) for obj in objects]
-    seen: dict[str, int] = {}
+    bases = [_object_id_base_for_object(obj) for obj in objects]
+    base_counts: dict[str, int] = {}
+    for base in bases:
+        base_counts[base] = base_counts.get(base, 0) + 1
     assigned: list[tuple[CatalogObject, str]] = []
     for obj, base in zip(objects, bases, strict=True):
-        count = seen.get(base, 0)
-        seen[base] = count + 1
-        if count == 0 and bases.count(base) == 1:
-            assigned.append((obj, base))
-            continue
-        if count == 0:
-            assigned.append((obj, base))
-            continue
-        suffix = safe_slug(sorted(obj.contributions, key=_source_sort_key)[0].record_id)
-        candidate = f"{base}__{suffix}"
+        if base_counts[base] == 1:
+            candidate = base
+        else:
+            suffix = safe_slug(sorted(obj.contributions, key=_source_sort_key)[0].record_id)
+            candidate = f"{base}__{suffix}"
         serial = 2
         used = {object_id for _, object_id in assigned}
         while candidate in used:
+            suffix = safe_slug(sorted(obj.contributions, key=_source_sort_key)[0].record_id)
             candidate = f"{base}__{suffix}_{serial}"
             serial += 1
         assigned.append((obj, candidate))
@@ -599,7 +702,7 @@ def _object_json_paths(catalog_dir: Path) -> list[Path]:
             payload = read_json(path)
         except (OSError, json.JSONDecodeError):
             continue
-        if payload.get("schema_version") == OBJECT_SCHEMA_VERSION:
+        if payload.get("schema_version") in READABLE_OBJECT_SCHEMA_VERSIONS:
             paths.append(path)
     return paths
 
@@ -659,7 +762,7 @@ def load_catalog_contributions(
         except (OSError, json.JSONDecodeError) as exc:
             skipped.append({"path": relative_path(path, workspace=workspace), "error": f"{type(exc).__name__}: {exc}"})
             continue
-        if record.get("schema_version") != OBJECT_SCHEMA_VERSION:
+        if record.get("schema_version") not in READABLE_OBJECT_SCHEMA_VERSIONS:
             continue
         contributions.extend(_contributions_from_catalog_object(record))
     return contributions, skipped

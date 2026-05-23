@@ -9,7 +9,8 @@ from pathlib import Path
 from typing import Any
 
 
-OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v1"
+OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v2"
+READABLE_OBJECT_SCHEMA_VERSIONS = {OBJECT_SCHEMA_VERSION, "stella.hvs_candidate_catalog.object.v1"}
 INDEX_JSON_FILENAME = "hvs_candidates_index.json"
 
 OBSERVED_FIELDS = (
@@ -162,7 +163,7 @@ def load_catalog_snapshot(catalog_dir: Path) -> dict[str, Any]:
         if path.name == INDEX_JSON_FILENAME:
             continue
         payload = read_json(path)
-        if payload.get("schema_version") == OBJECT_SCHEMA_VERSION:
+        if payload.get("schema_version") in READABLE_OBJECT_SCHEMA_VERSIONS:
             records.append(payload)
 
     order = [

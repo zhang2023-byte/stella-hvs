@@ -459,10 +459,11 @@ Both modes support `--dry-run True`, which prints generated writes/deletes witho
 ### Merge and Review Principles
 
 - Inputs are validated against the current `LiteratureHvsCandidatesRecord` schema first. Invalid files enter index `skipped[]` and do not participate in merging.
-- Gaia source ID is the strong match key; identical non-empty `gaia_source_id` values merge.
+- Gaia source ID is the strong match key after release-family normalization. `Gaia EDR3 <source_id>` and `Gaia DR3 <source_id>` merge when the numeric source ID matches; `Gaia DR2` remains a separate family.
 - If either side lacks a Gaia source ID, RA/Dec angular separation must be strictly `<5 arcsec` to merge.
 - If both sides have different Gaia source IDs, do not merge; if coordinates are `<5 arcsec`, write a warning.
 - If both sides have the same Gaia source ID but coordinates are not `<5 arcsec`, still merge and write a warning.
+- Object filenames prefer normalized Gaia slugs, then strong paper object IDs, then coordinate slugs, then stable source record slugs. Strong paper ID slugs preserve ASCII `+` and `-`; weak paper IDs such as bare numbers are not used directly as filenames.
 - Object-level JSON `sources[]` stores short source IDs, original `paper` fields, source JSON paths, and paper-level candidate IDs.
 - `method_chain[]` and `candidates[]` are grouped by `source` and do not keep `source_refs`; full provenance still lives in the paper-level JSON.
 - Do not manually modify `catalog/`. If warnings expose errors, fix the corresponding `literature_hvs_candidates.json` and rerun the merge.

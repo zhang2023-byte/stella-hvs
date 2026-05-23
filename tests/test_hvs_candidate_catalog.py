@@ -217,6 +217,86 @@ class HvsCandidateCatalogTest(unittest.TestCase):
             self.assertTrue((catalog / INDEX_JSON_FILENAME).exists())
             self.assertTrue((catalog / INDEX_MARKDOWN_FILENAME).exists())
 
+    def test_rebuild_merges_edr3_and_dr3_with_same_source_number(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature = workspace / "literature"
+            catalog = workspace / "catalog"
+            write_json(
+                literature / "2206.00417" / "literature_hvs_candidates.json",
+                payload(
+                    "2206.00417",
+                    month="2022-06",
+                    candidates=[
+                        candidate(
+                            "2206.00417",
+                            3,
+                            paper_candidate_id="HV-RRL-03",
+                            gaia_source_id="Gaia EDR3 2644870582050682240",
+                            ra="349.9803",
+                            dec="-0.1865",
+                        )
+                    ],
+                ),
+            )
+            write_json(
+                literature / "2509.24010" / "literature_hvs_candidates.json",
+                payload(
+                    "2509.24010",
+                    month="2025-09",
+                    candidates=[
+                        candidate(
+                            "2509.24010",
+                            164,
+                            paper_candidate_id="HV-RRL-164",
+                            gaia_source_id="Gaia DR3 2644870582050682240",
+                            ra="349.9803",
+                            dec="-0.1865",
+                        )
+                    ],
+                ),
+            )
+
+            result = rebuild_hvs_candidate_catalog(literature, catalog, workspace=workspace)
+
+            self.assertEqual(result["index_record"]["summary"]["object_count"], 1)
+            record = result["object_records"][0]
+            self.assertEqual(record["object_id"], "Gaia_DR3_2644870582050682240")
+            self.assertEqual(record["canonical_identifier"]["value"], "Gaia DR3 2644870582050682240")
+            self.assertEqual({source["gaia_source_id"] for source in record["sources"]}, {
+                "Gaia EDR3 2644870582050682240",
+                "Gaia DR3 2644870582050682240",
+            })
+            self.assertFalse(result["index_record"]["warnings"])
+
+    def test_rebuild_keeps_dr2_and_dr3_with_same_source_number_split(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature = workspace / "literature"
+            catalog = workspace / "catalog"
+            for arxiv_id, gaia_id in (
+                ("2601.00001", "Gaia DR2 777"),
+                ("2602.00002", "Gaia DR3 777"),
+            ):
+                write_json(
+                    literature / arxiv_id / "literature_hvs_candidates.json",
+                    payload(
+                        arxiv_id,
+                        month="2026-01",
+                        candidates=[
+                            candidate(arxiv_id, 1, paper_candidate_id=f"HVS-{arxiv_id}", gaia_source_id=gaia_id, ra="10", dec="20")
+                        ],
+                    ),
+                )
+
+            result = rebuild_hvs_candidate_catalog(literature, catalog, workspace=workspace)
+
+            object_ids = {record["object_id"] for record in result["object_records"]}
+            warning_types = {warning["type"] for warning in result["index_record"]["warnings"]}
+            self.assertEqual(result["index_record"]["summary"]["object_count"], 2)
+            self.assertEqual(object_ids, {"Gaia_DR2_777", "Gaia_DR3_777"})
+            self.assertIn("different_gaia_near_coordinates", warning_types)
+
     def test_rebuild_merges_by_coordinates_when_gaia_missing(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
@@ -343,7 +423,78 @@ class HvsCandidateCatalogTest(unittest.TestCase):
             self.assertEqual(result["index_record"]["summary"]["object_count"], 1)
             self.assertEqual(result["object_records"][0]["sources"][1]["source"], "src-002")
 
-    def test_slug_collision_uses_record_id_suffix(self) -> None:
+    def test_update_reads_v1_catalog_and_removes_stale_object_file(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature = workspace / "literature"
+            catalog = workspace / "catalog"
+            catalog.mkdir()
+            old_record = {
+                "schema_version": "stella.hvs_candidate_catalog.object.v1",
+                "generated_at": "2026-05-19T12:00:00",
+                "object_id": "Gaia_EDR3_123",
+                "canonical_identifier": {"kind": "gaia_source_id", "value": "Gaia EDR3 123", "source": "src-001"},
+                "sources": [
+                    {
+                        "source": "src-001",
+                        "paper": {
+                            "arxiv_id": "2601.00001",
+                            "bibcode": "2026TEST.2601.00001",
+                            "title": "Paper 2601.00001",
+                            "month": "2026-01",
+                            "source_note_json": "notes/2026/2026-01/2026-01.json",
+                            "links": {"abs": "https://arxiv.org/abs/2601.00001"},
+                        },
+                        "source_json_path": "literature/2601.00001/literature_hvs_candidates.json",
+                        "record_id": "2601.00001:cand-001",
+                        "paper_candidate_id": "A",
+                        "gaia_source_id": "Gaia EDR3 123",
+                    }
+                ],
+                "method_chain": [{"source": "src-001", "steps": []}],
+                "candidates": [
+                    {
+                        "source": "src-001",
+                        "identifiers": {
+                            "record_id": "2601.00001:cand-001",
+                            "paper_candidate_id": "A",
+                            "gaia_source_id": "Gaia EDR3 123",
+                        },
+                        "core": {
+                            "observed_phase_space": {
+                                "ra": {"value": "10", "unit": "deg", "method_refs": []},
+                                "dec": {"value": "20", "unit": "deg", "method_refs": []},
+                            },
+                            "derived_kinematics": {},
+                            "bound_assessment": {},
+                        },
+                    }
+                ],
+                "merge": {"match_strategy": "singleton", "warnings": []},
+            }
+            write_json(catalog / "Gaia_EDR3_123.json", old_record)
+            new_path = literature / "2602.00002" / "literature_hvs_candidates.json"
+            write_json(
+                new_path,
+                payload(
+                    "2602.00002",
+                    month="2026-02",
+                    candidates=[
+                        candidate("2602.00002", 1, paper_candidate_id="B", gaia_source_id="Gaia DR3 123", ra="10", dec="20")
+                    ],
+                ),
+            )
+
+            result = write_updated_hvs_candidate_catalog(new_path, catalog, literature_dir=literature, workspace=workspace)
+
+            self.assertEqual(result["index_record"]["summary"]["object_count"], 1)
+            self.assertEqual(result["object_records"][0]["schema_version"], OBJECT_SCHEMA_VERSION)
+            self.assertEqual(result["object_records"][0]["object_id"], "Gaia_DR3_123")
+            self.assertEqual(len(result["object_records"][0]["sources"]), 2)
+            self.assertFalse((catalog / "Gaia_EDR3_123.json").exists())
+            self.assertTrue((catalog / "Gaia_DR3_123.json").exists())
+
+    def test_strong_slug_collision_suffixes_all_colliding_objects(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             literature = workspace / "literature"
@@ -361,8 +512,77 @@ class HvsCandidateCatalogTest(unittest.TestCase):
             result = rebuild_hvs_candidate_catalog(literature, catalog, workspace=workspace)
 
             object_ids = [record["object_id"] for record in result["object_records"]]
-            self.assertEqual(object_ids[0], "HVS1")
-            self.assertIn("HVS1__2602_00002_cand_001", object_ids)
+            self.assertIn("HVS1__2601_00001_cand-001", object_ids)
+            self.assertIn("HVS1__2602_00002_cand-001", object_ids)
+
+    def test_strong_paper_id_slug_preserves_ascii_plus_and_minus(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature = workspace / "literature"
+            catalog = workspace / "catalog"
+            for index, paper_candidate_id in enumerate(("J0546+0836", "LAMOST-HVS7"), start=1):
+                write_json(
+                    literature / f"260{index}.0000{index}" / "literature_hvs_candidates.json",
+                    payload(
+                        f"260{index}.0000{index}",
+                        month="2026-01",
+                        candidates=[candidate(f"260{index}.0000{index}", 1, paper_candidate_id=paper_candidate_id)],
+                    ),
+                )
+
+            result = rebuild_hvs_candidate_catalog(literature, catalog, workspace=workspace)
+
+            object_ids = {record["object_id"] for record in result["object_records"]}
+            self.assertEqual(object_ids, {"J0546+0836", "LAMOST-HVS7"})
+
+    def test_numeric_paper_id_uses_coordinate_slug(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature = workspace / "literature"
+            catalog = workspace / "catalog"
+            write_json(
+                literature / "2601.00001" / "literature_hvs_candidates.json",
+                payload(
+                    "2601.00001",
+                    month="2026-01",
+                    candidates=[
+                        candidate(
+                            "2601.00001",
+                            1,
+                            paper_candidate_id="1",
+                            ra="267.9756666667",
+                            dec="-28.027425",
+                        )
+                    ],
+                ),
+            )
+
+            result = rebuild_hvs_candidate_catalog(literature, catalog, workspace=workspace)
+
+            record = result["object_records"][0]
+            self.assertEqual(record["object_id"], "J17515416-2801387")
+            self.assertEqual(record["canonical_identifier"]["kind"], "coordinate")
+            self.assertFalse((catalog / "1.json").exists())
+
+    def test_weak_paper_id_without_coordinate_uses_record_id_slug(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature = workspace / "literature"
+            catalog = workspace / "catalog"
+            for arxiv_id in ("2601.00001", "2602.00002"):
+                write_json(
+                    literature / arxiv_id / "literature_hvs_candidates.json",
+                    payload(
+                        arxiv_id,
+                        month="2026-01",
+                        candidates=[candidate(arxiv_id, 1, paper_candidate_id="1")],
+                    ),
+                )
+
+            result = rebuild_hvs_candidate_catalog(literature, catalog, workspace=workspace)
+
+            object_ids = {record["object_id"] for record in result["object_records"]}
+            self.assertEqual(object_ids, {"src_2601_00001_cand-001", "src_2602_00002_cand-001"})
 
     def test_dry_run_does_not_write_files(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
