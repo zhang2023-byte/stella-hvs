@@ -11,7 +11,8 @@ from typing import Any
 
 OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v2"
 READABLE_OBJECT_SCHEMA_VERSIONS = {OBJECT_SCHEMA_VERSION, "stella.hvs_candidate_catalog.object.v1"}
-INDEX_JSON_FILENAME = "hvs_candidates_index.json"
+INDEX_JSON_FILENAME = "03_hvs_candidates_index.json"
+LEGACY_INDEX_JSON_FILENAMES = ("hvs_candidates_index.json",)
 
 OBSERVED_FIELDS = (
     "ra",
@@ -156,11 +157,17 @@ def load_catalog_snapshot(catalog_dir: Path) -> dict[str, Any]:
     """Load index and object JSON files into a static-site snapshot."""
     catalog_dir = catalog_dir.expanduser()
     index_path = catalog_dir / INDEX_JSON_FILENAME
+    if not index_path.exists():
+        for filename in LEGACY_INDEX_JSON_FILENAMES:
+            legacy_path = catalog_dir / filename
+            if legacy_path.exists():
+                index_path = legacy_path
+                break
     index_record = read_json(index_path) if index_path.exists() else {}
 
     records: list[dict[str, Any]] = []
     for path in sorted(catalog_dir.glob("*.json")):
-        if path.name == INDEX_JSON_FILENAME:
+        if path.name == INDEX_JSON_FILENAME or path.name in LEGACY_INDEX_JSON_FILENAMES:
             continue
         payload = read_json(path)
         if payload.get("schema_version") in READABLE_OBJECT_SCHEMA_VERSIONS:

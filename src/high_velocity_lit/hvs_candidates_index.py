@@ -14,8 +14,10 @@ from high_velocity_lit.schema_specs import LITERATURE_HVS_CANDIDATES_INDEX_SCHEM
 
 HVS_CANDIDATES_INDEX_SCHEMA_VERSION = LITERATURE_HVS_CANDIDATES_INDEX_SCHEMA_VERSION
 HVS_CANDIDATES_FILENAME = "literature_hvs_candidates.json"
-INDEX_JSON_FILENAME = "literature_hvs_index.json"
-INDEX_MARKDOWN_FILENAME = "literature_hvs_index.md"
+INDEX_JSON_FILENAME = "02_literature_hvs_index.json"
+INDEX_MARKDOWN_FILENAME = "02_literature_hvs_index.md"
+LEGACY_INDEX_JSON_FILENAMES = ("literature_hvs_index.json",)
+LEGACY_INDEX_MARKDOWN_FILENAMES = ("literature_hvs_index.md",)
 
 
 def iter_hvs_candidates_paths(literature_dir: Path) -> list[Path]:
@@ -390,6 +392,8 @@ def write_hvs_candidates_index_outputs(
     markdown_path = literature_dir / INDEX_MARKDOWN_FILENAME
     write_json(json_path, index_record)
     markdown_path.write_text(render_hvs_candidates_index(index_record), encoding="utf-8")
+    for filename in LEGACY_INDEX_JSON_FILENAMES + LEGACY_INDEX_MARKDOWN_FILENAMES:
+        (literature_dir / filename).unlink(missing_ok=True)
     return {
         "index_record": index_record,
         "index_json_path": str(json_path),

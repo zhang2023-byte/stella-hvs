@@ -82,12 +82,12 @@ and expand it before execution.
   `conda run -n stella-env python -m unittest discover tests`.
 - For `catalog_review`, run `validate_catalog_review.py --require-complete`.
 - For `catalog_review_batch`, each worker runs the single-paper validator; the
-  parent rebuilds `literature_catalog_index` after all workers finish.
+  parent rebuilds `01_literature_catalog_index` after all workers finish.
 - For `catalog_table_extraction`, run `validate_catalog_extraction.py`.
 - For `hvs_candidate_extraction`, run `validate_hvs_candidates.py --require-complete`.
 - For `hvs_candidate_extraction_batch`, each worker runs the single-paper
-  validator; the parent rebuilds `literature_hvs_index` when requested.
-- For merge workflows, inspect merge warnings in `catalog/hvs_candidates_index.md`.
+  validator; the parent rebuilds `02_literature_hvs_index` when requested.
+- For merge workflows, inspect merge warnings in `catalog/03_hvs_candidates_index.md`.
 
 ## Generated Data Policy
 

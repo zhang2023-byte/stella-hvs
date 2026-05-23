@@ -145,7 +145,7 @@ class MonthWindowFilterTest(unittest.TestCase):
             self.assertEqual(report["summary"]["reported_count"], 1)
             self.assertEqual(report["entries"][0]["status"], "error")
 
-            index = json.loads((config.notes_dir / "literature_notes_index.json").read_text(encoding="utf-8"))
+            index = json.loads((config.notes_dir / "00_literature_notes_index.json").read_text(encoding="utf-8"))
             years = {item["year"]: item for item in index["years"]}
             self.assertEqual(years["2025"]["literature_count"], 1)
 

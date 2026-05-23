@@ -15,8 +15,8 @@ The object-level outputs live in:
 
 ```text
 catalog/<object_id>.json
-catalog/hvs_candidates_index.json
-catalog/hvs_candidates_index.md
+catalog/03_hvs_candidates_index.json
+catalog/03_hvs_candidates_index.md
 ```
 
 This stage merges candidates across papers. It does not re-extract candidates
@@ -78,7 +78,7 @@ unless merge review finds a source-data problem that the user asks to fix.
      --catalog-dir catalog
    ```
 
-6. Review the command summary, then open `catalog/hvs_candidates_index.md`.
+6. Review the command summary, then open `catalog/03_hvs_candidates_index.md`.
    Check `Warnings`, object counts, and source counts before considering the
    merge complete.
 

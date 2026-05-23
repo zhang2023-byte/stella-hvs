@@ -146,7 +146,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             catalog = Path(tmp) / "catalog"
             write_json(
-                catalog / "hvs_candidates_index.json",
+                catalog / "03_hvs_candidates_index.json",
                 {
                     "schema_version": "stella.hvs_candidate_catalog.index.v2",
                     "summary": {
@@ -196,7 +196,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
             root = Path(tmp)
             catalog = root / "catalog"
             assets = root / "assets"
-            write_json(catalog / "hvs_candidates_index.json", {"summary": {"object_count": 1}, "objects": []})
+            write_json(catalog / "03_hvs_candidates_index.json", {"summary": {"object_count": 1}, "objects": []})
             write_json(catalog / "Gaia_DR3_123.json", object_record())
             assets.mkdir()
             css_path = assets / "stella.css"

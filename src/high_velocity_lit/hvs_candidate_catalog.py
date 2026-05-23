@@ -20,8 +20,10 @@ from high_velocity_lit.schema_models import LiteratureHvsCandidatesRecord
 OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v2"
 INDEX_SCHEMA_VERSION = "stella.hvs_candidate_catalog.index.v2"
 READABLE_OBJECT_SCHEMA_VERSIONS = {OBJECT_SCHEMA_VERSION, "stella.hvs_candidate_catalog.object.v1"}
-INDEX_JSON_FILENAME = "hvs_candidates_index.json"
-INDEX_MARKDOWN_FILENAME = "hvs_candidates_index.md"
+INDEX_JSON_FILENAME = "03_hvs_candidates_index.json"
+INDEX_MARKDOWN_FILENAME = "03_hvs_candidates_index.md"
+LEGACY_INDEX_JSON_FILENAMES = ("hvs_candidates_index.json",)
+LEGACY_INDEX_MARKDOWN_FILENAMES = ("hvs_candidates_index.md",)
 MATCH_RADIUS_ARCSEC = 5.0
 
 GAIA_SOURCE_ID_RE = re.compile(r"^Gaia\s+((?:E)?DR\d+)\s+(\d+)$", re.IGNORECASE)
@@ -696,7 +698,7 @@ def _object_json_paths(catalog_dir: Path) -> list[Path]:
         return []
     paths: list[Path] = []
     for path in sorted(catalog_dir.glob("*.json")):
-        if path.name == INDEX_JSON_FILENAME:
+        if path.name == INDEX_JSON_FILENAME or path.name in LEGACY_INDEX_JSON_FILENAMES:
             continue
         try:
             payload = read_json(path)
@@ -803,6 +805,8 @@ def _write_catalog_records(
         write_json(catalog_dir / f"{record.get('object_id')}.json", record)
     write_json(json_path, index_record)
     markdown_path.write_text(render_hvs_candidate_catalog_index(index_record), encoding="utf-8")
+    for filename in LEGACY_INDEX_JSON_FILENAMES + LEGACY_INDEX_MARKDOWN_FILENAMES:
+        (catalog_dir / filename).unlink(missing_ok=True)
     return {
         "written_paths": [str(path) for path in sorted(write_paths)],
         "deleted_paths": [str(path) for path in stale_paths],

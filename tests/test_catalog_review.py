@@ -276,8 +276,8 @@ B & 710 \\
             for path in (
                 paper_dir / "catalog_review.json",
                 paper_dir / "catalog_extraction.json",
-                literature_dir / "literature_catalog_index.json",
-                literature_dir / "literature_catalog_index.md",
+                literature_dir / "01_literature_catalog_index.json",
+                literature_dir / "01_literature_catalog_index.md",
                 paper_dir / "audit.json",
                 paper_dir / "arxiv_source" / "main.tex",
             ):
@@ -345,8 +345,8 @@ B & 710 \\
                     exit_code = index_cli.main()
 
             self.assertEqual(exit_code, 0)
-            self.assertTrue((literature_dir / "literature_catalog_index.json").exists())
-            self.assertTrue((literature_dir / "literature_catalog_index.md").exists())
+            self.assertTrue((literature_dir / "01_literature_catalog_index.json").exists())
+            self.assertTrue((literature_dir / "01_literature_catalog_index.md").exists())
 
 
 if __name__ == "__main__":

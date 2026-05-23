@@ -355,7 +355,7 @@ class CatalogAssessmentTest(unittest.TestCase):
             month_dir.mkdir(parents=True)
             json_path = month_dir / "2026-03.json"
             json_path.write_text(json.dumps(sample_record(), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-            (notes_dir / "literature_notes_index.json").write_text(
+            (notes_dir / "00_literature_notes_index.json").write_text(
                 json.dumps(
                     {
                         "schema_version": "stella.literature.index.v4",
@@ -393,11 +393,11 @@ class CatalogAssessmentTest(unittest.TestCase):
             updated = json.loads(json_path.read_text(encoding="utf-8"))
             brief = updated["papers"][0]["catalog_assessment_context"]["deepxiv_brief"]  # type: ignore[index]
             self.assertEqual(brief["source"], "deepxiv")  # type: ignore[index]
-            index = json.loads((notes_dir / "literature_notes_index.json").read_text(encoding="utf-8"))
+            index = json.loads((notes_dir / "00_literature_notes_index.json").read_text(encoding="utf-8"))
             self.assertEqual(index["summary"]["literature_count"], 1)
             self.assertEqual(index["summary"]["data_related_count"], 1)
             self.assertEqual(index["papers"][0]["arxiv_id"], "2603.00001")
-            index_markdown = (notes_dir / "literature_notes_index.md").read_text(encoding="utf-8")
+            index_markdown = (notes_dir / "00_literature_notes_index.md").read_text(encoding="utf-8")
             self.assertIn("A catalog of hypervelocity star candidates", index_markdown)
 
 

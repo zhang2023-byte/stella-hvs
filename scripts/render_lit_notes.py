@@ -15,7 +15,7 @@ if str(SRC) not in sys.path:
 
 from high_velocity_lit.markdown import render_index, render_month_note  # noqa: E402
 from high_velocity_lit.indexing import (  # noqa: E402
-    LEGACY_NOTES_INDEX_JSON_FILENAME,
+    LEGACY_NOTES_INDEX_JSON_FILENAMES,
     NOTES_INDEX_JSON_FILENAME,
     NOTES_INDEX_MARKDOWN_FILENAME,
     refresh_index_outputs,
@@ -40,7 +40,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--index-only",
         action="store_true",
-        help="Regenerate only notes/literature_notes_index.json and notes/literature_notes_index.md.",
+        help="Regenerate only the notes index JSON and Markdown files.",
     )
     return parser
 
@@ -52,7 +52,7 @@ def main() -> int:
 
     index_json_candidates = [
         args.notes_dir / NOTES_INDEX_JSON_FILENAME,
-        args.notes_dir / LEGACY_NOTES_INDEX_JSON_FILENAME,
+        *(args.notes_dir / filename for filename in LEGACY_NOTES_INDEX_JSON_FILENAMES),
     ]
     if args.index_only:
         refresh_index_outputs(args.notes_dir)

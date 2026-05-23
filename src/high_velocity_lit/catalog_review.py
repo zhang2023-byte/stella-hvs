@@ -18,8 +18,10 @@ from .schema_specs import (
 
 REVIEW_FILENAME = "catalog_review.json"
 EXTRACTION_FILENAME = "catalog_extraction.json"
-INDEX_JSON_FILENAME = "literature_catalog_index.json"
-INDEX_MARKDOWN_FILENAME = "literature_catalog_index.md"
+INDEX_JSON_FILENAME = "01_literature_catalog_index.json"
+INDEX_MARKDOWN_FILENAME = "01_literature_catalog_index.md"
+LEGACY_INDEX_JSON_FILENAMES = ("literature_catalog_index.json",)
+LEGACY_INDEX_MARKDOWN_FILENAMES = ("literature_catalog_index.md",)
 INTERNAL_TABLES_FIELD = "internal_tables"
 EXTERNAL_RESOURCES_FIELD = "external_resources"
 
@@ -751,6 +753,8 @@ def write_catalog_index_outputs(literature_dir: Path, *, workspace: Path | None 
     markdown_path = literature_dir / INDEX_MARKDOWN_FILENAME
     write_json(json_path, index_record)
     markdown_path.write_text(render_catalog_index(index_record), encoding="utf-8")
+    for filename in LEGACY_INDEX_JSON_FILENAMES + LEGACY_INDEX_MARKDOWN_FILENAMES:
+        (literature_dir / filename).unlink(missing_ok=True)
     return {
         "index_record": index_record,
         "index_json_path": str(json_path),
@@ -772,7 +776,12 @@ def cleanup_catalog_workflow_outputs(literature_dir: Path, *, dry_run: bool = Fa
             candidate = paper_dir / name
             if candidate.exists():
                 targets.append(candidate)
-    for name in (INDEX_JSON_FILENAME, INDEX_MARKDOWN_FILENAME):
+    for name in (
+        INDEX_JSON_FILENAME,
+        INDEX_MARKDOWN_FILENAME,
+        *LEGACY_INDEX_JSON_FILENAMES,
+        *LEGACY_INDEX_MARKDOWN_FILENAMES,
+    ):
         candidate = literature_dir / name
         if candidate.exists():
             targets.append(candidate)

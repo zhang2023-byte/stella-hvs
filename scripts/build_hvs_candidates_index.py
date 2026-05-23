@@ -17,7 +17,7 @@ from high_velocity_lit.hvs_candidates_index import write_hvs_candidates_index_ou
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Build literature/literature_hvs_index.json and literature/literature_hvs_index.md."
+        description="Build literature/02_literature_hvs_index.json and literature/02_literature_hvs_index.md."
     )
     parser.add_argument(
         "--literature-dir",
