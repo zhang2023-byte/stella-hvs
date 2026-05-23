@@ -386,12 +386,19 @@ conda run -n stella-env python scripts/validate_hvs_candidates.py \
 Rebuild the global index without validation:
 
 ```bash
-conda run -n stella-env python scripts/build_hvs_candidates_index.py
+conda run -n stella-env python scripts/build_hvs_candidates_index.py --fail-on-skipped
+```
+
+Validate all paper-level HVS candidate files before a full rebuild:
+
+```bash
+conda run -n stella-env python scripts/validate_hvs_candidates.py --all --require-complete
 ```
 
 ### Notes
 
 - `literature_hvs_candidates.json` uses `schema_version: stella.literature_hvs_candidates.v7`; older candidate schemas are rejected by the current validator and skipped by index/merge builders.
+- Add `--fail-on-skipped` to index and merge builders when a rebuild should fail instead of silently carrying malformed inputs in the generated `skipped[]` summary.
 - Templates, validators, and skill schema references come from the same Pydantic models. Do not add fields outside the template manually.
 - Every paper should have a result file. If no candidate meets the boundary, write `extraction.status=no_candidates` and empty `candidates[]`.
 - Candidate identifiers live under `identifiers`: `record_id` is the Stella internal `<arxiv_id>:cand-001` ID, `paper_candidate_id` is the paper's preferred display name, `gaia_source_id` is empty or a strict `Gaia DR3/EDR3/DR2 ...` machine identifier, and `all[]` contains every name, number, and Gaia source ID appearing in the paper with `source_refs`. `record_id` does not enter `all[]`.
@@ -433,7 +440,8 @@ Rebuild the full object-level catalog:
 ```bash
 conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py rebuild \
   --literature-dir literature \
-  --catalog-dir catalog
+  --catalog-dir catalog \
+  --fail-on-skipped
 ```
 
 Merge one new paper-level candidate into an existing `catalog/`:
@@ -442,7 +450,8 @@ Merge one new paper-level candidate into an existing `catalog/`:
 conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py update \
   --arxiv-id 2604.21646 \
   --literature-dir literature \
-  --catalog-dir catalog
+  --catalog-dir catalog \
+  --fail-on-skipped
 ```
 
 Or specify a file directly:
@@ -451,10 +460,11 @@ Or specify a file directly:
 conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py update \
   --path literature/2604.21646/literature_hvs_candidates.json \
   --literature-dir literature \
-  --catalog-dir catalog
+  --catalog-dir catalog \
+  --fail-on-skipped
 ```
 
-Both modes support `--dry-run True`, which prints generated writes/deletes without modifying `catalog/`.
+Both modes support `--dry-run True`, which prints generated writes/deletes without modifying `catalog/`. Use `--fail-on-skipped` for strict rebuilds and CI-style checks.
 
 ### Merge and Review Principles
 

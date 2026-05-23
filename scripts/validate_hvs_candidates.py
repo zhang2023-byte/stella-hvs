@@ -21,7 +21,10 @@ SRC = WORKSPACE / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from high_velocity_lit.hvs_candidates_index import write_hvs_candidates_index_outputs  # noqa: E402
+from high_velocity_lit.hvs_candidates_index import (  # noqa: E402
+    iter_hvs_candidates_paths,
+    write_hvs_candidates_index_outputs,
+)
 from high_velocity_lit.hvs_method_provenance import (  # noqa: E402
     REPORTED_VALUE_STEP_TYPE,
     allowed_direct_step_types,
@@ -1814,6 +1817,7 @@ def build_parser() -> argparse.ArgumentParser:
     selection = parser.add_mutually_exclusive_group(required=True)
     selection.add_argument("--path", type=Path, help="Path to one literature_hvs_candidates.json file.")
     selection.add_argument("--arxiv-id", help="Validate literature/<arxiv-id>/literature_hvs_candidates.json.")
+    selection.add_argument("--all", action="store_true", help="Validate every literature_hvs_candidates.json file.")
     parser.add_argument("--literature-dir", type=Path, default=WORKSPACE / "literature")
     parser.add_argument(
         "--workspace",
@@ -1839,41 +1843,78 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def main() -> int:
-    args = build_parser().parse_args()
-    workspace = args.workspace.expanduser()
-    if args.path:
-        path = args.path.expanduser()
-    else:
-        path = args.literature_dir.expanduser() / str(args.arxiv_id) / "literature_hvs_candidates.json"
-
+def _validate_one_path(
+    path: Path,
+    *,
+    workspace: Path,
+    require_complete: bool,
+    verbose_warnings: bool,
+) -> ValidationReport | None:
     if not path.exists():
         print(f"missing candidate extraction JSON: {path}", file=sys.stderr)
-        return 1
+        return None
 
     try:
         payload = load_json(path)
     except json.JSONDecodeError as exc:
-        print(f"invalid JSON: {exc}", file=sys.stderr)
-        return 1
+        print(f"{path}: invalid JSON: {exc}", file=sys.stderr)
+        return None
 
     report = validate_hvs_candidates_report(
         payload,
         workspace=workspace,
-        require_complete=args.require_complete,
+        require_complete=require_complete,
     )
-    warning_lines = report.warnings if args.verbose_warnings else grouped_warning_lines(report.warnings)
+    warning_lines = report.warnings if verbose_warnings else grouped_warning_lines(report.warnings)
     for warning in warning_lines:
-        print(f"WARNING: {warning}", file=sys.stderr)
-    if report.errors:
-        for error in report.errors:
-            print(error, file=sys.stderr)
+        print(f"WARNING: {path}: {warning}", file=sys.stderr)
+    for error in report.errors:
+        print(f"{path}: {error}", file=sys.stderr)
+    return report
+
+
+def main() -> int:
+    args = build_parser().parse_args()
+    workspace = args.workspace.expanduser()
+
+    literature_dir = args.literature_dir.expanduser()
+    if args.all:
+        paths = list(iter_hvs_candidates_paths(literature_dir))
+    elif args.path:
+        paths = [args.path.expanduser()]
+    else:
+        paths = [literature_dir / str(args.arxiv_id) / "literature_hvs_candidates.json"]
+
+    if not paths:
+        print(f"no literature_hvs_candidates.json files found under {literature_dir}", file=sys.stderr)
         return 1
 
-    print(f"OK: {path}")
+    reports: list[ValidationReport] = []
+    missing_or_invalid = 0
+    for path in paths:
+        report = _validate_one_path(
+            path,
+            workspace=workspace,
+            require_complete=args.require_complete,
+            verbose_warnings=args.verbose_warnings,
+        )
+        if report is None:
+            missing_or_invalid += 1
+            continue
+        reports.append(report)
+
+    error_count = missing_or_invalid + sum(len(report.errors) for report in reports)
+    warning_count = sum(len(report.warnings) for report in reports)
+    if error_count:
+        print(f"FAILED: {len(paths)} files checked, {error_count} errors, {warning_count} warnings.", file=sys.stderr)
+        return 1
+
+    if args.all:
+        print(f"OK: {len(paths)} files checked, 0 errors, {warning_count} warnings.")
+    else:
+        print(f"OK: {paths[0]}")
 
     if args.rebuild_index:
-        literature_dir = args.literature_dir.expanduser()
         result = write_hvs_candidates_index_outputs(literature_dir, workspace=workspace)
         summary = result["index_record"]["summary"]
         print(

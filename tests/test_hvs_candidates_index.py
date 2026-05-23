@@ -1,14 +1,22 @@
 from __future__ import annotations
 
+import importlib.util
+import io
 import json
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
+SCRIPT = ROOT / "scripts" / "build_hvs_candidates_index.py"
+SPEC = importlib.util.spec_from_file_location("build_hvs_candidates_index", SCRIPT)
+assert SPEC is not None and SPEC.loader is not None
+build_index_cli = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(build_index_cli)
 
 from high_velocity_lit.hvs_candidates_index import rebuild_hvs_candidates_index, render_hvs_candidates_index  # noqa: E402
 from high_velocity_lit.schema_specs import LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION  # noqa: E402
@@ -166,6 +174,32 @@ class HvsCandidatesIndexTest(unittest.TestCase):
             self.assertEqual(index["summary"]["paper_count"], 0)
             self.assertEqual(index["summary"]["skipped_count"], 1)
             self.assertIn("literature/2603.00001/literature_hvs_candidates.json", index["skipped"][0]["path"])
+
+    def test_cli_fail_on_skipped_exits_nonzero(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature_dir = workspace / "literature"
+            write_json(
+                literature_dir / "2603.00001" / "literature_hvs_candidates.json",
+                {"paper": {"arxiv_id": "2603.00001"}, "candidates": []},
+            )
+
+            with patch.object(
+                sys,
+                "argv",
+                [
+                    "build_hvs_candidates_index.py",
+                    "--literature-dir",
+                    str(literature_dir),
+                    "--fail-on-skipped",
+                ],
+            ):
+                with patch("sys.stderr", new_callable=io.StringIO) as stderr:
+                    with patch("sys.stdout", new_callable=io.StringIO):
+                        exit_code = build_index_cli.main()
+
+            self.assertEqual(exit_code, 1)
+            self.assertIn("Skipped malformed HVS candidate files", stderr.getvalue())
 
 
 if __name__ == "__main__":

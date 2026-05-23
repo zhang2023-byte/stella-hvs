@@ -216,7 +216,7 @@ Merge rules:
 - Both sides have different Gaia source IDs: do not merge; write a warning if RA/Dec is `<5 arcsec`.
 - Same normalized Gaia source ID but RA/Dec is not within `<5 arcsec`: still merge by Gaia and write a warning.
 
-`catalog/hvs_candidates_index.json` summarizes object count, source count, warnings, skipped inputs, and each object link. `catalog/hvs_candidates_index.md` is the generated reading view.
+`catalog/hvs_candidates_index.json` summarizes object count, source count, warnings, skipped inputs, and each object link. `catalog/hvs_candidates_index.md` is the generated reading view. For strict rebuilds, run `scripts/merge_hvs_candidate_catalog.py ... --fail-on-skipped` so malformed paper-level inputs fail the command instead of only appearing in `skipped[]`.
 
 ## `html/` Display Pages
 

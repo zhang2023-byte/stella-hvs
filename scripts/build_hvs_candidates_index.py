@@ -25,6 +25,11 @@ def build_parser() -> argparse.ArgumentParser:
         default=WORKSPACE / "literature",
         help="Literature root directory to scan. Default: literature/",
     )
+    parser.add_argument(
+        "--fail-on-skipped",
+        action="store_true",
+        help="Exit non-zero if any malformed literature_hvs_candidates.json file is skipped.",
+    )
     return parser
 
 
@@ -43,6 +48,12 @@ def main() -> int:
     )
     print(result["index_json_path"])
     print(result["index_markdown_path"])
+    skipped = result["index_record"]["skipped"]
+    if args.fail_on_skipped and skipped:
+        print("Skipped malformed HVS candidate files:", file=sys.stderr)
+        for item in skipped:
+            print(f"  {item['path']}: {item['error']}", file=sys.stderr)
+        return 1
     return 0
 
 

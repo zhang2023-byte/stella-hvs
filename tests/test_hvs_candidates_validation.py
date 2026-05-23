@@ -1724,6 +1724,35 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             self.assertEqual(exit_code, 0)
             self.assertIn("WARNING:", stderr.getvalue())
 
+    def test_cli_all_fails_on_invalid_method_chain(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            path = workspace / "literature" / "2603.00001" / "literature_hvs_candidates.json"
+            payload = valid_payload(workspace)
+            payload["method_chain"][0]["id"] = "step-01a"  # type: ignore[index]
+            write_json_file(path, payload)
+
+            with patch.object(
+                sys,
+                "argv",
+                [
+                    "validate_hvs_candidates.py",
+                    "--all",
+                    "--literature-dir",
+                    str(workspace / "literature"),
+                    "--workspace",
+                    str(workspace),
+                    "--require-complete",
+                ],
+            ):
+                with patch("sys.stderr", new_callable=io.StringIO) as stderr:
+                    with patch("sys.stdout", new_callable=io.StringIO):
+                        exit_code = validate_cli.main()
+
+            self.assertEqual(exit_code, 1)
+            self.assertIn("method_chain[0].id", stderr.getvalue())
+            self.assertIn("FAILED: 1 files checked", stderr.getvalue())
+
     def test_cli_reports_valid_file(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)

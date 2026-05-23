@@ -49,6 +49,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="Object catalog output directory. Default: catalog/",
     )
     rebuild.add_argument("--dry-run", type=parse_bool, default=False, help="Print planned writes without writing files.")
+    rebuild.add_argument(
+        "--fail-on-skipped",
+        action="store_true",
+        help="Exit non-zero if any malformed paper-level input is skipped.",
+    )
 
     update = subparsers.add_parser("update", help="Merge one paper-level HVS candidates JSON into catalog/.")
     update.add_argument(
@@ -75,6 +80,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="Object catalog output directory. Default: catalog/",
     )
     update.add_argument("--dry-run", type=parse_bool, default=False, help="Print planned writes without writing files.")
+    update.add_argument(
+        "--fail-on-skipped",
+        action="store_true",
+        help="Exit non-zero if any malformed paper-level input or catalog object is skipped.",
+    )
     return parser
 
 
@@ -122,6 +132,19 @@ def _print_common_result(prefix: str, result: dict[str, object]) -> None:
                 print(f"  {path}")
 
 
+def _fail_if_skipped(result: dict[str, object]) -> int:
+    skipped = result.get("skipped") or []
+    if not skipped:
+        return 0
+    print("Skipped malformed HVS catalog inputs:", file=sys.stderr)
+    for item in skipped:
+        if isinstance(item, dict):
+            print(f"  {item.get('path')}: {item.get('error')}", file=sys.stderr)
+        else:
+            print(f"  {item}", file=sys.stderr)
+    return 1
+
+
 def main() -> int:
     parser = build_parser()
     try:
@@ -136,6 +159,8 @@ def main() -> int:
                 dry_run=args.dry_run,
             )
             _print_common_result("Built", result)
+            if args.fail_on_skipped:
+                return _fail_if_skipped(result)
             return 0
 
         candidate_path = _candidate_path_from_args(args)
@@ -152,6 +177,8 @@ def main() -> int:
             f"{result['new_candidate_count']} new candidate records, "
             f"{result['replaced_existing_source_count']} replaced existing source records."
         )
+        if args.fail_on_skipped:
+            return _fail_if_skipped(result)
         return 0
     except argparse.ArgumentTypeError as exc:
         parser.error(str(exc))

@@ -1,14 +1,22 @@
 from __future__ import annotations
 
+import importlib.util
+import io
 import json
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
+SCRIPT = ROOT / "scripts" / "merge_hvs_candidate_catalog.py"
+SPEC = importlib.util.spec_from_file_location("merge_hvs_candidate_catalog", SCRIPT)
+assert SPEC is not None and SPEC.loader is not None
+merge_cli = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(merge_cli)
 
 from high_velocity_lit.hvs_candidate_catalog import (  # noqa: E402
     INDEX_JSON_FILENAME,
@@ -617,6 +625,33 @@ class HvsCandidateCatalogTest(unittest.TestCase):
             self.assertEqual(result["index_record"]["summary"]["object_count"], 0)
             self.assertEqual(result["index_record"]["summary"]["skipped_count"], 1)
             self.assertIn("literature/2601.00001/literature_hvs_candidates.json", result["skipped"][0]["path"])
+
+    def test_cli_fail_on_skipped_exits_nonzero(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature = workspace / "literature"
+            catalog = workspace / "catalog"
+            write_json(literature / "2601.00001" / "literature_hvs_candidates.json", {"candidates": []})
+
+            with patch.object(
+                sys,
+                "argv",
+                [
+                    "merge_hvs_candidate_catalog.py",
+                    "rebuild",
+                    "--literature-dir",
+                    str(literature),
+                    "--catalog-dir",
+                    str(catalog),
+                    "--fail-on-skipped",
+                ],
+            ):
+                with patch("sys.stderr", new_callable=io.StringIO) as stderr:
+                    with patch("sys.stdout", new_callable=io.StringIO):
+                        exit_code = merge_cli.main()
+
+            self.assertEqual(exit_code, 1)
+            self.assertIn("Skipped malformed HVS catalog inputs", stderr.getvalue())
 
     def test_markdown_renders_objects_and_warnings(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
