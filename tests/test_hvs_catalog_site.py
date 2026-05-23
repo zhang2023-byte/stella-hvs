@@ -10,7 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from high_velocity_lit.hvs_catalog_site import (  # noqa: E402
+from stella_html.catalog_site import (  # noqa: E402
     CANDIDATES_DIRNAME,
     build_index_row,
     build_static_html,
