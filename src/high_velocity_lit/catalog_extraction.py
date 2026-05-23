@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import csv
 import hashlib
 import io
 import json
@@ -115,6 +116,61 @@ def skip_latex_arguments(text: str, index: int) -> int:
             return cursor
         cursor = close_index + 1
     return cursor
+
+
+def strip_outer_delimiters(value: str, open_char: str, close_char: str) -> str:
+    stripped = value.strip()
+    if stripped.startswith(open_char) and stripped.endswith(close_char):
+        close_index = find_matching_delimiter(stripped, 0, close_char)
+        if close_index == len(stripped) - 1:
+            return stripped[1:-1].strip()
+    return stripped
+
+
+def split_top_level_commas(text: str) -> list[str]:
+    parts: list[str] = []
+    current: list[str] = []
+    brace_depth = 0
+    bracket_depth = 0
+    escaped = False
+    for char in text:
+        if escaped:
+            current.append(char)
+            escaped = False
+            continue
+        if char == "\\":
+            current.append(char)
+            escaped = True
+            continue
+        if char == "{":
+            brace_depth += 1
+        elif char == "}" and brace_depth > 0:
+            brace_depth -= 1
+        elif char == "[":
+            bracket_depth += 1
+        elif char == "]" and bracket_depth > 0:
+            bracket_depth -= 1
+        if char == "," and brace_depth == 0 and bracket_depth == 0:
+            part = "".join(current).strip()
+            if part:
+                parts.append(part)
+            current = []
+        else:
+            current.append(char)
+    tail = "".join(current).strip()
+    if tail:
+        parts.append(tail)
+    return parts
+
+
+def latex_option_value(options: str, key: str) -> str:
+    for item in split_top_level_commas(options):
+        if "=" not in item:
+            continue
+        item_key, raw_value = item.split("=", 1)
+        if item_key.strip() == key:
+            return strip_outer_delimiters(raw_value, "{", "}")
+    return ""
 
 
 def latex_command_argument_preserve(text: str, command: str) -> str:
@@ -324,6 +380,190 @@ def build_column_records(header_rows: list[list[str]], column_count: int) -> lis
 def unresolved_macro_warnings(rows: list[list[str]]) -> list[str]:
     macros = sorted({match.group(0) for row in rows for cell in row for match in UNRESOLVED_MACRO_RE.finditer(cell)})
     return [f"unresolved LaTeX macro preserved: {macro}" for macro in macros]
+
+
+def parse_pgfplotstabletypeset(excerpt: str) -> dict[str, str]:
+    cleaned = remove_latex_comments(excerpt)
+    command = r"\pgfplotstabletypeset"
+    index = cleaned.find(command)
+    if index == -1:
+        return {}
+    cursor = index + len(command)
+    while cursor < len(cleaned) and cleaned[cursor].isspace():
+        cursor += 1
+    options = ""
+    if cursor < len(cleaned) and cleaned[cursor] == "[":
+        close_index = find_matching_delimiter(cleaned, cursor, "]")
+        if close_index == -1:
+            return {"error": "could not parse pgfplotstabletypeset options"}
+        options = cleaned[cursor + 1 : close_index]
+        cursor = close_index + 1
+    while cursor < len(cleaned) and cleaned[cursor].isspace():
+        cursor += 1
+    if cursor >= len(cleaned) or cleaned[cursor] != "{":
+        return {"error": "pgfplotstabletypeset source argument is missing"}
+    close_index = find_matching_delimiter(cleaned, cursor, "}")
+    if close_index == -1:
+        return {"error": "could not parse pgfplotstabletypeset source argument"}
+    source_arg = cleaned[cursor + 1 : close_index].strip()
+    macro = source_arg[1:] if source_arg.startswith("\\") else source_arg
+    return {"options": options, "source_arg": source_arg, "macro": macro}
+
+
+def parse_pgfplotstable_reads(source_text: str) -> list[dict[str, str]]:
+    cleaned = remove_latex_comments(source_text)
+    command = r"\pgfplotstableread"
+    reads: list[dict[str, str]] = []
+    search_from = 0
+    while True:
+        index = cleaned.find(command, search_from)
+        if index == -1:
+            break
+        cursor = index + len(command)
+        while cursor < len(cleaned) and cleaned[cursor].isspace():
+            cursor += 1
+        options = ""
+        if cursor < len(cleaned) and cleaned[cursor] == "[":
+            close_index = find_matching_delimiter(cleaned, cursor, "]")
+            if close_index == -1:
+                search_from = cursor
+                continue
+            options = cleaned[cursor + 1 : close_index]
+            cursor = close_index + 1
+        while cursor < len(cleaned) and cleaned[cursor].isspace():
+            cursor += 1
+        if cursor >= len(cleaned) or cleaned[cursor] != "{":
+            search_from = cursor
+            continue
+        close_index = find_matching_delimiter(cleaned, cursor, "}")
+        if close_index == -1:
+            search_from = cursor
+            continue
+        data_path = cleaned[cursor + 1 : close_index].strip()
+        cursor = close_index + 1
+        macro_match = re.match(r"\s*\\([A-Za-z@]+)", cleaned[cursor:])
+        if macro_match is not None:
+            reads.append({"macro": macro_match.group(1), "path": data_path, "options": options})
+            cursor += macro_match.end()
+        search_from = max(cursor, index + len(command))
+    return reads
+
+
+def source_prefix_before_ref(source_path: Path | None, source_ref: dict[str, Any] | None) -> str:
+    if source_path is None or source_ref is None:
+        return ""
+    start_line = int(source_ref.get("start_line") or 0)
+    if start_line <= 1:
+        return ""
+    lines = read_text(source_path).splitlines()
+    return "\n".join(lines[: start_line - 1])
+
+
+def pgfplotstable_delimiter(options: str) -> str:
+    value = latex_option_value(options, "col sep").strip().lower()
+    if value == "semicolon":
+        return ";"
+    if value in {"space", "spaces"}:
+        return " "
+    if value == "tab":
+        return "\t"
+    return ","
+
+
+def pgfplotstable_selected_columns(options: str, fieldnames: list[str]) -> list[str]:
+    columns_value = latex_option_value(options, "columns")
+    if not columns_value:
+        return fieldnames
+    return [part.strip() for part in split_top_level_commas(columns_value) if part.strip()]
+
+
+def pgfplotstable_column_headers(options: str) -> dict[str, str]:
+    headers: dict[str, str] = {}
+    pattern = re.compile(r"columns/([^/\s{}]+)/\.style\s*=")
+    for match in pattern.finditer(options):
+        cursor = match.end()
+        while cursor < len(options) and options[cursor].isspace():
+            cursor += 1
+        if cursor >= len(options) or options[cursor] != "{":
+            continue
+        close_index = find_matching_delimiter(options, cursor, "}")
+        if close_index == -1:
+            continue
+        style = options[cursor + 1 : close_index]
+        header = latex_option_value(style, "column name")
+        if header:
+            headers[match.group(1)] = clean_latex_cell(header)
+    return headers
+
+
+def parse_pgfplotstable_csv(
+    *,
+    excerpt: str,
+    source_path: Path | None,
+    source_ref: dict[str, Any] | None,
+    workspace: Path,
+) -> dict[str, Any]:
+    typeset = parse_pgfplotstabletypeset(excerpt)
+    if not typeset:
+        return failed_parsed_record(method="pgfplotstable_csv", error="no pgfplotstabletypeset command found")
+    if typeset.get("error"):
+        return failed_parsed_record(method="pgfplotstable_csv", error=str(typeset["error"]))
+    macro = str(typeset.get("macro") or "")
+    reads = parse_pgfplotstable_reads(source_prefix_before_ref(source_path, source_ref))
+    read = next((item for item in reversed(reads) if item.get("macro") == macro), None)
+    if read is None:
+        return failed_parsed_record(method="pgfplotstable_csv", error=f"no pgfplotstableread found for macro: {macro}")
+    if source_path is None:
+        return failed_parsed_record(method="pgfplotstable_csv", error="source path is required for pgfplotstable CSV resolution")
+    data_path = Path(str(read.get("path") or ""))
+    if not data_path.is_absolute():
+        data_path = source_path.parent / data_path
+    if not data_path.exists():
+        return failed_parsed_record(
+            method="pgfplotstable_csv",
+            error=f"pgfplotstable data file does not exist: {relative_path(data_path, workspace=workspace)}",
+        )
+
+    delimiter = pgfplotstable_delimiter(str(read.get("options") or ""))
+    reader = csv.DictReader(read_text(data_path).splitlines(), delimiter=delimiter, skipinitialspace=True)
+    fieldnames = list(reader.fieldnames or [])
+    if not fieldnames:
+        return failed_parsed_record(
+            method="pgfplotstable_csv",
+            error=f"pgfplotstable data file has no header row: {relative_path(data_path, workspace=workspace)}",
+        )
+    selected = pgfplotstable_selected_columns(str(typeset.get("options") or ""), fieldnames)
+    missing = [column for column in selected if column not in fieldnames]
+    if missing:
+        parsed = failed_parsed_record(method="pgfplotstable_csv", error=f"pgfplotstable columns missing from CSV: {', '.join(missing)}")
+        parsed["warnings"] = [f"available columns: {', '.join(fieldnames)}"]
+        return parsed
+
+    rows = [[str(row.get(column) or "") for column in selected] for row in reader]
+    headers = pgfplotstable_column_headers(str(typeset.get("options") or ""))
+    header_row = [headers.get(column, column) for column in selected]
+    columns = [
+        {
+            "name": column,
+            "original_header": header_row[index],
+            "unit_text": header_row[index] if unit_like(header_row[index]) else "",
+            "data_type": "",
+            "null_values": ["", "..."],
+        }
+        for index, column in enumerate(selected)
+    ]
+    return {
+        "status": "success",
+        "method": "pgfplotstable_csv",
+        "environment": "pgfplotstable",
+        "error": "",
+        "warnings": [f"converted from pgfplotstable backing CSV: {relative_path(data_path, workspace=workspace)}"],
+        "row_count": len(rows),
+        "column_count": len(selected),
+        "columns": enrich_column_data_types(columns, rows),
+        "header_rows": [header_row],
+        "data_rows": rows,
+    }
 
 
 def parse_latex_table_excerpt(excerpt: str) -> dict[str, Any]:
@@ -818,16 +1058,50 @@ def convert_with_internal_parser(excerpt: str) -> tuple[dict[str, Any], dict[str
     return attempt, parsed
 
 
+def convert_with_pgfplotstable_csv(
+    *,
+    excerpt: str,
+    source_path: Path | None,
+    source_ref: dict[str, Any] | None,
+    workspace: Path,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    parsed = parse_pgfplotstable_csv(
+        excerpt=excerpt,
+        source_path=source_path,
+        source_ref=source_ref,
+        workspace=workspace,
+    )
+    attempt = {
+        "method": "pgfplotstable_csv",
+        "status": "success" if parsed.get("status") == "success" else "failed",
+        "command": [],
+        "error": str(parsed.get("error") or ""),
+        "artifacts": {},
+    }
+    return attempt, parsed
+
+
 def convert_latex_table(
     *,
     excerpt: str,
     source_path: Path | None,
+    source_ref: dict[str, Any] | None,
     source_output_path: Path,
     workspace: Path,
     dry_run: bool,
     overwrite: bool,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     attempts: list[dict[str, Any]] = []
+    if r"\pgfplotstabletypeset" in excerpt:
+        attempt, parsed = convert_with_pgfplotstable_csv(
+            excerpt=excerpt,
+            source_path=source_path,
+            source_ref=source_ref,
+            workspace=workspace,
+        )
+        attempts.append(attempt)
+        if parsed.get("status") == "success":
+            return parsed, attempts
     for converter in (convert_with_latexml, convert_with_pandoc):
         attempt, parsed = converter(
             excerpt=excerpt,
@@ -971,6 +1245,7 @@ def extract_candidate(
     parsed, attempts = convert_latex_table(
         excerpt=excerpt_for_parse,
         source_path=source_path,
+        source_ref=source_ref,
         source_output_path=source_output_path,
         workspace=workspace,
         dry_run=dry_run,

@@ -201,6 +201,94 @@ HVS1 & 700 \\
             self.assertEqual(updated["run"]["options"]["internal_table_id"], "table-data")
             self.assertNotIn("external_resources", updated)
 
+    def test_extract_pgfplotstable_backing_csv(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature_dir = workspace / "literature"
+            paper_dir = literature_dir / "2603.00001"
+            source_dir = paper_dir / "arxiv_source"
+            table_dir = source_dir / "tables"
+            table_dir.mkdir(parents=True)
+            (table_dir / "data.csv").write_text(
+                "\n".join(
+                    [
+                        "object,velocity,unused",
+                        "HVS1,700,ignored",
+                        "HVS2,710,ignored",
+                    ]
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            tex_path = source_dir / "main.tex"
+            tex_path.write_text(
+                "\n".join(
+                    [
+                        r"\pgfplotstableread[col sep=comma]{tables/data.csv}\tableaf",
+                        r"\begin{table}",
+                        r"\caption{CSV backed table}",
+                        r"\label{tab:csv}",
+                        r"\pgfplotstabletypeset[",
+                        r"columns={object,velocity},",
+                        r"columns/object/.style={column name=Object},",
+                        r"columns/velocity/.style={column name=$v$}",
+                        r"]{\tableaf}",
+                        r"\end{table}",
+                    ]
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            write_json_file(
+                paper_dir / "catalog_review.json",
+                {
+                    "schema_version": "stella.article_data_assets.review.v1",
+                    "paper": {"arxiv_id": "2603.00001", "title": "CSV backed table", "month": "2026-03"},
+                    "source": {"paper_dir": "literature/2603.00001", "source_available": True},
+                    "review": {"status": "reviewed"},
+                    "internal_tables": [
+                        {
+                            "id": "table-csv",
+                            "kind": "latex_table",
+                            "asset_type": "object_measurement_table",
+                            "role_in_paper": "Example pgfplotstable table.",
+                            "source_refs": [
+                                {
+                                    "path": str(tex_path.relative_to(workspace)),
+                                    "start_line": 2,
+                                    "end_line": 10,
+                                    "caption": "CSV backed table",
+                                    "label": "tab:csv",
+                                }
+                            ],
+                            "columns": [
+                                {"name": "Object", "meaning": "Object identifier."},
+                                {"name": "$v$", "meaning": "Velocity value."},
+                            ],
+                        }
+                    ],
+                    "external_resources": [],
+                },
+            )
+
+            result = extract_catalog_tables(
+                literature_dir=literature_dir,
+                arxiv_id="2603.00001",
+                workspace=workspace,
+            )
+
+            manifest = result["manifest"]
+            ecsv_path = paper_dir / "catalog_tables" / "table-csv.ecsv"
+            self.assertEqual(ecsv_rows(ecsv_path), [["HVS1", "700"], ["HVS2", "710"]])
+            table_record = manifest["tables"][0]
+            self.assertEqual(table_record["status"], "success")
+            self.assertEqual(table_record["extraction_method"], "pgfplotstable_csv")
+            self.assertEqual(table_record["environment"], "pgfplotstable")
+            self.assertEqual([column["name"] for column in table_record["columns"]], ["object", "velocity"])
+            self.assertEqual(table_record["header_rows"], [["Object", "v"]])
+            self.assertIn("tables/data.csv", table_record["warnings"][0])
+            self.assertEqual(validate_cli.validate_catalog_extraction(manifest, workspace=workspace), [])
+
     def test_all_reviewed_processes_reviewed_data_asset_papers(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
