@@ -475,7 +475,9 @@ Both modes support `--dry-run True`, which prints generated writes/deletes witho
 - If both sides have the same Gaia source ID but coordinates are not `<5 arcsec`, still merge and write a warning.
 - Object filenames prefer normalized Gaia slugs, then strong paper object IDs, then coordinate slugs, then stable source record slugs. Strong paper ID slugs preserve ASCII `+` and `-`; weak paper IDs such as bare numbers are not used directly as filenames.
 - Object-level JSON `sources[]` stores short source IDs, original `paper` fields, source JSON paths, and paper-level candidate IDs.
+- Object-level JSON uses `schema_version: stella.hvs_candidate_catalog.object.v3`. Rebuild old object-level catalogs rather than migrating v1/v2 files.
 - `method_chain[]` and `candidates[]` are grouped by `source` and do not keep `source_refs`; full provenance still lives in the paper-level JSON.
+- `candidates[]` keeps compact `candidate_context`, `core`, and typed quantity groups. Quantities keep only `value`, non-empty uncertainties, `unit`, `method_refs`, and small typed semantic fields such as band, element, flag name, or hypothesis metric type; they do not keep `raw_value`, `description`, `kind`, coordinate frame/epoch, or coordinate format.
 - Do not manually modify `catalog/`. If warnings expose errors, fix the corresponding `literature_hvs_candidates.json` and rerun the merge.
 
 After running, inspect the command summary and then:

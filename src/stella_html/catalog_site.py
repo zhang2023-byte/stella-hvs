@@ -9,8 +9,8 @@ from pathlib import Path
 from typing import Any
 
 
-OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v2"
-READABLE_OBJECT_SCHEMA_VERSIONS = {OBJECT_SCHEMA_VERSION, "stella.hvs_candidate_catalog.object.v1"}
+OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v3"
+READABLE_OBJECT_SCHEMA_VERSIONS = {OBJECT_SCHEMA_VERSION}
 INDEX_JSON_FILENAME = "03_hvs_candidates_index.json"
 CANDIDATES_DIRNAME = "candidates"
 LEGACY_INDEX_JSON_FILENAMES = ("hvs_candidates_index.json",)

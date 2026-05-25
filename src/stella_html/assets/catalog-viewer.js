@@ -9,7 +9,15 @@
     proper_motion_dec: "pmDec",
     radial_velocity: "RV",
     total_velocity: "total velocity",
-    unbound_probability: "P(unbound)"
+    unbound_probability: "P(unbound)",
+    teff: "Teff",
+    log_g: "log g",
+    metallicity: "[Fe/H]",
+    mass: "mass",
+    radius: "radius",
+    age: "age",
+    luminosity: "luminosity",
+    spectral_type: "spectral type"
   };
 
   const OBSERVED_FIELDS = [
@@ -24,7 +32,16 @@
   const GROUP_LABELS = {
     observed_phase_space: "Observed phase space",
     derived_kinematics: "Derived kinematics",
-    probabilities: "Probabilities"
+    bound_assessment: "Bound assessment",
+    photometry: "Photometry",
+    spectroscopy: "Spectroscopy",
+    stellar_parameters: "Stellar parameters",
+    abundances: "Abundances",
+    quality_flags: "Quality flags",
+    orbit: "Orbit",
+    astrophysical_origin: "Astrophysical origin",
+    hypothesis_metrics: "Hypothesis metrics",
+    extra: "Extra"
   };
 
   const app = document.getElementById("app");
@@ -102,7 +119,7 @@
     const core = candidate.core || {};
     const observed = core.observed_phase_space || {};
     const derived = core.derived_kinematics || {};
-    const probabilities = core.probabilities || {};
+    const boundAssessment = core.bound_assessment || {};
     const paper = source.paper || {};
     const phaseSpace = {};
     OBSERVED_FIELDS.forEach((field) => {
@@ -117,7 +134,7 @@
       bibcode: compact(paper.bibcode),
       phase_space: phaseSpace,
       total_velocity: quantityText(derived.total_velocity, { includeUnit: false }),
-      unbound_probability: quantityText(probabilities.unbound_probability, { includeUnit: false })
+      unbound_probability: quantityText(boundAssessment.unbound_probability, { includeUnit: false })
     };
   }
 
@@ -425,8 +442,41 @@
     return escapeHtml(value);
   }
 
+  function quantityLabel(field, quantity, index) {
+    const parts = [
+      compact(quantity.name),
+      compact(quantity.element),
+      compact(quantity.hypothesis),
+      compact(quantity.measurement_type),
+      compact(quantity.band),
+      compact(quantity.spectral_type),
+      compact(quantity.line),
+      compact(quantity.metric_type)
+    ].filter(Boolean);
+    if (parts.length) {
+      return parts.join(" · ");
+    }
+    return FIELD_LABELS[field] || field || "item " + String(index + 1);
+  }
+
+  function renderQuantityRow(record, candidate, field, quantity, index) {
+    const refs = (quantity.method_refs || []).map(compact).filter(Boolean);
+    const active =
+      state.activeLineage &&
+      state.activeLineage.source === candidate.source &&
+      refs.some((ref) => state.activeLineage.direct.has(ref));
+    return `
+      <div class="quantity-row">
+        <button class="quantity-button ${active ? "is-active" : ""}" data-source="${escapeHtml(candidate.source)}" data-method-refs="${escapeHtml(refs.join(","))}">
+          ${escapeHtml(quantityLabel(field, quantity, index))}
+        </button>
+        <div class="quantity-value">${formatQuantityDetail(quantity)}</div>
+      </div>
+    `;
+  }
+
   function renderQuantityGroup(record, candidate, groupName, group) {
-    const entries = Object.entries(group || {}).filter(([, quantity]) => quantity && typeof quantity === "object");
+    const entries = Object.entries(group || {}).filter(([, quantity]) => quantity && typeof quantity === "object" && !Array.isArray(quantity));
     if (!entries.length) {
       return "";
     }
@@ -434,35 +484,55 @@
       <div class="quantity-group">
         <h4>${escapeHtml(GROUP_LABELS[groupName] || groupName)}</h4>
         ${entries
-          .map(([field, quantity]) => {
-            const refs = (quantity.method_refs || []).map(compact).filter(Boolean);
-            const active =
-              state.activeLineage &&
-              state.activeLineage.source === candidate.source &&
-              refs.some((ref) => state.activeLineage.direct.has(ref));
-            return `
-              <div class="quantity-row">
-                <button class="quantity-button ${active ? "is-active" : ""}" data-source="${escapeHtml(candidate.source)}" data-method-refs="${escapeHtml(refs.join(","))}">
-                  ${escapeHtml(FIELD_LABELS[field] || field)}
-                </button>
-                <div class="quantity-value">${formatQuantityDetail(quantity)}</div>
-              </div>
-            `;
-          })
+          .map(([field, quantity], index) => renderQuantityRow(record, candidate, field, quantity, index))
           .join("")}
       </div>
+    `;
+  }
+
+  function renderQuantityList(record, candidate, groupName, records) {
+    const entries = (records || []).filter((quantity) => quantity && typeof quantity === "object" && !Array.isArray(quantity));
+    if (!entries.length) {
+      return "";
+    }
+    return `
+      <div class="quantity-group">
+        <h4>${escapeHtml(GROUP_LABELS[groupName] || groupName)}</h4>
+        ${entries.map((quantity, index) => renderQuantityRow(record, candidate, "", quantity, index)).join("")}
+      </div>
+    `;
+  }
+
+  function renderCandidateContext(context) {
+    if (!context || typeof context !== "object") {
+      return "";
+    }
+    const citation = context.citation || {};
+    return `
+      <dl class="json-dl">
+        <dt>paper labels</dt><dd>${escapeHtml((context.paper_labels || []).join(", "))}</dd>
+        <dt>bound claim</dt><dd>${escapeHtml(context.galactic_bound_claim || "")}</dd>
+        <dt>basis</dt><dd>${escapeHtml(context.inclusion_basis || "")}</dd>
+        <dt>confidence</dt><dd>${escapeHtml(context.extraction_confidence || "")}</dd>
+        <dt>origin type</dt><dd>${escapeHtml(context.origin_type || "")}</dd>
+        <dt>reassesses status</dt><dd>${context.paper_reassesses_unbound_status ? "true" : "false"}</dd>
+        ${citation && Object.keys(citation).length ? `<dt>citation</dt><dd>${escapeHtml([citation.bibkey, citation.year, citation.bibcode || citation.arxiv_id].filter(Boolean).join(" · "))}</dd>` : ""}
+      </dl>
     `;
   }
 
   function renderCandidateCore(record) {
     return `
       <section class="section-band">
-        <h2 class="section-heading">Candidate Core</h2>
+        <h2 class="section-heading">Candidate Records</h2>
         <div class="core-grid">
           ${(record.candidates || [])
             .map((candidate) => {
               const identifiers = candidate.identifiers || {};
               const core = candidate.core || {};
+              const stellar = candidate.stellar_parameters || {};
+              const orbit = candidate.orbit || {};
+              const origin = candidate.astrophysical_origin || {};
               return `
                 <article class="candidate-core">
                   <h3><span class="source-tag">${escapeHtml(candidate.source)}</span> ${escapeHtml(identifiers.paper_candidate_id || identifiers.record_id || "")}</h3>
@@ -471,9 +541,22 @@
                     <dt>paper_candidate_id</dt><dd>${escapeHtml(identifiers.paper_candidate_id || "")}</dd>
                     <dt>gaia_source_id</dt><dd>${escapeHtml(identifiers.gaia_source_id || "")}</dd>
                   </dl>
+                  ${renderCandidateContext(candidate.candidate_context)}
                   ${renderQuantityGroup(record, candidate, "observed_phase_space", core.observed_phase_space)}
                   ${renderQuantityGroup(record, candidate, "derived_kinematics", core.derived_kinematics)}
-                  ${renderQuantityGroup(record, candidate, "probabilities", core.probabilities)}
+                  ${renderQuantityGroup(record, candidate, "bound_assessment", core.bound_assessment)}
+                  ${renderQuantityList(record, candidate, "photometry", candidate.photometry)}
+                  ${renderQuantityList(record, candidate, "spectroscopy", candidate.spectroscopy)}
+                  ${renderQuantityGroup(record, candidate, "stellar_parameters", stellar)}
+                  ${renderQuantityList(record, candidate, "stellar_parameters", stellar.other)}
+                  ${renderQuantityList(record, candidate, "abundances", candidate.abundances)}
+                  ${renderQuantityList(record, candidate, "quality_flags", candidate.quality_flags)}
+                  ${renderQuantityGroup(record, candidate, "orbit", orbit)}
+                  ${renderQuantityList(record, candidate, "orbit", orbit.other)}
+                  ${renderQuantityGroup(record, candidate, "astrophysical_origin", origin)}
+                  ${renderQuantityList(record, candidate, "hypothesis_metrics", origin.hypothesis_metrics)}
+                  ${renderQuantityList(record, candidate, "astrophysical_origin", origin.other)}
+                  ${renderQuantityList(record, candidate, "extra", candidate.extra)}
                 </article>
               `;
             })

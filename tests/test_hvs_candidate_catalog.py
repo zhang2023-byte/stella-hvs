@@ -119,6 +119,91 @@ def candidate(
     }
 
 
+def detailed_candidate(
+    arxiv_id: str,
+    index: int,
+    *,
+    paper_candidate_id: str,
+    gaia_source_id: str = "",
+    ra: str = "",
+    dec: str = "",
+) -> dict[str, object]:
+    item = candidate(
+        arxiv_id,
+        index,
+        paper_candidate_id=paper_candidate_id,
+        gaia_source_id=gaia_source_id,
+        ra=ra,
+        dec=dec,
+    )
+    item["candidate_origin"] = {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": True,
+        "source_refs": [],
+        "citation": {
+            "bibkey": "Brown2014",
+            "authors": ["Brown", "Geller"],
+            "year": "2014",
+            "title": "Hypervelocity stars",
+            "doi": "10.0000/example",
+            "bibcode": "2014ApJ...000..001B",
+            "arxiv_id": "1401.00001",
+            "citation_context_refs": [],
+            "bibliography_refs": [],
+        },
+    }
+    item["photometry"] = [
+        {
+            **quantity("17.1", unit="mag", method_ref="step-01"),
+            "measurement_type": "magnitude",
+            "band": "G",
+            "system": "Vega",
+            "survey": "Gaia",
+            "description": "Should be stripped.",
+            "kind": "reported",
+        }
+    ]
+    item["spectroscopy"] = [
+        {
+            **quantity("B", unit="", method_ref="step-01"),
+            "measurement_type": "spectral_type",
+            "spectral_type": "B",
+            "instrument": "FORS2",
+            "survey": "VLT",
+        }
+    ]
+    item["stellar_parameters"] = {
+        "mass": {**quantity("3.0", unit="Msun", method_ref="step-02"), "description": "Should be stripped."},
+        "other": [{**quantity("12000", unit="K", method_ref="step-02"), "name": "isochrone_teff"}],
+    }
+    item["abundances"] = [
+        {
+            **quantity("-0.3", unit="dex", method_ref="step-02"),
+            "element": "Fe",
+            "abundance_scale": "[X/H]",
+            "reference_element": "H",
+        }
+    ]
+    item["quality_flags"] = [{**quantity("1.1", unit="", method_ref="step-01"), "name": "RUWE"}]
+    item["orbit"] = {
+        "flight_time": quantity("40", unit="Myr", method_ref="step-03"),
+        "other": [{**quantity("8", unit="kpc", method_ref="step-03"), "name": "disk_crossing_radius_alt"}],
+    }
+    item["astrophysical_origin"] = {
+        "origin_site": quantity("LMC", unit="", method_ref="step-03"),
+        "hypothesis_metrics": [
+            {
+                **quantity("0.7", unit="", method_ref="step-03"),
+                "hypothesis": "LMC origin",
+                "metric_type": "probability",
+            }
+        ],
+        "other": [{**quantity("SMBH", unit="", method_ref="step-03"), "name": "ejection_channel"}],
+    }
+    item["extra"] = [{**quantity("42", unit="", method_ref="step-03"), "name": "custom_metric"}]
+    return item
+
+
 def payload(arxiv_id: str, *, month: str, candidates: list[dict[str, object]]) -> dict[str, object]:
     return {
         "schema_version": LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION,
@@ -184,7 +269,7 @@ class HvsCandidateCatalogTest(unittest.TestCase):
                     "2601.00001",
                     month="2026-01",
                     candidates=[
-                        candidate(
+                        detailed_candidate(
                             "2601.00001",
                             1,
                             paper_candidate_id="HVS-A",
@@ -224,8 +309,21 @@ class HvsCandidateCatalogTest(unittest.TestCase):
             )
             self.assertEqual(len(record["sources"]), 2)
             self.assertNotIn("source_refs", json.dumps(record))
+            self.assertNotIn("raw_value", json.dumps(record))
+            self.assertNotIn("Should be stripped.", json.dumps(record))
             first_quantity = record["candidates"][0]["core"]["derived_kinematics"]["total_velocity"]
             self.assertEqual(first_quantity, {"value": "700", "unit": "km s^-1", "method_refs": ["step-02"]})
+            first_candidate = record["candidates"][0]
+            self.assertEqual(first_candidate["candidate_context"]["origin_type"], "cited_from_literature")
+            self.assertEqual(first_candidate["candidate_context"]["citation"]["bibcode"], "2014ApJ...000..001B")
+            self.assertEqual(first_candidate["photometry"][0]["measurement_type"], "magnitude")
+            self.assertEqual(first_candidate["photometry"][0]["band"], "G")
+            self.assertEqual(first_candidate["stellar_parameters"]["mass"]["value"], "3.0")
+            self.assertEqual(first_candidate["abundances"][0]["element"], "Fe")
+            self.assertEqual(first_candidate["quality_flags"][0]["name"], "RUWE")
+            self.assertEqual(first_candidate["orbit"]["flight_time"]["value"], "40")
+            self.assertEqual(first_candidate["astrophysical_origin"]["hypothesis_metrics"][0]["hypothesis"], "LMC origin")
+            self.assertEqual(first_candidate["extra"][0]["name"], "custom_metric")
             self.assertTrue((catalog / CANDIDATES_DIRNAME / "Gaia_DR3_123.json").exists())
             self.assertFalse((catalog / "Gaia_DR3_123.json").exists())
             self.assertTrue((catalog / INDEX_JSON_FILENAME).exists())
@@ -437,56 +535,29 @@ class HvsCandidateCatalogTest(unittest.TestCase):
             self.assertEqual(result["index_record"]["summary"]["object_count"], 1)
             self.assertEqual(result["object_records"][0]["sources"][1]["source"], "src-002")
 
-    def test_update_reads_v1_catalog_and_removes_stale_object_file(self) -> None:
+    def test_update_reads_v3_catalog_and_preserves_compact_candidate_fields(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             literature = workspace / "literature"
             catalog = workspace / "catalog"
-            catalog.mkdir()
-            old_record = {
-                "schema_version": "stella.hvs_candidate_catalog.object.v1",
-                "generated_at": "2026-05-19T12:00:00",
-                "object_id": "Gaia_EDR3_123",
-                "canonical_identifier": {"kind": "gaia_source_id", "value": "Gaia EDR3 123", "source": "src-001"},
-                "sources": [
-                    {
-                        "source": "src-001",
-                        "paper": {
-                            "arxiv_id": "2601.00001",
-                            "bibcode": "2026TEST.2601.00001",
-                            "title": "Paper 2601.00001",
-                            "month": "2026-01",
-                            "source_note_json": "notes/2026/2026-01/2026-01.json",
-                            "links": {"abs": "https://arxiv.org/abs/2601.00001"},
-                        },
-                        "source_json_path": "literature/2601.00001/literature_hvs_candidates.json",
-                        "record_id": "2601.00001:cand-001",
-                        "paper_candidate_id": "A",
-                        "gaia_source_id": "Gaia EDR3 123",
-                    }
-                ],
-                "method_chain": [{"source": "src-001", "steps": []}],
-                "candidates": [
-                    {
-                        "source": "src-001",
-                        "identifiers": {
-                            "record_id": "2601.00001:cand-001",
-                            "paper_candidate_id": "A",
-                            "gaia_source_id": "Gaia EDR3 123",
-                        },
-                        "core": {
-                            "observed_phase_space": {
-                                "ra": {"value": "10", "unit": "deg", "method_refs": []},
-                                "dec": {"value": "20", "unit": "deg", "method_refs": []},
-                            },
-                            "derived_kinematics": {},
-                            "bound_assessment": {},
-                        },
-                    }
-                ],
-                "merge": {"match_strategy": "singleton", "warnings": []},
-            }
-            write_json(catalog / "Gaia_EDR3_123.json", old_record)
+            write_json(
+                literature / "2601.00001" / "literature_hvs_candidates.json",
+                payload(
+                    "2601.00001",
+                    month="2026-01",
+                    candidates=[
+                        detailed_candidate(
+                            "2601.00001",
+                            1,
+                            paper_candidate_id="A",
+                            gaia_source_id="Gaia EDR3 123",
+                            ra="10",
+                            dec="20",
+                        )
+                    ],
+                ),
+            )
+            write_rebuilt_hvs_candidate_catalog(literature, catalog, workspace=workspace)
             new_path = literature / "2602.00002" / "literature_hvs_candidates.json"
             write_json(
                 new_path,
@@ -505,7 +576,11 @@ class HvsCandidateCatalogTest(unittest.TestCase):
             self.assertEqual(result["object_records"][0]["schema_version"], OBJECT_SCHEMA_VERSION)
             self.assertEqual(result["object_records"][0]["object_id"], "Gaia_DR3_123")
             self.assertEqual(len(result["object_records"][0]["sources"]), 2)
-            self.assertFalse((catalog / "Gaia_EDR3_123.json").exists())
+            self.assertEqual(result["object_records"][0]["candidates"][0]["photometry"][0]["band"], "G")
+            self.assertEqual(
+                result["object_records"][0]["candidates"][0]["candidate_context"]["citation"]["bibkey"],
+                "Brown2014",
+            )
             self.assertTrue((catalog / CANDIDATES_DIRNAME / "Gaia_DR3_123.json").exists())
             self.assertFalse((catalog / "Gaia_DR3_123.json").exists())
 

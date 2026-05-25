@@ -44,7 +44,7 @@ def quantity(
 
 def object_record() -> dict[str, object]:
     return {
-        "schema_version": "stella.hvs_candidate_catalog.object.v2",
+        "schema_version": "stella.hvs_candidate_catalog.object.v3",
         "generated_at": "2026-05-20T10:00:00",
         "object_id": "Gaia_DR3_123",
         "canonical_identifier": {"kind": "gaia_source_id", "value": "Gaia DR3 123", "source": "src-001"},
@@ -106,6 +106,14 @@ def object_record() -> dict[str, object]:
                     "paper_candidate_id": "HVS-A",
                     "gaia_source_id": "Gaia DR3 123",
                 },
+                "candidate_context": {
+                    "paper_labels": ["hvs_candidate"],
+                    "galactic_bound_claim": "unbound",
+                    "inclusion_basis": "explicit_unbound_text",
+                    "extraction_confidence": "high",
+                    "origin_type": "introduced_by_this_paper",
+                    "paper_reassesses_unbound_status": True,
+                },
                 "core": {
                     "observed_phase_space": {
                         "ra": quantity("10.1", unit="deg", method_ref="step-01"),
@@ -120,6 +128,20 @@ def object_record() -> dict[str, object]:
                     },
                     "bound_assessment": {"unbound_probability": quantity("0.82", unit="", method_ref="step-03")},
                 },
+                "photometry": [{"measurement_type": "magnitude", "band": "G", **quantity("17.1", unit="mag")}],
+                "spectroscopy": [],
+                "stellar_parameters": {"mass": quantity("3.0", unit="Msun"), "other": []},
+                "abundances": [],
+                "quality_flags": [{"name": "RUWE", **quantity("1.1", unit="")}],
+                "orbit": {"flight_time": quantity("40", unit="Myr"), "other": []},
+                "astrophysical_origin": {
+                    "origin_site": quantity("LMC", unit=""),
+                    "hypothesis_metrics": [
+                        {"hypothesis": "LMC origin", "metric_type": "probability", **quantity("0.7", unit="")}
+                    ],
+                    "other": [],
+                },
+                "extra": [{"name": "custom_metric", **quantity("42", unit="")}],
             },
             {
                 "source": "src-002",
@@ -127,6 +149,14 @@ def object_record() -> dict[str, object]:
                     "record_id": "2602.00002:cand-001",
                     "paper_candidate_id": "HVS-B",
                     "gaia_source_id": "Gaia DR3 123",
+                },
+                "candidate_context": {
+                    "paper_labels": ["hvs_candidate"],
+                    "galactic_bound_claim": "possibly_unbound",
+                    "inclusion_basis": "explicit_candidate_text",
+                    "extraction_confidence": "medium",
+                    "origin_type": "cited_from_literature",
+                    "paper_reassesses_unbound_status": True,
                 },
                 "core": {
                     "observed_phase_space": {
@@ -137,6 +167,14 @@ def object_record() -> dict[str, object]:
                     "derived_kinematics": {"total_velocity": quantity("690", method_ref="step-02")},
                     "bound_assessment": {},
                 },
+                "photometry": [],
+                "spectroscopy": [],
+                "stellar_parameters": {"other": []},
+                "abundances": [],
+                "quality_flags": [],
+                "orbit": {"other": []},
+                "astrophysical_origin": {"hypothesis_metrics": [], "other": []},
+                "extra": [],
             },
         ],
         "merge": {"match_strategy": "gaia_source_id", "warnings": []},
@@ -169,6 +207,19 @@ class HvsCatalogSiteTest(unittest.TestCase):
             self.assertEqual(snapshot["summary"]["object_count"], 1)
             self.assertEqual(len(snapshot["objects"]), 1)
             self.assertEqual(snapshot["rows"][0]["identifier"], "Gaia DR3 123")
+
+    def test_snapshot_ignores_old_object_schema_versions(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            catalog = Path(tmp) / "catalog"
+            write_json(catalog / "03_hvs_candidates_index.json", {"summary": {}, "objects": []})
+            old_record = object_record()
+            old_record["schema_version"] = "stella.hvs_candidate_catalog.object.v2"
+            write_json(catalog / CANDIDATES_DIRNAME / "Gaia_DR3_123.json", old_record)
+
+            snapshot = load_catalog_snapshot(catalog)
+
+            self.assertEqual(snapshot["objects"], [])
+            self.assertEqual(snapshot["rows"], [])
 
     def test_index_row_extracts_quantities_without_source_overwrite(self) -> None:
         row = build_index_row(object_record())

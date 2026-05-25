@@ -17,9 +17,9 @@ from high_velocity_lit.hvs_candidates_index import HVS_CANDIDATES_FILENAME, iter
 from high_velocity_lit.schema_models import LiteratureHvsCandidatesRecord
 
 
-OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v2"
+OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v3"
 INDEX_SCHEMA_VERSION = "stella.hvs_candidate_catalog.index.v2"
-READABLE_OBJECT_SCHEMA_VERSIONS = {OBJECT_SCHEMA_VERSION, "stella.hvs_candidate_catalog.object.v1"}
+READABLE_OBJECT_SCHEMA_VERSIONS = {OBJECT_SCHEMA_VERSION}
 INDEX_JSON_FILENAME = "03_hvs_candidates_index.json"
 INDEX_MARKDOWN_FILENAME = "03_hvs_candidates_index.md"
 CANDIDATES_DIRNAME = "candidates"
@@ -52,7 +52,7 @@ class Contribution:
     paper_candidate_id: str
     gaia_source_id: str
     method_steps: list[dict[str, Any]]
-    core: dict[str, Any]
+    candidate: dict[str, Any]
     coordinate: SkyCoord | None = field(default=None, compare=False)
     coordinate_error: str = ""
 
@@ -179,14 +179,35 @@ def _remove_source_refs(value: Any) -> Any:
     return value
 
 
-def _simplify_quantity(record: Any) -> dict[str, Any] | None:
+def _non_empty(value: Any) -> bool:
+    return value not in (None, "", [], {})
+
+
+def _copy_semantic_fields(record: dict[str, Any], fields: tuple[str, ...]) -> dict[str, Any]:
+    output: dict[str, Any] = {}
+    for field_name in fields:
+        value = record.get(field_name)
+        if isinstance(value, list):
+            items = [str(item) for item in value if str(item).strip()]
+            if items:
+                output[field_name] = items
+            continue
+        if _non_empty(value):
+            output[field_name] = str(value)
+    return output
+
+
+def _simplify_quantity(record: Any, *, semantic_fields: tuple[str, ...] = ()) -> dict[str, Any] | None:
     if not isinstance(record, dict):
         return None
-    simplified: dict[str, Any] = {
-        "value": str(record.get("value") or ""),
-        "unit": str(record.get("unit") or ""),
-        "method_refs": [str(item) for item in record.get("method_refs") or []],
-    }
+    simplified: dict[str, Any] = _copy_semantic_fields(record, semantic_fields)
+    simplified.update(
+        {
+            "value": str(record.get("value") or ""),
+            "unit": str(record.get("unit") or ""),
+            "method_refs": [str(item) for item in record.get("method_refs") or []],
+        }
+    )
     for key in ("error", "lower_error", "upper_error"):
         value = record.get(key)
         if value not in (None, ""):
@@ -208,6 +229,115 @@ def simplify_core(core: Any) -> dict[str, Any]:
                     output_group[field_name] = simplified_quantity
         simplified[group_name] = output_group
     return simplified
+
+
+def _simplify_quantity_list(records: Any, *, semantic_fields: tuple[str, ...] = ()) -> list[dict[str, Any]]:
+    if not isinstance(records, list):
+        return []
+    simplified: list[dict[str, Any]] = []
+    for record in records:
+        quantity = _simplify_quantity(record, semantic_fields=semantic_fields)
+        if quantity is not None:
+            simplified.append(quantity)
+    return simplified
+
+
+def _simplify_quantity_object(
+    group: Any,
+    *,
+    quantity_fields: tuple[str, ...],
+    list_fields: dict[str, tuple[str, ...]],
+) -> dict[str, Any]:
+    source_group = group if isinstance(group, dict) else {}
+    simplified: dict[str, Any] = {}
+    for field_name in quantity_fields:
+        quantity = _simplify_quantity(source_group.get(field_name))
+        if quantity is not None:
+            simplified[field_name] = quantity
+    for field_name, semantic_fields in list_fields.items():
+        simplified[field_name] = _simplify_quantity_list(
+            source_group.get(field_name),
+            semantic_fields=semantic_fields,
+        )
+    return simplified
+
+
+def _simplify_candidate_context(candidate: dict[str, Any]) -> dict[str, Any]:
+    assessment = candidate.get("inclusion_assessment") if isinstance(candidate.get("inclusion_assessment"), dict) else {}
+    origin = candidate.get("candidate_origin") if isinstance(candidate.get("candidate_origin"), dict) else {}
+    context: dict[str, Any] = {
+        "paper_labels": [str(item) for item in assessment.get("paper_labels") or []],
+        "galactic_bound_claim": str(assessment.get("galactic_bound_claim") or ""),
+        "inclusion_basis": str(assessment.get("inclusion_basis") or ""),
+        "extraction_confidence": str(assessment.get("extraction_confidence") or ""),
+        "origin_type": str(origin.get("origin_type") or ""),
+        "paper_reassesses_unbound_status": bool(origin.get("paper_reassesses_unbound_status")),
+    }
+    citation = origin.get("citation")
+    if isinstance(citation, dict):
+        citation_payload = _copy_semantic_fields(
+            citation,
+            ("bibkey", "authors", "year", "title", "doi", "bibcode", "arxiv_id"),
+        )
+        if citation_payload:
+            context["citation"] = citation_payload
+    return context
+
+
+def _candidate_identifiers(candidate: dict[str, Any]) -> dict[str, str]:
+    identifiers = candidate.get("identifiers") if isinstance(candidate.get("identifiers"), dict) else {}
+    return {
+        "record_id": str(identifiers.get("record_id") or ""),
+        "paper_candidate_id": str(identifiers.get("paper_candidate_id") or ""),
+        "gaia_source_id": str(identifiers.get("gaia_source_id") or ""),
+    }
+
+
+def simplify_candidate(candidate: Any) -> dict[str, Any]:
+    """Return the object-catalog compact candidate payload for a paper-level candidate."""
+    source_candidate = candidate if isinstance(candidate, dict) else {}
+    return {
+        "identifiers": _candidate_identifiers(source_candidate),
+        "candidate_context": _simplify_candidate_context(source_candidate),
+        "core": simplify_core(source_candidate.get("core") or {}),
+        "photometry": _simplify_quantity_list(
+            source_candidate.get("photometry"),
+            semantic_fields=("measurement_type", "band", "system", "survey"),
+        ),
+        "spectroscopy": _simplify_quantity_list(
+            source_candidate.get("spectroscopy"),
+            semantic_fields=("measurement_type", "spectral_type", "line", "instrument", "survey"),
+        ),
+        "stellar_parameters": _simplify_quantity_object(
+            source_candidate.get("stellar_parameters"),
+            quantity_fields=("teff", "log_g", "metallicity", "mass", "radius", "age", "luminosity", "spectral_type"),
+            list_fields={"other": ("name",)},
+        ),
+        "abundances": _simplify_quantity_list(
+            source_candidate.get("abundances"),
+            semantic_fields=("element", "abundance_scale", "reference_element"),
+        ),
+        "quality_flags": _simplify_quantity_list(source_candidate.get("quality_flags"), semantic_fields=("name",)),
+        "orbit": _simplify_quantity_object(
+            source_candidate.get("orbit"),
+            quantity_fields=(
+                "eccentricity",
+                "pericenter",
+                "apocenter",
+                "zmax",
+                "flight_time",
+                "disk_crossing_radius",
+                "angular_momentum",
+            ),
+            list_fields={"other": ("name",)},
+        ),
+        "astrophysical_origin": _simplify_quantity_object(
+            source_candidate.get("astrophysical_origin"),
+            quantity_fields=("origin_site", "origin_classification", "ejection_velocity", "travel_time"),
+            list_fields={"hypothesis_metrics": ("hypothesis", "metric_type"), "other": ("name",)},
+        ),
+        "extra": _simplify_quantity_list(source_candidate.get("extra"), semantic_fields=("name",)),
+    }
 
 
 def _normalize_coordinate_text(value: Any) -> str:
@@ -283,8 +413,8 @@ def contributions_from_paper_path(path: Path, *, workspace: Path) -> tuple[list[
         if not isinstance(candidate, dict):
             continue
         identifiers = candidate.get("identifiers") if isinstance(candidate.get("identifiers"), dict) else {}
-        core = simplify_core(candidate.get("core") or {})
         coordinate, coordinate_error = parse_candidate_coordinate(candidate.get("core") or {})
+        compact_candidate = simplify_candidate(candidate)
         contributions.append(
             Contribution(
                 paper=dict(paper),
@@ -293,7 +423,7 @@ def contributions_from_paper_path(path: Path, *, workspace: Path) -> tuple[list[
                 paper_candidate_id=str(identifiers.get("paper_candidate_id") or ""),
                 gaia_source_id=str(identifiers.get("gaia_source_id") or ""),
                 method_steps=list(method_steps),
-                core=core,
+                candidate=compact_candidate,
                 coordinate=coordinate,
                 coordinate_error=coordinate_error,
             )
@@ -525,17 +655,7 @@ def object_records_from_catalog_objects(
                 }
             )
             method_chain.append({"source": source_id, "steps": contribution.method_steps})
-            candidates.append(
-                {
-                    "source": source_id,
-                    "identifiers": {
-                        "record_id": contribution.record_id,
-                        "paper_candidate_id": contribution.paper_candidate_id,
-                        "gaia_source_id": contribution.gaia_source_id,
-                    },
-                    "core": contribution.core,
-                }
-            )
+            candidates.append({"source": source_id, **contribution.candidate})
 
         canonical_kind, canonical_value, canonical_contribution = _canonical_for_object(obj)
         records.append(
@@ -737,6 +857,16 @@ def _contributions_from_catalog_object(record: dict[str, Any]) -> list[Contribut
         core = candidate.get("core") if isinstance(candidate.get("core"), dict) else {}
         coordinate, coordinate_error = parse_candidate_coordinate(core)
         paper = source_record.get("paper") if isinstance(source_record.get("paper"), dict) else {}
+        compact_candidate = simplify_candidate(candidate)
+        compact_candidate["identifiers"] = {
+            "record_id": str(identifiers.get("record_id") or source_record.get("record_id") or ""),
+            "paper_candidate_id": str(
+                identifiers.get("paper_candidate_id") or source_record.get("paper_candidate_id") or ""
+            ),
+            "gaia_source_id": str(identifiers.get("gaia_source_id") or source_record.get("gaia_source_id") or ""),
+        }
+        if isinstance(candidate.get("candidate_context"), dict):
+            compact_candidate["candidate_context"] = dict(candidate["candidate_context"])
         contributions.append(
             Contribution(
                 paper=dict(paper),
@@ -747,7 +877,7 @@ def _contributions_from_catalog_object(record: dict[str, Any]) -> list[Contribut
                 ),
                 gaia_source_id=str(identifiers.get("gaia_source_id") or source_record.get("gaia_source_id") or ""),
                 method_steps=_remove_source_refs(method_records.get(source_id, [])),
-                core=simplify_core(core),
+                candidate=compact_candidate,
                 coordinate=coordinate,
                 coordinate_error=coordinate_error,
             )
