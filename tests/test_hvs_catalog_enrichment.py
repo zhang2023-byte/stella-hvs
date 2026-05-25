@@ -27,7 +27,7 @@ def object_record(
     dec: str = "20.0",
 ) -> dict[str, object]:
     return {
-        "schema_version": "stella.hvs_candidate_catalog.object.v4",
+        "schema_version": "stella.hvs_candidate_catalog.object.v5",
         "generated_at": "2026-05-25T12:00:00",
         "object_id": object_id,
         "canonical_identifier": {"kind": "gaia_source_id", "value": gaia_source_id, "source": "src-001"},
@@ -188,6 +188,30 @@ class HvsCatalogEnrichmentTest(unittest.TestCase):
         self.assertEqual(external["status"], "not_found")
         self.assertEqual(external["providers"]["simbad"]["status"], "not_found")
         self.assertEqual(external["providers"]["gaia_dr3"]["status"], "not_found")
+
+    def test_simbad_gaia_alias_is_used_for_gaia_dr3_lookup(self) -> None:
+        clients = FakeClients(
+            simbad_identifier_rows=[
+                {
+                    "oid": "1",
+                    "main_id": "HVS-A",
+                    "ids": "HVS-A|Gaia DR3 777",
+                    "ra": 10.0,
+                    "dec": 20.0,
+                }
+            ],
+            gaia_id_rows=[{"source_id": 777, "designation": "Gaia DR3 777", "ra": 10.0, "dec": 20.0}],
+        )
+
+        enriched = enrich_object_records(
+            [object_record(gaia_source_id="", object_id="HVS-A")],
+            mode="auto",
+            clients=clients,
+            queried_at="2026-05-25T12:00:00",
+        )
+
+        self.assertEqual(clients.gaia_source_id_queries[0], ["777"])
+        self.assertEqual(enriched[0]["external_enrichment"]["providers"]["gaia_dr3"]["source_id"], "777")
 
     def test_auto_mode_records_provider_failures_as_warnings(self) -> None:
         enriched = enrich_object_records(

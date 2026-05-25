@@ -2,20 +2,21 @@
 
 ## Matching Policy
 
-- Gaia source ID is the strongest match key. Candidates with the same non-empty
-  normalized `gaia_source_id` are merged into the same object. `Gaia EDR3`
-  and `Gaia DR3` records with the same numeric source ID share a DR3-family
-  match key; `Gaia DR2` remains a separate family.
-- If one side or both sides have no Gaia source ID, compare RA/Dec with
-  `astropy.coordinates.SkyCoord`. A separation strictly `< 5 arcsec` means the
-  candidates are treated as the same object.
-- If two records have different non-empty normalized Gaia source IDs, do not
-  merge them even when their RA/Dec are closer than 5 arcsec. Emit and review
-  a warning.
-- If two records have the same Gaia source ID but their RA/Dec separation is
-  not `< 5 arcsec`, merge them by Gaia ID but emit and review a warning.
-- If an object group ends up with more than one non-empty Gaia source ID through
-  a coordinate bridge, treat it as a high-priority warning.
+- Literature Gaia source ID is the strongest match key. Candidates with the
+  same non-empty normalized `gaia_source_id` are merged into the same object.
+  `Gaia EDR3` and `Gaia DR3` records with the same numeric source ID share a
+  DR3-family match key; `Gaia DR2` remains a separate family.
+- Default `--external-merge-mode auto` can also merge by same external Gaia DR3
+  source ID, same SIMBAD object, or same strong alias when those signals do not
+  conflict with literature Gaia IDs.
+- Strong alias matches require `<5 arcsec` when both records have coordinates.
+  If either side lacks coordinates, alias-only merges are allowed but emit
+  `alias_only_merge_no_coordinate_check`.
+- Coordinate-only matches require separation strictly `<5 arcsec`, no
+  Gaia/SIMBAD identity conflict, and a unique coordinate neighbor in auto mode.
+- `--external-merge-mode review` records potential external/alias merges without
+  applying them. `--external-merge-mode off` keeps the old Gaia/coordinate-only
+  policy.
 
 ## Warning Review
 
@@ -40,10 +41,19 @@ For `coordinate_parse_failed`:
 - Fix invalid coordinate text or units in `literature_hvs_candidates.json`, not
   in generated `catalog/` output.
 
+For `same_alias_far_coordinates`, `same_alias_literature_gaia_conflict`,
+`external_gaia_literature_gaia_conflict`, or `simbad_literature_gaia_conflict`:
+
+- Treat the merge as blocked unless the source paper-level identifiers are
+  corrected.
+- Check `merge.evidence[]` to see which provider or alias produced the blocked
+  edge.
+- Do not patch generated object JSON by hand.
+
 ## Output Audit Checklist
 
 - Every object file has `schema_version:
-  stella.hvs_candidate_catalog.object.v2`.
+  stella.hvs_candidate_catalog.object.v5`.
 - `sources[]` entries trace back to a source paper through:
   `source`, `paper`, `source_json_path`, `record_id`,
   `paper_candidate_id`, and `gaia_source_id`.
@@ -54,6 +64,7 @@ For `coordinate_parse_failed`:
 - `method_chain` and `candidates.core` do not contain `source_refs`.
 - Quantity records in object-level `core` only keep `value`, non-empty error
   fields, `unit`, and `method_refs`.
+- `merge.evidence[]` records applied, blocked, and review-only identity edges.
 - File names prefer normalized Gaia release-family slugs. Objects without Gaia
   source IDs use strong paper candidate IDs, then coordinate slugs, then stable
   source record slugs. Strong paper ID slugs preserve ASCII `+` and `-`; weak
@@ -68,5 +79,7 @@ Markdown index. Correct bad merges by fixing the source
 ```bash
 conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py rebuild \
   --literature-dir literature \
-  --catalog-dir catalog
+  --catalog-dir catalog \
+  --enrichment-mode auto \
+  --external-merge-mode auto
 ```

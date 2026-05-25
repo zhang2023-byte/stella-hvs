@@ -44,7 +44,7 @@ def quantity(
 
 def object_record() -> dict[str, object]:
     return {
-        "schema_version": "stella.hvs_candidate_catalog.object.v4",
+        "schema_version": "stella.hvs_candidate_catalog.object.v5",
         "generated_at": "2026-05-20T10:00:00",
         "object_id": "Gaia_DR3_123",
         "canonical_identifier": {"kind": "gaia_source_id", "value": "Gaia DR3 123", "source": "src-001"},
@@ -195,7 +195,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
             write_json(
                 catalog / "03_hvs_candidates_index.json",
                 {
-                    "schema_version": "stella.hvs_candidate_catalog.index.v2",
+                    "schema_version": "stella.hvs_candidate_catalog.index.v3",
                     "summary": {
                         "object_count": 1,
                         "source_count": 2,

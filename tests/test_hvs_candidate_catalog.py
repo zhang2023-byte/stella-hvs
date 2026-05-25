@@ -275,6 +275,33 @@ class CatalogFakeEnrichmentClients:
         return QueryRows(rows=[], units={})
 
 
+class EvidenceFakeEnrichmentClients:
+    def __init__(
+        self,
+        *,
+        simbad_identifier_rows: list[dict[str, object]] | None = None,
+        simbad_region_rows: list[dict[str, object]] | None = None,
+        gaia_id_rows: list[dict[str, object]] | None = None,
+        gaia_region_rows: list[dict[str, object]] | None = None,
+    ) -> None:
+        self.simbad_identifier_rows = simbad_identifier_rows or []
+        self.simbad_region_rows = simbad_region_rows or []
+        self.gaia_id_rows = gaia_id_rows or []
+        self.gaia_region_rows = gaia_region_rows or []
+
+    def query_simbad_by_identifiers(self, identifiers: list[str]) -> QueryRows:
+        return QueryRows(rows=self.simbad_identifier_rows, units={"ra": "deg", "dec": "deg"})
+
+    def query_simbad_by_regions(self, coordinates: list[object]) -> QueryRows:
+        return QueryRows(rows=self.simbad_region_rows, units={"ra": "deg", "dec": "deg"})
+
+    def query_gaia_by_source_ids(self, source_ids: list[str]) -> QueryRows:
+        return QueryRows(rows=self.gaia_id_rows, units={"ra": "deg", "dec": "deg"})
+
+    def query_gaia_by_regions(self, coordinates: list[object]) -> QueryRows:
+        return QueryRows(rows=self.gaia_region_rows, units={"ra": "deg", "dec": "deg"})
+
+
 class HvsCandidateCatalogTest(unittest.TestCase):
     def test_rebuild_merges_same_gaia_and_strips_source_refs(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -375,6 +402,205 @@ class HvsCandidateCatalogTest(unittest.TestCase):
             self.assertEqual(summary["objects_enriched_count"], 1)
             self.assertEqual(summary["enrichment_status_counts"]["success"], 1)
             self.assertEqual(result["object_records"][0]["external_enrichment"]["providers"]["gaia_dr3"]["source_id"], "777")
+
+    def test_external_gaia_evidence_merges_missing_literature_gaia_ids(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature = workspace / "literature"
+            catalog = workspace / "catalog"
+            for arxiv_id, paper_id in (("2601.00001", "HVS-A"), ("2602.00002", "HVS-B")):
+                write_json(
+                    literature / arxiv_id / "literature_hvs_candidates.json",
+                    payload(
+                        arxiv_id,
+                        month="2026-01",
+                        candidates=[candidate(arxiv_id, 1, paper_candidate_id=paper_id)],
+                    ),
+                )
+            clients = EvidenceFakeEnrichmentClients(
+                simbad_identifier_rows=[
+                    {"oid": "1", "main_id": "HVS-A", "ids": "HVS-A|Gaia DR3 777", "ra": 10.0, "dec": 20.0},
+                    {"oid": "2", "main_id": "HVS-B", "ids": "HVS-B|Gaia DR3 777", "ra": 10.0, "dec": 20.0},
+                ],
+                gaia_id_rows=[{"source_id": 777, "designation": "Gaia DR3 777", "ra": 10.0, "dec": 20.0}],
+            )
+
+            result = rebuild_hvs_candidate_catalog(
+                literature,
+                catalog,
+                workspace=workspace,
+                enrichment_mode="auto",
+                enrichment_clients=clients,
+                external_merge_mode="auto",
+            )
+
+            self.assertEqual(result["index_record"]["summary"]["object_count"], 1)
+            record = result["object_records"][0]
+            self.assertEqual(record["merge"]["match_strategy"], "external_gaia_source_id")
+            self.assertIn("external_gaia_source_id", {item["type"] for item in record["merge"]["evidence"]})
+            self.assertEqual(record["external_enrichment"]["providers"]["gaia_dr3"]["source_id"], "777")
+
+    def test_simbad_oid_evidence_merges_when_literature_gaia_is_missing(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature = workspace / "literature"
+            catalog = workspace / "catalog"
+            for arxiv_id, paper_id in (("2601.00001", "HVS-A"), ("2602.00002", "HVS-B")):
+                write_json(
+                    literature / arxiv_id / "literature_hvs_candidates.json",
+                    payload(
+                        arxiv_id,
+                        month="2026-01",
+                        candidates=[candidate(arxiv_id, 1, paper_candidate_id=paper_id)],
+                    ),
+                )
+            clients = EvidenceFakeEnrichmentClients(
+                simbad_identifier_rows=[
+                    {"oid": "42", "main_id": "HVS-A", "ids": "HVS-A|HVS-B", "ra": 10.0, "dec": 20.0},
+                ],
+            )
+
+            result = rebuild_hvs_candidate_catalog(
+                literature,
+                catalog,
+                workspace=workspace,
+                enrichment_mode="auto",
+                enrichment_clients=clients,
+                external_merge_mode="auto",
+            )
+
+            self.assertEqual(result["index_record"]["summary"]["object_count"], 1)
+            record = result["object_records"][0]
+            self.assertEqual(record["merge"]["match_strategy"], "simbad_object")
+            self.assertIn("simbad_object", {item["type"] for item in record["merge"]["evidence"]})
+
+    def test_strong_alias_evidence_merges_without_coordinates_and_warns(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature = workspace / "literature"
+            catalog = workspace / "catalog"
+            for arxiv_id in ("2601.00001", "2602.00002"):
+                write_json(
+                    literature / arxiv_id / "literature_hvs_candidates.json",
+                    payload(
+                        arxiv_id,
+                        month="2026-01",
+                        candidates=[candidate(arxiv_id, 1, paper_candidate_id="J0546+0836")],
+                    ),
+                )
+
+            result = rebuild_hvs_candidate_catalog(literature, catalog, workspace=workspace, external_merge_mode="auto")
+
+            self.assertEqual(result["index_record"]["summary"]["object_count"], 1)
+            record = result["object_records"][0]
+            self.assertEqual(record["merge"]["match_strategy"], "alias")
+            warning_types = {warning["type"] for warning in record["merge"]["warnings"]}
+            self.assertIn("alias_only_merge_no_coordinate_check", warning_types)
+
+    def test_weak_alias_does_not_merge(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature = workspace / "literature"
+            catalog = workspace / "catalog"
+            for arxiv_id in ("2601.00001", "2602.00002"):
+                write_json(
+                    literature / arxiv_id / "literature_hvs_candidates.json",
+                    payload(
+                        arxiv_id,
+                        month="2026-01",
+                        candidates=[candidate(arxiv_id, 1, paper_candidate_id="1")],
+                    ),
+                )
+
+            result = rebuild_hvs_candidate_catalog(literature, catalog, workspace=workspace, external_merge_mode="auto")
+
+            self.assertEqual(result["index_record"]["summary"]["object_count"], 2)
+
+    def test_same_alias_with_far_coordinates_is_blocked(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature = workspace / "literature"
+            catalog = workspace / "catalog"
+            for arxiv_id, ra in (("2601.00001", "10"), ("2602.00002", "40")):
+                write_json(
+                    literature / arxiv_id / "literature_hvs_candidates.json",
+                    payload(
+                        arxiv_id,
+                        month="2026-01",
+                        candidates=[candidate(arxiv_id, 1, paper_candidate_id="J0546+0836", ra=ra, dec="20")],
+                    ),
+                )
+
+            result = rebuild_hvs_candidate_catalog(literature, catalog, workspace=workspace, external_merge_mode="auto")
+
+            self.assertEqual(result["index_record"]["summary"]["object_count"], 2)
+            warning_types = {warning["type"] for warning in result["index_record"]["warnings"]}
+            self.assertIn("same_alias_far_coordinates", warning_types)
+
+    def test_auto_coordinate_merge_requires_unique_neighbor(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature = workspace / "literature"
+            catalog = workspace / "catalog"
+            for index, offset in enumerate(("0", "0.0001", "0.0002"), start=1):
+                arxiv_id = f"260{index}.0000{index}"
+                write_json(
+                    literature / arxiv_id / "literature_hvs_candidates.json",
+                    payload(
+                        arxiv_id,
+                        month="2026-01",
+                        candidates=[
+                            candidate(arxiv_id, 1, paper_candidate_id=f"HVS-{index}", ra=f"10.{offset[2:]}" if "." in offset else "10", dec="20")
+                        ],
+                    ),
+                )
+
+            result = rebuild_hvs_candidate_catalog(literature, catalog, workspace=workspace, external_merge_mode="auto")
+
+            self.assertEqual(result["index_record"]["summary"]["object_count"], 3)
+            warning_types = {warning["type"] for warning in result["index_record"]["warnings"]}
+            self.assertIn("multiple_coordinate_neighbors", warning_types)
+
+    def test_review_mode_records_potential_merge_without_grouping(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature = workspace / "literature"
+            catalog = workspace / "catalog"
+            for arxiv_id in ("2601.00001", "2602.00002"):
+                write_json(
+                    literature / arxiv_id / "literature_hvs_candidates.json",
+                    payload(
+                        arxiv_id,
+                        month="2026-01",
+                        candidates=[candidate(arxiv_id, 1, paper_candidate_id="J0546+0836")],
+                    ),
+                )
+
+            result = rebuild_hvs_candidate_catalog(literature, catalog, workspace=workspace, external_merge_mode="review")
+
+            self.assertEqual(result["index_record"]["summary"]["object_count"], 2)
+            self.assertEqual(result["index_record"]["summary"]["potential_merge_count"], 2)
+            decisions = {item["decision"] for item in result["index_record"]["potential_merges"]}
+            self.assertEqual(decisions, {"review"})
+
+    def test_external_merge_off_preserves_old_alias_split(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature = workspace / "literature"
+            catalog = workspace / "catalog"
+            for arxiv_id in ("2601.00001", "2602.00002"):
+                write_json(
+                    literature / arxiv_id / "literature_hvs_candidates.json",
+                    payload(
+                        arxiv_id,
+                        month="2026-01",
+                        candidates=[candidate(arxiv_id, 1, paper_candidate_id="J0546+0836")],
+                    ),
+                )
+
+            result = rebuild_hvs_candidate_catalog(literature, catalog, workspace=workspace, external_merge_mode="off")
+
+            self.assertEqual(result["index_record"]["summary"]["object_count"], 2)
 
     def test_rebuild_merges_edr3_and_dr3_with_same_source_number(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

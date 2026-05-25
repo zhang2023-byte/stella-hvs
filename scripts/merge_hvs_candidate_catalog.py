@@ -14,6 +14,7 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from high_velocity_lit.hvs_candidate_catalog import (  # noqa: E402
+    EXTERNAL_MERGE_MODES,
     HVS_CANDIDATES_FILENAME,
     write_rebuilt_hvs_candidate_catalog,
     write_updated_hvs_candidate_catalog,
@@ -57,6 +58,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="External SIMBAD/Gaia DR3 enrichment mode. Default: auto.",
     )
     rebuild.add_argument(
+        "--external-merge-mode",
+        choices=EXTERNAL_MERGE_MODES,
+        default="auto",
+        help="Use official SIMBAD/Gaia and alias evidence for object grouping. Default: auto.",
+    )
+    rebuild.add_argument(
         "--fail-on-skipped",
         action="store_true",
         help="Exit non-zero if any malformed paper-level input is skipped.",
@@ -94,6 +101,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="External SIMBAD/Gaia DR3 enrichment mode. Default: auto.",
     )
     update.add_argument(
+        "--external-merge-mode",
+        choices=EXTERNAL_MERGE_MODES,
+        default="auto",
+        help="Use official SIMBAD/Gaia and alias evidence for object grouping. Default: auto.",
+    )
+    update.add_argument(
         "--fail-on-skipped",
         action="store_true",
         help="Exit non-zero if any malformed paper-level input or catalog object is skipped.",
@@ -124,8 +137,10 @@ def _print_common_result(prefix: str, result: dict[str, object]) -> None:
         f"{summary['object_count']} objects, "
         f"{summary['source_count']} sources, "
         f"{summary['warning_count']} warnings, "
+        f"{summary.get('potential_merge_count', 0)} potential merges, "
         f"{summary.get('objects_enriched_count', 0)} enriched, "
         f"{summary.get('enrichment_warning_count', 0)} enrichment warnings, "
+        f"{summary.get('process_warning_count', 0)} process warnings, "
         f"{summary['skipped_count']} skipped inputs."
     )
     if dry_run:
@@ -173,6 +188,7 @@ def main() -> int:
                 workspace=WORKSPACE,
                 dry_run=args.dry_run,
                 enrichment_mode=args.enrichment_mode,
+                external_merge_mode=args.external_merge_mode,
             )
             _print_common_result("Built", result)
             if args.fail_on_skipped:
@@ -187,6 +203,7 @@ def main() -> int:
             workspace=WORKSPACE,
             dry_run=args.dry_run,
             enrichment_mode=args.enrichment_mode,
+            external_merge_mode=args.external_merge_mode,
         )
         _print_common_result("Updated", result)
         print(

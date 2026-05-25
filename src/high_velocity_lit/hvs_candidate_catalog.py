@@ -16,6 +16,7 @@ from high_velocity_lit.catalog_review import read_json, relative_path, write_jso
 from high_velocity_lit.hvs_catalog_enrichment import (
     ENRICHMENT_MODES,
     EnrichmentClients,
+    QueryRows,
     enrich_object_records,
     disabled_enrichment,
 )
@@ -23,9 +24,9 @@ from high_velocity_lit.hvs_candidates_index import HVS_CANDIDATES_FILENAME, iter
 from high_velocity_lit.schema_models import LiteratureHvsCandidatesRecord
 
 
-OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v4"
-LEGACY_OBJECT_SCHEMA_VERSIONS = {"stella.hvs_candidate_catalog.object.v3"}
-INDEX_SCHEMA_VERSION = "stella.hvs_candidate_catalog.index.v2"
+OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v5"
+LEGACY_OBJECT_SCHEMA_VERSIONS = {"stella.hvs_candidate_catalog.object.v3", "stella.hvs_candidate_catalog.object.v4"}
+INDEX_SCHEMA_VERSION = "stella.hvs_candidate_catalog.index.v3"
 READABLE_OBJECT_SCHEMA_VERSIONS = {OBJECT_SCHEMA_VERSION, *LEGACY_OBJECT_SCHEMA_VERSIONS}
 INDEX_JSON_FILENAME = "03_hvs_candidates_index.json"
 INDEX_MARKDOWN_FILENAME = "03_hvs_candidates_index.md"
@@ -33,6 +34,7 @@ CANDIDATES_DIRNAME = "candidates"
 LEGACY_INDEX_JSON_FILENAMES = ("hvs_candidates_index.json",)
 LEGACY_INDEX_MARKDOWN_FILENAMES = ("hvs_candidates_index.md",)
 MATCH_RADIUS_ARCSEC = 5.0
+EXTERNAL_MERGE_MODES = ("auto", "review", "off")
 
 GAIA_SOURCE_ID_RE = re.compile(r"^Gaia\s+((?:E)?DR\d+)\s+(\d+)$", re.IGNORECASE)
 UNSAFE_SLUG_RE = re.compile(r"[^A-Za-z0-9+-]+")
@@ -79,6 +81,19 @@ class CatalogObject:
     contributions: list[Contribution]
     warnings: list[dict[str, Any]]
     match_strategy: str
+    evidence: list[dict[str, Any]] = field(default_factory=list)
+
+
+@dataclass(frozen=True)
+class ContributionExternalEvidence:
+    """Official-provider identity hints for one paper-level contribution."""
+
+    simbad_key: str = ""
+    simbad_main_id: str = ""
+    simbad_aliases: tuple[str, ...] = ()
+    external_gaia_source_ids: tuple[str, ...] = ()
+    provider_status: str = "missing"
+    warning_types: tuple[str, ...] = ()
 
 
 class UnionFind:
@@ -150,12 +165,68 @@ def _is_weak_identifier(value: Any) -> bool:
     text = " ".join(str(value or "").strip().split())
     if not text:
         return True
+    if parse_gaia_source_id(text) is not None:
+        return True
+    if ":cand-" in text.casefold():
+        return True
     if text.isdigit():
         return True
     compact = re.sub(r"[^A-Za-z0-9]+", "", text).casefold()
     if len(compact) == 1 and compact.isalpha():
         return True
+    if len(compact) < 4:
+        return True
     return compact in WEAK_IDENTIFIER_VALUES
+
+
+def _normalized_alias(value: Any) -> str:
+    return " ".join(str(value or "").strip().split()).casefold()
+
+
+def _identifier_values_for_alias_matching(contribution: Contribution) -> list[str]:
+    identifiers = contribution.candidate.get("identifiers") if isinstance(contribution.candidate.get("identifiers"), dict) else {}
+    values: list[str] = []
+    for value in (contribution.paper_candidate_id, identifiers.get("paper_candidate_id")):
+        if value:
+            values.append(str(value))
+    for value in identifiers.get("all") or []:
+        if value:
+            values.append(str(value))
+    return _unique_values_preserving_order(values)
+
+
+def _strong_aliases_for_contribution(
+    contribution: Contribution,
+    external: ContributionExternalEvidence | None = None,
+) -> list[str]:
+    values = _identifier_values_for_alias_matching(contribution)
+    if external is not None:
+        values.extend(external.simbad_aliases)
+        if external.simbad_main_id:
+            values.append(external.simbad_main_id)
+    aliases: list[str] = []
+    seen: set[str] = set()
+    for value in values:
+        text = " ".join(str(value or "").strip().split())
+        key = _normalized_alias(text)
+        if not text or key in seen or _is_weak_identifier(text):
+            continue
+        seen.add(key)
+        aliases.append(text)
+    return aliases
+
+
+def _unique_values_preserving_order(values: list[str]) -> list[str]:
+    output: list[str] = []
+    seen: set[str] = set()
+    for value in values:
+        text = " ".join(str(value or "").strip().split())
+        key = text.casefold()
+        if not text or key in seen:
+            continue
+        seen.add(key)
+        output.append(text)
+    return output
 
 
 def _source_sort_key(contribution: Contribution) -> tuple[str, str, str, str]:
@@ -465,24 +536,152 @@ def _pair_warning(kind: str, message: str, left: Contribution, right: Contributi
     }
 
 
-def merge_contributions(contributions: list[Contribution]) -> list[CatalogObject]:
-    """Merge contributions into object-level groups using Gaia ID and coordinates."""
+def _pair_warning_optional(
+    kind: str,
+    message: str,
+    left: Contribution,
+    right: Contribution,
+    sep: float | None,
+) -> dict[str, Any]:
+    warning = {
+        "type": kind,
+        "message": message,
+        "records": [_candidate_ref(left), _candidate_ref(right)],
+    }
+    if sep is not None:
+        warning["separation_arcsec"] = round(sep, 6)
+    return warning
+
+
+def _pair_evidence(
+    evidence_type: str,
+    source: str,
+    decision: str,
+    left: Contribution,
+    right: Contribution,
+    *,
+    value: str = "",
+    separation_arcsec: float | None = None,
+    message: str = "",
+) -> dict[str, Any]:
+    evidence: dict[str, Any] = {
+        "type": evidence_type,
+        "source": source,
+        "decision": decision,
+        "records": [_candidate_ref(left), _candidate_ref(right)],
+    }
+    if value:
+        evidence["value"] = value
+    if separation_arcsec is not None:
+        evidence["separation_arcsec"] = round(separation_arcsec, 6)
+    if message:
+        evidence["message"] = message
+    return evidence
+
+
+def _external_evidence_for(
+    evidence_by_identity: dict[tuple[str, str], ContributionExternalEvidence] | None,
+    contribution: Contribution,
+) -> ContributionExternalEvidence:
+    if not evidence_by_identity:
+        return ContributionExternalEvidence()
+    return evidence_by_identity.get(contribution.identity, ContributionExternalEvidence())
+
+
+def _external_gaia_keys(evidence: ContributionExternalEvidence) -> set[str]:
+    return {
+        normalize_gaia_source_id(f"Gaia DR3 {source_id}")
+        for source_id in evidence.external_gaia_source_ids
+        if str(source_id).strip()
+    }
+
+
+def _shared_external_gaia_value(
+    left_evidence: ContributionExternalEvidence,
+    right_evidence: ContributionExternalEvidence,
+) -> str:
+    shared = sorted(_external_gaia_keys(left_evidence) & _external_gaia_keys(right_evidence))
+    if not shared:
+        return ""
+    source_id = shared[0].rsplit(" ", 1)[-1]
+    return f"Gaia DR3 {source_id}"
+
+
+def _literature_gaia_conflict(left: Contribution, right: Contribution) -> bool:
+    return bool(left.gaia_match_key and right.gaia_match_key and left.gaia_match_key != right.gaia_match_key)
+
+
+def _external_identity_conflict(
+    left: Contribution,
+    right: Contribution,
+    left_evidence: ContributionExternalEvidence,
+    right_evidence: ContributionExternalEvidence,
+) -> bool:
+    if _literature_gaia_conflict(left, right):
+        return True
+    left_external_gaia = _external_gaia_keys(left_evidence)
+    right_external_gaia = _external_gaia_keys(right_evidence)
+    if left_external_gaia and right_external_gaia and not (left_external_gaia & right_external_gaia):
+        return True
+    if left_evidence.simbad_key and right_evidence.simbad_key and left_evidence.simbad_key != right_evidence.simbad_key:
+        return True
+    return False
+
+
+def _coordinate_neighbor_counts(ordered: list[Contribution]) -> dict[int, int]:
+    counts = {index: 0 for index in range(len(ordered))}
+    for left_index, left in enumerate(ordered):
+        for right_index in range(left_index + 1, len(ordered)):
+            sep = _separation_arcsec(left, ordered[right_index])
+            if sep is not None and sep < MATCH_RADIUS_ARCSEC:
+                counts[left_index] += 1
+                counts[right_index] += 1
+    return counts
+
+
+def merge_contributions(
+    contributions: list[Contribution],
+    *,
+    external_merge_mode: str = "auto",
+    external_evidence: dict[tuple[str, str], ContributionExternalEvidence] | None = None,
+) -> list[CatalogObject]:
+    """Merge contributions into object-level groups using a prioritized evidence graph."""
+    if external_merge_mode not in EXTERNAL_MERGE_MODES:
+        raise ValueError(f"unknown external merge mode: {external_merge_mode}")
     ordered = sorted(contributions, key=_source_sort_key)
     uf = UnionFind(len(ordered))
     union_edges: list[tuple[str, int, int]] = []
     pair_warnings: list[tuple[tuple[int, ...], dict[str, Any]]] = []
+    pair_evidence: list[tuple[tuple[int, ...], dict[str, Any]]] = []
+    coordinate_neighbor_counts = _coordinate_neighbor_counts(ordered)
 
     for left_index, left in enumerate(ordered):
         for right_index in range(left_index + 1, len(ordered)):
             right = ordered[right_index]
             left_gaia = left.gaia_match_key
             right_gaia = right.gaia_match_key
+            left_external = _external_evidence_for(external_evidence, left)
+            right_external = _external_evidence_for(external_evidence, right)
             sep = _separation_arcsec(left, right)
 
             if left_gaia and right_gaia:
                 if left_gaia == right_gaia:
                     uf.union(left_index, right_index)
                     union_edges.append(("gaia_source_id", left_index, right_index))
+                    pair_evidence.append(
+                        (
+                            (left_index, right_index),
+                            _pair_evidence(
+                                "literature_gaia_source_id",
+                                "literature",
+                                "merge",
+                                left,
+                                right,
+                                value=left.gaia_source_id,
+                                separation_arcsec=sep,
+                            ),
+                        )
+                    )
                     if sep is not None and sep >= MATCH_RADIUS_ARCSEC:
                         pair_warnings.append(
                             (
@@ -495,8 +694,23 @@ def merge_contributions(contributions: list[Contribution]) -> list[CatalogObject
                                     sep,
                                 ),
                             )
-                        )
+                    )
                 elif sep is not None and sep < MATCH_RADIUS_ARCSEC:
+                    pair_evidence.append(
+                        (
+                            (left_index, right_index),
+                            _pair_evidence(
+                                "literature_gaia_source_id_conflict",
+                                "literature",
+                                "blocked",
+                                left,
+                                right,
+                                value=f"{left.gaia_source_id} != {right.gaia_source_id}",
+                                separation_arcsec=sep,
+                                message="different literature Gaia source ids block automatic merging",
+                            ),
+                        )
+                    )
                     pair_warnings.append(
                         (
                             (left_index, right_index),
@@ -511,9 +725,202 @@ def merge_contributions(contributions: list[Contribution]) -> list[CatalogObject
                     )
                 continue
 
+            shared_external_gaia = (
+                _shared_external_gaia_value(left_external, right_external)
+                if external_merge_mode != "off"
+                else ""
+            )
+            if shared_external_gaia:
+                decision = "review" if external_merge_mode == "review" else "merge"
+                if _literature_gaia_conflict(left, right):
+                    decision = "blocked"
+                    pair_warnings.append(
+                        (
+                            (left_index, right_index),
+                            _pair_warning_optional(
+                                "external_gaia_literature_gaia_conflict",
+                                "same external Gaia DR3 source id but conflicting literature Gaia source ids; records were not merged",
+                                left,
+                                right,
+                                sep,
+                            ),
+                        )
+                    )
+                elif external_merge_mode == "auto":
+                    uf.union(left_index, right_index)
+                    union_edges.append(("external_gaia_source_id", left_index, right_index))
+                pair_evidence.append(
+                    (
+                        (left_index, right_index),
+                        _pair_evidence(
+                            "external_gaia_source_id",
+                            "gaia_dr3",
+                            decision,
+                            left,
+                            right,
+                            value=shared_external_gaia,
+                            separation_arcsec=sep,
+                        ),
+                    )
+                )
+                if decision == "merge" or external_merge_mode == "review":
+                    continue
+
+            if (
+                external_merge_mode != "off"
+                and left_external.simbad_key
+                and left_external.simbad_key == right_external.simbad_key
+            ):
+                decision = "review" if external_merge_mode == "review" else "merge"
+                if _literature_gaia_conflict(left, right):
+                    decision = "blocked"
+                    pair_warnings.append(
+                        (
+                            (left_index, right_index),
+                            _pair_warning_optional(
+                                "simbad_literature_gaia_conflict",
+                                "same SIMBAD object but conflicting literature Gaia source ids; records were not merged",
+                                left,
+                                right,
+                                sep,
+                            ),
+                        )
+                    )
+                elif external_merge_mode == "auto":
+                    uf.union(left_index, right_index)
+                    union_edges.append(("simbad_object", left_index, right_index))
+                pair_evidence.append(
+                    (
+                        (left_index, right_index),
+                        _pair_evidence(
+                            "simbad_object",
+                            "simbad",
+                            decision,
+                            left,
+                            right,
+                            value=left_external.simbad_key,
+                            separation_arcsec=sep,
+                        ),
+                    )
+                )
+                if decision == "merge" or external_merge_mode == "review":
+                    continue
+
+            left_aliases = (
+                {_normalized_alias(value): value for value in _strong_aliases_for_contribution(left, left_external)}
+                if external_merge_mode != "off"
+                else {}
+            )
+            right_aliases = (
+                {_normalized_alias(value): value for value in _strong_aliases_for_contribution(right, right_external)}
+                if external_merge_mode != "off"
+                else {}
+            )
+            shared_alias_keys = sorted(set(left_aliases) & set(right_aliases))
+            if shared_alias_keys:
+                shared_alias = left_aliases[shared_alias_keys[0]]
+                if _literature_gaia_conflict(left, right):
+                    decision = "blocked"
+                    message = "same strong alias but conflicting literature Gaia source ids; records were not merged"
+                    pair_warnings.append(
+                        (
+                            (left_index, right_index),
+                            _pair_warning_optional(
+                                "same_alias_literature_gaia_conflict",
+                                message,
+                                left,
+                                right,
+                                sep,
+                            ),
+                        )
+                    )
+                elif sep is not None and sep >= MATCH_RADIUS_ARCSEC:
+                    decision = "blocked"
+                    message = "same strong alias but RA/Dec separation is not < 5 arcsec; records were not merged"
+                    pair_warnings.append(
+                        (
+                            (left_index, right_index),
+                            _pair_warning("same_alias_far_coordinates", message, left, right, sep),
+                        )
+                    )
+                else:
+                    decision = "review" if external_merge_mode == "review" else "merge"
+                    message = "same strong alias"
+                    if external_merge_mode == "auto":
+                        uf.union(left_index, right_index)
+                        union_edges.append(("alias", left_index, right_index))
+                        if sep is None:
+                            pair_warnings.append(
+                                (
+                                    (left_index, right_index),
+                                    {
+                                        "type": "alias_only_merge_no_coordinate_check",
+                                        "message": "same strong alias merged without RA/Dec sanity check because one or both records lack coordinates",
+                                        "records": [_candidate_ref(left), _candidate_ref(right)],
+                                    },
+                                )
+                            )
+                    if sep is None:
+                        message = "same strong alias without coordinate sanity check"
+                pair_evidence.append(
+                    (
+                        (left_index, right_index),
+                        _pair_evidence(
+                            "strong_alias",
+                            "identifier",
+                            decision,
+                            left,
+                            right,
+                            value=shared_alias,
+                            separation_arcsec=sep,
+                            message=message,
+                        ),
+                    )
+                )
+                if decision == "merge" or external_merge_mode == "review":
+                    continue
+
             if sep is not None and sep < MATCH_RADIUS_ARCSEC:
+                coordinate_unique = coordinate_neighbor_counts[left_index] == 1 and coordinate_neighbor_counts[right_index] == 1
+                identity_conflict = _external_identity_conflict(left, right, left_external, right_external)
+                if external_merge_mode == "auto" and (identity_conflict or not coordinate_unique):
+                    warning_type = "coordinate_external_identity_conflict" if identity_conflict else "multiple_coordinate_neighbors"
+                    message = (
+                        "near coordinates but Gaia/SIMBAD identity evidence conflicts; records were not merged"
+                        if identity_conflict
+                        else "near coordinates but the match radius contains multiple candidate neighbors; records were not merged"
+                    )
+                    pair_warnings.append(((left_index, right_index), _pair_warning(warning_type, message, left, right, sep)))
+                    pair_evidence.append(
+                        (
+                            (left_index, right_index),
+                            _pair_evidence(
+                                "coordinates",
+                                "literature_coordinates",
+                                "blocked",
+                                left,
+                                right,
+                                separation_arcsec=sep,
+                                message=message,
+                            ),
+                        )
+                    )
+                    continue
                 uf.union(left_index, right_index)
                 union_edges.append(("coordinates", left_index, right_index))
+                pair_evidence.append(
+                    (
+                        (left_index, right_index),
+                        _pair_evidence(
+                            "coordinates",
+                            "literature_coordinates",
+                            "merge",
+                            left,
+                            right,
+                            separation_arcsec=sep,
+                        ),
+                    )
+                )
 
     groups: dict[int, list[int]] = {}
     for index in range(len(ordered)):
@@ -524,6 +931,12 @@ def merge_contributions(contributions: list[Contribution]) -> list[CatalogObject
         target_roots = {uf.find(index) for index in indexes}
         for root in target_roots:
             group_warnings.setdefault(root, []).append(warning)
+
+    group_evidence: dict[int, list[dict[str, Any]]] = {root: [] for root in groups}
+    for indexes, evidence in pair_evidence:
+        target_roots = {uf.find(index) for index in indexes}
+        for root in target_roots:
+            group_evidence.setdefault(root, []).append(evidence)
 
     for root, indexes in groups.items():
         for index in indexes:
@@ -555,6 +968,12 @@ def merge_contributions(contributions: list[Contribution]) -> list[CatalogObject
         edge_kinds = {kind for kind, left, right in union_edges if uf.find(left) == root and uf.find(right) == root}
         if edge_kinds == {"gaia_source_id"}:
             strategy_by_root[root] = "gaia_source_id"
+        elif edge_kinds == {"external_gaia_source_id"}:
+            strategy_by_root[root] = "external_gaia_source_id"
+        elif edge_kinds == {"simbad_object"}:
+            strategy_by_root[root] = "simbad_object"
+        elif edge_kinds == {"alias"}:
+            strategy_by_root[root] = "alias"
         elif edge_kinds == {"coordinates"}:
             strategy_by_root[root] = "coordinates"
         elif edge_kinds:
@@ -567,6 +986,7 @@ def merge_contributions(contributions: list[Contribution]) -> list[CatalogObject
             contributions=[ordered[index] for index in indexes],
             warnings=group_warnings.get(root, []),
             match_strategy=strategy_by_root[root],
+            evidence=group_evidence.get(root, []),
         )
         for root, indexes in sorted(groups.items(), key=lambda item: _source_sort_key(ordered[item[1][0]]))
     ]
@@ -693,6 +1113,7 @@ def object_records_from_catalog_objects(
                 "external_enrichment": disabled_enrichment(),
                 "merge": {
                     "match_strategy": obj.match_strategy,
+                    "evidence": obj.evidence,
                     "warnings": obj.warnings,
                 },
             }
@@ -718,13 +1139,16 @@ def build_catalog_index(
     catalog_dir: Path,
     literature_dir: Path | None,
     skipped: list[dict[str, str]],
+    process_warnings: list[dict[str, Any]] | None = None,
     generated_at: str,
     workspace: Path,
 ) -> dict[str, Any]:
     objects: list[dict[str, Any]] = []
     warnings: list[dict[str, Any]] = []
     enrichment_warnings: list[dict[str, Any]] = []
+    potential_merges: list[dict[str, Any]] = []
     enrichment_status_counts: dict[str, int] = {}
+    process_warning_items = [item for item in process_warnings or [] if isinstance(item, dict)]
     candidates_dir = catalog_dir / CANDIDATES_DIRNAME
     for record in object_records:
         sources = record.get("sources") if isinstance(record.get("sources"), list) else []
@@ -734,6 +1158,8 @@ def build_catalog_index(
         object_id = str(record.get("object_id") or "")
         object_warnings = (record.get("merge") or {}).get("warnings") if isinstance(record.get("merge"), dict) else []
         object_warning_items = [item for item in object_warnings if isinstance(item, dict)]
+        object_evidence = (record.get("merge") or {}).get("evidence") if isinstance(record.get("merge"), dict) else []
+        object_evidence_items = [item for item in object_evidence if isinstance(item, dict)]
         enrichment = record.get("external_enrichment") if isinstance(record.get("external_enrichment"), dict) else {}
         enrichment_status = str(enrichment.get("status") or "missing")
         enrichment_status_counts[enrichment_status] = enrichment_status_counts.get(enrichment_status, 0) + 1
@@ -748,6 +1174,12 @@ def build_catalog_index(
             warning_with_object = {"object_id": object_id}
             warning_with_object.update(warning)
             enrichment_warnings.append(warning_with_object)
+        for evidence in object_evidence_items:
+            if evidence.get("decision") != "review":
+                continue
+            evidence_with_object = {"object_id": object_id}
+            evidence_with_object.update(evidence)
+            potential_merges.append(evidence_with_object)
         objects.append(
             {
                 "object_id": object_id,
@@ -770,6 +1202,7 @@ def build_catalog_index(
                     for item in source_items
                 ],
                 "warning_count": len(object_warning_items),
+                "evidence_count": len(object_evidence_items),
                 "enrichment_status": enrichment_status,
                 "enrichment_warning_count": len(enrichment_warning_items),
                 "match_strategy": str((record.get("merge") or {}).get("match_strategy") or "")
@@ -784,6 +1217,8 @@ def build_catalog_index(
         "candidate_count": sum(len(record.get("candidates") or []) for record in object_records),
         "objects_with_gaia_count": sum(1 for item in objects if item.get("gaia_source_ids")),
         "warning_count": len(warnings),
+        "process_warning_count": len(process_warning_items),
+        "potential_merge_count": len(potential_merges),
         "enrichment_status_counts": enrichment_status_counts,
         "objects_enriched_count": enrichment_status_counts.get("success", 0) + enrichment_status_counts.get("partial", 0),
         "enrichment_warning_count": len(enrichment_warnings),
@@ -798,6 +1233,8 @@ def build_catalog_index(
         "summary": summary,
         "objects": objects,
         "warnings": warnings,
+        "process_warnings": process_warning_items,
+        "potential_merges": potential_merges,
         "enrichment_warnings": enrichment_warnings,
         "skipped": skipped,
     }
@@ -810,7 +1247,9 @@ def _markdown_cell(value: Any) -> str:
 def render_hvs_candidate_catalog_index(record: dict[str, Any]) -> str:
     summary = record.get("summary") or {}
     objects = record.get("objects") or []
+    process_warnings = record.get("process_warnings") or []
     warnings = record.get("warnings") or []
+    potential_merges = record.get("potential_merges") or []
     enrichment_warnings = record.get("enrichment_warnings") or []
 
     lines = [
@@ -822,6 +1261,8 @@ def render_hvs_candidate_catalog_index(record: dict[str, Any]) -> str:
         f"- Candidate records: {summary.get('candidate_count', 0)}",
         f"- Objects with Gaia source IDs: {summary.get('objects_with_gaia_count', 0)}",
         f"- Warnings: {summary.get('warning_count', 0)}",
+        f"- Process warnings: {summary.get('process_warning_count', 0)}",
+        f"- Potential merges: {summary.get('potential_merge_count', 0)}",
         f"- Objects enriched: {summary.get('objects_enriched_count', 0)}",
         f"- Enrichment warnings: {summary.get('enrichment_warning_count', 0)}",
         f"- Skipped malformed inputs: {summary.get('skipped_count', 0)}",
@@ -836,8 +1277,8 @@ def render_hvs_candidate_catalog_index(record: dict[str, Any]) -> str:
 
     if objects:
         lines.extend(["", "## Objects", ""])
-        lines.append("| Object | Canonical identifier | Sources | Gaia source IDs | Paper IDs | Warnings | Enrichment | JSON |")
-        lines.append("| --- | --- | ---: | --- | --- | ---: | --- | --- |")
+        lines.append("| Object | Canonical identifier | Sources | Gaia source IDs | Paper IDs | Evidence | Warnings | Enrichment | JSON |")
+        lines.append("| --- | --- | ---: | --- | --- | ---: | ---: | --- | --- |")
         for item in objects:
             canonical = item.get("canonical_identifier") if isinstance(item.get("canonical_identifier"), dict) else {}
             canonical_value = canonical.get("value") or item.get("object_id") or ""
@@ -846,9 +1287,16 @@ def render_hvs_candidate_catalog_index(record: dict[str, Any]) -> str:
                 f"| {_markdown_cell(item.get('object_id'))} | {_markdown_cell(canonical_value)} | "
                 f"{item.get('source_count', 0)} | {_markdown_cell(', '.join(item.get('gaia_source_ids') or [])) or '-'} | "
                 f"{_markdown_cell(', '.join(item.get('paper_candidate_ids') or [])) or '-'} | "
-                f"{item.get('warning_count', 0)} | {_markdown_cell(item.get('enrichment_status')) or '-'} "
+                f"{item.get('evidence_count', 0)} | {item.get('warning_count', 0)} | {_markdown_cell(item.get('enrichment_status')) or '-'} "
                 f"({item.get('enrichment_warning_count', 0)}) | {object_link} |"
             )
+
+    if process_warnings:
+        lines.extend(["", "## Process Warnings", ""])
+        lines.append("| Type | Message |")
+        lines.append("| --- | --- |")
+        for warning in process_warnings:
+            lines.append(f"| {_markdown_cell(warning.get('type'))} | {_markdown_cell(warning.get('message'))} |")
 
     if warnings:
         lines.extend(["", "## Warnings", ""])
@@ -858,6 +1306,17 @@ def render_hvs_candidate_catalog_index(record: dict[str, Any]) -> str:
             lines.append(
                 f"| {_markdown_cell(warning.get('object_id'))} | {_markdown_cell(warning.get('type'))} | "
                 f"{_markdown_cell(warning.get('message'))} |"
+            )
+
+    if potential_merges:
+        lines.extend(["", "## Potential Merges", ""])
+        lines.append("| Object | Type | Source | Value | Message |")
+        lines.append("| --- | --- | --- | --- | --- |")
+        for evidence in potential_merges:
+            lines.append(
+                f"| {_markdown_cell(evidence.get('object_id'))} | {_markdown_cell(evidence.get('type'))} | "
+                f"{_markdown_cell(evidence.get('source'))} | {_markdown_cell(evidence.get('value')) or '-'} | "
+                f"{_markdown_cell(evidence.get('message'))} |"
             )
 
     if enrichment_warnings:
@@ -917,13 +1376,16 @@ def _contributions_from_catalog_object(record: dict[str, Any]) -> list[Contribut
         coordinate, coordinate_error = parse_candidate_coordinate(core)
         paper = source_record.get("paper") if isinstance(source_record.get("paper"), dict) else {}
         compact_candidate = simplify_candidate(candidate)
-        compact_candidate["identifiers"] = {
+        compact_identifiers = {
             "record_id": str(identifiers.get("record_id") or source_record.get("record_id") or ""),
             "paper_candidate_id": str(
                 identifiers.get("paper_candidate_id") or source_record.get("paper_candidate_id") or ""
             ),
             "gaia_source_id": str(identifiers.get("gaia_source_id") or source_record.get("gaia_source_id") or ""),
         }
+        if identifiers.get("all"):
+            compact_identifiers["all"] = [str(value) for value in identifiers.get("all") or [] if str(value).strip()]
+        compact_candidate["identifiers"] = compact_identifiers
         if isinstance(candidate.get("candidate_context"), dict):
             compact_candidate["candidate_context"] = dict(candidate["candidate_context"])
         contributions.append(
@@ -961,6 +1423,141 @@ def load_catalog_contributions(
             continue
         contributions.extend(_contributions_from_catalog_object(record))
     return contributions, skipped
+
+
+def _singleton_records_for_contributions(contributions: list[Contribution], *, generated_at: str) -> list[dict[str, Any]]:
+    objects = [
+        CatalogObject(contributions=[contribution], warnings=[], match_strategy="singleton", evidence=[])
+        for contribution in contributions
+    ]
+    return object_records_from_catalog_objects(objects, generated_at=generated_at)
+
+
+def _source_identity_from_record(record: dict[str, Any]) -> tuple[str, str] | None:
+    sources = [item for item in record.get("sources") or [] if isinstance(item, dict)]
+    if len(sources) != 1:
+        return None
+    source = sources[0]
+    return (str(source.get("source_json_path") or ""), str(source.get("record_id") or ""))
+
+
+def _gaia_source_ids_from_simbad_aliases(aliases: list[Any]) -> list[str]:
+    source_ids: list[str] = []
+    for alias in aliases:
+        parsed = parse_gaia_source_id(alias)
+        if parsed is not None and parsed.release_family == "DR3":
+            source_ids.append(parsed.source_id)
+    return _unique_values_preserving_order(source_ids)
+
+
+def _external_evidence_from_enriched_records(
+    records: list[dict[str, Any]],
+) -> dict[tuple[str, str], ContributionExternalEvidence]:
+    evidence_by_identity: dict[tuple[str, str], ContributionExternalEvidence] = {}
+    for record in records:
+        identity = _source_identity_from_record(record)
+        if identity is None:
+            continue
+        external = record.get("external_enrichment") if isinstance(record.get("external_enrichment"), dict) else {}
+        providers = external.get("providers") if isinstance(external.get("providers"), dict) else {}
+        simbad = providers.get("simbad") if isinstance(providers.get("simbad"), dict) else {}
+        gaia = providers.get("gaia_dr3") if isinstance(providers.get("gaia_dr3"), dict) else {}
+        simbad_aliases = [str(value) for value in simbad.get("aliases") or [] if str(value).strip()]
+        simbad_raw = simbad.get("raw_columns") if isinstance(simbad.get("raw_columns"), dict) else {}
+        simbad_key = ""
+        if simbad.get("status") == "matched":
+            simbad_key = str(simbad_raw.get("oid") or simbad.get("main_id") or "")
+        gaia_source_ids: list[str] = []
+        if gaia.get("status") == "matched" and gaia.get("source_id"):
+            gaia_source_ids.append(str(gaia.get("source_id")))
+        gaia_source_ids.extend(_gaia_source_ids_from_simbad_aliases(simbad_aliases))
+        warnings = external.get("warnings") if isinstance(external.get("warnings"), list) else []
+        evidence_by_identity[identity] = ContributionExternalEvidence(
+            simbad_key=simbad_key,
+            simbad_main_id=str(simbad.get("main_id") or ""),
+            simbad_aliases=tuple(_unique_values_preserving_order(simbad_aliases)),
+            external_gaia_source_ids=tuple(_unique_values_preserving_order(gaia_source_ids)),
+            provider_status=str(external.get("status") or "missing"),
+            warning_types=tuple(str(item.get("type") or "") for item in warnings if isinstance(item, dict)),
+        )
+    return evidence_by_identity
+
+
+class _CachedEnrichmentClients:
+    def __init__(self, records: list[dict[str, Any]]) -> None:
+        self.simbad_rows: list[dict[str, Any]] = []
+        self.gaia_rows: list[dict[str, Any]] = []
+        self.simbad_units: dict[str, str] = {}
+        self.gaia_units: dict[str, str] = {}
+        simbad_seen: set[str] = set()
+        gaia_seen: set[str] = set()
+        for record in records:
+            external = record.get("external_enrichment") if isinstance(record.get("external_enrichment"), dict) else {}
+            providers = external.get("providers") if isinstance(external.get("providers"), dict) else {}
+            simbad = providers.get("simbad") if isinstance(providers.get("simbad"), dict) else {}
+            gaia = providers.get("gaia_dr3") if isinstance(providers.get("gaia_dr3"), dict) else {}
+            simbad_raw = simbad.get("raw_columns") if isinstance(simbad.get("raw_columns"), dict) else {}
+            if simbad.get("status") == "matched" and simbad_raw:
+                key = str(simbad_raw.get("oid") or simbad.get("main_id") or simbad_raw)
+                if key not in simbad_seen:
+                    simbad_seen.add(key)
+                    self.simbad_rows.append(dict(simbad_raw))
+                units = simbad.get("column_units") if isinstance(simbad.get("column_units"), dict) else {}
+                self.simbad_units.update({str(key): str(value) for key, value in units.items()})
+            gaia_raw = gaia.get("raw_columns") if isinstance(gaia.get("raw_columns"), dict) else {}
+            if gaia.get("status") == "matched" and gaia_raw:
+                key = str(gaia_raw.get("source_id") or gaia.get("source_id") or gaia_raw)
+                if key not in gaia_seen:
+                    gaia_seen.add(key)
+                    self.gaia_rows.append(dict(gaia_raw))
+                units = gaia.get("column_units") if isinstance(gaia.get("column_units"), dict) else {}
+                self.gaia_units.update({str(key): str(value) for key, value in units.items()})
+
+    def query_simbad_by_identifiers(self, identifiers: list[str]) -> QueryRows:
+        return QueryRows(rows=self.simbad_rows, units=self.simbad_units)
+
+    def query_simbad_by_regions(self, coordinates: list[object]) -> QueryRows:
+        return QueryRows(rows=self.simbad_rows, units=self.simbad_units)
+
+    def query_gaia_by_source_ids(self, source_ids: list[str]) -> QueryRows:
+        return QueryRows(rows=self.gaia_rows, units=self.gaia_units)
+
+    def query_gaia_by_regions(self, coordinates: list[object]) -> QueryRows:
+        return QueryRows(rows=self.gaia_rows, units=self.gaia_units)
+
+
+def _pre_enrich_contributions(
+    contributions: list[Contribution],
+    *,
+    enrichment_mode: str,
+    enrichment_clients: EnrichmentClients | None,
+    generated_at: str,
+) -> tuple[list[dict[str, Any]], dict[tuple[str, str], ContributionExternalEvidence], list[dict[str, Any]]]:
+    if enrichment_mode == "off" or not contributions:
+        return [], {}, []
+    singleton_records = _singleton_records_for_contributions(contributions, generated_at=generated_at)
+    enriched_records = enrich_object_records(
+        singleton_records,
+        mode=enrichment_mode,
+        clients=enrichment_clients,
+        queried_at=generated_at,
+    )
+    process_warnings: list[dict[str, Any]] = []
+    failed_count = sum(
+        1
+        for record in enriched_records
+        if (record.get("external_enrichment") or {}).get("status") == "failed"
+        and isinstance(record.get("external_enrichment"), dict)
+    )
+    if failed_count:
+        process_warnings.append(
+            {
+                "type": "external_merge_enrichment_failed",
+                "message": "External merge evidence was unavailable for some records; object grouping fell back to non-external evidence for those records.",
+                "failed_record_count": failed_count,
+            }
+        )
+    return enriched_records, _external_evidence_from_enriched_records(enriched_records), process_warnings
 
 
 def _record_paths(object_records: list[dict[str, Any]], catalog_dir: Path) -> list[Path]:
@@ -1019,21 +1616,53 @@ def _build_records_from_contributions(
     workspace: Path,
     enrichment_mode: str,
     enrichment_clients: EnrichmentClients | None,
+    external_merge_mode: str,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     generated_at = datetime.now().isoformat(timespec="seconds")
-    catalog_objects = merge_contributions(contributions)
-    object_records = object_records_from_catalog_objects(catalog_objects, generated_at=generated_at)
-    object_records = enrich_object_records(
-        object_records,
-        mode=enrichment_mode,
-        clients=enrichment_clients,
-        queried_at=generated_at,
+    process_warnings: list[dict[str, Any]] = []
+    pre_enriched_records: list[dict[str, Any]] = []
+    external_evidence: dict[tuple[str, str], ContributionExternalEvidence] = {}
+    if external_merge_mode != "off" and enrichment_mode != "off":
+        pre_enriched_records, external_evidence, process_warnings = _pre_enrich_contributions(
+            contributions,
+            enrichment_mode=enrichment_mode,
+            enrichment_clients=enrichment_clients,
+            generated_at=generated_at,
+        )
+    elif external_merge_mode != "off" and enrichment_mode == "off":
+        process_warnings.append(
+            {
+                "type": "external_merge_enrichment_disabled",
+                "message": "External merge mode is enabled but enrichment is off; only literature identifiers, strong aliases, and coordinates were available as merge evidence.",
+            }
+        )
+
+    catalog_objects = merge_contributions(
+        contributions,
+        external_merge_mode=external_merge_mode,
+        external_evidence=external_evidence,
     )
+    object_records = object_records_from_catalog_objects(catalog_objects, generated_at=generated_at)
+    if pre_enriched_records and not process_warnings:
+        object_records = enrich_object_records(
+            object_records,
+            mode=enrichment_mode,
+            clients=_CachedEnrichmentClients(pre_enriched_records),
+            queried_at=generated_at,
+        )
+    else:
+        object_records = enrich_object_records(
+            object_records,
+            mode=enrichment_mode,
+            clients=enrichment_clients,
+            queried_at=generated_at,
+        )
     index_record = build_catalog_index(
         object_records,
         catalog_dir=catalog_dir,
         literature_dir=literature_dir,
         skipped=skipped,
+        process_warnings=process_warnings,
         generated_at=generated_at,
         workspace=workspace,
     )
@@ -1047,10 +1676,13 @@ def rebuild_hvs_candidate_catalog(
     workspace: Path | None = None,
     enrichment_mode: str = "off",
     enrichment_clients: EnrichmentClients | None = None,
+    external_merge_mode: str = "off",
 ) -> dict[str, Any]:
     """Build object-level catalog records from every paper-level candidate JSON."""
     if enrichment_mode not in ENRICHMENT_MODES:
         raise ValueError(f"unknown enrichment mode: {enrichment_mode}")
+    if external_merge_mode not in EXTERNAL_MERGE_MODES:
+        raise ValueError(f"unknown external merge mode: {external_merge_mode}")
     workspace = workspace or literature_dir.parent
     contributions: list[Contribution] = []
     skipped: list[dict[str, str]] = []
@@ -1068,6 +1700,7 @@ def rebuild_hvs_candidate_catalog(
         workspace=workspace,
         enrichment_mode=enrichment_mode,
         enrichment_clients=enrichment_clients,
+        external_merge_mode=external_merge_mode,
     )
     return {
         "object_records": object_records,
@@ -1085,6 +1718,7 @@ def write_rebuilt_hvs_candidate_catalog(
     dry_run: bool = False,
     enrichment_mode: str = "off",
     enrichment_clients: EnrichmentClients | None = None,
+    external_merge_mode: str = "off",
 ) -> dict[str, Any]:
     workspace = workspace or literature_dir.parent
     result = rebuild_hvs_candidate_catalog(
@@ -1093,6 +1727,7 @@ def write_rebuilt_hvs_candidate_catalog(
         workspace=workspace,
         enrichment_mode=enrichment_mode,
         enrichment_clients=enrichment_clients,
+        external_merge_mode=external_merge_mode,
     )
     write_result = _write_catalog_records(
         result["object_records"],
@@ -1114,10 +1749,13 @@ def update_hvs_candidate_catalog(
     workspace: Path | None = None,
     enrichment_mode: str = "off",
     enrichment_clients: EnrichmentClients | None = None,
+    external_merge_mode: str = "off",
 ) -> dict[str, Any]:
     """Merge one paper-level candidate JSON into the existing object catalog."""
     if enrichment_mode not in ENRICHMENT_MODES:
         raise ValueError(f"unknown enrichment mode: {enrichment_mode}")
+    if external_merge_mode not in EXTERNAL_MERGE_MODES:
+        raise ValueError(f"unknown external merge mode: {external_merge_mode}")
     workspace = workspace or (literature_dir.parent if literature_dir is not None else catalog_dir.parent)
     existing_contributions, skipped = load_catalog_contributions(catalog_dir, workspace=workspace)
     new_contributions, new_skipped = contributions_from_paper_path(candidate_json_path, workspace=workspace)
@@ -1137,6 +1775,7 @@ def update_hvs_candidate_catalog(
         workspace=workspace,
         enrichment_mode=enrichment_mode,
         enrichment_clients=enrichment_clients,
+        external_merge_mode=external_merge_mode,
     )
     return {
         "object_records": object_records,
@@ -1156,6 +1795,7 @@ def write_updated_hvs_candidate_catalog(
     dry_run: bool = False,
     enrichment_mode: str = "off",
     enrichment_clients: EnrichmentClients | None = None,
+    external_merge_mode: str = "off",
 ) -> dict[str, Any]:
     workspace = workspace or (literature_dir.parent if literature_dir is not None else catalog_dir.parent)
     result = update_hvs_candidate_catalog(
@@ -1165,6 +1805,7 @@ def write_updated_hvs_candidate_catalog(
         workspace=workspace,
         enrichment_mode=enrichment_mode,
         enrichment_clients=enrichment_clients,
+        external_merge_mode=external_merge_mode,
     )
     write_result = _write_catalog_records(
         result["object_records"],

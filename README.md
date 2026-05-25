@@ -64,7 +64,7 @@ conda run -n stella-env python scripts/validate_catalog_extraction.py --arxiv-id
 conda run -n stella-env python scripts/init_hvs_candidates.py --arxiv-id 2402.10714
 conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id 2402.10714 --require-complete
 conda run -n stella-env python scripts/validate_hvs_candidates.py --all --require-complete
-conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py rebuild --literature-dir literature --catalog-dir catalog --enrichment-mode auto --fail-on-skipped
+conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py rebuild --literature-dir literature --catalog-dir catalog --enrichment-mode auto --external-merge-mode auto --fail-on-skipped
 conda run -n stella-env python scripts/build_hvs_catalog_html.py --catalog-dir catalog --html-dir catalog/html
 conda run -n stella-env python scripts/render_lit_notes.py
 ```

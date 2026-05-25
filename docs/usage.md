@@ -442,6 +442,7 @@ conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py rebuild \
   --literature-dir literature \
   --catalog-dir catalog \
   --enrichment-mode auto \
+  --external-merge-mode auto \
   --fail-on-skipped
 ```
 
@@ -453,6 +454,7 @@ conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py update \
   --literature-dir literature \
   --catalog-dir catalog \
   --enrichment-mode auto \
+  --external-merge-mode auto \
   --fail-on-skipped
 ```
 
@@ -464,24 +466,25 @@ conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py update \
   --literature-dir literature \
   --catalog-dir catalog \
   --enrichment-mode auto \
+  --external-merge-mode auto \
   --fail-on-skipped
 ```
 
-Both modes support `--dry-run True`, which prints generated writes/deletes without modifying `catalog/`. By default, `--enrichment-mode auto` queries public SIMBAD and Gaia DR3 TAP services through `astroquery`; if imports, network, or services fail, the merge still writes offline outputs and records `external_enrichment` warnings. Use `--enrichment-mode off` for a pure offline merge, or `--enrichment-mode required` when enrichment failures should make the command fail. Use `--fail-on-skipped` for strict rebuilds and CI-style checks.
+Both modes support `--dry-run True`, which prints generated writes/deletes without modifying `catalog/`. By default, `--enrichment-mode auto` queries public SIMBAD and Gaia DR3 TAP services through `astroquery`, and `--external-merge-mode auto` lets high-confidence official/alias evidence participate in object grouping. If imports, network, or services fail in auto mode, the merge keeps offline outputs and records warnings. Use `--enrichment-mode off --external-merge-mode off` for a pure offline old-style merge, `--external-merge-mode review` to list potential external/alias merges without changing grouping, or `--enrichment-mode required` when enrichment failures should fail the command. Use `--fail-on-skipped` for strict rebuilds and CI-style checks.
 
 ### Merge and Review Principles
 
 - Inputs are validated against the current `LiteratureHvsCandidatesRecord` schema first. Invalid files enter index `skipped[]` and do not participate in merging.
-- Gaia source ID is the strong match key after release-family normalization. `Gaia EDR3 <source_id>` and `Gaia DR3 <source_id>` merge when the numeric source ID matches; `Gaia DR2` remains a separate family.
-- If either side lacks a Gaia source ID, RA/Dec angular separation must be strictly `<5 arcsec` to merge.
-- If both sides have different Gaia source IDs, do not merge; if coordinates are `<5 arcsec`, write a warning.
-- If both sides have the same Gaia source ID but coordinates are not `<5 arcsec`, still merge and write a warning.
+- Literature Gaia source ID is the strongest match key after release-family normalization. `Gaia EDR3 <source_id>` and `Gaia DR3 <source_id>` merge when the numeric source ID matches; `Gaia DR2` remains a separate family.
+- With `--external-merge-mode auto`, matching external Gaia DR3 source IDs, matching SIMBAD objects, and strong aliases can merge records when they do not conflict with literature Gaia IDs. Alias-only merges without coordinates are kept but warned.
+- Coordinate-only merging uses a strict `<5 arcsec` radius and is conservative in auto mode: Gaia/SIMBAD conflicts or multiple coordinate neighbors block automatic merging and become warnings/potential review evidence.
+- Every merge or blocked/review edge is recorded under `merge.evidence[]`; `merge.warnings[]` remains the review queue for conflicts and sanity-check failures.
 - Object filenames prefer normalized Gaia slugs, then strong paper object IDs, then coordinate slugs, then stable source record slugs. Strong paper ID slugs preserve ASCII `+` and `-`; weak paper IDs such as bare numbers are not used directly as filenames.
 - Object-level JSON `sources[]` stores short source IDs, original `paper` fields, source JSON paths, and paper-level candidate IDs.
-- Object-level JSON uses `schema_version: stella.hvs_candidate_catalog.object.v4`. Rebuild old object-level catalogs rather than migrating v1/v2 files.
+- Object-level JSON uses `schema_version: stella.hvs_candidate_catalog.object.v5`. Rebuild old object-level catalogs rather than migrating v1/v2 files.
 - `method_chain[]` and `candidates[]` are grouped by `source` and do not keep `source_refs`; full provenance still lives in the paper-level JSON.
 - `candidates[]` keeps compact `candidate_context`, `core`, and typed quantity groups. Quantities keep only `value`, non-empty uncertainties, `unit`, `method_refs`, and small typed semantic fields such as band, element, flag name, or hypothesis metric type; they do not keep `raw_value`, `description`, `kind`, coordinate frame/epoch, or coordinate format.
-- `external_enrichment` stores official SIMBAD and Gaia DR3 matches, raw non-empty query columns, selected highlights, identifier/coordinate verification, value comparisons, and enrichment warnings. It never overwrites paper-level values and never changes object merge grouping.
+- `external_enrichment` stores official SIMBAD and Gaia DR3 matches, raw non-empty query columns, selected highlights, identifier/coordinate verification, value comparisons, and enrichment warnings. It never overwrites paper-level values; when external merge mode is enabled, the same official identity evidence may be recorded under `merge.evidence[]` and used for grouping.
 - Do not manually modify `catalog/`. If warnings expose errors, fix the corresponding `literature_hvs_candidates.json` and rerun the merge.
 
 After running, inspect the command summary and then:

@@ -895,6 +895,16 @@ def _enrich_with_clients(
             )
 
     source_ids_by_object = {str(record.get("object_id") or ""): _object_gaia_source_numbers(record) for record in records}
+    for object_id, (simbad_row, _match_kind) in simbad_rows_by_object.items():
+        simbad_gaia_source_ids = []
+        for alias in _aliases_from_simbad_row(simbad_row):
+            match = GAIA_SOURCE_ID_RE.match(" ".join(str(alias or "").strip().split()))
+            if match and match.group(1).upper() in {"DR3", "EDR3"}:
+                simbad_gaia_source_ids.append(match.group(2))
+        if simbad_gaia_source_ids:
+            source_ids_by_object[object_id] = _unique_preserve_order(
+                [*source_ids_by_object.get(object_id, []), *simbad_gaia_source_ids]
+            )
     all_source_ids = _unique_preserve_order(
         [source_id for source_ids in source_ids_by_object.values() for source_id in source_ids]
     )
