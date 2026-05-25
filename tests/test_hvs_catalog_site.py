@@ -44,7 +44,7 @@ def quantity(
 
 def object_record() -> dict[str, object]:
     return {
-        "schema_version": "stella.hvs_candidate_catalog.object.v3",
+        "schema_version": "stella.hvs_candidate_catalog.object.v4",
         "generated_at": "2026-05-20T10:00:00",
         "object_id": "Gaia_DR3_123",
         "canonical_identifier": {"kind": "gaia_source_id", "value": "Gaia DR3 123", "source": "src-001"},
@@ -177,6 +177,13 @@ def object_record() -> dict[str, object]:
                 "extra": [],
             },
         ],
+        "external_enrichment": {
+            "status": "success",
+            "queried_at": "2026-05-20T10:00:00",
+            "providers": {},
+            "verification": {},
+            "warnings": [],
+        },
         "merge": {"match_strategy": "gaia_source_id", "warnings": []},
     }
 
@@ -234,6 +241,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
         self.assertEqual(row["sources"][1]["phase_space"]["parallax"], "0.12")
         self.assertEqual(row["sources"][1]["total_velocity"], "690")
         self.assertEqual(row["sources"][1]["unbound_probability"], "")
+        self.assertEqual(row["enrichment_status"], "success")
 
     def test_method_lineage_follows_recursive_dependencies(self) -> None:
         steps = object_record()["method_chain"][0]["steps"]  # type: ignore[index]

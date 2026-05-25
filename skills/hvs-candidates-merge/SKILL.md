@@ -22,6 +22,10 @@ catalog/03_hvs_candidates_index.md
 This stage merges candidates across papers. It does not re-extract candidates
 from paper text and does not edit paper-level `literature_hvs_candidates.json`
 unless merge review finds a source-data problem that the user asks to fix.
+By default, the CLI also performs public SIMBAD and Gaia DR3 enrichment through
+`astroquery` after the object merge. Enrichment is stored only under
+`external_enrichment` in generated object records; it does not overwrite
+paper-level values and it does not change object grouping.
 
 ## Workflow
 
@@ -42,6 +46,7 @@ unless merge review finds a source-data problem that the user asks to fix.
    conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py rebuild \
      --literature-dir literature \
      --catalog-dir catalog \
+     --enrichment-mode auto \
      --dry-run True
    ```
 
@@ -50,6 +55,7 @@ unless merge review finds a source-data problem that the user asks to fix.
      --arxiv-id <arxiv_id> \
      --literature-dir literature \
      --catalog-dir catalog \
+     --enrichment-mode auto \
      --dry-run True
    ```
 
@@ -59,14 +65,16 @@ unless merge review finds a source-data problem that the user asks to fix.
    ```bash
    conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py rebuild \
      --literature-dir literature \
-     --catalog-dir catalog
+     --catalog-dir catalog \
+     --enrichment-mode auto
    ```
 
    ```bash
    conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py update \
      --arxiv-id <arxiv_id> \
      --literature-dir literature \
-     --catalog-dir catalog
+     --catalog-dir catalog \
+     --enrichment-mode auto
    ```
 
    Use an explicit path when the file is outside the default layout:
@@ -75,12 +83,18 @@ unless merge review finds a source-data problem that the user asks to fix.
    conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py update \
      --path literature/<arxiv_id>/literature_hvs_candidates.json \
      --literature-dir literature \
-     --catalog-dir catalog
+     --catalog-dir catalog \
+     --enrichment-mode auto
    ```
 
 6. Review the command summary, then open `catalog/03_hvs_candidates_index.md`.
-   Check `Warnings`, object counts, and source counts before considering the
-   merge complete.
+   Check `Warnings`, `Enrichment Warnings`, object counts, and source counts
+   before considering the merge complete.
+
+Use `--enrichment-mode off` for a pure offline merge. Use
+`--enrichment-mode required` when any SIMBAD/Gaia import, network, or service
+failure should fail the command instead of writing offline outputs with
+warnings.
 
 ## Review Rules
 
@@ -95,6 +109,9 @@ interpretation, and generated-output boundaries.
 - If an object merge is wrong because a source candidate has a bad Gaia ID,
   RA/Dec, or identifier, fix the corresponding
   `literature/<arxiv_id>/literature_hvs_candidates.json` and rerun the merge.
+- SIMBAD/Gaia enrichment warnings are verification hints only. They do not
+  replace paper evidence; fix paper-level source JSON only when the warning
+  exposes an extraction or identifier error.
 - Do not call DeepXiv or re-fetch literature for this workflow.
 - Do not force-add generated `catalog/`, `literature/`, or `notes/` files to
   Git unless the user explicitly asks.

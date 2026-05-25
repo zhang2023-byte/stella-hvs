@@ -29,6 +29,7 @@ from high_velocity_lit.hvs_candidate_catalog import (  # noqa: E402
     write_rebuilt_hvs_candidate_catalog,
     write_updated_hvs_candidate_catalog,
 )
+from high_velocity_lit.hvs_catalog_enrichment import QueryRows  # noqa: E402
 from high_velocity_lit.schema_specs import LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION  # noqa: E402
 
 
@@ -257,6 +258,23 @@ def payload(arxiv_id: str, *, month: str, candidates: list[dict[str, object]]) -
     }
 
 
+class CatalogFakeEnrichmentClients:
+    def query_simbad_by_identifiers(self, identifiers: list[str]) -> QueryRows:
+        return QueryRows(rows=[], units={})
+
+    def query_simbad_by_regions(self, coordinates: list[object]) -> QueryRows:
+        return QueryRows(rows=[], units={})
+
+    def query_gaia_by_source_ids(self, source_ids: list[str]) -> QueryRows:
+        return QueryRows(
+            rows=[{"source_id": 777, "designation": "Gaia DR3 777", "ra": 10.0, "dec": 20.0, "parallax": 0.2}],
+            units={"ra": "deg", "dec": "deg", "parallax": "mas"},
+        )
+
+    def query_gaia_by_regions(self, coordinates: list[object]) -> QueryRows:
+        return QueryRows(rows=[], units={})
+
+
 class HvsCandidateCatalogTest(unittest.TestCase):
     def test_rebuild_merges_same_gaia_and_strips_source_refs(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -328,6 +346,35 @@ class HvsCandidateCatalogTest(unittest.TestCase):
             self.assertFalse((catalog / "Gaia_DR3_123.json").exists())
             self.assertTrue((catalog / INDEX_JSON_FILENAME).exists())
             self.assertTrue((catalog / INDEX_MARKDOWN_FILENAME).exists())
+
+    def test_rebuild_can_write_external_enrichment_summary(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            literature = workspace / "literature"
+            catalog = workspace / "catalog"
+            write_json(
+                literature / "2601.00001" / "literature_hvs_candidates.json",
+                payload(
+                    "2601.00001",
+                    month="2026-01",
+                    candidates=[
+                        candidate("2601.00001", 1, paper_candidate_id="A", gaia_source_id="Gaia DR3 777", ra="10", dec="20")
+                    ],
+                ),
+            )
+
+            result = write_rebuilt_hvs_candidate_catalog(
+                literature,
+                catalog,
+                workspace=workspace,
+                enrichment_mode="auto",
+                enrichment_clients=CatalogFakeEnrichmentClients(),
+            )
+
+            summary = result["index_record"]["summary"]
+            self.assertEqual(summary["objects_enriched_count"], 1)
+            self.assertEqual(summary["enrichment_status_counts"]["success"], 1)
+            self.assertEqual(result["object_records"][0]["external_enrichment"]["providers"]["gaia_dr3"]["source_id"], "777")
 
     def test_rebuild_merges_edr3_and_dr3_with_same_source_number(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -726,6 +773,8 @@ class HvsCandidateCatalogTest(unittest.TestCase):
                     str(literature),
                     "--catalog-dir",
                     str(catalog),
+                    "--enrichment-mode",
+                    "off",
                     "--fail-on-skipped",
                 ],
             ):

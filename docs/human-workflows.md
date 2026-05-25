@@ -257,7 +257,7 @@ Clarify when missing:
 Precise agent prompt:
 
 ```text
-Run object_catalog_merge, using the hvs-candidates-merge skill. For rebuild, merge all valid literature_hvs_candidates.json files into catalog/. For update, merge only ARXIV_ID=<id> or PATH=<file>. Validate inputs first, preserve Gaia/coordinate merge warnings, and do not manually edit generated catalog files.
+Run object_catalog_merge, using the hvs-candidates-merge skill. For rebuild, merge all valid literature_hvs_candidates.json files into catalog/. For update, merge only ARXIV_ID=<id> or PATH=<file>. Validate inputs first, preserve Gaia/coordinate merge warnings, run default public SIMBAD/Gaia DR3 enrichment unless enrichment_mode=off, and do not manually edit generated catalog files.
 ```
 
 ## HVS Catalog HTML Build

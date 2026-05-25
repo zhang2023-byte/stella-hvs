@@ -18,6 +18,7 @@ from high_velocity_lit.hvs_candidate_catalog import (  # noqa: E402
     write_rebuilt_hvs_candidate_catalog,
     write_updated_hvs_candidate_catalog,
 )
+from high_velocity_lit.hvs_catalog_enrichment import ENRICHMENT_MODES, EnrichmentError  # noqa: E402
 
 
 def parse_bool(value: str) -> bool:
@@ -50,6 +51,12 @@ def build_parser() -> argparse.ArgumentParser:
     )
     rebuild.add_argument("--dry-run", type=parse_bool, default=False, help="Print planned writes without writing files.")
     rebuild.add_argument(
+        "--enrichment-mode",
+        choices=ENRICHMENT_MODES,
+        default="auto",
+        help="External SIMBAD/Gaia DR3 enrichment mode. Default: auto.",
+    )
+    rebuild.add_argument(
         "--fail-on-skipped",
         action="store_true",
         help="Exit non-zero if any malformed paper-level input is skipped.",
@@ -81,6 +88,12 @@ def build_parser() -> argparse.ArgumentParser:
     )
     update.add_argument("--dry-run", type=parse_bool, default=False, help="Print planned writes without writing files.")
     update.add_argument(
+        "--enrichment-mode",
+        choices=ENRICHMENT_MODES,
+        default="auto",
+        help="External SIMBAD/Gaia DR3 enrichment mode. Default: auto.",
+    )
+    update.add_argument(
         "--fail-on-skipped",
         action="store_true",
         help="Exit non-zero if any malformed paper-level input or catalog object is skipped.",
@@ -111,6 +124,8 @@ def _print_common_result(prefix: str, result: dict[str, object]) -> None:
         f"{summary['object_count']} objects, "
         f"{summary['source_count']} sources, "
         f"{summary['warning_count']} warnings, "
+        f"{summary.get('objects_enriched_count', 0)} enriched, "
+        f"{summary.get('enrichment_warning_count', 0)} enrichment warnings, "
         f"{summary['skipped_count']} skipped inputs."
     )
     if dry_run:
@@ -157,6 +172,7 @@ def main() -> int:
                 catalog_dir,
                 workspace=WORKSPACE,
                 dry_run=args.dry_run,
+                enrichment_mode=args.enrichment_mode,
             )
             _print_common_result("Built", result)
             if args.fail_on_skipped:
@@ -170,6 +186,7 @@ def main() -> int:
             literature_dir=literature_dir,
             workspace=WORKSPACE,
             dry_run=args.dry_run,
+            enrichment_mode=args.enrichment_mode,
         )
         _print_common_result("Updated", result)
         print(
@@ -183,6 +200,9 @@ def main() -> int:
     except argparse.ArgumentTypeError as exc:
         parser.error(str(exc))
         return 2
+    except EnrichmentError as exc:
+        print(f"External enrichment failed: {exc}", file=sys.stderr)
+        return 1
 
 
 if __name__ == "__main__":

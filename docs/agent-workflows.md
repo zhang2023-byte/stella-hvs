@@ -30,7 +30,7 @@ workflow detail.
 | `catalog_table_extraction` | Convert reviewed internal LaTeX tables to ECSV | `catalog_extraction.json`, ECSV | generated data |
 | `hvs_candidate_extraction` | Extract paper-level HVS/unbound candidates | `literature_hvs_candidates.json` | scientific judgment |
 | `hvs_candidate_extraction_batch` | Dispatch isolated per-paper HVS extraction | many `literature_hvs_candidates.json` files + index | scientific judgment |
-| `object_catalog_merge` | Merge paper-level candidates into object catalog | `catalog/candidates/*.json` | generated data |
+| `object_catalog_merge` | Merge paper-level candidates into object catalog and enrich from SIMBAD/Gaia | `catalog/candidates/*.json` | network/API + generated data |
 | `hvs_catalog_html_build` | Build local HTML display pages | `catalog/html/live`, `catalog/html/static` | generated view |
 | `index_or_markdown_regeneration` | Rebuild generated indexes/Markdown | generated indexes/views | generated view |
 
@@ -87,7 +87,7 @@ and expand it before execution.
 - For `hvs_candidate_extraction`, run `validate_hvs_candidates.py --require-complete`.
 - For `hvs_candidate_extraction_batch`, each worker runs the single-paper
   validator; the parent rebuilds `02_literature_hvs_index` when requested.
-- For merge workflows, inspect merge warnings in `catalog/03_hvs_candidates_index.md`.
+- For merge workflows, inspect merge warnings and enrichment warnings in `catalog/03_hvs_candidates_index.md`.
 
 ## Generated Data Policy
 

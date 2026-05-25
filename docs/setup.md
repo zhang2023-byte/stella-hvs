@@ -14,7 +14,7 @@ conda env update -f environment.yml --prune
 conda activate stella-env
 ```
 
-The environment includes dependencies for local literature archiving, HTML parsing, network requests, Pydantic schema validation, and external catalog table parsing. FITS, VOTable, and CDS/MRT ASCII are read through `astropy`.
+The environment includes dependencies for local literature archiving, HTML parsing, network requests, Pydantic schema validation, external catalog table parsing, and object-catalog enrichment. FITS, VOTable, and CDS/MRT ASCII are read through `astropy`; SIMBAD/Gaia DR3 enrichment is queried through `astroquery` and `pyvo`.
 
 ## Optional External Tools
 

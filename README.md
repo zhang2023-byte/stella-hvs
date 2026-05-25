@@ -64,7 +64,7 @@ conda run -n stella-env python scripts/validate_catalog_extraction.py --arxiv-id
 conda run -n stella-env python scripts/init_hvs_candidates.py --arxiv-id 2402.10714
 conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id 2402.10714 --require-complete
 conda run -n stella-env python scripts/validate_hvs_candidates.py --all --require-complete
-conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py rebuild --literature-dir literature --catalog-dir catalog --fail-on-skipped
+conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py rebuild --literature-dir literature --catalog-dir catalog --enrichment-mode auto --fail-on-skipped
 conda run -n stella-env python scripts/build_hvs_catalog_html.py --catalog-dir catalog --html-dir catalog/html
 conda run -n stella-env python scripts/render_lit_notes.py
 ```
@@ -122,7 +122,7 @@ scripts/repair_ads_metadata.py        Fill paper-level bibcodes via ADS API
 scripts/init_catalog_review.py        Generate catalog_review.json templates
 scripts/extract_catalog_tables.py     Extract reviewed LaTeX tables into ECSV
 scripts/init_hvs_candidates.py         Generate literature_hvs_candidates templates
-scripts/merge_hvs_candidate_catalog.py Merge object-level HVS candidates catalog
+scripts/merge_hvs_candidate_catalog.py Merge object-level HVS candidates catalog and SIMBAD/Gaia enrichment
 scripts/build_hvs_catalog_html.py      Build object-level HVS catalog HTML demo
 src/high_velocity_lit/                Core implementation
 tests/                                Tests

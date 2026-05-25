@@ -13,13 +13,20 @@ import astropy.units as u
 from astropy.coordinates import SkyCoord
 
 from high_velocity_lit.catalog_review import read_json, relative_path, write_json
+from high_velocity_lit.hvs_catalog_enrichment import (
+    ENRICHMENT_MODES,
+    EnrichmentClients,
+    enrich_object_records,
+    disabled_enrichment,
+)
 from high_velocity_lit.hvs_candidates_index import HVS_CANDIDATES_FILENAME, iter_hvs_candidates_paths
 from high_velocity_lit.schema_models import LiteratureHvsCandidatesRecord
 
 
-OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v3"
+OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v4"
+LEGACY_OBJECT_SCHEMA_VERSIONS = {"stella.hvs_candidate_catalog.object.v3"}
 INDEX_SCHEMA_VERSION = "stella.hvs_candidate_catalog.index.v2"
-READABLE_OBJECT_SCHEMA_VERSIONS = {OBJECT_SCHEMA_VERSION}
+READABLE_OBJECT_SCHEMA_VERSIONS = {OBJECT_SCHEMA_VERSION, *LEGACY_OBJECT_SCHEMA_VERSIONS}
 INDEX_JSON_FILENAME = "03_hvs_candidates_index.json"
 INDEX_MARKDOWN_FILENAME = "03_hvs_candidates_index.md"
 CANDIDATES_DIRNAME = "candidates"
@@ -284,13 +291,25 @@ def _simplify_candidate_context(candidate: dict[str, Any]) -> dict[str, Any]:
     return context
 
 
-def _candidate_identifiers(candidate: dict[str, Any]) -> dict[str, str]:
+def _candidate_identifiers(candidate: dict[str, Any]) -> dict[str, Any]:
     identifiers = candidate.get("identifiers") if isinstance(candidate.get("identifiers"), dict) else {}
-    return {
+    payload: dict[str, Any] = {
         "record_id": str(identifiers.get("record_id") or ""),
         "paper_candidate_id": str(identifiers.get("paper_candidate_id") or ""),
         "gaia_source_id": str(identifiers.get("gaia_source_id") or ""),
     }
+    all_values: list[str] = []
+    seen: set[str] = set()
+    for item in identifiers.get("all") or []:
+        value = item.get("value") if isinstance(item, dict) else item
+        text = " ".join(str(value or "").strip().split())
+        key = text.casefold()
+        if text and key not in seen:
+            seen.add(key)
+            all_values.append(text)
+    if all_values:
+        payload["all"] = all_values
+    return payload
 
 
 def simplify_candidate(candidate: Any) -> dict[str, Any]:
@@ -671,6 +690,7 @@ def object_records_from_catalog_objects(
                 "sources": sources,
                 "method_chain": method_chain,
                 "candidates": candidates,
+                "external_enrichment": disabled_enrichment(),
                 "merge": {
                     "match_strategy": obj.match_strategy,
                     "warnings": obj.warnings,
@@ -703,6 +723,8 @@ def build_catalog_index(
 ) -> dict[str, Any]:
     objects: list[dict[str, Any]] = []
     warnings: list[dict[str, Any]] = []
+    enrichment_warnings: list[dict[str, Any]] = []
+    enrichment_status_counts: dict[str, int] = {}
     candidates_dir = catalog_dir / CANDIDATES_DIRNAME
     for record in object_records:
         sources = record.get("sources") if isinstance(record.get("sources"), list) else []
@@ -712,10 +734,20 @@ def build_catalog_index(
         object_id = str(record.get("object_id") or "")
         object_warnings = (record.get("merge") or {}).get("warnings") if isinstance(record.get("merge"), dict) else []
         object_warning_items = [item for item in object_warnings if isinstance(item, dict)]
+        enrichment = record.get("external_enrichment") if isinstance(record.get("external_enrichment"), dict) else {}
+        enrichment_status = str(enrichment.get("status") or "missing")
+        enrichment_status_counts[enrichment_status] = enrichment_status_counts.get(enrichment_status, 0) + 1
+        enrichment_warning_items = [
+            item for item in enrichment.get("warnings") or [] if isinstance(item, dict)
+        ]
         for warning in object_warning_items:
             warning_with_object = {"object_id": object_id}
             warning_with_object.update(warning)
             warnings.append(warning_with_object)
+        for warning in enrichment_warning_items:
+            warning_with_object = {"object_id": object_id}
+            warning_with_object.update(warning)
+            enrichment_warnings.append(warning_with_object)
         objects.append(
             {
                 "object_id": object_id,
@@ -738,6 +770,8 @@ def build_catalog_index(
                     for item in source_items
                 ],
                 "warning_count": len(object_warning_items),
+                "enrichment_status": enrichment_status,
+                "enrichment_warning_count": len(enrichment_warning_items),
                 "match_strategy": str((record.get("merge") or {}).get("match_strategy") or "")
                 if isinstance(record.get("merge"), dict)
                 else "",
@@ -750,6 +784,9 @@ def build_catalog_index(
         "candidate_count": sum(len(record.get("candidates") or []) for record in object_records),
         "objects_with_gaia_count": sum(1 for item in objects if item.get("gaia_source_ids")),
         "warning_count": len(warnings),
+        "enrichment_status_counts": enrichment_status_counts,
+        "objects_enriched_count": enrichment_status_counts.get("success", 0) + enrichment_status_counts.get("partial", 0),
+        "enrichment_warning_count": len(enrichment_warnings),
         "skipped_count": len(skipped),
     }
 
@@ -761,6 +798,7 @@ def build_catalog_index(
         "summary": summary,
         "objects": objects,
         "warnings": warnings,
+        "enrichment_warnings": enrichment_warnings,
         "skipped": skipped,
     }
 
@@ -773,6 +811,7 @@ def render_hvs_candidate_catalog_index(record: dict[str, Any]) -> str:
     summary = record.get("summary") or {}
     objects = record.get("objects") or []
     warnings = record.get("warnings") or []
+    enrichment_warnings = record.get("enrichment_warnings") or []
 
     lines = [
         "# HVS Candidate Object Catalog",
@@ -783,13 +822,22 @@ def render_hvs_candidate_catalog_index(record: dict[str, Any]) -> str:
         f"- Candidate records: {summary.get('candidate_count', 0)}",
         f"- Objects with Gaia source IDs: {summary.get('objects_with_gaia_count', 0)}",
         f"- Warnings: {summary.get('warning_count', 0)}",
+        f"- Objects enriched: {summary.get('objects_enriched_count', 0)}",
+        f"- Enrichment warnings: {summary.get('enrichment_warning_count', 0)}",
         f"- Skipped malformed inputs: {summary.get('skipped_count', 0)}",
     ]
 
+    enrichment_status_counts = summary.get("enrichment_status_counts") if isinstance(summary.get("enrichment_status_counts"), dict) else {}
+    if enrichment_status_counts:
+        lines.append(
+            "- Enrichment statuses: "
+            + ", ".join(f"{key}={value}" for key, value in sorted(enrichment_status_counts.items()))
+        )
+
     if objects:
         lines.extend(["", "## Objects", ""])
-        lines.append("| Object | Canonical identifier | Sources | Gaia source IDs | Paper IDs | Warnings | JSON |")
-        lines.append("| --- | --- | ---: | --- | --- | ---: | --- |")
+        lines.append("| Object | Canonical identifier | Sources | Gaia source IDs | Paper IDs | Warnings | Enrichment | JSON |")
+        lines.append("| --- | --- | ---: | --- | --- | ---: | --- | --- |")
         for item in objects:
             canonical = item.get("canonical_identifier") if isinstance(item.get("canonical_identifier"), dict) else {}
             canonical_value = canonical.get("value") or item.get("object_id") or ""
@@ -798,7 +846,8 @@ def render_hvs_candidate_catalog_index(record: dict[str, Any]) -> str:
                 f"| {_markdown_cell(item.get('object_id'))} | {_markdown_cell(canonical_value)} | "
                 f"{item.get('source_count', 0)} | {_markdown_cell(', '.join(item.get('gaia_source_ids') or [])) or '-'} | "
                 f"{_markdown_cell(', '.join(item.get('paper_candidate_ids') or [])) or '-'} | "
-                f"{item.get('warning_count', 0)} | {object_link} |"
+                f"{item.get('warning_count', 0)} | {_markdown_cell(item.get('enrichment_status')) or '-'} "
+                f"({item.get('enrichment_warning_count', 0)}) | {object_link} |"
             )
 
     if warnings:
@@ -806,6 +855,16 @@ def render_hvs_candidate_catalog_index(record: dict[str, Any]) -> str:
         lines.append("| Object | Type | Message |")
         lines.append("| --- | --- | --- |")
         for warning in warnings:
+            lines.append(
+                f"| {_markdown_cell(warning.get('object_id'))} | {_markdown_cell(warning.get('type'))} | "
+                f"{_markdown_cell(warning.get('message'))} |"
+            )
+
+    if enrichment_warnings:
+        lines.extend(["", "## Enrichment Warnings", ""])
+        lines.append("| Object | Type | Message |")
+        lines.append("| --- | --- | --- |")
+        for warning in enrichment_warnings:
             lines.append(
                 f"| {_markdown_cell(warning.get('object_id'))} | {_markdown_cell(warning.get('type'))} | "
                 f"{_markdown_cell(warning.get('message'))} |"
@@ -958,10 +1017,18 @@ def _build_records_from_contributions(
     literature_dir: Path | None,
     skipped: list[dict[str, str]],
     workspace: Path,
+    enrichment_mode: str,
+    enrichment_clients: EnrichmentClients | None,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     generated_at = datetime.now().isoformat(timespec="seconds")
     catalog_objects = merge_contributions(contributions)
     object_records = object_records_from_catalog_objects(catalog_objects, generated_at=generated_at)
+    object_records = enrich_object_records(
+        object_records,
+        mode=enrichment_mode,
+        clients=enrichment_clients,
+        queried_at=generated_at,
+    )
     index_record = build_catalog_index(
         object_records,
         catalog_dir=catalog_dir,
@@ -978,8 +1045,12 @@ def rebuild_hvs_candidate_catalog(
     catalog_dir: Path,
     *,
     workspace: Path | None = None,
+    enrichment_mode: str = "off",
+    enrichment_clients: EnrichmentClients | None = None,
 ) -> dict[str, Any]:
     """Build object-level catalog records from every paper-level candidate JSON."""
+    if enrichment_mode not in ENRICHMENT_MODES:
+        raise ValueError(f"unknown enrichment mode: {enrichment_mode}")
     workspace = workspace or literature_dir.parent
     contributions: list[Contribution] = []
     skipped: list[dict[str, str]] = []
@@ -995,6 +1066,8 @@ def rebuild_hvs_candidate_catalog(
         literature_dir=literature_dir,
         skipped=skipped,
         workspace=workspace,
+        enrichment_mode=enrichment_mode,
+        enrichment_clients=enrichment_clients,
     )
     return {
         "object_records": object_records,
@@ -1010,9 +1083,17 @@ def write_rebuilt_hvs_candidate_catalog(
     *,
     workspace: Path | None = None,
     dry_run: bool = False,
+    enrichment_mode: str = "off",
+    enrichment_clients: EnrichmentClients | None = None,
 ) -> dict[str, Any]:
     workspace = workspace or literature_dir.parent
-    result = rebuild_hvs_candidate_catalog(literature_dir, catalog_dir, workspace=workspace)
+    result = rebuild_hvs_candidate_catalog(
+        literature_dir,
+        catalog_dir,
+        workspace=workspace,
+        enrichment_mode=enrichment_mode,
+        enrichment_clients=enrichment_clients,
+    )
     write_result = _write_catalog_records(
         result["object_records"],
         result["index_record"],
@@ -1031,8 +1112,12 @@ def update_hvs_candidate_catalog(
     *,
     literature_dir: Path | None = None,
     workspace: Path | None = None,
+    enrichment_mode: str = "off",
+    enrichment_clients: EnrichmentClients | None = None,
 ) -> dict[str, Any]:
     """Merge one paper-level candidate JSON into the existing object catalog."""
+    if enrichment_mode not in ENRICHMENT_MODES:
+        raise ValueError(f"unknown enrichment mode: {enrichment_mode}")
     workspace = workspace or (literature_dir.parent if literature_dir is not None else catalog_dir.parent)
     existing_contributions, skipped = load_catalog_contributions(catalog_dir, workspace=workspace)
     new_contributions, new_skipped = contributions_from_paper_path(candidate_json_path, workspace=workspace)
@@ -1050,6 +1135,8 @@ def update_hvs_candidate_catalog(
         literature_dir=literature_dir,
         skipped=skipped,
         workspace=workspace,
+        enrichment_mode=enrichment_mode,
+        enrichment_clients=enrichment_clients,
     )
     return {
         "object_records": object_records,
@@ -1067,6 +1154,8 @@ def write_updated_hvs_candidate_catalog(
     literature_dir: Path | None = None,
     workspace: Path | None = None,
     dry_run: bool = False,
+    enrichment_mode: str = "off",
+    enrichment_clients: EnrichmentClients | None = None,
 ) -> dict[str, Any]:
     workspace = workspace or (literature_dir.parent if literature_dir is not None else catalog_dir.parent)
     result = update_hvs_candidate_catalog(
@@ -1074,6 +1163,8 @@ def write_updated_hvs_candidate_catalog(
         catalog_dir,
         literature_dir=literature_dir,
         workspace=workspace,
+        enrichment_mode=enrichment_mode,
+        enrichment_clients=enrichment_clients,
     )
     write_result = _write_catalog_records(
         result["object_records"],

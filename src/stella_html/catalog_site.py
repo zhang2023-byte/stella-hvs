@@ -9,8 +9,8 @@ from pathlib import Path
 from typing import Any
 
 
-OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v3"
-READABLE_OBJECT_SCHEMA_VERSIONS = {OBJECT_SCHEMA_VERSION}
+OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v4"
+READABLE_OBJECT_SCHEMA_VERSIONS = {OBJECT_SCHEMA_VERSION, "stella.hvs_candidate_catalog.object.v3"}
 INDEX_JSON_FILENAME = "03_hvs_candidates_index.json"
 CANDIDATES_DIRNAME = "candidates"
 LEGACY_INDEX_JSON_FILENAMES = ("hvs_candidates_index.json",)
@@ -110,6 +110,7 @@ def build_index_row(record: dict[str, Any]) -> dict[str, Any]:
             gaia_ids.append(gaia_id)
         if paper_id and paper_id not in paper_ids:
             paper_ids.append(paper_id)
+    enrichment = record.get("external_enrichment") if isinstance(record.get("external_enrichment"), dict) else {}
     return {
         "object_id": str(record.get("object_id") or ""),
         "identifier": str(canonical.get("value") or record.get("object_id") or ""),
@@ -119,6 +120,8 @@ def build_index_row(record: dict[str, Any]) -> dict[str, Any]:
         "bibcodes": bibcodes,
         "sources": source_rows,
         "source_count": len(source_rows),
+        "enrichment_status": str(enrichment.get("status") or ""),
+        "enrichment_warning_count": len(enrichment.get("warnings") or []) if isinstance(enrichment, dict) else 0,
         "warning_count": len((record.get("merge") or {}).get("warnings") or [])
         if isinstance(record.get("merge"), dict)
         else 0,
