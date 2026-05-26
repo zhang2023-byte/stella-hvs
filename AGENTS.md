@@ -69,6 +69,9 @@ The repository currently supports:
 - Paper-level HVS/unbound candidate extraction into
   `literature_hvs_candidates.json`.
 - Object-level candidate merging into generated JSON under `catalog/`.
+- Object-level Bayesian dynamical reassessment with Gaia DR3 astrometry,
+  zero-point-corrected parallaxes, total Galactocentric velocities, and
+  unbound probabilities embedded under `dynamics`.
 - Generated Markdown indexes and local HTML catalog views.
 
 Long-term product direction lives in `docs/vision.md`. It is background context,
@@ -98,6 +101,7 @@ literature/01_literature_catalog_index.md
 literature/02_literature_hvs_index.json
 literature/02_literature_hvs_index.md
 catalog/candidates/<object_id>.json
+catalog/candidates/<object_id>.json dynamics
 catalog/03_hvs_candidates_index.json
 catalog/03_hvs_candidates_index.md
 catalog/html/live/
@@ -152,6 +156,12 @@ is ignored by default. Do not force-add it unless the user explicitly asks.
   default merge also queries public SIMBAD and Gaia DR3 through astroquery for
   object-level verification/enrichment; use `--enrichment-mode off` for a pure
   offline merge.
+- `hvs_dynamics_calculate` is generated from object-level catalog JSON plus
+  official Gaia DR3/SIMBAD values cached under `external_enrichment`. It writes
+  only the object-level `dynamics` field, performs no network calls by default,
+  uses the same default 10000 posterior samples for velocity, probability, and
+  graveyard classification, and must be rerun after object catalog merge
+  rebuilds.
 
 ## HVS Candidate Extraction Rules
 
@@ -186,6 +196,7 @@ conda run -n stella-env python scripts/validate_catalog_extraction.py --arxiv-id
 conda run -n stella-env python scripts/init_hvs_candidates.py --arxiv-id 2402.10714
 conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id 2402.10714 --require-complete
 conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py rebuild --literature-dir literature --catalog-dir catalog --enrichment-mode auto --external-merge-mode auto
+conda run -n stella-env python scripts/calculate_hvs_dynamics.py --catalog-dir catalog --samples 10000 --write True
 conda run -n stella-env python scripts/build_hvs_catalog_html.py --catalog-dir catalog --html-dir catalog/html
 conda run -n stella-env python scripts/render_lit_notes.py
 conda run -n stella-env python scripts/build_catalog_index.py

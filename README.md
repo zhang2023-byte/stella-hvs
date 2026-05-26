@@ -3,8 +3,8 @@
 Stella builds a traceable, reproducible, object-level data workflow for
 high-velocity-star research. The repository currently supports literature
 fetching, title triage, data-asset review, internal table extraction,
-paper-level HVS candidate extraction, object-level candidate merging, and
-generated Markdown/HTML views.
+paper-level HVS candidate extraction, object-level candidate merging,
+object-level dynamical reassessment, and generated Markdown/HTML views.
 
 Most day-to-day use is natural-language driven through an agent. The agent
 should route requests through `workflows/stella_workflows.yaml`, using
@@ -40,6 +40,7 @@ Review structured data assets for 2402.10714.
 Extract reviewed internal tables for 2402.10714.
 Extract paper-level HVS candidates for 2402.10714.
 Rebuild the object-level HVS catalog.
+Calculate HVS dynamics for the object catalog.
 Build the HVS catalog HTML demo.
 Regenerate generated Markdown and indexes.
 ```
@@ -65,6 +66,7 @@ conda run -n stella-env python scripts/init_hvs_candidates.py --arxiv-id 2402.10
 conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id 2402.10714 --require-complete
 conda run -n stella-env python scripts/validate_hvs_candidates.py --all --require-complete
 conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py rebuild --literature-dir literature --catalog-dir catalog --enrichment-mode auto --external-merge-mode auto --fail-on-skipped
+conda run -n stella-env python scripts/calculate_hvs_dynamics.py --catalog-dir catalog --samples 10000 --write True
 conda run -n stella-env python scripts/build_hvs_catalog_html.py --catalog-dir catalog --html-dir catalog/html
 conda run -n stella-env python scripts/render_lit_notes.py
 ```
@@ -89,6 +91,7 @@ literature/<arxiv_id>/catalog_review.json
 literature/<arxiv_id>/catalog_extraction.json
 literature/<arxiv_id>/literature_hvs_candidates.json
 catalog/candidates/<object_id>.json
+catalog/candidates/<object_id>.json dynamics field
 catalog/html/live/
 catalog/html/static/index.html
 ```
@@ -123,8 +126,10 @@ scripts/init_catalog_review.py        Generate catalog_review.json templates
 scripts/extract_catalog_tables.py     Extract reviewed LaTeX tables into ECSV
 scripts/init_hvs_candidates.py         Generate literature_hvs_candidates templates
 scripts/merge_hvs_candidate_catalog.py Merge object-level HVS candidates catalog and SIMBAD/Gaia enrichment
+scripts/calculate_hvs_dynamics.py      Calculate object-level Galactocentric dynamics and unbound probabilities
 scripts/build_hvs_catalog_html.py      Build object-level HVS catalog HTML demo
-src/high_velocity_lit/                Core implementation
+src/high_velocity_lit/                Literature and catalog implementation
+src/high_velocity_dyn/                HVS dynamics implementation
 tests/                                Tests
 notes/                                Generated monthly records and views
 literature/                           Generated local literature archive

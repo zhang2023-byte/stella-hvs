@@ -24,8 +24,12 @@ from high_velocity_lit.hvs_candidates_index import HVS_CANDIDATES_FILENAME, iter
 from high_velocity_lit.schema_models import LiteratureHvsCandidatesRecord
 
 
-OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v5"
-LEGACY_OBJECT_SCHEMA_VERSIONS = {"stella.hvs_candidate_catalog.object.v3", "stella.hvs_candidate_catalog.object.v4"}
+OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v6"
+LEGACY_OBJECT_SCHEMA_VERSIONS = {
+    "stella.hvs_candidate_catalog.object.v3",
+    "stella.hvs_candidate_catalog.object.v4",
+    "stella.hvs_candidate_catalog.object.v5",
+}
 INDEX_SCHEMA_VERSION = "stella.hvs_candidate_catalog.index.v3"
 READABLE_OBJECT_SCHEMA_VERSIONS = {OBJECT_SCHEMA_VERSION, *LEGACY_OBJECT_SCHEMA_VERSIONS}
 INDEX_JSON_FILENAME = "03_hvs_candidates_index.json"
@@ -259,6 +263,17 @@ def _remove_source_refs(value: Any) -> Any:
 
 def _non_empty(value: Any) -> bool:
     return value not in (None, "", [], {})
+
+
+def disabled_hvs_dynamics() -> dict[str, Any]:
+    """Return the not-yet-computed object-level dynamics placeholder."""
+    return {
+        "schema_version": "stella.hvs_dynamics.v1",
+        "status": "not_computed",
+        "status_reason": "hvs dynamics not computed after object catalog merge",
+        "generated_at": "",
+        "warnings": [],
+    }
 
 
 def _copy_semantic_fields(record: dict[str, Any], fields: tuple[str, ...]) -> dict[str, Any]:
@@ -1111,6 +1126,7 @@ def object_records_from_catalog_objects(
                 "method_chain": method_chain,
                 "candidates": candidates,
                 "external_enrichment": disabled_enrichment(),
+                "dynamics": disabled_hvs_dynamics(),
                 "merge": {
                     "match_strategy": obj.match_strategy,
                     "evidence": obj.evidence,

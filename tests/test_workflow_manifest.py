@@ -66,6 +66,7 @@ class WorkflowManifestTest(unittest.TestCase):
             "hvs_candidate_extraction",
             "hvs_candidate_extraction_batch",
             "object_catalog_merge",
+            "hvs_dynamics_calculate",
             "hvs_catalog_html_build",
             "index_or_markdown_regeneration",
         }

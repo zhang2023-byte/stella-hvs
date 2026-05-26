@@ -31,6 +31,7 @@ workflow detail.
 | `hvs_candidate_extraction` | Extract paper-level HVS/unbound candidates | `literature_hvs_candidates.json` | scientific judgment |
 | `hvs_candidate_extraction_batch` | Dispatch isolated per-paper HVS extraction | many `literature_hvs_candidates.json` files + index | scientific judgment |
 | `object_catalog_merge` | Merge paper-level candidates into object catalog with evidence graph and SIMBAD/Gaia enrichment | `catalog/candidates/*.json` | network/API + generated data |
+| `hvs_dynamics_calculate` | Calculate object-level Galactocentric velocities and unbound probabilities from cached external enrichment | `catalog/candidates/*.json` dynamics field | generated data |
 | `hvs_catalog_html_build` | Build local HTML display pages | `catalog/html/live`, `catalog/html/static` | generated view |
 | `index_or_markdown_regeneration` | Rebuild generated indexes/Markdown | generated indexes/views | generated view |
 
@@ -88,6 +89,7 @@ and expand it before execution.
 - For `hvs_candidate_extraction_batch`, each worker runs the single-paper
   validator; the parent rebuilds `02_literature_hvs_index` when requested.
 - For merge workflows, inspect merge warnings and enrichment warnings in `catalog/03_hvs_candidates_index.md`.
+- For `hvs_dynamics_calculate`, inspect the CLI JSON summary for skipped reasons, `graveyard_count`, `lower_limit_count`, and per-object warnings.
 
 ## Generated Data Policy
 

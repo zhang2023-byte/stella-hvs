@@ -481,7 +481,7 @@ Both modes support `--dry-run True`, which prints generated writes/deletes witho
 - Every merge or blocked/review edge is recorded under `merge.evidence[]`; `merge.warnings[]` remains the review queue for conflicts and sanity-check failures.
 - Object filenames prefer normalized Gaia slugs, then strong paper object IDs, then coordinate slugs, then stable source record slugs. Strong paper ID slugs preserve ASCII `+` and `-`; weak paper IDs such as bare numbers are not used directly as filenames.
 - Object-level JSON `sources[]` stores short source IDs, original `paper` fields, source JSON paths, and paper-level candidate IDs.
-- Object-level JSON uses `schema_version: stella.hvs_candidate_catalog.object.v5`. Rebuild old object-level catalogs rather than migrating v1/v2 files.
+- Object-level JSON uses `schema_version: stella.hvs_candidate_catalog.object.v6`. Version v6 adds the generated `dynamics` field. Rebuild old object-level catalogs rather than migrating v1/v2 files.
 - `method_chain[]` and `candidates[]` are grouped by `source` and do not keep `source_refs`; full provenance still lives in the paper-level JSON.
 - `candidates[]` keeps compact `candidate_context`, `core`, and typed quantity groups. Quantities keep only `value`, non-empty uncertainties, `unit`, `method_refs`, and small typed semantic fields such as band, element, flag name, or hypothesis metric type; they do not keep `raw_value`, `description`, `kind`, coordinate frame/epoch, or coordinate format.
 - `external_enrichment` stores official SIMBAD and Gaia DR3 matches, raw non-empty query columns, selected highlights, identifier/coordinate verification, value comparisons, and enrichment warnings. It never overwrites paper-level values; when external merge mode is enabled, the same official identity evidence may be recorded under `merge.evidence[]` and used for grouping.
@@ -495,7 +495,79 @@ catalog/03_hvs_candidates_index.md
 
 Focus on `Warnings`, `Enrichment Warnings`, object count, source count, and each object's JSON link.
 
-## 10. Build HVS Catalog HTML Pages
+## 10. Calculate Object-Level HVS Dynamics
+
+After object-level `catalog/` exists, calculate Galactocentric total velocity
+and unbound probability for catalog objects:
+
+```bash
+conda run -n stella-env python scripts/calculate_hvs_dynamics.py \
+  --catalog-dir catalog \
+  --samples 10000 \
+  --write True
+```
+
+Review without writing:
+
+```bash
+conda run -n stella-env python scripts/calculate_hvs_dynamics.py \
+  --catalog-dir catalog \
+  --samples 10000 \
+  --dry-run True
+```
+
+Process one object:
+
+```bash
+conda run -n stella-env python scripts/calculate_hvs_dynamics.py \
+  --catalog-dir catalog \
+  --object-id Gaia_DR3_123456789 \
+  --samples 10000 \
+  --write True
+```
+
+### Common Arguments
+
+```text
+--catalog-dir PATH          Object catalog directory, default catalog
+--object-id ID              Only process catalog/candidates/<ID>.json
+--samples N                 MCMC posterior samples per object, default 10000
+--seed N                    Optional random seed
+--write True|False          Write dynamics into object JSON, default False
+--dry-run True|False        Report planned writes without modifying files, default False
+--external-cache-mode MODE  required|refresh, default required
+--refresh-external          Shortcut for --external-cache-mode refresh
+--fail-on-network-error     Fail on Gaia/SIMBAD query errors in refresh mode
+```
+
+### Notes
+
+- The CLI writes `dynamics.schema_version=stella.hvs_dynamics.v1` into each
+  object JSON and updates the object schema version to
+  `stella.hvs_candidate_catalog.object.v6`.
+- Gaia astrometry is read from the official Gaia DR3 raw row already cached by
+  object merge at `external_enrichment.providers.gaia_dr3.raw_columns`. The
+  command prefers a DR3-family Gaia identifier from the object record, but a
+  matched cached `external_enrichment.providers.gaia_dr3.source_id` is also a
+  valid official DR3 input. DR2-only, non-Gaia, or missing-cache objects are
+  skipped with `gaia astrometry not available`. Use `--refresh-external` only
+  when you explicitly want fresh Gaia/SIMBAD network queries.
+- Parallax zero-point correction uses `gaiadr3-zeropoint`; missing required raw
+  Gaia columns or failed correction writes
+  `zero point correction not available`.
+- The quality gate is `corrected_parallax / parallax_error > 5`; failures write
+  `parallax uncertainty too large`.
+- RV priority is literature first, then cached SIMBAD RV from
+  `external_enrichment`. If neither exists, the command uses the Boubert et al.
+  missing-RV minimum Galactocentric rest-frame velocity convention and marks
+  `lower_limit=true`.
+- The same default 10000 posterior samples drive velocity summaries, escape
+  comparisons, Beta probabilities, raw MC fractions, and `graveyard`. Objects
+  with zero unbound realizations in those samples are marked `graveyard=true`.
+- Rerunning `merge_hvs_candidate_catalog.py` rebuilds object JSON and resets
+  dynamics, so rerun this command after an object catalog merge.
+
+## 11. Build HVS Catalog HTML Pages
 
 After object-level `catalog/` exists, build the HTML demo:
 
@@ -527,7 +599,7 @@ http://127.0.0.1:8765/catalog/html/live/
 
 The static version does not read JSON live. It is a build-time `catalog/` snapshot and can be opened directly as `catalog/html/static/index.html` or copied to static hosting for demos. The source of truth remains `catalog/candidates/*.json`; the web page is only a display layer.
 
-## 11. Date Syntax
+## 12. Date Syntax
 
 ```text
 --from 2026-03-15  starts from 2026-03-15
@@ -541,7 +613,7 @@ The static version does not read JSON live. It is a build-time `catalog/` snapsh
 
 Future dates are automatically clipped to today. Invalid date formats fail immediately.
 
-## 12. Additional Notes
+## 13. Additional Notes
 
 When DeepXiv returns a quota error:
 

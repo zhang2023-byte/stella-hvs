@@ -260,6 +260,33 @@ Precise agent prompt:
 Run object_catalog_merge, using the hvs-candidates-merge skill. For rebuild, merge all valid literature_hvs_candidates.json files into catalog/. For update, merge only ARXIV_ID=<id> or PATH=<file>. Validate inputs first, preserve merge evidence and warnings, run default public SIMBAD/Gaia DR3 enrichment plus external-assisted merge unless enrichment_mode=off or external_merge_mode=off, and do not manually edit generated catalog files.
 ```
 
+## HVS Dynamics Calculate
+
+Recommended human request:
+
+```text
+Calculate HVS dynamics for the object catalog.
+```
+
+Common vague request:
+
+```text
+Recompute unbound probabilities.
+```
+
+Clarify when missing:
+
+- Whether public Gaia DR3 and SIMBAD network queries are allowed, only when the
+  user requests `--refresh-external`.
+- Whether to process all objects or one `object_id` when the request is scoped
+  ambiguously.
+
+Precise agent prompt:
+
+```text
+Run hvs_dynamics_calculate for CATALOG_DIR=<catalog, unless overridden>, using the hvs_dynamics_calculate skill. Reuse official Gaia DR3 raw rows and SIMBAD RV cached under external_enrichment by default, apply gaiadr3-zeropoint correction, use literature RV first and cached SIMBAD RV second, then compute Galactocentric total velocity and Boubert-style unbound probability with the same default 10000 MCMC posterior samples used for graveyard classification. Write results into each object JSON dynamics field only when write=True, and report skipped reasons, lower-limit results, and graveyard count. Query Gaia/SIMBAD only when --refresh-external is explicitly requested.
+```
+
 ## HVS Catalog HTML Build
 
 Recommended human request:
