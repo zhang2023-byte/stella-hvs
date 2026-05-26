@@ -383,6 +383,32 @@ class HvsCatalogSiteTest(unittest.TestCase):
             self.assertNotIn("<script src=", html)
             self.assertNotIn("<link href=", html)
 
+    def test_static_html_bundles_local_latex_math_renderer(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            catalog = root / "catalog"
+            record = object_record()
+            record["sources"][0]["paper"]["title"] = "Velocity test $v_{\\rm GRF}>v_{\\rm esc}$"
+            record["method_chain"][0]["steps"][1]["summary"] = "Uses $\\frac{1}{2}v^2$."
+            write_json(catalog / "03_hvs_candidates_index.json", {"summary": {"object_count": 1}, "objects": []})
+            write_json(catalog / CANDIDATES_DIRNAME / "Gaia_DR3_123.json", record)
+
+            assets = ROOT / "src" / "stella_html" / "assets"
+            html = build_static_html(
+                catalog,
+                assets / "stella.css",
+                assets / "catalog-viewer.js",
+                assets / "stella-hero.svg",
+            )
+
+            self.assertIn("function textWithMath", html)
+            self.assertIn("function renderQuantityMath", html)
+            self.assertIn("function latexForUnit", html)
+            self.assertIn("quantity-math", html)
+            self.assertIn("math-formula", html)
+            self.assertIn("\\frac{1}{2}", html)
+            self.assertFalse(has_external_html_dependencies(html))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -72,6 +72,375 @@
       .replace(/'/g, "&#39;");
   }
 
+  const LATEX_SYMBOLS = {
+    alpha: "&alpha;",
+    beta: "&beta;",
+    gamma: "&gamma;",
+    Gamma: "&Gamma;",
+    delta: "&delta;",
+    Delta: "&Delta;",
+    epsilon: "&epsilon;",
+    varepsilon: "&epsilon;",
+    zeta: "&zeta;",
+    eta: "&eta;",
+    theta: "&theta;",
+    Theta: "&Theta;",
+    lambda: "&lambda;",
+    Lambda: "&Lambda;",
+    mu: "&mu;",
+    nu: "&nu;",
+    xi: "&xi;",
+    pi: "&pi;",
+    Pi: "&Pi;",
+    rho: "&rho;",
+    sigma: "&sigma;",
+    Sigma: "&Sigma;",
+    tau: "&tau;",
+    phi: "&phi;",
+    varphi: "&phi;",
+    Phi: "&Phi;",
+    chi: "&chi;",
+    psi: "&psi;",
+    Psi: "&Psi;",
+    omega: "&omega;",
+    Omega: "&Omega;",
+    pm: "&plusmn;",
+    mp: "&#8723;",
+    times: "&times;",
+    cdot: "&middot;",
+    ast: "*",
+    star: "&#8902;",
+    le: "&le;",
+    leq: "&le;",
+    ge: "&ge;",
+    geq: "&ge;",
+    ll: "&laquo;",
+    gg: "&raquo;",
+    approx: "&asymp;",
+    sim: "~",
+    simeq: "&#8771;",
+    propto: "&prop;",
+    infty: "&infin;",
+    odot: "&#8857;",
+    oplus: "&#8853;",
+    sun: "&#9737;",
+    deg: "&deg;",
+    degree: "&deg;",
+    prime: "&prime;",
+    arcsec: "&Prime;",
+    rightarrow: "&rarr;",
+    to: "&rarr;",
+    leftarrow: "&larr;"
+  };
+
+  function textWithMath(value) {
+    const text = String(value == null ? "" : value);
+    let out = "";
+    let index = 0;
+    const delimiters = [
+      { open: "$$", close: "$$", display: true },
+      { open: "\\[", close: "\\]", display: true },
+      { open: "\\(", close: "\\)", display: false },
+      { open: "$", close: "$", display: false }
+    ];
+    while (index < text.length) {
+      let next = null;
+      delimiters.forEach((delimiter) => {
+        const found = text.indexOf(delimiter.open, index);
+        if (found !== -1 && (!next || found < next.found || (found === next.found && delimiter.open.length > next.delimiter.open.length))) {
+          next = { found, delimiter };
+        }
+      });
+      if (!next) {
+        out += escapeHtml(text.slice(index));
+        break;
+      }
+      out += escapeHtml(text.slice(index, next.found));
+      const formulaStart = next.found + next.delimiter.open.length;
+      const formulaEnd = text.indexOf(next.delimiter.close, formulaStart);
+      if (formulaEnd === -1) {
+        out += escapeHtml(text.slice(next.found));
+        break;
+      }
+      out += renderLatexFormula(text.slice(formulaStart, formulaEnd), next.delimiter.display);
+      index = formulaEnd + next.delimiter.close.length;
+    }
+    return out;
+  }
+
+  function consumeGroup(text, index) {
+    if (text[index] !== "{") {
+      return null;
+    }
+    let depth = 0;
+    for (let cursor = index; cursor < text.length; cursor += 1) {
+      const char = text[cursor];
+      if (char === "{") {
+        depth += 1;
+      } else if (char === "}") {
+        depth -= 1;
+        if (depth === 0) {
+          return { body: text.slice(index + 1, cursor), end: cursor + 1 };
+        }
+      }
+    }
+    return null;
+  }
+
+  function readLatexCommand(text, index) {
+    let cursor = index + 1;
+    if (/[A-Za-z]/.test(text[cursor] || "")) {
+      while (cursor < text.length && /[A-Za-z]/.test(text[cursor])) {
+        cursor += 1;
+      }
+      return { name: text.slice(index + 1, cursor), end: cursor };
+    }
+    return { name: text[cursor] || "", end: Math.min(cursor + 1, text.length) };
+  }
+
+  function renderLatexAtom(text, index) {
+    const char = text[index];
+    if (char === "{") {
+      const group = consumeGroup(text, index);
+      if (group) {
+        return { html: renderLatexTokens(group.body), end: group.end };
+      }
+    }
+    if (char === "\\") {
+      const command = readLatexCommand(text, index);
+      return { html: renderLatexTokens(text.slice(index, command.end)), end: command.end };
+    }
+    return { html: escapeHtml(char || ""), end: Math.min(index + 1, text.length) };
+  }
+
+  function renderTextCommand(text, start, className) {
+    const group = consumeGroup(text, start);
+    if (!group) {
+      return null;
+    }
+    return {
+      html: `<span class="${className}">${escapeHtml(group.body)}</span>`,
+      end: group.end
+    };
+  }
+
+  function renderLatexTokens(text) {
+    let out = "";
+    let index = 0;
+    while (index < text.length) {
+      const char = text[index];
+      if (char === "\\") {
+        const command = readLatexCommand(text, index);
+        const name = command.name;
+        if (name === "frac" || name === "dfrac" || name === "tfrac") {
+          const numerator = consumeGroup(text, command.end);
+          const denominator = numerator ? consumeGroup(text, numerator.end) : null;
+          if (numerator && denominator) {
+            out += `<span class="math-frac"><span class="math-num">${renderLatexTokens(numerator.body)}</span><span class="math-den">${renderLatexTokens(denominator.body)}</span></span>`;
+            index = denominator.end;
+            continue;
+          }
+        }
+        if (name === "sqrt") {
+          let cursor = command.end;
+          if (text[cursor] === "[") {
+            const close = text.indexOf("]", cursor + 1);
+            if (close !== -1) {
+              cursor = close + 1;
+            }
+          }
+          const group = consumeGroup(text, cursor);
+          if (group) {
+            out += `<span class="math-sqrt"><span class="math-radical">&radic;</span><span class="math-radicand">${renderLatexTokens(group.body)}</span></span>`;
+            index = group.end;
+            continue;
+          }
+        }
+        if (["mathrm", "textrm", "operatorname", "text"].includes(name)) {
+          const rendered = renderTextCommand(text, command.end, "math-roman");
+          if (rendered) {
+            out += rendered.html;
+            index = rendered.end;
+            continue;
+          }
+        }
+        if (name === "mathbf") {
+          const rendered = renderTextCommand(text, command.end, "math-bold");
+          if (rendered) {
+            out += rendered.html;
+            index = rendered.end;
+            continue;
+          }
+        }
+        if (name === "mathit") {
+          const rendered = renderTextCommand(text, command.end, "math-italic");
+          if (rendered) {
+            out += rendered.html;
+            index = rendered.end;
+            continue;
+          }
+        }
+        if (name === "," || name === ";" || name === ":" || name === " ") {
+          out += " ";
+          index = command.end;
+          continue;
+        }
+        if (name === "rm" || name === "bf" || name === "it") {
+          index = command.end;
+          while (text[index] === " ") {
+            index += 1;
+          }
+          continue;
+        }
+        if (name === "!" || name === "left" || name === "right") {
+          index = command.end;
+          continue;
+        }
+        if (Object.prototype.hasOwnProperty.call(LATEX_SYMBOLS, name)) {
+          out += LATEX_SYMBOLS[name];
+          index = command.end;
+          continue;
+        }
+        out += escapeHtml("\\" + name);
+        index = command.end;
+        continue;
+      }
+      if (char === "^" || char === "_") {
+        const atom = renderLatexAtom(text, index + 1);
+        out += char === "^" ? `<sup>${atom.html}</sup>` : `<sub>${atom.html}</sub>`;
+        index = atom.end;
+        continue;
+      }
+      if (char === "{" || char === "}") {
+        index += 1;
+        continue;
+      }
+      out += escapeHtml(char);
+      index += 1;
+    }
+    return out;
+  }
+
+  function renderLatexFormula(source, display) {
+    const latex = String(source == null ? "" : source).trim();
+    if (!latex) {
+      return "";
+    }
+    const className = display ? "math-formula math-display" : "math-formula";
+    return `<span class="${className}" aria-label="${escapeHtml(latex)}">${renderLatexTokens(latex)}</span>`;
+  }
+
+  function isNumericText(value) {
+    return /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$/.test(compact(value));
+  }
+
+  function signedErrorText(value, fallbackSign) {
+    const text = compact(value);
+    if (!text) {
+      return "";
+    }
+    if (text.startsWith("+") || text.startsWith("-") || text.startsWith("±")) {
+      return text;
+    }
+    return fallbackSign + text;
+  }
+
+  function latexForUnit(unit) {
+    let text = compact(unit);
+    if (!text) {
+      return "";
+    }
+    if (text.includes("$") || text.includes("\\(") || text.includes("\\[")) {
+      return text;
+    }
+    text = text
+      .replace(/µ/g, "\\mu")
+      .replace(/μ/g, "\\mu")
+      .replace(/\s+/g, " ")
+      .replace(/\*\*/g, "^")
+      .replace(/\s*\/\s*/g, " / ")
+      .replace(/M_sun/g, "M_{\\odot}")
+      .replace(/R_sun/g, "R_{\\odot}")
+      .replace(/\bMsun\b/g, "M_{\\odot}")
+      .replace(/\bRsun\b/g, "R_{\\odot}")
+      .replace(/\belectron\b/g, "\\mathrm{electron}")
+      .replace(/\blog\(([^)]*)\)/g, "\\log($1)");
+    const pieces = text.split(" ").filter(Boolean);
+    let denominator = false;
+    const rendered = [];
+    pieces.forEach((piece) => {
+      if (piece === "/") {
+        denominator = true;
+        return;
+      }
+      let token = piece;
+      if (denominator && !token.includes("^")) {
+        token += "^-1";
+      }
+      token = token
+        .replace(/^([A-Za-z]+)-(\d+)$/, "$1^-$2")
+        .replace(/^([A-Za-z]+)\+(\d+)$/, "$1^+$2")
+        .replace(/^([A-Za-z]+)\^(-?\d+)$/, "\\mathrm{$1}^{$2}")
+        .replace(/^([A-Za-z]+)\^([+-]?\d+)$/, "\\mathrm{$1}^{$2}");
+      if (/^[A-Za-z]+$/.test(token)) {
+        token = "\\mathrm{" + token + "}";
+      }
+      rendered.push(token);
+    });
+    return rendered.join("\\,");
+  }
+
+  function renderUnit(unit) {
+    const latex = latexForUnit(unit);
+    if (!latex) {
+      return "";
+    }
+    if (latex.includes("$") || latex.includes("\\(") || latex.includes("\\[")) {
+      return textWithMath(latex);
+    }
+    return renderLatexFormula(latex, false);
+  }
+
+  function looksLikeUnit(value) {
+    const text = compact(value);
+    return /^(?:[A-Za-z_µμ]+|\w+\([^)]*\))(?:\s*(?:\/|\s)\s*(?:[A-Za-z_µμ]+|\w+\([^)]*\))(?:\^?\*?-?[0-9]+|\^[{]?-?[0-9]+[}]?)?)*$/.test(text)
+      && /\b(?:km|mas|yr|s|mag|kpc|pc|dex|K|Myr|Gyr|deg|electron|Msun|Rsun|M_sun|R_sun)\b/.test(text);
+  }
+
+  function renderQuantityMath(quantity) {
+    const payload = asObject(quantity);
+    const value = compact(payload.value);
+    if (!value) {
+      return "";
+    }
+    const unit = compact(payload.unit);
+    const error = compact(payload.error);
+    const lower = compact(payload.lower_error);
+    const upper = compact(payload.upper_error);
+    const shouldRenderMath = Boolean(unit || error || lower || upper || isNumericText(value));
+    if (!shouldRenderMath) {
+      return textWithMath(value);
+    }
+    let body = escapeHtml(value);
+    if (error) {
+      body += `<span class="math-op">&plusmn;</span>${escapeHtml(error.replace(/^[±+\\-]\s*/, ""))}`;
+    } else if (lower || upper) {
+      const lowerText = signedErrorText(lower, "-");
+      const upperText = signedErrorText(upper, "+");
+      if (lowerText) {
+        body += `<sub>${escapeHtml(lowerText)}</sub>`;
+      }
+      if (upperText) {
+        body += `<sup>${escapeHtml(upperText)}</sup>`;
+      }
+    }
+    const unitHtml = renderUnit(unit);
+    if (unitHtml) {
+      body += `<span class="math-unit">${unitHtml}</span>`;
+    }
+    return `<span class="math-formula quantity-math" aria-label="${escapeHtml(quantityText(payload))}">${body}</span>`;
+  }
+
   function compact(value) {
     return String(value == null ? "" : value).trim();
   }
@@ -420,7 +789,7 @@
       <div class="metric">
         <span class="metric-value">${escapeHtml(value == null || value === "" ? "-" : value)}</span>
         <span class="metric-label">${escapeHtml(label)}</span>
-        ${sublabel ? `<span class="metric-sub">${escapeHtml(sublabel)}</span>` : ""}
+        ${sublabel ? `<span class="metric-sub">${looksLikeUnit(sublabel) ? renderUnit(sublabel) : textWithMath(sublabel)}</span>` : ""}
       </div>
     `;
   }
@@ -732,9 +1101,9 @@
       <div class="science-stack">
         <div class="badge-row">${chips}</div>
         <div class="keyline"><span>Punb</span><strong class="tone-${probabilityTone(pUnbound.median)}">${escapeHtml(fmtProbability(pUnbound.median) || "-")}</strong></div>
-        <div class="keyline"><span>vGRF</span><strong>${escapeHtml(fmtNumber(v.median) || "-")}</strong><em>km s^-1</em></div>
-        <div class="keyline"><span>vesc</span><strong>${escapeHtml(fmtNumber(escape.median) || "-")}</strong><em>km s^-1</em></div>
-        <div class="keyline"><span>margin</span><strong>${escapeHtml(margin == null ? "-" : fmtNumber(margin))}</strong><em>km s^-1</em></div>
+        <div class="keyline"><span>vGRF</span><strong>${escapeHtml(fmtNumber(v.median) || "-")}</strong><em>${renderUnit("km s^-1")}</em></div>
+        <div class="keyline"><span>vesc</span><strong>${escapeHtml(fmtNumber(escape.median) || "-")}</strong><em>${renderUnit("km s^-1")}</em></div>
+        <div class="keyline"><span>margin</span><strong>${escapeHtml(margin == null ? "-" : fmtNumber(margin))}</strong><em>${renderUnit("km s^-1")}</em></div>
         ${dynamics.status_reason ? `<div class="muted-line">${escapeHtml(dynamics.status_reason)}</div>` : ""}
       </div>
     `;
@@ -907,7 +1276,7 @@
   function dlRows(items) {
     return items
       .filter(([, value]) => value != null && value !== "" && !(Array.isArray(value) && !value.length))
-      .map(([label, value]) => `<dt>${escapeHtml(label)}</dt><dd>${escapeHtml(Array.isArray(value) ? value.join(", ") : value)}</dd>`)
+      .map(([label, value]) => `<dt>${escapeHtml(label)}</dt><dd>${textWithMath(Array.isArray(value) ? value.join(", ") : value)}</dd>`)
       .join("");
   }
 
@@ -1053,12 +1422,12 @@
           <tbody>
             ${comparisons.map((item) => `
               <tr>
-                <td>${escapeHtml(item.source || "")}</td>
-                <td>${escapeHtml(item.field || "")}</td>
-                <td>${escapeHtml(item.literature_value || "")}</td>
-                <td>${escapeHtml(item.official_value || "")}</td>
-                <td>${escapeHtml(item.difference || "")}</td>
-                <td>${escapeHtml(item.unit || "")}</td>
+                <td>${textWithMath(item.source || "")}</td>
+                <td>${textWithMath(item.field || "")}</td>
+                <td>${textWithMath(item.literature_value || "")}</td>
+                <td>${textWithMath(item.official_value || "")}</td>
+                <td>${textWithMath(item.difference || "")}</td>
+                <td>${textWithMath(item.unit || "")}</td>
               </tr>
             `).join("")}
           </tbody>
@@ -1077,7 +1446,7 @@
         ${warnings.map((warning) => `
           <div class="warning-row">
             <strong>${escapeHtml(warning.type || "warning")}</strong>
-            <span>${escapeHtml(warning.message || JSON.stringify(warning))}</span>
+            <span>${textWithMath(warning.message || JSON.stringify(warning))}</span>
           </div>
         `).join("")}
       </div>
@@ -1118,8 +1487,8 @@
       <div class="evidence-row">
         ${badge(item.evidence_type || "evidence", "neutral")}
         ${badge(item.decision || "", item.decision === "accepted" ? "good" : "warn")}
-        <span>${escapeHtml(item.source || "")}</span>
-        <span>${escapeHtml(item.matched_value || item.message || "")}</span>
+        <span>${textWithMath(item.source || "")}</span>
+        <span>${textWithMath(item.matched_value || item.message || "")}</span>
       </div>
     `).join("");
   }
@@ -1136,7 +1505,7 @@
               return `
                 <article class="source-card">
                   <span class="source-tag">${escapeHtml(source.source)}</span>
-                  <h3>${escapeHtml(paper.title || "Untitled source")}</h3>
+                  <h3>${textWithMath(paper.title || "Untitled source")}</h3>
                   <dl>
                     ${dlRows([
                       ["arXiv", paper.arxiv_id],
@@ -1161,7 +1530,7 @@
   }
 
   function formatQuantityDetail(quantity) {
-    return escapeHtml(quantityText(quantity));
+    return renderQuantityMath(quantity);
   }
 
   function quantityLabel(field, quantity, index) {
@@ -1190,7 +1559,7 @@
     return `
       <div class="quantity-row">
         <button class="quantity-button ${active ? "is-active" : ""}" data-source="${escapeHtml(candidate.source)}" data-method-refs="${escapeHtml(refs.join(","))}">
-          ${escapeHtml(quantityLabel(field, quantity, index))}
+          ${textWithMath(quantityLabel(field, quantity, index))}
         </button>
         <div class="quantity-value">${formatQuantityDetail(quantity)}</div>
       </div>
@@ -1429,13 +1798,13 @@
       return `<aside class="method-panel"><h4>Method node</h4><p></p></aside>`;
     }
     const list = (title, values) => {
-      const items = asArray(values).map((value) => `<li>${escapeHtml(value)}</li>`).join("");
+      const items = asArray(values).map((value) => `<li>${textWithMath(value)}</li>`).join("");
       return items ? `<strong>${escapeHtml(title)}</strong><ul class="method-list">${items}</ul>` : "";
     };
     return `
       <aside class="method-panel">
         <h4>${escapeHtml(step.id)} / ${escapeHtml(step.step_type || "")}</h4>
-        <p>${escapeHtml(step.summary || "")}</p>
+        <p>${textWithMath(step.summary || "")}</p>
         ${list("Inputs", step.inputs)}
         ${list("Outputs", step.outputs)}
         ${list("Depends on", step.depends_on)}

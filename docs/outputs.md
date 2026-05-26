@@ -270,6 +270,16 @@ Gaia/SIMBAD official-value verification, source cards, merge evidence and
 warnings, method chain DAGs, candidate core fields, and the full object-level
 JSON. Clicking a quantity highlights its direct `method_refs`, recursive
 upstream steps, and dependency edges.
+Human-facing text fields in the HTML display layer render a local, self-contained
+subset of LaTeX math when expressions are delimited with `$...$`, `$$...$$`,
+`\(...\)`, or `\[...\]`. The renderer is intentionally display-only: JSON source
+values are unchanged, raw JSON remains escaped text, and no external MathJax,
+KaTeX, CDN, or remote font dependency is introduced.
+Quantity cells additionally format machine-readable `value`, `error`,
+`lower_error`, `upper_error`, and `unit` fields as mathematical display text, so
+plain units such as `km s^-1`, `mas/yr`, `M_sun`, and asymmetric uncertainties
+render with superscripts/subscripts and `±` without requiring LaTeX delimiters in
+source JSON.
 
 ## Index Files
 

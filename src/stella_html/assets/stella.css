@@ -716,6 +716,83 @@ button {
   overflow-wrap: anywhere;
 }
 
+.math-formula {
+  display: inline-flex;
+  align-items: baseline;
+  gap: .12em;
+  max-width: 100%;
+  padding: 0 .1em;
+  color: #0f271f;
+  font-family: "Times New Roman", Cambria, Georgia, serif;
+  font-size: 1.05em;
+  font-style: italic;
+  line-height: 1.15;
+  vertical-align: baseline;
+}
+
+.math-display {
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  margin: 8px 0;
+  padding: 8px 10px;
+  border-left: 3px solid var(--teal);
+  background: var(--teal-soft);
+  overflow-x: auto;
+}
+
+.math-roman {
+  font-family: var(--body);
+  font-style: normal;
+}
+
+.math-bold {
+  font-weight: 800;
+}
+
+.math-italic {
+  font-style: italic;
+}
+
+.math-frac {
+  display: inline-grid;
+  grid-template-rows: auto auto;
+  min-width: 1.2em;
+  align-items: center;
+  justify-items: center;
+  vertical-align: middle;
+}
+
+.math-num,
+.math-den {
+  display: block;
+  padding: 0 .18em;
+  font-size: .82em;
+  line-height: 1.05;
+}
+
+.math-num {
+  border-bottom: 1px solid currentColor;
+}
+
+.math-sqrt {
+  display: inline-flex;
+  align-items: stretch;
+  gap: .08em;
+}
+
+.math-radical {
+  align-self: center;
+  font-family: "Times New Roman", Cambria, Georgia, serif;
+  font-size: 1.15em;
+  font-style: normal;
+}
+
+.math-radicand {
+  border-top: 1px solid currentColor;
+  padding: 0 .12em;
+}
+
 .method-source {
   margin-bottom: 10px;
 }
