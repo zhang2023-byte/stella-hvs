@@ -180,11 +180,73 @@ def object_record() -> dict[str, object]:
         "external_enrichment": {
             "status": "success",
             "queried_at": "2026-05-20T10:00:00",
-            "providers": {},
-            "verification": {},
+            "providers": {
+                "simbad": {
+                    "status": "matched",
+                    "matched_by": "identifier",
+                    "main_id": "HVS-A",
+                    "object_type": "Star",
+                    "radial_velocity": {"value": "505", "unit": "km/s"},
+                },
+                "gaia_dr3": {
+                    "status": "matched",
+                    "matched_by": "source_id",
+                    "source_id": "123",
+                    "designation": "Gaia DR3 123",
+                },
+            },
+            "verification": {
+                "coordinate_separations_arcsec": {"simbad": 0.2, "gaia_dr3": 0.1},
+                "value_comparisons": [
+                    {
+                        "source": "src-001",
+                        "field": "radial_velocity",
+                        "literature_value": "510",
+                        "official_value": 505,
+                        "difference": 5,
+                        "unit": "km/s",
+                    }
+                ],
+            },
+            "warnings": [{"type": "simbad_coordinate_match", "message": "Matched by coordinates."}],
+        },
+        "dynamics": {
+            "schema_version": "stella.hvs_dynamics.v1",
+            "generated_at": "2026-05-20T10:00:00",
+            "status": "computed",
+            "status_reason": "",
+            "gaia_source_id": "Gaia DR3 123",
+            "radial_velocity_source": {
+                "source": "literature",
+                "source_detail": "literature/2601.00001/literature_hvs_candidates.json",
+                "value": 510,
+                "error": 2,
+                "unit": "km/s",
+                "bibcode": "",
+                "lower_limit": False,
+            },
+            "astrometry": {
+                "provider": "external_enrichment.providers.gaia_dr3.raw_columns",
+                "source_id": "123",
+                "corrected_parallax_mas": 0.29,
+                "parallax_error_mas": 0.03,
+                "corrected_parallax_over_error": 9.67,
+            },
+            "sampling": {"sample_count": 10000},
+            "total_velocity_grf_kms": {"p16": 700, "median": 740, "p84": 780},
+            "escape_velocity_kms": {"p16": 610, "median": 620, "p84": 630},
+            "p_bound_beta": {"p16": 0.17, "median": 0.18, "p84": 0.19},
+            "p_unbound_beta": {"p16": 0.81, "median": 0.82, "p84": 0.83},
+            "mc_counts": {"sample_count": 10000, "bound_count": 1800, "unbound_count": 8200},
+            "graveyard": False,
+            "lower_limit": False,
+            "warnings": [{"type": "rv_source", "message": "Using literature RV."}],
+        },
+        "merge": {
+            "match_strategy": "gaia_source_id",
+            "evidence": [{"evidence_type": "gaia_source_id", "decision": "accepted"}],
             "warnings": [],
         },
-        "merge": {"match_strategy": "gaia_source_id", "warnings": []},
     }
 
 
@@ -211,9 +273,11 @@ class HvsCatalogSiteTest(unittest.TestCase):
 
             snapshot = load_catalog_snapshot(catalog)
 
+            self.assertEqual(snapshot["schema_version"], "stella.hvs_catalog_site.snapshot.v2")
             self.assertEqual(snapshot["summary"]["object_count"], 1)
             self.assertEqual(len(snapshot["objects"]), 1)
             self.assertEqual(snapshot["rows"][0]["identifier"], "Gaia DR3 123")
+            self.assertEqual(snapshot["rows"][0]["dynamics"]["status"], "computed")
 
     def test_snapshot_ignores_old_object_schema_versions(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -242,6 +306,45 @@ class HvsCatalogSiteTest(unittest.TestCase):
         self.assertEqual(row["sources"][1]["total_velocity"], "690")
         self.assertEqual(row["sources"][1]["unbound_probability"], "")
         self.assertEqual(row["enrichment_status"], "success")
+        self.assertEqual(row["candidate_context"]["bound_claims"], ["unbound", "possibly_unbound"])
+        self.assertEqual(row["candidate_context"]["origin_types"], ["introduced_by_this_paper", "cited_from_literature"])
+        self.assertEqual(row["dynamics"]["status"], "computed")
+        self.assertEqual(row["dynamics"]["p_unbound"]["median"], 0.82)
+        self.assertEqual(row["dynamics"]["total_velocity_grf_kms"]["median"], 740.0)
+        self.assertEqual(row["dynamics"]["escape_velocity_kms"]["median"], 620.0)
+        self.assertEqual(row["dynamics"]["velocity_margin_kms"], 120.0)
+        self.assertEqual(row["dynamics"]["radial_velocity_source"]["source"], "literature")
+        self.assertEqual(row["dynamics"]["corrected_parallax_over_error"], 9.67)
+        self.assertEqual(row["dynamics"]["warning_count"], 1)
+        self.assertEqual(row["external"]["status"], "success")
+        self.assertEqual(row["external"]["gaia_dr3"]["matched_by"], "source_id")
+        self.assertEqual(row["external"]["simbad"]["matched_by"], "identifier")
+        self.assertEqual(row["external"]["warning_count"], 1)
+        self.assertEqual(row["external"]["value_comparison_count"], 1)
+        self.assertEqual(row["merge"]["evidence_count"], 1)
+        self.assertEqual(row["quantity_coverage"]["photometry"], 1)
+
+    def test_index_row_extracts_skipped_dynamics_audit(self) -> None:
+        record = object_record()
+        record["dynamics"] = {
+            "schema_version": "stella.hvs_dynamics.v1",
+            "status": "skipped",
+            "status_reason": "parallax uncertainty too large",
+            "astrometry": {
+                "corrected_parallax_mas": 0.35,
+                "parallax_error_mas": 0.10,
+                "corrected_parallax_over_error": 3.5,
+            },
+            "warnings": [],
+        }
+
+        row = build_index_row(record)
+
+        self.assertEqual(row["dynamics"]["status"], "skipped")
+        self.assertEqual(row["dynamics"]["status_reason"], "parallax uncertainty too large")
+        self.assertEqual(row["dynamics"]["corrected_parallax_over_error"], 3.5)
+        self.assertIsNone(row["dynamics"]["p_unbound"]["median"])
+        self.assertFalse(row["dynamics"]["lower_limit"])
 
     def test_method_lineage_follows_recursive_dependencies(self) -> None:
         steps = object_record()["method_chain"][0]["steps"]  # type: ignore[index]

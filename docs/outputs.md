@@ -257,7 +257,19 @@ Merge rules:
 - `catalog/html/live/`: under a local HTTP server, reads `catalog/03_hvs_candidates_index.json` and each `catalog/candidates/<object_id>.json` live. Refreshing the page reflects catalog updates.
 - `catalog/html/static/index.html`: a single-file snapshot with catalog data, CSS, JS, and local visual assets embedded at build time. It has no CDN or remote image dependency and is suitable for quick demos.
 
-The home page shows Stella's vision, object-level statistics, and the HVS object index. The index lists identifier, bibcode, RA, Dec, plx, pmRA, pmDec, RV, total velocity, unbound probability, and the detail entry. Multi-source objects are shown as source-specific rows so values from different papers are not overwritten. Detail pages show source cards, method chain DAGs, candidate core fields, and the full object-level JSON. Clicking a quantity highlights its direct `method_refs`, recursive upstream steps, and dependency edges.
+The home page is a research triage console for object-level scientific
+screening. It summarizes computed/skipped dynamics, high `P(unbound)` bins,
+lower-limit cases, graveyard classifications, and objects with merge,
+enrichment, or dynamics warnings. The object index exposes sortable/filterable
+object-level fields derived from existing JSON: Stella dynamics status,
+`P(unbound)`, Galactocentric total velocity, escape velocity margin, literature
+bound claims and labels, Gaia/SIMBAD match status, RV source, corrected
+parallax signal-to-noise, source count, merge evidence count, and warning
+counts. Detail pages are object dossiers with dynamics posterior summaries,
+Gaia/SIMBAD official-value verification, source cards, merge evidence and
+warnings, method chain DAGs, candidate core fields, and the full object-level
+JSON. Clicking a quantity highlights its direct `method_refs`, recursive
+upstream steps, and dependency edges.
 
 ## Index Files
 

@@ -39,10 +39,8 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def ensure_live_assets(assets_dir: Path) -> None:
-    """Populate target live assets from bundled source assets if needed."""
+    """Populate target live assets from bundled source assets."""
     required = ("stella.css", "catalog-viewer.js", "stella-hero.svg")
-    if all((assets_dir / name).exists() for name in required):
-        return
     source_assets_dir = SRC / "stella_html" / "assets"
     missing_source = [name for name in required if not (source_assets_dir / name).exists()]
     if missing_source:

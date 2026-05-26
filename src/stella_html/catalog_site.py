@@ -48,6 +48,32 @@ def read_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def _as_mapping(value: Any) -> dict[str, Any]:
+    return value if isinstance(value, dict) else {}
+
+
+def _as_list(value: Any) -> list[Any]:
+    return value if isinstance(value, list) else []
+
+
+def _compact(value: Any) -> str:
+    return str(value or "").strip()
+
+
+def _number(value: Any) -> float | None:
+    if isinstance(value, bool) or value is None:
+        return None
+    if isinstance(value, int | float):
+        return float(value)
+    text = str(value).strip()
+    if not text:
+        return None
+    try:
+        return float(text)
+    except ValueError:
+        return None
+
+
 def quantity_text(quantity: Any) -> str:
     """Render a compact value string for index cells, with units kept in headers."""
     if not isinstance(quantity, dict):
@@ -68,6 +94,42 @@ def quantity_text(quantity: Any) -> str:
     return text
 
 
+def interval_summary(value: Any) -> dict[str, Any]:
+    """Return display and numeric fields for posterior interval payloads."""
+    payload = _as_mapping(value)
+    median = _number(payload.get("median"))
+    p16 = _number(payload.get("p16"))
+    p84 = _number(payload.get("p84"))
+    if median is None:
+        return {"text": "", "median": None, "p16": p16, "p84": p84}
+    text = f"{median:.3g}"
+    if p16 is not None and p84 is not None:
+        text = f"{text} [{p16:.3g}, {p84:.3g}]"
+    return {"text": text, "median": median, "p16": p16, "p84": p84}
+
+
+def _unique(values: list[Any]) -> list[str]:
+    seen: set[str] = set()
+    out: list[str] = []
+    for value in values:
+        text = _compact(value)
+        if text and text not in seen:
+            seen.add(text)
+            out.append(text)
+    return out
+
+
+def _best_source_quantity(record: dict[str, Any], group: str, field: str) -> dict[str, Any]:
+    """Pick the first source-specific quantity for compact object-level display."""
+    for candidate in _as_list(record.get("candidates")):
+        candidate_map = _as_mapping(candidate)
+        core = _as_mapping(candidate_map.get("core"))
+        quantity = _as_mapping(_as_mapping(core.get(group)).get(field))
+        if quantity:
+            return quantity
+    return {}
+
+
 def candidate_for_source(record: dict[str, Any], source_id: str) -> dict[str, Any] | None:
     for candidate in record.get("candidates") or []:
         if isinstance(candidate, dict) and candidate.get("source") == source_id:
@@ -84,6 +146,7 @@ def source_summary(record: dict[str, Any], source: dict[str, Any]) -> dict[str, 
     derived = core.get("derived_kinematics") if isinstance(core.get("derived_kinematics"), dict) else {}
     bound_assessment = core.get("bound_assessment") if isinstance(core.get("bound_assessment"), dict) else {}
     paper = source.get("paper") if isinstance(source.get("paper"), dict) else {}
+    candidate_context = candidate.get("candidate_context") if isinstance(candidate.get("candidate_context"), dict) else {}
     return {
         "source": source_id,
         "record_id": str(source.get("record_id") or ""),
@@ -94,7 +157,119 @@ def source_summary(record: dict[str, Any], source: dict[str, Any]) -> dict[str, 
         "phase_space": {field: quantity_text(observed.get(field)) for field in OBSERVED_FIELDS},
         "total_velocity": quantity_text(derived.get("total_velocity")),
         "unbound_probability": quantity_text(bound_assessment.get("unbound_probability")),
+        "bound_claim": str(candidate_context.get("galactic_bound_claim") or ""),
+        "paper_labels": _unique(_as_list(candidate_context.get("paper_labels"))),
+        "origin_type": str(candidate_context.get("origin_type") or ""),
+        "extraction_confidence": str(candidate_context.get("extraction_confidence") or ""),
     }
+
+
+def candidate_context_summary(record: dict[str, Any]) -> dict[str, Any]:
+    contexts = [
+        _as_mapping(_as_mapping(candidate).get("candidate_context"))
+        for candidate in _as_list(record.get("candidates"))
+        if isinstance(candidate, dict)
+    ]
+    labels = _unique([label for context in contexts for label in _as_list(context.get("paper_labels"))])
+    bound_claims = _unique([context.get("galactic_bound_claim") for context in contexts])
+    origin_types = _unique([context.get("origin_type") for context in contexts])
+    confidence = _unique([context.get("extraction_confidence") for context in contexts])
+    return {
+        "paper_labels": labels,
+        "bound_claims": bound_claims,
+        "origin_types": origin_types,
+        "extraction_confidence": confidence,
+        "reassessed_source_count": sum(1 for context in contexts if context.get("paper_reassesses_unbound_status") is True),
+    }
+
+
+def dynamics_summary(record: dict[str, Any]) -> dict[str, Any]:
+    dynamics = _as_mapping(record.get("dynamics"))
+    astrometry = _as_mapping(dynamics.get("astrometry"))
+    rv_source = _as_mapping(dynamics.get("radial_velocity_source"))
+    p_unbound = interval_summary(dynamics.get("p_unbound_beta"))
+    p_bound = interval_summary(dynamics.get("p_bound_beta"))
+    total_velocity = interval_summary(dynamics.get("total_velocity_grf_kms"))
+    escape_velocity = interval_summary(dynamics.get("escape_velocity_kms"))
+    velocity_margin = None
+    if total_velocity["median"] is not None and escape_velocity["median"] is not None:
+        velocity_margin = float(total_velocity["median"]) - float(escape_velocity["median"])
+    return {
+        "status": str(dynamics.get("status") or "not_computed"),
+        "status_reason": str(dynamics.get("status_reason") or ""),
+        "gaia_source_id": str(dynamics.get("gaia_source_id") or ""),
+        "p_unbound": p_unbound,
+        "p_bound": p_bound,
+        "total_velocity_grf_kms": total_velocity,
+        "escape_velocity_kms": escape_velocity,
+        "velocity_margin_kms": velocity_margin,
+        "lower_limit": bool(dynamics.get("lower_limit")),
+        "graveyard": bool(dynamics.get("graveyard")),
+        "radial_velocity_source": {
+            "source": str(rv_source.get("source") or ""),
+            "source_detail": str(rv_source.get("source_detail") or ""),
+            "value": _number(rv_source.get("value")),
+            "error": _number(rv_source.get("error")),
+            "unit": str(rv_source.get("unit") or ""),
+            "bibcode": str(rv_source.get("bibcode") or ""),
+            "lower_limit": bool(rv_source.get("lower_limit")),
+        },
+        "corrected_parallax_mas": _number(astrometry.get("corrected_parallax_mas")),
+        "parallax_error_mas": _number(astrometry.get("parallax_error_mas")),
+        "corrected_parallax_over_error": _number(astrometry.get("corrected_parallax_over_error")),
+        "warning_count": len(_as_list(dynamics.get("warnings"))),
+        "sample_count": _number(_as_mapping(dynamics.get("sampling")).get("sample_count")),
+    }
+
+
+def external_summary(record: dict[str, Any]) -> dict[str, Any]:
+    enrichment = _as_mapping(record.get("external_enrichment"))
+    providers = _as_mapping(enrichment.get("providers"))
+    simbad = _as_mapping(providers.get("simbad"))
+    gaia = _as_mapping(providers.get("gaia_dr3"))
+    verification = _as_mapping(enrichment.get("verification"))
+    separations = _as_mapping(verification.get("coordinate_separations_arcsec"))
+    return {
+        "status": str(enrichment.get("status") or ""),
+        "queried_at": str(enrichment.get("queried_at") or ""),
+        "warning_count": len(_as_list(enrichment.get("warnings"))),
+        "value_comparison_count": len(_as_list(verification.get("value_comparisons"))),
+        "simbad": {
+            "status": str(simbad.get("status") or ""),
+            "matched_by": str(simbad.get("matched_by") or ""),
+            "main_id": str(simbad.get("main_id") or ""),
+            "object_type": str(simbad.get("object_type") or ""),
+            "separation_arcsec": _number(separations.get("simbad")),
+        },
+        "gaia_dr3": {
+            "status": str(gaia.get("status") or ""),
+            "matched_by": str(gaia.get("matched_by") or ""),
+            "source_id": str(gaia.get("source_id") or ""),
+            "designation": str(gaia.get("designation") or ""),
+            "separation_arcsec": _number(separations.get("gaia_dr3")),
+        },
+    }
+
+
+def quantity_coverage_summary(record: dict[str, Any]) -> dict[str, int]:
+    coverage = {
+        "photometry": 0,
+        "spectroscopy": 0,
+        "stellar_parameters": 0,
+        "abundances": 0,
+        "quality_flags": 0,
+        "orbit": 0,
+        "astrophysical_origin": 0,
+        "extra": 0,
+    }
+    for candidate in _as_list(record.get("candidates")):
+        candidate_map = _as_mapping(candidate)
+        for key in ("photometry", "spectroscopy", "abundances", "quality_flags", "extra"):
+            coverage[key] += len(_as_list(candidate_map.get(key)))
+        for key in ("stellar_parameters", "orbit", "astrophysical_origin"):
+            group = _as_mapping(candidate_map.get(key))
+            coverage[key] += sum(1 for value in group.values() if value not in (None, "", [], {}))
+    return coverage
 
 
 def build_index_row(record: dict[str, Any]) -> dict[str, Any]:
@@ -116,7 +291,18 @@ def build_index_row(record: dict[str, Any]) -> dict[str, Any]:
         if paper_id and paper_id not in paper_ids:
             paper_ids.append(paper_id)
     enrichment = record.get("external_enrichment") if isinstance(record.get("external_enrichment"), dict) else {}
+    external = external_summary(record)
+    dynamics = dynamics_summary(record)
+    candidate_context = candidate_context_summary(record)
     merge = record.get("merge") if isinstance(record.get("merge"), dict) else {}
+    best_observed = {
+        field: quantity_text(_best_source_quantity(record, "observed_phase_space", field))
+        for field in OBSERVED_FIELDS
+    }
+    best_derived = {
+        "total_velocity": quantity_text(_best_source_quantity(record, "derived_kinematics", "total_velocity")),
+        "unbound_probability": quantity_text(_best_source_quantity(record, "bound_assessment", "unbound_probability")),
+    }
     return {
         "object_id": str(record.get("object_id") or ""),
         "identifier": str(canonical.get("value") or record.get("object_id") or ""),
@@ -130,6 +316,16 @@ def build_index_row(record: dict[str, Any]) -> dict[str, Any]:
         "enrichment_warning_count": len(enrichment.get("warnings") or []) if isinstance(enrichment, dict) else 0,
         "warning_count": len(merge.get("warnings") or []),
         "evidence_count": len(merge.get("evidence") or []),
+        "best_source_values": {**best_observed, **best_derived},
+        "candidate_context": candidate_context,
+        "dynamics": dynamics,
+        "external": external,
+        "merge": {
+            "match_strategy": str(merge.get("match_strategy") or ""),
+            "warning_count": len(merge.get("warnings") or []),
+            "evidence_count": len(merge.get("evidence") or []),
+        },
+        "quantity_coverage": quantity_coverage_summary(record),
     }
 
 
@@ -205,7 +401,7 @@ def load_catalog_snapshot(catalog_dir: Path) -> dict[str, Any]:
         }
 
     return {
-        "schema_version": "stella.hvs_catalog_site.snapshot.v1",
+        "schema_version": "stella.hvs_catalog_site.snapshot.v2",
         "summary": summary,
         "index": index_record,
         "rows": rows,
@@ -238,6 +434,7 @@ def render_live_index_html(*, catalog_root: str = "../..") -> str:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Stella HVS Catalog</title>
+  <link rel="icon" href="data:,">
   <link rel="stylesheet" href="assets/stella.css">
 </head>
 <body data-catalog-root="{catalog_root}">
@@ -256,6 +453,7 @@ def render_static_index_html(snapshot: dict[str, Any], *, css: str, js: str) -> 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Stella HVS Catalog Snapshot</title>
+  <link rel="icon" href="data:,">
   <style>
 {css}
   </style>
@@ -277,7 +475,8 @@ def has_external_html_dependencies(html: str) -> bool:
     """Return True if static HTML uses external scripts, stylesheets, or remote image URLs."""
     patterns = [
         r"<script\b[^>]*\bsrc\s*=",
-        r"<link\b[^>]*\bhref\s*=",
+        r"<link\b[^>]*\brel\s*=\s*[\"']?stylesheet[^>]*\bhref\s*=",
+        r"<link\b[^>]*\bhref\s*=\s*[\"']?https?://",
         r"<img\b[^>]*\bsrc\s*=\s*[\"']https?://",
         r"url\(\s*[\"']?https?://",
     ]
