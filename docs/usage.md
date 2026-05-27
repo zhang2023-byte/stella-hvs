@@ -537,7 +537,7 @@ conda run -n stella-env python scripts/calculate_hvs_dynamics.py \
 --dry-run True|False        Report planned writes without modifying files, default False
 --external-cache-mode MODE  required|refresh, default required
 --refresh-external          Shortcut for --external-cache-mode refresh
---fail-on-network-error     Fail on Gaia/SIMBAD query errors in refresh mode
+--fail-on-network-error     Fail on Gaia DR3 query errors in refresh mode
 ```
 
 ### Notes
@@ -551,16 +551,15 @@ conda run -n stella-env python scripts/calculate_hvs_dynamics.py \
   matched cached `external_enrichment.providers.gaia_dr3.source_id` is also a
   valid official DR3 input. DR2-only, non-Gaia, or missing-cache objects are
   skipped with `gaia astrometry not available`. Use `--refresh-external` only
-  when you explicitly want fresh Gaia/SIMBAD network queries.
+  when you explicitly want fresh Gaia DR3 network queries.
 - Parallax zero-point correction uses `gaiadr3-zeropoint`; missing required raw
   Gaia columns or failed correction writes
   `zero point correction not available`.
 - The quality gate is `corrected_parallax / parallax_error > 5`; failures write
   `parallax uncertainty too large`.
-- RV priority is literature first, then cached SIMBAD RV from
-  `external_enrichment`. If neither exists, the command uses the Boubert et al.
-  missing-RV minimum Galactocentric rest-frame velocity convention and marks
-  `lower_limit=true`.
+- RV priority is literature first. If no literature RV exists, the command
+  intentionally ignores SIMBAD RV and uses the Boubert et al. missing-RV minimum
+  Galactocentric rest-frame velocity convention, marking `lower_limit=true`.
 - The same default 10000 posterior samples drive velocity summaries, escape
   comparisons, Beta probabilities, raw MC fractions, and `graveyard`. Objects
   with zero unbound realizations in those samples are marked `graveyard=true`.

@@ -276,15 +276,15 @@ Recompute unbound probabilities.
 
 Clarify when missing:
 
-- Whether public Gaia DR3 and SIMBAD network queries are allowed, only when the
-  user requests `--refresh-external`.
+- Whether public Gaia DR3 network queries are allowed, only when the user
+  requests `--refresh-external`.
 - Whether to process all objects or one `object_id` when the request is scoped
   ambiguously.
 
 Precise agent prompt:
 
 ```text
-Run hvs_dynamics_calculate for CATALOG_DIR=<catalog, unless overridden>, using the hvs_dynamics_calculate skill. Reuse official Gaia DR3 raw rows and SIMBAD RV cached under external_enrichment by default, apply gaiadr3-zeropoint correction, use literature RV first and cached SIMBAD RV second, then compute Galactocentric total velocity and Boubert-style unbound probability with the same default 10000 MCMC posterior samples used for graveyard classification. Write results into each object JSON dynamics field only when write=True, and report skipped reasons, lower-limit results, and graveyard count. Query Gaia/SIMBAD only when --refresh-external is explicitly requested.
+Run hvs_dynamics_calculate for CATALOG_DIR=<catalog, unless overridden>, using the hvs_dynamics_calculate skill. Reuse official Gaia DR3 raw rows cached under external_enrichment by default, apply gaiadr3-zeropoint correction, use literature RV when available, and otherwise ignore SIMBAD RV and compute the Boubert-style missing-RV lower-limit case. Then compute Galactocentric total velocity and unbound probability with the same default 10000 MCMC posterior samples used for graveyard classification. Write results into each object JSON dynamics field only when write=True, and report skipped reasons, lower-limit results, and graveyard count. Query Gaia DR3 only when --refresh-external is explicitly requested.
 ```
 
 ## HVS Catalog HTML Build

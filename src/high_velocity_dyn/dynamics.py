@@ -97,9 +97,6 @@ class DynamicsClients(Protocol):
     def query_gaia_by_source_ids(self, source_ids: list[str]) -> QueryRows:
         ...
 
-    def query_simbad_by_identifiers(self, identifiers: list[str]) -> QueryRows:
-        ...
-
 
 @dataclass(frozen=True)
 class GaiaSourceId:
@@ -395,26 +392,6 @@ def select_literature_radial_velocity(record: dict[str, Any]) -> RadialVelocityC
     return choices[0][1]
 
 
-def cached_simbad_radial_velocity(record: dict[str, Any]) -> RadialVelocityChoice | None:
-    external = record.get("external_enrichment") if isinstance(record.get("external_enrichment"), dict) else {}
-    providers = external.get("providers") if isinstance(external.get("providers"), dict) else {}
-    simbad = providers.get("simbad") if isinstance(providers.get("simbad"), dict) else {}
-    rv = simbad.get("radial_velocity") if isinstance(simbad.get("radial_velocity"), dict) else {}
-    value = parse_float(rv.get("value")) if isinstance(rv, dict) else None
-    if value is None:
-        return None
-    error = parse_float(rv.get("error"))
-    warning = "" if error is not None and error > 0 else "radial_velocity_uncertainty_missing"
-    return RadialVelocityChoice(
-        value=value,
-        error=error if error is not None and error > 0 else None,
-        source="simbad",
-        source_detail=str(simbad.get("main_id") or "cached external_enrichment"),
-        bibcode=str(rv.get("bibcode") or ""),
-        warning=warning,
-    )
-
-
 def cached_gaia_row(record: dict[str, Any], source_id: str) -> dict[str, Any] | None:
     external = record.get("external_enrichment") if isinstance(record.get("external_enrichment"), dict) else {}
     providers = external.get("providers") if isinstance(external.get("providers"), dict) else {}
@@ -430,30 +407,13 @@ def cached_gaia_row(record: dict[str, Any], source_id: str) -> dict[str, Any] | 
     return dict(raw)
 
 
-def simbad_radial_velocity_from_rows(rows: QueryRows) -> RadialVelocityChoice | None:
-    for row in rows.rows:
-        value = parse_float(row.get("rvz_radvel"))
-        if value is None:
-            continue
-        error = parse_float(row.get("rvz_err"))
-        warning = "" if error is not None and error > 0 else "radial_velocity_uncertainty_missing"
-        return RadialVelocityChoice(
-            value=value,
-            error=error if error is not None and error > 0 else None,
-            source="simbad",
-            source_detail=str(row.get("main_id") or row.get("oid") or ""),
-            bibcode=str(row.get("rvz_bibcode") or ""),
-            warning=warning,
-        )
-    return None
-
-
 def select_radial_velocity(
     record: dict[str, Any],
-    clients: DynamicsClients | None,
+    clients: DynamicsClients | None = None,
     *,
     fail_on_query_error: bool = False,
 ) -> tuple[RadialVelocityChoice, list[dict[str, Any]]]:
+    _ = clients, fail_on_query_error
     warnings: list[dict[str, Any]] = []
     literature = select_literature_radial_velocity(record)
     if literature is not None:
@@ -461,31 +421,10 @@ def select_radial_velocity(
             warnings.append({"type": literature.warning, "message": "Literature radial velocity has no usable uncertainty; RV is held fixed."})
         return literature, warnings
 
-    cached = cached_simbad_radial_velocity(record)
-    if cached is not None:
-        warnings.append({"type": "simbad_radial_velocity_used", "message": "No literature RV was available; SIMBAD RV was used."})
-        if cached.warning:
-            warnings.append({"type": cached.warning, "message": "SIMBAD radial velocity has no usable uncertainty; RV is held fixed."})
-        return cached, warnings
-
-    if clients is not None:
-        try:
-            queried = simbad_radial_velocity_from_rows(clients.query_simbad_by_identifiers(object_identifier_values(record)))
-        except Exception as exc:
-            if fail_on_query_error:
-                raise
-            queried = None
-            warnings.append({"type": "simbad_query_failed", "message": f"{type(exc).__name__}: {exc}"})
-        if queried is not None:
-            warnings.append({"type": "simbad_radial_velocity_used", "message": "No literature RV was available; SIMBAD RV was used."})
-            if queried.warning:
-                warnings.append({"type": queried.warning, "message": "SIMBAD radial velocity has no usable uncertainty; RV is held fixed."})
-            return queried, warnings
-
     warnings.append(
         {
             "type": "minimum_grf_velocity_assumption",
-            "message": "No literature or SIMBAD RV was available; the missing radial velocity is chosen per posterior sample to minimize Galactocentric rest-frame speed.",
+            "message": "No literature RV was available; the missing radial velocity is chosen per posterior sample to minimize Galactocentric rest-frame speed. SIMBAD RV is intentionally ignored for dynamics.",
         }
     )
     return RadialVelocityChoice(
@@ -1078,25 +1017,18 @@ def build_computed_dynamics_record(
     }
 
 
-def _adql_string(value: str) -> str:
-    return "'" + value.replace("'", "''") + "'"
-
-
 class AstroqueryDynamicsClients:
-    """Official Gaia DR3 TAP and SIMBAD query clients."""
+    """Official Gaia DR3 TAP query client."""
 
     def __init__(self) -> None:
         try:
             from astroquery.gaia import GaiaClass
-            from astroquery.simbad import SimbadClass
         except Exception as exc:  # pragma: no cover - depends on runtime env.
             raise DynamicsError(f"astroquery import failed: {type(exc).__name__}: {exc}") from exc
         try:
             self._gaia = GaiaClass(show_server_messages=False)
         except TypeError:  # pragma: no cover - older astroquery compatibility.
             self._gaia = GaiaClass()
-        self._simbad = SimbadClass()
-        self._simbad.ROW_LIMIT = -1
         try:
             self._gaia.MAIN_GAIA_TABLE = "gaiadr3.gaia_source"
             self._gaia.ROW_LIMIT = -1
@@ -1111,19 +1043,6 @@ class AstroqueryDynamicsClients:
         query = f"SELECT {columns} FROM gaiadr3.gaia_source WHERE source_id IN ({values})"
         job = self._gaia.launch_job_async(query, verbose=False)
         return rows_from_query_result(job.get_results())
-
-    def query_simbad_by_identifiers(self, identifiers: list[str]) -> QueryRows:
-        identifiers = _unique_preserve_order([value for value in identifiers if value])
-        if not identifiers:
-            return QueryRows(rows=[], units={})
-        values = ", ".join(_adql_string(value) for value in identifiers)
-        query = (
-            "SELECT basic.oid, basic.main_id, basic.rvz_radvel, basic.rvz_err, basic.rvz_bibcode, ids.ids "
-            "FROM basic LEFT JOIN ids ON basic.oid = ids.oidref "
-            "WHERE basic.oid IN (SELECT DISTINCT oidref FROM ident WHERE id IN ("
-            f"{values}))"
-        )
-        return rows_from_query_result(self._simbad.query_tap(query, async_job=True))
 
 
 SampleProvider = Callable[[AstrometryInput, RadialVelocityChoice, int, int | None], dict[str, np.ndarray]]
@@ -1229,8 +1148,7 @@ def compute_dynamics_for_object(
             extra_fields=extra_fields,
         )
 
-    rv_clients = clients if external_cache_mode == "refresh" else None
-    rv, rv_warnings = select_radial_velocity(record, rv_clients, fail_on_query_error=fail_on_network_error)
+    rv, rv_warnings = select_radial_velocity(record)
     warnings.extend(rv_warnings)
     fields, _cov, covariance_warnings = covariance_matrix(astrometry, rv)
     warnings.extend(covariance_warnings)

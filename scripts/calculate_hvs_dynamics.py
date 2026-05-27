@@ -57,13 +57,13 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--fail-on-network-error",
         action="store_true",
-        help="Fail immediately on Gaia/SIMBAD query errors in refresh mode instead of recording skipped dynamics.",
+        help="Fail immediately on Gaia DR3 query errors in refresh mode instead of recording skipped dynamics.",
     )
     parser.add_argument(
         "--external-cache-mode",
         choices=EXTERNAL_CACHE_MODES,
         default="required",
-        help="Use cached external_enrichment data only (required) or force Gaia/SIMBAD refresh queries (refresh). Default: required.",
+        help="Use cached external_enrichment data only (required) or force Gaia DR3 refresh queries (refresh). Default: required.",
     )
     parser.add_argument(
         "--refresh-external",

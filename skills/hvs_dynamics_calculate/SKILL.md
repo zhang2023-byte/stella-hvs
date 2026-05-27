@@ -19,7 +19,7 @@ whether an object belongs in the catalog.
 
 1. Confirm `catalog/candidates/` exists and that the object JSON files contain
    `external_enrichment.providers.gaia_dr3.raw_columns` from a prior enriched
-   merge. Public Gaia DR3/SIMBAD astroquery calls are needed only when the user
+   merge. Public Gaia DR3 astroquery calls are needed only when the user
    explicitly asks to refresh external data.
 2. Prefer a dry run for first review:
 
@@ -49,7 +49,7 @@ whether an object belongs in the catalog.
      --write True
    ```
 
-   Force fresh Gaia/SIMBAD queries only when explicitly requested:
+   Force fresh Gaia DR3 queries only when explicitly requested:
 
    ```bash
    conda run -n stella-env python scripts/calculate_hvs_dynamics.py \
@@ -78,10 +78,9 @@ whether an object belongs in the catalog.
   the raw parallax, zero point, corrected parallax, parallax error, and corrected
   parallax-over-error.
 - RV priority is literature first, choosing the literature RV with the smallest
-  numeric error. If no literature RV exists, use cached SIMBAD RV from
-  `external_enrichment`. If neither exists, use the Boubert et al. missing-RV
-  minimum Galactocentric rest-frame velocity convention and mark the result as a
-  lower limit.
+  numeric error. If no literature RV exists, ignore SIMBAD RV and use the
+  Boubert et al. missing-RV minimum Galactocentric rest-frame velocity
+  convention, marking the result as a lower limit.
 - The same MCMC posterior sample set, default exactly 10000 samples, drives
   velocity summaries, escape comparisons, Beta probabilities, raw MC fractions,
   and `graveyard`.
@@ -96,6 +95,6 @@ whether an object belongs in the catalog.
 - Rerunning `merge_hvs_candidate_catalog.py` rebuilds object JSON and resets
   `dynamics`; rerun this workflow after a merge rebuild or update.
 - Default calculation mode performs no network calls. Use `--refresh-external`
-  only with explicit permission.
+  only with explicit permission for Gaia DR3 refresh queries.
 - Do not call DeepXiv, ADS, LLMs, or literature download tools.
 - Do not force-add generated `catalog/` outputs unless explicitly requested.

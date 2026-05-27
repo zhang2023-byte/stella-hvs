@@ -290,7 +290,7 @@ class HvsDynamicsTest(unittest.TestCase):
         self.assertEqual(result["status_reason"], "gaia astrometry not available")
         self.assertEqual(clients.gaia_query_count, 0)
 
-    def test_refresh_mode_queries_gaia_and_simbad_when_needed(self) -> None:
+    def test_refresh_mode_queries_gaia_only_and_ignores_simbad_rv(self) -> None:
         clients = FakeClients(simbad_rows=[{"main_id": "HVS-A", "rvz_radvel": 512.0, "rvz_err": 3.0}])
         result = compute_dynamics_for_object(
             object_record(radial_velocities=[None], include_gaia_cache=False),
@@ -302,9 +302,10 @@ class HvsDynamicsTest(unittest.TestCase):
             generated_at="2026-05-26T12:00:00",
         )
         self.assertEqual(result["status"], "computed")
-        self.assertEqual(result["radial_velocity_source"]["source"], "simbad")
+        self.assertEqual(result["radial_velocity_source"]["source"], "minimum_grf_velocity")
+        self.assertTrue(result["radial_velocity_source"]["lower_limit"])
         self.assertEqual(clients.gaia_query_count, 1)
-        self.assertEqual(clients.simbad_query_count, 1)
+        self.assertEqual(clients.simbad_query_count, 0)
 
     def test_literature_rv_uses_smallest_error(self) -> None:
         selected = select_literature_radial_velocity(
@@ -327,18 +328,20 @@ class HvsDynamicsTest(unittest.TestCase):
         self.assertIn("radial_velocity_uncertainty_missing", warning_types)
         self.assertIn("radial_velocity_held_fixed", warning_types)
 
-    def test_simbad_fallback_and_missing_rv_lower_limit(self) -> None:
-        simbad, simbad_warnings = select_radial_velocity(
-            object_record(radial_velocities=[None]),
-            FakeClients(simbad_rows=[{"main_id": "HVS-A", "rvz_radvel": 512.0, "rvz_err": 3.0}]),
+    def test_missing_literature_rv_ignores_simbad_and_uses_lower_limit(self) -> None:
+        clients = FakeClients(simbad_rows=[{"main_id": "HVS-A", "rvz_radvel": 512.0, "rvz_err": 3.0}])
+        record = object_record(radial_velocities=[None])
+        record["external_enrichment"]["providers"]["simbad"] = {  # type: ignore[index]
+            "status": "matched",
+            "radial_velocity": {"value": 512.0, "error": 3.0},
+        }
+        lower_limit, lower_warnings = select_radial_velocity(
+            record,
+            clients,
         )
-        self.assertEqual(simbad.source, "simbad")
-        self.assertFalse(simbad.lower_limit)
-        self.assertIn("simbad_radial_velocity_used", {item["type"] for item in simbad_warnings})
-
-        lower_limit, lower_warnings = select_radial_velocity(object_record(radial_velocities=[None]), FakeClients())
         self.assertEqual(lower_limit.source, "minimum_grf_velocity")
         self.assertTrue(lower_limit.lower_limit)
+        self.assertEqual(clients.simbad_query_count, 0)
         self.assertIn("minimum_grf_velocity_assumption", {item["type"] for item in lower_warnings})
 
     def test_default_samples_drive_probability_and_graveyard(self) -> None:

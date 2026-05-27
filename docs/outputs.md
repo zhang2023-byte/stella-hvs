@@ -232,10 +232,10 @@ The dynamics calculation reads official Gaia DR3 TAP astrometry cached by the
 merge workflow under `external_enrichment.providers.gaia_dr3.raw_columns`,
 using either a DR3-family Gaia identifier from the object or the matched cached
 Gaia DR3 provider source ID. It applies `gaiadr3-zeropoint`, uses literature RV
-first and cached SIMBAD RV second, and otherwise computes the Boubert et al.
-missing-RV lower-limit case.
+when available, and otherwise computes the Boubert et al. missing-RV lower-limit
+case without using SIMBAD RV.
 Default mode performs no network calls; `--refresh-external` forces new
-Gaia/SIMBAD astroquery requests. The same default 10000 MCMC samples are used
+Gaia DR3 astroquery requests. The same default 10000 MCMC samples are used
 for total velocity, escape comparison, Beta probability, raw MC ratio, and
 `graveyard`. Rerunning the object catalog merge resets `dynamics` to
 `not_computed`, so recompute dynamics after merge rebuilds or updates.

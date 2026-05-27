@@ -157,7 +157,7 @@ is ignored by default. Do not force-add it unless the user explicitly asks.
   object-level verification/enrichment; use `--enrichment-mode off` for a pure
   offline merge.
 - `hvs_dynamics_calculate` is generated from object-level catalog JSON plus
-  official Gaia DR3/SIMBAD values cached under `external_enrichment`. It writes
+  official Gaia DR3 values cached under `external_enrichment`. It writes
   only the object-level `dynamics` field, performs no network calls by default,
   uses the same default 10000 posterior samples for velocity, probability, and
   graveyard classification, and must be rerun after object catalog merge
