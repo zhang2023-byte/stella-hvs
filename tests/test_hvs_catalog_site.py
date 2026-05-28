@@ -122,6 +122,7 @@ def object_record() -> dict[str, object]:
                         "proper_motion_ra": quantity("1.2", unit="mas/yr", method_ref="step-01"),
                         "proper_motion_dec": quantity("-0.2", unit="mas/yr", method_ref="step-01"),
                         "radial_velocity": quantity("510", unit="km/s", method_ref="step-01"),
+                        "distance": quantity("8.2", unit="kpc", method_ref="step-01"),
                     },
                     "derived_kinematics": {
                         "total_velocity": quantity("740", method_ref="step-02", lower_error="-20", upper_error="+30")
@@ -129,8 +130,14 @@ def object_record() -> dict[str, object]:
                     "bound_assessment": {"unbound_probability": quantity("0.82", unit="", method_ref="step-03")},
                 },
                 "photometry": [{"measurement_type": "magnitude", "band": "G", **quantity("17.1", unit="mag")}],
-                "spectroscopy": [],
-                "stellar_parameters": {"mass": quantity("3.0", unit="Msun"), "other": []},
+                "spectroscopy": [{"measurement_type": "spectral_type", "spectral_type": "B9", "value": "B9"}],
+                "stellar_parameters": {
+                    "teff": quantity("12000", unit="K"),
+                    "log_g": quantity("4.1", unit="dex"),
+                    "metallicity": quantity("-1.2", unit="dex"),
+                    "mass": quantity("3.0", unit="Msun"),
+                    "other": [],
+                },
                 "abundances": [],
                 "quality_flags": [{"name": "RUWE", **quantity("1.1", unit="")}],
                 "orbit": {"flight_time": quantity("40", unit="Myr"), "other": []},
@@ -180,21 +187,39 @@ def object_record() -> dict[str, object]:
         "external_enrichment": {
             "status": "success",
             "queried_at": "2026-05-20T10:00:00",
-            "providers": {
-                "simbad": {
-                    "status": "matched",
-                    "matched_by": "identifier",
-                    "main_id": "HVS-A",
-                    "object_type": "Star",
-                    "radial_velocity": {"value": "505", "unit": "km/s"},
+                "providers": {
+                    "simbad": {
+                        "status": "matched",
+                        "matched_by": "identifier",
+                        "main_id": "HVS-A",
+                        "object_type": "Star",
+                        "radial_velocity": {"value": "505", "unit": "km/s"},
+                        "spectral_type": {"value": "B8", "bibcode": "2026A&A...001A...1A"},
+                    },
+                    "gaia_dr3": {
+                        "status": "matched",
+                        "matched_by": "source_id",
+                        "source_id": "123",
+                        "designation": "Gaia DR3 123",
+                        "astrometry": {
+                            "ra": {"value": 10.11, "unit": "deg"},
+                            "dec": {"value": -20.21, "unit": "deg"},
+                            "parallax": {"value": 0.29, "unit": "mas"},
+                            "pmra": {"value": 1.1, "unit": "mas / yr"},
+                            "pmdec": {"value": -0.3, "unit": "mas / yr"},
+                        },
+                        "photometry": {
+                            "phot_g_mean_mag": {"value": 17.2, "unit": "mag"},
+                            "bp_rp": {"value": 0.4, "unit": "mag"},
+                        },
+                        "stellar_parameters": {
+                            "distance_gspphot": {"value": 8000, "unit": "pc"},
+                            "teff_gspphot": {"value": 11900, "unit": "K"},
+                            "logg_gspphot": {"value": 4.0, "unit": "log(cm.s**-2)"},
+                            "mh_gspphot": {"value": -1.1, "unit": "dex"},
+                        },
+                    },
                 },
-                "gaia_dr3": {
-                    "status": "matched",
-                    "matched_by": "source_id",
-                    "source_id": "123",
-                    "designation": "Gaia DR3 123",
-                },
-            },
             "verification": {
                 "coordinate_separations_arcsec": {"simbad": 0.2, "gaia_dr3": 0.1},
                 "value_comparisons": [
@@ -235,6 +260,7 @@ def object_record() -> dict[str, object]:
             "sampling": {"sample_count": 10000},
             "total_velocity_grf_kms": {"p16": 700, "median": 740, "p84": 780},
             "escape_velocity_kms": {"p16": 610, "median": 620, "p84": 630},
+            "posterior": {"heliocentric_distance_kpc": {"p16": 7.4, "median": 8.0, "p84": 8.6}},
             "p_bound_beta": {"p16": 0.17, "median": 0.18, "p84": 0.19},
             "p_unbound_beta": {"p16": 0.81, "median": 0.82, "p84": 0.83},
             "mc_counts": {"sample_count": 10000, "bound_count": 1800, "unbound_count": 8200},
@@ -279,6 +305,60 @@ class HvsCatalogSiteTest(unittest.TestCase):
             self.assertEqual(snapshot["rows"][0]["identifier"], "Gaia DR3 123")
             self.assertEqual(snapshot["rows"][0]["dynamics"]["status"], "computed")
 
+    def test_snapshot_reads_local_ads_metadata_for_reported_by(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            catalog = root / "catalog"
+            literature = root / "literature"
+            write_json(
+                catalog / "03_hvs_candidates_index.json",
+                {"summary": {"object_count": 1}, "objects": [{"object_id": "Gaia_DR3_123"}]},
+            )
+            write_json(catalog / CANDIDATES_DIRNAME / "Gaia_DR3_123.json", object_record())
+            write_json(
+                literature / "2601.00001" / "ads_metadata.json",
+                {
+                    "response": {
+                        "docs": [
+                            {
+                                "first_author": "Alpha, A.",
+                                "author": ["Alpha, A.", "Beta, B."],
+                                "year": "2026",
+                                "pubdate": "2026-01-04",
+                                "citation_count": 5,
+                                "bibcode": "2026A&A...001A...1A",
+                            }
+                        ]
+                    }
+                },
+            )
+            write_json(
+                literature / "2602.00002" / "ads_metadata.json",
+                {
+                    "response": {
+                        "docs": [
+                            {
+                                "first_author": "Gamma, G.",
+                                "author": ["Gamma, G."],
+                                "year": "2026",
+                                "pubdate": "2026-02-01",
+                                "citation_count": 42,
+                                "bibcode": "2026MNRAS.002..2B",
+                            }
+                        ]
+                    }
+                },
+            )
+
+            snapshot = load_catalog_snapshot(catalog, literature_dir=literature)
+            row = snapshot["rows"][0]
+
+            self.assertEqual(row["discovery_month"], "2026-01")
+            self.assertEqual(row["sources"][0]["paper_metadata"]["reported_by"], "Alpha et al. 2026")
+            self.assertEqual(row["sources"][0]["paper_metadata"]["citation_count"], 5.0)
+            self.assertEqual(row["sources"][1]["paper_metadata"]["reported_by"], "Gamma 2026")
+            self.assertEqual(snapshot["paper_metadata"]["2602.00002"]["citation_count"], 42.0)
+
     def test_snapshot_ignores_old_object_schema_versions(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             catalog = Path(tmp) / "catalog"
@@ -297,7 +377,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
 
         self.assertEqual(row["bibcodes"], ["2026A&A...001A...1A", "2026MNRAS.002..2B"])
         self.assertEqual(row["sources"][0]["phase_space"]["ra"], "10.1")
-        self.assertNotIn("distance", row["sources"][0]["phase_space"])
+        self.assertEqual(row["sources"][0]["phase_space"]["distance"], "8.2")
         self.assertEqual(row["sources"][0]["phase_space"]["parallax"], "0.31")
         self.assertEqual(row["sources"][0]["total_velocity"], "740 -20 +30")
         self.assertEqual(row["sources"][0]["unbound_probability"], "0.82")
@@ -312,6 +392,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
         self.assertEqual(row["dynamics"]["p_unbound"]["median"], 0.82)
         self.assertEqual(row["dynamics"]["total_velocity_grf_kms"]["median"], 740.0)
         self.assertEqual(row["dynamics"]["escape_velocity_kms"]["median"], 620.0)
+        self.assertEqual(row["dynamics"]["heliocentric_distance_kpc"]["median"], 8.0)
         self.assertEqual(row["dynamics"]["velocity_margin_kms"], 120.0)
         self.assertEqual(row["dynamics"]["radial_velocity_source"]["source"], "literature")
         self.assertEqual(row["dynamics"]["corrected_parallax_over_error"], 9.67)
@@ -319,6 +400,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
         self.assertEqual(row["external"]["status"], "success")
         self.assertEqual(row["external"]["gaia_dr3"]["matched_by"], "source_id")
         self.assertEqual(row["external"]["simbad"]["matched_by"], "identifier")
+        self.assertEqual(row["discovery_month"], "2026-01")
         self.assertEqual(row["external"]["warning_count"], 1)
         self.assertEqual(row["external"]["value_comparison_count"], 1)
         self.assertEqual(row["merge"]["evidence_count"], 1)
@@ -359,6 +441,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
         html = render_live_index_html(catalog_root="../..")
 
         self.assertIn('data-catalog-root="../.."', html)
+        self.assertIn('data-paper-metadata="assets/paper-metadata.json"', html)
 
     def test_static_html_is_self_contained(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -382,6 +465,100 @@ class HvsCatalogSiteTest(unittest.TestCase):
             self.assertFalse(has_external_html_dependencies(html))
             self.assertNotIn("<script src=", html)
             self.assertNotIn("<link href=", html)
+
+    def test_static_html_inlines_png_hero_asset(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            catalog = root / "catalog"
+            assets = root / "assets"
+            write_json(catalog / "03_hvs_candidates_index.json", {"summary": {"object_count": 1}, "objects": []})
+            write_json(catalog / CANDIDATES_DIRNAME / "Gaia_DR3_123.json", object_record())
+            assets.mkdir()
+            css_path = assets / "stella.css"
+            js_path = assets / "catalog-viewer.js"
+            hero_path = assets / "stella-hvs-hero.png"
+            css_path.write_text('.masthead { background-image: url("stella-hvs-hero.png"); }', encoding="utf-8")
+            js_path.write_text('document.body.dataset.loaded = "yes";', encoding="utf-8")
+            hero_path.write_bytes(b"\x89PNG\r\n\x1a\n")
+
+            html = build_static_html(catalog, css_path, js_path, hero_path)
+
+            self.assertIn("data:image/png;base64", html)
+            self.assertNotIn("stella-hvs-hero.png", html)
+            self.assertFalse(has_external_html_dependencies(html))
+
+    def test_home_filters_use_bounded_inputs_not_sliders(self) -> None:
+        js = (ROOT / "src" / "stella_html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
+
+        self.assertIn("data-filter-bound", js)
+        self.assertIn("filterValidationErrors", js)
+        self.assertNotIn('type="range"', js)
+        self.assertNotIn("data-range-filter", js)
+
+    def test_home_filter_input_updates_table_without_rebuilding_home(self) -> None:
+        js = (ROOT / "src" / "stella_html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
+        update_body = js.split("function updateFilterBound", 1)[1].split("function route", 1)[0]
+
+        self.assertIn("catalog-table-region", js)
+        self.assertIn("scheduleCatalogTableUpdate", update_body)
+        self.assertIn("updateFilterCardState", update_body)
+        self.assertNotIn("renderHome()", update_body)
+
+    def test_home_empty_table_cells_are_unboxed(self) -> None:
+        css = (ROOT / "src" / "stella_html" / "assets" / "stella.css").read_text(encoding="utf-8")
+        empty_inline_rule = css.split(".empty-inline {", 1)[1].split("}", 1)[0]
+
+        self.assertIn("background: transparent", empty_inline_rule)
+        self.assertIn("border: 0", empty_inline_rule)
+        self.assertNotIn(".empty-inline,\n.empty-state", css)
+
+    def test_home_sorting_is_limited_to_approved_columns(self) -> None:
+        js = (ROOT / "src" / "stella_html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
+        sortable_block = js.split("const SORTABLE_HOME_KEYS", 1)[1].split("]);", 1)[0]
+
+        for key in ("discovery", "total_velocity", "p_unbound", "radial_velocity"):
+            self.assertIn(f'"{key}"', sortable_block)
+        for key in ("identifier", "reported_by", "teff", "log_g", "metallicity"):
+            self.assertNotIn(f'"{key}"', sortable_block)
+        self.assertIn("renderHomeHeader", js)
+        self.assertIn("plain-header-label", js)
+
+    def test_reported_by_source_mode_can_show_all_sources(self) -> None:
+        js = (ROOT / "src" / "stella_html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
+
+        self.assertIn('["all", "all"]', js)
+        self.assertIn('modes.reportedBy === "all"', js)
+        self.assertIn("sortedPaperEntries", js)
+
+    def test_source_mode_change_avoids_full_home_rerender(self) -> None:
+        js = (ROOT / "src" / "stella_html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
+        mode_change_body = js.split('if (mode && Object.prototype.hasOwnProperty.call(state.homeConfig.modes, mode)) {', 1)[
+            1
+        ].split("const visibleColumn", 1)[0]
+
+        self.assertIn("updateRangeFilters()", mode_change_body)
+        self.assertIn("updateCatalogTable()", mode_change_body)
+        self.assertNotIn("renderHome()", mode_change_body)
+
+    def test_home_cells_use_compact_values_tooltips_and_source_labels(self) -> None:
+        js = (ROOT / "src" / "stella_html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
+
+        self.assertIn("renderDisplayQuantityMath", js)
+        self.assertIn("formatIntervalNumber", js)
+        self.assertIn('label !== "probability" && error != null', js)
+        self.assertIn('title="${escapeHtml(title)}"', js)
+        self.assertIn('new Set(["discovery", "reported_by", "radec", "pm", "parallax", "g_mag", "bp_rp"])', js)
+        self.assertIn('text: "(" + valid.map((part) => part.text).join(", ") + ")"', js)
+
+    def test_method_dag_uses_dark_readable_colors(self) -> None:
+        css = (ROOT / "src" / "stella_html" / "assets" / "stella.css").read_text(encoding="utf-8")
+        dag_scroll_rule = css.split(".dag-scroll {", 1)[1].split("}", 1)[0]
+        dag_node_rect_rule = css.split(".dag-node rect {", 1)[1].split("}", 1)[0]
+
+        self.assertIn("#050505", dag_scroll_rule)
+        self.assertNotIn("#fbfdfb", dag_scroll_rule)
+        self.assertIn("fill: #0a0a0a", dag_node_rect_rule)
+        self.assertNotIn("fill: #fff", dag_node_rect_rule)
 
     def test_static_html_bundles_local_latex_math_renderer(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

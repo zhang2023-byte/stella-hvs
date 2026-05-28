@@ -207,6 +207,10 @@ conda run -n stella-env python scripts/build_hvs_candidates_index.py
 
 - Test environment: `conda run -n stella-env python -m unittest discover tests`
 - Do not restore unrelated changes and do not revert user changes.
+- For any Stella webpage, HTML catalog, frontend view, CSS, or browser-facing
+  UI design work, first read and follow the root design specification
+  (`DESIGN.md`, or `design.md` if that casing is introduced later). Treat it as
+  the visual and interaction source of truth for subsequent web design changes.
 - Agents may create temporary helper scripts, scratch files, probes, and
   one-off analysis outputs only when needed for the active task. Prefer writing
   them outside source-controlled paths, such as `/tmp`, or in an ignored

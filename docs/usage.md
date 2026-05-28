@@ -584,6 +584,12 @@ catalog/html/live/assets/...              Local CSS, JS, and visual assets share
 catalog/html/static/index.html            Single-file demo with the current catalog/ snapshot embedded
 ```
 
+The live page writes `catalog/html/live/assets/paper-metadata.json` from local
+`literature/<arxiv_id>/ads_metadata.json` files and copies the reusable
+`stella-hvs-hero.png` hero asset. This is a local build step only: it does not
+make ADS/API/network calls or refresh enrichment data. Missing ADS metadata
+falls back to the paper fields already present in the object catalog.
+
 The live version needs an HTTP server started from the repository root, for example:
 
 ```bash
@@ -596,7 +602,11 @@ Then open:
 http://127.0.0.1:8765/catalog/html/live/
 ```
 
-The static version does not read JSON live. It is a build-time `catalog/` snapshot and can be opened directly as `catalog/html/static/index.html` or copied to static hosting for demos. The source of truth remains `catalog/candidates/*.json`; the web page is only a display layer.
+The static version does not read JSON live. It is a build-time `catalog/`
+snapshot with CSS, JS, the HVS hero image, and local paper metadata embedded,
+and can be opened directly as `catalog/html/static/index.html` or copied to
+static hosting for demos. The source of truth remains `catalog/candidates/*.json`;
+the web page is only a display layer.
 
 ## 12. Date Syntax
 

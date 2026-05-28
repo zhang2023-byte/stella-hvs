@@ -27,6 +27,7 @@ OBSERVED_FIELDS = (
     "proper_motion_ra",
     "proper_motion_dec",
     "radial_velocity",
+    "distance",
 )
 
 DERIVED_FIELDS = ("total_velocity",)
@@ -39,6 +40,7 @@ FIELD_LABELS = {
     "proper_motion_ra": "pmRA",
     "proper_motion_dec": "pmDec",
     "radial_velocity": "RV",
+    "distance": "distance",
     "total_velocity": "total velocity",
     "unbound_probability": "P(unbound)",
 }
@@ -72,6 +74,85 @@ def _number(value: Any) -> float | None:
         return float(text)
     except ValueError:
         return None
+
+
+def _first_item(value: Any) -> Any:
+    if isinstance(value, list):
+        return value[0] if value else None
+    return value
+
+
+def _ads_doc(payload: dict[str, Any]) -> dict[str, Any]:
+    response = _as_mapping(payload.get("response"))
+    docs = _as_list(response.get("docs"))
+    if docs and isinstance(docs[0], dict):
+        return docs[0]
+    return payload
+
+
+def _author_label(first_author: Any, authors: Any, year: Any) -> str:
+    raw_author = _compact(first_author)
+    author_list = [str(item) for item in _as_list(authors) if str(item).strip()]
+    if not raw_author and author_list:
+        raw_author = author_list[0]
+    surname = raw_author.split(",", 1)[0].strip() or raw_author.strip()
+    year_text = _compact(year)
+    if not surname and not year_text:
+        return ""
+    if surname and year_text:
+        suffix = " et al." if len(author_list) != 1 else ""
+        return f"{surname}{suffix} {year_text}"
+    return surname or year_text
+
+
+def paper_metadata_for_arxiv(literature_dir: Path | None, arxiv_id: str) -> dict[str, Any]:
+    """Read local ADS metadata for a paper without making network calls."""
+    arxiv_id = _compact(arxiv_id)
+    if not arxiv_id or literature_dir is None:
+        return {}
+    path = literature_dir.expanduser() / arxiv_id / "ads_metadata.json"
+    if not path.exists():
+        return {}
+    try:
+        doc = _ads_doc(read_json(path))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    authors = _as_list(doc.get("author"))
+    first_author = _compact(doc.get("first_author") or (authors[0] if authors else ""))
+    year = _compact(doc.get("year"))
+    return {
+        "arxiv_id": arxiv_id,
+        "bibcode": _compact(doc.get("bibcode")),
+        "title": _compact(_first_item(doc.get("title"))),
+        "first_author": first_author,
+        "author_count": len(authors),
+        "year": year,
+        "pubdate": _compact(doc.get("pubdate")),
+        "citation_count": _number(doc.get("citation_count")),
+        "reported_by": _author_label(first_author, authors, year),
+    }
+
+
+def collect_paper_metadata(records: list[dict[str, Any]], literature_dir: Path | None) -> dict[str, dict[str, Any]]:
+    metadata: dict[str, dict[str, Any]] = {}
+    if literature_dir is None:
+        return metadata
+    for record in records:
+        for source in _as_list(record.get("sources")):
+            paper = _as_mapping(_as_mapping(source).get("paper"))
+            arxiv_id = _compact(paper.get("arxiv_id"))
+            if arxiv_id and arxiv_id not in metadata:
+                metadata[arxiv_id] = paper_metadata_for_arxiv(literature_dir, arxiv_id)
+    return metadata
+
+
+def fallback_reported_by(paper: dict[str, Any], metadata: dict[str, Any]) -> str:
+    label = _compact(metadata.get("reported_by"))
+    if label:
+        return label
+    year = _compact(metadata.get("year")) or _compact(paper.get("month"))[:4]
+    arxiv_id = _compact(paper.get("arxiv_id"))
+    return f"arXiv {arxiv_id} {year}".strip()
 
 
 def quantity_text(quantity: Any) -> str:
@@ -137,7 +218,11 @@ def candidate_for_source(record: dict[str, Any], source_id: str) -> dict[str, An
     return None
 
 
-def source_summary(record: dict[str, Any], source: dict[str, Any]) -> dict[str, Any]:
+def source_summary(
+    record: dict[str, Any],
+    source: dict[str, Any],
+    paper_metadata: dict[str, dict[str, Any]] | None = None,
+) -> dict[str, Any]:
     """Extract source-specific index quantities without merging across papers."""
     source_id = str(source.get("source") or "")
     candidate = candidate_for_source(record, source_id) or {}
@@ -146,14 +231,27 @@ def source_summary(record: dict[str, Any], source: dict[str, Any]) -> dict[str, 
     derived = core.get("derived_kinematics") if isinstance(core.get("derived_kinematics"), dict) else {}
     bound_assessment = core.get("bound_assessment") if isinstance(core.get("bound_assessment"), dict) else {}
     paper = source.get("paper") if isinstance(source.get("paper"), dict) else {}
+    arxiv_id = str(paper.get("arxiv_id") or "")
+    metadata = (paper_metadata or {}).get(arxiv_id, {})
     candidate_context = candidate.get("candidate_context") if isinstance(candidate.get("candidate_context"), dict) else {}
     return {
         "source": source_id,
         "record_id": str(source.get("record_id") or ""),
         "paper_candidate_id": str(source.get("paper_candidate_id") or ""),
         "gaia_source_id": str(source.get("gaia_source_id") or ""),
-        "arxiv_id": str(paper.get("arxiv_id") or ""),
+        "arxiv_id": arxiv_id,
         "bibcode": str(paper.get("bibcode") or ""),
+        "paper": {
+            "arxiv_id": arxiv_id,
+            "bibcode": str(paper.get("bibcode") or ""),
+            "title": str(paper.get("title") or ""),
+            "month": str(paper.get("month") or ""),
+            "links": _as_mapping(paper.get("links")),
+        },
+        "paper_metadata": {
+            **metadata,
+            "reported_by": fallback_reported_by(paper, metadata),
+        },
         "phase_space": {field: quantity_text(observed.get(field)) for field in OBSERVED_FIELDS},
         "total_velocity": quantity_text(derived.get("total_velocity")),
         "unbound_probability": quantity_text(bound_assessment.get("unbound_probability")),
@@ -186,6 +284,7 @@ def candidate_context_summary(record: dict[str, Any]) -> dict[str, Any]:
 def dynamics_summary(record: dict[str, Any]) -> dict[str, Any]:
     dynamics = _as_mapping(record.get("dynamics"))
     astrometry = _as_mapping(dynamics.get("astrometry"))
+    posterior = _as_mapping(dynamics.get("posterior"))
     rv_source = _as_mapping(dynamics.get("radial_velocity_source"))
     p_unbound = interval_summary(dynamics.get("p_unbound_beta"))
     p_bound = interval_summary(dynamics.get("p_bound_beta"))
@@ -202,6 +301,7 @@ def dynamics_summary(record: dict[str, Any]) -> dict[str, Any]:
         "p_bound": p_bound,
         "total_velocity_grf_kms": total_velocity,
         "escape_velocity_kms": escape_velocity,
+        "heliocentric_distance_kpc": interval_summary(posterior.get("heliocentric_distance_kpc")),
         "velocity_margin_kms": velocity_margin,
         "lower_limit": bool(dynamics.get("lower_limit")),
         "graveyard": bool(dynamics.get("graveyard")),
@@ -272,10 +372,10 @@ def quantity_coverage_summary(record: dict[str, Any]) -> dict[str, int]:
     return coverage
 
 
-def build_index_row(record: dict[str, Any]) -> dict[str, Any]:
+def build_index_row(record: dict[str, Any], paper_metadata: dict[str, dict[str, Any]] | None = None) -> dict[str, Any]:
     canonical = record.get("canonical_identifier") if isinstance(record.get("canonical_identifier"), dict) else {}
     sources = [source for source in record.get("sources") or [] if isinstance(source, dict)]
-    source_rows = [source_summary(record, source) for source in sources]
+    source_rows = [source_summary(record, source, paper_metadata=paper_metadata) for source in sources]
     bibcodes = []
     for source in source_rows:
         bibcode = source.get("bibcode") or ""
@@ -303,6 +403,7 @@ def build_index_row(record: dict[str, Any]) -> dict[str, Any]:
         "total_velocity": quantity_text(_best_source_quantity(record, "derived_kinematics", "total_velocity")),
         "unbound_probability": quantity_text(_best_source_quantity(record, "bound_assessment", "unbound_probability")),
     }
+    months = _unique([_as_mapping(source.get("paper")).get("month") for source in sources])
     return {
         "object_id": str(record.get("object_id") or ""),
         "identifier": str(canonical.get("value") or record.get("object_id") or ""),
@@ -312,6 +413,7 @@ def build_index_row(record: dict[str, Any]) -> dict[str, Any]:
         "bibcodes": bibcodes,
         "sources": source_rows,
         "source_count": len(source_rows),
+        "discovery_month": min(months) if months else "",
         "enrichment_status": str(enrichment.get("status") or ""),
         "enrichment_warning_count": len(enrichment.get("warnings") or []) if isinstance(enrichment, dict) else 0,
         "warning_count": len(merge.get("warnings") or []),
@@ -358,7 +460,7 @@ def method_lineage(steps: list[dict[str, Any]], method_refs: list[str]) -> dict[
     }
 
 
-def load_catalog_snapshot(catalog_dir: Path) -> dict[str, Any]:
+def load_catalog_snapshot(catalog_dir: Path, *, literature_dir: Path | None = None) -> dict[str, Any]:
     """Load index and object JSON files into a static-site snapshot."""
     catalog_dir = catalog_dir.expanduser()
     index_path = catalog_dir / INDEX_JSON_FILENAME
@@ -388,7 +490,8 @@ def load_catalog_snapshot(catalog_dir: Path) -> dict[str, Any]:
     order_index = {object_id: index for index, object_id in enumerate(order)}
     records.sort(key=lambda record: (order_index.get(str(record.get("object_id") or ""), len(order_index)), str(record.get("object_id") or "")))
 
-    rows = [build_index_row(record) for record in records]
+    paper_metadata = collect_paper_metadata(records, literature_dir)
+    rows = [build_index_row(record, paper_metadata=paper_metadata) for record in records]
     summary = index_record.get("summary") if isinstance(index_record.get("summary"), dict) else {}
     if not summary:
         summary = {
@@ -406,6 +509,7 @@ def load_catalog_snapshot(catalog_dir: Path) -> dict[str, Any]:
         "index": index_record,
         "rows": rows,
         "objects": records,
+        "paper_metadata": paper_metadata,
         "field_labels": FIELD_LABELS,
     }
 
@@ -424,10 +528,12 @@ def inline_css(css_path: Path, *, hero_path: Path | None = None) -> str:
     css = css_path.read_text(encoding="utf-8")
     if hero_path is not None and hero_path.exists():
         css = css.replace("url(\"stella-hero.svg\")", f"url(\"{_asset_data_uri(hero_path, 'image/svg+xml')}\")")
+        mime_type = "image/png" if hero_path.suffix.lower() == ".png" else "image/svg+xml"
+        css = css.replace("url(\"stella-hvs-hero.png\")", f"url(\"{_asset_data_uri(hero_path, mime_type)}\")")
     return css
 
 
-def render_live_index_html(*, catalog_root: str = "../..") -> str:
+def render_live_index_html(*, catalog_root: str = "../..", paper_metadata_path: str = "assets/paper-metadata.json") -> str:
     return """<!doctype html>
 <html lang="en">
 <head>
@@ -437,12 +543,12 @@ def render_live_index_html(*, catalog_root: str = "../..") -> str:
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="assets/stella.css">
 </head>
-<body data-catalog-root="{catalog_root}">
+<body data-catalog-root="{catalog_root}" data-paper-metadata="{paper_metadata_path}">
   <div id="app" class="app-shell" aria-live="polite"></div>
   <script src="assets/catalog-viewer.js"></script>
 </body>
 </html>
-""".format(catalog_root=catalog_root)
+""".format(catalog_root=catalog_root, paper_metadata_path=paper_metadata_path)
 
 
 def render_static_index_html(snapshot: dict[str, Any], *, css: str, js: str) -> str:
@@ -483,8 +589,15 @@ def has_external_html_dependencies(html: str) -> bool:
     return any(re.search(pattern, html, flags=re.IGNORECASE) for pattern in patterns)
 
 
-def build_static_html(catalog_dir: Path, css_path: Path, js_path: Path, hero_path: Path | None = None) -> str:
-    snapshot = load_catalog_snapshot(catalog_dir)
+def build_static_html(
+    catalog_dir: Path,
+    css_path: Path,
+    js_path: Path,
+    hero_path: Path | None = None,
+    *,
+    literature_dir: Path | None = None,
+) -> str:
+    snapshot = load_catalog_snapshot(catalog_dir, literature_dir=literature_dir)
     css = inline_css(css_path, hero_path=hero_path)
     js = js_path.read_text(encoding="utf-8")
     return render_static_index_html(snapshot, css=css, js=js)

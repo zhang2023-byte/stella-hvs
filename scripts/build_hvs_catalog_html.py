@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import shutil
 import sys
 from pathlib import Path
@@ -17,6 +18,7 @@ if str(SRC) not in sys.path:
 from stella_html.catalog_site import (  # noqa: E402
     build_static_html,
     has_external_html_dependencies,
+    load_catalog_snapshot,
     render_live_index_html,
 )
 
@@ -40,7 +42,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 def ensure_live_assets(assets_dir: Path) -> None:
     """Populate target live assets from bundled source assets."""
-    required = ("stella.css", "catalog-viewer.js", "stella-hero.svg")
+    required = ("stella.css", "catalog-viewer.js", "stella-hero.svg", "stella-hvs-hero.png")
     source_assets_dir = SRC / "stella_html" / "assets"
     missing_source = [name for name in required if not (source_assets_dir / name).exists()]
     if missing_source:
@@ -74,7 +76,7 @@ def main() -> int:
 
     css_path = assets_dir / "stella.css"
     js_path = assets_dir / "catalog-viewer.js"
-    hero_path = assets_dir / "stella-hero.svg"
+    hero_path = assets_dir / "stella-hvs-hero.png"
     patch_catalog_viewer_asset(js_path)
     missing_assets = [path for path in (css_path, js_path, hero_path) if not path.exists()]
     if missing_assets:
@@ -83,9 +85,14 @@ def main() -> int:
 
     live_dir.mkdir(parents=True, exist_ok=True)
     static_dir.mkdir(parents=True, exist_ok=True)
+    snapshot = load_catalog_snapshot(catalog_dir, literature_dir=WORKSPACE / "literature")
+    (assets_dir / "paper-metadata.json").write_text(
+        json.dumps(snapshot.get("paper_metadata") or {}, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
     (live_dir / "index.html").write_text(render_live_index_html(catalog_root="../.."), encoding="utf-8")
 
-    static_html = build_static_html(catalog_dir, css_path, js_path, hero_path)
+    static_html = build_static_html(catalog_dir, css_path, js_path, hero_path, literature_dir=WORKSPACE / "literature")
     if has_external_html_dependencies(static_html):
         raise RuntimeError("static HTML contains an external script, stylesheet, or remote image dependency")
     static_path = static_dir / "index.html"

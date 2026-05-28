@@ -71,6 +71,13 @@ conda run -n stella-env python scripts/build_hvs_catalog_html.py --catalog-dir c
 conda run -n stella-env python scripts/render_lit_notes.py
 ```
 
+The HTML catalog home page is generated from `catalog/candidates/*.json` plus
+local `literature/<arxiv_id>/ads_metadata.json` citation metadata when present.
+It does not query ADS, SIMBAD, Gaia, DeepXiv, or any LLM during the HTML build.
+The generated live page includes a reusable local HVS hero image and a
+sortable, min/max input-filterable per-star table with source controls under the
+relevant table headers.
+
 `validate_hvs_candidates.py` groups repeated candidate warnings by default; add
 `--verbose-warnings` to print every warning.
 
@@ -127,7 +134,7 @@ scripts/extract_catalog_tables.py     Extract reviewed LaTeX tables into ECSV
 scripts/init_hvs_candidates.py         Generate literature_hvs_candidates templates
 scripts/merge_hvs_candidate_catalog.py Merge object-level HVS candidates catalog and SIMBAD/Gaia enrichment
 scripts/calculate_hvs_dynamics.py      Calculate object-level Galactocentric dynamics and unbound probabilities
-scripts/build_hvs_catalog_html.py      Build object-level HVS catalog HTML demo
+scripts/build_hvs_catalog_html.py      Build object-level HVS catalog HTML pages
 src/high_velocity_lit/                Literature and catalog implementation
 src/high_velocity_dyn/                HVS dynamics implementation
 tests/                                Tests
