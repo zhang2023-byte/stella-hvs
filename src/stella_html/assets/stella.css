@@ -809,6 +809,10 @@ th.sticky-object {
   margin: 0;
 }
 
+.span-2 .json-dl {
+  grid-template-columns: minmax(160px, auto) minmax(0, 1fr);
+}
+
 .source-card dt,
 .json-dl dt {
   color: var(--muted);
@@ -915,6 +919,50 @@ th.sticky-object {
   cursor: pointer;
   color: var(--navy);
   font-weight: 900;
+  list-style: none;
+  overflow: hidden;
+  text-align: left;
+  display: block;
+}
+
+.compact-details summary::before,
+.raw-json summary::before {
+  content: "▸";
+  color: var(--muted);
+  font-size: 14px;
+  margin-right: 6px;
+}
+
+.compact-details[open] summary::before,
+.raw-json[open] summary::before {
+  content: "▾ ";
+}
+
+.compact-details summary::-webkit-details-marker,
+.raw-json summary::-webkit-details-marker {
+  display: none;
+}
+
+.download-btn-inline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--muted);
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  flex-shrink: 0;
+  float: right;
+  margin-left: 10px;
+}
+
+.download-btn-inline:hover {
+  border-color: var(--ink);
+  color: var(--ink);
 }
 
 .compact-details pre,
@@ -955,7 +1003,7 @@ th.sticky-object {
 }
 
 .quantity-group h4 {
-  margin: 0 0 5px;
+  margin: 0 0 2px;
   color: var(--muted);
   font-family: var(--mono);
   font-size: 11px;
@@ -1102,12 +1150,14 @@ th.sticky-object {
 
 .dag-edge {
   stroke: #76767f;
+  color: #76767f;
   stroke-width: 2;
   opacity: .68;
 }
 
 .dag-edge.is-active {
   stroke: var(--red);
+  color: var(--red);
   stroke-width: 3;
   opacity: 1;
 }
@@ -1194,6 +1244,118 @@ th.sticky-object {
   border-width: 1px 0 0;
 }
 
+
+
+.method-chain-details {
+  border: 1px solid var(--line-strong);
+  background: var(--panel);
+  padding: 13px;
+}
+
+.method-chain-details summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.method-chain-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.method-chain-details summary::before {
+  content: "▸ ";
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.method-chain-details[open] summary::before {
+  content: "▾ ";
+}
+
+.method-chain-pager {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.method-chain-page-btn {
+  min-height: 32px;
+  padding: 0 14px;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--quiet);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.method-chain-page-btn.is-active {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.candidate-merged-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.merged-field {
+  margin-bottom: 3px;
+  border: 1px solid var(--line);
+  background: var(--panel-soft);
+  padding: 5px 7px;
+}
+
+.merged-field-label {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  margin-bottom: 1px;
+}
+
+.merged-quantity-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 0;
+  border-top: 1px solid var(--line);
+  cursor: pointer;
+}
+
+.merged-quantity-row:first-child {
+  border-top: 0;
+}
+
+.merged-quantity-row .quantity-value {
+  flex: 1 1 auto;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  min-height: 0;
+}
+
+.source-label {
+  flex: 0 0 auto;
+  min-height: 22px;
+  padding: 2px 8px;
+  border: 1px solid var(--line-strong);
+  background: var(--quiet-soft);
+  color: var(--quiet);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.merged-quantity-row.is-active {
+  border-color: var(--ink);
+  outline: 1px solid var(--ink);
+  outline-offset: 1px;
+}
+
 @media (max-width: 1180px) {
   .metric-strip {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1215,7 +1377,8 @@ th.sticky-object {
   }
 
   .dossier-grid,
-  .quantity-layout {
+  .quantity-layout,
+  .candidate-merged-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1266,6 +1429,7 @@ th.sticky-object {
   .dossier-scoreboard,
   .dossier-grid,
   .quantity-layout,
+  .candidate-merged-grid,
   .filter-grid,
   .range-filter-grid,
   .column-toggle-grid {

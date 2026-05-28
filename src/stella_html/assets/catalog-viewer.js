@@ -10,6 +10,9 @@
     radial_velocity: "RV",
     distance: "distance",
     total_velocity: "total velocity",
+    galactocentric_vy: "galactocentric v_y",
+    galactocentric_tangential_velocity: "galactocentric v_tan",
+    tangential_velocity: "tangential velocity",
     unbound_probability: "P(unbound)",
     teff: "Teff",
     log_g: "log g",
@@ -1744,7 +1747,7 @@
 
   function renderSortButton(label, key) {
     const active = state.sortKey === key;
-    const dir = active ? (state.sortDir === "asc" ? " ↑" : " ↓") : " ↕";
+    const dir = active ? (state.sortDir === "asc" ? " ↑" : " ⬇") : " ↕";
     return `<span class="sort-button${active ? " is-active" : ""}">${escapeHtml(label)}${escapeHtml(dir)}</span>`;
   }
 
@@ -2151,31 +2154,6 @@
     return state.rows.find((row) => row.object_id === objectId) || buildIndexRow(state.objectMap.get(objectId) || {});
   }
 
-  function renderDetailHeader(record, row) {
-    const dynamics = asObject(row.dynamics);
-    const pUnbound = asObject(dynamics.p_unbound);
-    const v = asObject(dynamics.total_velocity_grf_kms);
-    const escape = asObject(dynamics.escape_velocity_kms);
-    const rvSource = asObject(dynamics.radial_velocity_source);
-    const canonical = asObject(record.canonical_identifier);
-    return `
-      <section class="detail-header">
-        <div>
-          <a class="back-button" href="#">Back to index</a>
-          <h2 class="detail-title">${escapeHtml(canonical.value || record.object_id)}</h2>
-          <div class="detail-meta">${escapeHtml(record.object_id)} / schema ${escapeHtml(record.schema_version || "")} / generated ${escapeHtml(record.generated_at || "")}</div>
-          <div class="badge-row detail-labels">${renderPills(asObject(row.candidate_context).paper_labels, "neutral")}</div>
-        </div>
-        <div class="dossier-scoreboard">
-          ${metric("P(unbound)", fmtProbability(pUnbound.median) || "-", dynamics.status)}
-          ${metric("vGRF", fmtNumber(v.median) || "-", "km s^-1")}
-          ${metric("vesc", fmtNumber(escape.median) || "-", "km s^-1")}
-          ${metric("RV source", compact(rvSource.source) || "-", dynamics.lower_limit ? "lower limit" : "")}
-        </div>
-      </section>
-    `;
-  }
-
   function dlRows(items) {
     return items
       .filter(([, value]) => value != null && value !== "" && !(Array.isArray(value) && !value.length))
@@ -2186,6 +2164,25 @@
   function renderDynamicsDossier(record, row) {
     const dynamics = asObject(record.dynamics);
     const summary = asObject(row.dynamics);
+    const status = compact(summary.status || "not_computed");
+    if (status !== "computed") {
+      return `
+        <section class="section-band">
+          <h2 class="section-heading">Stella Dynamics</h2>
+          <div class="dossier-grid">
+            <article class="info-panel">
+              <h3>Status</h3>
+              <div class="badge-row">
+                ${badge(status, dynamicsTone(status))}
+              </div>
+              <dl class="json-dl">
+                ${dlRows([["reason", summary.status_reason]])}
+              </dl>
+            </article>
+          </div>
+        </section>
+      `;
+    }
     const astrometry = asObject(dynamics.astrometry);
     const rv = asObject(dynamics.radial_velocity_source);
     const warnings = asArray(dynamics.warnings);
@@ -2197,7 +2194,7 @@
           <article class="info-panel">
             <h3>Status</h3>
             <div class="badge-row">
-              ${badge(summary.status || "not_computed", dynamicsTone(summary.status))}
+              ${badge(status, dynamicsTone(status))}
               ${summary.lower_limit ? badge("lower limit", "warn") : ""}
               ${summary.graveyard ? badge("graveyard", "quiet") : ""}
             </div>
@@ -2268,30 +2265,87 @@
     `;
   }
 
-  function renderExternalDossier(record) {
+  function renderSimbadDossier(record) {
     const enrichment = asObject(record.external_enrichment);
     const providers = asObject(enrichment.providers);
     const simbad = asObject(providers.simbad);
-    const gaia = asObject(providers.gaia_dr3);
-    const verification = asObject(enrichment.verification);
+    const coords = asObject(simbad.coordinates);
+    const photo = asArray(simbad.photometry);
+    const aliases = asArray(simbad.aliases);
     return `
       <section class="section-band">
-        <h2 class="section-heading">Gaia and SIMBAD Verification</h2>
+        <h2 class="section-heading">SIMBAD</h2>
         <div class="dossier-grid">
           <article class="info-panel">
-            <h3>SIMBAD</h3>
+            <h3>Match</h3>
             <dl class="json-dl">
               ${dlRows([
                 ["status", simbad.status],
                 ["matched_by", simbad.matched_by],
                 ["main_id", simbad.main_id],
                 ["object_type", simbad.object_type],
+                ["spectral_type", quantityText(simbad.spectral_type)],
                 ["RV", quantityText(simbad.radial_velocity)]
               ])}
             </dl>
           </article>
           <article class="info-panel">
-            <h3>Gaia DR3</h3>
+            <h3>Coordinates</h3>
+            <dl class="json-dl">
+              ${dlRows([
+                ["RA", quantityText(coords.ra)],
+                ["Dec", quantityText(coords.dec)],
+                ["err_maj", quantityText(coords.coo_err_maj)],
+                ["err_min", quantityText(coords.coo_err_min)]
+              ])}
+            </dl>
+          </article>
+          <article class="info-panel span-2">
+            <h3>Photometry</h3>
+            ${photo.length ? `
+              <div class="mini-table-wrap">
+                <table class="mini-table">
+                  <thead>
+                    <tr><th>band</th><th>value</th><th>unit</th></tr>
+                  </thead>
+                  <tbody>
+                    ${photo.map((item) => `
+                      <tr>
+                        <td>${escapeHtml(item.band || "")}</td>
+                        <td>${textWithMath(item.value != null ? String(item.value) : "")}</td>
+                        <td>${textWithMath(item.unit || "")}</td>
+                      </tr>
+                    `).join("")}
+                  </tbody>
+                </table>
+              </div>
+            ` : `<div class="empty-inline">No photometry recorded.</div>`}
+          </article>
+          ${aliases.length ? `
+            <article class="info-panel span-2">
+              <h3>Aliases</h3>
+              <div class="badge-row">${aliases.map((a) => badge(a, "neutral")).join("")}</div>
+            </article>
+          ` : ""}
+        </div>
+      </section>
+    `;
+  }
+
+  function renderGaiaDossier(record) {
+    const enrichment = asObject(record.external_enrichment);
+    const providers = asObject(enrichment.providers);
+    const gaia = asObject(providers.gaia_dr3);
+    const astrometry = asObject(gaia.astrometry);
+    const photometry = asObject(gaia.photometry);
+    const stellar = asObject(gaia.stellar_parameters);
+    const quality = asObject(gaia.quality_flags);
+    return `
+      <section class="section-band">
+        <h2 class="section-heading">Gaia DR3</h2>
+        <div class="dossier-grid">
+          <article class="info-panel">
+            <h3>Match</h3>
             <dl class="json-dl">
               ${dlRows([
                 ["status", gaia.status],
@@ -2303,39 +2357,80 @@
             </dl>
           </article>
           <article class="info-panel span-2">
-            <h3>Value Comparisons</h3>
-            ${renderComparisonTable(asArray(verification.value_comparisons))}
+            <h3>Astrometry</h3>
+            <dl class="json-dl">
+              ${dlRows([
+                ["RA", quantityText(astrometry.ra)],
+                ["Dec", quantityText(astrometry.dec)],
+                ["RA error", quantityText(astrometry.ra_error)],
+                ["Dec error", quantityText(astrometry.dec_error)],
+                ["parallax", quantityText(astrometry.parallax)],
+                ["parallax error", quantityText(astrometry.parallax_error)],
+                ["pmRA", quantityText(astrometry.pmra)],
+                ["pmRA error", quantityText(astrometry.pmra_error)],
+                ["pmDec", quantityText(astrometry.pmdec)],
+                ["pmDec error", quantityText(astrometry.pmdec_error)]
+              ])}
+            </dl>
+          </article>
+          <article class="info-panel">
+            <h3>Photometry</h3>
+            <dl class="json-dl">
+              ${dlRows([
+                ["G", quantityText(photometry.phot_g_mean_mag)],
+                ["BP", quantityText(photometry.phot_bp_mean_mag)],
+                ["RP", quantityText(photometry.phot_rp_mean_mag)],
+                ["BP-RP", quantityText(photometry.bp_rp)],
+                ["BP-G", quantityText(photometry.bp_g)],
+                ["G-RP", quantityText(photometry.g_rp)]
+              ])}
+            </dl>
+          </article>
+          <article class="info-panel">
+            <h3>Stellar Parameters</h3>
+            <dl class="json-dl">
+              ${dlRows([
+                ["Teff", quantityText(stellar.teff_gspphot)],
+                ["log g", quantityText(stellar.logg_gspphot)],
+                ["[M/H]", quantityText(stellar.mh_gspphot)],
+                ["distance", quantityText(stellar.distance_gspphot)],
+                ["A0", quantityText(stellar.azero_gspphot)],
+                ["AG", quantityText(stellar.ag_gspphot)],
+                ["E(BP-RP)", quantityText(stellar.ebpminrp_gspphot)]
+              ])}
+            </dl>
+          </article>
+          <article class="info-panel span-2">
+            <h3>Quality Flags</h3>
+            <dl class="json-dl">
+              ${dlRows([
+                ["RUWE", quantityText(quality.ruwe)],
+                ["astrometric_params_solved", quantityText(quality.astrometric_params_solved)],
+                ["astrometric_excess_noise", quantityText(quality.astrometric_excess_noise)],
+                ["duplicated_source", quantityText(quality.duplicated_source)],
+                ["non_single_star", quantityText(quality.non_single_star)],
+                ["phot_g_mean_flux_over_error", quantityText(quality.phot_g_mean_flux_over_error)],
+                ["phot_bp_mean_flux_over_error", quantityText(quality.phot_bp_mean_flux_over_error)],
+                ["phot_rp_mean_flux_over_error", quantityText(quality.phot_rp_mean_flux_over_error)]
+              ])}
+            </dl>
           </article>
         </div>
-        ${renderWarningList("Enrichment warnings", asArray(enrichment.warnings))}
+        ${(() => {
+          const gaiaRawStr = JSON.stringify(gaia.raw_columns || {}, null, 2);
+          const gaiaRawBytes = new TextEncoder().encode(gaiaRawStr);
+          let gaiaRawBinary = "";
+          gaiaRawBytes.forEach((b) => { gaiaRawBinary += String.fromCharCode(b); });
+          const gaiaRawUri = "data:application/json;base64," + btoa(gaiaRawBinary);
+          const gaiaRawFilename = `${compact(record.object_id) || "object"}_gaia_raw.json`;
+          return `
+            <details class="compact-details">
+              <summary>Raw Gaia DR3 columns <a class="download-btn-inline" href="${gaiaRawUri}" download="${escapeHtml(gaiaRawFilename)}" title="Download JSON" onclick="event.stopPropagation();">⬇</a></summary>
+              <pre>${escapeHtml(gaiaRawStr)}</pre>
+            </details>
+          `;
+        })()}
       </section>
-    `;
-  }
-
-  function renderComparisonTable(comparisons) {
-    if (!comparisons.length) {
-      return `<div class="empty-inline">No comparisons recorded.</div>`;
-    }
-    return `
-      <div class="mini-table-wrap">
-        <table class="mini-table">
-          <thead>
-            <tr><th>source</th><th>field</th><th>literature</th><th>official</th><th>difference</th><th>unit</th></tr>
-          </thead>
-          <tbody>
-            ${comparisons.map((item) => `
-              <tr>
-                <td>${textWithMath(item.source || "")}</td>
-                <td>${textWithMath(item.field || "")}</td>
-                <td>${textWithMath(item.literature_value || "")}</td>
-                <td>${textWithMath(item.official_value || "")}</td>
-                <td>${textWithMath(item.difference || "")}</td>
-                <td>${textWithMath(item.unit || "")}</td>
-              </tr>
-            `).join("")}
-          </tbody>
-        </table>
-      </div>
     `;
   }
 
@@ -2354,46 +2449,6 @@
         `).join("")}
       </div>
     `;
-  }
-
-  function renderMergeAudit(record) {
-    const merge = asObject(record.merge);
-    return `
-      <section class="section-band">
-        <h2 class="section-heading">Merge Evidence</h2>
-        <div class="dossier-grid">
-          <article class="info-panel">
-            <h3>Grouping</h3>
-            <dl class="json-dl">
-              ${dlRows([
-                ["strategy", merge.match_strategy],
-                ["evidence", asArray(merge.evidence).length],
-                ["warnings", asArray(merge.warnings).length]
-              ])}
-            </dl>
-          </article>
-          <article class="info-panel span-2">
-            <h3>Evidence edges</h3>
-            ${renderEvidenceList(asArray(merge.evidence))}
-          </article>
-        </div>
-        ${renderWarningList("Merge warnings", asArray(merge.warnings))}
-      </section>
-    `;
-  }
-
-  function renderEvidenceList(evidence) {
-    if (!evidence.length) {
-      return `<div class="empty-inline">Singleton object or no merge evidence recorded.</div>`;
-    }
-    return evidence.map((item) => `
-      <div class="evidence-row">
-        ${badge(item.evidence_type || "evidence", "neutral")}
-        ${badge(item.decision || "", item.decision === "accepted" ? "good" : "warn")}
-        <span>${textWithMath(item.source || "")}</span>
-        <span>${textWithMath(item.matched_value || item.message || "")}</span>
-      </div>
-    `).join("");
   }
 
   function renderSourceCards(record) {
@@ -2415,8 +2470,7 @@
                       ["bibcode", paper.bibcode],
                       ["record_id", source.record_id],
                       ["paper ID", source.paper_candidate_id],
-                      ["Gaia source ID", source.gaia_source_id],
-                      ["source JSON", source.source_json_path]
+                      ["Gaia source ID", source.gaia_source_id]
                     ])}
                   </dl>
                   <div class="link-row">
@@ -2516,49 +2570,114 @@
   }
 
   function renderCandidateCore(record) {
+    const allCandidates = asArray(record.candidates);
+    if (!allCandidates.length) {
+      return "";
+    }
+
+    const groupDefs = [
+      { name: "observed_phase_space", key: "core.observed_phase_space", isList: false },
+      { name: "derived_kinematics", key: "core.derived_kinematics", isList: false },
+      { name: "bound_assessment", key: "core.bound_assessment", isList: false },
+      { name: "photometry", key: "photometry", isList: true },
+      { name: "spectroscopy", key: "spectroscopy", isList: true },
+      { name: "stellar_parameters", key: "stellar_parameters", isList: false, listKey: "other" },
+      { name: "abundances", key: "abundances", isList: true },
+      { name: "quality_flags", key: "quality_flags", isList: true },
+      { name: "orbit", key: "orbit", isList: false, listKey: "other" },
+      { name: "astrophysical_origin", key: "astrophysical_origin", isList: false, listKey: "other", extraListKey: "hypothesis_metrics" },
+      { name: "extra", key: "extra", isList: true },
+    ];
+
     return `
       <section class="section-band">
         <h2 class="section-heading">Source Candidate Records</h2>
-        <div class="core-grid">
-          ${asArray(record.candidates)
-            .map((candidate) => {
-              const identifiers = asObject(candidate.identifiers);
-              const core = asObject(candidate.core);
-              const stellar = asObject(candidate.stellar_parameters);
-              const orbit = asObject(candidate.orbit);
-              const origin = asObject(candidate.astrophysical_origin);
-              return `
-                <article class="candidate-core">
-                  <h3><span class="source-tag">${escapeHtml(candidate.source)}</span> ${escapeHtml(identifiers.paper_candidate_id || identifiers.record_id || "")}</h3>
-                  <dl class="json-dl">
-                    ${dlRows([
-                      ["record_id", identifiers.record_id],
-                      ["paper_candidate_id", identifiers.paper_candidate_id],
-                      ["gaia_source_id", identifiers.gaia_source_id]
-                    ])}
-                  </dl>
-                  ${renderCandidateContext(candidate.candidate_context)}
-                  <div class="quantity-layout">
-                    ${renderQuantityGroup(record, candidate, "observed_phase_space", asObject(core.observed_phase_space))}
-                    ${renderQuantityGroup(record, candidate, "derived_kinematics", asObject(core.derived_kinematics))}
-                    ${renderQuantityGroup(record, candidate, "bound_assessment", asObject(core.bound_assessment))}
-                    ${renderQuantityList(record, candidate, "photometry", candidate.photometry)}
-                    ${renderQuantityList(record, candidate, "spectroscopy", candidate.spectroscopy)}
-                    ${renderQuantityGroup(record, candidate, "stellar_parameters", stellar)}
-                    ${renderQuantityList(record, candidate, "stellar_parameters", stellar.other)}
-                    ${renderQuantityList(record, candidate, "abundances", candidate.abundances)}
-                    ${renderQuantityList(record, candidate, "quality_flags", candidate.quality_flags)}
-                    ${renderQuantityGroup(record, candidate, "orbit", orbit)}
-                    ${renderQuantityList(record, candidate, "orbit", orbit.other)}
-                    ${renderQuantityGroup(record, candidate, "astrophysical_origin", origin)}
-                    ${renderQuantityList(record, candidate, "hypothesis_metrics", origin.hypothesis_metrics)}
-                    ${renderQuantityList(record, candidate, "astrophysical_origin", origin.other)}
-                    ${renderQuantityList(record, candidate, "extra", candidate.extra)}
-                  </div>
-                </article>
-              `;
-            })
-            .join("")}
+        <div class="candidate-merged-grid">
+          ${groupDefs.map((def) => {
+            const entries = [];
+            allCandidates.forEach((candidate) => {
+              const source = compact(candidate.source);
+              let groupData;
+              if (def.key.startsWith("core.")) {
+                const core = asObject(candidate.core);
+                groupData = core[def.key.slice(5)];
+              } else {
+                groupData = candidate[def.key];
+              }
+
+              if (def.isList) {
+                asArray(groupData).forEach((quantity, index) => {
+                  if (quantity && typeof quantity === "object" && !Array.isArray(quantity)) {
+                    entries.push({ quantity, source, index, field: "" });
+                  }
+                });
+              } else {
+                Object.entries(groupData).forEach(([field, quantity]) => {
+                  if (field === def.listKey || field === def.extraListKey) return;
+                  if (quantity && typeof quantity === "object" && !Array.isArray(quantity)) {
+                    entries.push({ quantity, source, field });
+                  }
+                });
+                if (def.listKey) {
+                  asArray(groupData[def.listKey]).forEach((quantity, index) => {
+                    if (quantity && typeof quantity === "object" && !Array.isArray(quantity)) {
+                      entries.push({ quantity, source, index, field: "", subGroup: def.listKey });
+                    }
+                  });
+                }
+                if (def.extraListKey) {
+                  asArray(groupData[def.extraListKey]).forEach((quantity, index) => {
+                    if (quantity && typeof quantity === "object" && !Array.isArray(quantity)) {
+                      entries.push({ quantity, source, index, field: "", subGroup: def.extraListKey });
+                    }
+                  });
+                }
+              }
+            });
+
+            if (!entries.length) return "";
+
+            const byField = {};
+            entries.forEach((entry) => {
+              const key = entry.field || entry.subGroup || `item-${entry.index}`;
+              if (!byField[key]) byField[key] = [];
+              byField[key].push(entry);
+            });
+
+            return `
+              <div class="quantity-group">
+                <h4>${escapeHtml(GROUP_LABELS[def.name] || def.name)}</h4>
+                ${Object.entries(byField).map(([field, fieldEntries]) => {
+                  let label;
+                  if (field.startsWith("item-")) {
+                    const idx = Number(field.slice(5));
+                    const firstQty = fieldEntries[0] && fieldEntries[0].quantity;
+                    label = quantityLabel("", firstQty, idx);
+                  } else {
+                    label = FIELD_LABELS[field] || field;
+                  }
+                  return `
+                    <div class="merged-field">
+                      <div class="merged-field-label">${escapeHtml(label)}</div>
+                      ${fieldEntries.map((entry) => {
+                        const refs = asArray(entry.quantity.method_refs).map(compact).filter(Boolean);
+                        const active =
+                          state.activeLineage &&
+                          state.activeLineage.source === entry.source &&
+                          refs.some((ref) => state.activeLineage.direct.has(ref));
+                        return `
+                          <div class="merged-quantity-row ${active ? "is-active" : ""}" data-source="${escapeHtml(entry.source)}" data-method-refs="${escapeHtml(refs.join(","))}">
+                            <div class="quantity-value">${formatQuantityDetail(entry.quantity)}</div>
+                            <span class="source-label">${escapeHtml(entry.source)}</span>
+                          </div>
+                        `;
+                      }).join("")}
+                    </div>
+                  `;
+                }).join("")}
+              </div>
+            `;
+          }).join("")}
         </div>
       </section>
     `;
@@ -2646,6 +2765,13 @@
     const height = Math.max(132, 64 + sortedLayers.length * yGap);
     const active = state.activeLineage && state.activeLineage.source === sourceId ? state.activeLineage : null;
     const selected = state.selectedStep && state.selectedStep.source === sourceId ? state.selectedStep.stepId : "";
+    const defs = `
+      <defs>
+        <marker id="dag-arrow" viewBox="0 0 10 10" refX="0" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
+        </marker>
+      </defs>
+    `;
     const edges = [];
     steps.forEach((step) => {
       const to = compact(step.id);
@@ -2660,7 +2786,8 @@
         edges.push(`
           <line class="dag-edge ${active && active.edges.has(key) ? "is-active" : ""}"
             x1="${fromPos.x + nodeWidth / 2}" y1="${fromPos.y + nodeHeight}"
-            x2="${toPos.x + nodeWidth / 2}" y2="${toPos.y}" />
+            x2="${toPos.x + nodeWidth / 2}" y2="${toPos.y - 2}"
+            marker-end="url(#dag-arrow)" />
         `);
       });
     });
@@ -2686,7 +2813,7 @@
         `;
       })
       .join("");
-    return `<div class="dag-scroll"><svg class="dag-svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="Method DAG">${edges.join("")}${nodes}</svg></div>`;
+    return `<div class="dag-scroll"><svg class="dag-svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="Method DAG">${defs}${nodes}${edges.join("")}</svg></div>`;
   }
 
   function selectedStepForSource(sourceId, steps) {
@@ -2716,34 +2843,73 @@
   }
 
   function renderMethodChains(record) {
+    const groups = asArray(record.method_chain);
+    if (!groups.length) {
+      return "";
+    }
+    const isOpen = state.activeLineage != null || state.selectedStep != null;
+    let focusIndex = 0;
+    const focusSource = (state.activeLineage && state.activeLineage.source)
+      ? state.activeLineage.source
+      : (state.selectedStep && state.selectedStep.source)
+      ? state.selectedStep.source
+      : "";
+    if (focusSource) {
+      const found = groups.findIndex((g) => compact(g.source) === compact(focusSource));
+      if (found >= 0) {
+        focusIndex = found;
+      }
+    }
     return `
-      <section class="section-band" id="method-chain">
-        <h2 class="section-heading">Method Chain DAG</h2>
-        ${asArray(record.method_chain)
-          .map((group) => {
-            const source = sourceById(record, group.source);
-            const steps = asArray(group.steps);
-            return `
-              <article class="method-source" id="method-source-${escapeHtml(group.source)}">
-                <h3><span class="source-tag">${escapeHtml(group.source)}</span> ${escapeHtml(asObject(source.paper).bibcode || asObject(source.paper).arxiv_id || "")}</h3>
-                <div class="method-layout">
-                  ${renderDagSvg(group.source, steps)}
-                  ${renderMethodPanel(selectedStepForSource(group.source, steps))}
+      <section class="section-band">
+        <details class="method-chain-details" id="method-chain-details"${isOpen ? ' open' : ''}>
+          <summary><h2 class="section-heading" style="display:inline;">Method Chain</h2></summary>
+          <div class="method-chain-pages">
+            ${groups.map((group, index) => {
+              const source = sourceById(record, group.source);
+              const steps = asArray(group.steps);
+              return `
+                <div class="method-chain-page" data-page="${index}"${index === focusIndex ? "" : ' style="display:none;"'}>
+                  <article class="method-source" id="method-source-${escapeHtml(group.source)}">
+                    <h3><span class="source-tag">${escapeHtml(group.source)}</span> ${escapeHtml(asObject(source.paper).bibcode || asObject(source.paper).arxiv_id || "")}</h3>
+                    <div class="method-layout">
+                      ${renderDagSvg(group.source, steps)}
+                      ${renderMethodPanel(selectedStepForSource(group.source, steps))}
+                    </div>
+                  </article>
                 </div>
-              </article>
-            `;
-          })
-          .join("")}
+              `;
+            }).join("")}
+          </div>
+          ${groups.length > 1 ? `
+            <div class="method-chain-pager">
+              ${groups.map((group, index) => `
+                <button class="method-chain-page-btn ${index === focusIndex ? "is-active" : ""}" data-page="${index}">${escapeHtml(group.source)}</button>
+              `).join("")}
+            </div>
+          ` : ""}
+        </details>
       </section>
     `;
   }
 
   function renderRawJson(record) {
+    const jsonStr = JSON.stringify(record, null, 2);
+    const bytes = new TextEncoder().encode(jsonStr);
+    let binary = "";
+    bytes.forEach((b) => {
+      binary += String.fromCharCode(b);
+    });
+    const dataUri = "data:application/json;base64," + btoa(binary);
+    const filename = `${compact(record.object_id) || "object"}.json`;
     return `
-      <details class="raw-json">
-        <summary>Full object-level JSON</summary>
-        <pre>${escapeHtml(JSON.stringify(record, null, 2))}</pre>
-      </details>
+      <section class="section-band">
+        <h2 class="section-heading">Raw JSON</h2>
+        <details class="raw-json">
+          <summary>View raw JSON <a class="download-btn-inline" href="${dataUri}" download="${escapeHtml(filename)}" title="Download JSON" onclick="event.stopPropagation();">⬇</a></summary>
+          <pre>${escapeHtml(jsonStr)}</pre>
+        </details>
+      </section>
     `;
   }
 
@@ -2768,13 +2934,12 @@
     }
     const row = rowForObject(objectId);
     const content = `
-      ${renderDetailHeader(record, row)}
-      ${renderDynamicsDossier(record, row)}
-      ${renderExternalDossier(record)}
-      ${renderMergeAudit(record)}
       ${renderSourceCards(record)}
       ${renderMethodChains(record)}
       ${renderCandidateCore(record)}
+      ${renderDynamicsDossier(record, row)}
+      ${renderSimbadDossier(record)}
+      ${renderGaiaDossier(record)}
       ${renderRawJson(record)}
     `;
     app.innerHTML = shell(content, "detail");
@@ -2909,23 +3074,54 @@
       return;
     }
 
-    const quantity = event.target.closest(".quantity-button");
-    if (quantity) {
-      const sourceId = quantity.dataset.source;
-      const refs = (quantity.dataset.methodRefs || "").split(",").map(compact).filter(Boolean);
+    const methodChainBtn = event.target.closest(".method-chain-page-btn");
+    if (methodChainBtn) {
+      const pageIndex = methodChainBtn.dataset.page;
+      const details = document.getElementById("method-chain-details");
+      const pages = details.querySelectorAll(".method-chain-page");
+      const buttons = details.querySelectorAll(".method-chain-page-btn");
+      pages.forEach((p) => {
+        p.style.display = p.dataset.page === pageIndex ? "" : "none";
+      });
+      buttons.forEach((b) => {
+        b.classList.toggle("is-active", b.dataset.page === pageIndex);
+      });
+      return;
+    }
+
+    const quantityRow = event.target.closest(".merged-quantity-row");
+    if (quantityRow) {
+      const sourceId = quantityRow.dataset.source;
+      const refs = (quantityRow.dataset.methodRefs || "").split(",").map(compact).filter(Boolean);
       const objectId = asObject(parseObjectRoute(window.location.hash || "")).objectId;
       const record = state.objectMap.get(objectId);
       const group = record ? methodGroupBySource(record, sourceId) : { steps: [] };
       const lineage = lineageFor(asArray(group.steps), refs);
       state.activeLineage = { source: sourceId, direct: lineage.direct, ancestors: lineage.ancestors, edges: lineage.edges };
       state.selectedStep = refs.length ? { source: sourceId, stepId: refs[0] } : null;
-      rerenderDetailFromEventTarget(quantity);
+      const details = document.getElementById("method-chain-details");
+      if (details && !details.open) {
+        details.open = true;
+      }
+      if (details) {
+        const pages = details.querySelectorAll(".method-chain-page");
+        pages.forEach((page) => {
+          const sourceTag = page.querySelector(".source-tag");
+          page.style.display = (sourceTag && sourceTag.textContent.trim() === sourceId) ? "" : "none";
+        });
+        const buttons = details.querySelectorAll(".method-chain-page-btn");
+        buttons.forEach((b) => {
+          b.classList.toggle("is-active", b.textContent.trim() === sourceId);
+        });
+      }
+      rerenderDetailFromEventTarget(quantityRow);
       window.requestAnimationFrame(() => {
-        const target = document.getElementById("method-source-" + sourceId) || document.getElementById("method-chain");
+        const target = document.getElementById("method-source-" + sourceId) || document.getElementById("method-chain-details");
         if (target) {
           target.scrollIntoView({ behavior: "smooth", block: "start" });
         }
       });
+      return;
     }
   });
 
