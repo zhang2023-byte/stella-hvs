@@ -54,8 +54,8 @@
     { key: "total_velocity", label: "Total velocity", type: "number", defaultVisible: true, widthClass: "col-velocity" },
     { key: "p_unbound", label: "P_ub", type: "number", defaultVisible: true, widthClass: "col-probability" },
     { key: "radial_velocity", label: "RV", type: "number", defaultVisible: true, widthClass: "col-rv" },
-    { key: "radec", label: "RA, Dec", type: "number", defaultVisible: true, widthClass: "col-coordinate" },
-    { key: "pm", label: "pmRA, pmDec", type: "number", defaultVisible: true, widthClass: "col-coordinate" },
+    { key: "radec", label: "(RA, Dec)", type: "number", defaultVisible: true, widthClass: "col-coordinate" },
+    { key: "pm", label: "(pmRA, pmDec)", type: "number", defaultVisible: true, widthClass: "col-coordinate" },
     { key: "parallax", label: "plx", type: "number", defaultVisible: true, widthClass: "col-small" },
     { key: "distance", label: "Distance", type: "number", defaultVisible: true, widthClass: "col-distance" },
     { key: "g_mag", label: "G", type: "number", defaultVisible: true, widthClass: "col-small" },
@@ -721,7 +721,7 @@
     return sign + formatQuantityNumber(body.trim(), quantity, label);
   }
 
-  function renderDisplayQuantityMath(quantity, label) {
+  function renderDisplayQuantityMath(quantity, label, omitUnit) {
     const payload = asObject(quantity);
     const value = compact(payload.value);
     if (!value) {
@@ -748,14 +748,16 @@
         body += `<sup>${escapeHtml(upperText)}</sup>`;
       }
     }
-    const unitHtml = renderUnit(unit);
-    if (unitHtml) {
-      body += `<span class="math-unit">${unitHtml}</span>`;
+    if (!omitUnit) {
+      const unitHtml = renderUnit(unit);
+      if (unitHtml) {
+        body += `<span class="math-unit">${unitHtml}</span>`;
+      }
     }
-    return `<span class="math-formula quantity-math" aria-label="${escapeHtml(quantityText(payload))}">${body}</span>`;
+    return `<span class="math-formula quantity-math" aria-label="${escapeHtml(quantityText(payload, omitUnit ? { includeUnit: false } : undefined))}">${body}</span>`;
   }
 
-  function displayQuantityText(quantity, label) {
+  function displayQuantityText(quantity, label, omitUnit) {
     const payload = asObject(quantity);
     const value = compact(payload.value);
     if (!value) {
@@ -771,7 +773,7 @@
       text += " " + formatSignedDisplayError(lower, "-", payload, label) + " " + formatSignedDisplayError(upper, "+", payload, label);
     }
     const unit = compact(payload.unit);
-    if (unit) {
+    if (unit && !omitUnit) {
       text += " " + unit;
     }
     return text;
@@ -1240,9 +1242,9 @@
     };
   }
 
-  function quantityItem(kind, source, quantity, label) {
+  function quantityItem(kind, source, quantity, label, omitUnit) {
     const payload = asObject(quantity);
-    const rawText = quantityText(payload);
+    const rawText = quantityText(payload, omitUnit ? { includeUnit: false } : undefined);
     if (!rawText) {
       return null;
     }
@@ -1250,9 +1252,9 @@
       kind,
       source,
       label: label || "",
-      text: displayQuantityText(payload, label),
+      text: displayQuantityText(payload, label, omitUnit),
       rawText,
-      html: renderDisplayQuantityMath(payload, label),
+      html: renderDisplayQuantityMath(payload, label, omitUnit),
       title: rawText,
       number: numberValue(payload.value),
       numbers: [numberValue(payload.value)].filter((value) => value != null)
@@ -1360,27 +1362,29 @@
     return asObject(asObject(externalProvider(record, provider)[group])[field]);
   }
 
-  function gaiaItem(row, group, field, label) {
-    return quantityItem("gaia", "Gaia DR3", providerQuantity(rowRecord(row), "gaia_dr3", group, field), label);
+  function gaiaItem(row, group, field, label, omitUnit) {
+    return quantityItem("gaia", "Gaia DR3", providerQuantity(rowRecord(row), "gaia_dr3", group, field), label, omitUnit);
   }
 
   function simbadItem(row, group, field, label) {
     return quantityItem("simbad", "SIMBAD", providerQuantity(rowRecord(row), "simbad", group, field), label);
   }
 
-  function tupleItem(kind, source, parts, label) {
+  function tupleItem(kind, source, parts, label, unit) {
     const valid = parts.filter((part) => part && compact(part.text));
     if (!valid.length) {
       return null;
     }
+    const suffixText = unit ? " " + unit : "";
+    const suffixHtml = unit ? `<span class="math-unit">${renderUnit(unit)}</span>` : "";
     return {
       kind,
       source,
       label,
-      text: "(" + valid.map((part) => part.text).join(", ") + ")",
-      rawText: "(" + valid.map((part) => part.rawText || part.text).join(", ") + ")",
-      html: `<span class="tuple-paren">(</span>${valid.map((part) => part.html || textWithMath(part.text)).join('<span class="tuple-separator">, </span>')}<span class="tuple-paren">)</span>`,
-      title: "(" + valid.map((part) => part.title || part.rawText || part.text).join(", ") + ")",
+      text: "(" + valid.map((part) => part.text).join(", ") + ")" + suffixText,
+      rawText: "(" + valid.map((part) => part.rawText || part.text).join(", ") + ")" + suffixText,
+      html: `<span class="tuple-paren">(</span>${valid.map((part) => part.html || textWithMath(part.text)).join('<span class="tuple-separator">, </span>')}<span class="tuple-paren">)</span>${suffixHtml}`,
+      title: "(" + valid.map((part) => part.title || part.rawText || part.text).join(", ") + ")" + suffixText,
       number: valid[0].number,
       numbers: valid.flatMap((part) => asArray(part.numbers).length ? part.numbers : [part.number]).filter((value) => value != null)
     };
@@ -1432,16 +1436,24 @@
       return literatureQuantityItems(row, "observed_phase_space", "radial_velocity", "paper");
     }
     if (key === "radec") {
+      const record = rowRecord(row);
+      const raQty = providerQuantity(record, "gaia_dr3", "astrometry", "ra");
+      const decQty = providerQuantity(record, "gaia_dr3", "astrometry", "dec");
+      const unit = compact(raQty.unit) || compact(decQty.unit) || "";
       return [tupleItem("gaia", "Gaia DR3", [
-        gaiaItem(row, "astrometry", "ra", "RA"),
-        gaiaItem(row, "astrometry", "dec", "Dec")
-      ], "RA, Dec")].filter(Boolean);
+        gaiaItem(row, "astrometry", "ra", "RA", true),
+        gaiaItem(row, "astrometry", "dec", "Dec", true)
+      ], "(RA, Dec)", unit)].filter(Boolean);
     }
     if (key === "pm") {
+      const record = rowRecord(row);
+      const pmraQty = providerQuantity(record, "gaia_dr3", "astrometry", "pmra");
+      const pmdecQty = providerQuantity(record, "gaia_dr3", "astrometry", "pmdec");
+      const unit = compact(pmraQty.unit) || compact(pmdecQty.unit) || "";
       return [tupleItem("gaia", "Gaia DR3", [
-        gaiaItem(row, "astrometry", "pmra", "pmRA"),
-        gaiaItem(row, "astrometry", "pmdec", "pmDec")
-      ], "pmRA, pmDec")].filter(Boolean);
+        gaiaItem(row, "astrometry", "pmra", "pmRA", true),
+        gaiaItem(row, "astrometry", "pmdec", "pmDec", true)
+      ], "(pmRA, pmDec)", unit)].filter(Boolean);
     }
     if (key === "parallax") {
       return [gaiaItem(row, "astrometry", "parallax", "Gaia")].filter(Boolean);
