@@ -16,8 +16,7 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from stella_html.catalog_site import (  # noqa: E402
-    build_static_html,
-    has_external_html_dependencies,
+    build_static_site,
     load_catalog_snapshot,
     render_live_index_html,
 )
@@ -92,15 +91,18 @@ def main() -> int:
     )
     (live_dir / "index.html").write_text(render_live_index_html(catalog_root="../.."), encoding="utf-8")
 
-    static_html = build_static_html(catalog_dir, css_path, js_path, hero_path, literature_dir=WORKSPACE / "literature")
-    if has_external_html_dependencies(static_html):
-        raise RuntimeError("static HTML contains an external script, stylesheet, or remote image dependency")
-    static_path = static_dir / "index.html"
-    static_path.write_text(static_html, encoding="utf-8")
+    build_static_site(
+        static_dir,
+        catalog_dir,
+        css_path,
+        js_path,
+        hero_path,
+        literature_dir=WORKSPACE / "literature",
+    )
 
     print("Built Stella HVS catalog HTML outputs:")
     print(live_dir / "index.html")
-    print(static_path)
+    print(static_dir / "index.html")
     print("Live preview: start an HTTP server at the repository root and open /catalog/html/live/")
     return 0
 

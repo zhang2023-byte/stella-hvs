@@ -5,6 +5,7 @@ from __future__ import annotations
 import base64
 import json
 import re
+import shutil
 from pathlib import Path
 from typing import Any
 
@@ -601,3 +602,65 @@ def build_static_html(
     css = inline_css(css_path, hero_path=hero_path)
     js = js_path.read_text(encoding="utf-8")
     return render_static_index_html(snapshot, css=css, js=js)
+
+
+def render_static_index_html_v2() -> str:
+    return """<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stella HVS Catalog Snapshot</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="stella.css">
+</head>
+<body>
+  <div id="app" class="app-shell" aria-live="polite"></div>
+  <script src="catalog-data.js"></script>
+  <script src="catalog-viewer.js"></script>
+</body>
+</html>
+"""
+
+
+def build_static_site(
+    output_dir: Path,
+    catalog_dir: Path,
+    css_path: Path,
+    js_path: Path,
+    hero_path: Path | None = None,
+    *,
+    literature_dir: Path | None = None,
+) -> Path:
+    """Build a multi-file static site into *output_dir*.
+
+    Produces:
+      - index.html        (small shell referencing sibling assets)
+      - stella.css        (copied from *css_path*)
+      - catalog-viewer.js (copied from *js_path*)
+      - catalog-data.js   (snapshot serialized as window.STELLA_CATALOG_SNAPSHOT)
+      - <hero-image>      (copied from *hero_path*, if provided)
+    """
+    output_dir.mkdir(parents=True, exist_ok=True)
+    snapshot = load_catalog_snapshot(catalog_dir, literature_dir=literature_dir)
+
+    # 1. Catalog data as a JS file that sets the global snapshot variable
+    payload = json_script_payload(snapshot)
+    (output_dir / "catalog-data.js").write_text(
+        f"window.STELLA_CATALOG_SNAPSHOT = {payload};", encoding="utf-8"
+    )
+
+    # 2. CSS (keep external image references intact)
+    shutil.copy2(css_path, output_dir / "stella.css")
+
+    # 3. Hero image (CSS references it by filename)
+    if hero_path is not None and hero_path.exists():
+        shutil.copy2(hero_path, output_dir / hero_path.name)
+
+    # 4. JS viewer
+    shutil.copy2(js_path, output_dir / "catalog-viewer.js")
+
+    # 5. HTML shell
+    (output_dir / "index.html").write_text(render_static_index_html_v2(), encoding="utf-8")
+
+    return output_dir / "index.html"

@@ -14,6 +14,7 @@ from stella_html.catalog_site import (  # noqa: E402
     CANDIDATES_DIRNAME,
     build_index_row,
     build_static_html,
+    build_static_site,
     has_external_html_dependencies,
     load_catalog_snapshot,
     method_lineage,
@@ -559,6 +560,44 @@ class HvsCatalogSiteTest(unittest.TestCase):
         self.assertNotIn("#fbfdfb", dag_scroll_rule)
         self.assertIn("fill: #0a0a0a", dag_node_rect_rule)
         self.assertNotIn("fill: #fff", dag_node_rect_rule)
+
+    def test_static_site_generates_multi_file_bundle(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            catalog = root / "catalog"
+            assets = root / "assets"
+            write_json(catalog / "03_hvs_candidates_index.json", {"summary": {"object_count": 1}, "objects": []})
+            write_json(catalog / CANDIDATES_DIRNAME / "Gaia_DR3_123.json", object_record())
+            assets.mkdir()
+            css_path = assets / "stella.css"
+            js_path = assets / "catalog-viewer.js"
+            hero_path = assets / "stella-hvs-hero.png"
+            css_path.write_text('.masthead { background-image: url("stella-hvs-hero.png"); }', encoding="utf-8")
+            js_path.write_text('window.loaded = true;', encoding="utf-8")
+            hero_path.write_bytes(b"\x89PNG\r\n\x1a\n")
+            static_dir = root / "static"
+
+            index_path = build_static_site(static_dir, catalog, css_path, js_path, hero_path)
+
+            self.assertEqual(index_path, static_dir / "index.html")
+            self.assertTrue((static_dir / "index.html").exists())
+            self.assertTrue((static_dir / "stella.css").exists())
+            self.assertTrue((static_dir / "catalog-viewer.js").exists())
+            self.assertTrue((static_dir / "catalog-data.js").exists())
+            self.assertTrue((static_dir / "stella-hvs-hero.png").exists())
+
+            html = (static_dir / "index.html").read_text(encoding="utf-8")
+            self.assertIn('<link rel="stylesheet" href="stella.css">', html)
+            self.assertIn('<script src="catalog-data.js"></script>', html)
+            self.assertIn('<script src="catalog-viewer.js"></script>', html)
+            self.assertNotIn("<style>", html)
+            self.assertNotIn("window.STELLA_CATALOG_SNAPSHOT", html)
+
+            data_js = (static_dir / "catalog-data.js").read_text(encoding="utf-8")
+            self.assertTrue(data_js.startswith("window.STELLA_CATALOG_SNAPSHOT = "))
+            self.assertTrue(data_js.endswith(";"))
+            snapshot = json.loads(data_js[len("window.STELLA_CATALOG_SNAPSHOT = "):-1])
+            self.assertEqual(snapshot["schema_version"], "stella.hvs_catalog_site.snapshot.v2")
 
     def test_static_html_bundles_local_latex_math_renderer(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
