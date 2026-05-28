@@ -1940,11 +1940,16 @@
       <section class="catalog-tools" id="catalog-index">
         <div>
           <h2 class="section-heading">Star Index</h2>
-          <div class="table-count">Showing ${rows.length} of ${state.rows.length} objects / ${sourceRowCount} source rows</div>
+          <div class="table-count" id="catalog-table-count">Showing ${rows.length} of ${state.rows.length} objects / ${sourceRowCount} source rows</div>
         </div>
         <label class="filter-field global-search">
-          <span>Search all visible/source fields</span>
-          <input id="catalog-search" type="search" value="${escapeHtml(state.filter)}" autocomplete="off">
+          <span>Search by name, ID, or value</span>
+          <form class="search-input-wrap" id="catalog-search-form">
+            <input id="catalog-search" type="search" value="${escapeHtml(state.filter)}" autocomplete="off">
+            <button type="submit" id="catalog-search-btn" title="Search" aria-label="Search">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </button>
+          </form>
         </label>
       </section>
     `;
@@ -2060,7 +2065,6 @@
     normalizeHomeModeAvailability();
     const columns = visibleColumns();
     const rows = filteredRows();
-    const sourceRowCount = rows.reduce((total, row) => total + Math.max(1, asArray(row.sources).length), 0);
     const colCount = columns.length + 2;
     const body = rows.map((row) => `
       <tr>
@@ -2070,7 +2074,6 @@
       </tr>
     `).join("");
     return `
-      ${renderCatalogToolbar(rows, sourceRowCount)}
       <div class="table-wrap">
         <table class="catalog-table">
           <colgroup>
@@ -2096,8 +2099,23 @@
     `;
   }
 
+  function renderCatalogToolbarRegion() {
+    const rows = filteredRows();
+    const sourceRowCount = rows.reduce((total, row) => total + Math.max(1, asArray(row.sources).length), 0);
+    return `<div id="catalog-toolbar-region">${renderCatalogToolbar(rows, sourceRowCount)}</div>`;
+  }
+
   function renderCatalogTableRegion() {
     return `<section id="catalog-table-region">${renderCatalogTable()}</section>`;
+  }
+
+  function updateCatalogToolbar() {
+    const countEl = document.getElementById("catalog-table-count");
+    if (countEl) {
+      const rows = filteredRows();
+      const sourceRowCount = rows.reduce((total, row) => total + Math.max(1, asArray(row.sources).length), 0);
+      countEl.textContent = `Showing ${rows.length} of ${state.rows.length} objects / ${sourceRowCount} source rows`;
+    }
   }
 
   function updateCatalogTable() {
@@ -2111,6 +2129,7 @@
       return;
     }
     region.innerHTML = renderCatalogTable();
+    updateCatalogToolbar();
   }
 
   function scheduleCatalogTableUpdate(delay) {
@@ -2128,6 +2147,7 @@
     const content = `
       ${renderScienceMetrics()}
       ${renderColumnControls()}
+      ${renderCatalogToolbarRegion()}
       ${renderCatalogTableRegion()}
       <section class="audit-summary" id="audit">
         <h2 class="section-heading">Audit Surface</h2>
@@ -2765,13 +2785,6 @@
     const height = Math.max(132, 64 + sortedLayers.length * yGap);
     const active = state.activeLineage && state.activeLineage.source === sourceId ? state.activeLineage : null;
     const selected = state.selectedStep && state.selectedStep.source === sourceId ? state.selectedStep.stepId : "";
-    const defs = `
-      <defs>
-        <marker id="dag-arrow" viewBox="0 0 10 10" refX="0" refY="5" markerWidth="5" markerHeight="5" orient="auto">
-          <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
-        </marker>
-      </defs>
-    `;
     const edges = [];
     steps.forEach((step) => {
       const to = compact(step.id);
@@ -2783,11 +2796,33 @@
           return;
         }
         const key = from + "->" + to;
+        const x1 = fromPos.x + nodeWidth / 2;
+        const y1 = fromPos.y + nodeHeight;
+        const x2 = toPos.x + nodeWidth / 2;
+        const y2 = toPos.y - 2;
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        const len = Math.sqrt(dx * dx + dy * dy) || 1;
+        const ux = dx / len;
+        const uy = dy / len;
+        const arrowSize = 5;
+        const tipX = x2;
+        const tipY = y2;
+        const baseX = x2 - arrowSize * ux;
+        const baseY = y2 - arrowSize * uy;
+        const perpX = -uy * (arrowSize * 0.6);
+        const perpY = ux * (arrowSize * 0.6);
+        const leftX = baseX + perpX;
+        const leftY = baseY + perpY;
+        const rightX = baseX - perpX;
+        const rightY = baseY - perpY;
+        const isActive = active && active.edges.has(key);
         edges.push(`
-          <line class="dag-edge ${active && active.edges.has(key) ? "is-active" : ""}"
-            x1="${fromPos.x + nodeWidth / 2}" y1="${fromPos.y + nodeHeight}"
-            x2="${toPos.x + nodeWidth / 2}" y2="${toPos.y - 2}"
-            marker-end="url(#dag-arrow)" />
+          <line class="dag-edge ${isActive ? "is-active" : ""}"
+            x1="${x1}" y1="${y1}"
+            x2="${x2}" y2="${y2}" />
+          <polygon class="dag-arrow ${isActive ? "is-active" : ""}"
+            points="${tipX},${tipY} ${leftX},${leftY} ${rightX},${rightY}" />
         `);
       });
     });
@@ -2813,7 +2848,7 @@
         `;
       })
       .join("");
-    return `<div class="dag-scroll"><svg class="dag-svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="Method DAG">${defs}${nodes}${edges.join("")}</svg></div>`;
+    return `<div class="dag-scroll"><svg class="dag-svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="Method DAG">${edges.join("")}${nodes}</svg></div>`;
   }
 
   function selectedStepForSource(sourceId, steps) {
@@ -3127,8 +3162,10 @@
 
   app.addEventListener("input", (event) => {
     if (event.target && event.target.id === "catalog-search") {
-      state.filter = event.target.value;
-      scheduleCatalogTableUpdate();
+      if (!event.target.value) {
+        state.filter = "";
+        scheduleCatalogTableUpdate();
+      }
       return;
     }
     if (updateFilterBound(event.target)) {
@@ -3136,6 +3173,18 @@
     }
     const rangeKey = event.target && event.target.dataset ? event.target.dataset.rangeFilter : "";
     if (rangeKey) {
+      return;
+    }
+  });
+
+  app.addEventListener("submit", (event) => {
+    if (event.target && event.target.id === "catalog-search-form") {
+      event.preventDefault();
+      const input = document.getElementById("catalog-search");
+      if (input) {
+        state.filter = input.value;
+        scheduleCatalogTableUpdate();
+      }
       return;
     }
   });

@@ -284,6 +284,35 @@ button {
   gap: 4px;
 }
 
+.search-input-wrap {
+  display: flex;
+  gap: 0;
+}
+
+.search-input-wrap input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border-right: none;
+}
+
+.search-input-wrap button {
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--line-strong);
+  background: #000;
+  color: var(--ink);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.search-input-wrap button:hover {
+  background: var(--line);
+}
+
 .control-panel {
   margin: 18px 0;
   padding: 16px;
@@ -1159,6 +1188,16 @@ th.sticky-object {
   stroke: var(--red);
   color: var(--red);
   stroke-width: 3;
+  opacity: 1;
+}
+
+.dag-arrow {
+  fill: #76767f;
+  opacity: .68;
+}
+
+.dag-arrow.is-active {
+  fill: var(--red);
   opacity: 1;
 }
 
