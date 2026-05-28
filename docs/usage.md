@@ -590,23 +590,33 @@ The live page writes `catalog/html/live/assets/paper-metadata.json` from local
 make ADS/API/network calls or refresh enrichment data. Missing ADS metadata
 falls back to the paper fields already present in the object catalog.
 
-The live version needs an HTTP server started from the repository root, for example:
+Preview either version with the helper script:
 
 ```bash
-python -m http.server 8765 --bind 127.0.0.1
+# Static snapshot (default)
+conda run -n stella-env python scripts/serve_catalog_site.py --port 8080
+
+# Live data view
+conda run -n stella-env python scripts/serve_catalog_site.py --mode live --port 8081
 ```
 
-Then open:
+Or start a plain HTTP server manually:
 
-```text
-http://127.0.0.1:8765/catalog/html/live/
+```bash
+# Live mode — must serve from the repo root so /catalog/... resolves
+python -m http.server 8765 --bind 127.0.0.1
+# Then open http://127.0.0.1:8765/catalog/html/live/
+
+# Static mode — serve from the static directory
+python -m http.server 8765 --bind 127.0.0.1 --directory catalog/html/static
+# Then open http://127.0.0.1:8765/
 ```
 
 The static version does not read JSON live. It is a build-time `catalog/`
-snapshot with CSS, JS, the HVS hero image, and local paper metadata embedded,
-and can be opened directly as `catalog/html/static/index.html` or copied to
-static hosting for demos. The source of truth remains `catalog/candidates/*.json`;
-the web page is only a display layer.
+snapshot split into a small HTML shell plus sibling CSS/JS/data/image assets,
+and can be opened directly as `catalog/html/static/index.html` (works under
+`file://`) or served for demos. The source of truth remains
+`catalog/candidates/*.json`; the web page is only a display layer.
 
 ## 12. Date Syntax
 

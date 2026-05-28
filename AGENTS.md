@@ -198,6 +198,8 @@ conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id 240
 conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py rebuild --literature-dir literature --catalog-dir catalog --enrichment-mode auto --external-merge-mode auto
 conda run -n stella-env python scripts/calculate_hvs_dynamics.py --catalog-dir catalog --samples 10000 --write True
 conda run -n stella-env python scripts/build_hvs_catalog_html.py --catalog-dir catalog --html-dir catalog/html
+conda run -n stella-env python scripts/serve_catalog_site.py --mode static --port 8080
+conda run -n stella-env python scripts/serve_catalog_site.py --mode live --port 8081
 conda run -n stella-env python scripts/render_lit_notes.py
 conda run -n stella-env python scripts/build_catalog_index.py
 conda run -n stella-env python scripts/build_hvs_candidates_index.py
