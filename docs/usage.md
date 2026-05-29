@@ -600,6 +600,11 @@ conda run -n stella-env python scripts/serve_catalog_site.py --port 8080
 conda run -n stella-env python scripts/serve_catalog_site.py --mode live --port 8081
 ```
 
+The helper binds to `127.0.0.1` (localhost only) by default, and `live` mode
+serves only the `catalog/` directory so the rest of the repository (source,
+`.git/`, `literature/`, `logs/`) is never exposed over HTTP. To expose the
+server on the local network, opt in explicitly with `--host 0.0.0.0`.
+
 Or start a plain HTTP server manually:
 
 ```bash

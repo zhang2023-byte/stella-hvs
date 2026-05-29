@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib.util
 import json
 import sys
 import tempfile
@@ -9,6 +10,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
+
+
+def _load_script(name: str):
+    spec = importlib.util.spec_from_file_location(name, ROOT / "scripts" / f"{name}.py")
+    module = importlib.util.module_from_spec(spec)
+    assert spec and spec.loader
+    spec.loader.exec_module(module)
+    return module
 
 from stella_html.catalog_site import (  # noqa: E402
     CANDIDATES_DIRNAME,
@@ -373,6 +382,22 @@ class HvsCatalogSiteTest(unittest.TestCase):
             self.assertEqual(snapshot["objects"], [])
             self.assertEqual(snapshot["rows"], [])
 
+    def test_snapshot_skips_malformed_candidate_files(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            catalog = Path(tmp) / "catalog"
+            write_json(
+                catalog / "03_hvs_candidates_index.json",
+                {"summary": {}, "objects": [{"object_id": "Gaia_DR3_123"}]},
+            )
+            write_json(catalog / CANDIDATES_DIRNAME / "Gaia_DR3_123.json", object_record())
+            # A corrupt sibling JSON must not abort the whole snapshot build.
+            (catalog / CANDIDATES_DIRNAME / "broken.json").write_text("{ not json", encoding="utf-8")
+
+            snapshot = load_catalog_snapshot(catalog)
+
+            self.assertEqual(len(snapshot["objects"]), 1)
+            self.assertEqual(snapshot["rows"][0]["identifier"], "Gaia DR3 123")
+
     def test_index_row_extracts_quantities_without_source_overwrite(self) -> None:
         row = build_index_row(object_record())
 
@@ -599,6 +624,14 @@ class HvsCatalogSiteTest(unittest.TestCase):
             snapshot = json.loads(data_js[len("window.STELLA_CATALOG_SNAPSHOT = "):-1])
             self.assertEqual(snapshot["schema_version"], "stella.hvs_catalog_site.snapshot.v2")
 
+    def test_external_links_pass_through_url_scheme_allowlist(self) -> None:
+        js = (ROOT / "src" / "stella_html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
+
+        self.assertIn("function safeUrl", js)
+        self.assertIn("escapeHtml(safeUrl(links.abs", js)
+        self.assertIn("escapeHtml(safeUrl(links.pdf))", js)
+        self.assertIn("escapeHtml(safeUrl(item.href))", js)
+
     def test_static_html_bundles_local_latex_math_renderer(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -624,6 +657,23 @@ class HvsCatalogSiteTest(unittest.TestCase):
             self.assertIn("math-formula", html)
             self.assertIn("\\frac{1}{2}", html)
             self.assertFalse(has_external_html_dependencies(html))
+
+
+class ServeCatalogSiteCliTest(unittest.TestCase):
+    def test_defaults_bind_localhost_static_mode(self) -> None:
+        serve = _load_script("serve_catalog_site")
+        args = serve.build_parser().parse_args([])
+
+        self.assertEqual(args.host, "127.0.0.1")
+        self.assertEqual(args.mode, "static")
+        self.assertEqual(args.port, 8080)
+
+    def test_host_can_be_overridden_for_explicit_exposure(self) -> None:
+        serve = _load_script("serve_catalog_site")
+        args = serve.build_parser().parse_args(["--host", "0.0.0.0", "--mode", "live"])
+
+        self.assertEqual(args.host, "0.0.0.0")
+        self.assertEqual(args.mode, "live")
 
 
 if __name__ == "__main__":

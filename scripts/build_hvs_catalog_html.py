@@ -45,22 +45,11 @@ def ensure_live_assets(assets_dir: Path) -> None:
     source_assets_dir = SRC / "stella_html" / "assets"
     missing_source = [name for name in required if not (source_assets_dir / name).exists()]
     if missing_source:
-        missing = ", ".join(str(assets_dir / name) for name in required if not (assets_dir / name).exists())
-        raise FileNotFoundError(f"missing live assets: {missing}")
+        missing = ", ".join(str(source_assets_dir / name) for name in missing_source)
+        raise FileNotFoundError(f"missing source live assets: {missing}")
     assets_dir.mkdir(parents=True, exist_ok=True)
     for name in required:
         shutil.copy2(source_assets_dir / name, assets_dir / name)
-
-
-def patch_catalog_viewer_asset(js_path: Path) -> None:
-    """Keep generated live assets aligned with the current catalog layout."""
-    text = js_path.read_text(encoding="utf-8")
-    text = text.replace(
-        'root + "/" + encodeURIComponent(item.object_id) + ".json"',
-        'root + "/candidates/" + encodeURIComponent(item.object_id) + ".json"',
-    )
-    text = text.replace("catalog/*.json", "catalog/candidates/*.json")
-    js_path.write_text(text, encoding="utf-8")
 
 
 def main() -> int:
@@ -76,7 +65,6 @@ def main() -> int:
     css_path = assets_dir / "stella.css"
     js_path = assets_dir / "catalog-viewer.js"
     hero_path = assets_dir / "stella-hvs-hero.png"
-    patch_catalog_viewer_asset(js_path)
     missing_assets = [path for path in (css_path, js_path, hero_path) if not path.exists()]
     if missing_assets:
         missing = ", ".join(str(path) for path in missing_assets)
@@ -103,7 +91,7 @@ def main() -> int:
     print("Built Stella HVS catalog HTML outputs:")
     print(live_dir / "index.html")
     print(static_dir / "index.html")
-    print("Live preview: start an HTTP server at the repository root and open /catalog/html/live/")
+    print("Live preview: conda run -n stella-env python scripts/serve_catalog_site.py --mode live")
     return 0
 
 

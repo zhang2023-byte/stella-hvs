@@ -203,6 +203,26 @@
       .replace(/'/g, "&#39;");
   }
 
+  // Defense-in-depth: only allow http(s)/mailto and relative/anchor links so a
+  // tampered catalog field cannot inject javascript:/data: hrefs.
+  function safeUrl(value) {
+    const url = String(value == null ? "" : value).trim();
+    if (!url) {
+      return "";
+    }
+    if (/^(?:https?:|mailto:)/i.test(url)) {
+      return url;
+    }
+    if (/^(?:#|\/|\.\/|\.\.\/|\?)/.test(url)) {
+      return url;
+    }
+    // Reject any other explicit scheme (javascript:, data:, vbscript:, ...).
+    if (/^[a-z][a-z0-9+.-]*:/i.test(url)) {
+      return "";
+    }
+    return url;
+  }
+
   const LATEX_SYMBOLS = {
     alpha: "&alpha;",
     beta: "&beta;",
@@ -1993,7 +2013,7 @@
   function renderCellValue(row, item) {
     const value = item.html || textWithMath(item.text || "—");
     if (item.href) {
-      return `<a class="cell-link js-object-link" href="${escapeHtml(item.href)}" data-object-id="${escapeHtml(row.object_id)}" data-source-id="${escapeHtml(item.sourceId || "")}">${value}</a>`;
+      return `<a class="cell-link js-object-link" href="${escapeHtml(safeUrl(item.href))}" data-object-id="${escapeHtml(row.object_id)}" data-source-id="${escapeHtml(item.sourceId || "")}">${value}</a>`;
     }
     return value;
   }
@@ -2494,8 +2514,8 @@
                     ])}
                   </dl>
                   <div class="link-row">
-                    ${paper.arxiv_id ? `<a href="${escapeHtml(links.abs || "https://arxiv.org/abs/" + paper.arxiv_id)}">arXiv</a>` : ""}
-                    ${links.pdf ? `<a href="${escapeHtml(links.pdf)}">PDF</a>` : ""}
+                    ${paper.arxiv_id ? `<a href="${escapeHtml(safeUrl(links.abs || "https://arxiv.org/abs/" + paper.arxiv_id))}">arXiv</a>` : ""}
+                    ${links.pdf ? `<a href="${escapeHtml(safeUrl(links.pdf))}">PDF</a>` : ""}
                   </div>
                 </article>
               `;

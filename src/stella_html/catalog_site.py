@@ -471,7 +471,12 @@ def load_catalog_snapshot(catalog_dir: Path, *, literature_dir: Path | None = No
             if legacy_path.exists():
                 index_path = legacy_path
                 break
-    index_record = read_json(index_path) if index_path.exists() else {}
+    index_record: dict[str, Any] = {}
+    if index_path.exists():
+        try:
+            index_record = read_json(index_path)
+        except (OSError, json.JSONDecodeError):
+            index_record = {}
 
     records: list[dict[str, Any]] = []
     candidate_paths = list((catalog_dir / CANDIDATES_DIRNAME).glob("*.json"))
@@ -479,8 +484,11 @@ def load_catalog_snapshot(catalog_dir: Path, *, literature_dir: Path | None = No
     for path in sorted([*candidate_paths, *legacy_paths]):
         if path.name == INDEX_JSON_FILENAME or path.name in LEGACY_INDEX_JSON_FILENAMES:
             continue
-        payload = read_json(path)
-        if payload.get("schema_version") in READABLE_OBJECT_SCHEMA_VERSIONS:
+        try:
+            payload = read_json(path)
+        except (OSError, json.JSONDecodeError):
+            continue
+        if isinstance(payload, dict) and payload.get("schema_version") in READABLE_OBJECT_SCHEMA_VERSIONS:
             records.append(payload)
 
     order = [
