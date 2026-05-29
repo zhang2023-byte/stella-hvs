@@ -1,8 +1,8 @@
 # Usage
 
 This is the low-level CLI reference. For day-to-day natural-language use, start
-with `docs/human-workflows.md`; agents should route those requests through
-`workflows/stella_workflows.yaml` and `docs/agent-workflows.md`.
+with `docs/workflows.md`; agents route those requests through
+`workflows/stella_workflows.yaml`.
 
 ## 1. Fetch Literature
 

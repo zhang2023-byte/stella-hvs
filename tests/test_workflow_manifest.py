@@ -106,14 +106,11 @@ class WorkflowManifestTest(unittest.TestCase):
                     with self.subTest(workflow=workflow["id"], script=script):
                         self.assertTrue((ROOT / script).exists(), script)
 
-    def test_workflow_ids_are_documented_in_human_and_agent_guides(self) -> None:
-        human_text = (ROOT / "docs" / "human-workflows.md").read_text(encoding="utf-8")
-        agent_text = (ROOT / "docs" / "agent-workflows.md").read_text(encoding="utf-8")
+    def test_workflow_ids_are_documented_in_human_workflow_guide(self) -> None:
+        guide_text = (ROOT / "docs" / "workflows.md").read_text(encoding="utf-8")
         for workflow_id in self.workflow_ids:
-            with self.subTest(workflow=workflow_id, doc="human"):
-                self.assertIn(workflow_id, human_text)
-            with self.subTest(workflow=workflow_id, doc="agent"):
-                self.assertIn(workflow_id, agent_text)
+            with self.subTest(workflow=workflow_id):
+                self.assertIn(workflow_id, guide_text)
 
     def test_root_todo_is_not_referenced_by_agent_or_readme(self) -> None:
         for relative_path in ("AGENTS.md", "README.md"):

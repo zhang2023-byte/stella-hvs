@@ -1,17 +1,49 @@
-# High-Velocity-Star Literature Workflow
+# Stella
 
-Stella builds a traceable, reproducible, object-level data workflow for
-high-velocity-star research. The repository currently supports literature
-fetching, title triage, data-asset review, internal table extraction,
-paper-level HVS candidate extraction, object-level candidate merging,
-object-level dynamical reassessment, and generated Markdown/HTML views.
+Stella is an autonomous agent for high-velocity-star (HVS) research. It turns
+scattered literature into a traceable, reproducible, object-level data catalog,
+and keeps that catalog updated mostly through natural-language conversation with
+an AI agent.
 
-Most day-to-day use is natural-language driven through an agent. The agent
-should route requests through `workflows/stella_workflows.yaml`, using
-`docs/human-workflows.md` for human prompt examples and `docs/agent-workflows.md`
-for execution rules.
+## Why Stella
 
-## Environment Setup
+A natural first question in this field is simple: how many high-velocity stars
+have we found, and what are their velocities and spatial distribution? It is
+surprisingly hard to answer. Different authors use different observations,
+selection cuts, Galactic potential assumptions, and even different definitions
+of "high-velocity". Results live in differently structured tables, often without
+machine-readable data, hosted on a patchwork of infrastructure. Purely
+observational papers rarely get reused, some data is at risk of being lost for
+good, and theorists usually re-derive HVS candidate selection from scratch -
+steadily increasing the entropy of the field's data.
+
+Boubert et al. (2018) manually compiled ~500 HVS candidates from the literature
+and re-evaluated them with Gaia, showing that almost all previously reported
+late-type candidates were not genuinely hypervelocity
+([arXiv:1804.10179](https://arxiv.org/abs/1804.10179),
+[ADS](https://ui.adsabs.harvard.edu/abs/2018MNRAS.479.2789B/abstract)). A
+sizable fraction of subsequent HVS work cites that effort, which signals a real
+community need for aggregating and updating older data. But projects that depend
+on sustained manual curation - the
+[Open Fast Stars Catalog](https://github.com/astrocatalogs/faststars) and the
+Open Astronomy Catalog - proved unsustainable and have stalled. A TNS-style
+pipeline wired directly into observatories is not realistic for a small,
+underfunded subfield.
+
+What changed is the cost structure. Agents now perform repetitive, tedious
+knowledge work at a cost approaching zero, which makes maintaining a
+literature-to-catalog data infrastructure newly feasible. Stella is our attempt:
+an agent that automatically fetches and analyzes literature, extracts and merges
+HVS candidates across papers, runs physical validation, and maintains the
+resulting database.
+
+See [docs/vision.md](docs/vision.md) for the full motivation and roadmap.
+
+## Quick Start
+
+Stella is meant to be driven by talking to an agent, not by memorizing commands.
+
+1. Set up the environment:
 
 ```bash
 conda env create -f environment.yml
@@ -19,128 +51,58 @@ conda activate stella-env
 cp env.example .env
 ```
 
-LaTeX table extraction works best with LaTeXML installed:
+LaTeX table extraction works best with LaTeXML (`brew install latexml`). Tokens
+for DeepXiv, ADS, or LLM features go in `.env`. Details are in
+[docs/setup.md](docs/setup.md).
 
-```bash
-brew install latexml
-```
+2. Point an agent runtime at this repository. Stella ships its operating rules in
+[AGENTS.md](AGENTS.md), so any agent that auto-loads `AGENTS.md` works. Good
+options include [OpenClaw](https://github.com/openclaw/openclaw) and
+[Hermes Agent](https://github.com/NousResearch/hermes-agent); follow their setup
+docs to bind an agent workspace to this folder.
 
-If you use DeepXiv, ADS repair, or LLM-backed review, configure the relevant
-tokens in `.env`. See [docs/setup.md](docs/setup.md).
-
-## Common Agent Requests
-
-Humans can usually ask in natural language:
+3. Ask in natural language. The agent reads [AGENTS.md](AGENTS.md), routes your
+request through [workflows/stella_workflows.yaml](workflows/stella_workflows.yaml),
+and asks only for details that change the result, trigger network/API calls, or
+risk touching the wrong generated data. For example:
 
 ```text
 Fetch high-velocity-star literature from 2026-03.
-Add catalog assessments for 2026-03.
-Archive local assets for 2402.10714.
 Review structured data assets for 2402.10714.
-Extract reviewed internal tables for 2402.10714.
 Extract paper-level HVS candidates for 2402.10714.
 Rebuild the object-level HVS catalog.
 Calculate HVS dynamics for the object catalog.
 Build the HVS catalog HTML demo.
-Regenerate generated Markdown and indexes.
 ```
 
-When details are missing, agents should ask only for high-impact ambiguity such
-as target month/arXiv ID, whether network/API calls are allowed, or whether a
-catalog merge should rebuild everything or update one paper.
+The full set of requests, with what each one does, is in
+[docs/workflows.md](docs/workflows.md).
 
-## Common CLI Commands
+## How It Works
 
-Direct CLI use remains available:
-
-```bash
-conda run -n stella-env python scripts/fetch_high_velocity_lit.py --from 2026-03
-conda run -n stella-env python scripts/annotate_catalog_data.py --on 2026-03
-conda run -n stella-env python scripts/pull_literature_assets.py --arxiv-id 2402.10714
-conda run -n stella-env python scripts/repair_ads_metadata.py --arxiv-id 2402.10714
-conda run -n stella-env python scripts/init_catalog_review.py --arxiv-id 2402.10714
-conda run -n stella-env python scripts/validate_catalog_review.py --arxiv-id 2402.10714 --require-complete
-conda run -n stella-env python scripts/extract_catalog_tables.py --arxiv-id 2402.10714
-conda run -n stella-env python scripts/validate_catalog_extraction.py --arxiv-id 2402.10714 --require-reviewed
-conda run -n stella-env python scripts/init_hvs_candidates.py --arxiv-id 2402.10714
-conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id 2402.10714 --require-complete
-conda run -n stella-env python scripts/validate_hvs_candidates.py --all --require-complete
-conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py rebuild --literature-dir literature --catalog-dir catalog --enrichment-mode auto --external-merge-mode auto --fail-on-skipped
-conda run -n stella-env python scripts/calculate_hvs_dynamics.py --catalog-dir catalog --samples 10000 --write True
-conda run -n stella-env python scripts/build_hvs_catalog_html.py --catalog-dir catalog --html-dir catalog/html
-conda run -n stella-env python scripts/render_lit_notes.py
-```
-
-The HTML catalog home page is generated from `catalog/candidates/*.json` plus
-local `literature/<arxiv_id>/ads_metadata.json` citation metadata when present.
-It does not query ADS, SIMBAD, Gaia, DeepXiv, or any LLM during the HTML build.
-The generated live page includes a reusable local HVS hero image and a
-sortable, min/max input-filterable per-star table with source controls under the
-relevant table headers.
-
-`validate_hvs_candidates.py` groups repeated candidate warnings by default; add
-`--verbose-warnings` to print every warning.
-
-See [docs/usage.md](docs/usage.md) for full CLI options and failure behavior.
-
-## Source of Truth
-
-JSON is canonical. Markdown, HTML, indexes, and object-level catalog files are
-generated products or reading views. If generated output is wrong, fix the JSON
-construction logic or renderer and regenerate.
-
-Important outputs are documented in [docs/outputs.md](docs/outputs.md):
+Stella is a pipeline of focused workflows. JSON is always the source of truth;
+Markdown, indexes, HTML, and the object catalog are generated views or products.
 
 ```text
-notes/YYYY/YYYY-MM/YYYY-MM.json
-notes/YYYY/YYYY-MM/YYYY-MM.title-triage.json
-literature/<arxiv_id>/catalog_review.json
-literature/<arxiv_id>/catalog_extraction.json
-literature/<arxiv_id>/literature_hvs_candidates.json
-catalog/candidates/<object_id>.json
-catalog/candidates/<object_id>.json dynamics field
-catalog/html/live/
-catalog/html/static/index.html
+fetch literature  ->  review data assets  ->  extract internal tables
+      ->  extract HVS candidates  ->  merge into object catalog
+      ->  calculate dynamics  ->  build HTML site
 ```
 
-Generated data under `notes/`, `literature/`, `catalog/`, and `logs/`
-is ignored by Git by default. Do not force-add it unless that is explicitly
-requested.
+Each stage writes machine-readable JSON first; reading views are regenerated
+from that JSON. If a generated view looks wrong, the fix is in the source JSON or
+the renderer, never in the generated file. See
+[docs/workflows.md](docs/workflows.md) for stage-by-stage detail and
+[docs/outputs.md](docs/outputs.md) for the data contract.
 
 ## Documentation
 
-- Human workflow prompts: [docs/human-workflows.md](docs/human-workflows.md)
-- Agent workflow rules: [docs/agent-workflows.md](docs/agent-workflows.md)
-- Machine-readable workflow manifest: [workflows/stella_workflows.yaml](workflows/stella_workflows.yaml)
-- Environment: [docs/setup.md](docs/setup.md)
-- Usage: [docs/usage.md](docs/usage.md)
-- Outputs: [docs/outputs.md](docs/outputs.md)
+- Workflows and example requests: [docs/workflows.md](docs/workflows.md)
+- Machine-readable workflow contract: [workflows/stella_workflows.yaml](workflows/stella_workflows.yaml)
+- Environment setup: [docs/setup.md](docs/setup.md)
+- CLI reference: [docs/usage.md](docs/usage.md)
+- Output data contract: [docs/outputs.md](docs/outputs.md)
 - Title triage rules: [docs/title-triage.md](docs/title-triage.md)
-- Long-term vision: [docs/vision.md](docs/vision.md)
-- Repository agent constraints: [AGENTS.md](AGENTS.md)
-
-## Directory Map
-
-```text
-workflows/stella_workflows.yaml       Agent workflow routing contract
-docs/                                 Documentation and workflow guides
-skills/                               In-repository agent skills
-scripts/fetch_high_velocity_lit.py    Main monthly literature fetcher
-scripts/annotate_catalog_data.py      Add catalog_assessment to monthly JSON
-scripts/pull_literature_assets.py     Archive local assets for papers
-scripts/repair_ads_metadata.py        Fill paper-level bibcodes via ADS API
-scripts/init_catalog_review.py        Generate catalog_review.json templates
-scripts/extract_catalog_tables.py     Extract reviewed LaTeX tables into ECSV
-scripts/init_hvs_candidates.py         Generate literature_hvs_candidates templates
-scripts/merge_hvs_candidate_catalog.py Merge object-level HVS candidates catalog and SIMBAD/Gaia enrichment
-scripts/calculate_hvs_dynamics.py      Calculate object-level Galactocentric dynamics and unbound probabilities
-scripts/build_hvs_catalog_html.py      Build object-level HVS catalog HTML pages
-src/high_velocity_lit/                Literature and catalog implementation
-src/high_velocity_dyn/                HVS dynamics implementation
-tests/                                Tests
-notes/                                Generated monthly records and views
-literature/                           Generated local literature archive
-catalog/                              Generated object-level HVS catalog
-catalog/html/                         Generated local HTML display layer
-logs/                                 Local run logs
-```
+- Motivation and roadmap: [docs/vision.md](docs/vision.md)
+- Web/HTML design spec: [docs/DESIGN.md](docs/DESIGN.md)
+- Agent operating rules: [AGENTS.md](AGENTS.md)

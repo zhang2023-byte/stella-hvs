@@ -148,6 +148,14 @@ components:
     padding: 32px 24px
 ---
 
+> Source and license: this is a SpaceX-inspired design analysis adapted from the
+> `VoltAgent/awesome-design-md` collection
+> (https://github.com/VoltAgent/awesome-design-md, source path
+> `design-md/spacex/DESIGN.md`), released under the MIT License,
+> Copyright (c) 2026 VoltAgent. It is reused here as Stella's web design spec.
+> This notice covers the design document only and grants no rights to SpaceX
+> trademarks, logos, images, or proprietary fonts.
+
 ## Overview
 
 Spasex's design language is an exercise in negation: pure black canvas, white display type set in tight vertical leading and uppercase, full-bleed photography or autoplaying rocket-launch video as the only chrome. There is no brand color beyond black-and-white; there are no decorative shapes; there are no card grids or pricing tables on the marketing pages. Every band is a single full-viewport photograph or video paired with one all-caps headline at `{typography.display-xxl}` (80px D-DIN-Bold) and one ghost-outlined pill CTA. The composition is closer to a film title card than a SaaS landing page.
@@ -356,7 +364,7 @@ Marketing photography uses `srcset` for desktop / tablet / mobile with art-direc
 
 1. Focus on ONE component at a time.
 2. Reference component names and tokens directly (`{colors.canvas-night}`, `{button-ghost-on-dark}`, `{rounded.pill}`).
-3. Run `npx @google/design.md lint DESIGN.md` after edits.
+3. Keep token references and naming consistent across entries after edits.
 4. Add new variants as separate entries.
 5. Default body to `{typography.body-md}`; reserve `{typography.body-lg}` for marketing leads.
 6. The black-and-white-only rule is load-bearing — adding a brand accent color breaks the system.
