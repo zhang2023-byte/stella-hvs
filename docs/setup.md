@@ -48,6 +48,35 @@ DEEPXIV_TOKEN=
 ADS_API_TOKEN=
 ```
 
+### DeepXiv token
+
+DeepXiv search is provided by the `deepxiv-sdk` package
+([github.com/DeepXiv/deepxiv_sdk](https://github.com/DeepXiv/deepxiv_sdk),
+[API docs](https://data.rag.ac.cn/api/docs)). It is already installed by
+`environment.yml`. The simplest way to get a token:
+
+```bash
+# Interactive: registers/saves a token to ~/.env (which Stella also reads)
+conda run -n stella-env deepxiv config
+```
+
+On first use the SDK can also auto-register a free anonymous token
+(1,000 requests/day) into `~/.env`. For a higher quota (10,000 requests/day),
+register at [data.rag.ac.cn/register](https://data.rag.ac.cn/register) and either
+run `deepxiv config --token YOUR_TOKEN` or set `DEEPXIV_TOKEN=...` in this
+project's `.env`.
+
+### NASA ADS token
+
+ADS metadata/bibcode retrieval uses the NASA ADS Developer API
+([docs: github.com/adsabs/adsabs-dev-api](https://github.com/adsabs/adsabs-dev-api)).
+To get a token:
+
+1. Sign in at [ui.adsabs.harvard.edu](https://ui.adsabs.harvard.edu).
+2. Generate a key on the
+   [API token settings page](https://ui.adsabs.harvard.edu/user/settings/token).
+3. Put it in `.env` as `ADS_API_TOKEN=...` (the CLIs also accept `ADS_TOKEN`).
+
 The following variables are optional and are only needed for LLM review of `no-clear-title-evidence` papers, `catalog_assessment`, and ADS metadata/bibcode archival or repair:
 
 ```env
