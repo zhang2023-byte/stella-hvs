@@ -106,3 +106,9 @@ the renderer, never in the generated file. See
 - Motivation and roadmap: [docs/vision.md](docs/vision.md)
 - Web/HTML design spec: [docs/DESIGN.md](docs/DESIGN.md)
 - Agent operating rules: [AGENTS.md](AGENTS.md)
+
+## License
+
+Released under the MIT License - see [LICENSE](LICENSE). The bundled web design
+spec [docs/DESIGN.md](docs/DESIGN.md) is adapted from a third-party MIT-licensed
+source; its attribution is recorded at the top of that file.
