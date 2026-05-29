@@ -1124,19 +1124,20 @@
       <div class="site-frame">
         <header class="masthead">
           <nav class="top-nav" aria-label="Main navigation">
-            <a class="nav-pill ${active === "home" ? "is-active" : ""}" href="#">Catalog</a>
-            <a class="nav-pill" href="#catalog-index">Stars</a>
-            <a class="nav-pill" href="#column-controls">Columns</a>
-            <a class="nav-pill" href="#audit">Audit</a>
+            <a class="nav-pill ${active === "home" ? "is-active" : ""}" href="#">Overview</a>
+            <a class="nav-pill" href="#catalog-index">Star table</a>
+            <a class="nav-pill" href="#column-controls">Display options</a>
+            <a class="nav-pill" href="#audit">Data quality</a>
+            <a class="nav-pill" href="https://github.com/zhang2023-byte/stella-hvs" target="_blank" rel="noopener">GitHub</a>
           </nav>
           <div class="hero-copy">
-            <div class="eyebrow">Stella object-level HVS catalog</div>
+            <div class="eyebrow">Stella &middot; high-velocity-star research</div>
             <h1>STELLA HVS CATALOG</h1>
-            <p>Object-level high-velocity-star candidates merged from literature evidence, Gaia DR3/SIMBAD enrichment, and Stella dynamical reassessments. JSON remains the source of truth; this page is a generated view for scanning, sorting, and comparing candidates.</p>
+            <p>An open, AI-assisted catalog that gathers high-velocity-star candidates from the published literature into a single object-level table. This page is an automatically generated, browsable snapshot. For the project background, methodology, source data, and code behind it, see the repository on GitHub.</p>
+            <p class="hero-disclaimer">AI-generated content may contain errors. Review the data carefully and verify against the original papers before relying on it.</p>
             <div class="hero-actions">
-              <a class="hero-link" href="#catalog-index">Open Star Table</a>
-              <a class="hero-link" href="#column-controls">Tune Columns</a>
-              <a class="hero-link" href="#audit">Review Audit</a>
+              <a class="hero-link" href="#catalog-index">Browse the star table</a>
+              <a class="hero-link" href="https://github.com/zhang2023-byte/stella-hvs" target="_blank" rel="noopener">Project &amp; code on GitHub</a>
             </div>
           </div>
         </header>
