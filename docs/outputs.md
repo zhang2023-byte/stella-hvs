@@ -41,6 +41,7 @@ literature/01_literature_catalog_index.md        Data asset workflow view genera
 catalog/03_hvs_candidates_index.md               Object-level HVS catalog view generated from catalog/03_hvs_candidates_index.json
 catalog/html/live/index.html                          Object-level HVS catalog display page that reads catalog/ live
 catalog/html/static/index.html                        Single-file HTML demo with the current catalog/ snapshot embedded
+site/index.html                                       Committable GitHub Pages static snapshot copied from catalog/html/static
 notes/00_literature_notes_index.md               Yearly view generated from 00_literature_notes_index.json
 notes/YYYY/YYYY-MM/YYYY-MM.md                 Monthly note generated from monthly JSON
 ```
@@ -258,6 +259,7 @@ Merge rules:
 - `catalog/html/live/assets/paper-metadata.json`: a generated local summary of already archived `literature/<arxiv_id>/ads_metadata.json` fields used for `Author et al. Year` labels and citation-based source selection. It is not fetched from ADS during the HTML build.
 - `catalog/html/live/assets/stella-hvs-hero.png`: the reusable local HVS hero image copied from `src/stella_html/assets/`.
 - `catalog/html/static/index.html`: a single-file snapshot with catalog data, CSS, JS, local paper metadata, and local visual assets embedded at build time. It has no CDN or remote image dependency and is suitable for quick demos.
+- `site/`: the GitHub Pages deployment snapshot prepared by `scripts/prepare_pages_site.py` from `catalog/html/static/`. It is committable so GitHub Actions can publish it, but it remains generated from the catalog and should be refreshed instead of edited by hand.
 
 The home page is a research triage table for object-level scientific screening.
 It starts with project context and jump links over a local HVS hero image, then

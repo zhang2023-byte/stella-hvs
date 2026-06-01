@@ -68,6 +68,7 @@ class WorkflowManifestTest(unittest.TestCase):
             "object_catalog_merge",
             "hvs_dynamics_calculate",
             "hvs_catalog_html_build",
+            "hvs_catalog_pages_prepare",
             "index_or_markdown_regeneration",
         }
         self.assertEqual(self.workflow_ids, expected)

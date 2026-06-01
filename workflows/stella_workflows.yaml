@@ -214,6 +214,22 @@
       "referenced_paths": ["scripts/build_hvs_catalog_html.py", "docs/outputs.md"]
     },
     {
+      "id": "hvs_catalog_pages_prepare",
+      "human_intents": ["prepare GitHub Pages site", "publish HTML catalog", "deploy website", "prepare website deployment"],
+      "required_inputs": ["source_html_dir"],
+      "optional_inputs": ["site_dir"],
+      "clarify_if_missing": ["deployment_target_if_not_github_pages"],
+      "agent_prompt_template": "Run hvs_catalog_pages_prepare using SOURCE_HTML_DIR=<source_html_dir default catalog/html/static> and SITE_DIR=<site_dir default site>. First build the local static HTML snapshot if needed, then copy it into the committed GitHub Pages publish directory. Do not treat site/ or catalog/html/ as source of truth.",
+      "prerequisite_checks": ["Confirm catalog/html/static/index.html exists or run hvs_catalog_html_build first.", "Confirm GitHub Pages is the deployment target.", "Confirm site/ is intended to be committed as a deployment snapshot."],
+      "commands": ["conda run -n stella-env python scripts/build_hvs_catalog_html.py --catalog-dir catalog --html-dir catalog/html", "python scripts/prepare_pages_site.py --source catalog/html/static --site-dir site"],
+      "outputs": ["site/index.html", "site/catalog-data.js", "site/catalog-viewer.js", "site/stella.css", "site/stella-hvs-hero.png", "site/.nojekyll"],
+      "validators": ["Confirm site/index.html and site/catalog-data.js exist after preparation.", "Run conda run -n stella-env python -m unittest tests.test_hvs_catalog_site tests.test_workflow_manifest after code changes."],
+      "risk_level": "generated_view_deployment_artifact",
+      "network_policy": "Local preparation requires no network access. Git push triggers GitHub Pages deployment remotely.",
+      "generated_files_policy": "site/ is a committable deployment snapshot derived from catalog/html/static; catalog JSON remains the source of truth.",
+      "referenced_paths": ["scripts/prepare_pages_site.py", ".github/workflows/deploy-pages.yml", "docs/usage.md", "docs/outputs.md"]
+    },
+    {
       "id": "index_or_markdown_regeneration",
       "human_intents": ["regenerate Markdown", "refresh generated views", "rebuild indexes"],
       "required_inputs": ["target"],

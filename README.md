@@ -73,6 +73,7 @@ Extract paper-level HVS candidates for 2402.10714.
 Rebuild the object-level HVS catalog.
 Calculate HVS dynamics for the object catalog.
 Build the HVS catalog HTML demo.
+Prepare the GitHub Pages site.
 ```
 
 The full set of requests, with what each one does, is in
@@ -86,7 +87,7 @@ Markdown, indexes, HTML, and the object catalog are generated views or products.
 ```text
 fetch literature  ->  review data assets  ->  extract internal tables
       ->  extract HVS candidates  ->  merge into object catalog
-      ->  calculate dynamics  ->  build HTML site
+      ->  calculate dynamics  ->  build HTML site  ->  prepare Pages site
 ```
 
 Each stage writes machine-readable JSON first; reading views are regenerated

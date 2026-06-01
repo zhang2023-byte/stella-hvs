@@ -676,5 +676,36 @@ class ServeCatalogSiteCliTest(unittest.TestCase):
         self.assertEqual(args.mode, "live")
 
 
+class PreparePagesSiteCliTest(unittest.TestCase):
+    def test_defaults_copy_static_site_to_site_directory(self) -> None:
+        pages = _load_script("prepare_pages_site")
+        args = pages.build_parser().parse_args([])
+
+        self.assertEqual(args.source, ROOT / "catalog" / "html" / "static")
+        self.assertEqual(args.site_dir, ROOT / "site")
+
+    def test_prepare_pages_site_copies_bundle_and_cleans_stale_files(self) -> None:
+        pages = _load_script("prepare_pages_site")
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = root / "static"
+            site = root / "site"
+            source.mkdir()
+            (source / "index.html").write_text("<!doctype html>\n", encoding="utf-8")
+            (source / "catalog-data.js").write_text("window.STELLA_CATALOG_SNAPSHOT = {};", encoding="utf-8")
+            (source / ".DS_Store").write_text("local metadata", encoding="utf-8")
+            site.mkdir()
+            (site / "stale.txt").write_text("remove me", encoding="utf-8")
+
+            result = pages.prepare_pages_site(source, site)
+
+            self.assertEqual(result, site.resolve())
+            self.assertTrue((site / "index.html").exists())
+            self.assertTrue((site / "catalog-data.js").exists())
+            self.assertTrue((site / ".nojekyll").exists())
+            self.assertFalse((site / ".DS_Store").exists())
+            self.assertFalse((site / "stale.txt").exists())
+
+
 if __name__ == "__main__":
     unittest.main()

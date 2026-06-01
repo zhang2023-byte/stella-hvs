@@ -18,6 +18,7 @@ catalog are generated views; fix the source JSON or renderer if a view is wrong.
 monthly_literature_fetch  ->  catalog_assessment  ->  literature_asset_archive
    ->  catalog_review  ->  catalog_table_extraction  ->  hvs_candidate_extraction
    ->  object_catalog_merge  ->  hvs_dynamics_calculate  ->  hvs_catalog_html_build
+   ->  hvs_catalog_pages_prepare
 ```
 
 `ads_metadata_repair` and `index_or_markdown_regeneration` are maintenance
@@ -150,6 +151,18 @@ Build the local HTML display pages from the object catalog.
 - Clarifies: whether this means a local build or a deployment outside this repo.
 - Produces: `catalog/html/live/` and `catalog/html/static/index.html`.
 - Risk: generated view (no network).
+
+## hvs_catalog_pages_prepare
+
+Copy the generated static HTML snapshot into the committed GitHub Pages publish
+directory.
+
+- Ask: "Prepare the GitHub Pages site."
+- Clarifies: deployment target if it is not GitHub Pages.
+- Produces: `site/`, including `site/index.html`, `catalog-data.js`, CSS, JS,
+  image assets, and `.nojekyll`.
+- Risk: generated view deployment artifact (no network locally; deployment
+  happens after pushing to GitHub).
 
 ## index_or_markdown_regeneration
 

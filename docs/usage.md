@@ -623,7 +623,51 @@ and can be opened directly as `catalog/html/static/index.html` (works under
 `file://`) or served for demos. The source of truth remains
 `catalog/candidates/*.json`; the web page is only a display layer.
 
-## 12. Date Syntax
+## 12. Prepare GitHub Pages Deployment
+
+The repository keeps `catalog/` ignored, so GitHub Actions cannot rebuild the
+site from local catalog data on its own. For GitHub Pages, publish the committed
+static snapshot under `site/`.
+
+Build the HTML snapshot, then prepare `site/`:
+
+```bash
+conda run -n stella-env python scripts/build_hvs_catalog_html.py \
+  --catalog-dir catalog \
+  --html-dir catalog/html
+
+python scripts/prepare_pages_site.py \
+  --source catalog/html/static \
+  --site-dir site
+```
+
+This copies the static bundle into:
+
+```text
+site/index.html
+site/catalog-data.js
+site/catalog-viewer.js
+site/stella.css
+site/stella-hvs-hero.png
+site/.nojekyll
+```
+
+Commit `site/`, the workflow file, and any code/docs changes:
+
+```bash
+git add site .github/workflows/deploy-pages.yml scripts/prepare_pages_site.py \
+  README.md docs/usage.md docs/workflows.md docs/outputs.md \
+  workflows/stella_workflows.yaml tests/test_hvs_catalog_site.py \
+  tests/test_workflow_manifest.py
+git commit -m "Deploy static catalog site"
+git push origin main
+```
+
+In the GitHub repository settings, set Pages to use **GitHub Actions** as the
+source. After each push that changes `site/`, `.github/workflows/deploy-pages.yml`
+uploads `site/` and publishes it with GitHub Pages.
+
+## 13. Date Syntax
 
 ```text
 --from 2026-03-15  starts from 2026-03-15
