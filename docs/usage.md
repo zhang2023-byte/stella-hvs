@@ -663,9 +663,10 @@ git commit -m "Deploy static catalog site"
 git push origin main
 ```
 
-In the GitHub repository settings, set Pages to use **GitHub Actions** as the
-source. After each push that changes `site/`, `.github/workflows/deploy-pages.yml`
-uploads `site/` and publishes it with GitHub Pages.
+The workflow enables Pages with **GitHub Actions** on its first run, then each
+push that changes `site/` uploads `site/` and publishes it with GitHub Pages.
+If repository settings block automatic enablement, set Pages to use
+**GitHub Actions** manually under GitHub `Settings -> Pages`.
 
 ## 13. Date Syntax
 
