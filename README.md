@@ -5,6 +5,11 @@ scattered literature into a traceable, reproducible, object-level data catalog,
 and keeps that catalog updated mostly through natural-language conversation with
 an AI agent.
 
+You can browse a live demo at
+[the Stella HVS Catalog](https://zhang2023-byte.github.io/stella-hvs/). It
+collects the HVS candidates Stella extracted from high-velocity-star literature
+published between January 2022 and April 2026 - the post–Gaia DR3 era.
+
 ## Why Stella
 
 A natural first question in this field is simple: how many high-velocity stars
