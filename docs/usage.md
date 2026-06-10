@@ -668,7 +668,50 @@ push that changes `site/` uploads `site/` and publishes it with GitHub Pages.
 If repository settings block automatic enablement, set Pages to use
 **GitHub Actions** manually under GitHub `Settings -> Pages`.
 
-## 13. Date Syntax
+## 13. Extraction Benchmark
+
+The `hvs_benchmark_*` workflows maintain an expert-adjudicated gold standard
+for `hvs_candidate_extraction`. Layout, schemas, and the adjudication protocol
+live in `benchmark/README.md` and `skills/hvs-benchmark/SKILL.md`.
+
+Select a frozen stratified paper sample:
+
+```bash
+conda run -n stella-env python scripts/benchmark_select_sample.py --size 10
+```
+
+Register variants and collect extractions (the canonical snapshot freezes the
+current production output; fresh reruns are dispatched through the
+`hvs_benchmark_variant_extraction_batch` workflow):
+
+```bash
+conda run -n stella-env python scripts/benchmark_collect_variants.py register \
+  --variant-id canonical-v7-202606 --kind canonical_snapshot --model stella-production
+conda run -n stella-env python scripts/benchmark_collect_variants.py snapshot-canonical \
+  --variant-id canonical-v7-202606
+conda run -n stella-env python scripts/benchmark_collect_variants.py status
+```
+
+Align variants, build the review site, and adjudicate in the browser (verdicts
+autosave to `benchmark/adjudication/` with the expert id and timestamps):
+
+```bash
+conda run -n stella-env python scripts/benchmark_align_candidates.py --all
+conda run -n stella-env python scripts/build_benchmark_review.py
+conda run -n stella-env python scripts/serve_benchmark_review.py --expert-id <id>
+# open http://127.0.0.1:8081/review/index.html
+```
+
+Finalize gold from the verdicts and score variants:
+
+```bash
+conda run -n stella-env python scripts/benchmark_finalize_gold.py --all
+conda run -n stella-env python scripts/benchmark_score.py
+```
+
+Reports land in `benchmark/reports/benchmark_report.{json,md}`.
+
+## 14. Date Syntax
 
 ```text
 --from 2026-03-15  starts from 2026-03-15
@@ -682,7 +725,7 @@ If repository settings block automatic enablement, set Pages to use
 
 Future dates are automatically clipped to today. Invalid date formats fail immediately.
 
-## 13. Additional Notes
+## 15. Additional Notes
 
 When DeepXiv returns a quota error:
 

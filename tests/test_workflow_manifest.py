@@ -70,6 +70,12 @@ class WorkflowManifestTest(unittest.TestCase):
             "hvs_catalog_html_build",
             "hvs_catalog_pages_prepare",
             "index_or_markdown_regeneration",
+            "hvs_benchmark_sample",
+            "hvs_benchmark_variant_extraction",
+            "hvs_benchmark_variant_extraction_batch",
+            "hvs_benchmark_review_build",
+            "hvs_benchmark_gold_finalize",
+            "hvs_benchmark_score",
         }
         self.assertEqual(self.workflow_ids, expected)
 
@@ -77,6 +83,7 @@ class WorkflowManifestTest(unittest.TestCase):
         expected_workers = {
             "catalog_review_batch": "catalog_review",
             "hvs_candidate_extraction_batch": "hvs_candidate_extraction",
+            "hvs_benchmark_variant_extraction_batch": "hvs_benchmark_variant_extraction",
         }
         required_status_fields = {
             "arxiv_id",

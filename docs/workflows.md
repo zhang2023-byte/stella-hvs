@@ -25,6 +25,10 @@ monthly_literature_fetch  ->  catalog_assessment  ->  literature_asset_archive
 workflows used as needed. `catalog_review` and `hvs_candidate_extraction` have
 batch variants for processing many papers, one fresh worker per paper.
 
+The `hvs_benchmark_*` family (sample → variant extraction → review build →
+gold finalize → score) maintains an expert-adjudicated benchmark for the
+`hvs_candidate_extraction` stage; see `skills/hvs-benchmark/SKILL.md`.
+
 ## monthly_literature_fetch
 
 Fetch and triage a month (or range) of HVS literature.
@@ -171,4 +175,69 @@ Rebuild generated indexes and Markdown from JSON.
 - Ask: "Regenerate literature Markdown and indexes from JSON."
 - Clarifies: which view family (monthly notes, catalog index, HVS index, or all).
 - Produces: regenerated Markdown and index files.
+- Risk: generated view (no network).
+
+## hvs_benchmark_sample
+
+Select a frozen, stratified benchmark paper sample for the extraction
+benchmark (year bucket × extraction status × candidate-count bucket).
+
+- Ask: "Create a benchmark sample of 10 papers."
+- Clarifies: sample size, whether an existing frozen manifest may be replaced.
+- Produces: `benchmark/manifest/benchmark_manifest.json` (committed).
+- Risk: generated data (no network).
+
+## hvs_benchmark_variant_extraction
+
+Run one independent candidate extraction for one benchmark paper, writing into
+a variant directory instead of `literature/`. Workers follow the same
+extraction skill but must not read the production extraction, other variants,
+or any gold/adjudication data (contamination rule).
+
+- Ask: "Extract benchmark variant rerun-fable5-202606 for 2402.10714."
+- Clarifies: arXiv ID and variant id.
+- Produces: `benchmark/variants/<variant_id>/<arxiv_id>/literature_hvs_candidates.json`.
+- Risk: scientific judgment.
+
+## hvs_benchmark_variant_extraction_batch
+
+Run `hvs_benchmark_variant_extraction` over the manifest papers, one fresh
+worker per paper, then report the manifest × variants completion matrix.
+
+- Ask: "Collect benchmark variant rerun-fable5-202606 for all manifest papers."
+- Clarifies: variant id (register it first when missing).
+
+## hvs_benchmark_review_build
+
+Align variant extractions per paper (embedding source-ref evidence excerpts),
+build the local expert review site, and start the verdict-persisting review
+server.
+
+- Ask: "Build the benchmark review site; I'll review as expert wz."
+- Clarifies: expert id.
+- Produces: `benchmark/alignment/`, `benchmark/review/` (generated), and
+  expert verdicts in `benchmark/adjudication/` (committed, written only via
+  the review server).
+- Risk: generated view; localhost server only.
+
+## hvs_benchmark_gold_finalize
+
+Apply expert verdicts to assemble per-paper gold v7 records, gate on verdict
+completeness, and validate gold with the standard candidate validator.
+
+- Ask: "Finalize benchmark gold for all adjudicated papers."
+- Clarifies: one paper or all; whether partial runs are allowed.
+- Produces: `benchmark/gold/<arxiv_id>/literature_hvs_candidates.json` and
+  `gold_provenance.json` (committed).
+- Risk: scientific judgment (no network).
+
+## hvs_benchmark_score
+
+Score variants against gold: detection precision/recall/F1 with bootstrap
+confidence intervals, paper-status agreement, and field-level accuracy under
+strict and loose numeric tolerances.
+
+- Ask: "Score the benchmark variants."
+- Clarifies: which variants (default: all registered).
+- Produces: `benchmark/reports/benchmark_report.json` and `.md` (generated).
 - Risk: generated view (no network).

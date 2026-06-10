@@ -20,6 +20,12 @@ catalog/03_hvs_candidates_index.json              Object-level HVS candidate cat
 notes/00_literature_notes_index.json              Global index rebuilt from monthly JSON
 notes/YYYY/YYYY-MM/YYYY-MM.json                Monthly normalized records
 notes/YYYY/YYYY-MM/YYYY-MM.title-triage.json   Monthly title triage and review records
+benchmark/manifest/benchmark_manifest.json        Frozen stratified benchmark paper sample (committed)
+benchmark/variants/<variant_id>/variant_meta.json Variant registration (model, kind, date; committed)
+benchmark/variants/<variant_id>/<arxiv_id>/literature_hvs_candidates.json   Independent extraction run (committed)
+benchmark/adjudication/<arxiv_id>.adjudication.json   Expert verdicts written via the review server (committed)
+benchmark/gold/<arxiv_id>/literature_hvs_candidates.json   Expert-adjudicated gold record, standard v7 (committed)
+benchmark/gold/<arxiv_id>/gold_provenance.json    Gold item provenance: verdict ids or auto-consensus (committed)
 ```
 
 ## Generated Files
@@ -44,6 +50,11 @@ catalog/html/static/index.html                        Single-file HTML demo with
 site/index.html                                       Committable GitHub Pages static snapshot copied from catalog/html/static
 notes/00_literature_notes_index.md               Yearly view generated from 00_literature_notes_index.json
 notes/YYYY/YYYY-MM/YYYY-MM.md                 Monthly note generated from monthly JSON
+benchmark/alignment/<arxiv_id>.alignment.json    Cross-variant diff with embedded evidence excerpts (regenerable, git-ignored)
+benchmark/alignment/alignment_index.json         Alignment summary index (regenerable, git-ignored)
+benchmark/review/index.html                      Expert review site (regenerable, git-ignored)
+benchmark/reports/benchmark_report.json          Benchmark scoring report (regenerable, git-ignored)
+benchmark/reports/benchmark_report.md            Report reading view (regenerable, git-ignored)
 ```
 
 Table extraction uses:
