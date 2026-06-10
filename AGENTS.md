@@ -76,6 +76,18 @@ Git stores toolchain, documentation, tests, workflow manifests, and skills.
 Generated data under `notes/`, `literature/`, `catalog/`, and `logs/` is ignored
 by default. Do not force-add it unless the user explicitly asks.
 
+## Benchmark Data Isolation
+
+Workflows that produce candidate extractions (production
+`hvs_candidate_extraction` and benchmark `hvs_benchmark_variant_extraction`)
+must never read `benchmark/gold/`, `benchmark/adjudication/`,
+`benchmark/alignment/`, `benchmark/manifest/`, or any
+`benchmark/variants/<variant_id>/` directory other than the one they are
+writing. A benchmark variant worker must also not read the paper's production
+`literature/<arxiv_id>/literature_hvs_candidates.json`. Only
+`hvs_benchmark_gold_finalize` and `hvs_benchmark_score` may read gold and
+adjudication data. Never copy gold or adjudication content into `literature/`.
+
 ## Network and API Rules
 
 - Do not make real DeepXiv calls unless the user explicitly asks for new data
