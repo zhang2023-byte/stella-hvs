@@ -93,6 +93,7 @@ the renderer, never in the generated file. See
 - Motivation and roadmap: [docs/vision.md](docs/vision.md)
 - Web/HTML design spec: [docs/DESIGN.md](docs/DESIGN.md)
 - Agent operating rules: [AGENTS.md](AGENTS.md)
+- Expert gold-standard benchmark: [benchmark/README.md](benchmark/README.md)
 
 ## License
 

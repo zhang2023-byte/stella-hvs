@@ -714,3 +714,40 @@ runaway stars
 unbound stars
 escaping stars
 ```
+
+## 14. Benchmark Tooling
+
+The expert gold-standard benchmark lives in `benchmark/` (see
+`benchmark/README.md` for roles and anti-contamination rules).
+
+Regenerate the stratified sampling manifest (deterministic for the same
+corpus and `--seed`; rerunning must produce byte-identical output):
+
+```bash
+conda run -n stella-env python scripts/build_benchmark_manifest.py
+```
+
+Options: `--literature-dir`, `--output`, `--seed`, `--skip-version-check`
+(skips the per-paper PDF/abs arXiv version consistency check).
+
+Validate and upgrade an expert annotation YAML into gold JSON (the only
+entry point allowed to write under `benchmark/gold/`):
+
+```bash
+conda run -n stella-env python scripts/upgrade_gold_annotation.py \
+    benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml
+```
+
+Options: `--output`, `--manifest`.
+
+Build evidence review pages for verification-role papers (blind-role papers
+are refused unconditionally; off-benchmark papers need `--allow-unsampled`):
+
+```bash
+conda run -n stella-env python scripts/build_review_workbench.py --all-verification
+conda run -n stella-env python scripts/build_review_workbench.py --arxiv-id <arxiv_id>
+```
+
+Options: `--literature-dir`, `--manifest`, `--output-dir`,
+`--allow-unsampled`. Output is regenerable and git-ignored under
+`benchmark/workbench/`.

@@ -1,0 +1,79 @@
+# Expert gold annotation — blank template
+#
+# Copy this file to benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml,
+# fill it in while reading the paper PDF (the PDF is the normative evidence
+# source; do not consult extracted JSON, TeX, or ECSV files for blind-role
+# papers), then run:
+#
+#   python scripts/upgrade_gold_annotation.py benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml
+#
+# The upgrade script validates every controlled vocabulary and tells you the
+# exact line of any mistake. See benchmark/GUIDELINE.md for the judgment
+# rules; this file only documents the format.
+
+schema_version: stella.benchmark_gold_annotation.v0.1
+arxiv_id: ""              # must match the directory name, e.g. "2101.10878"
+annotator: ""             # your short handle, stable across the project
+annotated_at: ""          # date you finished this paper, e.g. "2026-06-15"
+guideline_version: ""     # git commit (short hash) of GUIDELINE.md you used;
+                          # keep the quotes — all-digit hashes parse as numbers
+evidence_basis: pdf
+status: candidates_found  # or: no_candidates  (then leave candidates empty)
+
+candidates:
+  - record_id: ""         # your stable id for this star within this paper,
+                          # usually the main name, e.g. "S5-HVS1"
+    names: []             # every paper-visible identifier, e.g.
+                          #   ["S5-HVS1", "Gaia DR2 6513109241989477504"]
+    gaia_source_id: ""    # strict form "Gaia DR2 123..." / "Gaia EDR3 123..."
+                          # leave "" if the paper gives none
+    ra_deg: null          # decimal degrees (ICRS) if the paper reports a
+    dec_deg: null         # position; otherwise leave null
+    pm_ra_masyr: null     # proper motion (mu_alpha*, with cos dec) in mas/yr
+    pm_dec_masyr: null
+    epoch_year: null      # reference epoch of the position, e.g. 2016.0
+    galactic_bound_claim: not_reported
+                          # one of: unbound | likely_unbound |
+                          #         possibly_unbound | escaping | not_reported
+    origin_type: ""       # introduced_by_this_paper | cited_from_literature
+    quantities:
+      - field: ""         # dotted scored field, e.g.
+                          #   observed_phase_space.radial_velocity
+                          #   derived_kinematics.total_velocity
+                          #   bound_assessment.escape_velocity
+        value: ""         # normalized number as a string, e.g. "1755"
+        error: ""         # symmetric error, if reported
+        lower_error: ""   # asymmetric errors, if reported
+        upper_error: ""
+        unit: ""          # e.g. "km/s"
+        limit_kind: ""    # "" (exact) | lower_limit | upper_limit | range
+        range_lower: ""   # only for limit_kind: range (value stays empty)
+        range_upper: ""
+        evidence:
+          - location: ""  # PDF locator, e.g. "Table 2, row S5-HVS1, col vtot"
+            quote: ""     # optional short verbatim quote
+        notes: ""
+    evidence:
+      - location: ""      # where the paper establishes this star as a
+        quote: ""         # candidate, e.g. "Sec 4.2, second paragraph"
+    notes: ""
+
+# Closed method-fact questions (L4). Answer each one you checked; use
+# status: not_reported when the paper does not state it. Names follow the
+# extraction schema's parameter vocabulary.
+method_facts:
+  - name: potential_name  # R0 | z0 | v_circ_sun | solar_motion_u |
+                          # solar_motion_v | solar_motion_w | potential_name |
+                          # escape_velocity_definition | other
+    status: not_reported  # reported | not_reported
+    value: ""             # required when status: reported
+    unit: ""
+    evidence: []
+    notes: ""
+
+# Tick every analysis stage the paper actually performs (presence only;
+# order and granularity are not scored). Vocabulary: see GUIDELINE.md
+# checklist, identical to the extraction schema step types.
+step_types_present: []
+
+notes: ""                 # anything the template cannot express

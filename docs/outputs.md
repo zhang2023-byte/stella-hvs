@@ -297,6 +297,34 @@ plain units such as `km s^-1`, `mas/yr`, `M_sun`, and asymmetric uncertainties
 render with superscripts/subscripts and `±` without requiring LaTeX delimiters in
 source JSON.
 
+## `benchmark/` Artifacts
+
+`benchmark/manifest/sampling_manifest.json`
+(`stella.benchmark_sampling_manifest.v0.1`) freezes the benchmark sample:
+the `design` block records the stratification scheme (paper-intrinsic
+variables only), `frame` records per-cell populations and weights, and
+`papers[]` records each sampled paper's stratum, complexity bin, role
+(`blind`/`verification`), overlap flag, inverse-probability
+`sampling_weight`, and PDF/abs arXiv version check results. Generated
+deterministically by `scripts/build_benchmark_manifest.py`; committed.
+
+`benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml` is the expert's
+hand-written annotation (template under `benchmark/templates/`);
+`scripts/upgrade_gold_annotation.py` validates it and writes the JSON twin
+(`stella.benchmark_gold_annotation.v0.1`). Gold uses its own slim schema:
+expert evidence is a PDF locator plus optional quote (the PDF is the
+normative evidence source), and method knowledge is stated as facts plus a
+step-type checklist instead of a wired DAG. All controlled vocabularies
+(quantity field paths, step types, method parameter names, limit kinds) are
+imported from the frozen extraction schema, so gold and AI extractions stay
+comparable by construction. Both files are committed; only the human
+workflow may write here.
+
+`benchmark/runs/` archives AI extraction runs (Phase 2) and
+`benchmark/scoring/` scoring outputs (Phase 4). `benchmark/workbench/` is a
+regenerable, git-ignored review view built by
+`scripts/build_review_workbench.py`.
+
 ## Index Files
 
 `notes/00_literature_notes_index.json` stores:

@@ -1,0 +1,95 @@
+# Expert gold annotation — filled example (fictional paper, realistic shape)
+#
+# Shows one candidates_found annotation with: a candidate carrying a Gaia id
+# and a position, an exact quantity, a lower limit, and a range; method facts
+# both reported and not reported; and a step-type checklist. Values are
+# illustrative, not from a real paper.
+
+schema_version: stella.benchmark_gold_annotation.v0.1
+arxiv_id: "9901.00001"
+annotator: will
+annotated_at: "2026-06-15"
+guideline_version: "0000000"  # quote git hashes: all-digit ones parse as numbers
+evidence_basis: pdf
+status: candidates_found
+
+candidates:
+  - record_id: J1234+5678
+    names:
+      - J1234+5678
+      - "Gaia DR3 1234567890123456789"
+    gaia_source_id: "Gaia DR3 1234567890123456789"
+    ra_deg: 188.512
+    dec_deg: 56.781
+    pm_ra_masyr: -2.41
+    pm_dec_masyr: 1.05
+    epoch_year: 2016.0
+    galactic_bound_claim: likely_unbound
+    origin_type: introduced_by_this_paper
+    quantities:
+      - field: observed_phase_space.radial_velocity
+        value: "612.3"
+        error: "4.1"
+        unit: km/s
+        evidence:
+          - location: "Table 1, row J1234+5678, col RV"
+      - field: derived_kinematics.total_velocity
+        value: "743"
+        lower_error: "12"
+        upper_error: "15"
+        unit: km/s
+        evidence:
+          - location: "Table 3, row J1234+5678, col v_GC"
+            quote: "743^{+15}_{-12}"
+      - field: bound_assessment.escape_velocity
+        value: "580"
+        unit: km/s
+        limit_kind: lower_limit
+        evidence:
+          - location: "Sec 4.1, first paragraph"
+            quote: "the local escape speed exceeds 580 km/s"
+      - field: observed_phase_space.distance
+        unit: kpc
+        limit_kind: range
+        range_lower: "8.2"
+        range_upper: "11.6"
+        evidence:
+          - location: "Sec 3.2"
+            quote: "heliocentric distances between 8.2 and 11.6 kpc"
+    evidence:
+      - location: "Sec 4.2, second paragraph"
+        quote: "we therefore consider J1234+5678 a hypervelocity candidate"
+    notes: ""
+
+method_facts:
+  - name: potential_name
+    status: reported
+    value: MWPotential2014
+    evidence:
+      - location: "Sec 4.1"
+  - name: R0
+    status: reported
+    value: "8.122"
+    unit: kpc
+    evidence:
+      - location: "Sec 4.1, footnote 3"
+  - name: v_circ_sun
+    status: not_reported
+  - name: solar_motion_u
+    status: not_reported
+  - name: escape_velocity_definition
+    status: reported
+    value: "speed for escape to 3 virial radii"
+    evidence:
+      - location: "Sec 4.1"
+
+step_types_present:
+  - input_catalog
+  - sample_selection
+  - distance_estimation
+  - radial_velocity_measurement
+  - velocity_calculation
+  - galactic_potential_model
+  - escape_or_bound_assessment
+
+notes: ""
